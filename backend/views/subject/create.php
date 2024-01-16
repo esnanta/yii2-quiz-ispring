@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="subject-create">
             <?= $this->render('_form', [
                 'model' => $model,
+                'officeList' => $officeList
             ]) 
             ?>
         </div>

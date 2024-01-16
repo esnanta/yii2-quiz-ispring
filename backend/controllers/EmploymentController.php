@@ -70,11 +70,9 @@ class EmploymentController extends Controller
     {
         if (Yii::$app->user->can('view-employment')) {
             $model = $this->findModel($id);
-            
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
             $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
+                    ->where(['id' => $model->office_id])
                     ->asArray()->all(), 'id', 'title');
             
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -138,13 +136,11 @@ class EmploymentController extends Controller
     {
         if (Yii::$app->user->can('update-employment')) {
             try {
-                $cacheCloud = new CacheCloud();
-                $officeId   = $cacheCloud->getOfficeId();
-                $officeList = ArrayHelper::map(Office::find()
-                        ->where(['id' => $officeId])
-                        ->asArray()->all(), 'id', 'title');
                 
                 $model = $this->findModel($id);
+                $officeList = ArrayHelper::map(Office::find()
+                    ->where(['id' => $model->office_id])
+                    ->asArray()->all(), 'id', 'title');
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashUpdateSuccess();

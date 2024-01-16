@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
@@ -28,7 +29,17 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         ],
         'attributes' => [
             'id',
-            'office_id',
+            [
+                'attribute'=>'office_id',
+                'value'=>($model->office_id!=null) ? $model->office->title:'',
+                'type'=>DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'office_id', 'prompt' => '', 'disabled'=> (Yii::$app->user->identity->isAdmin) ? false : true],
+                'items' => $officeList,
+                'widgetOptions'=>[
+                    'class'=> Select2::class,
+                    'data' => $officeList,
+                ],
+            ],
             'title',
             'participant_name',
             'password',

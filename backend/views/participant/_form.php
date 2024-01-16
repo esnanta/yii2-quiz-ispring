@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
@@ -21,16 +22,20 @@ use kartik\datecontrol\DateControl;
         'columns' => 1,
         'attributes' => [
 
-            'office_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Office ID...']],
-
+            'office_id' => [
+                'type' => Form::INPUT_WIDGET,
+                'widgetClass' => Select2::class,
+                'options' => [
+                    'data' => $officeList,
+                    'options' => ['placeholder' => 'Choose Office', 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ],
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 15]],
-
             'participant_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Participant Name...', 'maxlength' => 100]],
-
             'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => 'Enter Password...', 'maxlength' => 10]],
-
-            'verlock' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => 'Enter verlock...']],
-
         ]
 
     ]);

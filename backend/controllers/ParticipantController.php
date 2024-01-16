@@ -2,9 +2,13 @@
 
 namespace backend\controllers;
 
+use backend\models\Office;
+use backend\models\Subject;
+use common\helper\CacheCloud;
 use Yii;
 use backend\models\Participant;
 use backend\models\ParticipantSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -36,14 +40,21 @@ class ParticipantController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->can('index-participant')){
-                            $searchModel = new ParticipantSearch;
-                    $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $searchModel = new ParticipantSearch;
+            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-                    return $this->render('index', [
-                        'dataProvider' => $dataProvider,
-                        'searchModel' => $searchModel,
-                    ]);
-                    }
+            $cacheCloud = new CacheCloud();
+            $officeId   = $cacheCloud->getOfficeId();
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+                'officeList' => $officeList
+            ]);
+        }
         else{
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
@@ -60,10 +71,17 @@ class ParticipantController extends Controller
         if(Yii::$app->user->can('view-participant')){
             $model = $this->findModel($id);
 
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('view', ['model' => $model]);
+                return $this->render('view', [
+                    'model' => $model,
+                    'officeList' => $officeList
+                ]);
             }
         }
         else{
@@ -80,7 +98,14 @@ class ParticipantController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-participant')){
+            $cacheCloud = new CacheCloud();
+            $officeId   = $cacheCloud->getOfficeId();
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             $model = new Participant;
+            $model->office_id = $officeId;
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -89,6 +114,7 @@ class ParticipantController extends Controller
                 else {
                     return $this->render('create', [
                         'model' => $model,
+                        'officeList' => $officeList
                     ]);
                 }
             }
@@ -114,11 +140,16 @@ class ParticipantController extends Controller
             try {
                 $model = $this->findModel($id);
 
+                $officeList = ArrayHelper::map(Office::find()
+                    ->where(['id' => $model->office_id])
+                    ->asArray()->all(), 'id', 'title');
+
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('update', [
                         'model' => $model,
+                        'officeList' => $officeList
                     ]);
                 }
             }

@@ -24,6 +24,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $deleted_by
  * @property integer $verlock
  * @property string $uuid
+ *
+ * @property \backend\models\Office $office
  */
 class Room extends \yii\db\ActiveRecord
 {
@@ -51,7 +53,7 @@ class Room extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            ''
+            'office'
         ];
     }
 
@@ -107,7 +109,15 @@ class Room extends \yii\db\ActiveRecord
             'uuid' => Yii::t('app', 'Uuid'),
         ];
     }
-
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffice()
+    {
+        return $this->hasOne(\backend\models\Office::className(), ['id' => 'office_id']);
+    }
+    
     /**
      * @inheritdoc
      * @return array mixed

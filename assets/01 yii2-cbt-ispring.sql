@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2024 at 04:13 PM
+-- Generation Time: Jan 16, 2024 at 07:40 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -668,6 +668,7 @@ CREATE TABLE `tx_room` (
                            `id` int(11) NOT NULL,
                            `office_id` int(11) DEFAULT NULL,
                            `title` varchar(100) DEFAULT NULL,
+                           `sequence` tinyint(4) DEFAULT NULL,
                            `description` tinytext DEFAULT NULL,
                            `created_at` datetime DEFAULT NULL,
                            `updated_at` datetime DEFAULT NULL,
@@ -679,6 +680,13 @@ CREATE TABLE `tx_room` (
                            `verlock` int(11) DEFAULT NULL,
                            `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tx_room`
+--
+
+INSERT INTO `tx_room` (`id`, `office_id`, `title`, `sequence`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (2, 1, 'Ruang 1', 1, '-', '2024-01-16 13:36:04', '2024-01-16 13:36:04', 1, 1, NULL, NULL, NULL, 0, '8607a981b43911ee80c4c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -701,8 +709,10 @@ INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
                                                       ('2la9aa5f7at6pl8gd7b56fsi9o', 1705251795, 0x5f5f666c6173687c613a303a7b7d),
                                                       ('7dej2rrhrf4j4qnc9emhm87ska', 1705251825, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('ets0ivb83dc83s1po5gijde52i', 1705251644, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('fnngqq77pi8rq7t1csk0k0t969', 1705334907, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('ifhk0d4vf2c82qj1ksonp7thg0', 1705252225, 0x5f5f666c6173687c613a303a7b7d),
                                                       ('lkaib0q71gpegi72dsd6kel2ii', 1705250792, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('v56f8816i8jr3lugr66f3pqiv4', 1705388519, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('vr8s85l0elb0p0tu4o1vqm6m8u', 1705251590, 0x5f5f666c6173687c613a303a7b7d);
 
 -- --------------------------------------------------------
@@ -799,6 +809,7 @@ CREATE TABLE `tx_subject` (
                               `id` int(11) NOT NULL,
                               `office_id` int(11) DEFAULT NULL,
                               `title` varchar(100) DEFAULT NULL,
+                              `sequence` tinyint(4) DEFAULT NULL,
                               `description` tinytext DEFAULT NULL,
                               `created_at` datetime DEFAULT NULL,
                               `updated_at` datetime DEFAULT NULL,
@@ -900,7 +911,7 @@ CREATE TABLE `tx_user` (
 --
 
 INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `unconfirmed_email`, `registration_ip`, `flags`, `confirmed_at`, `blocked_at`, `updated_at`, `created_at`, `last_login_at`, `auth_tf_key`, `auth_tf_enabled`) VALUES
-                                                                                                                                                                                                                                                 (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1705245540, NULL, 0),
+                                                                                                                                                                                                                                                 (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1705386953, NULL, 0),
                                                                                                                                                                                                                                                  (2, 'rajahati', 'rajahati@oke.com', '$2y$12$ZBs3Bnv1RrdVWxhrxNMeLeT9Fr1EdLD1T6zY70KJ.fzkOxOilVgFy', 'oyb5maS0UL9P11U6EUjDo4ok980M8wNR', NULL, '180.241.44.219', 0, NULL, NULL, 1699022063, 1699022063, 1705159096, NULL, 0),
                                                                                                                                                                                                                                                  (3, 'sadiqulwahyudi@gmail.com', 'sadiqulwahyudi@gmail.com', '$2y$12$evPFMD73ILudJ/lF4qfIh.Lt9QmrZ77aOPA/bTxzkNTu/0suIIyNK', 'ecNmxD3FGiFOf5HX7J3pwtuqN16GPxZo', NULL, '180.241.46.7', 0, NULL, NULL, 1704188118, 1704183532, 1704560204, NULL, 0),
                                                                                                                                                                                                                                                  (4, 'afna', 'afna@rajahati.com', '$2y$12$fwJhdAvfKR86cj4oHi2QbuVU7C1woAXuBgw13fqM/RXYUfg8vkXKe', 'ukgumez3ivNnx9mOazFJiVBKM0Ebyzmh', NULL, '36.85.110.2', 0, NULL, NULL, 1704187889, 1704187889, 1704196731, NULL, 0),
@@ -1020,7 +1031,8 @@ ALTER TABLE `tx_quote`
 -- Indexes for table `tx_room`
 --
 ALTER TABLE `tx_room`
-    ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `Fk_room_office` (`office_id`);
 
 --
 -- Indexes for table `tx_session`
@@ -1154,7 +1166,7 @@ ALTER TABLE `tx_quote`
 -- AUTO_INCREMENT for table `tx_room`
 --
 ALTER TABLE `tx_room`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tx_site_link`
@@ -1262,6 +1274,12 @@ ALTER TABLE `tx_participant`
 --
 ALTER TABLE `tx_profile`
     ADD CONSTRAINT `fk_profile_user` FOREIGN KEY (`user_id`) REFERENCES `tx_user` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tx_room`
+--
+ALTER TABLE `tx_room`
+    ADD CONSTRAINT `Fk_room_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
 
 --
 -- Constraints for table `tx_social_account`
