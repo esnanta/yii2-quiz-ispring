@@ -1,0 +1,9 @@
+STOCK MUTASI
+
+tx_stock_mutation
+id
+office_id
+title
+date_issued
+staff_id
+warehouse_id // sumber
