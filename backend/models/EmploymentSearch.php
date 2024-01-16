@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,7 +30,7 @@ class EmploymentSearch extends Employment
 
     public function search($params)
     {
-        $cacheCloud = new \common\helper\CacheCloud();
+        $cacheCloud = new CacheCloud();
         $officeId = $cacheCloud->getOfficeId();
         $query = Employment::find()->where(['office_id'=>$officeId]);
         

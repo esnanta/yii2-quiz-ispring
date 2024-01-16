@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,7 +30,9 @@ class ParticipantSearch extends Participant
 
     public function search($params)
     {
-        $query = Participant::find();
+        $cacheCloud = new CacheCloud();
+        $officeId = $cacheCloud->getOfficeId();
+        $query = Participant::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

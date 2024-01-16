@@ -43,7 +43,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'office_id',
+            [
+                'attribute'=>'office_id',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->office_id!=null) ? $model->office->title:'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$officeList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
             'test1:ntext',
             'test2:ntext',
             'test3:ntext',

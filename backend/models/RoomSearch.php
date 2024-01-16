@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,7 +30,9 @@ class RoomSearch extends Room
 
     public function search($params)
     {
-        $query = Room::find();
+        $cacheCloud = new CacheCloud();
+        $officeId = $cacheCloud->getOfficeId();
+        $query = Room::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -33,9 +33,9 @@ use kartik\datecontrol\DateControl;
                     'allowClear' => true
                 ],
             ],
-            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 15]],
-            'participant_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Participant Name...', 'maxlength' => 100]],
-            'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => 'Enter Password...', 'maxlength' => 10]],
+            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 15]],
+            'participant_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => '', 'maxlength' => 10]],
         ]
 
     ]);

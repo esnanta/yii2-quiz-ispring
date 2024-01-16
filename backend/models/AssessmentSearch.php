@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,7 +30,9 @@ class AssessmentSearch extends Assessment
 
     public function search($params)
     {
-        $query = Assessment::find();
+        $cacheCloud = new CacheCloud();
+        $officeId = $cacheCloud->getOfficeId();
+        $query = Assessment::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
