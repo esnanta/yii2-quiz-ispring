@@ -17,7 +17,7 @@ class ArchiveCategory extends BaseArchiveCategory
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 200],

@@ -52,8 +52,15 @@ function getMenu($_menuName, $_classIcon): string
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
-                            getMenu('Test Result', 'fa fa-angle-right'),
-                            ['/test-result/index'],
+                            getMenu('Assessment', 'fa fa-angle-right'),
+                            ['/assessment/index'],
+                            ['class' => 'sidebar-link']
+                        ) ?>
+                    </li>
+                    <li class="sidebar-item">
+                        <?= Html::a(
+                            getMenu('Import', 'fa fa-angle-right'),
+                            ['/site/import'],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>

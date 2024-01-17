@@ -12,6 +12,7 @@ use mootensai\behaviors\UUIDBehavior;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property string $unique_id
  * @property string $title
  * @property string $phone_number
  * @property string $fax_number
@@ -35,11 +36,14 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \backend\models\Archive[] $archives
+ * @property \backend\models\ArchiveCategory[] $archiveCategories
  * @property \backend\models\Assessment[] $assessments
  * @property \backend\models\Counter[] $counters
  * @property \backend\models\Employment[] $employments
  * @property \backend\models\User $user
  * @property \backend\models\Participant[] $participants
+ * @property \backend\models\Room[] $rooms
  * @property \backend\models\Staff[] $staff
  * @property \backend\models\Subject[] $subjects
  * @property \backend\models\Theme[] $themes
@@ -70,11 +74,14 @@ class Office extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'archives',
+            'archiveCategories',
             'assessments',
             'counters',
             'employments',
             'user',
             'participants',
+            'rooms',
             'staff',
             'subjects',
             'themes'
@@ -90,6 +97,7 @@ class Office extends \yii\db\ActiveRecord
             [['user_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['unique_id'], 'string', 'max' => 15],
             [['title', 'phone_number', 'fax_number', 'email', 'web', 'address', 'latitude', 'longitude', 'facebook', 'google_plus', 'instagram', 'twitter'], 'string', 'max' => 100],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
@@ -124,6 +132,7 @@ class Office extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
+            'unique_id' => Yii::t('app', 'Unique ID'),
             'title' => Yii::t('app', 'Title'),
             'phone_number' => Yii::t('app', 'Phone Number'),
             'fax_number' => Yii::t('app', 'Fax Number'),
@@ -143,6 +152,22 @@ class Office extends \yii\db\ActiveRecord
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArchives()
+    {
+        return $this->hasMany(\backend\models\Archive::className(), ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArchiveCategories()
+    {
+        return $this->hasMany(\backend\models\ArchiveCategory::className(), ['office_id' => 'id']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -181,6 +206,14 @@ class Office extends \yii\db\ActiveRecord
     public function getParticipants()
     {
         return $this->hasMany(\backend\models\Participant::className(), ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRooms()
+    {
+        return $this->hasMany(\backend\models\Room::className(), ['office_id' => 'id']);
     }
         
     /**

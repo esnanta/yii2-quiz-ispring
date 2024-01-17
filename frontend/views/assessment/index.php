@@ -1,6 +1,5 @@
 <?php
 
-use common\helper\CacheCloud;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -8,19 +7,19 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\ArchiveCategorySearch $searchModel
+ * @var backend\models\AssessmentSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Archive Categories');
+$this->title = Yii::t('app', 'Assessments');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="archive-category-index">
+<div class="assessment-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php /* echo Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Archive Category',
+    'modelClass' => 'Assessment',
 ]), ['create'], ['class' => 'btn btn-success'])*/  ?>
     </p>
 
@@ -42,36 +41,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'title',
-            'sequence',
-            'description:ntext',
-            [
-                'attribute' => 'created_at',
-                'value'=>'created_at',
-                'enableSorting' => true,
-                'format'=>'date',
-                'options' => [
-                    'format' => Yii::$app->params['dateDisplayFormat'],
-                ],
-                'filterType' => GridView::FILTER_DATE_RANGE,
-                'filterWidgetOptions' => ([
-                    'attribute' => 'date_range',
-                    'presetDropdown' => false,
-                    'convertFormat' => true,
-                    'pluginOptions'=>[
-                        'locale'=>['format' => Yii::$app->params['dateDisplayFormat']],
-                    ]                
-                ])
-            ], 
 
+            'id',
+            [
+                'attribute'=>'office_id',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->office_id!=null) ? $model->office->title:'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$officeList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
+            'test1:ntext',
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',                
+                'template'=>'{update} {view}',
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['archive-category/view', 'id' => $model->id, 'edit' => 't']),
+                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
@@ -80,13 +75,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['archive-category/view', 'id' => $model->id]),
+                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
                             [
                                 'title' => Yii::t('yii', 'View'),
                                 'class'=>'btn btn-sm btn-info',
                             ]
                         );
-                    },        
+                    },
                 ],
             ],
         ],

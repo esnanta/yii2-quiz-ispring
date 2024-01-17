@@ -2,6 +2,8 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
+use common\helper\LabelHelper;
 use Yii;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
@@ -20,10 +22,14 @@ class Archive extends BaseArchive
     public $url;
     //END HANYA UNTUK INFO DI VIEW BACKEND
 
-    public static $path='/uploads/archive';
 
     const IS_VISIBLE_PRIVATE            = 1;
     const IS_VISIBLE_PUBLIC             = 2;
+
+    const ARCHIVE_TYPE_DOCUMENT         = 1;
+    const ARCHIVE_TYPE_SPREADSHEET      = 2;
+    const ARCHIVE_TYPE_IMAGE            = 3;
+    const ARCHIVE_TYPE_COMPRESSION      = 4;
 
     /**
      * @inheritdoc
@@ -64,8 +70,8 @@ class Archive extends BaseArchive
     {
         return [
             //MASTER
-            self::IS_VISIBLE_PRIVATE => 'Private',
-            self::IS_VISIBLE_PUBLIC  => 'Public',
+            self::IS_VISIBLE_PRIVATE => Yii::t('app', 'Private'),
+            self::IS_VISIBLE_PUBLIC  => Yii::t('app', 'Public'),
         ];
     }
 
@@ -74,17 +80,56 @@ class Archive extends BaseArchive
         if($_module)
         {
             $arrayModule = self::getArrayIsVisible();
-            $returnValue = 'NULL';
 
             switch ($_module) {
                 case ($_module == self::IS_VISIBLE_PRIVATE):
-                    $returnValue = '<span class="label label-danger">'.$arrayModule[$_module].'</span>';
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 case ($_module == self::IS_VISIBLE_PUBLIC):
-                    $returnValue = '<span class="label label-primary">'.$arrayModule[$_module].'</span>';
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = '<span class="label label-default">'.$arrayModule[$_module].'</span>';
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+            }
+
+            return $returnValue;
+
+        }
+        else
+            return;
+    }
+
+    public static function getArrayArchiveType(): array
+    {
+        return [
+            //MASTER
+            self::ARCHIVE_TYPE_DOCUMENT => Yii::t('app', 'Document'),
+            self::ARCHIVE_TYPE_SPREADSHEET  => Yii::t('app', 'Spreadsheet'),
+            self::ARCHIVE_TYPE_IMAGE  => Yii::t('app', 'Image'),
+            self::ARCHIVE_TYPE_COMPRESSION  => Yii::t('app', 'Compression'),
+        ];
+    }
+    public static function getOneArchiveType($_module = null)
+    {
+        if($_module)
+        {
+            $arrayModule = self::getArrayArchiveType();
+
+            switch ($_module) {
+                case ($_module == self::ARCHIVE_TYPE_DOCUMENT):
+                    $returnValue = LabelHelper::getArchiveTypeDocument($arrayModule[$_module]);
+                    break;
+                case ($_module == self::ARCHIVE_TYPE_SPREADSHEET):
+                    $returnValue = LabelHelper::getArchiveTypeSpreadsheet($arrayModule[$_module]);
+                    break;
+                case ($_module == self::ARCHIVE_TYPE_IMAGE):
+                    $returnValue = LabelHelper::getArchiveTypeImage($arrayModule[$_module]);
+                    break;
+                case ($_module == self::ARCHIVE_TYPE_COMPRESSION):
+                    $returnValue = LabelHelper::getArchiveTypeCompression($arrayModule[$_module]);
+                    break;
+                default:
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;
@@ -115,9 +160,10 @@ class Archive extends BaseArchive
      * fetch stored asset file name with complete path
      * @return string
      */
-    public function getAssetFile()
+    public function getAssetFile(): ?string
     {
-        $directory  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
+        $directory  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
+            $this->getPath();
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
@@ -128,20 +174,20 @@ class Archive extends BaseArchive
      * fetch stored asset url
      * @return string
      */
-    public function getAssetUrl()
+    public function getAssetUrl(): string
     {
         // return a default image placeholder if your source avatar is not found
         $defaultImage = '/images/no-picture-available-icon-1.jpg';
         $file_name = (!empty($this->file_name)) ? $this->file_name : $defaultImage;
-        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
 
         if (file_exists($directory.'/'.$file_name)) {
             $file_parts = pathinfo($directory.'/'.$file_name);
             if($file_parts['extension']=='pdf'){
-                Yii::$app->urlManager->baseUrl . self::$path.'/'.$file_name;
+                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
             }
             
-            return Yii::$app->urlManager->baseUrl . self::$path.'/'.$file_name;
+            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
         }
         else{
             return Yii::$app->urlManager->baseUrl . $defaultImage;
@@ -210,7 +256,14 @@ class Archive extends BaseArchive
         return true;
     }
 
-    public function getUrl(){
+    public function getUrl(): string
+    {
         return Yii::$app->getUrlManager()->createUrl(['archive/view', 'id' => $this->id, 'title' => $this->title]);
+    }
+
+    private function getPath() : string {
+        $cacheCloud = new CacheCloud();
+        $officeUniqueId = $cacheCloud->getOfficeUniqueId();
+        return '/uploads/archive/'.$officeUniqueId;
     }
 }

@@ -29,6 +29,10 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         ],
         'attributes' => [
             'title',
+            [
+                'attribute'=>'unique_id',
+                'type'=>DetailView::INPUT_HIDDEN,
+            ],
             'phone_number',
             'email:email',
             'web',

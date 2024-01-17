@@ -11,6 +11,7 @@ use mootensai\behaviors\UUIDBehavior;
  * This is the base model class for table "tx_archive".
  *
  * @property integer $id
+ * @property integer $office_id
  * @property integer $is_visible
  * @property integer $archive_type
  * @property integer $archive_category_id
@@ -34,6 +35,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \backend\models\ArchiveCategory $archiveCategory
+ * @property \backend\models\Office $office
  */
 class Archive extends \yii\db\ActiveRecord
 {
@@ -61,7 +63,8 @@ class Archive extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'archiveCategory'
+            'archiveCategory',
+            'office'
         ];
     }
 
@@ -71,7 +74,7 @@ class Archive extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title', 'file_name'], 'string', 'max' => 200],
@@ -109,9 +112,10 @@ class Archive extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'office_id' => Yii::t('app', 'Office ID'),
             'is_visible' => Yii::t('app', 'Is Visible'),
             'archive_type' => Yii::t('app', 'Archive Type'),
-            'archive_category_id' => Yii::t('app', 'Archive Category'),
+            'archive_category_id' => Yii::t('app', 'Archive Category ID'),
             'title' => Yii::t('app', 'Title'),
             'date_issued' => Yii::t('app', 'Date Issued'),
             'file_name' => Yii::t('app', 'File Name'),
@@ -133,6 +137,14 @@ class Archive extends \yii\db\ActiveRecord
     public function getArchiveCategory()
     {
         return $this->hasOne(\backend\models\ArchiveCategory::className(), ['id' => 'archive_category_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffice()
+    {
+        return $this->hasOne(\backend\models\Office::className(), ['id' => 'office_id']);
     }
     
     /**

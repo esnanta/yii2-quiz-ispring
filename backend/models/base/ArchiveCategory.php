@@ -11,6 +11,7 @@ use mootensai\behaviors\UUIDBehavior;
  * This is the base model class for table "tx_archive_category".
  *
  * @property integer $id
+ * @property integer $office_id
  * @property string $title
  * @property integer $sequence
  * @property string $description
@@ -25,6 +26,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \backend\models\Archive[] $archives
+ * @property \backend\models\Office $office
  */
 class ArchiveCategory extends \yii\db\ActiveRecord
 {
@@ -52,7 +54,8 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'archives'
+            'archives',
+            'office'
         ];
     }
 
@@ -62,7 +65,7 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 200],
@@ -98,6 +101,7 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
             'sequence' => Yii::t('app', 'Sequence'),
             'description' => Yii::t('app', 'Description'),
@@ -113,6 +117,14 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     public function getArchives()
     {
         return $this->hasMany(\backend\models\Archive::className(), ['archive_category_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffice()
+    {
+        return $this->hasOne(\backend\models\Office::className(), ['id' => 'office_id']);
     }
     
     /**

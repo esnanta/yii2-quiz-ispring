@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2024 at 07:40 AM
+-- Generation Time: Jan 17, 2024 at 05:27 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tx_archive` (
                               `id` int(11) NOT NULL,
+                              `office_id` int(11) DEFAULT NULL,
                               `is_visible` int(11) DEFAULT NULL,
                               `archive_type` int(11) DEFAULT NULL,
                               `archive_category_id` int(11) DEFAULT NULL,
@@ -60,6 +61,7 @@ CREATE TABLE `tx_archive` (
 
 CREATE TABLE `tx_archive_category` (
                                        `id` int(11) NOT NULL,
+                                       `office_id` int(11) DEFAULT NULL,
                                        `title` varchar(200) DEFAULT NULL,
                                        `sequence` int(11) DEFAULT NULL,
                                        `description` text DEFAULT NULL,
@@ -73,6 +75,13 @@ CREATE TABLE `tx_archive_category` (
                                        `verlock` bigint(20) DEFAULT NULL,
                                        `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tx_archive_category`
+--
+
+INSERT INTO `tx_archive_category` (`id`, `office_id`, `title`, `sequence`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (5, 1, 'Test', 1, '', '2024-01-17 23:20:28', '2024-01-17 23:20:28', 1, 1, NULL, NULL, NULL, 0, '53bcf82eb55411ee9384c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -558,6 +567,7 @@ CREATE TABLE `tx_migration` (
 CREATE TABLE `tx_office` (
                              `id` int(11) NOT NULL,
                              `user_id` int(11) DEFAULT NULL,
+                             `unique_id` varchar(15) DEFAULT NULL,
                              `title` varchar(100) DEFAULT NULL,
                              `phone_number` varchar(100) DEFAULT NULL,
                              `fax_number` varchar(100) DEFAULT NULL,
@@ -586,9 +596,9 @@ CREATE TABLE `tx_office` (
 -- Dumping data for table `tx_office`
 --
 
-INSERT INTO `tx_office` (`id`, `user_id`, `title`, `phone_number`, `fax_number`, `email`, `web`, `address`, `latitude`, `longitude`, `facebook`, `google_plus`, `instagram`, `twitter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-                                                                                                                                                                                                                                                                                                                                (1, 1, 'Es Nanta ID', '-', NULL, 'ombakrinai@gmail.com', 'esnanta.my.id', '-', NULL, NULL, NULL, NULL, NULL, NULL, '-', '2023-08-18 22:25:10', '2023-08-18 22:25:10', 1, 1, NULL, NULL, NULL, 0, NULL),
-                                                                                                                                                                                                                                                                                                                                (2, 2, 'CV Rajahati', '081360328522', NULL, 'rajahati@rajahati.com', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '', '2023-11-03 21:34:23', '2024-01-02 16:33:28', 1, 2, NULL, NULL, NULL, 1, '1096ca237a5611eeaaf5441ea14ed578');
+INSERT INTO `tx_office` (`id`, `user_id`, `unique_id`, `title`, `phone_number`, `fax_number`, `email`, `web`, `address`, `latitude`, `longitude`, `facebook`, `google_plus`, `instagram`, `twitter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                                                                                                                             (1, 1, '65a7fb0e28f7b', 'Es Nanta ID', '-', NULL, 'ombakrinai@gmail.com', 'esnanta.my.id', '-', NULL, NULL, NULL, NULL, NULL, NULL, '-', '2023-08-18 22:25:10', '2024-01-17 23:06:53', 1, 1, NULL, NULL, NULL, 3, NULL),
+                                                                                                                                                                                                                                                                                                                                             (2, 2, NULL, 'CV Rajahati', '081360328522', NULL, 'rajahati@rajahati.com', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '', '2023-11-03 21:34:23', '2024-01-02 16:33:28', 1, 2, NULL, NULL, NULL, 1, '1096ca237a5611eeaaf5441ea14ed578');
 
 -- --------------------------------------------------------
 
@@ -705,15 +715,7 @@ CREATE TABLE `tx_session` (
 --
 
 INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
-                                                      ('0h29agn1a4u8g1dqjvqcg7rdgs', 1705252315, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('2la9aa5f7at6pl8gd7b56fsi9o', 1705251795, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('7dej2rrhrf4j4qnc9emhm87ska', 1705251825, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('ets0ivb83dc83s1po5gijde52i', 1705251644, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('fnngqq77pi8rq7t1csk0k0t969', 1705334907, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('ifhk0d4vf2c82qj1ksonp7thg0', 1705252225, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('lkaib0q71gpegi72dsd6kel2ii', 1705250792, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('v56f8816i8jr3lugr66f3pqiv4', 1705388519, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('vr8s85l0elb0p0tu4o1vqm6m8u', 1705251590, 0x5f5f666c6173687c613a303a7b7d);
+    ('loqi2jadtvn65upcu7aj7d3jdk', 1705510234, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a35323a22687474703a2f2f6c6f63616c686f73742f6170706c69636174696f6e2f796969322d6362742d69737072696e672f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
 
 -- --------------------------------------------------------
 
@@ -911,7 +913,7 @@ CREATE TABLE `tx_user` (
 --
 
 INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `unconfirmed_email`, `registration_ip`, `flags`, `confirmed_at`, `blocked_at`, `updated_at`, `created_at`, `last_login_at`, `auth_tf_key`, `auth_tf_enabled`) VALUES
-                                                                                                                                                                                                                                                 (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1705386953, NULL, 0),
+                                                                                                                                                                                                                                                 (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1705508221, NULL, 0),
                                                                                                                                                                                                                                                  (2, 'rajahati', 'rajahati@oke.com', '$2y$12$ZBs3Bnv1RrdVWxhrxNMeLeT9Fr1EdLD1T6zY70KJ.fzkOxOilVgFy', 'oyb5maS0UL9P11U6EUjDo4ok980M8wNR', NULL, '180.241.44.219', 0, NULL, NULL, 1699022063, 1699022063, 1705159096, NULL, 0),
                                                                                                                                                                                                                                                  (3, 'sadiqulwahyudi@gmail.com', 'sadiqulwahyudi@gmail.com', '$2y$12$evPFMD73ILudJ/lF4qfIh.Lt9QmrZ77aOPA/bTxzkNTu/0suIIyNK', 'ecNmxD3FGiFOf5HX7J3pwtuqN16GPxZo', NULL, '180.241.46.7', 0, NULL, NULL, 1704188118, 1704183532, 1704560204, NULL, 0),
                                                                                                                                                                                                                                                  (4, 'afna', 'afna@rajahati.com', '$2y$12$fwJhdAvfKR86cj4oHi2QbuVU7C1woAXuBgw13fqM/RXYUfg8vkXKe', 'ukgumez3ivNnx9mOazFJiVBKM0Ebyzmh', NULL, '36.85.110.2', 0, NULL, NULL, 1704187889, 1704187889, 1704196731, NULL, 0),
@@ -926,13 +928,15 @@ INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `
 --
 ALTER TABLE `tx_archive`
     ADD PRIMARY KEY (`id`),
-    ADD KEY `FK_tx_archive_category` (`archive_category_id`);
+    ADD KEY `FK_tx_archive_category` (`archive_category_id`),
+    ADD KEY `FK_tx_archive_office` (`office_id`);
 
 --
 -- Indexes for table `tx_archive_category`
 --
 ALTER TABLE `tx_archive_category`
-    ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `FK_tx_archive_category_office` (`office_id`);
 
 --
 -- Indexes for table `tx_assessment`
@@ -1100,13 +1104,13 @@ ALTER TABLE `tx_user`
 -- AUTO_INCREMENT for table `tx_archive`
 --
 ALTER TABLE `tx_archive`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tx_archive_category`
 --
 ALTER TABLE `tx_archive_category`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tx_assessment`
@@ -1218,7 +1222,14 @@ ALTER TABLE `tx_user`
 -- Constraints for table `tx_archive`
 --
 ALTER TABLE `tx_archive`
-    ADD CONSTRAINT `FK_tx_archive_category` FOREIGN KEY (`archive_category_id`) REFERENCES `tx_archive_category` (`id`);
+    ADD CONSTRAINT `FK_tx_archive_category` FOREIGN KEY (`archive_category_id`) REFERENCES `tx_archive_category` (`id`),
+    ADD CONSTRAINT `FK_tx_archive_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
+
+--
+-- Constraints for table `tx_archive_category`
+--
+ALTER TABLE `tx_archive_category`
+    ADD CONSTRAINT `FK_tx_archive_category_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
 
 --
 -- Constraints for table `tx_assessment`

@@ -63,6 +63,8 @@ use common\helper\CacheCloud;
 
 
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
+                    ['label' => Yii::t('app', 'Archive Category'), 'url' => ['/archive-category/index']],
+                    ['label' => Yii::t('app', 'Archive'), 'url' => ['/archive/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                 ]],

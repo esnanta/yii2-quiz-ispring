@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\Office;
+use common\helper\CacheCloud;
 use Yii;
 use backend\models\Archive;
 use backend\models\ArchiveCategory;
@@ -42,11 +44,19 @@ class ArchiveController extends Controller
             $searchModel = new ArchiveSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
+            $cacheCloud = new CacheCloud();
+            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             $archiveCategoryList   = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
             $isVisibleList         = Archive::getArrayIsVisible();
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
+                'officeList' =>$officeList,
                 'archiveCategoryList' => $archiveCategoryList,
                 'isVisibleList' => $isVisibleList,
             ]);
@@ -65,9 +75,13 @@ class ArchiveController extends Controller
     {
         if (Yii::$app->user->can('view-archive')) {
             $model                  = $this->findModel($id);
+            $officeList             = ArrayHelper::map(Office::find()
+                                        ->where(['id' => $model->office_id])
+                                        ->asArray()->all(), 'id', 'title');
             $archiveCategoryList    = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
             $isVisibleList          = Archive::getArrayIsVisible();
-            
+            $archiveTypeList        = Archive::getArrayArchiveType();
+
             $oldFile = $model->getAssetFile();
             $oldAvatar = $model->file_name;
 
@@ -96,8 +110,10 @@ class ArchiveController extends Controller
             } else {
                 return $this->render('view', [
                     'model' => $model,
+                    'officeList' => $officeList,
                     'archiveCategoryList'=>$archiveCategoryList,
                     'isVisibleList' => $isVisibleList,
+                    'archiveTypeList' => $archiveTypeList
                 ]);
             }
         } else {
@@ -114,11 +130,19 @@ class ArchiveController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-archive')) {
+            $cacheCloud = new CacheCloud();
+            $officeId   = $cacheCloud->getOfficeId();
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             $model = new Archive;
-            $model->date_issued     = date(Yii::$app->params['dateDisplayFormat']);
+            $model->office_id       = $officeId;
+            $model->date_issued     = date(Yii::$app->params['dateSaveFormat']);
             $model->is_visible      = Archive::IS_VISIBLE_PRIVATE;
             
             $archiveCategoryList    = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
+            $archiveTypeList        = Archive::getArrayArchiveType();
             $isVisibleList          = Archive::getArrayIsVisible();
             
             try {
@@ -140,8 +164,10 @@ class ArchiveController extends Controller
                 }
                 return $this->render('create', [
                     'model' => $model,
+                    'officeList' => $officeList,
                     'archiveCategoryList'=>$archiveCategoryList,
                     'isVisibleList' => $isVisibleList,
+                    'archiveTypeList' => $archiveTypeList,
                 ]);
             } catch (StaleObjectException $e) {
                 throw new StaleObjectException('The object being updated is outdated.');
@@ -162,6 +188,13 @@ class ArchiveController extends Controller
     {
         if (Yii::$app->user->can('update-archive')) {
             $model = $this->findModel($id);
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
+            $archiveCategoryList    = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
+            $archiveTypeList        = Archive::getArrayArchiveType();
+            $isVisibleList          = Archive::getArrayIsVisible();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -169,6 +202,10 @@ class ArchiveController extends Controller
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'officeList' => $officeList,
+                    'archiveCategoryList'=>$archiveCategoryList,
+                    'isVisibleList' => $isVisibleList,
+                    'archiveTypeList' => $archiveTypeList,
                 ]);
             }
         } else {
@@ -223,12 +260,23 @@ class ArchiveController extends Controller
      * @return Archive the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id): Archive
     {
         if (($model = Archive::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionDownload($id,$title=null)
+    {
+        $model  = $this->findModel($id);
+        $path   = $model->getAssetFile();
+        if (!empty($path)) {
+            return $model->downloadFile($path);
+        } else {
+            throw new NotFoundHttpException("can't find {$model->title} file");
         }
     }
 }

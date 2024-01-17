@@ -81,12 +81,6 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                 ],
                 'attributes' => [
                     [
-                        'attribute'=>'title', 
-                        'format'=>'html',
-                        'type'=>DetailView::INPUT_TEXT, 
-                    ], 
-                    
-                    [
                         'attribute'=>'date_issued',
                         'format'=>'date',
                         'type'=>DetailView::INPUT_WIDGET,
@@ -94,6 +88,35 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                             'class'=>DateControl::class,
                             'type'=>DateControl::FORMAT_DATE,
                         ],
+                    ],
+                    [
+                        'attribute'=>'title', 
+                        'format'=>'html',
+                        'type'=>DetailView::INPUT_TEXT, 
+                    ],
+                    [
+                        'attribute'=>'archive_category_id',
+                        'value'=>($model->archive_category_id!=null) ? $model->archiveCategory->title:'',
+                        'type'=>DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'archive_category_id', 'prompt' => '', 'disabled'=>false],
+                        'items' => $archiveCategoryList,
+                        'widgetOptions'=>[
+                            'class'=> Select2::class,
+                            'data'=>$archiveCategoryList,
+                        ],
+                    ],
+                    [
+                        'attribute'=>'archive_type',
+                        'format'=>'html',
+                        'value'=>($model->archive_type!=null) ? $model->getOneArchiveType($model->archive_type):'',
+                        'type'=>DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'archive_type', 'prompt' => '', 'disabled'=>false],
+                        'items' => $archiveTypeList,
+                        'widgetOptions'=>[
+                            'class'=> Select2::class,
+                            'data'=>$archiveTypeList,
+                        ],
+                        //'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
                         'attribute'=>'is_visible',
@@ -108,18 +131,6 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                         ],
                         //'valueColOptions'=>['style'=>'width:30%']
                     ],
-                    [
-                        'attribute'=>'archive_category_id', 
-                        'value'=>($model->archive_category_id!=null) ? $model->archiveCategory->title:'',
-                        'type'=>DetailView::INPUT_SELECT2, 
-                        'options' => ['id' => 'archive_category_id', 'prompt' => '', 'disabled'=>false],
-                        'items' => $archiveCategoryList,
-                        'widgetOptions'=>[
-                            'class'=> Select2::class,
-                            'data'=>$archiveCategoryList,
-                        ],
-                    ],  
-
                     [
                         'attribute'=>'description', 
                         'format'=>'html',

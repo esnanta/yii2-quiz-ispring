@@ -4,6 +4,10 @@ namespace frontend\controllers;
 
 use backend\models\TestResult;
 use common\helper\CacheCloud;
+use common\helper\ReadFilter;
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use QuizReportFactory;
 use QuizResults;
 use RequestParametersParser;
@@ -201,4 +205,47 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    public function actionImport(){
+
+        $inputFileName  = 'https://localhost/application/yii2-cbt-ispring/admin/uploads/65a7fb0e28f7b/archive/_65a8006f3fec7.xlsx';
+        $sheetName = 'Foto';
+        $filterSubset = new ReadFilter();
+
+        $helper = new Sample();
+
+        $inputFileType = IOFactory::identify($inputFileName);
+        $reader = IOFactory::createReader($inputFileType);
+        $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
+        $reader->setLoadSheetsOnly($sheetName);
+        $reader->setReadFilter($filterSubset);
+        $spreadsheet = $reader->load($inputFileName);
+
+        $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+        $sheetData = $spreadsheet->getActiveSheet()->rangeToArray($activeRange, null, true, true, true);
+        $data = $spreadsheet->getActiveSheet();
+
+        $helper->displayGrid($sheetData);
+
+        foreach ($data->getRowIterator() as $row) {
+            $cellIterator = $row->getCellIterator();
+
+            /*
+             * setIterateOnlyExistingCells
+             * Default value is 'false'
+             * FALSE = This loops through all cells, even if a cell value is not set.
+             * TRUE = Loop through cells only when their value is set.
+             */
+            $cellIterator->setIterateOnlyExistingCells(FALSE);
+
+            foreach ($cellIterator as $i=>$cell) {
+                $helper->log('Cell "' . $i.' '.$cell->getValue());
+            }
+        }
+
+
+    }
 }

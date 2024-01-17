@@ -73,24 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions'=>['placeholder'=>''],
                 'format'=>'raw'
             ],
-            [
-                'attribute' => 'created_at',
-                'value'=>'created_at',
-                'enableSorting' => true,
-                'format'=>'date',
-                'options' => [
-                    'format' => Yii::$app->params['dateDisplayFormat'],
-                ],
-                'filterType' => GridView::FILTER_DATE_RANGE,
-                'filterWidgetOptions' => ([
-                    'attribute' => 'date_range',
-                    'presetDropdown' => false,
-                    'convertFormat' => true,
-                    'pluginOptions'=>[
-                        'locale'=>['format' => Yii::$app->params['dateDisplayFormat']],
-                    ]                
-                ])
-            ],
+            
                         
             [
                 'class' => 'common\widgets\ActionColumn',

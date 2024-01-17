@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <div class="card-block g-pa-15 g-pa-30--sm">
             <?= $this->render('_form', [
                 'model' => $model,
+                'officeList' => $officeList
             ]) ?>
     </div>
 </div>

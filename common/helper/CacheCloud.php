@@ -18,6 +18,7 @@ class CacheCloud {
     private $cache;
     private $cacheOfficeId;
     private $cacheOfficeTitle;
+    private $cacheOfficeUniqueId;
     private $cacheStaffId;
     private $cacheStaffTitle;
     private $cacheAuthItemName;
@@ -30,6 +31,7 @@ class CacheCloud {
         $this->userId               = Yii::$app->user->identity->id;
         $this->cacheOfficeId        = 'office_id';
         $this->cacheOfficeTitle     = 'office_title';
+        $this->cacheOfficeUniqueId  = 'office_unique_id';
         $this->cacheStaffId         = 'staff_id';
         $this->cacheStaffTitle      = 'staff_title';
         $this->cacheAuthItemName    = 'auth_item_name';
@@ -55,6 +57,13 @@ class CacheCloud {
         return Yii::$app->cache->getOrSet($this->cacheOfficeTitle.$this->combineCache, function () {
             $model = Staff::find()->where(['user_id' => $this->userId])->one();
             return $model->office->title;
+        });
+    }
+
+    public function getOfficeUniqueId(){
+        return Yii::$app->cache->getOrSet($this->cacheOfficeUniqueId.$this->combineCache, function () {
+            $model = Staff::find()->where(['user_id' => $this->userId])->one();
+            return $model->office->unique_id;
         });
     }
 

@@ -31,11 +31,32 @@ use kartik\widgets\FileInput;
                     'form' => $form,
                     'columns' => 1,
                     'attributes' => [
-                        'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 200]],
                         'date_issued' => [
                             'type' => Form::INPUT_WIDGET,
-                            'widgetClass'=> DateControl::class,
-                            //'format'=>'date',
+                            'widgetClass' => DateControl::class,
+                            'options' => ['type' => DateControl::FORMAT_DATE]],
+                        'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 200]],
+                        'archive_category_id' => [
+                            'type' => Form::INPUT_WIDGET,
+                            'widgetClass' => Select2::class,
+                            'options' => [
+                                'data' => $archiveCategoryList,
+                                'options' => ['placeholder' => '', 'disabled' => false],
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ],
+                        'archive_type' => [
+                            'type' => Form::INPUT_WIDGET,
+                            'widgetClass' => Select2::class,
+                            'options' => [
+                                'data' => $archiveTypeList,
+                                'options' => ['placeholder' => '', 'disabled' => false],
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
                         ],
                         'is_visible' => [
                             'type' => Form::INPUT_WIDGET,
@@ -43,17 +64,6 @@ use kartik\widgets\FileInput;
                             'options' => [
                                 'data' => $isVisibleList,
                                 'options' => ['placeholder' => '', 'disabled' => false],
-                            ],
-                            'pluginOptions' => [
-                                'allowClear' => true
-                            ],
-                        ],
-                        'archive_category_id' => [
-                            'type' => Form::INPUT_WIDGET,
-                            'widgetClass' => Select2::class,
-                            'options' => [
-                                'data' => $archiveCategoryList,
-                                'options' => ['placeholder' => 'Choose Category', 'disabled' => false],
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true
