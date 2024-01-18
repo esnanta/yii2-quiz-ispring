@@ -9,11 +9,11 @@ $flushMenuEnabled       = false;
 $activityMenuEnabled    = false;
 
 if (!Yii::$app->user->isGuest) {
-    $cacheCloud     = new CacheCloud;
-    $officeId       = $cacheCloud->getOfficeId();
-    $staffId        = $cacheCloud->getStaffId();
+
+    $officeId       = CacheCloud::getInstance()->getOfficeId();
+    $staffId        = CacheCloud::getInstance()->getStaffId();
     $staff          = Staff::find()->where(['id'=>$staffId])->one();
-    $authItemName   = $cacheCloud->getAuthItemName();
+    $authItemName   = CacheCloud::getInstance()->getAuthItemName();
     
     $flushMenuEnabled = ($authItemName == Yii::$app->params['userRoleAdmin']) ? true:false;
     

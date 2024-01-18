@@ -42,9 +42,7 @@ class AssessmentController extends Controller
             $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
-
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -97,8 +95,8 @@ class AssessmentController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-assessment')){
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');

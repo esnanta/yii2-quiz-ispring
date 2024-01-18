@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -48,8 +49,7 @@ class OfficeSearch extends Office
 
     public function search($params)
     {
-        $cacheCloud = new \common\helper\CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Office::find()->where(['id'=>$officeId]);
         
         if(Yii::$app->user->identity->isAdmin):

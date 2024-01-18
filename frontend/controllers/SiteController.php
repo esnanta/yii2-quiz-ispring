@@ -90,9 +90,8 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['user/login']);
         } else {
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
 
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             return $this->render('index');
         }
     }

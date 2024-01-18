@@ -6,8 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 if (!Yii::$app->user->isGuest) {
-    $cacheCloud = new CacheCloud;
-    $staffId = $cacheCloud->getStaffId();
+    $staffId = CacheCloud::getInstance()->getStaffId();
     $model = Staff::find()->where(['id' => $staffId])->one();
 }
 ?>

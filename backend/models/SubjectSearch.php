@@ -30,8 +30,7 @@ class SubjectSearch extends Subject
 
     public function search($params)
     {
-        $cacheCloud = new CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Subject::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([

@@ -67,9 +67,8 @@ class StaffController extends Controller
         if (Yii::$app->user->can('index-staff')) {
             $searchModel = new StaffSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -105,9 +104,8 @@ class StaffController extends Controller
     {
         if (Yii::$app->user->can('view-staff')) {
             $model = $this->findModel($id);
-            
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -147,9 +145,8 @@ class StaffController extends Controller
     {
         if (Yii::$app->user->can('create-staff')) {
             $model = new Staff;
-            
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -196,8 +193,8 @@ class StaffController extends Controller
     
         if (Yii::$app->user->can('update-staff')) {
             try {
-                $cacheCloud = new CacheCloud();
-                $officeId   = $cacheCloud->getOfficeId();
+
+                $officeId   = CacheCloud::getInstance()->getOfficeId();
                 $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');

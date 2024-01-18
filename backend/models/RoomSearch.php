@@ -30,8 +30,7 @@ class RoomSearch extends Room
 
     public function search($params)
     {
-        $cacheCloud = new CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Room::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([

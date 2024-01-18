@@ -42,10 +42,8 @@ class EmploymentController extends Controller
         if (Yii::$app->user->can('index-employment')) {
             $searchModel = new EmploymentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
 
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -98,8 +96,7 @@ class EmploymentController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-employment')) {
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');

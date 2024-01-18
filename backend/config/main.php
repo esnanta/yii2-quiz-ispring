@@ -54,15 +54,6 @@ return [
                 ],
                 'basePath' => '@backend/web/themes-admin-unify',
                 'baseUrl' => '@web/web/themes-admin-unify',
-                
-//                [
-//                    '@dektrium/user/views' => '@app/web/themes-modernize/views/dektrium/user',
-//                    '@dektrium/rbac/views' => '@app/web/themes-modernize/views/dektrium/rbac',
-//                    '@app/views' => '@app/web/themes-modernize/views',
-//                ],
-//                'basePath' => '@app/web/themes-modernize',
-//                'baseUrl' => '@web/web/themes-modernize',
-                
             ],
         ],
     ],              

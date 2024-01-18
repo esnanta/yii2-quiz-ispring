@@ -43,9 +43,7 @@ class ArchiveCategoryController extends Controller
             $searchModel = new ArchiveCategorySearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
-
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -96,8 +94,8 @@ class ArchiveCategoryController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-archivecategory')) {
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');

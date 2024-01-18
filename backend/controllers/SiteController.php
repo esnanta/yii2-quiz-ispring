@@ -72,19 +72,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        
-        $cacheCloud     = new CacheCloud();
-        $authItemName   = $cacheCloud->getAuthItemName();
+        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
 
         if ($authItemName == Yii::$app->params['userRoleReguler']) :
             $this->redirect(str_replace('admin/site', '', 'site/index'));
         endif;
         
         if (!Yii::$app->user->isGuest) {
-            $cacheCloud     = new CacheCloud;
-            $officeId       = $cacheCloud->getOfficeId();
-            $staffId        = $cacheCloud->getStaffId();
-            $authItemName   = $cacheCloud->getAuthItemName();
+            $officeId       = CacheCloud::getInstance()->getOfficeId();
+            $staffId        = CacheCloud::getInstance()->getStaffId();
+            $authItemName   = CacheCloud::getInstance()->getAuthItemName();
 
             $office     = Office::find()->where(['id' => $officeId])->one();
             $staff      = Staff::find()->where(['id' => $staffId])->one();
@@ -104,8 +101,7 @@ class SiteController extends Controller
     public function actionFlush()
     {
         if (Yii::$app->user->identity->isAdmin) {
-            $cacheCloud = new CacheCloud();
-            $cacheCloud->Flush();
+            CacheCloud::getInstance()->Flush();
             $this->redirect('index');
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -183,10 +179,8 @@ class SiteController extends Controller
     
     public function actionCreateReguler()
     {
-        
-        $cacheCloud     = new CacheCloud;
-        $officeId   = $cacheCloud->getOfficeId();
-        $authItemName   = $cacheCloud->getAuthItemName();
+        $officeId   = CacheCloud::getInstance()->getOfficeId();
+        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
         
         $canCreateReguler = false;
         if ($authItemName == Yii::$app->params['userRoleAdmin'] ||
@@ -316,9 +310,9 @@ class SiteController extends Controller
     
     public function testCreateTransaction()
     {
-        $cacheCloud = new CacheCloud();
-        $officeId   = $cacheCloud->getOfficeId();
-        $staffId    = $cacheCloud->getStaffId();
+
+        $officeId   = CacheCloud::getInstance()->getOfficeId();
+        $staffId    = CacheCloud::getInstance()->getStaffId();
         for ($i=0; $i<50; $i++) {
             $dateIssued = date('Y-m-d', strtotime('+'.mt_rand(0, 30).' days'));
 

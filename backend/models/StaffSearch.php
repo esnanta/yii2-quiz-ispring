@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,8 +30,7 @@ class StaffSearch extends Staff
 
     public function search($params)
     {
-        $cacheCloud = new \common\helper\CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Staff::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([

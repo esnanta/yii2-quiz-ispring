@@ -30,8 +30,7 @@ class EmploymentSearch extends Employment
 
     public function search($params)
     {
-        $cacheCloud = new CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Employment::find()->where(['office_id'=>$officeId]);
         
         $dataProvider = new ActiveDataProvider([

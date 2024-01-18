@@ -30,8 +30,7 @@ class AssessmentSearch extends Assessment
 
     public function search($params)
     {
-        $cacheCloud = new CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Assessment::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([

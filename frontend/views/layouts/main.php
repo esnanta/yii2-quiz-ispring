@@ -76,10 +76,9 @@ AppBootstrap4Asset::register($this);
         //$loginText = str_replace('user/user/', '', Html::a('Login', ['admin/user/login'], ['class' => '']));
         echo Html::tag('div',Html::a('Login',['user/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
     } else {
-        
-        $cacheCloud = new CacheCloud();
-        $officeId   = $cacheCloud->getOfficeId();
-        $authItemName   = $cacheCloud->getAuthItemName();
+
+        $officeId   = CacheCloud::getInstance()->getOfficeId();
+        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
 
         $dashboardMenuVisibility = false;
         if($authItemName == Yii::$app->params['userRoleAdmin'] ||

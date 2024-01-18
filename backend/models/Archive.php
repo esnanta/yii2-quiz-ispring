@@ -263,7 +263,7 @@ class Archive extends BaseArchive
 
     private function getPath() : string {
         $cacheCloud = new CacheCloud();
-        $officeUniqueId = $cacheCloud->getOfficeUniqueId();
+        $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
         return '/uploads/archive/'.$officeUniqueId;
     }
 }

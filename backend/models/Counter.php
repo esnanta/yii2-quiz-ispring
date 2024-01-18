@@ -36,13 +36,9 @@ class Counter extends BaseCounter
     }
     
     public static function getDataNumber($_code){
-        $counter    =0;
         $code       = $_code;
-        
-        $cacheCloud = new CacheCloud();
-        $officeId   = $cacheCloud->getOfficeId();
-            
-        $model  = Counter::find()->where(['title' => $code,'office_id'=>$officeId])->one();
+        $officeId   = CacheCloud::getInstance()->getOfficeId();
+        $model      = Counter::find()->where(['title' => $code,'office_id'=>$officeId])->one();
 
         if($model==null){
             $newCounter = new Counter();

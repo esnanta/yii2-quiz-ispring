@@ -42,8 +42,7 @@ class RoomController extends Controller
             $searchModel = new RoomSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -97,8 +96,8 @@ class RoomController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-room')){
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');

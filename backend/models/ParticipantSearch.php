@@ -30,8 +30,7 @@ class ParticipantSearch extends Participant
 
     public function search($params)
     {
-        $cacheCloud = new CacheCloud();
-        $officeId = $cacheCloud->getOfficeId();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Participant::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([

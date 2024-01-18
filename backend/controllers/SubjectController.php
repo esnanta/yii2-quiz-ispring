@@ -42,8 +42,7 @@ class SubjectController extends Controller
             $searchModel = new SubjectSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -97,8 +96,8 @@ class SubjectController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-subject')){
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');

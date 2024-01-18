@@ -13,9 +13,10 @@ use backend\models\Staff;
  */
 use Yii;
 
+//SINGLETON CLASS
 class CacheCloud {
 
-    private $cache;
+    private static $instance = null;
     private $cacheOfficeId;
     private $cacheOfficeTitle;
     private $cacheOfficeUniqueId;
@@ -38,6 +39,13 @@ class CacheCloud {
         $this->combineCache         = Yii::$app->user->identity->id.Yii::$app->user->identity->username;
     }
 
+    public static function getInstance(): ?CacheCloud
+    {
+        if (self::$instance === null) {
+            self::$instance = new CacheCloud();
+        }
+        return self::$instance;
+    }
 
     public function Flush(){
         Yii::$app->cache->flush();

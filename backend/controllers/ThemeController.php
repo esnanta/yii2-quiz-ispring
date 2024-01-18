@@ -68,8 +68,7 @@ class ThemeController extends Controller
             $searchModel = new ThemeSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $cacheCloud     = new CacheCloud();
-            $officeId       = $cacheCloud->getOfficeId();
+            $officeId       = CacheCloud::getInstance()->getOfficeId();
             $officeList     = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -109,8 +108,7 @@ class ThemeController extends Controller
         if (Yii::$app->user->can('view-theme')) {
             $model = $this->findModel($id);
 
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -168,8 +166,7 @@ class ThemeController extends Controller
         
         
         if (Yii::$app->user->can('create-theme')) {
-            $cacheCloud = new CacheCloud();
-            $officeId   = $cacheCloud->getOfficeId();
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');
@@ -211,8 +208,7 @@ class ThemeController extends Controller
             try {
                 $model = $this->findModel($id);
 
-                $cacheCloud = new CacheCloud();
-                $officeId   = $cacheCloud->getOfficeId();
+                $officeId   = CacheCloud::getInstance()->getOfficeId();
                 $officeList = ArrayHelper::map(Office::find()
                     ->where(['id' => $officeId])
                     ->asArray()->all(), 'id', 'title');

@@ -20,10 +20,9 @@ use common\helper\CacheCloud;
 
 <?php
     if (!Yii::$app->user->isGuest) {
-        
-        $cacheCloud     = new CacheCloud;
-        $authItemName   = $cacheCloud->getAuthItemName();
-        $officeId       = $cacheCloud->getOfficeId();
+
+        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
+        $officeId       = CacheCloud::getInstance()->getOfficeId();
         
         $officeMenuVisibility = false;
         if($authItemName == Yii::$app->params['userRoleAdmin'] ||
