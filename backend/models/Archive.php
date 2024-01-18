@@ -56,8 +56,6 @@ class Archive extends BaseArchive
     
     
     public function beforeSave($insert) {
-
-
         if ($this->isNewRecord) {
             $this->download_counter     = 0;
             $this->view_counter         = 0;
@@ -262,7 +260,6 @@ class Archive extends BaseArchive
     }
 
     private function getPath() : string {
-        $cacheCloud = new CacheCloud();
         $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
         return '/uploads/archive/'.$officeUniqueId;
     }

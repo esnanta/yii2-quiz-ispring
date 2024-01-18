@@ -7,12 +7,12 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use kartik\daterange\DateRangeBehavior;
-use backend\models\Room;
+use backend\models\Group;
 
 /**
- * RoomSearch represents the model behind the search form about `backend\models\Room`.
+ * GroupSearch represents the model behind the search form about `backend\models\Group`.
  */
-class RoomSearch extends Room
+class GroupSearch extends Group
 {
     public function rules()
     {
@@ -31,7 +31,7 @@ class RoomSearch extends Room
     public function search($params)
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
-        $query = Room::find()->where(['office_id'=>$officeId])
+        $query = Group::find()->where(['office_id'=>$officeId])
             ->orderBy('sequence ASC');
 
         $dataProvider = new ActiveDataProvider([

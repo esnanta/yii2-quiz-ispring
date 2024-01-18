@@ -8,15 +8,27 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "tx_test_result".
+ * This is the base model class for table "tx_group".
  *
  * @property integer $id
  * @property integer $office_id
- * @property string $test1
- * @property string $test2
- * @property string $test3
+ * @property string $title
+ * @property integer $sequence
+ * @property string $description
+ * @property string $created_at
+ * @property string $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $is_deleted
+ * @property string $deleted_at
+ * @property integer $deleted_by
+ * @property integer $verlock
+ * @property string $uuid
+ *
+ * @property \backend\models\Office $office
+ * @property \backend\models\Participant[] $participants
  */
-class TestResult extends \yii\db\ActiveRecord
+class Group extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -42,7 +54,8 @@ class TestResult extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            ''
+            'office',
+            'participants'
         ];
     }
 
@@ -52,8 +65,12 @@ class TestResult extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id'], 'integer'],
-            [['test1', 'test2', 'test3'], 'string'],
+            [['office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['description'], 'string'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title'], 'string', 'max' => 100],
+            [['sequence'], 'string', 'max' => 4],
+            [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
@@ -64,7 +81,7 @@ class TestResult extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tx_test_result';
+        return 'tx_group';
     }
 
     /**
@@ -86,12 +103,31 @@ class TestResult extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
-            'test1' => Yii::t('app', 'Test1'),
-            'test2' => Yii::t('app', 'Test2'),
-            'test3' => Yii::t('app', 'Test3'),
+            'title' => Yii::t('app', 'Title'),
+            'sequence' => Yii::t('app', 'Sequence'),
+            'description' => Yii::t('app', 'Description'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
+            'verlock' => Yii::t('app', 'Verlock'),
+            'uuid' => Yii::t('app', 'Uuid'),
         ];
     }
-
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffice()
+    {
+        return $this->hasOne(\backend\models\Office::className(), ['id' => 'office_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParticipants()
+    {
+        return $this->hasMany(\backend\models\Participant::className(), ['group_id' => 'id']);
+    }
+    
     /**
      * @inheritdoc
      * @return array mixed

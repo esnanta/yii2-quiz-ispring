@@ -3,47 +3,77 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/**
- * @var yii\web\View $this
- * @var backend\models\AssessmentSearch $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $this yii\web\View */
+/* @var $model AssessmentSearch */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="assessment-search">
+<div class="form-assessment-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'office_id') ?>
+    <?= $form->field($model, 'office_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Office::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'test1') ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title']) ?>
 
-    <?= $form->field($model, 'test2') ?>
+    <?= $form->field($model, 'subject_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Subject::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx subject')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'test3') ?>
+    <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Room::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx room')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-    <?php // echo $form->field($model, 'created_at') ?>
+    <?php /* echo $form->field($model, 'date_start')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+        'saveFormat' => 'php:Y-m-d H:i:s',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => Yii::t('app', 'Choose Date Start'),
+                'autoclose' => true,
+            ]
+        ],
+    ]); */ ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
+    <?php /* echo $form->field($model, 'date_end')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+        'saveFormat' => 'php:Y-m-d H:i:s',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => Yii::t('app', 'Choose Date End'),
+                'autoclose' => true,
+            ]
+        ],
+    ]); */ ?>
 
-    <?php // echo $form->field($model, 'created_by') ?>
+    <?php /* echo $form->field($model, 'description')->textarea(['rows' => 6]) */ ?>
 
-    <?php // echo $form->field($model, 'updated_by') ?>
+    <?php /* echo $form->field($model, 'is_deleted')->textInput(['placeholder' => 'Is Deleted']) */ ?>
 
-    <?php // echo $form->field($model, 'verlock') ?>
+    <?php /* echo $form->field($model, 'verlock', ['template' => '{input}'])->textInput(['style' => 'display:none']); */ ?>
 
-    <?php // echo $form->field($model, 'is_deleted') ?>
-
-    <?php // echo $form->field($model, 'deleted_at') ?>
-
-    <?php // echo $form->field($model, 'deleted_by') ?>
-
-    <?php // echo $form->field($model, 'uuid') ?>
+    <?php /* echo $form->field($model, 'uuid')->textInput(['maxlength' => true, 'placeholder' => 'Uuid']) */ ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

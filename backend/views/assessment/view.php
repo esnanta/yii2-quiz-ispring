@@ -1,99 +1,180 @@
 <?php
 
-use kartik\select2\Select2;
 use yii\helpers\Html;
-use kartik\detail\DetailView;
-use kartik\datecontrol\DateControl;
+use yii\widgets\DetailView;
+use kartik\grid\GridView;
 
-/**
- * @var yii\web\View $this
- * @var backend\models\Assessment $model
- */
+/* @var $this yii\web\View */
+/* @var $model backend\models\Assessment */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessments'), 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']);
-
 ?>
 <div class="assessment-view">
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'condensed' => false,
-        'hover' => true,
-        'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
-        'panel' => [
-            'heading' => $this->title.$create,
-            'type' => DetailView::TYPE_DEFAULT,
-        ],
-        'attributes' => [
-            'id',
-            [
-                'attribute'=>'office_id',
-                'value'=>($model->office_id!=null) ? $model->office->title:'',
-                'type'=>DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'office_id', 'prompt' => '', 'disabled'=> (Yii::$app->user->identity->isAdmin) ? false : true],
-                'items' => $officeList,
-                'widgetOptions'=>[
-                    'class'=> Select2::class,
-                    'data'=>$officeList,
+    <div class="row">
+        <div class="col-sm-9">
+            <h2><?= Yii::t('app', 'Assessment').' '. Html::encode($this->title) ?></h2>
+        </div>
+        <div class="col-sm-3" style="margin-top: 15px">
+            
+            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
                 ],
-            ],
-            'test1:ntext',
-            'test2:ntext',
-            'test3:ntext',
-            [
-                'columns' => [
-                    [
-                        'attribute' => 'created_at',
-                        'format' => [
-                            'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                                ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                                : 'd-m-Y H:i:s A'
-                        ],
-                        'type'=>DetailView::INPUT_HIDDEN,
-                        'widgetOptions' => [
-                            'class' => DateControl::class,
-                            'type' => DateControl::FORMAT_DATETIME
-                        ]
-                    ],
-                    [
-                        'attribute' => 'updated_at',
-                        'format' => [
-                            'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                                ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                                : 'd-m-Y H:i:s A'
-                        ],
-                        'type'=>DetailView::INPUT_HIDDEN,
-                        'widgetOptions' => [
-                            'class' => DateControl::class,
-                            'type' => DateControl::FORMAT_DATETIME
-                        ]
-                    ],
-                ],
-            ],
-            [
-                'columns' => [
-                    [
-                        'attribute'=>'created_by',
-                        'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
-                        'type'=>DetailView::INPUT_HIDDEN,
-                        'valueColOptions'=>['style'=>'width:30%']
-                    ],
-                    [
-                        'attribute'=>'updated_by',
-                        'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
-                        'type'=>DetailView::INPUT_HIDDEN,
-                        'valueColOptions'=>['style'=>'width:30%']
-                    ],
-                ],
-            ],
-        ],
-        'deleteOptions' => [
-            'url' => ['delete', 'id' => $model->id],
-        ],
-        'enableEditMode' => Yii::$app->user->can('update-assessment'),
-    ]) ?>
+            ])
+            ?>
+        </div>
+    </div>
 
+    <div class="row">
+<?php 
+    $gridColumn = [
+        ['attribute' => 'id', 'visible' => false],
+        [
+            'attribute' => 'office.title',
+            'label' => Yii::t('app', 'Office'),
+        ],
+        'title',
+        [
+            'attribute' => 'subject.title',
+            'label' => Yii::t('app', 'Subject'),
+        ],
+        [
+            'attribute' => 'room.title',
+            'label' => Yii::t('app', 'Room'),
+        ],
+        'date_start',
+        'date_end',
+        'description:ntext',
+        'is_deleted',
+        ['attribute' => 'verlock', 'visible' => false],
+        'uuid',
+    ];
+    echo DetailView::widget([
+        'model' => $model,
+        'attributes' => $gridColumn
+    ]);
+?>
+    </div>
+    <div class="row">
+        <h4>Office<?= ' '. Html::encode($this->title) ?></h4>
+    </div>
+    <?php 
+    $gridColumnOffice = [
+        ['attribute' => 'id', 'visible' => false],
+        'user_id',
+        'unique_id',
+        'title',
+        'phone_number',
+        'fax_number',
+        'email',
+        'web',
+        'address',
+        'latitude',
+        'longitude',
+        'facebook',
+        'google_plus',
+        'instagram',
+        'twitter',
+        'description:ntext',
+        'is_deleted',
+        ['attribute' => 'verlock', 'visible' => false],
+        'uuid',
+    ];
+    echo DetailView::widget([
+        'model' => $model->office,
+        'attributes' => $gridColumnOffice    ]);
+    ?>
+    <div class="row">
+        <h4>Room<?= ' '. Html::encode($this->title) ?></h4>
+    </div>
+    <?php 
+    $gridColumnRoom = [
+        ['attribute' => 'id', 'visible' => false],
+        [
+            'attribute' => 'office.title',
+            'label' => Yii::t('app', 'Office'),
+        ],
+        'title',
+        'sequence',
+        'description:ntext',
+        'is_deleted',
+        ['attribute' => 'verlock', 'visible' => false],
+        'uuid',
+    ];
+    echo DetailView::widget([
+        'model' => $model->room,
+        'attributes' => $gridColumnRoom    ]);
+    ?>
+    <div class="row">
+        <h4>Subject<?= ' '. Html::encode($this->title) ?></h4>
+    </div>
+    <?php 
+    $gridColumnSubject = [
+        ['attribute' => 'id', 'visible' => false],
+        [
+            'attribute' => 'office.title',
+            'label' => Yii::t('app', 'Office'),
+        ],
+        'title',
+        'sequence',
+        'description:ntext',
+        'is_deleted',
+        ['attribute' => 'verlock', 'visible' => false],
+        'uuid',
+    ];
+    echo DetailView::widget([
+        'model' => $model->subject,
+        'attributes' => $gridColumnSubject    ]);
+    ?>
+    
+    <div class="row">
+<?php
+if($providerAssessmentDetail->totalCount){
+    $gridColumnAssessmentDetail = [
+        ['class' => 'yii\grid\SerialColumn'],
+            ['attribute' => 'id', 'visible' => false],
+            [
+                'attribute' => 'office.title',
+                'label' => Yii::t('app', 'Office')
+            ],
+                        [
+                'attribute' => 'participant.title',
+                'label' => Yii::t('app', 'Participant')
+            ],
+            'app_version',
+            'earned_points',
+            'passing_score',
+            'passing_score_percent',
+            'gained_score',
+            'quiz_title',
+            'quiz_type',
+            'username',
+            'time_limit:datetime',
+            'used_time:datetime',
+            'time_spent:datetime',
+            'is_deleted',
+            ['attribute' => 'verlock', 'visible' => false],
+            'uuid',
+    ];
+    echo Gridview::widget([
+        'dataProvider' => $providerAssessmentDetail,
+        'pjax' => true,
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-tx-assessment-detail']],
+        'panel' => [
+            'type' => GridView::TYPE_PRIMARY,
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode(Yii::t('app', 'Assessment Detail')),
+        ],
+        'export' => false,
+        'columns' => $gridColumnAssessmentDetail
+    ]);
+}
+?>
+
+    </div>
 </div>

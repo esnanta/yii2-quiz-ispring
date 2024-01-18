@@ -30,14 +30,12 @@ class Office extends BaseOffice
 
     public function beforeSave($insert): bool
     {
-
         if ($this->isNewRecord) {
             $this->unique_id    = uniqid();
         }
         elseif ($this->unique_id == null){
             $this->unique_id    = uniqid();
         }
-
         return parent::beforeSave($insert);
     }
 	

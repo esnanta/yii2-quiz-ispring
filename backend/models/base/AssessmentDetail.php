@@ -8,16 +8,23 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "tx_assessment".
+ * This is the base model class for table "tx_assessment_detail".
  *
  * @property integer $id
  * @property integer $office_id
- * @property string $title
- * @property integer $subject_id
- * @property integer $room_id
- * @property string $date_start
- * @property string $date_end
- * @property string $description
+ * @property integer $assessment_id
+ * @property integer $participant_id
+ * @property string $app_version
+ * @property string $earned_points
+ * @property string $passing_score
+ * @property string $passing_score_percent
+ * @property string $gained_score
+ * @property string $quiz_title
+ * @property string $quiz_type
+ * @property string $username
+ * @property integer $time_limit
+ * @property integer $used_time
+ * @property integer $time_spent
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -28,12 +35,11 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \backend\models\Assessment $assessment
  * @property \backend\models\Office $office
- * @property \backend\models\Room $room
- * @property \backend\models\Subject $subject
- * @property \backend\models\AssessmentDetail[] $assessmentDetails
+ * @property \backend\models\Participant $participant
  */
-class Assessment extends \yii\db\ActiveRecord
+class AssessmentDetail extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -59,10 +65,9 @@ class Assessment extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'assessment',
             'office',
-            'room',
-            'subject',
-            'assessmentDetails'
+            'participant'
         ];
     }
 
@@ -72,10 +77,10 @@ class Assessment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'subject_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['description'], 'string'],
-            [['title'], 'string', 'max' => 15],
+            [['office_id', 'assessment_id', 'participant_id', 'time_limit', 'used_time', 'time_spent', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['app_version', 'quiz_title', 'quiz_type', 'username'], 'string', 'max' => 50],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -87,7 +92,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tx_assessment';
+        return 'tx_assessment_detail';
     }
 
     /**
@@ -109,18 +114,33 @@ class Assessment extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
-            'title' => Yii::t('app', 'Title'),
-            'subject_id' => Yii::t('app', 'Subject ID'),
-            'room_id' => Yii::t('app', 'Room ID'),
-            'date_start' => Yii::t('app', 'Date Start'),
-            'date_end' => Yii::t('app', 'Date End'),
-            'description' => Yii::t('app', 'Description'),
+            'assessment_id' => Yii::t('app', 'Assessment ID'),
+            'participant_id' => Yii::t('app', 'Participant ID'),
+            'app_version' => Yii::t('app', 'App Version'),
+            'earned_points' => Yii::t('app', 'Earned Points'),
+            'passing_score' => Yii::t('app', 'Passing Score'),
+            'passing_score_percent' => Yii::t('app', 'Passing Score Percent'),
+            'gained_score' => Yii::t('app', 'Gained Score'),
+            'quiz_title' => Yii::t('app', 'Quiz Title'),
+            'quiz_type' => Yii::t('app', 'Quiz Type'),
+            'username' => Yii::t('app', 'Username'),
+            'time_limit' => Yii::t('app', 'Time Limit'),
+            'used_time' => Yii::t('app', 'Used Time'),
+            'time_spent' => Yii::t('app', 'Time Spent'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssessment()
+    {
+        return $this->hasOne(\backend\models\Assessment::className(), ['id' => 'assessment_id']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -132,25 +152,9 @@ class Assessment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoom()
+    public function getParticipant()
     {
-        return $this->hasOne(\backend\models\Room::className(), ['id' => 'room_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSubject()
-    {
-        return $this->hasOne(\backend\models\Subject::className(), ['id' => 'subject_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAssessmentDetails()
-    {
-        return $this->hasMany(\backend\models\AssessmentDetail::className(), ['assessment_id' => 'id']);
+        return $this->hasOne(\backend\models\Participant::className(), ['id' => 'participant_id']);
     }
     
     /**

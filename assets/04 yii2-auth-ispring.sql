@@ -8,7 +8,8 @@
   01 Participant
   02 Room
   03 Subject
-  04 assessment
+  04 Group
+  05 assessment
 
   xx Ispring Master
   yy Ispring Transaction
@@ -45,6 +46,15 @@ values
     ('view-subject',2,'View Subject',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('delete-subject',2,'Delete Subject',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('report-subject',2,'Report Subject',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
+    ('index-group',2,'Index Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-group',2,'Create Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-group',2,'Update Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-group',2,'View Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-group',2,'Delete Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-group',2,'Report Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values

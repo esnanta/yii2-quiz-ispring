@@ -1,59 +1,112 @@
 <?php
 
 use yii\helpers\Html;
-use kartik\widgets\ActiveForm;
-use kartik\builder\Form;
-use kartik\datecontrol\DateControl;
+use yii\widgets\ActiveForm;
 
-/**
- * @var yii\web\View $this
- * @var backend\models\Assessment $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $this yii\web\View */
+/* @var $model backend\models\Assessment */
+/* @var $form yii\widgets\ActiveForm */
+
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+    'viewParams' => [
+        'class' => 'AssessmentDetail', 
+        'relID' => 'assessment-detail', 
+        'value' => \yii\helpers\Json::encode($model->assessmentDetails),
+        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
+    ]
+]);
 ?>
 
 <div class="assessment-form">
 
-    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); echo Form::widget([
+    <?php $form = ActiveForm::begin(); ?>
 
-        'model' => $model,
-        'form' => $form,
-        'columns' => 1,
-        'attributes' => [
+    <?= $form->errorSummary($model); ?>
 
-            'office_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Office ID...']],
+    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-            'created_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter created_by...']],
+    <?= $form->field($model, 'office_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Office::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-            'updated_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter updated_by...']],
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title']) ?>
 
-            'verlock' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Verlock...']],
+    <?= $form->field($model, 'subject_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Subject::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx subject')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-            'is_deleted' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Deleted...']],
+    <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Room::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx room')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-            'deleted_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter deleted_by...']],
+    <?= $form->field($model, 'date_start')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+        'saveFormat' => 'php:Y-m-d H:i:s',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => Yii::t('app', 'Choose Date Start'),
+                'autoclose' => true,
+            ]
+        ],
+    ]); ?>
 
-            'test1' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Test1...','rows' => 6]],
+    <?= $form->field($model, 'date_end')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+        'saveFormat' => 'php:Y-m-d H:i:s',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => Yii::t('app', 'Choose Date End'),
+                'autoclose' => true,
+            ]
+        ],
+    ]); ?>
 
-            'test2' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Test2...','rows' => 6]],
+    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-            'test3' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Test3...','rows' => 6]],
+    <?= $form->field($model, 'is_deleted')->textInput(['placeholder' => 'Is Deleted']) ?>
 
-            'created_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
+    <?= $form->field($model, 'verlock', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-            'updated_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
+    <?= $form->field($model, 'uuid')->textInput(['maxlength' => true, 'placeholder' => 'Uuid']) ?>
 
-            'deleted_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'uuid' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Uuid...', 'maxlength' => 36]],
-
-        ]
-
+    <?php
+    $forms = [
+        [
+            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'AssessmentDetail')),
+            'content' => $this->render('_formAssessmentDetail', [
+                'row' => \yii\helpers\ArrayHelper::toArray($model->assessmentDetails),
+            ]),
+        ],
+    ];
+    echo kartik\tabs\TabsX::widget([
+        'items' => $forms,
+        'position' => kartik\tabs\TabsX::POS_ABOVE,
+        'encodeLabels' => false,
+        'pluginOptions' => [
+            'bordered' => true,
+            'sideways' => true,
+            'enableCache' => false,
+        ],
     ]);
+    ?>
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
 
-    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
-        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-    );
-    ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

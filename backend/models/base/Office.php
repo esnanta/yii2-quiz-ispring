@@ -39,8 +39,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \backend\models\Archive[] $archives
  * @property \backend\models\ArchiveCategory[] $archiveCategories
  * @property \backend\models\Assessment[] $assessments
+ * @property \backend\models\AssessmentDetail[] $assessmentDetails
  * @property \backend\models\Counter[] $counters
  * @property \backend\models\Employment[] $employments
+ * @property \backend\models\Group[] $groups
  * @property \backend\models\User $user
  * @property \backend\models\Participant[] $participants
  * @property \backend\models\Room[] $rooms
@@ -77,8 +79,10 @@ class Office extends \yii\db\ActiveRecord
             'archives',
             'archiveCategories',
             'assessments',
+            'assessmentDetails',
             'counters',
             'employments',
+            'groups',
             'user',
             'participants',
             'rooms',
@@ -179,6 +183,14 @@ class Office extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAssessmentDetails()
+    {
+        return $this->hasMany(\backend\models\AssessmentDetail::className(), ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCounters()
     {
         return $this->hasMany(\backend\models\Counter::className(), ['office_id' => 'id']);
@@ -190,6 +202,14 @@ class Office extends \yii\db\ActiveRecord
     public function getEmployments()
     {
         return $this->hasMany(\backend\models\Employment::className(), ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups()
+    {
+        return $this->hasMany(\backend\models\Group::className(), ['office_id' => 'id']);
     }
         
     /**

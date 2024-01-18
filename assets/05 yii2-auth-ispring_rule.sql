@@ -13,6 +13,7 @@
   01 Participant
   02 Room
   03 Subject
+  04 Group
  */
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
@@ -42,7 +43,14 @@ values
     ('delete-ispring-master','delete-subject'),
     ('report-ispring-master','report-subject');
 
-
+insert  into `tx_auth_item_child`(`parent`,`child`)
+values
+    ('index-ispring-master','index-group'),
+    ('create-ispring-master','create-group'),
+    ('update-ispring-master','update-group'),
+    ('view-ispring-master','view-group'),
+    ('delete-ispring-master','delete-group'),
+    ('report-ispring-master','report-group');
 /**
   MENU FOR ISPRING TRANSACTION
   01 Assessment

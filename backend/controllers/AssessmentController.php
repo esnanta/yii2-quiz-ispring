@@ -2,12 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\Office;
-use common\helper\CacheCloud;
 use Yii;
 use backend\models\Assessment;
-use backend\models\AssessmentSearch;
-use yii\helpers\ArrayHelper;
+use AssessmentSearch;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -39,18 +36,12 @@ class AssessmentController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->can('index-assessment')){
-            $searchModel = new AssessmentSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $searchModel = new AssessmentSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
-                'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList'=>$officeList
+                'dataProvider' => $dataProvider,
             ]);
         }
         else{
@@ -68,18 +59,13 @@ class AssessmentController extends Controller
     {
         if(Yii::$app->user->can('view-assessment')){
             $model = $this->findModel($id);
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('view', [
-                    'model' => $model,
-                    'officeList' => $officeList
-                ]);
-            }
+            $providerAssessmentDetail = new \yii\data\ArrayDataProvider([
+                'allModels' => $model->assessmentDetails,
+            ]);
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'providerAssessmentDetail' => $providerAssessmentDetail,
+            ]);
         }
         else{
             MessageHelper::getFlashAccessDenied();
@@ -95,28 +81,14 @@ class AssessmentController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-assessment')){
+            $model = new Assessment();
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $model = new Assessment;
-            $model->office_id = $officeId;
-
-            try {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } 
-                else {
-                    return $this->render('create', [
-                        'model' => $model,
-                        'officeList' => $officeList
-                    ]);
-                }
-            }
-            catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+            if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
         }
         else{
@@ -134,23 +106,14 @@ class AssessmentController extends Controller
     public function actionUpdate($id)
     {
         if(Yii::$app->user->can('update-assessment')){
-            try {
-                $model = $this->findModel($id);
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+            $model = $this->findModel($id);
 
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('update', [
-                        'model' => $model,
-                        'officeList' => $officeList
-                    ]);
-                }
-            }
-            catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+            if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
             }
         }
         else{
@@ -168,7 +131,7 @@ class AssessmentController extends Controller
     public function actionDelete($id)
     {
         if(Yii::$app->user->can('delete-assessment')){
-            $this->findModel($id)->delete();
+            $this->findModel($id)->deleteWithRelated();
 
             return $this->redirect(['index']);
         }
@@ -178,6 +141,7 @@ class AssessmentController extends Controller
         }
     }
 
+    
     /**
      * Finds the Assessment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -190,7 +154,30 @@ class AssessmentController extends Controller
         if (($model = Assessment::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for AssessmentDetail
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddAssessmentDetail()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('AssessmentDetail');
+            if (!empty($row)) {
+                $row = array_values($row);
+            }
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formAssessmentDetail', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }

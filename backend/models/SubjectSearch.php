@@ -31,7 +31,8 @@ class SubjectSearch extends Subject
     public function search($params)
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
-        $query = Subject::find()->where(['office_id'=>$officeId]);
+        $query = Subject::find()->where(['office_id'=>$officeId])
+            ->orderBy('sequence ASC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
