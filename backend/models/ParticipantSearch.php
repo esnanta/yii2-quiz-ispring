@@ -17,8 +17,8 @@ class ParticipantSearch extends Participant
     public function rules()
     {
         return [
-            [['id', 'office_id'], 'integer'],
-            [['title', 'participant_name', 'password'], 'safe'],
+            [['id', 'office_id', 'group_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'identity_number', 'username', 'password', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -44,11 +44,22 @@ class ParticipantSearch extends Participant
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
+            'group_id' => $this->group_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'is_deleted' => $this->is_deleted,
+            'deleted_at' => $this->deleted_at,
+            'deleted_by' => $this->deleted_by,
+            'verlock' => $this->verlock,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'participant_name', $this->participant_name])
-            ->andFilterWhere(['like', 'password', $this->password]);
+            ->andFilterWhere(['like', 'identity_number', $this->identity_number])
+            ->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;
     }

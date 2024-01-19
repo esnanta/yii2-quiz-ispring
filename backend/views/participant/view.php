@@ -28,7 +28,6 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
             'type' => DetailView::TYPE_DEFAULT,
         ],
         'attributes' => [
-            'id',
             [
                 'attribute'=>'office_id',
                 'value'=>($model->office_id!=null) ? $model->office->title:'',
@@ -37,17 +36,75 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
                 'items' => $officeList,
                 'widgetOptions'=>[
                     'class'=> Select2::class,
-                    'data' => $officeList,
+                    'data'=>$officeList,
+                ],
+            ],
+            [
+                'attribute'=>'group_id',
+                'value'=>($model->group_id!=null) ? $model->group->title:'',
+                'type'=>DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'group_id', 'prompt' => '', 'disabled'=> false],
+                'items' => $groupList,
+                'widgetOptions'=>[
+                    'class'=> Select2::class,
+                    'data'=>$groupList,
                 ],
             ],
             'title',
-            'participant_name',
+            'identity_number',
+            'username',
             'password',
+            [
+                'columns' => [
+                    [
+                        'attribute' => 'created_at',
+                        'format' => [
+                            'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                                ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                                : 'd-m-Y H:i:s A'
+                        ],
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'widgetOptions' => [
+                            'class' => DateControl::class,
+                            'type' => DateControl::FORMAT_DATETIME
+                        ]
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'format' => [
+                            'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                                ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                                : 'd-m-Y H:i:s A'
+                        ],
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'widgetOptions' => [
+                            'class' => DateControl::class,
+                            'type' => DateControl::FORMAT_DATETIME
+                        ]
+                    ],
+                ],
+            ],
+            [
+                'columns' => [
+                    [
+                        'attribute'=>'created_by',
+                        'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'valueColOptions'=>['style'=>'width:30%']
+                    ],
+                    [
+                        'attribute'=>'updated_by',
+                        'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'valueColOptions'=>['style'=>'width:30%']
+                    ],
+                ],
+            ],
         ],
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => Yii::$app->user->can('update-participant'),
+        'enableEditMode' => true,
     ]) ?>
 
 </div>

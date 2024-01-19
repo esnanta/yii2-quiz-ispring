@@ -27,5 +27,17 @@ class Participant extends BaseParticipant
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
-	
+
+        public function beforeSave($insert) {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->isNewRecord) {
+            $this->username     = 'U'.$this->identity_number;
+            $this->password     = substr(str_shuffle(MD5(microtime())), 0, 5);
+        }
+
+        return true;
+    }
 }

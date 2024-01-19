@@ -41,10 +41,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'attribute' => 'group_id',
+                'label' => Yii::t('app', 'Group'),
+                'value' => function($model){
+                    if ($model->group)
+                    {return $model->group->title;}
+                    else
+                    {return NULL;}
+                },
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $groupList,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-group-search-group_id']
+            ],
+            'identity_number',
             'title',
-
-
+            'username',
+            'password',
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],

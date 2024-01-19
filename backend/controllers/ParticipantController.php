@@ -55,10 +55,15 @@ class ParticipantController extends Controller
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $groupList = ArrayHelper::map(Group::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' => $officeList
+                'officeList' => $officeList,
+                'groupList' => $groupList
             ]);
         }
         else{
@@ -81,12 +86,17 @@ class ParticipantController extends Controller
                 ->where(['id' => $model->office_id])
                 ->asArray()->all(), 'id', 'title');
 
+            $groupList = ArrayHelper::map(Group::find()
+                ->where(['office_id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList' => $officeList
+                    'officeList' => $officeList,
+                    'groupList' => $groupList
                 ]);
             }
         }
