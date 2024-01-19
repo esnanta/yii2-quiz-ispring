@@ -66,12 +66,13 @@ use common\helper\CacheCloud;
                     ['label' => Yii::t('app', 'Archive'), 'url' => ['/archive/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
+                    ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
 
-                ['label' => Yii::t('app', 'Test'), 'icon' => 'clipboard-list', 'items' => [
-                    ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
+                ['label' => Yii::t('app', 'Quizz'), 'icon' => 'clipboard-list', 'items' => [
+                    ['label' => Yii::t('app', 'Import Participant'), 'url' => ['/participant/select']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
-                    ['label' => Yii::t('app', 'Participant Import'), 'url' => ['/participant/select']],
+                    ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment/index']],
                 ]],
 

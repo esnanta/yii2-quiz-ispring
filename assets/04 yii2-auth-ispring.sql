@@ -10,6 +10,7 @@
   03 Subject
   04 Group
   05 assessment
+  06 schedule
 
   xx Ispring Master
   yy Ispring Transaction
@@ -55,6 +56,15 @@ values
     ('view-group',2,'View Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('delete-group',2,'Delete Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('report-group',2,'Report Group',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
+    ('index-schedule',2,'Index Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-schedule',2,'Create Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-schedule',2,'Update Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-schedule',2,'View Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-schedule',2,'Delete Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-schedule',2,'Report Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values

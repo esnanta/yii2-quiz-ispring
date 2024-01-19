@@ -40,4 +40,9 @@ class Participant extends BaseParticipant
 
         return true;
     }
+
+    public function getGroupTitle(): string
+    {
+        return $this->group->title;
+    }
 }

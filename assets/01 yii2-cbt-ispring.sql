@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2024 at 04:39 PM
+-- Generation Time: Jan 19, 2024 at 03:16 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -208,6 +208,7 @@ INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, 
                                                                                                                 ('create-profile', 2, 'Create Profile', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('create-quote', 2, 'Create Quote', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('create-room', 2, 'Create Room', NULL, NULL, 1705331599, 1705331599),
+                                                                                                                ('create-schedule', 2, 'Create Schedule', NULL, NULL, 1705673764, 1705673764),
                                                                                                                 ('create-staff', 2, 'Create Staff', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('create-subject', 2, 'Create Subject', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('create-theme', 2, 'Create Theme', NULL, NULL, 1705331584, 1705331584),
@@ -229,6 +230,7 @@ INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, 
                                                                                                                 ('delete-profile', 2, 'Delete Profile', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('delete-quote', 2, 'Delete Quote', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('delete-room', 2, 'Delete Room', NULL, NULL, 1705331599, 1705331599),
+                                                                                                                ('delete-schedule', 2, 'Delete Schedule', NULL, NULL, 1705673764, 1705673764),
                                                                                                                 ('delete-staff', 2, 'Delete Staff', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('delete-subject', 2, 'Delete Subject', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('delete-theme', 2, 'Delete Theme', NULL, NULL, 1705331584, 1705331584),
@@ -251,6 +253,7 @@ INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, 
                                                                                                                 ('index-profile', 2, 'Index Profile', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('index-quote', 2, 'Index Quote', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('index-room', 2, 'Index Room', NULL, NULL, 1705331599, 1705331599),
+                                                                                                                ('index-schedule', 2, 'Index Schedule', NULL, NULL, 1705673764, 1705673764),
                                                                                                                 ('index-staff', 2, 'Index Staff', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('index-subject', 2, 'Index Subject', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('index-theme', 2, 'Index Theme', NULL, NULL, 1705331584, 1705331584),
@@ -266,6 +269,7 @@ INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, 
                                                                                                                 ('report-master', 2, 'Report Master', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('report-participant', 2, 'Report Participant', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('report-room', 2, 'Report Room', NULL, NULL, 1705331599, 1705331599),
+                                                                                                                ('report-schedule', 2, 'Report Schedule', NULL, NULL, 1705673764, 1705673764),
                                                                                                                 ('report-subject', 2, 'Report Subject', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('report-transaction', 2, 'Report Transaction', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('update-archive', 2, 'Update Archive', NULL, NULL, 1705331584, 1705331584),
@@ -285,6 +289,7 @@ INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, 
                                                                                                                 ('update-profile', 2, 'Update Profile', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('update-quote', 2, 'Update Quote', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('update-room', 2, 'Update Room', NULL, NULL, 1705331599, 1705331599),
+                                                                                                                ('update-schedule', 2, 'Update Schedule', NULL, NULL, 1705673764, 1705673764),
                                                                                                                 ('update-staff', 2, 'Update Staff', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('update-subject', 2, 'Update Subject', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('update-theme', 2, 'Update Theme', NULL, NULL, 1705331584, 1705331584),
@@ -306,6 +311,7 @@ INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, 
                                                                                                                 ('view-profile', 2, 'View Profile', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('view-quote', 2, 'View Quote', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('view-room', 2, 'View Room', NULL, NULL, 1705331599, 1705331599),
+                                                                                                                ('view-schedule', 2, 'View Schedule', NULL, NULL, 1705673764, 1705673764),
                                                                                                                 ('view-staff', 2, 'View Staff', NULL, NULL, 1705331584, 1705331584),
                                                                                                                 ('view-subject', 2, 'View Subject', NULL, NULL, 1705331599, 1705331599),
                                                                                                                 ('view-theme', 2, 'View Theme', NULL, NULL, 1705331584, 1705331584),
@@ -354,6 +360,7 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('create-ispring-master', 'create-group'),
                                                          ('create-ispring-master', 'create-participant'),
                                                          ('create-ispring-master', 'create-room'),
+                                                         ('create-ispring-master', 'create-schedule'),
                                                          ('create-ispring-master', 'create-subject'),
                                                          ('create-ispring-transaction', 'create-assessment'),
                                                          ('create-master', 'create-archivecategory'),
@@ -371,6 +378,7 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('delete-ispring-master', 'delete-group'),
                                                          ('delete-ispring-master', 'delete-participant'),
                                                          ('delete-ispring-master', 'delete-room'),
+                                                         ('delete-ispring-master', 'delete-schedule'),
                                                          ('delete-ispring-master', 'delete-subject'),
                                                          ('delete-ispring-transaction', 'delete-assessment'),
                                                          ('delete-master', 'delete-archivecategory'),
@@ -390,6 +398,7 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('index-ispring-master', 'index-group'),
                                                          ('index-ispring-master', 'index-participant'),
                                                          ('index-ispring-master', 'index-room'),
+                                                         ('index-ispring-master', 'index-schedule'),
                                                          ('index-ispring-master', 'index-subject'),
                                                          ('index-ispring-transaction', 'index-assessment'),
                                                          ('index-master', 'index-archivecategory'),
@@ -448,6 +457,7 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('report-ispring-master', 'report-group'),
                                                          ('report-ispring-master', 'report-participant'),
                                                          ('report-ispring-master', 'report-room'),
+                                                         ('report-ispring-master', 'report-schedule'),
                                                          ('report-ispring-master', 'report-subject'),
                                                          ('report-ispring-transaction', 'report-assessment'),
                                                          ('report-master', 'report-archivecategory'),
@@ -455,6 +465,7 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('update-ispring-master', 'update-group'),
                                                          ('update-ispring-master', 'update-participant'),
                                                          ('update-ispring-master', 'update-room'),
+                                                         ('update-ispring-master', 'update-schedule'),
                                                          ('update-ispring-master', 'update-subject'),
                                                          ('update-ispring-transaction', 'update-assessment'),
                                                          ('update-master', 'update-archivecategory'),
@@ -472,6 +483,7 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('view-ispring-master', 'view-group'),
                                                          ('view-ispring-master', 'view-participant'),
                                                          ('view-ispring-master', 'view-room'),
+                                                         ('view-ispring-master', 'view-schedule'),
                                                          ('view-ispring-master', 'view-subject'),
                                                          ('view-ispring-transaction', 'view-assessment'),
                                                          ('view-master', 'view-archivecategory'),
@@ -787,6 +799,55 @@ CREATE TABLE `tx_room` (
 
 INSERT INTO `tx_room` (`id`, `office_id`, `title`, `sequence`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
     (2, 1, 'Ruang 1', 1, '-', '2024-01-16 13:36:04', '2024-01-16 13:36:04', 1, 1, NULL, NULL, NULL, 0, '8607a981b43911ee80c4c858c0b7f92f');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tx_schedule`
+--
+
+CREATE TABLE `tx_schedule` (
+                               `id` int(11) NOT NULL,
+                               `office_id` int(11) DEFAULT NULL,
+                               `title` varchar(100) DEFAULT NULL,
+                               `subject_id` int(11) DEFAULT NULL,
+                               `room_id` int(11) DEFAULT NULL,
+                               `date_start` datetime DEFAULT NULL,
+                               `date_end` datetime DEFAULT NULL,
+                               `description` tinytext DEFAULT NULL,
+                               `created_at` datetime DEFAULT NULL,
+                               `updated_at` datetime DEFAULT NULL,
+                               `created_by` int(11) DEFAULT NULL,
+                               `updated_by` int(11) DEFAULT NULL,
+                               `is_deleted` int(11) DEFAULT NULL,
+                               `deleted_at` datetime DEFAULT NULL,
+                               `deleted_by` int(11) DEFAULT NULL,
+                               `verlock` int(11) DEFAULT NULL,
+                               `uuid` varchar(36) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tx_schedule_detail`
+--
+
+CREATE TABLE `tx_schedule_detail` (
+                                      `id` int(11) NOT NULL,
+                                      `office_id` int(11) DEFAULT NULL,
+                                      `schedule_id` int(11) DEFAULT NULL,
+                                      `participant_id` int(11) DEFAULT NULL,
+                                      `remark` tinytext DEFAULT NULL,
+                                      `created_at` datetime DEFAULT NULL,
+                                      `updated_at` datetime DEFAULT NULL,
+                                      `created_by` int(11) DEFAULT NULL,
+                                      `updated_by` int(11) DEFAULT NULL,
+                                      `is_deleted` int(11) DEFAULT NULL,
+                                      `deleted_at` datetime DEFAULT NULL,
+                                      `deleted_by` int(11) DEFAULT NULL,
+                                      `verlock` int(11) DEFAULT NULL,
+                                      `uuid` varchar(36) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1149,6 +1210,24 @@ ALTER TABLE `tx_room`
     ADD KEY `Fk_room_office` (`office_id`);
 
 --
+-- Indexes for table `tx_schedule`
+--
+ALTER TABLE `tx_schedule`
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `Fk_schedule_office` (`office_id`),
+    ADD KEY `Fk_schedule_subject` (`subject_id`),
+    ADD KEY `Fk_schedule_room` (`room_id`);
+
+--
+-- Indexes for table `tx_schedule_detail`
+--
+ALTER TABLE `tx_schedule_detail`
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `Fk_schedule_detail_office` (`office_id`),
+    ADD KEY `Fk_schedule_detail_schedule` (`schedule_id`),
+    ADD KEY `Fk_schedule_detail_participant` (`participant_id`);
+
+--
 -- Indexes for table `tx_session`
 --
 ALTER TABLE `tx_session`
@@ -1295,6 +1374,18 @@ ALTER TABLE `tx_room`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `tx_schedule`
+--
+ALTER TABLE `tx_schedule`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tx_schedule_detail`
+--
+ALTER TABLE `tx_schedule_detail`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tx_site_link`
 --
 ALTER TABLE `tx_site_link`
@@ -1430,6 +1521,22 @@ ALTER TABLE `tx_profile`
 --
 ALTER TABLE `tx_room`
     ADD CONSTRAINT `Fk_room_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
+
+--
+-- Constraints for table `tx_schedule`
+--
+ALTER TABLE `tx_schedule`
+    ADD CONSTRAINT `Fk_schedule_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
+    ADD CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`),
+    ADD CONSTRAINT `Fk_schedule_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`);
+
+--
+-- Constraints for table `tx_schedule_detail`
+--
+ALTER TABLE `tx_schedule_detail`
+    ADD CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
+    ADD CONSTRAINT `Fk_schedule_detail_participant` FOREIGN KEY (`participant_id`) REFERENCES `tx_participant` (`id`),
+    ADD CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`);
 
 --
 -- Constraints for table `tx_social_account`
