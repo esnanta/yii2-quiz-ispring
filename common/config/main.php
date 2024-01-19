@@ -6,7 +6,7 @@ return [
         '@npm' => '@vendor/npm-asset',
     ],
 
-    'name'=>'Pertashop',
+    'name'=>'CBT-ISpring',
     'timeZone' => 'Asia/Bangkok',
     'language' => 'id-ID',
     

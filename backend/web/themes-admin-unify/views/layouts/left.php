@@ -71,6 +71,7 @@ use common\helper\CacheCloud;
                 ['label' => Yii::t('app', 'Test'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
+                    ['label' => Yii::t('app', 'Participant Import'), 'url' => ['/participant/select']],
                     ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment/index']],
                 ]],
 

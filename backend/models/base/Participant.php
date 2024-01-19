@@ -12,10 +12,23 @@ use mootensai\behaviors\UUIDBehavior;
  *
  * @property integer $id
  * @property integer $office_id
+ * @property integer $group_id
  * @property string $title
- * @property string $participant_name
+ * @property string $identity_number
+ * @property string $username
  * @property string $password
+ * @property string $created_at
+ * @property string $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $is_deleted
+ * @property string $deleted_at
+ * @property integer $deleted_by
+ * @property integer $verlock
+ * @property string $uuid
  *
+ * @property \backend\models\AssessmentDetail[] $assessmentDetails
+ * @property \backend\models\Group $group
  * @property \backend\models\Office $office
  */
 class Participant extends \yii\db\ActiveRecord
@@ -44,6 +57,8 @@ class Participant extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'assessmentDetails',
+            'group',
             'office'
         ];
     }
@@ -54,10 +69,12 @@ class Participant extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id'], 'integer'],
-            [['title'], 'string', 'max' => 15],
-            [['participant_name'], 'string', 'max' => 100],
+            [['office_id', 'group_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title', 'identity_number'], 'string', 'max' => 100],
+            [['username'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 10],
+            [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
@@ -90,12 +107,33 @@ class Participant extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
+            'group_id' => Yii::t('app', 'Group ID'),
             'title' => Yii::t('app', 'Title'),
-            'participant_name' => Yii::t('app', 'Participant Name'),
+            'identity_number' => Yii::t('app', 'Identity Number'),
+            'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
+            'verlock' => Yii::t('app', 'Verlock'),
+            'uuid' => Yii::t('app', 'Uuid'),
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssessmentDetails()
+    {
+        return $this->hasMany(\backend\models\AssessmentDetail::className(), ['participant_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroup()
+    {
+        return $this->hasOne(\backend\models\Group::className(), ['id' => 'group_id']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */

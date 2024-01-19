@@ -2,9 +2,16 @@
 
 namespace backend\controllers;
 
+use backend\models\Archive;
+use backend\models\Group;
+use backend\models\GroupSearch;
 use backend\models\Office;
+use backend\models\ParticipantImport;
 use backend\models\Subject;
 use common\helper\CacheCloud;
+use common\helper\ReadFilter;
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
 use backend\models\Participant;
 use backend\models\ParticipantSearch;
@@ -126,6 +133,145 @@ class ParticipantController extends Controller
             throw new ForbiddenHttpException;
         }
     }
+
+    public function actionSelect(){
+        if(Yii::$app->user->can('create-participant')){
+            $searchModel    = new GroupSearch();
+            $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
+
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            return $this->render('select_group', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'officeList' => $officeList,
+            ]);
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
+    }
+
+    public function actionImport($groupId)
+    {
+        if(Yii::$app->user->can('create-participant')){
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $archiveList = ArrayHelper::map(Archive::find()
+                ->where(['office_id' => $officeId,'archive_type'=>Archive::ARCHIVE_TYPE_SPREADSHEET])
+                ->asArray()->all(), 'id', 'title');
+
+            $groupList = ArrayHelper::map(Group::find()
+                ->where(['id' => $groupId,'office_id' => $officeId,])
+                ->asArray()->all(), 'id', 'title');
+
+            $model = new ParticipantImport();
+            $model->office_id = $officeId;
+            $model->group_id = $groupId;
+
+            try {
+                if ($model->load(Yii::$app->request->post())) {
+                    $archive = Archive::find()->where(['id'=>$model->archive_id])->one();
+                    $path = Yii::getAlias('@backend').'/web/'.$archive->getPath();
+                    $inputFileName  = $path.'/'.$archive->file_name;
+                    $sheetName = 'Participant';
+                    $filterSubset = new ReadFilter();
+
+                    $helper = new Sample();
+
+                    $inputFileType = IOFactory::identify($inputFileName);
+                    $reader = IOFactory::createReader($inputFileType);
+                    $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
+                    $reader->setLoadSheetsOnly($sheetName);
+                    $reader->setReadFilter($filterSubset);
+                    $spreadsheet = $reader->load($inputFileName);
+
+                    $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+                    $sheetData = $spreadsheet->getActiveSheet()->rangeToArray($activeRange, null, true, true, true);
+                    $data = $spreadsheet->getActiveSheet();
+
+                    $helper->displayGrid($sheetData);
+                    //throw new NotFoundHttpException('The object being updated is outdated.');
+
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    $dataList = [];
+                    try {
+                        //$data->getRowIterator(1) = START FROM ROW 1
+                        foreach ($data->getRowIterator(1) as $row) {
+                            $cellIterator = $row->getCellIterator();
+
+                            /*
+                             * setIterateOnlyExistingCells
+                             * Default value is 'false'
+                             * FALSE = This loops through all cells, even if a cell value is not set.
+                             * TRUE = Loop through cells only when their value is set.
+                             */
+                            $cellIterator->setIterateOnlyExistingCells(FALSE);
+
+                            //$counter = 0;
+                            $rowList = [];
+                            foreach ($cellIterator as $i=>$cell) {
+                                if($i !=  'A' && $cell->getValue() != null){
+                                    $rowList[] = $cell->getFormattedValue();
+                                }
+                                $dataList[] = $rowList;
+                            }
+                        }
+
+                        $counter = 0;
+                        foreach (array_filter($dataList) as $i=>$data){
+                            if(sizeof($data) > 1){
+                                $participant = new Participant();
+                                $participant->office_id         = $model->office_id;
+                                $participant->group_id          = $model->group_id;
+                                $participant->identity_number   = $data[0]; //identity_number
+                                $participant->title             = $data[1]; //title
+                                $participant->save();
+                                $counter = $counter+1;
+                            }
+                        }
+
+                        $transaction->commit();
+                        MessageHelper::getFlashSaveSuccess();
+                        Yii::$app->getSession()->setFlash(
+                                'success',
+                                ['message' => Yii::t(
+                                    'app',
+                                    'Saved '.$counter.' records.'
+                                )]
+                        );
+                        return $this->redirect(['index']);
+                    } catch (\Exception|\Throwable $e) {
+                        $transaction->rollBack();
+                        throw $e;
+                    }
+                }
+                else {
+                    return $this->render('import', [
+                        'model' => $model,
+                        'officeList' => $officeList,
+                        'groupList' => $groupList,
+                        'archiveList' => $archiveList
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
+    }
+
 
     /**
      * Updates an existing Participant model.

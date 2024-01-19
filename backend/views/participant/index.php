@@ -43,8 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'title',
-            'participant_name',
-            'password',
+
 
             [
                 'class' => 'common\widgets\ActionColumn',

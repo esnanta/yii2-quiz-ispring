@@ -17,10 +17,12 @@ class Participant extends BaseParticipant
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['office_id'], 'integer'],
-            [['title'], 'string', 'max' => 15],
-            [['participant_name'], 'string', 'max' => 100],
+            [['office_id', 'group_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title', 'identity_number'], 'string', 'max' => 100],
+            [['username'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 10],
+            [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ]);

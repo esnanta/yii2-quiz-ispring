@@ -31,7 +31,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
@@ -74,11 +74,11 @@ class SiteController extends Controller
     /**
      * @throws BadRequestHttpException
      */
-    public function beforeAction($action): bool
-    {
-        $this->enableCsrfValidation = false;
-        return parent::beforeAction($action);
-    }
+//    public function beforeAction($action): bool
+//    {
+//        $this->enableCsrfValidation = false;
+//        return parent::beforeAction($action);
+//    }
     
     /**
      * Displays homepage.
@@ -91,7 +91,7 @@ class SiteController extends Controller
             return $this->redirect(['user/login']);
         } else {
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            //$officeId   = CacheCloud::getInstance()->getOfficeId();
             return $this->render('index');
         }
     }
@@ -210,7 +210,8 @@ class SiteController extends Controller
      */
     public function actionImport(){
 
-        $inputFileName  = 'https://localhost/application/yii2-cbt-ispring/admin/uploads/65a7fb0e28f7b/archive/_65a8006f3fec7.xlsx';
+        //$inputFileName  = 'https://localhost/application/yii2-cbt-ispring/admin/uploads/archive/65a7fb0e28f7b/_65a80ac0ce7e2.xlsx';
+        $inputFileName  = Yii::getAlias('@backend').'\web\uploads\archive\65a7fb0e28f7b\_65a80ac0ce7e2.xlsx';
         $sheetName = 'Foto';
         $filterSubset = new ReadFilter();
 

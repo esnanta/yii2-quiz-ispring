@@ -259,7 +259,7 @@ class Archive extends BaseArchive
         return Yii::$app->getUrlManager()->createUrl(['archive/view', 'id' => $this->id, 'title' => $this->title]);
     }
 
-    private function getPath() : string {
+    public function getPath() : string {
         $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
         return '/uploads/archive/'.$officeUniqueId;
     }
