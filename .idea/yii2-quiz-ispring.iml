@@ -8,8 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/common/tests/_support" isTestSource="true" packagePrefix="common\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/web/assets/85e0bfd5/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bajadev/yii2-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/bootstrap" />
@@ -38,6 +38,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/esnanta/dektrium-rbac" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/esnanta/dektrium-user" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/php-cs-fixer" />
@@ -99,6 +101,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/php-enum" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/bootstrap" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/onmotion/yii2-widget-apexcharts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pdepend/pdepend" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />
@@ -173,14 +176,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/warrence/yii2-kartikgii" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yii2tech/ar-softdelete" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yii2tech/spreadsheet" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/esnanta/dektrium-rbac" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/esnanta/dektrium-user" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-bootstrap5" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-debug" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-gii" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-jui" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/onmotion/yii2-widget-apexcharts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
