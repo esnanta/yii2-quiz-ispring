@@ -125,6 +125,7 @@ class ParticipantController extends Controller
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    MessageHelper::getFlashSaveSuccess();
                     return $this->redirect(['view', 'id' => $model->id]);
                 } 
                 else {
@@ -190,7 +191,7 @@ class ParticipantController extends Controller
                 if ($model->load(Yii::$app->request->post())) {
                     $archive = Archive::find()->where(['id'=>$model->archive_id])->one();
                     $path = Yii::getAlias('@backend').'/web/'.$archive->getPath();
-                    $inputFileName  = $path.'/'.$archive->file_name;
+                    $inputFileName  = $path.'/'.$archive->asset_name;
                     $sheetName = 'Participant';
                     $filterSubset = new ReadFilter();
 
@@ -300,6 +301,7 @@ class ParticipantController extends Controller
                     ->asArray()->all(), 'id', 'title');
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    MessageHelper::getFlashSaveSuccess();
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('update', [
@@ -328,7 +330,7 @@ class ParticipantController extends Controller
     {
         if(Yii::$app->user->can('delete-participant')){
             $this->findModel($id)->delete();
-
+            MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['index']);
         }
         else{

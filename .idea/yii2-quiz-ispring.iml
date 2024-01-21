@@ -8,8 +8,10 @@
       <sourceFolder url="file://$MODULE_DIR$/common/tests/_support" isTestSource="true" packagePrefix="common\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/frontend/web/assets/85e0bfd5/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/2f252f49/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/ab48894d/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/dd601be4/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bajadev/yii2-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/bootstrap" />
@@ -181,9 +183,15 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-gii" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-jui" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-authclient" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-bootstrap4" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-httpclient" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-imagine" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-symfonymailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="cbt" />
   </component>
 </module>

@@ -27,9 +27,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title']) ?>
 
-    <?= $form->field($model, 'subject_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Subject::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Tx subject')],
+    <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Group::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Tx group')],
         'pluginOptions' => [
             'allowClear' => true
         ],

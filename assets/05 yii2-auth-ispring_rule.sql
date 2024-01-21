@@ -15,6 +15,7 @@
   03 Subject
   04 Group
   05 Schedule
+  06 Schedule Detail
  */
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
@@ -62,6 +63,14 @@ values
     ('delete-ispring-master','delete-schedule'),
     ('report-ispring-master','report-schedule');
 
+insert  into `tx_auth_item_child`(`parent`,`child`)
+values
+    ('index-ispring-master','index-scheduledetail'),
+    ('create-ispring-master','create-scheduledetail'),
+    ('update-ispring-master','update-scheduledetail'),
+    ('view-ispring-master','view-scheduledetail'),
+    ('delete-ispring-master','delete-scheduledetail'),
+    ('report-ispring-master','report-scheduledetail');
 /**
   MENU FOR ISPRING TRANSACTION
   01 Assessment

@@ -204,14 +204,14 @@ class StaffController extends Controller
 
                 if ($model->load(Yii::$app->request->post())) {
                     $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
-                    $model->file_name = str_replace($urlTmpCrop, '', $model->file_name);
-                    $model->file_name = str_replace('/', '', $model->file_name);
+                    $model->asset_name = str_replace($urlTmpCrop, '', $model->asset_name);
+                    $model->asset_name = str_replace('/', '', $model->asset_name);
 
                     if ($model->save()) {
                         //DELETE FILE LAMA
-                        file_exists($urlTmpCrop.'/'.$model->file_name) ? unlink($urlTmpCrop.'/'.$model->file_name) : '' ;
+                        file_exists($urlTmpCrop.'/'.$model->asset_name) ? unlink($urlTmpCrop.'/'.$model->asset_name) : '' ;
                         //PINDAHIN DATA DARI TMP KE DIREKTORI MODEL
-                        rename(str_replace('frontend', 'backend', Yii::getAlias('@webroot')).self::$pathTmpCrop.'/'.$model->file_name, $model->getImageFile());
+                        rename(str_replace('frontend', 'backend', Yii::getAlias('@webroot')).self::$pathTmpCrop.'/'.$model->asset_name, $model->getImageFile());
                         MessageHelper::getFlashUpdateSuccess();
                         return $this->redirect(['view', 'id'=>$model->id, 'title'=>$model->title]);
                     } else {

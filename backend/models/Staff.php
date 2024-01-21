@@ -40,7 +40,7 @@ class Staff extends BaseStaff
             [['title', 'identity_number', 'email'], 'string', 'max' => 100],
             [['initial'], 'string', 'max' => 10],
             [['phone_number'], 'string', 'max' => 50],
-            [['file_name'], 'string', 'max' => 200],
+            [['asset_name'], 'string', 'max' => 200],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -76,7 +76,7 @@ class Staff extends BaseStaff
             'gender_status' => Yii::t('app', 'Gender Status'),
             'active_status' => Yii::t('app', 'Active Status'),
             'address' => Yii::t('app', 'Address'),
-            'file_name' => Yii::t('app', 'File Name'),
+            'asset_name' => Yii::t('app', 'File Name'),
             'email' => Yii::t('app', 'Email'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
@@ -161,7 +161,7 @@ class Staff extends BaseStaff
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
-        return (!empty($this->file_name)) ? $directory.'/'. $this->file_name : '';
+        return (!empty($this->asset_name)) ? $directory.'/'. $this->asset_name : '';
     }
 
     /**
@@ -171,8 +171,8 @@ class Staff extends BaseStaff
     public function getImageUrl()
     {
         // return a default image placeholder if your source avatar is not found
-        $file_name = isset($this->file_name) ? self::$path.'/'.$this->file_name : '/images/'.'if_skype2512x512_197582.png';
-        return Yii::$app->urlManager->baseUrl . $file_name;
+        $asset_name = isset($this->asset_name) ? self::$path.'/'.$this->asset_name : '/images/'.'if_skype2512x512_197582.png';
+        return Yii::$app->urlManager->baseUrl . $asset_name;
     }
 
     /**
@@ -200,7 +200,7 @@ class Staff extends BaseStaff
         //$ext = end((explode(".", $image->name)));
         $tmp = explode('.', $image->name);
         $ext = end($tmp);
-        $this->file_name = Yii::$app->security->generateRandomString().".{$ext}";
+        $this->asset_name = Yii::$app->security->generateRandomString().".{$ext}";
 
         // the uploaded image instance
         return $image;
@@ -225,7 +225,7 @@ class Staff extends BaseStaff
         }
 
         // if deletion successful, reset your file attributes
-        $this->file_name = null;
+        $this->asset_name = null;
         $this->title = null;
 
         return true;

@@ -17,8 +17,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $archive_category_id
  * @property string $title
  * @property string $date_issued
- * @property string $file_name
- * @property string $archive_url
+ * @property string $asset_name
+ * @property string $asset_url
  * @property integer $size
  * @property string $mime_type
  * @property integer $view_counter
@@ -77,8 +77,8 @@ class Archive extends \yii\db\ActiveRecord
             [['office_id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
-            [['title', 'file_name'], 'string', 'max' => 200],
-            [['archive_url'], 'string', 'max' => 500],
+            [['title', 'asset_name'], 'string', 'max' => 200],
+            [['asset_url'], 'string', 'max' => 500],
             [['mime_type'], 'string', 'max' => 100],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
@@ -118,8 +118,8 @@ class Archive extends \yii\db\ActiveRecord
             'archive_category_id' => Yii::t('app', 'Archive Category ID'),
             'title' => Yii::t('app', 'Title'),
             'date_issued' => Yii::t('app', 'Date Issued'),
-            'file_name' => Yii::t('app', 'File Name'),
-            'archive_url' => Yii::t('app', 'Archive Url'),
+            'asset_name' => Yii::t('app', 'Asset Name'),
+            'asset_url' => Yii::t('app', 'Asset Url'),
             'size' => Yii::t('app', 'Size'),
             'mime_type' => Yii::t('app', 'Mime Type'),
             'view_counter' => Yii::t('app', 'View Counter'),

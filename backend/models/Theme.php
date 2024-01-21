@@ -40,7 +40,7 @@ class Theme extends BaseTheme
             [['content', 'description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['file_name'], 'string', 'max' => 200],
+            [['asset_name'], 'string', 'max' => 200],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']      
@@ -125,7 +125,7 @@ class Theme extends BaseTheme
             FileHelper::createDirectory($directory, $mode = 0777);      
         }
 
-        return (!empty($this->file_name)) ? $directory.'/'. $this->file_name : '';
+        return (!empty($this->asset_name)) ? $directory.'/'. $this->asset_name : '';
     }   
     
     /**
@@ -138,7 +138,7 @@ class Theme extends BaseTheme
         $defaultPicture = 'NULL';
         $_module        = $this->theme_type;
         
-        if(!isset($this->file_name)){
+        if(!isset($this->asset_name)){
             switch ($_module) {
                 case ($_module == self::LOGO_FRONTEND_HEADER):
                         $defaultPicture = Yii::$app->urlManager->baseUrl .'/images/unify263-marketing/logo.png';
@@ -158,13 +158,13 @@ class Theme extends BaseTheme
             return $defaultPicture;
         }
         else{
-            return Yii::$app->urlManager->baseUrl .self::$path.'/'.$this->file_name;
+            return Yii::$app->urlManager->baseUrl .self::$path.'/'.$this->asset_name;
         }
         
-//        $file_name = isset($this->file_name) ? 
-//            Yii::$app->urlManager->baseUrl .self::$path.'/'.$this->file_name : 
+//        $asset_name = isset($this->asset_name) ? 
+//            Yii::$app->urlManager->baseUrl .self::$path.'/'.$this->asset_name : 
 //            Yii::$app->urlManager->baseUrl .'/images/no-picture-available-icon-1.jpg';
-//        return $file_name;
+//        return $asset_name;
     }    
     
     /**
@@ -187,7 +187,7 @@ class Theme extends BaseTheme
         //$ext = end((explode(".", $image->name)));
         $tmp = explode('.', $image->name);
         $ext = end($tmp);  
-        $this->file_name = Yii::$app->security->generateRandomString().".{$ext}";
+        $this->asset_name = Yii::$app->security->generateRandomString().".{$ext}";
 
         // the uploaded image instance
         return $image;
@@ -212,7 +212,7 @@ class Theme extends BaseTheme
         }
 
         // if deletion successful, reset your file attributes
-        $this->file_name = null;
+        $this->asset_name = null;
         //$this->title = null;
 
         return true;

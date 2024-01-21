@@ -189,7 +189,7 @@ $create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['site/create-regu
                     //'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
-                        'attribute' => 'file_name',
+                        'attribute' => 'asset_name',
                         'type' => DetailView::INPUT_HIDDEN,
                     ],
                     [

@@ -11,6 +11,7 @@
   04 Group
   05 assessment
   06 schedule
+  07 schedule detail
 
   xx Ispring Master
   yy Ispring Transaction
@@ -65,6 +66,15 @@ values
     ('view-schedule',2,'View Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('delete-schedule',2,'Delete Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('report-schedule',2,'Report Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
+    ('index-scheduledetail',2,'Index Schedule Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-scheduledetail',2,'Create Schedule Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-scheduledetail',2,'Update Schedule Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-scheduledetail',2,'View Schedule Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-scheduledetail',2,'Delete Schedule Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-scheduledetail',2,'Report Schedule Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values

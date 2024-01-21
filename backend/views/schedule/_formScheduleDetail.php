@@ -22,18 +22,18 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden'=>true]],
-
-        'participant_id' => [
-            'label' => Yii::t('app', 'Participant'),
+        'subject_id' => [
+            'label' => Yii::t('app', 'Subject'),
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
-                'data' => $participantList,
-                'options' => ['placeholder' => Yii::t('app', 'Choose Participant')],
+                'data' => $subjectList,
+                'options' => ['placeholder' => Yii::t('app', 'Choose Subject')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
         'remark' => ['type' => TabularForm::INPUT_TEXT],
+        //'asset' => ['type' => TabularForm::INPUT_FILE],
         'del' => [
             'type' => 'raw',
             'label' => '',

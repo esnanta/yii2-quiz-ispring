@@ -2,14 +2,17 @@
 
 namespace backend\controllers;
 
+use backend\models\Group;
 use backend\models\Office;
 use backend\models\Participant;
 use backend\models\Room;
+use backend\models\ScheduleDetail;
 use backend\models\Subject;
 use common\helper\CacheCloud;
 use Yii;
 use backend\models\Schedule;
 use backend\models\ScheduleSearch;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
@@ -27,7 +30,7 @@ class ScheduleController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -50,7 +53,7 @@ class ScheduleController extends Controller
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            $subjectList = ArrayHelper::map(Subject::find()
+            $groupList = ArrayHelper::map(Group::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
@@ -62,7 +65,7 @@ class ScheduleController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
-                'subjectList' => $subjectList,
+                'groupList' => $groupList,
                 'roomList' => $roomList
             ]);
         }
@@ -116,14 +119,17 @@ class ScheduleController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            $participantList = ArrayHelper::map(Participant::find()
+            $groupList = ArrayHelper::map(Group::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
             $model = new Schedule();
             $model->office_id = $officeId;
+            $model->date_start = date(Yii::$app->params['datetimeSaveFormat']);
+            $model->date_end = date(Yii::$app->params['datetimeSaveFormat']);
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                MessageHelper::getFlashSaveSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
@@ -131,7 +137,7 @@ class ScheduleController extends Controller
                     'officeList' => $officeList,
                     'subjectList' => $subjectList,
                     'roomList' => $roomList,
-                    'participantList' => $participantList
+                    'groupList' => $groupList
                 ]);
             }
         }
@@ -150,13 +156,35 @@ class ScheduleController extends Controller
     public function actionUpdate($id)
     {
         if(Yii::$app->user->can('update-schedule')){
-            $model = $this->findModel($id);
+            $model      = $this->findModel($id);
+            $officeId   = $model->office_id;
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $subjectList = ArrayHelper::map(Subject::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $roomList = ArrayHelper::map(Room::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $groupList = ArrayHelper::map(Group::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                MessageHelper::getFlashUpdateSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'officeList' => $officeList,
+                    'subjectList' => $subjectList,
+                    'roomList' => $roomList,
+                    'groupList' => $groupList
                 ]);
             }
         }
@@ -231,7 +259,7 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->request->isAjax) {
             $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $participantList = ArrayHelper::map(Participant::find()
+            $subjectList = ArrayHelper::map(Subject::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
@@ -243,7 +271,7 @@ class ScheduleController extends Controller
                 $row[] = [];
             return $this->renderAjax('_formScheduleDetail', [
                 'row' => $row,
-                'participantList' => $participantList
+                'subjectList' => $subjectList
             ]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

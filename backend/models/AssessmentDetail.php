@@ -26,5 +26,17 @@ class AssessmentDetail extends BaseAssessmentDetail
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
+
+    public function beforeSave($insert) {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->isNewRecord) {
+            $this->office_id    = $this->assessment->office_id;
+        }
+
+        return true;
+    }
 	
 }

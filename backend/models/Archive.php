@@ -39,13 +39,13 @@ class Archive extends BaseArchive
         return [
             //TAMBAHAN
             [['is_visible','archive_category_id'], 'required'],
-            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 5), 'tooBig' => 'Limit is 5MB'],
-            
-            [['is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 2), 'tooBig' => 'Limit is 2MB'],
+
+            [['office_id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
-            [['title', 'file_name'], 'string', 'max' => 200],
-            [['archive_url'], 'string', 'max' => 500],
+            [['title', 'asset_name'], 'string', 'max' => 200],
+            [['asset_url'], 'string', 'max' => 500],
             [['mime_type'], 'string', 'max' => 100],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
@@ -165,7 +165,7 @@ class Archive extends BaseArchive
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
-        return (!empty($this->file_name)) ? $directory.'/'. $this->file_name : null;
+        return (!empty($this->asset_name)) ? $directory.'/'. $this->asset_name : null;
     }
 
     /**
@@ -176,16 +176,16 @@ class Archive extends BaseArchive
     {
         // return a default image placeholder if your source avatar is not found
         $defaultImage = '/images/no-picture-available-icon-1.jpg';
-        $file_name = (!empty($this->file_name)) ? $this->file_name : $defaultImage;
+        $asset_name = (!empty($this->asset_name)) ? $this->asset_name : $defaultImage;
         $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
 
-        if (file_exists($directory.'/'.$file_name)) {
-            $file_parts = pathinfo($directory.'/'.$file_name);
+        if (file_exists($directory.'/'.$asset_name)) {
+            $file_parts = pathinfo($directory.'/'.$asset_name);
             if($file_parts['extension']=='pdf'){
-                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
+                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$asset_name;
             }
             
-            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
+            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$asset_name;
         }
         else{
             return Yii::$app->urlManager->baseUrl . $defaultImage;
@@ -223,7 +223,7 @@ class Archive extends BaseArchive
         $title              = $replaceDot;
         $tmp                = explode('.', $asset->name);
         $ext                = end($tmp);          
-        $this->file_name    = $title.'_'.uniqid().".{$ext}";
+        $this->asset_name    = $title.'_'.uniqid().".{$ext}";
         
         // the uploaded asset instance
         return $asset;
@@ -248,7 +248,7 @@ class Archive extends BaseArchive
         }
 
         // if deletion successful, reset your file attributes
-        $this->file_name = null;
+        $this->asset_name = null;
         $this->title = null;
 
         return true;

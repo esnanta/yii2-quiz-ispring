@@ -58,7 +58,7 @@ $stripTagsButton = Html::a('Remove Tags', ['strip-tags','id'=>$model->id], ['cla
                      ],
                  ],
              ],
-            'file_name',
+            'asset_name',
             [
                 'attribute'=>'description',
                 'format'=>'html',

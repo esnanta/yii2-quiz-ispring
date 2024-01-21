@@ -44,20 +44,20 @@ $this->registerJs($search);
                 'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-office_id']
         ],
         [
-            'attribute' => 'subject_id',
-            'label' => Yii::t('app', 'Subject'),
+            'attribute' => 'group_id',
+            'label' => Yii::t('app', 'Group'),
             'value' => function($model){
-                if ($model->subject)
-                {return $model->subject->title;}
+                if ($model->group)
+                {return $model->group->title;}
                 else
                 {return NULL;}
             },
             'filterType' => GridView::FILTER_SELECT2,
-            'filter' => $subjectList,
+            'filter' => $groupList,
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true],
             ],
-            'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-subject_id']
+            'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-group_id']
         ],
         [
             'attribute' => 'room_id',
@@ -85,7 +85,7 @@ $this->registerJs($search);
             'buttons' => [
                 'update' => function ($url, $model) {
                     return Html::a('<i class="fas fa-pencil-alt"></i>',
-                        Yii::$app->urlManager->createUrl(['schedule/view', 'id' => $model->id, 'edit' => 't']),
+                        Yii::$app->urlManager->createUrl(['schedule/update', 'id' => $model->id]),
                         [
                             'title' => Yii::t('yii', 'Edit'),
                             'class'=>'btn btn-sm btn-info',

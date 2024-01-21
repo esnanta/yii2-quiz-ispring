@@ -2,23 +2,22 @@
 
 namespace backend\models;
 
-use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use kartik\daterange\DateRangeBehavior;
-use backend\models\Theme;
+use backend\models\ScheduleDetail;
 
 /**
- * ThemeSearch represents the model behind the search form about `backend\models\Theme`.
+ * ScheduleDetailSearch represents the model behind the search form about `backend\models\ScheduleDetail`.
  */
-class ThemeSearch extends Theme
+class ScheduleDetailSearch extends ScheduleDetail
 {
     public function rules()
     {
         return [
-            [['id', 'office_id', 'theme_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'content', 'asset_name', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['id', 'office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['remark', 'asset_name', 'asset_url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -30,9 +29,7 @@ class ThemeSearch extends Theme
 
     public function search($params)
     {
-
-        $officeId = CacheCloud::getInstance()->getOfficeId();
-        $query = Theme::find()->where(['office_id'=>$officeId]);
+        $query = ScheduleDetail::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -45,7 +42,8 @@ class ThemeSearch extends Theme
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'theme_type' => $this->theme_type,
+            'schedule_id' => $this->schedule_id,
+            'subject_id' => $this->subject_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -56,10 +54,10 @@ class ThemeSearch extends Theme
             'verlock' => $this->verlock,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'remark', $this->remark])
             ->andFilterWhere(['like', 'asset_name', $this->asset_name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'asset_url', $this->asset_url])
+            ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;
     }

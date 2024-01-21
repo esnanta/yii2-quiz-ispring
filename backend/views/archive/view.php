@@ -43,7 +43,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                     ?>
 
                     <?php
-                        if(!empty($model->file_name)){
+                        if(!empty($model->asset_name)){
                             echo $deleteAsset;
 
                             $assetUrl   = $model->getAssetUrl();

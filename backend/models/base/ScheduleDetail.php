@@ -13,8 +13,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property integer $office_id
  * @property integer $schedule_id
- * @property integer $participant_id
+ * @property integer $subject_id
  * @property string $remark
+ * @property string $asset_name
+ * @property string $asset_url
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -26,8 +28,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \backend\models\Office $office
- * @property \backend\models\Participant $participant
  * @property \backend\models\Schedule $schedule
+ * @property \backend\models\Subject $subject
  */
 class ScheduleDetail extends \yii\db\ActiveRecord
 {
@@ -56,8 +58,8 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     {
         return [
             'office',
-            'participant',
-            'schedule'
+            'schedule',
+            'subject'
         ];
     }
 
@@ -67,9 +69,11 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'schedule_id', 'participant_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['asset_name'], 'string', 'max' => 100],
+            [['asset_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -104,8 +108,10 @@ class ScheduleDetail extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'schedule_id' => Yii::t('app', 'Schedule ID'),
-            'participant_id' => Yii::t('app', 'Participant ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
             'remark' => Yii::t('app', 'Remark'),
+            'asset_name' => Yii::t('app', 'Asset Name'),
+            'asset_url' => Yii::t('app', 'Asset Url'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),
@@ -123,17 +129,17 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParticipant()
+    public function getSchedule()
     {
-        return $this->hasOne(\backend\models\Participant::className(), ['id' => 'participant_id']);
+        return $this->hasOne(\backend\models\Schedule::className(), ['id' => 'schedule_id']);
     }
         
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSchedule()
+    public function getSubject()
     {
-        return $this->hasOne(\backend\models\Schedule::className(), ['id' => 'schedule_id']);
+        return $this->hasOne(\backend\models\Subject::className(), ['id' => 'subject_id']);
     }
     
     /**

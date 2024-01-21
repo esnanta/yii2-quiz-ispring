@@ -19,9 +19,12 @@ use yii\widgets\ActiveForm;
 
 <div class="schedule-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => [
+            'enctype' => 'multipart/form-data',
+            'multiple' => true
+    ]]); ?>
 
-    <?= $form->errorSummary($model); ?>
+    <?= $form->errorSummary($model,['class'=>'alert alert-danger', 'role'=>"alert"]); ?>
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
@@ -29,15 +32,15 @@ use yii\widgets\ActiveForm;
         <div class="col-md-6 col-xs-12">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => '']) ?>
 
-            <?= $form->field($model, 'subject_id')->widget(\kartik\widgets\Select2::classname(), [
-                'data' => $subjectList,
+            <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::class, [
+                'data' => $groupList,
                 'options' => ['placeholder' => Yii::t('app', '')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
             ]); ?>
 
-            <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::classname(), [
+            <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::class, [
                 'data' => $roomList,
                 'options' => ['placeholder' => Yii::t('app', '')],
                 'pluginOptions' => [
@@ -80,7 +83,7 @@ use yii\widgets\ActiveForm;
             'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'ScheduleDetail')),
             'content' => $this->render('_formScheduleDetail', [
                 'row' => \yii\helpers\ArrayHelper::toArray($model->scheduleDetails),
-                'participantList' => $participantList
+                'subjectList' => $subjectList
             ]),
         ],
     ];

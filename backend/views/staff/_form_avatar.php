@@ -15,7 +15,7 @@ use budyaga\cropper\Widget;
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); 
 
-    echo $form->field($model, 'file_name')->widget(Widget::class, [
+    echo $form->field($model, 'asset_name')->widget(Widget::class, [
         'uploadUrl' => Url::toRoute('/staff/avatar'),
         'width'=> '400',
         'height'=> '400' ,

@@ -5,12 +5,12 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\ThemeSearch $model
+ * @var backend\models\ScheduleDetailSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="theme-search">
+<div class="schedule-detail-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -21,15 +21,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'office_id') ?>
 
-    <?= $form->field($model, 'title') ?>
+    <?= $form->field($model, 'schedule_id') ?>
 
-    <?= $form->field($model, 'theme_type') ?>
+    <?= $form->field($model, 'subject_id') ?>
 
-    <?= $form->field($model, 'content') ?>
+    <?= $form->field($model, 'remark') ?>
 
     <?php // echo $form->field($model, 'asset_name') ?>
 
-    <?php // echo $form->field($model, 'description') ?>
+    <?php // echo $form->field($model, 'asset_url') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
@@ -46,6 +46,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'deleted_by') ?>
 
     <?php // echo $form->field($model, 'verlock') ?>
+
+    <?php // echo $form->field($model, 'uuid') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

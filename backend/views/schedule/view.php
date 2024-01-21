@@ -69,8 +69,8 @@ $create = Html::a(
                     </span>
                     <?= $model->title;?>
                 </li>
-                <li><span class="g-font-weight-700"><?= Yii::t('app', 'Subject');?>:</span>
-                    <?= $model->subject->title;?>
+                <li><span class="g-font-weight-700"><?= Yii::t('app', 'Group');?>:</span>
+                    <?= $model->group->title;?>
                 </li>
                 <li><span class="g-font-weight-700"><?= Yii::t('app', 'Room');?>:</span>
                     <?= $model->room->title;?>
@@ -112,11 +112,10 @@ $create = Html::a(
                 <tr>
                     <th class="g-brd-top-none g-font-weight-500 g-py-15">Ref</th>
                     <th class="g-brd-top-none g-font-weight-500 text-left g-py-15">
-                        <?= Yii::t('app', 'Participant');?>
+                        <?= Yii::t('app', 'Subject');?>
                     </th>
-                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Group');?></th>
-                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Username');?></th>
-                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Password');?></th>
+                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Remark');?></th>
+                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Url');?></th>
                 </tr>
                 </thead>
 
@@ -131,20 +130,30 @@ $create = Html::a(
                         </td>
                         <td class="g-max-width-300 text-left g-py-15">
                             <h4 class="g-color-gray-dark-v4 g-font-weight-700 g-font-size-16">
-                                <?= $modelDetailItem->participant->title;?>
+                                <?= $modelDetailItem->subject->title;?>
                             </h4>
                             <p class="g-color-gray-dark-v5 g-font-size-12 mb-0">
-                                <?= $modelDetailItem->participant->uuid;?>
+                                <?= $modelDetailItem->subject->description;?>
                             </p>
                         </td>
                         <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
-                            <?= $modelDetailItem->participant->getGroupTitle();?>
+                            <?= $modelDetailItem->remark;?>
                         </td>
                         <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
-                            <?= $modelDetailItem->participant->username;?>
-                        </td>
-                        <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
-                            <?= $modelDetailItem->participant->password;?>
+                            <?php
+                                if($modelDetailItem->asset_name==null){
+
+                                    $upload = Html::a(
+                                        '<i class="fas fa-plus"></i>',
+                                        ['schedule-detail/update','id'=>$modelDetailItem->id],
+                                        ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']
+                                    );
+
+                                    echo $upload;
+                                } else {
+                                    echo $modelDetailItem->asset_url;
+                                }
+                            ?>
                         </td>
                     </tr>
                 <?php } ?>

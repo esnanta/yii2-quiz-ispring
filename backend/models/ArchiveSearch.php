@@ -32,7 +32,7 @@ class ArchiveSearch extends Archive
     {
         return [
             [['id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'date_issued', 'file_name', 'archive_url', 'mime_type', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title', 'date_issued', 'asset_name', 'asset_url', 'mime_type', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             //TAMBAHAN
             [['date_range'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
@@ -74,8 +74,8 @@ class ArchiveSearch extends Archive
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'file_name', $this->file_name])
-            ->andFilterWhere(['like', 'archive_url', $this->archive_url])
+            ->andFilterWhere(['like', 'asset_name', $this->asset_name])
+            ->andFilterWhere(['like', 'asset_url', $this->asset_url])
             ->andFilterWhere(['like', 'mime_type', $this->mime_type])
             ->andFilterWhere(['like', 'description', $this->description]);
 

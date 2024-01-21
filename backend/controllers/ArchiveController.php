@@ -26,7 +26,7 @@ class ArchiveController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -81,7 +81,7 @@ class ArchiveController extends Controller
             $archiveTypeList        = Archive::getArrayArchiveType();
 
             $oldFile = $model->getAssetFile();
-            $oldAvatar = $model->file_name;
+            $oldAvatar = $model->asset_name;
 
             if ($model->load(Yii::$app->request->post())) {
                 // process uploaded asset file instance
@@ -89,7 +89,7 @@ class ArchiveController extends Controller
 
                 // revert back if no valid file instance uploaded
                 if ($asset === false) {
-                    $model->file_name = $oldAvatar;
+                    $model->asset_name = $oldAvatar;
                     //$model->title = $oldFileName;
                 }
 

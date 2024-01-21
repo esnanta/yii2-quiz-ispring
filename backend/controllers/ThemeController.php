@@ -114,7 +114,7 @@ class ThemeController extends Controller
                     ->asArray()->all(), 'id', 'title');
 
             $oldFile = $model->getImageFile();
-            $oldAvatar = $model->file_name;
+            $oldAvatar = $model->asset_name;
 
             if ($model->load(Yii::$app->request->post())) {
                 // process uploaded image file instance
@@ -122,7 +122,7 @@ class ThemeController extends Controller
 
                 // revert back if no valid file instance uploaded
                 if ($image === false) {
-                    $model->file_name = $oldAvatar;
+                    $model->asset_name = $oldAvatar;
                 }
 
                 if ($model->save()) {

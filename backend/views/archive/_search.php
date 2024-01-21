@@ -29,9 +29,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'date_issued') ?>
 
-    <?php // echo $form->field($model, 'file_name') ?>
+    <?php // echo $form->field($model, 'asset_name') ?>
 
-    <?php // echo $form->field($model, 'archive_url') ?>
+    <?php // echo $form->field($model, 'asset_url') ?>
 
     <?php // echo $form->field($model, 'size') ?>
 

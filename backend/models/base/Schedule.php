@@ -13,7 +13,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property integer $office_id
  * @property string $title
- * @property integer $subject_id
+ * @property integer $group_id
  * @property integer $room_id
  * @property string $date_start
  * @property string $date_end
@@ -28,9 +28,9 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \backend\models\Group $group
  * @property \backend\models\Office $office
  * @property \backend\models\Room $room
- * @property \backend\models\Subject $subject
  * @property \backend\models\ScheduleDetail[] $scheduleDetails
  */
 class Schedule extends \yii\db\ActiveRecord
@@ -59,9 +59,9 @@ class Schedule extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'group',
             'office',
             'room',
-            'subject',
             'scheduleDetails'
         ];
     }
@@ -72,7 +72,7 @@ class Schedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'subject_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
@@ -110,7 +110,7 @@ class Schedule extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
-            'subject_id' => Yii::t('app', 'Subject ID'),
+            'group_id' => Yii::t('app', 'Group ID'),
             'room_id' => Yii::t('app', 'Room ID'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
@@ -121,6 +121,14 @@ class Schedule extends \yii\db\ActiveRecord
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroup()
+    {
+        return $this->hasOne(\backend\models\Group::className(), ['id' => 'group_id']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -135,14 +143,6 @@ class Schedule extends \yii\db\ActiveRecord
     public function getRoom()
     {
         return $this->hasOne(\backend\models\Room::className(), ['id' => 'room_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSubject()
-    {
-        return $this->hasOne(\backend\models\Subject::className(), ['id' => 'subject_id']);
     }
         
     /**

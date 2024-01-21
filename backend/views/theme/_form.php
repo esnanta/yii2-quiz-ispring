@@ -47,7 +47,7 @@ use kartik\datecontrol\DateControl;
 
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
 
-            'file_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter File Name...', 'maxlength' => 200]],
+            'asset_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter File Name...', 'maxlength' => 200]],
 
         ]
 

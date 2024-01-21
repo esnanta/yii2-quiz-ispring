@@ -15,7 +15,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $title
  * @property integer $theme_type
  * @property string $content
- * @property string $file_name
+ * @property string $asset_name
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -69,7 +69,7 @@ class Theme extends \yii\db\ActiveRecord
             [['content', 'description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['file_name'], 'string', 'max' => 200],
+            [['asset_name'], 'string', 'max' => 200],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -102,11 +102,11 @@ class Theme extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'office_id' => Yii::t('app', 'Office'),
+            'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
             'theme_type' => Yii::t('app', 'Theme Type'),
             'content' => Yii::t('app', 'Content'),
-            'file_name' => Yii::t('app', 'File Name'),
+            'asset_name' => Yii::t('app', 'Asset Name'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2024 at 03:16 PM
+-- Generation Time: Jan 20, 2024 at 06:01 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -35,8 +35,8 @@ CREATE TABLE `tx_archive` (
                               `archive_category_id` int(11) DEFAULT NULL,
                               `title` varchar(200) DEFAULT NULL,
                               `date_issued` date DEFAULT NULL,
-                              `file_name` varchar(200) DEFAULT NULL,
-                              `archive_url` varchar(500) DEFAULT NULL,
+                              `asset_name` varchar(200) DEFAULT NULL,
+                              `asset_url` varchar(500) DEFAULT NULL,
                               `size` int(11) DEFAULT NULL,
                               `mime_type` varchar(100) DEFAULT NULL,
                               `view_counter` int(11) DEFAULT NULL,
@@ -57,9 +57,9 @@ CREATE TABLE `tx_archive` (
 -- Dumping data for table `tx_archive`
 --
 
-INSERT INTO `tx_archive` (`id`, `office_id`, `is_visible`, `archive_type`, `archive_category_id`, `title`, `date_issued`, `file_name`, `archive_url`, `size`, `mime_type`, `view_counter`, `download_counter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-                                                                                                                                                                                                                                                                                                                                                       (3, 1, 1, 2, 5, 'Data siswa TP 2324', '2024-01-17', '_65a80ac0ce7e2.xlsx', NULL, NULL, NULL, 0, 1, '', '2024-01-17 23:29:35', '2024-01-18 00:17:09', 1, 1, NULL, NULL, NULL, 4, '99d2cde2b55511ee9384c858c0b7f92f'),
-                                                                                                                                                                                                                                                                                                                                                       (4, 1, 1, 1, 5, 'test', '2024-01-18', '_65a80ca664d40.pdf', NULL, NULL, NULL, 0, 0, NULL, '2024-01-18 00:21:42', '2024-01-18 00:21:42', 1, 1, NULL, NULL, NULL, 0, 'e1c0b09ab55c11ee9384c858c0b7f92f');
+INSERT INTO `tx_archive` (`id`, `office_id`, `is_visible`, `archive_type`, `archive_category_id`, `title`, `date_issued`, `asset_name`, `asset_url`, `size`, `mime_type`, `view_counter`, `download_counter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                                                                                                                                      (3, 1, 1, 2, 5, 'Data siswa TP 2324', '2024-01-17', '_65a80ac0ce7e2.xlsx', NULL, NULL, NULL, 0, 1, '', '2024-01-17 23:29:35', '2024-01-18 00:17:09', 1, 1, NULL, NULL, NULL, 4, '99d2cde2b55511ee9384c858c0b7f92f'),
+                                                                                                                                                                                                                                                                                                                                                      (4, 1, 1, 1, 5, 'yii2_cbt_ispring.sql', '2024-01-18', 'yii2_cbt_ispring_65abf5ded4237.sql', NULL, NULL, NULL, 0, 0, '', '2024-01-18 00:21:42', '2024-01-20 23:33:18', 1, 1, NULL, NULL, NULL, 2, 'e1c0b09ab55c11ee9384c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -638,6 +638,13 @@ CREATE TABLE `tx_group` (
                             `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tx_group`
+--
+
+INSERT INTO `tx_group` (`id`, `office_id`, `title`, `sequence`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (1, 1, 'XII - IPA 1', NULL, '', '2024-01-19 21:18:59', '2024-01-19 21:18:59', 1, 1, NULL, NULL, NULL, 0, 'b020dab7b6d511eeb65dc858c0b7f92f');
+
 -- --------------------------------------------------------
 
 --
@@ -715,6 +722,43 @@ CREATE TABLE `tx_participant` (
                                   `verlock` int(11) DEFAULT NULL,
                                   `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tx_participant`
+--
+
+INSERT INTO `tx_participant` (`id`, `office_id`, `group_id`, `title`, `identity_number`, `username`, `password`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                          (1, 1, 1, 'Achmad Maula Fata', '0078294733', 'U0078294733', '1b832', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b55f1cbeb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (2, 1, 1, 'Adila Khalisah', '0063509763', 'U0063509763', '7d63e', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b55f7fd2b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (3, 1, 1, 'Amira Jufri', '0053756117', 'U0053756117', 'a2bdd', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b55fd42cb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (4, 1, 1, 'Anbar Salsabilla', '0065125737', 'U0065125737', 'deb90', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b560893bb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (5, 1, 1, 'Aninda Belta Shakira', '0065757046', 'U0065757046', '9dbc4', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b560d381b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (6, 1, 1, 'Annisa Salsabila', '0064848339', 'U0064848339', '41729', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5611447b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (7, 1, 1, 'Ardian Saputra', '0055531022', 'U0055531022', '03de2', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b56152ecb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (8, 1, 1, 'Cut Sahara Tantri', '0050410064', 'U0050410064', 'e0619', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5619433b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (9, 1, 1, 'Ersya Elysia', '0076787140', 'U0076787140', '2e617', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b561d27fb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (10, 1, 1, 'Fachri Satria Tanjung', '0066822084', 'U0066822084', '19763', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b56210dcb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (11, 1, 1, 'Faiz Rusdy', '0067053895', 'U0067053895', 'bc5c2', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5625401b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (12, 1, 1, 'Faturrahman', '0064788352', 'U0064788352', '0ae21', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b562b229b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (13, 1, 1, 'Gery Juan Devista', '0056176047', 'U0056176047', '6b7ed', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b56319a9b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (14, 1, 1, 'Ghaliza Anandistya Medina', '0066765899', 'U0066765899', '0f885', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5636204b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (15, 1, 1, 'Hadisty Ananda', '0064226685', 'U0064226685', '49301', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b563a184b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (16, 1, 1, 'Haifa Azizah', '0064115981', 'U0064115981', '3ad12', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b563df6fb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (17, 1, 1, 'Izzah Rizqina', '0067675678', 'U0067675678', '29452', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5641e57b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (18, 1, 1, 'Maqsal Mina', '0062231412', 'U0062231412', '3ac8f', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5645c33b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (19, 1, 1, 'Muhammad Rafiqul Abbrar', '0068042913', 'U0068042913', '2ff87', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5649a5fb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (20, 1, 1, 'Muhammad Rayyis Rasikh', '0062475153', 'U0062475153', '88771', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b56516f9b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (21, 1, 1, 'Nabila Alya Zahra', '0061728059', 'U0061728059', '5eb4d', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b56571eeb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (22, 1, 1, 'Nayla Putri Agustin', '0063723566', 'U0063723566', 'ed8a0', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b565d61eb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (23, 1, 1, 'Naylatul Uhiya', '0066038509', 'U0066038509', 'ded87', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5661d6cb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (24, 1, 1, 'Nouval Temas Mico', '0051515150', 'U0051515150', '429bf', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5665cdbb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (25, 1, 1, 'Raisya Nikmatul Maula', '0069297662', 'U0069297662', '1108f', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5669c9ab6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (26, 1, 1, 'Reza Aulia', '0063784793', 'U0063784793', '0d4ce', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b566dacfb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (27, 1, 1, 'Ridho Adha', '0068307640', 'U0068307640', '35073', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5671d87b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (28, 1, 1, 'Riva Afaiza', '0062599709', 'U0062599709', 'ee484', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5675bb3b6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (29, 1, 1, 'Syauqi Amran', '0067129512', 'U0067129512', 'c152a', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b5679bedb6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (30, 1, 1, 'Syifaus Syauqina', '0062471428', 'U0062471428', 'd2047', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b567fd4ab6d511eeb65dc858c0b7f92f'),
+                                                                                                                                                                                                                                          (31, 1, 1, 'Zaqi Aulia', '0067476158', 'U0067476158', '7d852', '2024-01-19 21:19:08', '2024-01-19 21:19:08', 1, 1, NULL, NULL, NULL, 0, 'b56842b0b6d511eeb65dc858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -810,7 +854,7 @@ CREATE TABLE `tx_schedule` (
                                `id` int(11) NOT NULL,
                                `office_id` int(11) DEFAULT NULL,
                                `title` varchar(100) DEFAULT NULL,
-                               `subject_id` int(11) DEFAULT NULL,
+                               `group_id` int(11) DEFAULT NULL,
                                `room_id` int(11) DEFAULT NULL,
                                `date_start` datetime DEFAULT NULL,
                                `date_end` datetime DEFAULT NULL,
@@ -826,6 +870,15 @@ CREATE TABLE `tx_schedule` (
                                `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tx_schedule`
+--
+
+INSERT INTO `tx_schedule` (`id`, `office_id`, `title`, `group_id`, `room_id`, `date_start`, `date_end`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                                (26, 1, 'Kimia', 1, 2, '2024-01-20 23:51:37', '2024-01-20 23:51:37', '', '2024-01-20 23:52:00', '2024-01-20 23:52:00', 1, 1, NULL, NULL, NULL, 0, '3ab7499fb7b411eeb603c858c0b7f92f'),
+                                                                                                                                                                                                                                                (27, 1, 'Kimia', 1, 2, '2024-01-20 23:53:03', '2024-01-20 23:53:03', '', '2024-01-20 23:53:15', '2024-01-20 23:53:15', 1, 1, NULL, NULL, NULL, 0, '675f300fb7b411eeb603c858c0b7f92f'),
+                                                                                                                                                                                                                                                (28, 1, 'Kimia', 1, 2, '2024-01-20 23:55:09', '2024-01-20 23:55:09', '', '2024-01-20 23:55:19', '2024-01-20 23:55:19', 1, 1, NULL, NULL, NULL, 0, 'b17efea8b7b411eeb603c858c0b7f92f');
+
 -- --------------------------------------------------------
 
 --
@@ -836,8 +889,10 @@ CREATE TABLE `tx_schedule_detail` (
                                       `id` int(11) NOT NULL,
                                       `office_id` int(11) DEFAULT NULL,
                                       `schedule_id` int(11) DEFAULT NULL,
-                                      `participant_id` int(11) DEFAULT NULL,
+                                      `subject_id` int(11) DEFAULT NULL,
                                       `remark` tinytext DEFAULT NULL,
+                                      `asset_name` varchar(100) DEFAULT NULL,
+                                      `asset_url` varchar(500) DEFAULT NULL,
                                       `created_at` datetime DEFAULT NULL,
                                       `updated_at` datetime DEFAULT NULL,
                                       `created_by` int(11) DEFAULT NULL,
@@ -848,6 +903,15 @@ CREATE TABLE `tx_schedule_detail` (
                                       `verlock` int(11) DEFAULT NULL,
                                       `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tx_schedule_detail`
+--
+
+INSERT INTO `tx_schedule_detail` (`id`, `office_id`, `schedule_id`, `subject_id`, `remark`, `asset_name`, `asset_url`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                                (27, NULL, 26, 1, '-', NULL, NULL, '2024-01-20 23:52:00', '2024-01-20 23:52:00', 1, 1, NULL, NULL, NULL, 0, '3ab81f37b7b411eeb603c858c0b7f92f'),
+                                                                                                                                                                                                                                                (28, NULL, 27, 1, '-', NULL, NULL, '2024-01-20 23:53:15', '2024-01-20 23:53:15', 1, 1, NULL, NULL, NULL, 0, '675fff24b7b411eeb603c858c0b7f92f'),
+                                                                                                                                                                                                                                                (29, NULL, 28, 1, '-', NULL, NULL, '2024-01-20 23:55:19', '2024-01-20 23:55:19', 1, 1, NULL, NULL, NULL, 0, 'b18016e0b7b411eeb603c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -867,7 +931,10 @@ CREATE TABLE `tx_session` (
 
 INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
                                                       ('72a29djrl0741ud01mel30dr8m', 1705593795, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a35323a22687474703a2f2f6c6f63616c686f73742f6170706c69636174696f6e2f796969322d6362742d69737072696e672f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('loqi2jadtvn65upcu7aj7d3jdk', 1705515606, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a35323a22687474703a2f2f6c6f63616c686f73742f6170706c69636174696f6e2f796969322d6362742d69737072696e672f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
+                                                      ('75lnmi6e0u40hn1uhqp1850920', 1705678221, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('gof0q8lkv1arbn96ha7g0c1bt5', 1705770208, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('loqi2jadtvn65upcu7aj7d3jdk', 1705515606, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a35323a22687474703a2f2f6c6f63616c686f73742f6170706c69636174696f6e2f796969322d6362742d69737072696e672f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('m9rvb8rdlm4qphktkve41h7kuf', 1705771273, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
 
 -- --------------------------------------------------------
 
@@ -928,7 +995,7 @@ CREATE TABLE `tx_staff` (
                             `gender_status` int(11) DEFAULT NULL,
                             `active_status` int(11) DEFAULT NULL,
                             `address` tinytext DEFAULT NULL,
-                            `file_name` varchar(200) DEFAULT NULL,
+                            `asset_name` varchar(200) DEFAULT NULL,
                             `email` varchar(100) DEFAULT NULL,
                             `description` tinytext DEFAULT NULL,
                             `created_at` datetime DEFAULT NULL,
@@ -946,12 +1013,12 @@ CREATE TABLE `tx_staff` (
 -- Dumping data for table `tx_staff`
 --
 
-INSERT INTO `tx_staff` (`id`, `user_id`, `office_id`, `employment_id`, `title`, `initial`, `identity_number`, `phone_number`, `gender_status`, `active_status`, `address`, `file_name`, `email`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-                                                                                                                                                                                                                                                                                                                                         (1, 1, 1, 1, 'Nanta Es', 'Ade', '123', '123', 1, 1, '-', '654f25f00c353.jpg', 'asdf', '-', '2023-08-23 22:29:45', '2023-11-11 13:57:56', 1, 1, NULL, NULL, NULL, 6, NULL),
-                                                                                                                                                                                                                                                                                                                                         (2, 2, 2, 2, 'rajahati', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109bc5fe7a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                                                                                                                         (3, 3, 2, 3, 'Sadiqul Wahyudi', '', NULL, '', NULL, 1, '', '', '', '', '2024-01-02 15:18:52', '2024-01-02 16:32:45', 2, 2, NULL, NULL, NULL, 1, '913a1c0aa94711ee97d144a84247fe3b'),
-                                                                                                                                                                                                                                                                                                                                         (4, 4, 2, 3, 'Afna Lilia', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-01-02 16:31:29', '2024-01-02 16:31:29', 2, 2, NULL, NULL, NULL, 0, 'b6529c42a95111ee97d144a84247fe3b'),
-                                                                                                                                                                                                                                                                                                                                         (5, 5, 2, 3, 'Nurahmah Yanti', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-01-02 16:32:14', '2024-01-02 16:32:14', 2, 2, NULL, NULL, NULL, 0, 'd0cd01a6a95111ee97d144a84247fe3b');
+INSERT INTO `tx_staff` (`id`, `user_id`, `office_id`, `employment_id`, `title`, `initial`, `identity_number`, `phone_number`, `gender_status`, `active_status`, `address`, `asset_name`, `email`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                                                                                                                          (1, 1, 1, 1, 'Nanta Es', 'Ade', '123', '123', 1, 1, '-', '654f25f00c353.jpg', 'asdf', '-', '2023-08-23 22:29:45', '2023-11-11 13:57:56', 1, 1, NULL, NULL, NULL, 6, NULL),
+                                                                                                                                                                                                                                                                                                                                          (2, 2, 2, 2, 'rajahati', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109bc5fe7a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                                                                                                                          (3, 3, 2, 3, 'Sadiqul Wahyudi', '', NULL, '', NULL, 1, '', '', '', '', '2024-01-02 15:18:52', '2024-01-02 16:32:45', 2, 2, NULL, NULL, NULL, 1, '913a1c0aa94711ee97d144a84247fe3b'),
+                                                                                                                                                                                                                                                                                                                                          (4, 4, 2, 3, 'Afna Lilia', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-01-02 16:31:29', '2024-01-02 16:31:29', 2, 2, NULL, NULL, NULL, 0, 'b6529c42a95111ee97d144a84247fe3b'),
+                                                                                                                                                                                                                                                                                                                                          (5, 5, 2, 3, 'Nurahmah Yanti', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-01-02 16:32:14', '2024-01-02 16:32:14', 2, 2, NULL, NULL, NULL, 0, 'd0cd01a6a95111ee97d144a84247fe3b');
 
 -- --------------------------------------------------------
 
@@ -975,6 +1042,13 @@ CREATE TABLE `tx_subject` (
                               `verlock` int(11) DEFAULT NULL,
                               `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tx_subject`
+--
+
+INSERT INTO `tx_subject` (`id`, `office_id`, `title`, `sequence`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (1, 1, 'Metematika', 1, '', '2024-01-19 21:18:43', '2024-01-19 21:18:43', 1, 1, NULL, NULL, NULL, 0, 'a6d26c56b6d511eeb65dc858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -1001,7 +1075,7 @@ CREATE TABLE `tx_theme` (
                             `title` varchar(100) DEFAULT NULL,
                             `theme_type` int(11) DEFAULT NULL,
                             `content` text DEFAULT NULL,
-                            `file_name` varchar(200) DEFAULT NULL,
+                            `asset_name` varchar(200) DEFAULT NULL,
                             `description` tinytext DEFAULT NULL,
                             `created_at` datetime DEFAULT NULL,
                             `updated_at` datetime DEFAULT NULL,
@@ -1018,23 +1092,23 @@ CREATE TABLE `tx_theme` (
 -- Dumping data for table `tx_theme`
 --
 
-INSERT INTO `tx_theme` (`id`, `office_id`, `title`, `theme_type`, `content`, `file_name`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-                                                                                                                                                                                                                                  (1, 1, 'Logo Frontend Header', 1, NULL, NULL, 'Logo Frontend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910935-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (2, 1, 'Logo Frontend Footer', 2, NULL, NULL, 'Logo Frontend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910cd7-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (3, 1, 'Logo Backend Header', 3, NULL, NULL, 'Logo Backend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910de7-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (4, 1, 'Logo Backend Footer', 4, NULL, NULL, 'Logo Backend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910e82-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (5, 1, 'Logo Report', 5, NULL, NULL, 'Logo Report', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910f02-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (6, 1, 'Logo Invoice', 6, NULL, NULL, 'Logo Invoice', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910f7a-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (7, 1, 'Title', 7, NULL, NULL, 'Title', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910ff0-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (8, 1, 'Content', 8, NULL, NULL, 'Content', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb911062-7a55-11ee-aaf5-441ea14ed578'),
-                                                                                                                                                                                                                                  (9, 2, 'Logo Frontend Header', 1, NULL, NULL, 'Logo Frontend Header', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109db2d67a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (10, 2, 'Logo Frontend Footer', 2, NULL, NULL, 'Logo Frontend Footer', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109ddcae7a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (11, 2, 'Logo Backend Header', 3, NULL, NULL, 'Logo Backend Header', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109e05d97a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (12, 2, 'Logo Backend Footer', 4, NULL, NULL, 'Logo Backend Footer', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109e2e7e7a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (13, 2, 'Logo Report', 5, NULL, NULL, 'Logo Report', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a042557a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (14, 2, 'Logo Invoice', 6, NULL, NULL, 'Logo Invoice', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a090db7a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (15, 2, 'Title', 7, NULL, NULL, 'Title', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a0cc5e7a5611eeaaf5441ea14ed578'),
-                                                                                                                                                                                                                                  (16, 2, 'Content', 8, NULL, NULL, 'Content', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a0fee07a5611eeaaf5441ea14ed578');
+INSERT INTO `tx_theme` (`id`, `office_id`, `title`, `theme_type`, `content`, `asset_name`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                   (1, 1, 'Logo Frontend Header', 1, NULL, NULL, 'Logo Frontend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910935-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (2, 1, 'Logo Frontend Footer', 2, NULL, NULL, 'Logo Frontend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910cd7-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (3, 1, 'Logo Backend Header', 3, NULL, NULL, 'Logo Backend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910de7-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (4, 1, 'Logo Backend Footer', 4, NULL, NULL, 'Logo Backend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910e82-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (5, 1, 'Logo Report', 5, NULL, NULL, 'Logo Report', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910f02-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (6, 1, 'Logo Invoice', 6, NULL, NULL, 'Logo Invoice', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910f7a-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (7, 1, 'Title', 7, NULL, NULL, 'Title', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb910ff0-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (8, 1, 'Content', 8, NULL, NULL, 'Content', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, 'eb911062-7a55-11ee-aaf5-441ea14ed578'),
+                                                                                                                                                                                                                                   (9, 2, 'Logo Frontend Header', 1, NULL, NULL, 'Logo Frontend Header', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109db2d67a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (10, 2, 'Logo Frontend Footer', 2, NULL, NULL, 'Logo Frontend Footer', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109ddcae7a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (11, 2, 'Logo Backend Header', 3, NULL, NULL, 'Logo Backend Header', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109e05d97a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (12, 2, 'Logo Backend Footer', 4, NULL, NULL, 'Logo Backend Footer', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '109e2e7e7a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (13, 2, 'Logo Report', 5, NULL, NULL, 'Logo Report', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a042557a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (14, 2, 'Logo Invoice', 6, NULL, NULL, 'Logo Invoice', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a090db7a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (15, 2, 'Title', 7, NULL, NULL, 'Title', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a0cc5e7a5611eeaaf5441ea14ed578'),
+                                                                                                                                                                                                                                   (16, 2, 'Content', 8, NULL, NULL, 'Content', '2023-11-03 21:34:23', '2023-11-03 21:34:23', 1, 1, NULL, NULL, NULL, 0, '10a0fee07a5611eeaaf5441ea14ed578');
 
 -- --------------------------------------------------------
 
@@ -1065,7 +1139,7 @@ CREATE TABLE `tx_user` (
 --
 
 INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `unconfirmed_email`, `registration_ip`, `flags`, `confirmed_at`, `blocked_at`, `updated_at`, `created_at`, `last_login_at`, `auth_tf_key`, `auth_tf_enabled`) VALUES
-                                                                                                                                                                                                                                                 (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1705592256, NULL, 0),
+                                                                                                                                                                                                                                                 (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1705767226, NULL, 0),
                                                                                                                                                                                                                                                  (2, 'rajahati', 'rajahati@oke.com', '$2y$12$ZBs3Bnv1RrdVWxhrxNMeLeT9Fr1EdLD1T6zY70KJ.fzkOxOilVgFy', 'oyb5maS0UL9P11U6EUjDo4ok980M8wNR', NULL, '180.241.44.219', 0, NULL, NULL, 1699022063, 1699022063, 1705159096, NULL, 0),
                                                                                                                                                                                                                                                  (3, 'sadiqulwahyudi@gmail.com', 'sadiqulwahyudi@gmail.com', '$2y$12$evPFMD73ILudJ/lF4qfIh.Lt9QmrZ77aOPA/bTxzkNTu/0suIIyNK', 'ecNmxD3FGiFOf5HX7J3pwtuqN16GPxZo', NULL, '180.241.46.7', 0, NULL, NULL, 1704188118, 1704183532, 1704560204, NULL, 0),
                                                                                                                                                                                                                                                  (4, 'afna', 'afna@rajahati.com', '$2y$12$fwJhdAvfKR86cj4oHi2QbuVU7C1woAXuBgw13fqM/RXYUfg8vkXKe', 'ukgumez3ivNnx9mOazFJiVBKM0Ebyzmh', NULL, '36.85.110.2', 0, NULL, NULL, 1704187889, 1704187889, 1704196731, NULL, 0),
@@ -1215,8 +1289,8 @@ ALTER TABLE `tx_room`
 ALTER TABLE `tx_schedule`
     ADD PRIMARY KEY (`id`),
     ADD KEY `Fk_schedule_office` (`office_id`),
-    ADD KEY `Fk_schedule_subject` (`subject_id`),
-    ADD KEY `Fk_schedule_room` (`room_id`);
+    ADD KEY `Fk_schedule_room` (`room_id`),
+    ADD KEY `Fk_schedule_group` (`group_id`);
 
 --
 -- Indexes for table `tx_schedule_detail`
@@ -1225,7 +1299,7 @@ ALTER TABLE `tx_schedule_detail`
     ADD PRIMARY KEY (`id`),
     ADD KEY `Fk_schedule_detail_office` (`office_id`),
     ADD KEY `Fk_schedule_detail_schedule` (`schedule_id`),
-    ADD KEY `Fk_schedule_detail_participant` (`participant_id`);
+    ADD KEY `Fk_schedule_detail_subject` (`subject_id`);
 
 --
 -- Indexes for table `tx_session`
@@ -1341,7 +1415,7 @@ ALTER TABLE `tx_event`
 -- AUTO_INCREMENT for table `tx_group`
 --
 ALTER TABLE `tx_group`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tx_office`
@@ -1353,7 +1427,7 @@ ALTER TABLE `tx_office`
 -- AUTO_INCREMENT for table `tx_participant`
 --
 ALTER TABLE `tx_participant`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tx_profile`
@@ -1377,13 +1451,13 @@ ALTER TABLE `tx_room`
 -- AUTO_INCREMENT for table `tx_schedule`
 --
 ALTER TABLE `tx_schedule`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tx_schedule_detail`
 --
 ALTER TABLE `tx_schedule_detail`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `tx_site_link`
@@ -1407,7 +1481,7 @@ ALTER TABLE `tx_staff`
 -- AUTO_INCREMENT for table `tx_subject`
 --
 ALTER TABLE `tx_subject`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tx_tag`
@@ -1526,17 +1600,17 @@ ALTER TABLE `tx_room`
 -- Constraints for table `tx_schedule`
 --
 ALTER TABLE `tx_schedule`
+    ADD CONSTRAINT `Fk_schedule_group` FOREIGN KEY (`group_id`) REFERENCES `tx_group` (`id`),
     ADD CONSTRAINT `Fk_schedule_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
-    ADD CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`),
-    ADD CONSTRAINT `Fk_schedule_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`);
+    ADD CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`);
 
 --
 -- Constraints for table `tx_schedule_detail`
 --
 ALTER TABLE `tx_schedule_detail`
     ADD CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
-    ADD CONSTRAINT `Fk_schedule_detail_participant` FOREIGN KEY (`participant_id`) REFERENCES `tx_participant` (`id`),
-    ADD CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`);
+    ADD CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
+    ADD CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`);
 
 --
 -- Constraints for table `tx_social_account`
