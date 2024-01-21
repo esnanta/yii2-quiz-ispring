@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,7 +16,6 @@ use PhpCsFixer\Console\SelfUpdate\NewVersionCheckerInterface;
 use PhpCsFixer\PharCheckerInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\ToolInfoInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -30,19 +27,31 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author Stephane PY <py.stephane1@gmail.com>
  * @author Grégoire Pineau <lyrixx@lyrixx.info>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  *
  * @internal
  */
-#[AsCommand(name: 'self-update')]
 final class SelfUpdateCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'self-update';
 
-    private NewVersionCheckerInterface $versionChecker;
+    /**
+     * @var NewVersionCheckerInterface
+     */
+    private $versionChecker;
 
-    private ToolInfoInterface $toolInfo;
+    /**
+     * @var ToolInfoInterface
+     */
+    private $toolInfo;
 
-    private PharCheckerInterface $pharChecker;
+    /**
+     * @var PharCheckerInterface
+     */
+    private $pharChecker;
 
     public function __construct(
         NewVersionCheckerInterface $versionChecker,
@@ -56,7 +65,10 @@ final class SelfUpdateCommand extends Command
         $this->pharChecker = $pharChecker;
     }
 
-    protected function configure(): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
     {
         $this
             ->setAliases(['selfupdate'])
@@ -68,22 +80,26 @@ final class SelfUpdateCommand extends Command
             ->setDescription('Update php-cs-fixer.phar to the latest stable version.')
             ->setHelp(
                 <<<'EOT'
-                    The <info>%command.name%</info> command replace your php-cs-fixer.phar by the
-                    latest version released on:
-                    <comment>https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases</comment>
+The <info>%command.name%</info> command replace your php-cs-fixer.phar by the
+latest version released on:
+<comment>https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases</comment>
 
-                    <info>$ php php-cs-fixer.phar %command.name%</info>
+<info>$ php php-cs-fixer.phar %command.name%</info>
 
-                    EOT
+EOT
             )
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    /**
+     * {@inheritdoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity() && $output instanceof ConsoleOutputInterface) {
             $stdErr = $output->getErrorOutput();
             $stdErr->writeln($this->getApplication()->getLongVersion());
+            $stdErr->writeln(sprintf('Runtime: <info>PHP %s</info>', PHP_VERSION));
         }
 
         if (!$this->toolInfo->isInstalledAsPhar()) {
@@ -109,7 +125,7 @@ final class SelfUpdateCommand extends Command
         }
 
         if (1 !== $this->versionChecker->compareVersions($latestVersion, $currentVersion)) {
-            $output->writeln('<info>PHP CS Fixer is already up-to-date.</info>');
+            $output->writeln('<info>PHP CS Fixer is already up to date.</info>');
 
             return 0;
         }
@@ -121,7 +137,7 @@ final class SelfUpdateCommand extends Command
             && true !== $input->getOption('force')
         ) {
             $output->writeln(sprintf('<info>A new major version of PHP CS Fixer is available</info> (<comment>%s</comment>)', $latestVersion));
-            $output->writeln(sprintf('<info>Before upgrading please read</info> https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/%s/UPGRADE-v%s.md', $latestVersion, $currentMajor + 1));
+            $output->writeln(sprintf('<info>Before upgrading please read</info> https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/%s/UPGRADE-v%s.md', $latestVersion, $currentMajor + 1));
             $output->writeln('<info>If you are ready to upgrade run this command with</info> <comment>-f</comment>');
             $output->writeln('<info>Checking for new minor/patch version...</info>');
 

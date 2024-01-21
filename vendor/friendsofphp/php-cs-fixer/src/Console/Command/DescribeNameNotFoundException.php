@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,18 +13,27 @@ declare(strict_types=1);
 namespace PhpCsFixer\Console\Command;
 
 /**
+ * @author SpacePossum
+ *
  * @internal
  */
 final class DescribeNameNotFoundException extends \InvalidArgumentException
 {
-    private string $name;
+    /**
+     * @var string
+     */
+    private $name;
 
     /**
-     * 'rule'|'set'.
+     * @var string 'rule'|'set'
      */
-    private string $type;
+    private $type;
 
-    public function __construct(string $name, string $type)
+    /**
+     * @param string $name
+     * @param string $type
+     */
+    public function __construct($name, $type)
     {
         $this->name = $name;
         $this->type = $type;
@@ -34,12 +41,18 @@ final class DescribeNameNotFoundException extends \InvalidArgumentException
         parent::__construct();
     }
 
-    public function getName(): string
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getType(): string
+    /**
+     * @return string
+     */
+    public function getType()
     {
         return $this->type;
     }

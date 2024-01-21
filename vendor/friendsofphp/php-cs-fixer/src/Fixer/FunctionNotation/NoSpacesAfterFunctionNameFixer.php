@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\FunctionNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -29,31 +26,40 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'When making a method or function call, there MUST NOT be a space between the method or function name and the opening parenthesis.',
-            [new CodeSample("<?php\nstrlen ('Hello World!');\nfoo (test (3));\nexit  (1);\n\$func ();\n")]
+            [new CodeSample("<?php\nrequire ('sample.php');\necho (test (3));\nexit  (1);\n\$func ();\n")]
         );
     }
 
     /**
      * {@inheritdoc}
      *
-     * Must run before FunctionToConstantFixer, GetClassToClassKeywordFixer.
+     * Must run before FunctionToConstantFixer.
      * Must run after PowToExponentiationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 3;
+        return 2;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAnyTokenKindsFound([T_STRING, ...$this->getFunctionyTokenKinds()]);
+        return $tokens->isAnyTokenKindsFound(array_merge($this->getFunctionyTokenKinds(), [T_STRING]));
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $functionyTokens = $this->getFunctionyTokenKinds();
         $languageConstructionTokens = $this->getLanguageConstructionTokenKinds();
@@ -73,7 +79,7 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
             $nextNonWhiteSpace = $tokens->getNextMeaningfulToken($endParenthesisIndex);
             if (
                 null !== $nextNonWhiteSpace
-                && !$tokens[$nextNonWhiteSpace]->equals(';')
+                && $tokens[$nextNonWhiteSpace]->equals('?')
                 && $tokens[$lastTokenIndex]->isGivenKind($languageConstructionTokens)
             ) {
                 continue;
@@ -107,7 +113,7 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
      * @param Tokens $tokens tokens to handle
      * @param int    $index  index of token
      */
-    private function fixFunctionCall(Tokens $tokens, int $index): void
+    private function fixFunctionCall(Tokens $tokens, $index)
     {
         // remove space before opening brace
         if ($tokens[$index - 1]->isWhitespace()) {
@@ -116,9 +122,9 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
     }
 
     /**
-     * @return array<list<int>|string>
+     * @return array<array|string>
      */
-    private function getBraceAfterVariableKinds(): array
+    private function getBraceAfterVariableKinds()
     {
         static $tokens = [
             ')',
@@ -133,9 +139,9 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
     /**
      * Gets the token kinds which can work as function calls.
      *
-     * @return list<int> Token names
+     * @return int[] Token names
      */
-    private function getFunctionyTokenKinds(): array
+    private function getFunctionyTokenKinds()
     {
         static $tokens = [
             T_ARRAY,
@@ -162,7 +168,7 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
      *
      * @return int[]
      */
-    private function getLanguageConstructionTokenKinds(): array
+    private function getLanguageConstructionTokenKinds()
     {
         static $languageConstructionTokens = [
             T_ECHO,

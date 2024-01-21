@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,86 +13,66 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Import;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\FixerConfiguration\AliasedFixerOptionBuilder;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
-use PhpCsFixer\Utils;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * @author Sebastiaan Stok <s.stok@rollerscapes.net>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  * @author Darius Matulionis <darius@matulionis.lt>
  * @author Adriano Pilger <adriano.pilger@gmail.com>
  */
-final class OrderedImportsFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class OrderedImportsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
-    /**
-     * @internal
-     */
-    public const IMPORT_TYPE_CLASS = 'class';
+    const IMPORT_TYPE_CLASS = 'class';
 
-    /**
-     * @internal
-     */
-    public const IMPORT_TYPE_CONST = 'const';
+    const IMPORT_TYPE_CONST = 'const';
 
-    /**
-     * @internal
-     */
-    public const IMPORT_TYPE_FUNCTION = 'function';
+    const IMPORT_TYPE_FUNCTION = 'function';
 
-    /**
-     * @internal
-     */
-    public const SORT_ALPHA = 'alpha';
+    const SORT_ALPHA = 'alpha';
 
-    /**
-     * @internal
-     */
-    public const SORT_LENGTH = 'length';
+    const SORT_LENGTH = 'length';
 
-    /**
-     * @internal
-     */
-    public const SORT_NONE = 'none';
+    const SORT_NONE = 'none';
 
     /**
      * Array of supported sort types in configuration.
      *
      * @var string[]
      */
-    private const SUPPORTED_SORT_TYPES = [self::IMPORT_TYPE_CLASS, self::IMPORT_TYPE_CONST, self::IMPORT_TYPE_FUNCTION];
+    private $supportedSortTypes = [self::IMPORT_TYPE_CLASS, self::IMPORT_TYPE_CONST, self::IMPORT_TYPE_FUNCTION];
 
     /**
      * Array of supported sort algorithms in configuration.
      *
      * @var string[]
      */
-    private const SUPPORTED_SORT_ALGORITHMS = [self::SORT_ALPHA, self::SORT_LENGTH, self::SORT_NONE];
+    private $supportedSortAlgorithms = [self::SORT_ALPHA, self::SORT_LENGTH, self::SORT_NONE];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Ordering `use` statements.',
             [
-                new CodeSample(
-                    "<?php\nuse function AAC;\nuse const AAB;\nuse AAA;\n"
-                ),
-                new CodeSample(
-                    "<?php\nuse function Aaa;\nuse const AA;\n",
-                    ['case_sensitive' => true]
-                ),
+                new CodeSample("<?php\nuse Z; use A;\n"),
                 new CodeSample(
                     '<?php
 use Acme\Bar;
@@ -104,7 +82,11 @@ use Bar;
 ',
                     ['sort_algorithm' => self::SORT_LENGTH]
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
+                    "<?php\nuse function AAC;\nuse const AAB;\nuse AAA;\n",
+                    new VersionSpecification(70000)
+                ),
+                new VersionSpecificCodeSample(
                     '<?php
 use const AAAA;
 use const BBB;
@@ -116,6 +98,7 @@ use Acme;
 use function CCC\AA;
 use function DDD;
 ',
+                    new VersionSpecification(70000),
                     [
                         'sort_algorithm' => self::SORT_LENGTH,
                         'imports_order' => [
@@ -125,7 +108,7 @@ use function DDD;
                         ],
                     ]
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php
 use const BBB;
 use const AAAA;
@@ -137,6 +120,7 @@ use Bar;
 use function DDD;
 use function CCC\AA;
 ',
+                    new VersionSpecification(70000),
                     [
                         'sort_algorithm' => self::SORT_ALPHA,
                         'imports_order' => [
@@ -146,7 +130,7 @@ use function CCC\AA;
                         ],
                     ]
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php
 use const BBB;
 use const AAAA;
@@ -158,6 +142,7 @@ use Acme;
 use AAC;
 use Bar;
 ',
+                    new VersionSpecification(70000),
                     [
                         'sort_algorithm' => self::SORT_NONE,
                         'imports_order' => [
@@ -174,102 +159,120 @@ use Bar;
     /**
      * {@inheritdoc}
      *
-     * Must run before BlankLineBetweenImportGroupsFixer.
-     * Must run after FullyQualifiedStrictTypesFixer, GlobalNamespaceImportFixer, NoLeadingImportSlashFixer.
+     * Must run after GlobalNamespaceImportFixer, NoLeadingImportSlashFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -30;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_USE);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
         $namespacesImports = $tokensAnalyzer->getImportUseIndexes(true);
 
-        foreach (array_reverse($namespacesImports) as $usesPerNamespaceIndices) {
-            $count = \count($usesPerNamespaceIndices);
+        if (0 === \count($namespacesImports)) {
+            return;
+        }
 
-            if (0 === $count) {
-                continue; // nothing to sort
-            }
+        $usesOrder = [];
+        foreach ($namespacesImports as $uses) {
+            $usesOrder[] = $this->getNewOrder(array_reverse($uses), $tokens);
+        }
+        $usesOrder = array_replace(...$usesOrder);
 
-            if (1 === $count) {
-                $this->setNewOrder($tokens, $this->getNewOrder($usesPerNamespaceIndices, $tokens));
+        $usesOrder = array_reverse($usesOrder, true);
+        $mapStartToEnd = [];
 
-                continue;
-            }
+        foreach ($usesOrder as $use) {
+            $mapStartToEnd[$use['startIndex']] = $use['endIndex'];
+        }
 
-            $groupUsesOffset = 0;
-            $groupUses = [$groupUsesOffset => [$usesPerNamespaceIndices[0]]];
+        // Now insert the new tokens, starting from the end
+        foreach ($usesOrder as $index => $use) {
+            $declarationTokens = Tokens::fromCode(
+                sprintf(
+                    '<?php use %s%s;',
+                    self::IMPORT_TYPE_CLASS === $use['importType'] ? '' : ' '.$use['importType'].' ',
+                    $use['namespace']
+                )
+            );
 
-            // if there's some logic between two `use` statements, sort only imports grouped before that logic
-            for ($index = 0; $index < $count - 1; ++$index) {
-                $nextGroupUse = $tokens->getNextTokenOfKind($usesPerNamespaceIndices[$index], [';', [T_CLOSE_TAG]]);
+            $declarationTokens->clearRange(0, 2); // clear `<?php use `
+            $declarationTokens->clearAt(\count($declarationTokens) - 1); // clear `;`
+            $declarationTokens->clearEmptyTokens();
 
-                if ($tokens[$nextGroupUse]->isGivenKind(T_CLOSE_TAG)) {
-                    $nextGroupUse = $tokens->getNextTokenOfKind($usesPerNamespaceIndices[$index], [[T_OPEN_TAG]]);
+            $tokens->overrideRange($index, $mapStartToEnd[$index], $declarationTokens);
+            if ($use['group']) {
+                // a group import must start with `use` and cannot be part of comma separated import list
+                $prev = $tokens->getPrevMeaningfulToken($index);
+                if ($tokens[$prev]->equals(',')) {
+                    $tokens[$prev] = new Token(';');
+                    $tokens->insertAt($prev + 1, new Token([T_USE, 'use']));
+
+                    if (!$tokens[$prev + 2]->isWhitespace()) {
+                        $tokens->insertAt($prev + 2, new Token([T_WHITESPACE, ' ']));
+                    }
                 }
-
-                $nextGroupUse = $tokens->getNextMeaningfulToken($nextGroupUse);
-
-                if ($nextGroupUse !== $usesPerNamespaceIndices[$index + 1]) {
-                    $groupUses[++$groupUsesOffset] = [];
-                }
-
-                $groupUses[$groupUsesOffset][] = $usesPerNamespaceIndices[$index + 1];
-            }
-
-            for ($index = $groupUsesOffset; $index >= 0; --$index) {
-                $this->setNewOrder($tokens, $this->getNewOrder($groupUses[$index], $tokens));
             }
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
-        $supportedSortTypes = self::SUPPORTED_SORT_TYPES;
+        $supportedSortTypes = $this->supportedSortTypes;
 
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('sort_algorithm', 'Whether the statements should be sorted alphabetically or by length, or not sorted.'))
-                ->setAllowedValues(self::SUPPORTED_SORT_ALGORITHMS)
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('sort_algorithm', 'whether the statements should be sorted alphabetically or by length, or not sorted'),
+                'sortAlgorithm'
+            ))
+                ->setAllowedValues($this->supportedSortAlgorithms)
                 ->setDefault(self::SORT_ALPHA)
                 ->getOption(),
-            (new FixerOptionBuilder('imports_order', 'Defines the order of import types.'))
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('imports_order', 'Defines the order of import types.'),
+                'importsOrder'
+            ))
                 ->setAllowedTypes(['array', 'null'])
-                ->setAllowedValues([static function (?array $value) use ($supportedSortTypes): bool {
+                ->setAllowedValues([static function ($value) use ($supportedSortTypes) {
                     if (null !== $value) {
                         $missing = array_diff($supportedSortTypes, $value);
-                        if (\count($missing) > 0) {
+                        if (\count($missing)) {
                             throw new InvalidOptionsException(sprintf(
-                                'Missing sort %s %s.',
+                                'Missing sort %s "%s".',
                                 1 === \count($missing) ? 'type' : 'types',
-                                Utils::naturalLanguageJoin($missing)
+                                implode('", "', $missing)
                             ));
                         }
 
                         $unknown = array_diff($value, $supportedSortTypes);
-                        if (\count($unknown) > 0) {
+                        if (\count($unknown)) {
                             throw new InvalidOptionsException(sprintf(
-                                'Unknown sort %s %s.',
+                                'Unknown sort %s "%s".',
                                 1 === \count($unknown) ? 'type' : 'types',
-                                Utils::naturalLanguageJoin($unknown)
+                                implode('", "', $unknown)
                             ));
                         }
                     }
 
                     return true;
                 }])
-                ->setDefault(null) // @TODO set to ['class', 'function', 'const'] on 4.0
-                ->getOption(),
-            (new FixerOptionBuilder('case_sensitive', 'Whether the sorting should be case sensitive.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(false)
+                ->setDefault(null)
                 ->getOption(),
         ]);
     }
@@ -280,17 +283,17 @@ use Bar;
      * @param array<string, bool|int|string> $first
      * @param array<string, bool|int|string> $second
      *
+     * @return int
+     *
      * @internal
      */
-    private function sortAlphabetically(array $first, array $second): int
+    private function sortAlphabetically(array $first, array $second)
     {
         // Replace backslashes by spaces before sorting for correct sort order
         $firstNamespace = str_replace('\\', ' ', $this->prepareNamespace($first['namespace']));
         $secondNamespace = str_replace('\\', ' ', $this->prepareNamespace($second['namespace']));
 
-        return true === $this->configuration['case_sensitive']
-            ? $firstNamespace <=> $secondNamespace
-            : strcasecmp($firstNamespace, $secondNamespace);
+        return strcasecmp($firstNamespace, $secondNamespace);
     }
 
     /**
@@ -299,9 +302,11 @@ use Bar;
      * @param array<string, bool|int|string> $first
      * @param array<string, bool|int|string> $second
      *
+     * @return int
+     *
      * @internal
      */
-    private function sortByLength(array $first, array $second): int
+    private function sortByLength(array $first, array $second)
     {
         $firstNamespace = (self::IMPORT_TYPE_CLASS === $first['importType'] ? '' : $first['importType'].' ').$this->prepareNamespace($first['namespace']);
         $secondNamespace = (self::IMPORT_TYPE_CLASS === $second['importType'] ? '' : $second['importType'].' ').$this->prepareNamespace($second['namespace']);
@@ -310,9 +315,7 @@ use Bar;
         $secondNamespaceLength = \strlen($secondNamespace);
 
         if ($firstNamespaceLength === $secondNamespaceLength) {
-            $sortResult = true === $this->configuration['case_sensitive']
-                ? $firstNamespace <=> $secondNamespace
-                : strcasecmp($firstNamespace, $secondNamespace);
+            $sortResult = strcasecmp($firstNamespace, $secondNamespace);
         } else {
             $sortResult = $firstNamespaceLength > $secondNamespaceLength ? 1 : -1;
         }
@@ -320,22 +323,28 @@ use Bar;
         return $sortResult;
     }
 
-    private function prepareNamespace(string $namespace): string
+    /**
+     * @param string $namespace
+     *
+     * @return string
+     */
+    private function prepareNamespace($namespace)
     {
         return trim(Preg::replace('%/\*(.*)\*/%s', '', $namespace));
     }
 
     /**
-     * @param list<int> $uses
+     * @param int[] $uses
+     *
+     * @return array
      */
-    private function getNewOrder(array $uses, Tokens $tokens): array
+    private function getNewOrder(array $uses, Tokens $tokens)
     {
-        $indices = [];
-        $originalIndices = [];
+        $indexes = [];
+        $originalIndexes = [];
         $lineEnding = $this->whitespacesConfig->getLineEnding();
-        $usesCount = \count($uses);
 
-        for ($i = 0; $i < $usesCount; ++$i) {
+        for ($i = \count($uses) - 1; $i >= 0; --$i) {
             $index = $uses[$i];
 
             $startIndex = $tokens->getTokenNotOfKindsSibling($index + 1, 1, [T_WHITESPACE]);
@@ -401,7 +410,7 @@ use Bar;
                                 if (
                                     '' === $firstIndent
                                     && $namespaceTokens[$k2]->isWhitespace()
-                                    && str_contains($namespaceTokens[$k2]->getContent(), $lineEnding)
+                                    && false !== strpos($namespaceTokens[$k2]->getContent(), $lineEnding)
                                 ) {
                                     $lastIndent = $lineEnding;
                                     $firstIndent = $lineEnding.$this->whitespacesConfig->getIndent();
@@ -441,7 +450,7 @@ use Bar;
                         $namespace = Tokens::fromArray($namespaceTokens)->generateCode();
                     }
 
-                    $indices[$startIndex] = [
+                    $indexes[$startIndex] = [
                         'namespace' => $namespace,
                         'startIndex' => $startIndex,
                         'endIndex' => $index - 1,
@@ -449,14 +458,14 @@ use Bar;
                         'group' => $group,
                     ];
 
-                    $originalIndices[] = $startIndex;
+                    $originalIndexes[] = $startIndex;
 
                     if ($index === $endIndex) {
                         break;
                     }
 
                     $namespaceTokens = [];
-                    $nextPartIndex = $tokens->getTokenNotOfKindSibling($index, 1, [',', [T_WHITESPACE]]);
+                    $nextPartIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[','], [T_WHITESPACE]]);
                     $startIndex = $nextPartIndex;
                     $index = $nextPartIndex;
 
@@ -470,132 +479,56 @@ use Bar;
 
         // Is sort types provided, sorting by groups and each group by algorithm
         if (null !== $this->configuration['imports_order']) {
-            // Grouping indices by import type.
+            // Grouping indexes by import type.
             $groupedByTypes = [];
-
-            foreach ($indices as $startIndex => $item) {
+            foreach ($indexes as $startIndex => $item) {
                 $groupedByTypes[$item['importType']][$startIndex] = $item;
             }
 
             // Sorting each group by algorithm.
-            foreach ($groupedByTypes as $type => $groupIndices) {
-                $groupedByTypes[$type] = $this->sortByAlgorithm($groupIndices);
+            foreach ($groupedByTypes as $type => $indexes) {
+                $groupedByTypes[$type] = $this->sortByAlgorithm($indexes);
             }
 
             // Ordering groups
             $sortedGroups = [];
-
             foreach ($this->configuration['imports_order'] as $type) {
-                if (isset($groupedByTypes[$type]) && [] !== $groupedByTypes[$type]) {
+                if (isset($groupedByTypes[$type]) && !empty($groupedByTypes[$type])) {
                     foreach ($groupedByTypes[$type] as $startIndex => $item) {
                         $sortedGroups[$startIndex] = $item;
                     }
                 }
             }
-
-            $indices = $sortedGroups;
+            $indexes = $sortedGroups;
         } else {
             // Sorting only by algorithm
-            $indices = $this->sortByAlgorithm($indices);
+            $indexes = $this->sortByAlgorithm($indexes);
         }
 
         $index = -1;
         $usesOrder = [];
 
-        // Loop through the index but use original index order
-        foreach ($indices as $v) {
-            $usesOrder[$originalIndices[++$index]] = $v;
+        // Loop trough the index but use original index order
+        foreach ($indexes as $v) {
+            $usesOrder[$originalIndexes[++$index]] = $v;
         }
 
         return $usesOrder;
     }
 
     /**
-     * @param array<
-     *     int,
-     *     array{
-     *         namespace: string,
-     *         startIndex: int,
-     *         endIndex: int,
-     *         importType: string,
-     *         group: bool,
-     *     }
-     * > $indices
+     * @param array[] $indexes
      *
-     * @return array<
-     *     int,
-     *     array{
-     *         namespace: string,
-     *         startIndex: int,
-     *         endIndex: int,
-     *         importType: string,
-     *         group: bool,
-     *     }
-     * >
+     * @return array
      */
-    private function sortByAlgorithm(array $indices): array
+    private function sortByAlgorithm(array $indexes)
     {
         if (self::SORT_ALPHA === $this->configuration['sort_algorithm']) {
-            uasort($indices, [$this, 'sortAlphabetically']);
+            uasort($indexes, [$this, 'sortAlphabetically']);
         } elseif (self::SORT_LENGTH === $this->configuration['sort_algorithm']) {
-            uasort($indices, [$this, 'sortByLength']);
+            uasort($indexes, [$this, 'sortByLength']);
         }
 
-        return $indices;
-    }
-
-    /**
-     * @param array<int, array{
-     *     namespace: string,
-     *     startIndex: int,
-     *     endIndex: int,
-     *     importType: string,
-     *     group: bool,
-     * }> $usesOrder
-     */
-    private function setNewOrder(Tokens $tokens, array $usesOrder): void
-    {
-        $mapStartToEnd = [];
-
-        foreach ($usesOrder as $use) {
-            $mapStartToEnd[$use['startIndex']] = $use['endIndex'];
-        }
-
-        // Now insert the new tokens, starting from the end
-        foreach (array_reverse($usesOrder, true) as $index => $use) {
-            $code = sprintf(
-                '<?php use %s%s;',
-                self::IMPORT_TYPE_CLASS === $use['importType'] ? '' : ' '.$use['importType'].' ',
-                $use['namespace']
-            );
-
-            $numberOfInitialTokensToClear = 3; // clear `<?php use `
-            if (self::IMPORT_TYPE_CLASS !== $use['importType']) {
-                $prevIndex = $tokens->getPrevMeaningfulToken($index);
-                if ($tokens[$prevIndex]->equals(',')) {
-                    $numberOfInitialTokensToClear = 5; // clear `<?php use const ` or `<?php use function `
-                }
-            }
-
-            $declarationTokens = Tokens::fromCode($code);
-            $declarationTokens->clearRange(0, $numberOfInitialTokensToClear - 1);
-            $declarationTokens->clearAt(\count($declarationTokens) - 1); // clear `;`
-            $declarationTokens->clearEmptyTokens();
-
-            $tokens->overrideRange($index, $mapStartToEnd[$index], $declarationTokens);
-
-            if ($use['group']) {
-                // a group import must start with `use` and cannot be part of comma separated import list
-                $prev = $tokens->getPrevMeaningfulToken($index);
-                if ($tokens[$prev]->equals(',')) {
-                    $tokens[$prev] = new Token(';');
-                    $tokens->insertAt($prev + 1, new Token([T_USE, 'use']));
-
-                    if (!$tokens[$prev + 2]->isWhitespace()) {
-                        $tokens->insertAt($prev + 2, new Token([T_WHITESPACE, ' ']));
-                    }
-                }
-            }
-        }
+        return $indexes;
     }
 }

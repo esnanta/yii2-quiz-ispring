@@ -1,0 +1,40 @@
+{
+    "name": "victor78/yii2-zipper",
+    "version": "0.0.4",
+    "description": "Yii2-Zipper is archiving component for Yii2.",
+    "keywords": [
+        "yii2",
+        "zippy",
+        "zip",
+        "tar",
+        "archive",
+        "archiver",
+        "zipper",
+        "component",
+        "Victor78"
+    ],
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Victor78"
+        }
+    ],    
+    "support": {
+        "issues": "https://github.com/victor78/yii2-zipper/issues",
+        "wiki": "https://github.com/victor78/yii2-zipper/wiki",
+        "source": "https://github.com/victor78/yii2-zipper"
+    },
+
+    "require": {
+        "php": ">=7.0",
+        "yiisoft/yii2": "*",
+        "victor78/zippy-ext": "~0.0.4"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Victor78\\Zipper\\": "src/"
+        }
+    }
+}

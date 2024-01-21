@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,38 +13,60 @@ declare(strict_types=1);
 namespace PhpCsFixer\Tokenizer\Analyzer\Analysis;
 
 /**
+ * @author Kuba Werłos <werlos@gmail.com>
+ *
  * @internal
  */
-final class SwitchAnalysis extends AbstractControlCaseStructuresAnalysis
+final class SwitchAnalysis
 {
     /**
-     * @var list<CaseAnalysis>
+     * @var int
      */
-    private array $cases;
-
-    private ?DefaultAnalysis $defaultAnalysis;
+    private $casesStart;
 
     /**
-     * @param list<CaseAnalysis> $cases
+     * @var int
      */
-    public function __construct(int $index, int $open, int $close, array $cases, ?DefaultAnalysis $defaultAnalysis)
-    {
-        parent::__construct($index, $open, $close);
+    private $casesEnd;
 
+    /**
+     * @var CaseAnalysis[]
+     */
+    private $cases = [];
+
+    /**
+     * @param int            $casesStart
+     * @param int            $casesEnd
+     * @param CaseAnalysis[] $cases
+     */
+    public function __construct($casesStart, $casesEnd, array $cases)
+    {
+        $this->casesStart = $casesStart;
+        $this->casesEnd = $casesEnd;
         $this->cases = $cases;
-        $this->defaultAnalysis = $defaultAnalysis;
     }
 
     /**
-     * @return list<CaseAnalysis>
+     * @return int
      */
-    public function getCases(): array
+    public function getCasesStart()
+    {
+        return $this->casesStart;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCasesEnd()
+    {
+        return $this->casesEnd;
+    }
+
+    /**
+     * @return CaseAnalysis[]
+     */
+    public function getCases()
     {
         return $this->cases;
-    }
-
-    public function getDefaultAnalysis(): ?DefaultAnalysis
-    {
-        return $this->defaultAnalysis;
     }
 }

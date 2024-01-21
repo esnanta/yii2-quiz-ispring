@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,7 +16,6 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,16 +24,23 @@ use PhpCsFixer\Tokenizer\Tokens;
  * Fixer for rules defined in PSR2 ¶2.2.
  *
  * @author Fabien Potencier <fabien@symfony.com>
+ * @author SpacePossum
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
 final class LineEndingFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return true;
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'All PHP files must use same line ending.',
@@ -48,7 +52,20 @@ final class LineEndingFixer extends AbstractFixer implements WhitespacesAwareFix
         );
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before BracesFixer.
+     */
+    public function getPriority()
+    {
+        return 40;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $ending = $this->whitespacesConfig->getLineEnding();
 

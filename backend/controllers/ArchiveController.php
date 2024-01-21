@@ -147,18 +147,18 @@ class ArchiveController extends Controller
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
                     $asset = $model->uploadAsset();
+                    $model->asset_url = $model->getPath().'/'.$asset->name;
 
-                    if ($model->save()) {
+                    if ($model->save()) :
                         // upload only if valid uploaded file instance found
                         if ($asset !== false) {
                             $path = $model->getAssetFile();
                             $asset->saveAs($path);
                         }
-                        MessageHelper::getFlashSaveSuccess();
-                        return $this->redirect(['view', 'id'=>$model->id]);
-                    } else {
-                        // error in saving model
-                    }
+                        MessageHelper::getFlashUpdateSuccess();
+                    endif;
+
+                    return $this->redirect(['view', 'id'=>$model->id]);
                 }
                 return $this->render('create', [
                     'model' => $model,

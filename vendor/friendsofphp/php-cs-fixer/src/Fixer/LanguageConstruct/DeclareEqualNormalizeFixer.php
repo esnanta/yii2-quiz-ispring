@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,34 +13,39 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\LanguageConstruct;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  */
-final class DeclareEqualNormalizeFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class DeclareEqualNormalizeFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
      * @var string
      */
     private $callback;
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
         $this->callback = 'none' === $this->configuration['space'] ? 'removeWhitespaceAroundToken' : 'ensureWhitespaceAroundToken';
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Equal sign in declare statement should be surrounded by spaces or not following configuration.',
@@ -58,17 +61,23 @@ final class DeclareEqualNormalizeFixer extends AbstractFixer implements Configur
      *
      * Must run after DeclareStrictTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DECLARE);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $callback = $this->callback;
         for ($index = 0, $count = $tokens->count(); $index < $count - 6; ++$index) {
@@ -76,18 +85,16 @@ final class DeclareEqualNormalizeFixer extends AbstractFixer implements Configur
                 continue;
             }
 
-            $openParenthesisIndex = $tokens->getNextMeaningfulToken($index);
-            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+            while (!$tokens[++$index]->equals('='));
 
-            for ($i = $closeParenthesisIndex; $i > $openParenthesisIndex; --$i) {
-                if ($tokens[$i]->equals('=')) {
-                    $this->{$callback}($tokens, $i);
-                }
-            }
+            $this->{$callback}($tokens, $index);
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('space', 'Spacing to apply around the equal sign.'))
@@ -100,7 +107,7 @@ final class DeclareEqualNormalizeFixer extends AbstractFixer implements Configur
     /**
      * @param int $index of `=` token
      */
-    private function ensureWhitespaceAroundToken(Tokens $tokens, int $index): void
+    private function ensureWhitespaceAroundToken(Tokens $tokens, $index)
     {
         if ($tokens[$index + 1]->isWhitespace()) {
             if (' ' !== $tokens[$index + 1]->getContent()) {
@@ -122,7 +129,7 @@ final class DeclareEqualNormalizeFixer extends AbstractFixer implements Configur
     /**
      * @param int $index of `=` token
      */
-    private function removeWhitespaceAroundToken(Tokens $tokens, int $index): void
+    private function removeWhitespaceAroundToken(Tokens $tokens, $index)
     {
         if (!$tokens[$tokens->getPrevNonWhitespace($index)]->isComment()) {
             $tokens->removeLeadingWhitespace($index);

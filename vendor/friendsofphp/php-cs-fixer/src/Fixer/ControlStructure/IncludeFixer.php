@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\ControlStructure;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -29,10 +26,13 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class IncludeFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
-            'Include/Require and file path should be divided with a single space. File path should not be placed within parentheses.',
+            'Include/Require and file path should be divided with a single space. File path should not be placed under brackets.',
             [
                 new CodeSample(
                     '<?php
@@ -46,27 +46,29 @@ include_once("sample4.php");
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound([T_REQUIRE, T_REQUIRE_ONCE, T_INCLUDE, T_INCLUDE_ONCE]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $this->clearIncludies($tokens, $this->findIncludies($tokens));
     }
 
-    /**
-     * @param array<int, array{begin: int, braces: ?array{open: int, close: int}, end: int}> $includies
-     */
-    private function clearIncludies(Tokens $tokens, array $includies): void
+    private function clearIncludies(Tokens $tokens, array $includies)
     {
         $blocksAnalyzer = new BlocksAnalyzer();
 
         foreach ($includies as $includy) {
-            if (!$tokens[$includy['end']]->isGivenKind(T_CLOSE_TAG)) {
+            if ($includy['end'] && !$tokens[$includy['end']]->isGivenKind(T_CLOSE_TAG)) {
                 $afterEndIndex = $tokens->getNextNonWhitespace($includy['end']);
-
                 if (null === $afterEndIndex || !$tokens[$afterEndIndex]->isComment()) {
                     $tokens->removeLeadingWhitespace($includy['end']);
                 }
@@ -99,10 +101,7 @@ include_once("sample4.php");
         }
     }
 
-    /**
-     * @return array<int, array{begin: int, braces: ?array{open: int, close: int}, end: int}>
-     */
-    private function findIncludies(Tokens $tokens): array
+    private function findIncludies(Tokens $tokens)
     {
         static $includyTokenKinds = [T_REQUIRE, T_REQUIRE_ONCE, T_INCLUDE, T_INCLUDE_ONCE];
 
@@ -136,16 +135,17 @@ include_once("sample4.php");
         return $includies;
     }
 
-    private function removeWhitespaceAroundIfPossible(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function removeWhitespaceAroundIfPossible(Tokens $tokens, $index)
     {
         $nextIndex = $tokens->getNextNonWhitespace($index);
-
         if (null === $nextIndex || !$tokens[$nextIndex]->isComment()) {
             $tokens->removeLeadingWhitespace($index);
         }
 
         $prevIndex = $tokens->getPrevNonWhitespace($index);
-
         if (null === $prevIndex || !$tokens[$prevIndex]->isComment()) {
             $tokens->removeTrailingWhitespace($index);
         }

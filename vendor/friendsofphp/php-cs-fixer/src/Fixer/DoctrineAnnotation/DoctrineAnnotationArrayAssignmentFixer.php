@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,22 +12,23 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Fixer\DoctrineAnnotation;
 
+use Doctrine\Common\Annotations\DocLexer;
 use PhpCsFixer\AbstractDoctrineAnnotationFixer;
-use PhpCsFixer\Doctrine\Annotation\DocLexer;
 use PhpCsFixer\Doctrine\Annotation\Tokens;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 
 /**
  * Forces the configured operator for assignment in arrays in Doctrine Annotations.
  */
 final class DoctrineAnnotationArrayAssignmentFixer extends AbstractDoctrineAnnotationFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Doctrine annotations must use configured operator for assignment in arrays.',
@@ -50,12 +49,15 @@ final class DoctrineAnnotationArrayAssignmentFixer extends AbstractDoctrineAnnot
      *
      * Must run before DoctrineAnnotationSpacesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 1;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         $options = parent::createConfigurationDefinition()->getOptions();
 
@@ -69,7 +71,10 @@ final class DoctrineAnnotationArrayAssignmentFixer extends AbstractDoctrineAnnot
         return new FixerConfigurationResolver($options);
     }
 
-    protected function fixAnnotations(Tokens $doctrineAnnotationTokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function fixAnnotations(Tokens $doctrineAnnotationTokens)
     {
         $scopes = [];
         foreach ($doctrineAnnotationTokens as $token) {

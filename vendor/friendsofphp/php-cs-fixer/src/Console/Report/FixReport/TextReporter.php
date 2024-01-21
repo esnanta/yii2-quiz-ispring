@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,54 +21,58 @@ use PhpCsFixer\Differ\DiffConsoleFormatter;
  */
 final class TextReporter implements ReporterInterface
 {
-    public function getFormat(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormat()
     {
         return 'txt';
     }
 
-    public function generate(ReportSummary $reportSummary): string
+    /**
+     * {@inheritdoc}
+     */
+    public function generate(ReportSummary $reportSummary)
     {
         $output = '';
 
-        $identifiedFiles = 0;
+        $i = 0;
         foreach ($reportSummary->getChanged() as $file => $fixResult) {
-            ++$identifiedFiles;
-            $output .= sprintf('%4d) %s', $identifiedFiles, $file);
+            ++$i;
+            $output .= sprintf('%4d) %s', $i, $file);
 
             if ($reportSummary->shouldAddAppliedFixers()) {
-                $output .= $this->getAppliedFixers(
-                    $reportSummary->isDecoratedOutput(),
-                    $fixResult['appliedFixers'],
-                );
+                $output .= $this->getAppliedFixers($reportSummary->isDecoratedOutput(), $fixResult);
             }
 
-            $output .= $this->getDiff($reportSummary->isDecoratedOutput(), $fixResult['diff']);
+            $output .= $this->getDiff($reportSummary->isDecoratedOutput(), $fixResult);
             $output .= PHP_EOL;
         }
 
-        return $output.$this->getFooter(
-            $reportSummary->getTime(),
-            $identifiedFiles,
-            $reportSummary->getFilesCount(),
-            $reportSummary->getMemory(),
-            $reportSummary->isDryRun()
+        return $output.$this->getFooter($reportSummary->getTime(), $reportSummary->getMemory(), $reportSummary->isDryRun());
+    }
+
+    /**
+     * @param bool $isDecoratedOutput
+     *
+     * @return string
+     */
+    private function getAppliedFixers($isDecoratedOutput, array $fixResult)
+    {
+        return sprintf(
+            $isDecoratedOutput ? ' (<comment>%s</comment>)' : ' (%s)',
+            implode(', ', $fixResult['appliedFixers'])
         );
     }
 
     /**
-     * @param list<string> $appliedFixers
+     * @param bool $isDecoratedOutput
+     *
+     * @return string
      */
-    private function getAppliedFixers(bool $isDecoratedOutput, array $appliedFixers): string
+    private function getDiff($isDecoratedOutput, array $fixResult)
     {
-        return sprintf(
-            $isDecoratedOutput ? ' (<comment>%s</comment>)' : ' (%s)',
-            implode(', ', $appliedFixers)
-        );
-    }
-
-    private function getDiff(bool $isDecoratedOutput, string $diff): string
-    {
-        if ('' === $diff) {
+        if (empty($fixResult['diff'])) {
             return '';
         }
 
@@ -80,21 +82,25 @@ final class TextReporter implements ReporterInterface
             PHP_EOL
         ));
 
-        return PHP_EOL.$diffFormatter->format($diff).PHP_EOL;
+        return PHP_EOL.$diffFormatter->format($fixResult['diff']).PHP_EOL;
     }
 
-    private function getFooter(int $time, int $identifiedFiles, int $files, int $memory, bool $isDryRun): string
+    /**
+     * @param int  $time
+     * @param int  $memory
+     * @param bool $isDryRun
+     *
+     * @return string
+     */
+    private function getFooter($time, $memory, $isDryRun)
     {
         if (0 === $time || 0 === $memory) {
             return '';
         }
 
         return PHP_EOL.sprintf(
-            '%s %d of %d %s in %.3f seconds, %.3f MB memory used'.PHP_EOL,
-            $isDryRun ? 'Found' : 'Fixed',
-            $identifiedFiles,
-            $files,
-            $isDryRun ? 'files that can be fixed' : 'files',
+            '%s all files in %.3f seconds, %.3f MB memory used'.PHP_EOL,
+            $isDryRun ? 'Checked' : 'Fixed',
             $time / 1000,
             $memory / 1024 / 1024
         );

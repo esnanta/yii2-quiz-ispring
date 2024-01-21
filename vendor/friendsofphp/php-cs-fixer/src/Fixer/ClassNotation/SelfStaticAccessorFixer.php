@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\ClassNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\FixerDefinition\VersionSpecification;
 use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\Token;
@@ -26,12 +23,18 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 final class SelfStaticAccessorFixer extends AbstractFixer
 {
-    private TokensAnalyzer $tokensAnalyzer;
+    /**
+     * @var TokensAnalyzer
+     */
+    private $tokensAnalyzer;
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
-            'Inside an enum or `final`/anonymous class, `self` should be preferred over `static`.',
+            'Inside a `final` class or anonymous class `self` should be preferred to `static`.',
             [
                 new CodeSample(
                     '<?php
@@ -73,7 +76,7 @@ final class Foo
 }
 '
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php
 $a = new class() {
     public function getBar()
@@ -81,79 +84,58 @@ $a = new class() {
         return static::class;
     }
 };
-'
-                ),
-                new VersionSpecificCodeSample(
-                    '<?php
-enum Foo
-{
-    public const A = 123;
-
-    public static function bar(): void
-    {
-        echo static::A;
-    }
-}
 ',
-                    new VersionSpecification(8_01_00)
+                    new VersionSpecification(70000)
                 ),
             ]
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        $classyTypes = [T_CLASS];
-
-        if (\defined('T_ENUM')) { // @TODO: drop condition when PHP 8.1+ is required
-            $classyTypes[] = T_ENUM;
-        }
-
-        return $tokens->isTokenKindFound(T_STATIC)
-            && $tokens->isAnyTokenKindsFound($classyTypes)
-            && $tokens->isAnyTokenKindsFound([T_DOUBLE_COLON, T_NEW, T_INSTANCEOF]);
+        return $tokens->isAllTokenKindsFound([T_CLASS, T_STATIC]) && $tokens->isAnyTokenKindsFound([T_DOUBLE_COLON, T_NEW, T_INSTANCEOF]);
     }
 
     /**
      * {@inheritdoc}
      *
-     * Must run after FinalClassFixer, FinalInternalClassFixer, FunctionToConstantFixer, PhpUnitTestCaseStaticMethodCallsFixer.
+     * Must run after FinalInternalClassFixer, FunctionToConstantFixer, PhpUnitTestCaseStaticMethodCallsFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -10;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        $classyTokensOfInterest = [[T_CLASS]];
+        $this->tokensAnalyzer = $tokensAnalyzer = new TokensAnalyzer($tokens);
 
-        if (\defined('T_ENUM')) {
-            $classyTokensOfInterest[] = [T_ENUM]; // @TODO drop condition when PHP 8.1+ is required
-        }
+        $classIndex = $tokens->getNextTokenOfKind(0, [[T_CLASS]]);
 
-        $this->tokensAnalyzer = new TokensAnalyzer($tokens);
-        $classyIndex = $tokens->getNextTokenOfKind(0, $classyTokensOfInterest);
-
-        while (null !== $classyIndex) {
-            if ($tokens[$classyIndex]->isGivenKind(T_CLASS)) {
-                $modifiers = $this->tokensAnalyzer->getClassyModifiers($classyIndex);
-
-                if (
-                    isset($modifiers['final'])
-                    || $this->tokensAnalyzer->isAnonymousClass($classyIndex)
-                ) {
-                    $classyIndex = $this->fixClassy($tokens, $classyIndex);
-                }
-            } else {
-                $classyIndex = $this->fixClassy($tokens, $classyIndex);
+        while (null !== $classIndex) {
+            if (
+                $tokens[$tokens->getPrevMeaningfulToken($classIndex)]->isGivenKind(T_FINAL)
+                || $tokensAnalyzer->isAnonymousClass($classIndex)
+            ) {
+                $classIndex = $this->fixClass($tokens, $classIndex);
             }
 
-            $classyIndex = $tokens->getNextTokenOfKind($classyIndex, $classyTokensOfInterest);
+            $classIndex = $tokens->getNextTokenOfKind($classIndex, [[T_CLASS]]);
         }
     }
 
-    private function fixClassy(Tokens $tokens, int $index): int
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    private function fixClass(Tokens $tokens, $index)
     {
         $index = $tokens->getNextTokenOfKind($index, ['{']);
         $classOpenCount = 1;
@@ -187,7 +169,7 @@ enum Foo
                         } elseif ($tokens[$index]->equals('{')) {
                             ++$openCount;
                         } else {
-                            $index = $this->fixClassy($tokens, $index);
+                            $index = $this->fixClass($tokens, $index);
                         }
                     } while ($openCount > 0);
                 }

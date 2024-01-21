@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,30 +15,36 @@ namespace PhpCsFixer\Fixer\ReturnNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  */
 final class SimplifiedNullReturnFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'A return statement wishing to return `void` should not return `null`.',
             [
                 new CodeSample("<?php return null;\n"),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     <<<'EOT'
-                        <?php
-                        function foo() { return null; }
-                        function bar(): int { return null; }
-                        function baz(): ?int { return null; }
-                        function xyz(): void { return null; }
+<?php
+function foo() { return null; }
+function bar(): int { return null; }
+function baz(): ?int { return null; }
+function xyz(): void { return null; }
 
-                        EOT
+EOT
+                    ,
+                    new VersionSpecification(70100)
                 ),
             ]
         );
@@ -51,17 +55,23 @@ final class SimplifiedNullReturnFixer extends AbstractFixer
      *
      * Must run before NoUselessReturnFixer, VoidReturnFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 16;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_RETURN);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_RETURN)) {
@@ -76,8 +86,10 @@ final class SimplifiedNullReturnFixer extends AbstractFixer
 
     /**
      * Clear the return statement located at a given index.
+     *
+     * @param int $index
      */
-    private function clear(Tokens $tokens, int $index): void
+    private function clear(Tokens $tokens, $index)
     {
         while (!$tokens[++$index]->equals(';')) {
             if ($this->shouldClearToken($tokens, $index)) {
@@ -88,8 +100,12 @@ final class SimplifiedNullReturnFixer extends AbstractFixer
 
     /**
      * Does the return statement located at a given index need fixing?
+     *
+     * @param int $index
+     *
+     * @return bool
      */
-    private function needFixing(Tokens $tokens, int $index): bool
+    private function needFixing(Tokens $tokens, $index)
     {
         if ($this->isStrictOrNullableReturnTypeFunction($tokens, $index)) {
             return false;
@@ -111,8 +127,10 @@ final class SimplifiedNullReturnFixer extends AbstractFixer
      * Is the return within a function with a non-void or nullable return type?
      *
      * @param int $returnIndex Current return token index
+     *
+     * @return bool
      */
-    private function isStrictOrNullableReturnTypeFunction(Tokens $tokens, int $returnIndex): bool
+    private function isStrictOrNullableReturnTypeFunction(Tokens $tokens, $returnIndex)
     {
         $functionIndex = $returnIndex;
         do {
@@ -138,8 +156,12 @@ final class SimplifiedNullReturnFixer extends AbstractFixer
      *
      * If the token is a comment, or is whitespace that is immediately before a
      * comment, then we'll leave it alone.
+     *
+     * @param int $index
+     *
+     * @return bool
      */
-    private function shouldClearToken(Tokens $tokens, int $index): bool
+    private function shouldClearToken(Tokens $tokens, $index)
     {
         $token = $tokens[$index];
 

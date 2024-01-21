@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,11 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\LanguageConstruct;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -30,24 +26,16 @@ use PhpCsFixer\Tokenizer\Tokens;
  * @author Jules Pietri <jules@heahprod.com>
  * @author Kuba Werłos <werlos@gmail.com>
  */
-final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    /**
-     * @internal
-     */
-    public const OPTION_MUTE_DEPRECATION_ERROR = 'mute_deprecation_error';
+    const OPTION_MUTE_DEPRECATION_ERROR = 'mute_deprecation_error';
+    const OPTION_NOISE_REMAINING_USAGES = 'noise_remaining_usages';
+    const OPTION_NOISE_REMAINING_USAGES_EXCLUDE = 'noise_remaining_usages_exclude';
 
     /**
-     * @internal
+     * {@inheritdoc}
      */
-    public const OPTION_NOISE_REMAINING_USAGES = 'noise_remaining_usages';
-
-    /**
-     * @internal
-     */
-    public const OPTION_NOISE_REMAINING_USAGES_EXCLUDE = 'noise_remaining_usages_exclude';
-
-    public function getDefinition(): FixerDefinitionInterface
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Error control operator should be added to deprecation notices and/or removed from other cases.',
@@ -70,17 +58,26 @@ final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurableF
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(T_STRING);
+        return $tokens->isAnyTokenKindsFound(['@', T_STRING]);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder(self::OPTION_MUTE_DEPRECATION_ERROR, 'Whether to add `@` in deprecation notices.'))
@@ -91,22 +88,27 @@ final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurableF
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            (new FixerOptionBuilder(self::OPTION_NOISE_REMAINING_USAGES_EXCLUDE, 'List of global functions to exclude from removing `@`.'))
+            (new FixerOptionBuilder(self::OPTION_NOISE_REMAINING_USAGES_EXCLUDE, 'List of global functions to exclude from removing `@`'))
                 ->setAllowedTypes(['array'])
                 ->setDefault([])
                 ->getOption(),
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
-        $excludedFunctions = array_map(static fn (string $function): string => strtolower($function), $this->configuration[self::OPTION_NOISE_REMAINING_USAGES_EXCLUDE]);
+        $excludedFunctions = array_map(static function ($function) {
+            return strtolower($function);
+        }, $this->configuration[self::OPTION_NOISE_REMAINING_USAGES_EXCLUDE]);
 
         for ($index = $tokens->count() - 1; $index >= 0; --$index) {
             $token = $tokens[$index];
 
-            if (true === $this->configuration[self::OPTION_NOISE_REMAINING_USAGES] && $token->equals('@')) {
+            if ($this->configuration[self::OPTION_NOISE_REMAINING_USAGES] && $token->equals('@')) {
                 $tokens->clearAt($index);
 
                 continue;
@@ -119,7 +121,6 @@ final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurableF
             $functionIndex = $index;
             $startIndex = $index;
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
-
             if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
                 $startIndex = $prevIndex;
                 $prevIndex = $tokens->getPrevMeaningfulToken($startIndex);
@@ -128,7 +129,7 @@ final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurableF
             $index = $prevIndex;
 
             if ($this->isDeprecationErrorCall($tokens, $functionIndex)) {
-                if (false === $this->configuration[self::OPTION_MUTE_DEPRECATION_ERROR]) {
+                if (!$this->configuration[self::OPTION_MUTE_DEPRECATION_ERROR]) {
                     continue;
                 }
 
@@ -145,21 +146,26 @@ final class ErrorSuppressionFixer extends AbstractFixer implements ConfigurableF
                 continue;
             }
 
-            if (true === $this->configuration[self::OPTION_NOISE_REMAINING_USAGES] && !\in_array($tokens[$functionIndex]->getContent(), $excludedFunctions, true)) {
+            if ($this->configuration[self::OPTION_NOISE_REMAINING_USAGES] && !\in_array($tokens[$functionIndex]->getContent(), $excludedFunctions, true)) {
                 $tokens->clearAt($index);
             }
         }
     }
 
-    private function isDeprecationErrorCall(Tokens $tokens, int $index): bool
+    /**
+     * @param int $index
+     *
+     * @return bool
+     */
+    private function isDeprecationErrorCall(Tokens $tokens, $index)
     {
         if ('trigger_error' !== strtolower($tokens[$index]->getContent())) {
             return false;
         }
 
-        $endBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $tokens->getNextTokenOfKind($index, [[T_STRING], '(']));
-        $prevIndex = $tokens->getPrevMeaningfulToken($endBraceIndex);
+        $endBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $tokens->getNextTokenOfKind($index, [T_STRING, '(']));
 
+        $prevIndex = $tokens->getPrevMeaningfulToken($endBraceIndex);
         if ($tokens[$prevIndex]->equals(',')) {
             $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
         }

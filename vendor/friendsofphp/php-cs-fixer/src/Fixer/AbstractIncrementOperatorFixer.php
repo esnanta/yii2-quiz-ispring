@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,7 +17,12 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 abstract class AbstractIncrementOperatorFixer extends AbstractFixer
 {
-    final protected function findStart(Tokens $tokens, int $index): int
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    final protected function findStart(Tokens $tokens, $index)
     {
         do {
             $index = $tokens->getPrevMeaningfulToken($index);

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -28,34 +26,34 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class TypeColonTransformer extends AbstractTransformer
 {
-    public function getPriority(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
     {
         // needs to run after ReturnRefTransformer and UseTransformer
         // and before TypeAlternationTransformer
         return -10;
     }
 
-    public function getRequiredPhpVersionId(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredPhpVersionId()
     {
-        return 7_00_00;
+        return 70000;
     }
 
-    public function process(Tokens $tokens, Token $token, int $index): void
+    /**
+     * {@inheritdoc}
+     */
+    public function process(Tokens $tokens, Token $token, $index)
     {
         if (!$token->equals(':')) {
             return;
         }
 
         $endIndex = $tokens->getPrevMeaningfulToken($index);
-
-        if (
-            \defined('T_ENUM') // @TODO: drop condition when PHP 8.1+ is required
-            && $tokens[$tokens->getPrevMeaningfulToken($endIndex)]->isGivenKind(T_ENUM)
-        ) {
-            $tokens[$index] = new Token([CT::T_TYPE_COLON, ':']);
-
-            return;
-        }
 
         if (!$tokens[$endIndex]->equals(')')) {
             return;
@@ -71,12 +69,21 @@ final class TypeColonTransformer extends AbstractTransformer
             $prevToken = $tokens[$prevIndex];
         }
 
-        if ($prevToken->isGivenKind([T_FUNCTION, CT::T_RETURN_REF, CT::T_USE_LAMBDA, T_FN])) {
+        $prevKinds = [T_FUNCTION, CT::T_RETURN_REF, CT::T_USE_LAMBDA];
+
+        if (\PHP_VERSION_ID >= 70400) {
+            $prevKinds[] = T_FN;
+        }
+
+        if ($prevToken->isGivenKind($prevKinds)) {
             $tokens[$index] = new Token([CT::T_TYPE_COLON, ':']);
         }
     }
 
-    public function getCustomTokens(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getCustomTokens()
     {
         return [CT::T_TYPE_COLON];
     }

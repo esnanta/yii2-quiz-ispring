@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,14 +13,9 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Import;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\WhitespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -33,30 +26,18 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  * Fixer for rules defined in PSR2 ¶3.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  */
-final class SingleImportPerStatementFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class SingleImportPerStatementFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There MUST be one use keyword per declaration.',
-            [
-                new CodeSample(
-                    '<?php
-use Foo, Sample, Sample\Sample as Sample2;
-'
-                ),
-                new CodeSample(
-                    '<?php
-use Space\Models\ {
-    TestModelA,
-    TestModelB,
-    TestModel,
-};
-',
-                    ['group_to_single_imports' => true]
-                ),
-            ]
+            [new CodeSample("<?php\nuse Foo, Sample, Sample\\Sample as Sample2;\n")]
         );
     }
 
@@ -65,50 +46,49 @@ use Space\Models\ {
      *
      * Must run before MultilineWhitespaceBeforeSemicolonsFixer, NoLeadingImportSlashFixer, NoSinglelineWhitespaceBeforeSemicolonsFixer, NoUnusedImportsFixer, SpaceAfterSemicolonFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_USE);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
+        $uses = array_reverse($tokensAnalyzer->getImportUseIndexes());
 
-        foreach (array_reverse($tokensAnalyzer->getImportUseIndexes()) as $index) {
+        foreach ($uses as $index) {
             $endIndex = $tokens->getNextTokenOfKind($index, [';', [T_CLOSE_TAG]]);
             $groupClose = $tokens->getPrevMeaningfulToken($endIndex);
 
             if ($tokens[$groupClose]->isGivenKind(CT::T_GROUP_IMPORT_BRACE_CLOSE)) {
-                if (true === $this->configuration['group_to_single_imports']) {
-                    $this->fixGroupUse($tokens, $index, $endIndex);
-                }
+                $this->fixGroupUse($tokens, $index, $endIndex);
             } else {
                 $this->fixMultipleUse($tokens, $index, $endIndex);
             }
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
-    {
-        return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('group_to_single_imports', 'Whether to change group imports into single imports.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(true)
-                ->getOption(),
-        ]);
-    }
-
-    private function getGroupDeclaration(Tokens $tokens, int $index): array
+    /**
+     * @param int $index
+     *
+     * @return array
+     */
+    private function getGroupDeclaration(Tokens $tokens, $index)
     {
         $groupPrefix = '';
         $comment = '';
         $groupOpenIndex = null;
-
         for ($i = $index + 1;; ++$i) {
             if ($tokens[$i]->isGivenKind(CT::T_GROUP_IMPORT_BRACE_OPEN)) {
                 $groupOpenIndex = $i;
@@ -143,9 +123,14 @@ use Space\Models\ {
     }
 
     /**
-     * @return list<string>
+     * @param string $groupPrefix
+     * @param int    $groupOpenIndex
+     * @param int    $groupCloseIndex
+     * @param string $comment
+     *
+     * @return string[]
      */
-    private function getGroupStatements(Tokens $tokens, string $groupPrefix, int $groupOpenIndex, int $groupCloseIndex, string $comment): array
+    private function getGroupStatements(Tokens $tokens, $groupPrefix, $groupOpenIndex, $groupCloseIndex, $comment)
     {
         $statements = [];
         $statement = $groupPrefix;
@@ -153,7 +138,7 @@ use Space\Models\ {
         for ($i = $groupOpenIndex + 1; $i <= $groupCloseIndex; ++$i) {
             $token = $tokens[$i];
 
-            if ($token->equals(',') && $tokens[$tokens->getNextMeaningfulToken($i)]->isGivenKind(CT::T_GROUP_IMPORT_BRACE_CLOSE)) {
+            if ($token->equals(',') && $tokens[$tokens->getNextMeaningfulToken($i)]->equals([CT::T_GROUP_IMPORT_BRACE_CLOSE])) {
                 continue;
             }
 
@@ -167,18 +152,18 @@ use Space\Models\ {
             if ($token->isWhitespace()) {
                 $j = $tokens->getNextMeaningfulToken($i);
 
-                if ($tokens[$j]->isGivenKind(T_AS)) {
+                if ($tokens[$j]->equals([T_AS])) {
                     $statement .= ' as ';
                     $i += 2;
-                } elseif ($tokens[$j]->isGivenKind(CT::T_FUNCTION_IMPORT)) {
+                } elseif ($tokens[$j]->equals([T_FUNCTION])) {
                     $statement = ' function'.$statement;
                     $i += 2;
-                } elseif ($tokens[$j]->isGivenKind(CT::T_CONST_IMPORT)) {
+                } elseif ($tokens[$j]->equals([T_CONST])) {
                     $statement = ' const'.$statement;
                     $i += 2;
                 }
 
-                if ($token->isWhitespace(" \t") || !str_starts_with($tokens[$i - 1]->getContent(), '//')) {
+                if ($token->isWhitespace(" \t") || '//' !== substr($tokens[$i - 1]->getContent(), 0, 2)) {
                     continue;
                 }
             }
@@ -193,9 +178,13 @@ use Space\Models\ {
         return $statements;
     }
 
-    private function fixGroupUse(Tokens $tokens, int $index, int $endIndex): void
+    /**
+     * @param int $index
+     * @param int $endIndex
+     */
+    private function fixGroupUse(Tokens $tokens, $index, $endIndex)
     {
-        [$groupPrefix, $groupOpenIndex, $groupCloseIndex, $comment] = $this->getGroupDeclaration($tokens, $index);
+        list($groupPrefix, $groupOpenIndex, $groupCloseIndex, $comment) = $this->getGroupDeclaration($tokens, $index);
         $statements = $this->getGroupStatements($tokens, $groupPrefix, $groupOpenIndex, $groupCloseIndex, $comment);
 
         if (\count($statements) < 2) {
@@ -215,24 +204,12 @@ use Space\Models\ {
         $tokens->insertAt($index, $importTokens);
     }
 
-    private function fixMultipleUse(Tokens $tokens, int $index, int $endIndex): void
+    /**
+     * @param int $index
+     * @param int $endIndex
+     */
+    private function fixMultipleUse(Tokens $tokens, $index, $endIndex)
     {
-        $nextTokenIndex = $tokens->getNextMeaningfulToken($index);
-
-        if ($tokens[$nextTokenIndex]->isGivenKind(CT::T_FUNCTION_IMPORT)) {
-            $leadingTokens = [
-                new Token([CT::T_FUNCTION_IMPORT, 'function']),
-                new Token([T_WHITESPACE, ' ']),
-            ];
-        } elseif ($tokens[$nextTokenIndex]->isGivenKind(CT::T_CONST_IMPORT)) {
-            $leadingTokens = [
-                new Token([CT::T_CONST_IMPORT, 'const']),
-                new Token([T_WHITESPACE, ' ']),
-            ];
-        } else {
-            $leadingTokens = [];
-        }
-
         $ending = $this->whitespacesConfig->getLineEnding();
 
         for ($i = $endIndex - 1; $i > $index; --$i) {
@@ -242,19 +219,17 @@ use Space\Models\ {
 
             $tokens[$i] = new Token(';');
             $i = $tokens->getNextMeaningfulToken($i);
-
             $tokens->insertAt($i, new Token([T_USE, 'use']));
             $tokens->insertAt($i + 1, new Token([T_WHITESPACE, ' ']));
 
-            foreach ($leadingTokens as $offset => $leadingToken) {
-                $tokens->insertAt($i + 2 + $offset, clone $leadingTokens[$offset]);
-            }
-
             $indent = WhitespacesAnalyzer::detectIndent($tokens, $index);
-
             if ($tokens[$i - 1]->isWhitespace()) {
                 $tokens[$i - 1] = new Token([T_WHITESPACE, $ending.$indent]);
-            } elseif (!str_contains($tokens[$i - 1]->getContent(), "\n")) {
+
+                continue;
+            }
+
+            if (false === strpos($tokens[$i - 1]->getContent(), "\n")) {
                 $tokens->insertAt($i, new Token([T_WHITESPACE, $ending.$indent]));
             }
         }

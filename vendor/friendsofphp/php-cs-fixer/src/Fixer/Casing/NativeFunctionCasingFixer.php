@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,14 +15,19 @@ namespace PhpCsFixer\Fixer\Casing;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class NativeFunctionCasingFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Function defined by PHP should be called using the correct casing.',
@@ -37,20 +40,24 @@ final class NativeFunctionCasingFixer extends AbstractFixer
      *
      * Must run after FunctionToConstantFixer, NoUselessSprintfFixer, PowToExponentiationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_STRING);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        $functionsAnalyzer = new FunctionsAnalyzer();
-
         static $nativeFunctionNames = null;
 
         if (null === $nativeFunctionNames) {
@@ -59,8 +66,28 @@ final class NativeFunctionCasingFixer extends AbstractFixer
 
         for ($index = 0, $count = $tokens->count(); $index < $count; ++$index) {
             // test if we are at a function all
-            if (!$functionsAnalyzer->isGlobalFunctionCall($tokens, $index)) {
+            if (!$tokens[$index]->isGivenKind(T_STRING)) {
                 continue;
+            }
+
+            $next = $tokens->getNextMeaningfulToken($index);
+            if (!$tokens[$next]->equals('(')) {
+                $index = $next;
+
+                continue;
+            }
+
+            $functionNamePrefix = $tokens->getPrevMeaningfulToken($index);
+            if ($tokens[$functionNamePrefix]->isGivenKind([T_DOUBLE_COLON, T_NEW, T_FUNCTION, CT::T_RETURN_REF]) || $tokens[$functionNamePrefix]->isObjectOperator()) {
+                continue;
+            }
+
+            if ($tokens[$functionNamePrefix]->isGivenKind(T_NS_SEPARATOR)) {
+                // skip if the call is to a constructor or to a function in a namespace other than the default
+                $prev = $tokens->getPrevMeaningfulToken($functionNamePrefix);
+                if ($tokens[$prev]->isGivenKind([T_STRING, T_NEW])) {
+                    continue;
+                }
             }
 
             // test if the function call is to a native PHP function
@@ -70,13 +97,14 @@ final class NativeFunctionCasingFixer extends AbstractFixer
             }
 
             $tokens[$index] = new Token([T_STRING, $nativeFunctionNames[$lower]]);
+            $index = $next;
         }
     }
 
     /**
      * @return array<string, string>
      */
-    private function getNativeFunctionNames(): array
+    private function getNativeFunctionNames()
     {
         $allFunctions = get_defined_functions();
         $functions = [];

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,11 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Operator;
 
 use PhpCsFixer\Fixer\AbstractIncrementOperatorFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
@@ -30,19 +26,22 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  * @author Gregor Harlan <gharlan@web.de>
  * @author Kuba Werłos <werlos@gmail.com>
  */
-final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implements ConfigurableFixerInterface
+final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
      * @internal
      */
-    public const STYLE_PRE = 'pre';
+    const STYLE_PRE = 'pre';
 
     /**
      * @internal
      */
-    public const STYLE_POST = 'post';
+    const STYLE_POST = 'post';
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Pre- or post-increment and decrement operators should be used if possible.',
@@ -59,20 +58,25 @@ final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implement
     /**
      * {@inheritdoc}
      *
-     * Must run before NoSpacesInsideParenthesisFixer, SpacesInsideParenthesesFixer.
      * Must run after StandardizeIncrementFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 15;
+        return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound([T_INC, T_DEC]);
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('style', 'Whether to use pre- or post-increment and decrement operators.'))
@@ -82,7 +86,10 @@ final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implement
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
@@ -95,28 +102,26 @@ final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implement
 
             if (self::STYLE_PRE === $this->configuration['style'] && $tokensAnalyzer->isUnarySuccessorOperator($index)) {
                 $nextToken = $tokens[$tokens->getNextMeaningfulToken($index)];
-
                 if (!$nextToken->equalsAny([';', ')'])) {
                     continue;
                 }
 
                 $startIndex = $this->findStart($tokens, $index);
-                $prevToken = $tokens[$tokens->getPrevMeaningfulToken($startIndex)];
 
+                $prevToken = $tokens[$tokens->getPrevMeaningfulToken($startIndex)];
                 if ($prevToken->equalsAny([';', '{', '}', [T_OPEN_TAG], ')'])) {
                     $tokens->clearAt($index);
                     $tokens->insertAt($startIndex, clone $token);
                 }
             } elseif (self::STYLE_POST === $this->configuration['style'] && $tokensAnalyzer->isUnaryPredecessorOperator($index)) {
                 $prevToken = $tokens[$tokens->getPrevMeaningfulToken($index)];
-
                 if (!$prevToken->equalsAny([';', '{', '}', [T_OPEN_TAG], ')'])) {
                     continue;
                 }
 
                 $endIndex = $this->findEnd($tokens, $index);
-                $nextToken = $tokens[$tokens->getNextMeaningfulToken($endIndex)];
 
+                $nextToken = $tokens[$tokens->getNextMeaningfulToken($endIndex)];
                 if ($nextToken->equalsAny([';', ')'])) {
                     $tokens->clearAt($index);
                     $tokens->insertAt($tokens->getNextNonWhitespace($endIndex), clone $token);
@@ -125,7 +130,12 @@ final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implement
         }
     }
 
-    private function findEnd(Tokens $tokens, int $index): int
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    private function findEnd(Tokens $tokens, $index)
     {
         $nextIndex = $tokens->getNextMeaningfulToken($index);
         $nextToken = $tokens[$nextIndex];
@@ -143,11 +153,9 @@ final class IncrementStyleFixer extends AbstractIncrementOperatorFixer implement
             [T_VARIABLE],
         ])) {
             $blockType = Tokens::detectBlockType($nextToken);
-
             if (null !== $blockType) {
                 $nextIndex = $tokens->findBlockEnd($blockType['type'], $nextIndex);
             }
-
             $index = $nextIndex;
             $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
             $nextToken = $tokens[$nextIndex];

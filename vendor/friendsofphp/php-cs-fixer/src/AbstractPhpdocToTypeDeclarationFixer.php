@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,10 +14,8 @@ namespace PhpCsFixer;
 
 use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\DocBlock\TypeExpression;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
@@ -30,26 +26,27 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @internal
  */
-abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implements ConfigurableFixerInterface
+abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    private const REGEX_CLASS = '(?:\\\\?+'.TypeExpression::REGEX_IDENTIFIER
-        .'(\\\\'.TypeExpression::REGEX_IDENTIFIER.')*+)';
+    /**
+     * @var string
+     */
+    private $classRegex = '/^\\\\?[a-zA-Z_\\x7f-\\xff](?:\\\\?[a-zA-Z0-9_\\x7f-\\xff]+)*$/';
 
     /**
      * @var array<string, int>
      */
-    private array $versionSpecificTypes = [
-        'void' => 7_01_00,
-        'iterable' => 7_01_00,
-        'object' => 7_02_00,
-        'mixed' => 8_00_00,
-        'never' => 8_01_00,
+    private $versionSpecificTypes = [
+        'void' => 70100,
+        'iterable' => 70100,
+        'object' => 70200,
+        'mixed' => 80000,
     ];
 
     /**
      * @var array<string, bool>
      */
-    private array $scalarTypes = [
+    private $scalarTypes = [
         'bool' => true,
         'float' => true,
         'int' => true,
@@ -59,16 +56,27 @@ abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implem
     /**
      * @var array<string, bool>
      */
-    private static array $syntaxValidationCache = [];
+    private static $syntaxValidationCache = [];
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    abstract protected function isSkippedType(string $type): bool;
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    abstract protected function isSkippedType($type);
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('scalar_types', 'Fix also scalar types; may have unexpected behaviour due to PHP bad type coercion system.'))
@@ -80,8 +88,10 @@ abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implem
 
     /**
      * @param int $index The index of the function token
+     *
+     * @return null|int
      */
-    protected function findFunctionDocComment(Tokens $tokens, int $index): ?int
+    protected function findFunctionDocComment(Tokens $tokens, $index)
     {
         do {
             $index = $tokens->getPrevNonWhitespace($index);
@@ -103,9 +113,12 @@ abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implem
     }
 
     /**
-     * @return list<Annotation>
+     * @param string $name
+     * @param int    $docCommentIndex
+     *
+     * @return Annotation[]
      */
-    protected function getAnnotationsFromDocComment(string $name, Tokens $tokens, int $docCommentIndex): array
+    protected function getAnnotationsFromDocComment($name, Tokens $tokens, $docCommentIndex)
     {
         $namespacesAnalyzer = new NamespacesAnalyzer();
         $namespace = $namespacesAnalyzer->getNamespaceAt($tokens, $docCommentIndex);
@@ -123,53 +136,60 @@ abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implem
     }
 
     /**
-     * @return list<Token>
+     * @param string $type
+     * @param bool   $isNullable
+     *
+     * @return Token[]
      */
-    protected function createTypeDeclarationTokens(string $type, bool $isNullable): array
+    protected function createTypeDeclarationTokens($type, $isNullable)
     {
+        static $specialTypes = [
+            'array' => [CT::T_ARRAY_TYPEHINT, 'array'],
+            'callable' => [T_CALLABLE, 'callable'],
+            'static' => [T_STATIC, 'static'],
+        ];
+
         $newTokens = [];
 
         if (true === $isNullable && 'mixed' !== $type) {
             $newTokens[] = new Token([CT::T_NULLABLE_TYPE, '?']);
         }
 
-        $newTokens = array_merge(
-            $newTokens,
-            $this->createTokensFromRawType($type)->toArray()
-        );
+        if (isset($specialTypes[$type])) {
+            $newTokens[] = new Token($specialTypes[$type]);
+        } else {
+            $typeUnqualified = ltrim($type, '\\');
 
-        // 'scalar's, 'void', 'iterable' and 'object' must be unqualified
-        foreach ($newTokens as $i => $token) {
-            if ($token->isGivenKind(T_STRING)) {
-                $typeUnqualified = $token->getContent();
+            if (isset($this->scalarTypes[$typeUnqualified]) || isset($this->versionSpecificTypes[$typeUnqualified])) {
+                // 'scalar's, 'void', 'iterable' and 'object' must be unqualified
+                $newTokens[] = new Token([T_STRING, $typeUnqualified]);
+            } else {
+                foreach (explode('\\', $type) as $nsIndex => $value) {
+                    if (0 === $nsIndex && '' === $value) {
+                        continue;
+                    }
 
-                if (
-                    (isset($this->scalarTypes[$typeUnqualified]) || isset($this->versionSpecificTypes[$typeUnqualified]))
-                    && isset($newTokens[$i - 1])
-                    && '\\' === $newTokens[$i - 1]->getContent()
-                ) {
-                    unset($newTokens[$i - 1]);
+                    if (0 < $nsIndex) {
+                        $newTokens[] = new Token([T_NS_SEPARATOR, '\\']);
+                    }
+
+                    $newTokens[] = new Token([T_STRING, $value]);
                 }
             }
         }
 
-        return array_values($newTokens);
+        return $newTokens;
     }
 
     /**
-     * Each fixer inheriting from this class must define a way of creating token collection representing type
-     * gathered from phpDoc, e.g. `Foo|Bar` should be transformed into 3 tokens (`Foo`, `|` and `Bar`).
-     * This can't be standardised, because some types may be allowed in one place, and invalid in others.
+     * @param bool $isReturnType
      *
-     * @param string $type Type determined (and simplified) from phpDoc
+     * @return null|array
      */
-    abstract protected function createTokensFromRawType(string $type): Tokens;
-
-    /**
-     * @return null|array{string, bool}
-     */
-    protected function getCommonTypeInfo(TypeExpression $typesExpression, bool $isReturnType): ?array
+    protected function getCommonTypeFromAnnotation(Annotation $annotation, $isReturnType)
     {
+        $typesExpression = $annotation->getTypeExpression();
+
         $commonType = $typesExpression->getCommonType();
         $isNullable = $typesExpression->allowsNull();
 
@@ -177,11 +197,11 @@ abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implem
             return null;
         }
 
-        if ($isNullable && 'void' === $commonType) {
+        if ($isNullable && (\PHP_VERSION_ID < 70100 || 'void' === $commonType)) {
             return null;
         }
 
-        if ('static' === $commonType && (!$isReturnType || \PHP_VERSION_ID < 8_00_00)) {
+        if ('static' === $commonType && (!$isReturnType || \PHP_VERSION_ID < 80000)) {
             $commonType = 'self';
         }
 
@@ -197,74 +217,14 @@ abstract class AbstractPhpdocToTypeDeclarationFixer extends AbstractFixer implem
             if (false === $this->configuration['scalar_types']) {
                 return null;
             }
-        } elseif (!Preg::match('/^'.self::REGEX_CLASS.'$/', $commonType)) {
+        } elseif (1 !== Preg::match($this->classRegex, $commonType)) {
             return null;
         }
 
         return [$commonType, $isNullable];
     }
 
-    protected function getUnionTypes(TypeExpression $typesExpression, bool $isReturnType): ?string
-    {
-        if (\PHP_VERSION_ID < 8_00_00) {
-            return null;
-        }
-
-        if (!$typesExpression->isUnionType() || '|' !== $typesExpression->getTypesGlue()) {
-            return null;
-        }
-
-        $types = $typesExpression->getTypes();
-        $isNullable = $typesExpression->allowsNull();
-        $unionTypes = [];
-        $containsOtherThanIterableType = false;
-        $containsOtherThanEmptyType = false;
-
-        foreach ($types as $type) {
-            if ('null' === $type) {
-                continue;
-            }
-
-            if ($this->isSkippedType($type)) {
-                return null;
-            }
-
-            if (isset($this->versionSpecificTypes[$type]) && \PHP_VERSION_ID < $this->versionSpecificTypes[$type]) {
-                return null;
-            }
-
-            $typeExpression = new TypeExpression($type, null, []);
-            $commonType = $typeExpression->getCommonType();
-
-            if (!$containsOtherThanIterableType && !\in_array($commonType, ['array', \Traversable::class, 'iterable'], true)) {
-                $containsOtherThanIterableType = true;
-            }
-            if ($isReturnType && !$containsOtherThanEmptyType && !\in_array($commonType, ['null', 'void', 'never'], true)) {
-                $containsOtherThanEmptyType = true;
-            }
-
-            if (!$isNullable && $typesExpression->allowsNull()) {
-                $isNullable = true;
-            }
-
-            $unionTypes[] = $commonType;
-        }
-
-        if (!$containsOtherThanIterableType) {
-            return null;
-        }
-        if ($isReturnType && !$containsOtherThanEmptyType) {
-            return null;
-        }
-
-        if ($isNullable) {
-            $unionTypes[] = 'null';
-        }
-
-        return implode($typesExpression->getTypesGlue(), array_unique($unionTypes));
-    }
-
-    final protected function isValidSyntax(string $code): bool
+    final protected function isValidSyntax($code)
     {
         if (!isset(self::$syntaxValidationCache[$code])) {
             try {

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,9 +15,6 @@ namespace PhpCsFixer\Fixer\ControlStructure;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\Analysis\SwitchAnalysis;
-use PhpCsFixer\Tokenizer\Analyzer\ControlCaseStructuresAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -29,7 +24,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class SwitchCaseSpaceFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Removes extra spaces between colon and case value.',
@@ -48,38 +46,47 @@ final class SwitchCaseSpaceFixer extends AbstractFixer
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(T_SWITCH);
+        return $tokens->isAnyTokenKindsFound([T_CASE, T_DEFAULT]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        /** @var SwitchAnalysis $analysis */
-        foreach (ControlCaseStructuresAnalyzer::findControlStructures($tokens, [T_SWITCH]) as $analysis) {
-            $default = $analysis->getDefaultAnalysis();
-
-            if (null !== $default) {
-                $index = $default->getIndex();
-
-                if (!$tokens[$index + 1]->isWhitespace() || !$tokens[$index + 2]->equalsAny([':', ';'])) {
-                    continue;
-                }
-
-                $tokens->clearAt($index + 1);
+        foreach ($tokens as $index => $token) {
+            if (!$token->isGivenKind([T_CASE, T_DEFAULT])) {
+                continue;
             }
 
-            foreach ($analysis->getCases() as $caseAnalysis) {
-                $colonIndex = $caseAnalysis->getColonIndex();
-                $valueIndex = $tokens->getPrevNonWhitespace($colonIndex);
-
-                // skip if there is no space between the colon and previous token or is space after comment
-                if ($valueIndex === $colonIndex - 1 || $tokens[$valueIndex]->isComment()) {
-                    continue;
+            $ternariesCount = 0;
+            for ($colonIndex = $index + 1;; ++$colonIndex) {
+                // We have to skip ternary case for colons.
+                if ($tokens[$colonIndex]->equals('?')) {
+                    ++$ternariesCount;
                 }
 
-                $tokens->clearAt($valueIndex + 1);
+                if ($tokens[$colonIndex]->equalsAny([':', ';'])) {
+                    if (0 === $ternariesCount) {
+                        break;
+                    }
+
+                    --$ternariesCount;
+                }
             }
+
+            $valueIndex = $tokens->getPrevNonWhitespace($colonIndex);
+            // skip if there is no space between the colon and previous token or is space after comment
+            if ($valueIndex === $colonIndex - 1 || $tokens[$valueIndex]->isComment()) {
+                continue;
+            }
+
+            $tokens->clearAt($valueIndex + 1);
         }
     }
 }

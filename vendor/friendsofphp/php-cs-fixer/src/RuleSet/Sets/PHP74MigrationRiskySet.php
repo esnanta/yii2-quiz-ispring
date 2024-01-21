@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,14 +12,14 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\RuleSet\Sets;
 
-use PhpCsFixer\RuleSet\AbstractMigrationSetDescription;
+use PhpCsFixer\RuleSet\AbstractRuleSetDescription;
 
 /**
  * @internal
  */
-final class PHP74MigrationRiskySet extends AbstractMigrationSetDescription
+final class PHP74MigrationRiskySet extends AbstractRuleSetDescription
 {
-    public function getRules(): array
+    public function getRules()
     {
         return [
             '@PHP71Migration:risky' => true,
@@ -29,5 +27,10 @@ final class PHP74MigrationRiskySet extends AbstractMigrationSetDescription
             'no_alias_functions' => true,
             'use_arrow_functions' => true,
         ];
+    }
+
+    public function getDescription()
+    {
+        return 'Rules to improve code for PHP 7.4 compatibility.';
     }
 }

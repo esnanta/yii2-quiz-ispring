@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,12 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\FunctionNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
-use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -29,22 +26,30 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class ReturnTypeDeclarationFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class ReturnTypeDeclarationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
+        $versionSpecification = new VersionSpecification(70000);
+
         return new FixerDefinition(
-            'Adjust spacing around colon in return type declarations and backed enum types.',
+            'There should be one or no space before colon, and one space after it in return type declarations, according to configuration.',
             [
-                new CodeSample(
-                    "<?php\nfunction foo(int \$a):string {};\n"
-                ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     "<?php\nfunction foo(int \$a):string {};\n",
+                    $versionSpecification
+                ),
+                new VersionSpecificCodeSample(
+                    "<?php\nfunction foo(int \$a):string {};\n",
+                    $versionSpecification,
                     ['space_before' => 'none']
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     "<?php\nfunction foo(int \$a):string {};\n",
+                    $versionSpecification,
                     ['space_before' => 'one']
                 ),
             ],
@@ -55,19 +60,25 @@ final class ReturnTypeDeclarationFixer extends AbstractFixer implements Configur
     /**
      * {@inheritdoc}
      *
-     * Must run after PhpUnitDataProviderReturnTypeFixer, PhpdocToReturnTypeFixer, VoidReturnFixer.
+     * Must run after PhpdocToReturnTypeFixer, VoidReturnFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -17;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(CT::T_TYPE_COLON);
+        return \PHP_VERSION_ID >= 70000 && $tokens->isTokenKindFound(CT::T_TYPE_COLON);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $oneSpaceBefore = 'one' === $this->configuration['space_before'];
 
@@ -107,7 +118,10 @@ final class ReturnTypeDeclarationFixer extends AbstractFixer implements Configur
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('space_before', 'Spacing to apply before colon.'))

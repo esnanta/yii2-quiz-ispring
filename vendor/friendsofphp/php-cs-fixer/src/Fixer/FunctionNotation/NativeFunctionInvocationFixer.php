@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,29 +13,28 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\FunctionNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceAnalysis;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Utils;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * @author Andreas Möller <am@localheinz.com>
+ * @author SpacePossum
  */
-final class NativeFunctionInvocationFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class NativeFunctionInvocationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
      * @internal
      */
-    public const SET_ALL = '@all';
+    const SET_ALL = '@all';
 
     /**
      * Subset of SET_INTERNAL.
@@ -49,26 +46,29 @@ final class NativeFunctionInvocationFixer extends AbstractFixer implements Confi
      *
      * @internal
      */
-    public const SET_COMPILER_OPTIMIZED = '@compiler_optimized';
+    const SET_COMPILER_OPTIMIZED = '@compiler_optimized';
 
     /**
      * @internal
      */
-    public const SET_INTERNAL = '@internal';
+    const SET_INTERNAL = '@internal';
 
     /**
      * @var callable
      */
     private $functionFilter;
 
-    public function configure(array $configuration): void
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
         $this->functionFilter = $this->getFunctionFilter();
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Add leading `\` before function invocation to speed up resolving.',
@@ -164,24 +164,33 @@ $c = get_class($d);
      * {@inheritdoc}
      *
      * Must run before GlobalNamespaceImportFixer.
-     * Must run after BacktickToShellExecFixer, RegularCallableCallFixer, StrictParamFixer.
+     * Must run after BacktickToShellExecFixer, StrictParamFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_STRING);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         if ('all' === $this->configuration['scope']) {
             $this->fixFunctionCalls($tokens, $this->functionFilter, 0, \count($tokens) - 1, false);
@@ -189,26 +198,29 @@ $c = get_class($d);
             return;
         }
 
-        $namespaces = $tokens->getNamespaceDeclarations();
+        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
 
         // 'scope' is 'namespaced' here
         /** @var NamespaceAnalysis $namespace */
         foreach (array_reverse($namespaces) as $namespace) {
-            $this->fixFunctionCalls($tokens, $this->functionFilter, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->isGlobalNamespace());
+            $this->fixFunctionCalls($tokens, $this->functionFilter, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), '' === $namespace->getFullName());
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('exclude', 'List of functions to ignore.'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues([static function (array $value): bool {
+                ->setAllowedValues([static function (array $value) {
                     foreach ($value as $functionName) {
                         if (!\is_string($functionName) || '' === trim($functionName) || trim($functionName) !== $functionName) {
                             throw new InvalidOptionsException(sprintf(
                                 'Each element must be a non-empty, trimmed string, got "%s" instead.',
-                                get_debug_type($functionName)
+                                \is_object($functionName) ? \get_class($functionName) : \gettype($functionName)
                             ));
                         }
                     }
@@ -219,12 +231,12 @@ $c = get_class($d);
                 ->getOption(),
             (new FixerOptionBuilder('include', 'List of function names or sets to fix. Defined sets are `@internal` (all native functions), `@all` (all global functions) and `@compiler_optimized` (functions that are specially optimized by Zend).'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues([static function (array $value): bool {
+                ->setAllowedValues([static function (array $value) {
                     foreach ($value as $functionName) {
                         if (!\is_string($functionName) || '' === trim($functionName) || trim($functionName) !== $functionName) {
                             throw new InvalidOptionsException(sprintf(
                                 'Each element must be a non-empty, trimmed string, got "%s" instead.',
-                                get_debug_type($functionName)
+                                \is_object($functionName) ? \get_class($functionName) : \gettype($functionName)
                             ));
                         }
 
@@ -234,14 +246,14 @@ $c = get_class($d);
                             self::SET_COMPILER_OPTIMIZED,
                         ];
 
-                        if (str_starts_with($functionName, '@') && !\in_array($functionName, $sets, true)) {
-                            throw new InvalidOptionsException(sprintf('Unknown set "%s", known sets are %s.', $functionName, Utils::naturalLanguageJoin($sets)));
+                        if ('@' === $functionName[0] && !\in_array($functionName, $sets, true)) {
+                            throw new InvalidOptionsException(sprintf('Unknown set "%s", known sets are "%s".', $functionName, implode('", "', $sets)));
                         }
                     }
 
                     return true;
                 }])
-                ->setDefault([self::SET_COMPILER_OPTIMIZED])
+                ->setDefault([self::SET_INTERNAL])
                 ->getOption(),
             (new FixerOptionBuilder('scope', 'Only fix function calls that are made within a namespace or fix all.'))
                 ->setAllowedValues(['all', 'namespaced'])
@@ -249,12 +261,17 @@ $c = get_class($d);
                 ->getOption(),
             (new FixerOptionBuilder('strict', 'Whether leading `\` of function call not meant to have it should be removed.'))
                 ->setAllowedTypes(['bool'])
-                ->setDefault(true)
+                ->setDefault(false) // @TODO: 3.0 change to true as default
                 ->getOption(),
         ]);
     }
 
-    private function fixFunctionCalls(Tokens $tokens, callable $functionFilter, int $start, int $end, bool $tryToRemove): void
+    /**
+     * @param int  $start
+     * @param int  $end
+     * @param bool $tryToRemove
+     */
+    private function fixFunctionCalls(Tokens $tokens, callable $functionFilter, $start, $end, $tryToRemove)
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
 
@@ -267,10 +284,9 @@ $c = get_class($d);
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
             if (!$functionFilter($tokens[$index]->getContent()) || $tryToRemove) {
-                if (false === $this->configuration['strict']) {
+                if (!$this->configuration['strict']) {
                     continue;
                 }
-
                 if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
                     $tokens->clearTokenAndMergeSurroundingWhitespace($prevIndex);
                 }
@@ -288,20 +304,26 @@ $c = get_class($d);
         $tokens->insertSlices($tokensToInsert);
     }
 
-    private function getFunctionFilter(): callable
+    /**
+     * @return callable
+     */
+    private function getFunctionFilter()
     {
         $exclude = $this->normalizeFunctionNames($this->configuration['exclude']);
 
         if (\in_array(self::SET_ALL, $this->configuration['include'], true)) {
             if (\count($exclude) > 0) {
-                return static fn (string $functionName): bool => !isset($exclude[strtolower($functionName)]);
+                return static function ($functionName) use ($exclude) {
+                    return !isset($exclude[strtolower($functionName)]);
+                };
             }
 
-            return static fn (): bool => true;
+            return static function () {
+                return true;
+            };
         }
 
         $include = [];
-
         if (\in_array(self::SET_INTERNAL, $this->configuration['include'], true)) {
             $include = $this->getAllInternalFunctionsNormalized();
         } elseif (\in_array(self::SET_COMPILER_OPTIMIZED, $this->configuration['include'], true)) {
@@ -309,22 +331,26 @@ $c = get_class($d);
         }
 
         foreach ($this->configuration['include'] as $additional) {
-            if (!str_starts_with($additional, '@')) {
+            if ('@' !== $additional[0]) {
                 $include[strtolower($additional)] = true;
             }
         }
 
         if (\count($exclude) > 0) {
-            return static fn (string $functionName): bool => isset($include[strtolower($functionName)]) && !isset($exclude[strtolower($functionName)]);
+            return static function ($functionName) use ($include, $exclude) {
+                return isset($include[strtolower($functionName)]) && !isset($exclude[strtolower($functionName)]);
+            };
         }
 
-        return static fn (string $functionName): bool => isset($include[strtolower($functionName)]);
+        return static function ($functionName) use ($include) {
+            return isset($include[strtolower($functionName)]);
+        };
     }
 
     /**
      * @return array<string, true> normalized function names of which the PHP compiler optimizes
      */
-    private function getAllCompilerOptimizedFunctionsNormalized(): array
+    private function getAllCompilerOptimizedFunctionsNormalized()
     {
         return $this->normalizeFunctionNames([
             // @see https://github.com/php/php-src/blob/PHP-7.4/Zend/zend_compile.c "zend_try_compile_special_func"
@@ -357,29 +383,24 @@ $c = get_class($d);
             'is_object',
             'is_real',
             'is_resource',
-            'is_scalar',
             'is_string',
             'ord',
-            'sizeof',
             'strlen',
             'strval',
             // @see https://github.com/php/php-src/blob/php-7.2.6/ext/opcache/Optimizer/pass1_5.c
-            // @see https://github.com/php/php-src/blob/PHP-8.1.2/Zend/Optimizer/block_pass.c
-            // @see https://github.com/php/php-src/blob/php-8.1.3/Zend/Optimizer/zend_optimizer.c
             'constant',
             'define',
             'dirname',
             'extension_loaded',
             'function_exists',
             'is_callable',
-            'ini_get',
         ]);
     }
 
     /**
      * @return array<string, true> normalized function names of all internal defined functions
      */
-    private function getAllInternalFunctionsNormalized(): array
+    private function getAllInternalFunctionsNormalized()
     {
         return $this->normalizeFunctionNames(get_defined_functions()['internal']);
     }
@@ -389,7 +410,7 @@ $c = get_class($d);
      *
      * @return array<string, true> all function names lower cased
      */
-    private function normalizeFunctionNames(array $functionNames): array
+    private function normalizeFunctionNames(array $functionNames)
     {
         foreach ($functionNames as $index => $functionName) {
             $functionNames[strtolower($functionName)] = true;

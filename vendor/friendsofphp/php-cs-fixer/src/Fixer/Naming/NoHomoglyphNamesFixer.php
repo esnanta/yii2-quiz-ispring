@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Naming;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -46,9 +43,9 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
      * This is not the complete list of unicode homographs, but limited
      * to those you are more likely to have typed/copied by accident
      *
-     * @var array<string, string>
+     * @var array
      */
-    private static array $replacements = [
+    private static $replacements = [
         'O' => '0',
         '０' => '0',
         'I' => '1',
@@ -193,7 +190,10 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
         'ｚ' => 'z',
     ];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Replace accidental usage of homoglyphs (non ascii characters) in names.',
@@ -203,24 +203,38 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
         );
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound([T_VARIABLE, T_STRING]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind([T_VARIABLE, T_STRING])) {
                 continue;
             }
 
-            $replaced = Preg::replaceCallback('/[^[:ascii:]]/u', static fn (array $matches): string => self::$replacements[$matches[0]] ?? $matches[0], $token->getContent(), -1, $count);
+            $replaced = Preg::replaceCallback('/[^[:ascii:]]/u', static function ($matches) {
+                return isset(self::$replacements[$matches[0]])
+                    ? self::$replacements[$matches[0]]
+                    : $matches[0]
+                ;
+            }, $token->getContent(), -1, $count);
 
             if ($count) {
                 $tokens->offsetSet($index, new Token([$token->getId(), $replaced]));

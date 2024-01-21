@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,33 +13,29 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Basic;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
+use PhpCsFixer\FixerConfiguration\InvalidOptionsForEnvException;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * Removes Zero-width space (ZWSP), Non-breaking space (NBSP) and other invisible unicode symbols.
  *
  * @author Ivan Boprzenkov <ivan.borzenkov@gmail.com>
  */
-final class NonPrintableCharacterFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class NonPrintableCharacterFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    /**
-     * @var array<string, string[]>
-     */
-    private array $symbolsReplace;
+    private $symbolsReplace;
 
-    /**
-     * @var int[]
-     */
-    private static array $tokens = [
+    private static $tokens = [
         T_STRING_VARNAME,
         T_INLINE_HTML,
         T_VARIABLE,
@@ -64,7 +58,10 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         ];
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Remove Zero-width space (ZWSP), Non-breaking space (NBSP) and other invisible unicode symbols.',
@@ -72,9 +69,10 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
                 new CodeSample(
                     '<?php echo "'.pack('H*', 'e2808b').'Hello'.pack('H*', 'e28087').'World'.pack('H*', 'c2a0')."!\";\n"
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php echo "'.pack('H*', 'e2808b').'Hello'.pack('H*', 'e28087').'World'.pack('H*', 'c2a0')."!\";\n",
-                    ['use_escape_sequences_in_strings' => false]
+                    new VersionSpecification(70000),
+                    ['use_escape_sequences_in_strings' => true]
                 ),
             ],
             null,
@@ -82,32 +80,50 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         );
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound(self::$tokens);
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('use_escape_sequences_in_strings', 'Whether characters should be replaced with escape sequences in strings.'))
                 ->setAllowedTypes(['bool'])
-                ->setDefault(true)
+                ->setDefault(false) // @TODO 3.0 change to true
+                ->setNormalizer(static function (Options $options, $value) {
+                    if (\PHP_VERSION_ID < 70000 && $value) {
+                        throw new InvalidOptionsForEnvException('Escape sequences require PHP 7.0+.');
+                    }
+
+                    return $value;
+                })
                 ->getOption(),
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $replacements = [];
         $escapeSequences = [];
-
-        foreach ($this->symbolsReplace as $character => [$replacement, $codepoint]) {
+        foreach ($this->symbolsReplace as $character => list($replacement, $codepoint)) {
             $replacements[$character] = $replacement;
             $escapeSequences[$character] = '\u{'.$codepoint.'}';
         }
@@ -116,7 +132,7 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
             $content = $token->getContent();
 
             if (
-                true === $this->configuration['use_escape_sequences_in_strings']
+                $this->configuration['use_escape_sequences_in_strings']
                 && $token->isGivenKind([T_CONSTANT_ENCAPSED_STRING, T_ENCAPSED_AND_WHITESPACE])
             ) {
                 if (!Preg::match('/'.implode('|', array_keys($escapeSequences)).'/', $content)) {
@@ -130,11 +146,11 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
                 if ($previousToken->isGivenKind(T_START_HEREDOC)) {
                     $previousTokenContent = $previousToken->getContent();
 
-                    if (str_contains($previousTokenContent, '\'')) {
+                    if (false !== strpos($previousTokenContent, '\'')) {
                         $tokens[$index - 1] = new Token([T_START_HEREDOC, str_replace('\'', '', $previousTokenContent)]);
                         $stringTypeChanged = true;
                     }
-                } elseif (str_starts_with($content, "'")) {
+                } elseif ("'" === $content[0]) {
                     $stringTypeChanged = true;
                     $swapQuotes = true;
                 }
@@ -142,15 +158,13 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
                 if ($swapQuotes) {
                     $content = str_replace("\\'", "'", $content);
                 }
-
                 if ($stringTypeChanged) {
                     $content = Preg::replace('/(\\\\{1,2})/', '\\\\\\\\', $content);
                     $content = str_replace('$', '\$', $content);
                 }
-
                 if ($swapQuotes) {
                     $content = str_replace('"', '\"', $content);
-                    $content = Preg::replace('/^\'(.*)\'$/s', '"$1"', $content);
+                    $content = Preg::replace('/^\'(.*)\'$/', '"$1"', $content);
                 }
 
                 $tokens[$index] = new Token([$token->getId(), strtr($content, $escapeSequences)]);
@@ -159,19 +173,7 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
             }
 
             if ($token->isGivenKind(self::$tokens)) {
-                $newContent = strtr($content, $replacements);
-
-                // variable name cannot contain space
-                if ($token->isGivenKind([T_STRING_VARNAME, T_VARIABLE]) && str_contains($newContent, ' ')) {
-                    continue;
-                }
-
-                // multiline comment must have "*/" only at the end
-                if ($token->isGivenKind([T_COMMENT, T_DOC_COMMENT]) && str_starts_with($newContent, '/*') && strpos($newContent, '*/') !== \strlen($newContent) - 2) {
-                    continue;
-                }
-
-                $tokens[$index] = new Token([$token->getId(), $newContent]);
+                $tokens[$index] = new Token([$token->getId(), strtr($content, $replacements)]);
             }
         }
     }

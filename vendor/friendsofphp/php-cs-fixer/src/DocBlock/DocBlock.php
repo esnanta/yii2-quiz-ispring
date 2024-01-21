@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,31 +21,44 @@ use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis;
  *
  * It internally splits it up into "lines" that we can manipulate.
  *
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
+ *
+ * @final
  */
-final class DocBlock
+class DocBlock
 {
     /**
-     * @var list<Line>
+     * The array of lines.
+     *
+     * @var Line[]
      */
-    private array $lines = [];
+    private $lines = [];
 
     /**
-     * @var null|list<Annotation>
+     * The array of annotations.
+     *
+     * @var null|Annotation[]
      */
-    private ?array $annotations = null;
-
-    private ?NamespaceAnalysis $namespace;
-
-    /**
-     * @var list<NamespaceUseAnalysis>
-     */
-    private array $namespaceUses;
+    private $annotations;
 
     /**
-     * @param list<NamespaceUseAnalysis> $namespaceUses
+     * @var null|NamespaceAnalysis
      */
-    public function __construct(string $content, ?NamespaceAnalysis $namespace = null, array $namespaceUses = [])
+    private $namespace;
+
+    /**
+     * @var NamespaceUseAnalysis[]
+     */
+    private $namespaceUses;
+
+    /**
+     * Create a new docblock instance.
+     *
+     * @param string                 $content
+     * @param null|NamespaceAnalysis $namespace
+     * @param NamespaceUseAnalysis[] $namespaceUses
+     */
+    public function __construct($content, $namespace = null, array $namespaceUses = [])
     {
         foreach (Preg::split('/([^\n\r]+\R*)/', $content, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE) as $line) {
             $this->lines[] = new Line($line);
@@ -57,7 +68,12 @@ final class DocBlock
         $this->namespaceUses = $namespaceUses;
     }
 
-    public function __toString(): string
+    /**
+     * Get the string representation of object.
+     *
+     * @return string
+     */
+    public function __toString()
     {
         return $this->getContent();
     }
@@ -65,27 +81,31 @@ final class DocBlock
     /**
      * Get this docblock's lines.
      *
-     * @return list<Line>
+     * @return Line[]
      */
-    public function getLines(): array
+    public function getLines()
     {
         return $this->lines;
     }
 
     /**
      * Get a single line.
+     *
+     * @param int $pos
+     *
+     * @return null|Line
      */
-    public function getLine(int $pos): ?Line
+    public function getLine($pos)
     {
-        return $this->lines[$pos] ?? null;
+        return isset($this->lines[$pos]) ? $this->lines[$pos] : null;
     }
 
     /**
      * Get this docblock's annotations.
      *
-     * @return list<Annotation>
+     * @return Annotation[]
      */
-    public function getAnnotations(): array
+    public function getAnnotations()
     {
         if (null !== $this->annotations) {
             return $this->annotations;
@@ -111,15 +131,18 @@ final class DocBlock
         return $this->annotations;
     }
 
-    public function isMultiLine(): bool
+    public function isMultiLine()
     {
         return 1 !== \count($this->lines);
     }
 
     /**
      * Take a one line doc block, and turn it into a multi line doc block.
+     *
+     * @param string $indent
+     * @param string $lineEnd
      */
-    public function makeMultiLine(string $indent, string $lineEnd): void
+    public function makeMultiLine($indent, $lineEnd)
     {
         if ($this->isMultiLine()) {
             return;
@@ -144,7 +167,7 @@ final class DocBlock
         ];
     }
 
-    public function makeSingleLine(): void
+    public function makeSingleLine()
     {
         if (!$this->isMultiLine()) {
             return;
@@ -152,7 +175,9 @@ final class DocBlock
 
         $usefulLines = array_filter(
             $this->lines,
-            static fn (Line $line): bool => $line->containsUsefulContent()
+            static function (Line $line) {
+                return $line->containsUsefulContent();
+            }
         );
 
         if (1 < \count($usefulLines)) {
@@ -160,37 +185,45 @@ final class DocBlock
         }
 
         $lineContent = '';
-        if (\count($usefulLines) > 0) {
+        if (\count($usefulLines)) {
             $lineContent = $this->getSingleLineDocBlockEntry(array_shift($usefulLines));
         }
 
         $this->lines = [new Line('/** '.$lineContent.' */')];
     }
 
-    public function getAnnotation(int $pos): ?Annotation
+    /**
+     * @param int $pos
+     *
+     * @return null|Annotation
+     */
+    public function getAnnotation($pos)
     {
         $annotations = $this->getAnnotations();
 
-        return $annotations[$pos] ?? null;
+        return isset($annotations[$pos]) ? $annotations[$pos] : null;
     }
 
     /**
      * Get specific types of annotations only.
      *
-     * @param list<string>|string $types
+     * If none exist, we're returning an empty array.
      *
-     * @return list<Annotation>
+     * @param string|string[] $types
+     *
+     * @return Annotation[]
      */
-    public function getAnnotationsOfType($types): array
+    public function getAnnotationsOfType($types)
     {
-        $typesToSearchFor = (array) $types;
-
         $annotations = [];
+        $types = (array) $types;
 
         foreach ($this->getAnnotations() as $annotation) {
-            $tagName = $annotation->getTag()->getName();
-            if (\in_array($tagName, $typesToSearchFor, true)) {
-                $annotations[] = $annotation;
+            $tag = $annotation->getTag()->getName();
+            foreach ($types as $type) {
+                if ($type === $tag) {
+                    $annotations[] = $annotation;
+                }
             }
         }
 
@@ -199,13 +232,15 @@ final class DocBlock
 
     /**
      * Get the actual content of this docblock.
+     *
+     * @return string
      */
-    public function getContent(): string
+    public function getContent()
     {
         return implode('', $this->lines);
     }
 
-    private function findAnnotationLength(int $start): int
+    private function findAnnotationLength($start)
     {
         $index = $start;
 
@@ -228,20 +263,23 @@ final class DocBlock
         return $index - $start;
     }
 
-    private function getSingleLineDocBlockEntry(Line $line): string
+    /**
+     * @return string
+     */
+    private function getSingleLineDocBlockEntry(Line $line)
     {
         $lineString = $line->getContent();
 
-        if ('' === $lineString) {
+        if (0 === \strlen($lineString)) {
             return $lineString;
         }
 
         $lineString = str_replace('*/', '', $lineString);
         $lineString = trim($lineString);
 
-        if (str_starts_with($lineString, '/**')) {
+        if ('/**' === substr($lineString, 0, 3)) {
             $lineString = substr($lineString, 3);
-        } elseif (str_starts_with($lineString, '*')) {
+        } elseif ('*' === substr($lineString, 0, 1)) {
             $lineString = substr($lineString, 1);
         }
 

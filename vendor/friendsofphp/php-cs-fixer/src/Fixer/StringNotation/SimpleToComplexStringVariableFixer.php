@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\StringNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,28 +24,31 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class SimpleToComplexStringVariableFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Converts explicit variables in double-quoted strings and heredoc syntax from simple to complex format (`${` to `{$`).',
             [
                 new CodeSample(
                     <<<'EOT'
-                        <?php
-                        $name = 'World';
-                        echo "Hello ${name}!";
+<?php
+$name = 'World';
+echo "Hello ${name}!";
 
-                        EOT
+EOT
                 ),
                 new CodeSample(
                     <<<'EOT'
-                        <?php
-                        $name = 'World';
-                        echo <<<TEST
-                        Hello ${name}!
-                        TEST;
+<?php
+$name = 'World';
+echo <<<TEST
+Hello ${name}!
+TEST;
 
-                        EOT
+EOT
                 ),
             ],
             "Doesn't touch implicit variables. Works together nicely with `explicit_string_variable`."
@@ -60,17 +60,20 @@ final class SimpleToComplexStringVariableFixer extends AbstractFixer
      *
      * Must run after ExplicitStringVariableFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -10;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOLLAR_OPEN_CURLY_BRACES);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = \count($tokens) - 3; $index > 0; --$index) {
             $token = $tokens[$index];
@@ -94,7 +97,7 @@ final class SimpleToComplexStringVariableFixer extends AbstractFixer
             $tokenOfStringBeforeToken = $tokens[$index - 1];
             $stringContent = $tokenOfStringBeforeToken->getContent();
 
-            if (str_ends_with($stringContent, '$') && !str_ends_with($stringContent, '\\$')) {
+            if ('$' === substr($stringContent, -1) && '\\$' !== substr($stringContent, -2)) {
                 $newContent = substr($stringContent, 0, -1).'\\$';
                 $tokenOfStringBeforeToken = new Token([T_ENCAPSED_AND_WHITESPACE, $newContent]);
             }

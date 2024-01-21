@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,7 +12,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Console;
 
-use PhpCsFixer\Console\Command\CheckCommand;
 use PhpCsFixer\Console\Command\DescribeCommand;
 use PhpCsFixer\Console\Command\FixCommand;
 use PhpCsFixer\Console\Command\HelpCommand;
@@ -40,20 +37,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Application extends BaseApplication
 {
-    public const VERSION = '3.46.0';
-    public const VERSION_CODENAME = 'Three Keys';
+    const VERSION = '2.19.3';
+    const VERSION_CODENAME = 'Testament';
 
-    private ToolInfo $toolInfo;
+    /**
+     * @var ToolInfo
+     */
+    private $toolInfo;
 
     public function __construct()
     {
+        if (!getenv('PHP_CS_FIXER_FUTURE_MODE')) {
+            error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+        }
+
         parent::__construct('PHP CS Fixer', self::VERSION);
 
         $this->toolInfo = new ToolInfo();
 
         // in alphabetical order
         $this->add(new DescribeCommand());
-        $this->add(new CheckCommand($this->toolInfo));
         $this->add(new FixCommand($this->toolInfo));
         $this->add(new ListFilesCommand($this->toolInfo));
         $this->add(new ListSetsCommand());
@@ -64,16 +67,23 @@ final class Application extends BaseApplication
         ));
     }
 
-    public static function getMajorVersion(): int
+    /**
+     * @return int
+     */
+    public static function getMajorVersion()
     {
         return (int) explode('.', self::VERSION)[0];
     }
 
-    public function doRun(InputInterface $input, OutputInterface $output): int
+    /**
+     * {@inheritdoc}
+     */
+    public function doRun(InputInterface $input, OutputInterface $output)
     {
         $stdErr = $output instanceof ConsoleOutputInterface
             ? $output->getErrorOutput()
-            : ($input->hasParameterOption('--format', true) && 'txt' !== $input->getParameterOption('--format', null, true) ? null : $output);
+            : ($input->hasParameterOption('--format', true) && 'txt' !== $input->getParameterOption('--format', null, true) ? null : $output)
+        ;
 
         if (null !== $stdErr) {
             $warningsDetector = new WarningsDetector($this->toolInfo);
@@ -81,7 +91,7 @@ final class Application extends BaseApplication
             $warningsDetector->detectOldMajor();
             $warnings = $warningsDetector->getWarnings();
 
-            if (\count($warnings) > 0) {
+            if ($warnings) {
                 foreach ($warnings as $warning) {
                     $stdErr->writeln(sprintf($stdErr->isDecorated() ? '<bg=yellow;fg=black;>%s</>' : '%s', $warning));
                 }
@@ -96,8 +106,7 @@ final class Application extends BaseApplication
             && $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE
         ) {
             $triggeredDeprecations = Utils::getTriggeredDeprecations();
-
-            if (\count($triggeredDeprecations) > 0) {
+            if ($triggeredDeprecations) {
                 $stdErr->writeln('');
                 $stdErr->writeln($stdErr->isDecorated() ? '<bg=yellow;fg=black;>Detected deprecations in use:</>' : 'Detected deprecations in use:');
                 foreach ($triggeredDeprecations as $deprecation) {
@@ -109,25 +118,30 @@ final class Application extends BaseApplication
         return $result;
     }
 
-    public function getLongVersion(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getLongVersion()
     {
-        $commit = '@git-commit@';
-        $versionCommit = '';
+        $version = implode('', [
+            parent::getLongVersion(),
+            self::VERSION_CODENAME ? sprintf(' <info>%s</info>', self::VERSION_CODENAME) : '', // @phpstan-ignore-line to avoid `Ternary operator condition is always true|false.`
+            ' by <comment>Fabien Potencier</comment> and <comment>Dariusz Ruminski</comment>',
+        ]);
 
-        if ('@'.'git-commit@' !== $commit) { /** @phpstan-ignore-line as `$commit` is replaced during phar building */
-            $versionCommit = substr($commit, 0, 7);
+        $commit = '@git-commit@';
+
+        if ('@'.'git-commit@' !== $commit) { // @phpstan-ignore-line as `$commit` is replaced during phar building
+            $version .= ' ('.substr($commit, 0, 7).')';
         }
 
-        return implode('', [
-            parent::getLongVersion(),
-            $versionCommit ? sprintf(' <info>(%s)</info>', $versionCommit) : '', // @phpstan-ignore-line to avoid `Ternary operator condition is always true|false.`
-            self::VERSION_CODENAME ? sprintf(' <info>%s</info>', self::VERSION_CODENAME) : '', // @phpstan-ignore-line to avoid `Ternary operator condition is always true|false.`
-            ' by <comment>Fabien Potencier</comment> and <comment>Dariusz Ruminski</comment>.',
-            "\nPHP runtime: <info>".PHP_VERSION.'</info>',
-        ]);
+        return $version;
     }
 
-    protected function getDefaultCommands(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultCommands()
     {
         return [new HelpCommand(), new ListCommand()];
     }

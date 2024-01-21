@@ -40,6 +40,7 @@
 
         "bajadev/yii2-ckeditor": "*",
         "budyaga/yii2-cropper": "*",
+        "victor78/yii2-zipper": "~0.0.4",
 
         "mootensai/yii2-enhanced-gii": "dev-master",
         "warrence/yii2-kartikgii": "dev-master"

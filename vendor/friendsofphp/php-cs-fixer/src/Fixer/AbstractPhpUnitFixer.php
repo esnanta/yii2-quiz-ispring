@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,12 +13,7 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Tokenizer\Analyzer\WhitespacesAnalyzer;
-use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -28,12 +21,15 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 abstract class AbstractPhpUnitFixer extends AbstractFixer
 {
-    final public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    final public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAllTokenKindsFound([T_CLASS, T_STRING]);
     }
 
-    final protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    final protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
 
@@ -42,123 +38,33 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
         }
     }
 
-    abstract protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void;
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    abstract protected function applyPhpUnitClassFix(Tokens $tokens, $startIndex, $endIndex);
 
-    final protected function getDocBlockIndex(Tokens $tokens, int $index): int
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    final protected function getDocBlockIndex(Tokens $tokens, $index)
     {
-        $modifiers = [T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT];
-
-        if (\defined('T_ATTRIBUTE')) { // @TODO: drop condition when PHP 8.0+ is required
-            $modifiers[] = T_ATTRIBUTE;
-        }
-
-        if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.2+ is required
-            $modifiers[] = T_READONLY;
-        }
-
         do {
             $index = $tokens->getPrevNonWhitespace($index);
-
-            if ($tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
-                $index = $tokens->getPrevTokenOfKind($index, [[T_ATTRIBUTE]]);
-            }
-        } while ($tokens[$index]->isGivenKind($modifiers));
+        } while ($tokens[$index]->isGivenKind([T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT]));
 
         return $index;
     }
 
     /**
-     * @param array<string> $preventingAnnotations
+     * @param int $index
+     *
+     * @return bool
      */
-    final protected function ensureIsDockBlockWithAnnotation(
-        Tokens $tokens,
-        int $index,
-        string $annotation,
-        array $preventingAnnotations
-    ): void {
-        $docBlockIndex = $this->getDocBlockIndex($tokens, $index);
-
-        if ($this->isPHPDoc($tokens, $docBlockIndex)) {
-            $this->updateDocBlockIfNeeded($tokens, $docBlockIndex, $annotation, $preventingAnnotations);
-        } else {
-            $this->createDocBlock($tokens, $docBlockIndex, $annotation);
-        }
-    }
-
-    final protected function isPHPDoc(Tokens $tokens, int $index): bool
+    final protected function isPHPDoc(Tokens $tokens, $index)
     {
         return $tokens[$index]->isGivenKind(T_DOC_COMMENT);
-    }
-
-    private function createDocBlock(Tokens $tokens, int $docBlockIndex, string $annotation): void
-    {
-        $lineEnd = $this->whitespacesConfig->getLineEnding();
-        $originalIndent = WhitespacesAnalyzer::detectIndent($tokens, $tokens->getNextNonWhitespace($docBlockIndex));
-        $toInsert = [
-            new Token([T_DOC_COMMENT, "/**{$lineEnd}{$originalIndent} * @{$annotation}{$lineEnd}{$originalIndent} */"]),
-            new Token([T_WHITESPACE, $lineEnd.$originalIndent]),
-        ];
-        $index = $tokens->getNextMeaningfulToken($docBlockIndex);
-        $tokens->insertAt($index, $toInsert);
-
-        if (!$tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
-            $extraNewLines = $this->whitespacesConfig->getLineEnding();
-
-            if (!$tokens[$index - 1]->isGivenKind(T_OPEN_TAG)) {
-                $extraNewLines .= $this->whitespacesConfig->getLineEnding();
-            }
-
-            $tokens->insertAt($index, [
-                new Token([T_WHITESPACE, $extraNewLines.WhitespacesAnalyzer::detectIndent($tokens, $index)]),
-            ]);
-        }
-    }
-
-    /**
-     * @param array<string> $preventingAnnotations
-     */
-    private function updateDocBlockIfNeeded(
-        Tokens $tokens,
-        int $docBlockIndex,
-        string $annotation,
-        array $preventingAnnotations
-    ): void {
-        $doc = new DocBlock($tokens[$docBlockIndex]->getContent());
-        foreach ($preventingAnnotations as $preventingAnnotation) {
-            if ([] !== $doc->getAnnotationsOfType($preventingAnnotation)) {
-                return;
-            }
-        }
-        $doc = $this->makeDocBlockMultiLineIfNeeded($doc, $tokens, $docBlockIndex, $annotation);
-        $lines = $this->addInternalAnnotation($doc, $tokens, $docBlockIndex, $annotation);
-        $lines = implode('', $lines);
-
-        $tokens[$docBlockIndex] = new Token([T_DOC_COMMENT, $lines]);
-    }
-
-    /**
-     * @return array<Line>
-     */
-    private function addInternalAnnotation(DocBlock $docBlock, Tokens $tokens, int $docBlockIndex, string $annotation): array
-    {
-        $lines = $docBlock->getLines();
-        $originalIndent = WhitespacesAnalyzer::detectIndent($tokens, $docBlockIndex);
-        $lineEnd = $this->whitespacesConfig->getLineEnding();
-        array_splice($lines, -1, 0, $originalIndent.' * @'.$annotation.$lineEnd);
-
-        return $lines;
-    }
-
-    private function makeDocBlockMultiLineIfNeeded(DocBlock $doc, Tokens $tokens, int $docBlockIndex, string $annotation): DocBlock
-    {
-        $lines = $doc->getLines();
-        if (1 === \count($lines) && [] === $doc->getAnnotationsOfType($annotation)) {
-            $indent = WhitespacesAnalyzer::detectIndent($tokens, $tokens->getNextNonWhitespace($docBlockIndex));
-            $doc->makeMultiLine($indent, $this->whitespacesConfig->getLineEnding());
-
-            return $doc;
-        }
-
-        return $doc;
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,12 +21,18 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  */
 final class CheckstyleReporter implements ReporterInterface
 {
-    public function getFormat(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormat()
     {
         return 'checkstyle';
     }
 
-    public function generate(ReportSummary $reportSummary): string
+    /**
+     * {@inheritdoc}
+     */
+    public function generate(ReportSummary $reportSummary)
     {
         if (!\extension_loaded('dom')) {
             throw new \RuntimeException('Cannot generate report! `ext-dom` is not available!');
@@ -53,7 +57,12 @@ final class CheckstyleReporter implements ReporterInterface
         return $reportSummary->isDecoratedOutput() ? OutputFormatter::escape($dom->saveXML()) : $dom->saveXML();
     }
 
-    private function createError(\DOMDocument $dom, string $appliedFixer): \DOMElement
+    /**
+     * @param string $appliedFixer
+     *
+     * @return \DOMElement
+     */
+    private function createError(\DOMDocument $dom, $appliedFixer)
     {
         $error = $dom->createElement('error');
         $error->setAttribute('severity', 'warning');

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,15 +19,38 @@ namespace PhpCsFixer\Cache;
  */
 interface CacheInterface
 {
-    public function getSignature(): SignatureInterface;
+    /**
+     * @return SignatureInterface
+     */
+    public function getSignature();
 
-    public function has(string $file): bool;
+    /**
+     * @param string $file
+     *
+     * @return bool
+     */
+    public function has($file);
 
-    public function get(string $file): ?string;
+    /**
+     * @param string $file
+     *
+     * @return null|int
+     */
+    public function get($file);
 
-    public function set(string $file, string $hash): void;
+    /**
+     * @param string $file
+     * @param int    $hash
+     */
+    public function set($file, $hash);
 
-    public function clear(string $file): void;
+    /**
+     * @param string $file
+     */
+    public function clear($file);
 
-    public function toJson(): string;
+    /**
+     * @return string
+     */
+    public function toJson();
 }

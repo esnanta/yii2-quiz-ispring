@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,5 +17,10 @@ namespace PhpCsFixer\Cache;
  */
 interface DirectoryInterface
 {
-    public function getRelativePathTo(string $file): string;
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    public function getRelativePathTo($file);
 }

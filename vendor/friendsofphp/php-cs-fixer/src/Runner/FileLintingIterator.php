@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,21 +19,19 @@ use PhpCsFixer\Linter\LintingResultInterface;
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  *
  * @internal
- *
- * @extends \IteratorIterator<mixed, \SplFileInfo, \Traversable<\SplFileInfo>>
  */
 final class FileLintingIterator extends \IteratorIterator
 {
     /**
-     * @var null|LintingResultInterface
+     * @var LintingResultInterface
      */
     private $currentResult;
 
-    private LinterInterface $linter;
-
     /**
-     * @param \Iterator<mixed, \SplFileInfo> $iterator
+     * @var null|LinterInterface
      */
+    private $linter;
+
     public function __construct(\Iterator $iterator, LinterInterface $linter)
     {
         parent::__construct($iterator);
@@ -43,26 +39,29 @@ final class FileLintingIterator extends \IteratorIterator
         $this->linter = $linter;
     }
 
-    public function currentLintingResult(): ?LintingResultInterface
+    /**
+     * @return null|LintingResultInterface
+     */
+    public function currentLintingResult()
     {
         return $this->currentResult;
     }
 
-    public function next(): void
+    public function next()
     {
         parent::next();
 
         $this->currentResult = $this->valid() ? $this->handleItem($this->current()) : null;
     }
 
-    public function rewind(): void
+    public function rewind()
     {
         parent::rewind();
 
         $this->currentResult = $this->valid() ? $this->handleItem($this->current()) : null;
     }
 
-    private function handleItem(\SplFileInfo $file): LintingResultInterface
+    private function handleItem(\SplFileInfo $file)
     {
         return $this->linter->lintFile($file->getRealPath());
     }

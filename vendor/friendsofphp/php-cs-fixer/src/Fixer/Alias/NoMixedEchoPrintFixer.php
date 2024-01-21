@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,22 +13,26 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Alias;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
+ * @author SpacePossum
  */
-final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
+    /**
+     * @deprecated will be removed in 3.0
+     */
+    public static $defaultConfig = ['use' => 'echo'];
+
     /**
      * @var string
      */
@@ -41,7 +43,10 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableF
      */
     private $candidateTokenType;
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
@@ -54,7 +59,10 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableF
         }
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Either language construct `print` or `echo` should be used.',
@@ -68,19 +76,25 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableF
     /**
      * {@inheritdoc}
      *
-     * Must run after EchoTagSyntaxFixer.
+     * Must run after EchoTagSyntaxFixer, NoShortEchoTagFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -10;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound($this->candidateTokenType);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $callBack = $this->callBack;
         foreach ($tokens as $index => $token) {
@@ -90,7 +104,10 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableF
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('use', 'The desired language construct.'))
@@ -100,7 +117,10 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableF
         ]);
     }
 
-    private function fixEchoToPrint(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixEchoToPrint(Tokens $tokens, $index)
     {
         $nextTokenIndex = $tokens->getNextMeaningfulToken($index);
         $endTokenIndex = $tokens->getNextTokenOfKind($index, [';', [T_CLOSE_TAG]]);
@@ -126,7 +146,10 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements ConfigurableF
         $tokens[$index] = new Token([T_PRINT, 'print']);
     }
 
-    private function fixPrintToEcho(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixPrintToEcho(Tokens $tokens, $index)
     {
         $prevToken = $tokens[$tokens->getPrevMeaningfulToken($index)];
 

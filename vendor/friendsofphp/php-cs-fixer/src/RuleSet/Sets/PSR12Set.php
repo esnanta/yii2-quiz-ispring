@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,28 +19,19 @@ use PhpCsFixer\RuleSet\AbstractRuleSetDescription;
  */
 final class PSR12Set extends AbstractRuleSetDescription
 {
-    public function getRules(): array
+    public function getRules()
     {
         return [
             '@PSR2' => true,
-            'binary_operator_spaces' => [
-                'default' => 'at_least_single_space',
-            ],
             'blank_line_after_opening_tag' => true,
-            'blank_line_between_import_groups' => true,
-            'blank_lines_before_namespace' => true,
-            'braces_position' => [
-                'allow_single_line_empty_anonymous_classes' => true,
+            'braces' => [
+                'allow_single_line_anonymous_class_with_empty_body' => true,
             ],
-            'class_definition' => [
-                'inline_constructor_arguments' => false, // handled by method_argument_space fixer
-                'space_before_parenthesis' => true, // defined in PSR12 ¶8. Anonymous Classes
-            ],
-            'compact_nullable_type_declaration' => true,
+            'compact_nullable_typehint' => true,
             'declare_equal_normalize' => true,
             'lowercase_cast' => true,
             'lowercase_static_reference' => true,
-            'new_with_parentheses' => true,
+            'new_with_braces' => true,
             'no_blank_lines_after_class_opening' => true,
             'no_leading_import_slash' => true,
             'no_whitespace_in_blank_line' => true,
@@ -61,17 +50,20 @@ final class PSR12Set extends AbstractRuleSetDescription
             ],
             'return_type_declaration' => true,
             'short_scalar_cast' => true,
-            'single_import_per_statement' => ['group_to_single_imports' => false],
+            'single_blank_line_before_namespace' => true,
             'single_trait_insert_per_statement' => true,
             'ternary_operator_spaces' => true,
-            'unary_operator_spaces' => [
-                'only_dec_inc' => true,
+            'visibility_required' => [
+                'elements' => [
+                    'const',
+                    'method',
+                    'property',
+                ],
             ],
-            'visibility_required' => true,
         ];
     }
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return 'Rules that follow `PSR-12 <https://www.php-fig.org/psr/psr-12/>`_ standard.';
     }

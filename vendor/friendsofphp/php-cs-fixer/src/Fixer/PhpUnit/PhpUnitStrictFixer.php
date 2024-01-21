@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,14 +13,12 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\PhpUnit;
 
 use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -31,19 +27,19 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class PhpUnitStrictFixer extends AbstractPhpUnitFixer implements ConfigurableFixerInterface
+final class PhpUnitStrictFixer extends AbstractPhpUnitFixer implements ConfigurationDefinitionFixerInterface
 {
-    /**
-     * @var array<string, string>
-     */
-    private static array $assertionMap = [
+    private static $assertionMap = [
         'assertAttributeEquals' => 'assertAttributeSame',
         'assertAttributeNotEquals' => 'assertAttributeNotSame',
         'assertEquals' => 'assertSame',
         'assertNotEquals' => 'assertNotSame',
     ];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHPUnit methods like `assertSame` should be used instead of `assertEquals`.',
@@ -83,12 +79,18 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyPhpUnitClassFix(Tokens $tokens, $startIndex, $endIndex)
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
         $functionsAnalyzer = new FunctionsAnalyzer();
@@ -123,9 +125,12 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolverRootless('assertions', [
             (new FixerOptionBuilder('assertions', 'List of assertion methods to fix.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(self::$assertionMap))])
@@ -136,6 +141,6 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                     'assertNotEquals',
                 ])
                 ->getOption(),
-        ]);
+        ], $this->getName());
     }
 }

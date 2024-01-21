@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Alias;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,23 +24,29 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class BacktickToShellExecFixer extends AbstractFixer
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound('`');
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Converts backtick operators to `shell_exec` calls.',
             [
                 new CodeSample(
                     <<<'EOT'
-                        <?php
-                        $plain = `ls -lah`;
-                        $withVar = `ls -lah $var1 ${var2} {$var3} {$var4[0]} {$var5->call()}`;
+<?php
+$plain = `ls -lah`;
+$withVar = `ls -lah $var1 ${var2} {$var3} {$var4[0]} {$var5->call()}`;
 
-                        EOT
+EOT
                 ),
             ],
             'Conversion is done only when it is non risky, so when special chars like single-quotes, double-quotes and backticks are not used inside the command.'
@@ -55,18 +58,20 @@ final class BacktickToShellExecFixer extends AbstractFixer
      *
      * Must run before EscapeImplicitBackslashesFixer, ExplicitStringVariableFixer, NativeFunctionInvocationFixer, SingleQuoteFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 17;
+        return 2;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $backtickStarted = false;
         $backtickTokens = [];
         for ($index = $tokens->count() - 1; $index > 0; --$index) {
             $token = $tokens[$index];
-
             if (!$token->equals('`')) {
                 if ($backtickStarted) {
                     $backtickTokens[$index] = $token;
@@ -76,27 +81,24 @@ final class BacktickToShellExecFixer extends AbstractFixer
             }
 
             $backtickTokens[$index] = $token;
-
             if ($backtickStarted) {
                 $this->fixBackticks($tokens, $backtickTokens);
                 $backtickTokens = [];
             }
-
             $backtickStarted = !$backtickStarted;
         }
     }
 
     /**
      * Override backtick code with corresponding double-quoted string.
-     *
-     * @param array<int, Token> $backtickTokens
      */
-    private function fixBackticks(Tokens $tokens, array $backtickTokens): void
+    private function fixBackticks(Tokens $tokens, array $backtickTokens)
     {
-        // Track indices for final override
+        // Track indexes for final override
         ksort($backtickTokens);
-        $openingBacktickIndex = array_key_first($backtickTokens);
-        $closingBacktickIndex = array_key_last($backtickTokens);
+        $openingBacktickIndex = key($backtickTokens);
+        end($backtickTokens);
+        $closingBacktickIndex = key($backtickTokens);
 
         // Strip enclosing backticks
         array_shift($backtickTokens);
@@ -110,18 +112,15 @@ final class BacktickToShellExecFixer extends AbstractFixer
             new Token([T_STRING, 'shell_exec']),
             new Token('('),
         ];
-
         if (1 !== $count) {
             $newTokens[] = new Token('"');
         }
-
         foreach ($backtickTokens as $token) {
             if (!$token->isGivenKind(T_ENCAPSED_AND_WHITESPACE)) {
                 $newTokens[] = $token;
 
                 continue;
             }
-
             $content = $token->getContent();
             // Escaping special chars depends on the context: too tricky
             if (Preg::match('/[`"\']/u', $content)) {
@@ -129,7 +128,6 @@ final class BacktickToShellExecFixer extends AbstractFixer
             }
 
             $kind = T_ENCAPSED_AND_WHITESPACE;
-
             if (1 === $count) {
                 $content = '"'.$content.'"';
                 $kind = T_CONSTANT_ENCAPSED_STRING;
@@ -137,11 +135,9 @@ final class BacktickToShellExecFixer extends AbstractFixer
 
             $newTokens[] = new Token([$kind, $content]);
         }
-
         if (1 !== $count) {
             $newTokens[] = new Token('"');
         }
-
         $newTokens[] = new Token(')');
 
         $tokens->overrideRange($openingBacktickIndex, $closingBacktickIndex, $newTokens);

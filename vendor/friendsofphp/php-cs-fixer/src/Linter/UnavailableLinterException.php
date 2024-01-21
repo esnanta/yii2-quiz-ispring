@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,9 +16,7 @@ namespace PhpCsFixer\Linter;
  * Exception that is thrown when the chosen linter is not available on the environment.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
- *
- * @final
- *
- * @TODO 4.0 make class "final"
  */
-class UnavailableLinterException extends \RuntimeException {}
+class UnavailableLinterException extends \RuntimeException
+{
+}

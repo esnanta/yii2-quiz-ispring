@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,21 +17,26 @@ use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  */
 final class PhpdocNoEmptyReturnFixer extends AbstractFixer
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             '`@return void` and `@return null` annotations should be omitted from PHPDoc.',
@@ -64,12 +67,15 @@ function foo() {}
      * Must run before NoEmptyPhpdocFixer, PhpdocAlignFixer, PhpdocOrderFixer, PhpdocSeparationFixer, PhpdocTrimFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer, VoidReturnFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 4;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
@@ -79,12 +85,12 @@ function foo() {}
             $doc = new DocBlock($token->getContent());
             $annotations = $doc->getAnnotationsOfType('return');
 
-            if (0 === \count($annotations)) {
+            if (empty($annotations)) {
                 continue;
             }
 
             foreach ($annotations as $annotation) {
-                $this->fixAnnotation($annotation);
+                $this->fixAnnotation($doc, $annotation);
             }
 
             $newContent = $doc->getContent();
@@ -104,9 +110,9 @@ function foo() {}
     }
 
     /**
-     * Remove `return void` or `return null` annotations.
+     * Remove return void or return null annotations..
      */
-    private function fixAnnotation(Annotation $annotation): void
+    private function fixAnnotation(DocBlock $doc, Annotation $annotation)
     {
         $types = $annotation->getNormalizedTypes();
 

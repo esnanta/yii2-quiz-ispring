@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -30,18 +28,27 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class UseTransformer extends AbstractTransformer
 {
-    public function getPriority(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
     {
         // Should run after CurlyBraceTransformer and before TypeColonTransformer
         return -5;
     }
 
-    public function getRequiredPhpVersionId(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredPhpVersionId()
     {
-        return 5_03_00;
+        return 50300;
     }
 
-    public function process(Tokens $tokens, Token $token, int $index): void
+    /**
+     * {@inheritdoc}
+     */
+    public function process(Tokens $tokens, Token $token, $index)
     {
         if ($token->isGivenKind(T_USE) && $this->isUseForLambda($tokens, $index)) {
             $tokens[$index] = new Token([CT::T_USE_LAMBDA, $token->getContent()]);
@@ -52,17 +59,11 @@ final class UseTransformer extends AbstractTransformer
         // Only search inside class/trait body for `T_USE` for traits.
         // Cannot import traits inside interfaces or anywhere else
 
-        $classTypes = [T_TRAIT];
-
-        if (\defined('T_ENUM')) { // @TODO: drop condition when PHP 8.1+ is required
-            $classTypes[] = T_ENUM;
+        if (!$token->isGivenKind([T_CLASS, T_TRAIT])) {
+            return;
         }
 
-        if ($token->isGivenKind(T_CLASS)) {
-            if ($tokens[$tokens->getPrevMeaningfulToken($index)]->isGivenKind(T_DOUBLE_COLON)) {
-                return;
-            }
-        } elseif (!$token->isGivenKind($classTypes)) {
+        if ($tokens[$tokens->getPrevMeaningfulToken($index)]->isGivenKind(T_DOUBLE_COLON)) {
             return;
         }
 
@@ -84,15 +85,22 @@ final class UseTransformer extends AbstractTransformer
         }
     }
 
-    public function getCustomTokens(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getCustomTokens()
     {
         return [CT::T_USE_TRAIT, CT::T_USE_LAMBDA];
     }
 
     /**
      * Check if token under given index is `use` statement for lambda function.
+     *
+     * @param int $index
+     *
+     * @return bool
      */
-    private function isUseForLambda(Tokens $tokens, int $index): bool
+    private function isUseForLambda(Tokens $tokens, $index)
     {
         $nextToken = $tokens[$tokens->getNextMeaningfulToken($index)];
 

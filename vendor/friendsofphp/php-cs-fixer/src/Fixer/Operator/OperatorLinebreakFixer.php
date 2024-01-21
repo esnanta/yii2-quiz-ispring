@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,15 +13,13 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Operator;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Analyzer\AlternativeSyntaxAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixer\Tokenizer\Analyzer\GotoLabelAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\ReferenceAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer;
@@ -33,18 +29,27 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Kuba Werłos <werlos@gmail.com>
  */
-final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    private const BOOLEAN_OPERATORS = [[T_BOOLEAN_AND], [T_BOOLEAN_OR], [T_LOGICAL_AND], [T_LOGICAL_OR], [T_LOGICAL_XOR]];
+    /**
+     * @internal
+     */
+    const BOOLEAN_OPERATORS = [[T_BOOLEAN_AND], [T_BOOLEAN_OR], [T_LOGICAL_AND], [T_LOGICAL_OR], [T_LOGICAL_XOR]];
 
-    private string $position = 'beginning';
+    /**
+     * @var string
+     */
+    private $position = 'beginning';
 
     /**
      * @var array<array<int|string>|string>
      */
-    private array $operators = [];
+    private $operators = [];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Operators - when multiline - must always be at the beginning or at the end of the line.',
@@ -68,42 +73,58 @@ function foo() {
         );
     }
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
-        $this->position = $this->configuration['position'];
         $this->operators = self::BOOLEAN_OPERATORS;
-
-        if (false === $this->configuration['only_booleans']) {
+        if (!$this->configuration['only_booleans']) {
             $this->operators = array_merge($this->operators, self::getNonBooleanOperators());
+            if (\PHP_VERSION_ID >= 70000) {
+                $this->operators[] = [T_COALESCE];
+                $this->operators[] = [T_SPACESHIP];
+            }
         }
+        $this->position = $this->configuration['position'];
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return true;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('only_booleans', 'Whether to limit operators to only boolean ones.'))
+            (new FixerOptionBuilder('only_booleans', 'whether to limit operators to only boolean ones'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            (new FixerOptionBuilder('position', 'Whether to place operators at the beginning or at the end of the line.'))
+            (new FixerOptionBuilder('position', 'whether to place operators at the beginning or at the end of the line'))
                 ->setAllowedValues(['beginning', 'end'])
                 ->setDefault($this->position)
                 ->getOption(),
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $referenceAnalyzer = new ReferenceAnalyzer();
         $gotoLabelAnalyzer = new GotoLabelAnalyzer();
-        $alternativeSyntaxAnalyzer = new AlternativeSyntaxAnalyzer();
+
+        $excludedIndices = $this->getExcludedIndices($tokens);
 
         $index = $tokens->count();
         while ($index > 1) {
@@ -121,11 +142,7 @@ function foo() {
                 continue;
             }
 
-            if ($alternativeSyntaxAnalyzer->belongsToAlternativeSyntax($tokens, $index)) {
-                continue;
-            }
-
-            if (SwitchAnalyzer::belongsToSwitch($tokens, $index)) {
+            if (\in_array($index, $excludedIndices, true)) {
                 continue;
             }
 
@@ -144,9 +161,41 @@ function foo() {
     }
 
     /**
+     * Currently only colons from "switch".
+     *
+     * @return int[]
+     */
+    private function getExcludedIndices(Tokens $tokens)
+    {
+        $indices = [];
+        for ($index = $tokens->count() - 1; $index > 0; --$index) {
+            if ($tokens[$index]->isGivenKind(T_SWITCH)) {
+                $indices = array_merge($indices, $this->getCasesColonsForSwitch($tokens, $index));
+            }
+        }
+
+        return $indices;
+    }
+
+    /**
+     * @param int $switchIndex
+     *
+     * @return int[]
+     */
+    private function getCasesColonsForSwitch(Tokens $tokens, $switchIndex)
+    {
+        return array_map(
+            static function (CaseAnalysis $caseAnalysis) {
+                return $caseAnalysis->getColonIndex();
+            },
+            (new SwitchAnalyzer())->getSwitchAnalysis($tokens, $switchIndex)->getCases()
+        );
+    }
+
+    /**
      * @param int[] $operatorIndices
      */
-    private function fixOperatorLinebreak(Tokens $tokens, array $operatorIndices): void
+    private function fixOperatorLinebreak(Tokens $tokens, array $operatorIndices)
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken(min($operatorIndices));
@@ -178,7 +227,7 @@ function foo() {
     /**
      * @param int[] $operatorIndices
      */
-    private function fixMoveToTheBeginning(Tokens $tokens, array $operatorIndices): void
+    private function fixMoveToTheBeginning(Tokens $tokens, array $operatorIndices)
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling(min($operatorIndices), -1);
@@ -187,7 +236,7 @@ function foo() {
         $nextIndex = $tokens->getNextMeaningfulToken(max($operatorIndices));
 
         for ($i = $nextIndex - 1; $i > max($operatorIndices); --$i) {
-            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent())) {
+            if ($tokens[$i]->isWhitespace() && 1 === Preg::match('/\R/u', $tokens[$i]->getContent())) {
                 $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, -1);
                 if ($isWhitespaceBefore) {
@@ -203,7 +252,7 @@ function foo() {
     /**
      * @param int[] $operatorIndices
      */
-    private function fixMoveToTheEnd(Tokens $tokens, array $operatorIndices): void
+    private function fixMoveToTheEnd(Tokens $tokens, array $operatorIndices)
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken(min($operatorIndices));
@@ -212,7 +261,7 @@ function foo() {
         $nextIndex = $tokens->getNonEmptySibling(max($operatorIndices), 1);
 
         for ($i = $prevIndex + 1; $i < max($operatorIndices); ++$i) {
-            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent())) {
+            if ($tokens[$i]->isWhitespace() && 1 === Preg::match('/\R/u', $tokens[$i]->getContent())) {
                 $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, 1);
                 if ($isWhitespaceAfter) {
@@ -227,19 +276,18 @@ function foo() {
 
     /**
      * @param int[] $indices
+     * @param int   $direction
      *
      * @return Token[]
      */
-    private function getReplacementsAndClear(Tokens $tokens, array $indices, int $direction): array
+    private function getReplacementsAndClear(Tokens $tokens, array $indices, $direction)
     {
         return array_map(
-            static function (int $index) use ($tokens, $direction): Token {
+            static function ($index) use ($tokens, $direction) {
                 $clone = $tokens[$index];
-
                 if ($tokens[$index + $direction]->isWhitespace()) {
                     $tokens->clearAt($index + $direction);
                 }
-
                 $tokens->clearAt($index);
 
                 return $clone;
@@ -248,10 +296,16 @@ function foo() {
         );
     }
 
-    private function isMultiline(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    /**
+     * @param int $indexStart
+     * @param int $indexEnd
+     *
+     * @return bool
+     */
+    private function isMultiline(Tokens $tokens, $indexStart, $indexEnd)
     {
         for ($index = $indexStart; $index <= $indexEnd; ++$index) {
-            if (str_contains($tokens[$index]->getContent(), "\n")) {
+            if (false !== strpos($tokens[$index]->getContent(), "\n")) {
                 return true;
             }
         }
@@ -259,7 +313,7 @@ function foo() {
         return false;
     }
 
-    private static function getNonBooleanOperators(): array
+    private static function getNonBooleanOperators()
     {
         return array_merge(
             [
@@ -268,9 +322,8 @@ function foo() {
                 [T_IS_IDENTICAL], [T_IS_NOT_EQUAL], [T_IS_NOT_IDENTICAL], [T_IS_SMALLER_OR_EQUAL], [T_MINUS_EQUAL],
                 [T_MOD_EQUAL], [T_MUL_EQUAL], [T_OR_EQUAL], [T_PAAMAYIM_NEKUDOTAYIM], [T_PLUS_EQUAL], [T_POW],
                 [T_POW_EQUAL], [T_SL], [T_SL_EQUAL], [T_SR], [T_SR_EQUAL], [T_XOR_EQUAL],
-                [T_COALESCE], [T_SPACESHIP],
             ],
-            array_map(static fn (int $id): array => [$id], Token::getObjectOperatorKinds()),
+            array_map(function ($id) { return [$id]; }, Token::getObjectOperatorKinds())
         );
     }
 }

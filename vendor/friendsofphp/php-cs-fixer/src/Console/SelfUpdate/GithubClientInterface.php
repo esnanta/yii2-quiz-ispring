@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -20,12 +18,7 @@ namespace PhpCsFixer\Console\SelfUpdate;
 interface GithubClientInterface
 {
     /**
-     * @return list<array{
-     *     name: string,
-     *     zipball_url: string,
-     *     tarball_url: string,
-     *     commit: array{sha: string, url: string},
-     * }>
+     * @return array
      */
-    public function getTags(): array;
+    public function getTags();
 }

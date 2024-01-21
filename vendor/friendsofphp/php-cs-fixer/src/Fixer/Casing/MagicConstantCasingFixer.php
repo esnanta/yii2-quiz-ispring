@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Casing;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,7 +24,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class MagicConstantCasingFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Magic constants should be referred to using the correct casing.',
@@ -35,12 +35,18 @@ final class MagicConstantCasingFixer extends AbstractFixer
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound($this->getMagicConstantTokens());
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $magicConstants = $this->getMagicConstants();
         $magicConstantTokens = $this->getMagicConstantTokens();
@@ -55,7 +61,7 @@ final class MagicConstantCasingFixer extends AbstractFixer
     /**
      * @return array<int, string>
      */
-    private function getMagicConstants(): array
+    private function getMagicConstants()
     {
         static $magicConstants = null;
 
@@ -79,7 +85,7 @@ final class MagicConstantCasingFixer extends AbstractFixer
     /**
      * @return array<int>
      */
-    private function getMagicConstantTokens(): array
+    private function getMagicConstantTokens()
     {
         static $magicConstantTokens = null;
 

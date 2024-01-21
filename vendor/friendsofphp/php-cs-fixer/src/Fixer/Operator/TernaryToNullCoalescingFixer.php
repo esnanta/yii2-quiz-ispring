@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,9 +13,9 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Operator;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -26,13 +24,17 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class TernaryToNullCoalescingFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Use `null` coalescing operator `??` where possible. Requires PHP >= 7.0.',
             [
-                new CodeSample(
-                    "<?php\n\$sample = isset(\$a) ? \$a : \$b;\n"
+                new VersionSpecificCodeSample(
+                    "<?php\n\$sample = isset(\$a) ? \$a : \$b;\n",
+                    new VersionSpecification(70000)
                 ),
             ]
         );
@@ -40,24 +42,19 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
 
     /**
      * {@inheritdoc}
-     *
-     * Must run before AssignNullCoalescingToCoalesceEqualFixer.
      */
-    public function getPriority(): int
+    public function isCandidate(Tokens $tokens)
     {
-        return 0;
+        return \PHP_VERSION_ID >= 70000 && $tokens->isTokenKindFound(T_ISSET);
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(T_ISSET);
-    }
-
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        $issetIndices = array_keys($tokens->findGivenKind(T_ISSET));
-
-        while ($issetIndex = array_pop($issetIndices)) {
+        $issetIndexes = array_keys($tokens->findGivenKind(T_ISSET));
+        while ($issetIndex = array_pop($issetIndexes)) {
             $this->fixIsset($tokens, $issetIndex);
         }
     }
@@ -65,10 +62,9 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
     /**
      * @param int $index of `T_ISSET` token
      */
-    private function fixIsset(Tokens $tokens, int $index): void
+    private function fixIsset(Tokens $tokens, $index)
     {
         $prevTokenIndex = $tokens->getPrevMeaningfulToken($index);
-
         if ($this->isHigherPrecedenceAssociativityOperator($tokens[$prevTokenIndex])) {
             return;
         }
@@ -77,29 +73,21 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
         $endBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $startBraceIndex);
 
         $ternaryQuestionMarkIndex = $tokens->getNextMeaningfulToken($endBraceIndex);
-
         if (!$tokens[$ternaryQuestionMarkIndex]->equals('?')) {
             return; // we are not in a ternary operator
         }
 
         // search what is inside the isset()
         $issetTokens = $this->getMeaningfulSequence($tokens, $startBraceIndex, $endBraceIndex);
-
         if ($this->hasChangingContent($issetTokens)) {
             return; // some weird stuff inside the isset
-        }
-
-        $issetCode = $issetTokens->generateCode();
-
-        if ('$this' === $issetCode) {
-            return; // null coalescing operator does not with $this
         }
 
         // search what is inside the middle argument of ternary operator
         $ternaryColonIndex = $tokens->getNextTokenOfKind($ternaryQuestionMarkIndex, [':']);
         $ternaryFirstOperandTokens = $this->getMeaningfulSequence($tokens, $ternaryQuestionMarkIndex, $ternaryColonIndex);
 
-        if ($issetCode !== $ternaryFirstOperandTokens->generateCode()) {
+        if ($issetTokens->generateCode() !== $ternaryFirstOperandTokens->generateCode()) {
             return; // regardless of non-meaningful tokens, the operands are different
         }
 
@@ -108,7 +96,6 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
         // preserve comments and spaces
         $comments = [];
         $commentStarted = false;
-
         for ($loopIndex = $index; $loopIndex < $ternaryFirstOperandIndex; ++$loopIndex) {
             if ($tokens[$loopIndex]->isComment()) {
                 $comments[] = $tokens[$loopIndex];
@@ -131,15 +118,15 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
      *
      * @param int $start start index
      * @param int $end   end index
+     *
+     * @return Tokens
      */
-    private function getMeaningfulSequence(Tokens $tokens, int $start, int $end): Tokens
+    private function getMeaningfulSequence(Tokens $tokens, $start, $end)
     {
         $sequence = [];
         $index = $start;
-
         while ($index < $end) {
             $index = $tokens->getNextMeaningfulToken($index);
-
             if ($index >= $end || null === $index) {
                 break;
             }
@@ -153,8 +140,10 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
     /**
      * Check if the requested token is an operator computed
      * before the ternary operator along with the `isset()`.
+     *
+     * @return bool
      */
-    private function isHigherPrecedenceAssociativityOperator(Token $token): bool
+    private function isHigherPrecedenceAssociativityOperator(Token $token)
     {
         static $operatorsPerId = [
             T_ARRAY_CAST => true,
@@ -203,8 +192,10 @@ final class TernaryToNullCoalescingFixer extends AbstractFixer
      * Check if the `isset()` content may change if called multiple times.
      *
      * @param Tokens $tokens The original token list
+     *
+     * @return bool
      */
-    private function hasChangingContent(Tokens $tokens): bool
+    private function hasChangingContent(Tokens $tokens)
     {
         static $operatorsPerId = [
             T_DEC,

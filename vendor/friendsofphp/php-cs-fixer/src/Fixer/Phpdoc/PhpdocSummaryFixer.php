@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -20,16 +18,18 @@ use PhpCsFixer\DocBlock\ShortDescription;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  */
 final class PhpdocSummaryFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHPDoc summary should end in either a full stop, exclamation mark, or question mark.',
@@ -48,17 +48,23 @@ function foo () {}
      * Must run before PhpdocAlignFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
@@ -72,12 +78,7 @@ function foo () {}
                 $line = $doc->getLine($end);
                 $content = rtrim($line->getContent());
 
-                if (
-                    // final line of Description is NOT properly formatted
-                    !$this->isCorrectlyFormatted($content)
-                    // and first line  of Description, if different than final line, does NOT indicate a list
-                    && (1 === $end || ($doc->isMultiLine() && ':' !== substr(rtrim($doc->getLine(1)->getContent()), -1)))
-                ) {
+                if (!$this->isCorrectlyFormatted($content)) {
                     $line->setContent($content.'.'.$this->whitespacesConfig->getLineEnding());
                     $tokens[$index] = new Token([T_DOC_COMMENT, $doc->getContent()]);
                 }
@@ -87,13 +88,17 @@ function foo () {}
 
     /**
      * Is the last line of the short description correctly formatted?
+     *
+     * @param string $content
+     *
+     * @return bool
      */
-    private function isCorrectlyFormatted(string $content): bool
+    private function isCorrectlyFormatted($content)
     {
         if (false !== stripos($content, '{@inheritdoc}')) {
             return true;
         }
 
-        return $content !== rtrim($content, '.:。!?¡¿！？');
+        return $content !== rtrim($content, '.。!?¡¿！？');
     }
 }

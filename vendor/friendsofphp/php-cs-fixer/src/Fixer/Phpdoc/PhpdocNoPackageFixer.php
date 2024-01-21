@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,15 +15,17 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 use PhpCsFixer\AbstractProxyFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
 final class PhpdocNoPackageFixer extends AbstractProxyFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             '`@package` and `@subpackage` annotations should be omitted from PHPDoc.',
@@ -52,12 +52,15 @@ class Baz
      * Must run before NoEmptyPhpdocFixer, PhpdocAlignFixer, PhpdocSeparationFixer, PhpdocTrimFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return parent::getPriority();
     }
 
-    protected function createProxyFixers(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function createProxyFixers()
     {
         $fixer = new GeneralPhpdocAnnotationRemoveFixer();
         $fixer->configure(['annotations' => ['package', 'subpackage']]);

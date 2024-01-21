@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Whitespace;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -32,7 +29,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoTrailingWhitespaceFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Remove trailing whitespace at the end of non-blank lines.',
@@ -43,19 +43,25 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      *
-     * Must run after CombineConsecutiveIssetsFixer, CombineConsecutiveUnsetsFixer, EmptyLoopBodyFixer, EmptyLoopConditionFixer, FunctionToConstantFixer, ModernizeStrposFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoEmptyStatementFixer, NoUnneededControlParenthesesFixer, NoUselessElseFixer, StringLengthToEmptyFixer, TernaryToElvisOperatorFixer.
+     * Must run after CombineConsecutiveIssetsFixer, CombineConsecutiveUnsetsFixer, FunctionToConstantFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoEmptyStatementFixer, NoUnneededControlParenthesesFixer, NoUselessElseFixer, TernaryToElvisOperatorFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = \count($tokens) - 1; $index >= 0; --$index) {
             $token = $tokens[$index];
@@ -63,11 +69,15 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
                 $token->isGivenKind(T_OPEN_TAG)
                 && $tokens->offsetExists($index + 1)
                 && $tokens[$index + 1]->isWhitespace()
-                && Preg::match('/(.*)\h$/', $token->getContent(), $openTagMatches)
-                && Preg::match('/^(\R)(.*)$/s', $tokens[$index + 1]->getContent(), $whitespaceMatches)
+                && 1 === Preg::match('/(.*)\h$/', $token->getContent(), $openTagMatches)
+                && 1 === Preg::match('/^(\R)(.*)$/s', $tokens[$index + 1]->getContent(), $whitespaceMatches)
             ) {
                 $tokens[$index] = new Token([T_OPEN_TAG, $openTagMatches[1].$whitespaceMatches[1]]);
-                $tokens->ensureWhitespaceAtIndex($index + 1, 0, $whitespaceMatches[2]);
+                if ('' === $whitespaceMatches[2]) {
+                    $tokens->clearAt($index + 1);
+                } else {
+                    $tokens[$index + 1] = new Token([T_WHITESPACE, $whitespaceMatches[2]]);
+                }
 
                 continue;
             }
@@ -81,7 +91,7 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
 
             // fix only multiline whitespaces or singleline whitespaces at the end of file
             if ($linesSize > 1 || !isset($tokens[$index + 1])) {
-                if (!$tokens[$index - 1]->isGivenKind(T_OPEN_TAG) || !Preg::match('/(.*)\R$/', $tokens[$index - 1]->getContent())) {
+                if (!$tokens[$index - 1]->isGivenKind(T_OPEN_TAG) || 1 !== Preg::match('/(.*)\R$/', $tokens[$index - 1]->getContent())) {
                     $lines[0] = rtrim($lines[0], " \t");
                 }
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Basic;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -28,22 +25,28 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class EncodingFixer extends AbstractFixer
 {
-    private string $bom;
+    /**
+     * @var string
+     */
+    private $BOM;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->bom = pack('CCC', 0xEF, 0xBB, 0xBF);
+        $this->BOM = pack('CCC', 0xef, 0xbb, 0xbf);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHP code MUST use only UTF-8 without BOM (remove BOM).',
             [
                 new CodeSample(
-                    $this->bom.'<?php
+                    $this->BOM.'<?php
 
 echo "Hello!";
 '
@@ -52,23 +55,37 @@ echo "Hello!";
         );
     }
 
-    public function getPriority(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
     {
         // must run first (at least before Fixers that using Tokens) - for speed reason of whole fixing process
         return 100;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $content = $tokens[0]->getContent();
 
-        if (str_starts_with($content, $this->bom)) {
+        if (0 === strncmp($content, $this->BOM, 3)) {
+            /** @var false|string $newContent until support for PHP 5.6 is dropped */
             $newContent = substr($content, 3);
+
+            if (false === $newContent) {
+                $newContent = ''; // substr returns false rather than an empty string when starting at the end
+            }
 
             if ('' === $newContent) {
                 $tokens->clearAt(0);

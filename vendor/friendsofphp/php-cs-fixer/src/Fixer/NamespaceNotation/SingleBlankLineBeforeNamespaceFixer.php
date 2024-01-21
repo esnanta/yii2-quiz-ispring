@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,27 +12,20 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Fixer\NamespaceNotation;
 
-use PhpCsFixer\AbstractProxyFixer;
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\AbstractLinesBeforeNamespaceFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
- *
- * @deprecated Use `blank_lines_before_namespace` with config: ['min_line_breaks' => 2, 'max_line_breaks' => 2] (default)
+ * @author Graham Campbell <graham@alt-three.com>
  */
-final class SingleBlankLineBeforeNamespaceFixer extends AbstractProxyFixer implements WhitespacesAwareFixerInterface, DeprecatedFixerInterface
+final class SingleBlankLineBeforeNamespaceFixer extends AbstractLinesBeforeNamespaceFixer
 {
-    public function getSuccessorsNames(): array
-    {
-        return array_keys($this->proxyFixers);
-    }
-
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There should be exactly one blank line before a namespace declaration.',
@@ -45,31 +36,33 @@ final class SingleBlankLineBeforeNamespaceFixer extends AbstractProxyFixer imple
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_NAMESPACE);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * Must run after HeaderCommentFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return parent::getPriority();
+        return -21;
     }
 
-    protected function createProxyFixers(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        $blankLineBeforeNamespace = new BlankLinesBeforeNamespaceFixer();
-        $blankLineBeforeNamespace->configure([
-            'min_line_breaks' => 2,
-            'max_line_breaks' => 2,
-        ]);
+        for ($index = $tokens->count() - 1; $index >= 0; --$index) {
+            $token = $tokens[$index];
 
-        return [
-            $blankLineBeforeNamespace,
-        ];
+            if ($token->isGivenKind(T_NAMESPACE)) {
+                $this->fixLinesBeforeNamespace($tokens, $index, 2, 2);
+            }
+        }
     }
 }

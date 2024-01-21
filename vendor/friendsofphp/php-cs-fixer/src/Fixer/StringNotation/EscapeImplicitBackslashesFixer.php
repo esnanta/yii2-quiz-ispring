@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,11 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\StringNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -29,22 +25,25 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Filippo Tessarotto <zoeslam@gmail.com>
  */
-final class EscapeImplicitBackslashesFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class EscapeImplicitBackslashesFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         $codeSample = <<<'EOF'
-            <?php
+<?php
 
-            $singleQuoted = 'String with \" and My\Prefix\\';
+$singleQuoted = 'String with \" and My\Prefix\\';
 
-            $doubleQuoted = "Interpret my \n but not my \a";
+$doubleQuoted = "Interpret my \n but not my \a";
 
-            $hereDoc = <<<HEREDOC
-            Interpret my \100 but not my \999
-            HEREDOC;
+$hereDoc = <<<HEREDOC
+Interpret my \100 but not my \999
+HEREDOC;
 
-            EOF;
+EOF;
 
         return new FixerDefinition(
             'Escape implicit backslashes in strings and heredocs to ease the understanding of which are special chars interpreted by PHP and which not.',
@@ -73,7 +72,10 @@ final class EscapeImplicitBackslashesFixer extends AbstractFixer implements Conf
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound([T_ENCAPSED_AND_WHITESPACE, T_CONSTANT_ENCAPSED_STRING]);
     }
@@ -84,12 +86,15 @@ final class EscapeImplicitBackslashesFixer extends AbstractFixer implements Conf
      * Must run before HeredocToNowdocFixer, SingleQuoteFixer.
      * Must run after BacktickToShellExecFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 15;
+        return 1;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         static $singleQuotedRegex = '/(?<!\\\\)\\\\((?:\\\\\\\\)*)(?![\\\'\\\\])/';
         static $doubleQuotedRegex = '/(?<!\\\\)\\\\((?:\\\\\\\\)*)(?![efnrtv$"\\\\0-7]|x[0-9A-Fa-f]|u{)/';
@@ -101,7 +106,7 @@ final class EscapeImplicitBackslashesFixer extends AbstractFixer implements Conf
             if ($token->equalsAny(['"', 'b"', 'B"'])) {
                 $doubleQuoteOpened = !$doubleQuoteOpened;
             }
-            if (!$token->isGivenKind([T_ENCAPSED_AND_WHITESPACE, T_CONSTANT_ENCAPSED_STRING]) || !str_contains($content, '\\')) {
+            if (!$token->isGivenKind([T_ENCAPSED_AND_WHITESPACE, T_CONSTANT_ENCAPSED_STRING]) || false === strpos($content, '\\')) {
                 continue;
             }
 
@@ -114,7 +119,8 @@ final class EscapeImplicitBackslashesFixer extends AbstractFixer implements Conf
             $isSingleQuotedString = $token->isGivenKind(T_CONSTANT_ENCAPSED_STRING) && ('\'' === $content[0] || 'b\'' === $firstTwoCharacters);
             $isDoubleQuotedString =
                 ($token->isGivenKind(T_CONSTANT_ENCAPSED_STRING) && ('"' === $content[0] || 'b"' === $firstTwoCharacters))
-                || ($token->isGivenKind(T_ENCAPSED_AND_WHITESPACE) && $doubleQuoteOpened);
+                || ($token->isGivenKind(T_ENCAPSED_AND_WHITESPACE) && $doubleQuoteOpened)
+            ;
             $isHeredocSyntax = !$isSingleQuotedString && !$isDoubleQuotedString;
             if (
                 (false === $this->configuration['single_quoted'] && $isSingleQuotedString)
@@ -138,7 +144,10 @@ final class EscapeImplicitBackslashesFixer extends AbstractFixer implements Conf
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('single_quoted', 'Whether to fix single-quoted strings.'))

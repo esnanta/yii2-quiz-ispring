@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,9 +13,8 @@ declare(strict_types=1);
 namespace PhpCsFixer;
 
 use PhpCsFixer\Doctrine\Annotation\Tokens as DoctrineAnnotationTokens;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -27,21 +24,27 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
 /**
  * @internal
  */
-abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements ConfigurableFixerInterface
+abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
-     * @var array<int, array{classIndex: int, token: Token, type: string}>
+     * @var array
      */
-    private array $classyElements;
+    private $classyElements;
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        // fetch indices one time, this is safe as we never add or remove a token during fixing
+        // fetch indexes one time, this is safe as we never add or remove a token during fixing
         $analyzer = new TokensAnalyzer($tokens);
         $this->classyElements = $analyzer->getClassyElements();
 
@@ -55,7 +58,6 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
                 $docCommentToken,
                 $this->configuration['ignored_tags']
             );
-
             $this->fixAnnotations($doctrineAnnotationTokens);
             $tokens[$index] = new Token([T_DOC_COMMENT, $doctrineAnnotationTokens->getCode()]);
         }
@@ -64,14 +66,17 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
     /**
      * Fixes Doctrine annotations from the given PHPDoc style comment.
      */
-    abstract protected function fixAnnotations(DoctrineAnnotationTokens $doctrineAnnotationTokens): void;
+    abstract protected function fixAnnotations(DoctrineAnnotationTokens $doctrineAnnotationTokens);
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('ignored_tags', 'List of tags that must not be treated as Doctrine Annotations.'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues([static function (array $values): bool {
+                ->setAllowedValues([static function ($values) {
                     foreach ($values as $value) {
                         if (!\is_string($value)) {
                             return false;
@@ -184,7 +189,6 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
 
                     // PHPStan
                     'phpstan',
-                    'template',
 
                     // other
                     'fix',
@@ -196,40 +200,29 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
         ]);
     }
 
-    private function nextElementAcceptsDoctrineAnnotations(Tokens $tokens, int $index): bool
+    /**
+     * @param int $index
+     *
+     * @return bool
+     */
+    private function nextElementAcceptsDoctrineAnnotations(Tokens $tokens, $index)
     {
-        $classModifiers = [T_ABSTRACT, T_FINAL];
-
-        if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.2+ is required
-            $classModifiers[] = T_READONLY;
-        }
-
         do {
             $index = $tokens->getNextMeaningfulToken($index);
 
             if (null === $index) {
                 return false;
             }
-        } while ($tokens[$index]->isGivenKind($classModifiers));
+        } while ($tokens[$index]->isGivenKind([T_ABSTRACT, T_FINAL]));
 
-        if ($tokens[$index]->isGivenKind(T_CLASS)) {
+        if ($tokens[$index]->isClassy()) {
             return true;
         }
 
-        $modifierKinds = [T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_NS_SEPARATOR, T_STRING, CT::T_NULLABLE_TYPE];
-
-        if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.1+ is required
-            $modifierKinds[] = T_READONLY;
-        }
-
-        while ($tokens[$index]->isGivenKind($modifierKinds)) {
+        while ($tokens[$index]->isGivenKind([T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_NS_SEPARATOR, T_STRING, CT::T_NULLABLE_TYPE])) {
             $index = $tokens->getNextMeaningfulToken($index);
         }
 
-        if (!isset($this->classyElements[$index])) {
-            return false;
-        }
-
-        return $tokens[$this->classyElements[$index]['classIndex']]->isGivenKind(T_CLASS); // interface, enums and traits cannot have doctrine annotations
+        return isset($this->classyElements[$index]);
     }
 }

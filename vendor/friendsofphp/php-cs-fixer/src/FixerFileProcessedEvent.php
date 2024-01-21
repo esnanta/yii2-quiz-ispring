@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,7 +12,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixer;
 
-use Symfony\Contracts\EventDispatcher\Event;
+use PhpCsFixer\Event\Event;
 
 /**
  * Event that is fired when file was processed by Fixer.
@@ -28,23 +26,33 @@ final class FixerFileProcessedEvent extends Event
     /**
      * Event name.
      */
-    public const NAME = 'fixer.file_processed';
+    const NAME = 'fixer.file_processed';
 
-    public const STATUS_INVALID = 1;
-    public const STATUS_SKIPPED = 2;
-    public const STATUS_NO_CHANGES = 3;
-    public const STATUS_FIXED = 4;
-    public const STATUS_EXCEPTION = 5;
-    public const STATUS_LINT = 6;
+    const STATUS_UNKNOWN = 0;
+    const STATUS_INVALID = 1;
+    const STATUS_SKIPPED = 2;
+    const STATUS_NO_CHANGES = 3;
+    const STATUS_FIXED = 4;
+    const STATUS_EXCEPTION = 5;
+    const STATUS_LINT = 6;
 
-    private int $status;
+    /**
+     * @var int
+     */
+    private $status;
 
-    public function __construct(int $status)
+    /**
+     * @param int $status
+     */
+    public function __construct($status)
     {
         $this->status = $status;
     }
 
-    public function getStatus(): int
+    /**
+     * @return int
+     */
+    public function getStatus()
     {
         return $this->status;
     }

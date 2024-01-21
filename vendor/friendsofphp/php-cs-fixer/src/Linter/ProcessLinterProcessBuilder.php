@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,17 +21,25 @@ use Symfony\Component\Process\Process;
  */
 final class ProcessLinterProcessBuilder
 {
-    private string $executable;
+    /**
+     * @var string
+     */
+    private $executable;
 
     /**
      * @param string $executable PHP executable
      */
-    public function __construct(string $executable)
+    public function __construct($executable)
     {
         $this->executable = $executable;
     }
 
-    public function build(string $path): Process
+    /**
+     * @param string $path
+     *
+     * @return Process
+     */
+    public function build($path)
     {
         return new Process([
             $this->executable,

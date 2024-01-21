@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\LanguageConstruct;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,7 +24,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoUnsetOnPropertyFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Properties should be set to `null` instead of using `unset`.',
@@ -40,12 +40,18 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
         );
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_UNSET)
             && $tokens->isAnyTokenKindsFound([T_OBJECT_OPERATOR, T_PAAMAYIM_NEKUDOTAYIM]);
@@ -56,12 +62,12 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
      *
      * Must run before CombineConsecutiveUnsetsFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 25;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = $tokens->count() - 1; $index >= 0; --$index) {
             if (!$tokens[$index]->isGivenKind(T_UNSET)) {
@@ -74,8 +80,7 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
                 continue;
             }
 
-            $isLastUnset = true; // "last" as we reverse the array below
-
+            $isLastUnset = true; // yes, last - we reverse the array below
             foreach (array_reverse($unsetsInfo) as $unsetInfo) {
                 $this->updateTokens($tokens, $unsetInfo, $isLastUnset);
                 $isLastUnset = false;
@@ -84,17 +89,19 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
     }
 
     /**
+     * @param int $index
+     *
      * @return array<array<string, bool|int>>
      */
-    private function getUnsetsInfo(Tokens $tokens, int $index): array
+    private function getUnsetsInfo(Tokens $tokens, $index)
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
         $unsetStart = $tokens->getNextTokenOfKind($index, ['(']);
         $unsetEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $unsetStart);
         $isFirst = true;
-        $unsets = [];
 
+        $unsets = [];
         foreach ($argumentsAnalyzer->getArguments($tokens, $unsetStart, $unsetEnd) as $startIndex => $endIndex) {
             $startIndex = $tokens->getNextMeaningfulToken($startIndex - 1);
             $endIndex = $tokens->getPrevMeaningfulToken($endIndex + 1);
@@ -110,18 +117,21 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
         return $unsets;
     }
 
-    private function isProperty(Tokens $tokens, int $index, int $endIndex): bool
+    /**
+     * @param int $index
+     * @param int $endIndex
+     *
+     * @return bool
+     */
+    private function isProperty(Tokens $tokens, $index, $endIndex)
     {
         if ($tokens[$index]->isGivenKind(T_VARIABLE)) {
             $nextIndex = $tokens->getNextMeaningfulToken($index);
-
             if (null === $nextIndex || !$tokens[$nextIndex]->isGivenKind(T_OBJECT_OPERATOR)) {
                 return false;
             }
-
             $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
             $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
-
             if (null !== $nextNextIndex && $nextNextIndex < $endIndex) {
                 return false;
             }
@@ -132,7 +142,6 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
         if ($tokens[$index]->isGivenKind([T_NS_SEPARATOR, T_STRING])) {
             $nextIndex = $tokens->getTokenNotOfKindsSibling($index, 1, [T_DOUBLE_COLON, T_NS_SEPARATOR, T_STRING]);
             $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
-
             if (null !== $nextNextIndex && $nextNextIndex < $endIndex) {
                 return false;
             }
@@ -145,8 +154,10 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
 
     /**
      * @param array<array<string, bool|int>> $unsetsInfo
+     *
+     * @return bool
      */
-    private function isAnyUnsetToTransform(array $unsetsInfo): bool
+    private function isAnyUnsetToTransform(array $unsetsInfo)
     {
         foreach ($unsetsInfo as $unsetInfo) {
             if ($unsetInfo['isToTransform']) {
@@ -159,10 +170,11 @@ final class NoUnsetOnPropertyFixer extends AbstractFixer
 
     /**
      * @param array<string, bool|int> $unsetInfo
+     * @param bool                    $isLastUnset
      */
-    private function updateTokens(Tokens $tokens, array $unsetInfo, bool $isLastUnset): void
+    private function updateTokens(Tokens $tokens, array $unsetInfo, $isLastUnset)
     {
-        // if entry is first and to be transformed we remove leading "unset("
+        // if entry is first and to be transform we remove leading "unset("
         if ($unsetInfo['isFirst'] && $unsetInfo['isToTransform']) {
             $braceIndex = $tokens->getPrevTokenOfKind($unsetInfo['startIndex'], ['(']);
             $unsetIndex = $tokens->getPrevTokenOfKind($braceIndex, [[T_UNSET]]);

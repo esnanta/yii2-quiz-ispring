@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,16 +15,20 @@ namespace PhpCsFixer\Console\Output;
 use PhpCsFixer\Differ\DiffConsoleFormatter;
 use PhpCsFixer\Error\Error;
 use PhpCsFixer\Linter\LintingException;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @author SpacePossum
+ *
  * @internal
  */
 final class ErrorOutput
 {
-    private OutputInterface $output;
+    /**
+     * @var OutputInterface
+     */
+    private $output;
 
     /**
      * @var bool
@@ -40,9 +42,10 @@ final class ErrorOutput
     }
 
     /**
+     * @param string  $process
      * @param Error[] $errors
      */
-    public function listErrors(string $process, array $errors): void
+    public function listErrors($process, array $errors)
     {
         $this->output->writeln(['', sprintf(
             'Files that were not fixed due to errors reported during %s:',
@@ -87,7 +90,7 @@ final class ErrorOutput
                 $this->output->writeln('');
                 $stackTrace = $e->getTrace();
                 foreach ($stackTrace as $trace) {
-                    if (isset($trace['class']) && Command::class === $trace['class'] && 'run' === $trace['function']) {
+                    if (isset($trace['class'], $trace['function']) && \Symfony\Component\Console\Command\Command::class === $trace['class'] && 'run' === $trace['function']) {
                         $this->output->writeln('      [ ... ]');
 
                         break;
@@ -102,7 +105,7 @@ final class ErrorOutput
                 $this->output->writeln(sprintf('      Applied fixers: <comment>%s</comment>', implode(', ', $error->getAppliedFixers())));
 
                 $diff = $error->getDiff();
-                if (null !== $diff) {
+                if (!empty($diff)) {
                     $diffFormatter = new DiffConsoleFormatter(
                         $this->isDecorated,
                         sprintf(
@@ -118,18 +121,7 @@ final class ErrorOutput
         }
     }
 
-    /**
-     * @param array{
-     *     function?: string,
-     *     line?: int,
-     *     file?: string,
-     *     class?: class-string,
-     *     type?: '::'|'->',
-     *     args?: mixed[],
-     *     object?: object,
-     * } $trace
-     */
-    private function outputTrace(array $trace): void
+    private function outputTrace(array $trace)
     {
         if (isset($trace['class'], $trace['type'], $trace['function'])) {
             $this->output->writeln(sprintf(
@@ -147,10 +139,16 @@ final class ErrorOutput
         }
     }
 
-    private function prepareOutput(string $string): string
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    private function prepareOutput($string)
     {
         return $this->isDecorated
             ? OutputFormatter::escape($string)
-            : $string;
+            : $string
+        ;
     }
 }

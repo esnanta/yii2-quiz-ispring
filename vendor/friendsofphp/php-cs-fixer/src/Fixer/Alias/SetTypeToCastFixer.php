@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,14 +15,19 @@ namespace PhpCsFixer\Fixer\Alias;
 use PhpCsFixer\AbstractFunctionReferenceFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class SetTypeToCastFixer extends AbstractFunctionReferenceFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Cast shall be used, not `settype`.',
@@ -44,20 +47,16 @@ settype($bar, "null");
 
     /**
      * {@inheritdoc}
-     *
-     * Must run after NoBinaryStringFixer, NoUselessConcatOperatorFixer.
      */
-    public function getPriority(): int
-    {
-        return 0;
-    }
-
-    public function isCandidate(Tokens $tokens): bool
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAllTokenKindsFound([T_CONSTANT_ENCAPSED_STRING, T_STRING, T_VARIABLE]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $map = [
             'array' => [T_ARRAY_CAST, '(array)'],
@@ -147,17 +146,14 @@ settype($bar, "null");
             );
 
             if ('null' === $type) {
-                $this->fixSettypeNullCall($tokens, $functionNameIndex, $argumentToken);
+                $this->findSettypeNullCall($tokens, $functionNameIndex, $argumentToken);
             } else {
                 $this->fixSettypeCall($tokens, $functionNameIndex, $argumentToken, new Token($map[$type]));
             }
         }
     }
 
-    /**
-     * @return list<list<int>>
-     */
-    private function findSettypeCalls(Tokens $tokens): array
+    private function findSettypeCalls(Tokens $tokens)
     {
         $candidates = [];
 
@@ -175,15 +171,23 @@ settype($bar, "null");
         return $candidates;
     }
 
+    /**
+     * @param int $functionNameIndex
+     * @param int $openParenthesisIndex
+     * @param int $firstArgumentStart
+     * @param int $commaIndex
+     * @param int $secondArgumentStart
+     * @param int $closeParenthesisIndex
+     */
     private function removeSettypeCall(
         Tokens $tokens,
-        int $functionNameIndex,
-        int $openParenthesisIndex,
-        int $firstArgumentStart,
-        int $commaIndex,
-        int $secondArgumentStart,
-        int $closeParenthesisIndex
-    ): void {
+        $functionNameIndex,
+        $openParenthesisIndex,
+        $firstArgumentStart,
+        $commaIndex,
+        $secondArgumentStart,
+        $closeParenthesisIndex
+    ) {
         $tokens->clearTokenAndMergeSurroundingWhitespace($closeParenthesisIndex);
         $prevIndex = $tokens->getPrevMeaningfulToken($closeParenthesisIndex);
         if ($tokens[$prevIndex]->equals(',')) {
@@ -197,12 +201,15 @@ settype($bar, "null");
         $tokens->clearEmptyTokens();
     }
 
+    /**
+     * @param int $functionNameIndex
+     */
     private function fixSettypeCall(
         Tokens $tokens,
-        int $functionNameIndex,
+        $functionNameIndex,
         Token $argumentToken,
         Token $castToken
-    ): void {
+    ) {
         $tokens->insertAt(
             $functionNameIndex,
             [
@@ -219,11 +226,14 @@ settype($bar, "null");
         $tokens->removeTrailingWhitespace($functionNameIndex + 6); // 6 = number of inserted tokens -1 for offset correction
     }
 
-    private function fixSettypeNullCall(
+    /**
+     * @param int $functionNameIndex
+     */
+    private function findSettypeNullCall(
         Tokens $tokens,
-        int $functionNameIndex,
+        $functionNameIndex,
         Token $argumentToken
-    ): void {
+    ) {
         $tokens->insertAt(
             $functionNameIndex,
             [

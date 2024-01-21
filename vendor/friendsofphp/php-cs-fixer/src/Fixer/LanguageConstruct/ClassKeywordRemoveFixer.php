@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,28 +13,28 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\LanguageConstruct;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 /**
- * @deprecated
- *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-final class ClassKeywordRemoveFixer extends AbstractFixer implements DeprecatedFixerInterface
+final class ClassKeywordRemoveFixer extends AbstractFixer
 {
     /**
      * @var string[]
      */
-    private array $imports = [];
+    private $imports = [];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Converts `::class` keywords to FQCN strings.',
@@ -53,30 +51,33 @@ $className = Baz::class;
         );
     }
 
-    public function getSuccessorsNames(): array
-    {
-        return [];
-    }
-
     /**
      * {@inheritdoc}
      *
      * Must run before NoUnusedImportsFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(CT::T_CLASS_CONSTANT);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
+        $namespacesAnalyzer = new NamespacesAnalyzer();
+
         $previousNamespaceScopeEndIndex = 0;
-        foreach ($tokens->getNamespaceDeclarations() as $declaration) {
+        foreach ($namespacesAnalyzer->getDeclarations($tokens) as $declaration) {
             $this->replaceClassKeywordsSection($tokens, '', $previousNamespaceScopeEndIndex, $declaration->getStartIndex());
             $this->replaceClassKeywordsSection($tokens, $declaration->getFullName(), $declaration->getStartIndex(), $declaration->getScopeEndIndex());
             $previousNamespaceScopeEndIndex = $declaration->getScopeEndIndex();
@@ -85,7 +86,11 @@ $className = Baz::class;
         $this->replaceClassKeywordsSection($tokens, '', $previousNamespaceScopeEndIndex, $tokens->count() - 1);
     }
 
-    private function storeImports(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    private function storeImports(Tokens $tokens, $startIndex, $endIndex)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
         $this->imports = [];
@@ -109,11 +114,15 @@ $className = Baz::class;
             if ($tokens[$index]->isGivenKind(CT::T_GROUP_IMPORT_BRACE_OPEN)) {
                 $groupEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_GROUP_IMPORT_BRACE, $index);
                 $groupImports = array_map(
-                    static fn (string $import): string => trim($import),
+                    static function ($import) {
+                        return trim($import);
+                    },
                     explode(',', $tokens->generatePartialCode($index + 1, $groupEndIndex - 1))
                 );
                 foreach ($groupImports as $groupImport) {
-                    $groupImportParts = array_map(static fn (string $import): string => trim($import), explode(' as ', $groupImport));
+                    $groupImportParts = array_map(static function ($import) {
+                        return trim($import);
+                    }, explode(' as ', $groupImport));
                     if (2 === \count($groupImportParts)) {
                         $this->imports[$groupImportParts[1]] = $import.$groupImportParts[0];
                     } else {
@@ -130,7 +139,12 @@ $className = Baz::class;
         }
     }
 
-    private function replaceClassKeywordsSection(Tokens $tokens, string $namespace, int $startIndex, int $endIndex): void
+    /**
+     * @param string $namespace
+     * @param int    $startIndex
+     * @param int    $endIndex
+     */
+    private function replaceClassKeywordsSection(Tokens $tokens, $namespace, $startIndex, $endIndex)
     {
         if ($endIndex - $startIndex < 3) {
             return;
@@ -144,7 +158,11 @@ $className = Baz::class;
         }
     }
 
-    private function replaceClassKeyword(Tokens $tokens, string $namespacePrefix, int $classIndex): void
+    /**
+     * @param string $namespacePrefix
+     * @param int    $classIndex
+     */
+    private function replaceClassKeyword(Tokens $tokens, $namespacePrefix, $classIndex)
     {
         $classEndIndex = $tokens->getPrevMeaningfulToken($classIndex);
         $classEndIndex = $tokens->getPrevMeaningfulToken($classEndIndex);
@@ -188,7 +206,7 @@ $className = Baz::class;
                 $classStringArray = explode('\\', $classString);
                 $namespaceToTest = $classStringArray[0];
 
-                if (0 === ($namespaceToTest <=> substr($import, -\strlen($namespaceToTest)))) {
+                if (0 === strcmp($namespaceToTest, substr($import, -\strlen($namespaceToTest)))) {
                     $classImport = $import;
 
                     break;
@@ -197,7 +215,7 @@ $className = Baz::class;
         }
 
         for ($i = $classBeginIndex; $i <= $classIndex; ++$i) {
-            if (!$tokens[$i]->isComment() && !($tokens[$i]->isWhitespace() && str_contains($tokens[$i]->getContent(), "\n"))) {
+            if (!$tokens[$i]->isComment() && !($tokens[$i]->isWhitespace() && false !== strpos($tokens[$i]->getContent(), "\n"))) {
                 $tokens->clearAt($i);
             }
         }
@@ -209,9 +227,13 @@ $className = Baz::class;
     }
 
     /**
+     * @param string       $namespacePrefix
      * @param false|string $classImport
+     * @param string       $classString
+     *
+     * @return string
      */
-    private function makeClassFQN(string $namespacePrefix, $classImport, string $classString): string
+    private function makeClassFQN($namespacePrefix, $classImport, $classString)
     {
         if (false === $classImport) {
             return ('' !== $namespacePrefix ? ($namespacePrefix.'\\') : '').$classString;

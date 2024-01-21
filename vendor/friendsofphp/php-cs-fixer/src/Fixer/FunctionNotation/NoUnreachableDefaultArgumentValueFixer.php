@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\FunctionNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -28,7 +25,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoUnreachableDefaultArgumentValueFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'In function arguments there must not be arguments with default values before non-default ones.',
@@ -49,27 +49,41 @@ function example($foo = "two words", $bar) {}
      *
      * Must run after NullableTypeDeclarationForDefaultNullValueFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAnyTokenKindsFound([T_FUNCTION, T_FN]);
+        if (\PHP_VERSION_ID >= 70400 && $tokens->isTokenKindFound(T_FN)) {
+            return true;
+        }
+
+        return $tokens->isTokenKindFound(T_FUNCTION);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        $functionKinds = [T_FUNCTION, T_FN];
-
         for ($i = 0, $l = $tokens->count(); $i < $l; ++$i) {
-            if (!$tokens[$i]->isGivenKind($functionKinds)) {
+            if (
+                !$tokens[$i]->isGivenKind(T_FUNCTION)
+                && (\PHP_VERSION_ID < 70400 || !$tokens[$i]->isGivenKind(T_FN))
+            ) {
                 continue;
             }
 
@@ -80,11 +94,15 @@ function example($foo = "two words", $bar) {}
         }
     }
 
-    private function fixFunctionDefinition(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    private function fixFunctionDefinition(Tokens $tokens, $startIndex, $endIndex)
     {
         $lastArgumentIndex = $this->getLastNonDefaultArgumentIndex($tokens, $startIndex, $endIndex);
 
-        if (null === $lastArgumentIndex) {
+        if (!$lastArgumentIndex) {
             return;
         }
 
@@ -101,11 +119,19 @@ function example($foo = "two words", $bar) {}
                 continue;
             }
 
-            $this->removeDefaultValue($tokens, $i, $this->getDefaultValueEndIndex($tokens, $lastArgumentIndex));
+            $endIndex = $tokens->getPrevTokenOfKind($lastArgumentIndex, [',']);
+            $endIndex = $tokens->getPrevMeaningfulToken($endIndex);
+            $this->removeDefaultArgument($tokens, $i, $endIndex);
         }
     }
 
-    private function getLastNonDefaultArgumentIndex(Tokens $tokens, int $startIndex, int $endIndex): ?int
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     *
+     * @return null|int
+     */
+    private function getLastNonDefaultArgumentIndex(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($i = $endIndex - 1; $i > $startIndex; --$i) {
             $token = $tokens[$i];
@@ -124,25 +150,21 @@ function example($foo = "two words", $bar) {}
         return null;
     }
 
-    private function isEllipsis(Tokens $tokens, int $variableIndex): bool
+    /**
+     * @param int $variableIndex
+     *
+     * @return bool
+     */
+    private function isEllipsis(Tokens $tokens, $variableIndex)
     {
         return $tokens[$tokens->getPrevMeaningfulToken($variableIndex)]->isGivenKind(T_ELLIPSIS);
     }
 
-    private function getDefaultValueEndIndex(Tokens $tokens, int $index): int
-    {
-        do {
-            $index = $tokens->getPrevMeaningfulToken($index);
-
-            if ($tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
-                $index = $tokens->findBlockStart(Tokens::BLOCK_TYPE_ATTRIBUTE, $index);
-            }
-        } while (!$tokens[$index]->equals(','));
-
-        return $tokens->getPrevMeaningfulToken($index);
-    }
-
-    private function removeDefaultValue(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    private function removeDefaultArgument(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($i = $startIndex; $i <= $endIndex;) {
             $tokens->clearTokenAndMergeSurroundingWhitespace($i);
@@ -153,8 +175,10 @@ function example($foo = "two words", $bar) {}
 
     /**
      * @param int $index Index of "="
+     *
+     * @return bool
      */
-    private function isNonNullableTypehintedNullableVariable(Tokens $tokens, int $index): bool
+    private function isNonNullableTypehintedNullableVariable(Tokens $tokens, $index)
     {
         $nextToken = $tokens[$tokens->getNextMeaningfulToken($index)];
 
@@ -176,7 +200,10 @@ function example($foo = "two words", $bar) {}
         return !$tokens[$tokens->getPrevMeaningfulToken($prevIndex)]->isGivenKind(CT::T_NULLABLE_TYPE);
     }
 
-    private function clearWhitespacesBeforeIndex(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function clearWhitespacesBeforeIndex(Tokens $tokens, $index)
     {
         $prevIndex = $tokens->getNonEmptySibling($index, -1);
         if (!$tokens[$prevIndex]->isWhitespace()) {

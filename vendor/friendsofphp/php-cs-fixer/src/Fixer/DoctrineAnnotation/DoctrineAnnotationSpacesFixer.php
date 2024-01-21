@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,16 +12,14 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Fixer\DoctrineAnnotation;
 
+use Doctrine\Common\Annotations\DocLexer;
 use PhpCsFixer\AbstractDoctrineAnnotationFixer;
-use PhpCsFixer\Doctrine\Annotation\DocLexer;
 use PhpCsFixer\Doctrine\Annotation\Token;
 use PhpCsFixer\Doctrine\Annotation\Tokens;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 
 /**
@@ -31,7 +27,10 @@ use PhpCsFixer\Preg;
  */
 final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Fixes spaces in Doctrine annotations.',
@@ -53,57 +52,104 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
      *
      * Must run after DoctrineAnnotationArrayAssignmentFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    public function configure(array $configuration = null)
     {
-        return new FixerConfigurationResolver([
-            ...parent::createConfigurationDefinition()->getOptions(),
-            (new FixerOptionBuilder('around_parentheses', 'Whether to fix spaces around parentheses.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(true)
-                ->getOption(),
-            (new FixerOptionBuilder('around_commas', 'Whether to fix spaces around commas.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(true)
-                ->getOption(),
-            (new FixerOptionBuilder('before_argument_assignments', 'Whether to add, remove or ignore spaces before argument assignment operator.'))
-                ->setAllowedTypes(['null', 'bool'])
-                ->setDefault(false)
-                ->getOption(),
-            (new FixerOptionBuilder('after_argument_assignments', 'Whether to add, remove or ignore spaces after argument assignment operator.'))
-                ->setAllowedTypes(['null', 'bool'])
-                ->setDefault(false)
-                ->getOption(),
-            (new FixerOptionBuilder('before_array_assignments_equals', 'Whether to add, remove or ignore spaces before array `=` assignment operator.'))
-                ->setAllowedTypes(['null', 'bool'])
-                ->setDefault(true)
-                ->getOption(),
-            (new FixerOptionBuilder('after_array_assignments_equals', 'Whether to add, remove or ignore spaces after array assignment `=` operator.'))
-                ->setAllowedTypes(['null', 'bool'])
-                ->setDefault(true)
-                ->getOption(),
-            (new FixerOptionBuilder('before_array_assignments_colon', 'Whether to add, remove or ignore spaces before array `:` assignment operator.'))
-                ->setAllowedTypes(['null', 'bool'])
-                ->setDefault(true)
-                ->getOption(),
-            (new FixerOptionBuilder('after_array_assignments_colon', 'Whether to add, remove or ignore spaces after array assignment `:` operator.'))
-                ->setAllowedTypes(['null', 'bool'])
-                ->setDefault(true)
-                ->getOption(),
-        ]);
+        parent::configure($configuration);
+
+        if (!$this->configuration['around_argument_assignments']) {
+            foreach ([
+                'before_argument_assignments',
+                'after_argument_assignments',
+            ] as $newOption) {
+                if (!\array_key_exists($newOption, $configuration)) {
+                    $this->configuration[$newOption] = null;
+                }
+            }
+        }
+
+        if (!$this->configuration['around_array_assignments']) {
+            foreach ([
+                'before_array_assignments_equals',
+                'after_array_assignments_equals',
+                'before_array_assignments_colon',
+                'after_array_assignments_colon',
+            ] as $newOption) {
+                if (!\array_key_exists($newOption, $configuration)) {
+                    $this->configuration[$newOption] = null;
+                }
+            }
+        }
     }
 
-    protected function fixAnnotations(Tokens $doctrineAnnotationTokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
-        if (true === $this->configuration['around_parentheses']) {
+        return new FixerConfigurationResolver(array_merge(
+            parent::createConfigurationDefinition()->getOptions(),
+            [
+                (new FixerOptionBuilder('around_parentheses', 'Whether to fix spaces around parentheses.'))
+                    ->setAllowedTypes(['bool'])
+                    ->setDefault(true)
+                    ->getOption(),
+                (new FixerOptionBuilder('around_commas', 'Whether to fix spaces around commas.'))
+                    ->setAllowedTypes(['bool'])
+                    ->setDefault(true)
+                    ->getOption(),
+                (new FixerOptionBuilder('around_argument_assignments', 'Whether to fix spaces around argument assignment operator.'))
+                    ->setAllowedTypes(['bool'])
+                    ->setDefault(true)
+                    ->setDeprecationMessage('Use options `before_argument_assignments` and `after_argument_assignments` instead.')
+                    ->getOption(),
+                (new FixerOptionBuilder('before_argument_assignments', 'Whether to add, remove or ignore spaces before argument assignment operator.'))
+                    ->setAllowedTypes(['null', 'bool'])
+                    ->setDefault(false)
+                    ->getOption(),
+                (new FixerOptionBuilder('after_argument_assignments', 'Whether to add, remove or ignore spaces after argument assignment operator.'))
+                    ->setAllowedTypes(['null', 'bool'])
+                    ->setDefault(false)
+                    ->getOption(),
+                (new FixerOptionBuilder('around_array_assignments', 'Whether to fix spaces around array assignment operators.'))
+                    ->setAllowedTypes(['bool'])
+                    ->setDefault(true)
+                    ->setDeprecationMessage('Use options `before_array_assignments_equals`, `after_array_assignments_equals`, `before_array_assignments_colon` and `after_array_assignments_colon` instead.')
+                    ->getOption(),
+                (new FixerOptionBuilder('before_array_assignments_equals', 'Whether to add, remove or ignore spaces before array `=` assignment operator.'))
+                    ->setAllowedTypes(['null', 'bool'])
+                    ->setDefault(true)
+                    ->getOption(),
+                (new FixerOptionBuilder('after_array_assignments_equals', 'Whether to add, remove or ignore spaces after array assignment `=` operator.'))
+                    ->setAllowedTypes(['null', 'bool'])
+                    ->setDefault(true)
+                    ->getOption(),
+                (new FixerOptionBuilder('before_array_assignments_colon', 'Whether to add, remove or ignore spaces before array `:` assignment operator.'))
+                    ->setAllowedTypes(['null', 'bool'])
+                    ->setDefault(true)
+                    ->getOption(),
+                (new FixerOptionBuilder('after_array_assignments_colon', 'Whether to add, remove or ignore spaces after array assignment `:` operator.'))
+                    ->setAllowedTypes(['null', 'bool'])
+                    ->setDefault(true)
+                    ->getOption(),
+            ]
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function fixAnnotations(Tokens $doctrineAnnotationTokens)
+    {
+        if ($this->configuration['around_parentheses']) {
             $this->fixSpacesAroundParentheses($doctrineAnnotationTokens);
         }
 
-        if (true === $this->configuration['around_commas']) {
+        if ($this->configuration['around_commas']) {
             $this->fixSpacesAroundCommas($doctrineAnnotationTokens);
         }
 
@@ -119,7 +165,7 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    private function fixSpacesAroundParentheses(Tokens $tokens): void
+    private function fixSpacesAroundParentheses(Tokens $tokens)
     {
         $inAnnotationUntilIndex = null;
 
@@ -159,7 +205,7 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
             }
 
             if ($token->isType(DocLexer::T_NONE)) {
-                if (str_contains($token->getContent(), "\n")) {
+                if (false !== strpos($token->getContent(), "\n")) {
                     continue;
                 }
 
@@ -168,7 +214,7 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    private function fixSpacesAroundCommas(Tokens $tokens): void
+    private function fixSpacesAroundCommas(Tokens $tokens)
     {
         $inAnnotationUntilIndex = null;
 
@@ -207,7 +253,7 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    private function fixAroundAssignments(Tokens $tokens): void
+    private function fixAroundAssignments(Tokens $tokens)
     {
         $beforeArguments = $this->configuration['before_argument_assignments'];
         $afterArguments = $this->configuration['after_argument_assignments'];
@@ -260,17 +306,30 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    private function updateSpacesAfter(Tokens $tokens, int $index, ?bool $insert): void
+    /**
+     * @param int       $index
+     * @param null|bool $insert
+     */
+    private function updateSpacesAfter(Tokens $tokens, $index, $insert)
     {
         $this->updateSpacesAt($tokens, $index + 1, $index + 1, $insert);
     }
 
-    private function updateSpacesBefore(Tokens $tokens, int $index, ?bool $insert): void
+    /**
+     * @param int       $index
+     * @param null|bool $insert
+     */
+    private function updateSpacesBefore(Tokens $tokens, $index, $insert)
     {
         $this->updateSpacesAt($tokens, $index - 1, $index, $insert);
     }
 
-    private function updateSpacesAt(Tokens $tokens, int $index, int $insertIndex, ?bool $insert): void
+    /**
+     * @param int       $index
+     * @param int       $insertIndex
+     * @param null|bool $insert
+     */
+    private function updateSpacesAt(Tokens $tokens, $index, $insertIndex, $insert)
     {
         if (null === $insert) {
             return;

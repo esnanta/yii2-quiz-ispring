@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,19 +21,34 @@ use Symfony\Component\Process\Process;
  */
 final class ProcessLintingResult implements LintingResultInterface
 {
-    private Process $process;
+    /**
+     * @var bool
+     */
+    private $isSuccessful;
 
-    private ?string $path;
+    /**
+     * @var Process
+     */
+    private $process;
 
-    private ?bool $isSuccessful = null;
+    /**
+     * @var null|string
+     */
+    private $path;
 
-    public function __construct(Process $process, ?string $path = null)
+    /**
+     * @param null|string $path
+     */
+    public function __construct(Process $process, $path = null)
     {
         $this->process = $process;
         $this->path = $path;
     }
 
-    public function check(): void
+    /**
+     * {@inheritdoc}
+     */
+    public function check()
     {
         if (!$this->isSuccessful()) {
             // on some systems stderr is used, but on others, it's not
@@ -43,10 +56,9 @@ final class ProcessLintingResult implements LintingResultInterface
         }
     }
 
-    private function getProcessErrorMessage(): string
+    private function getProcessErrorMessage()
     {
-        $errorOutput = $this->process->getErrorOutput();
-        $output = strtok(ltrim('' !== $errorOutput ? $errorOutput : $this->process->getOutput()), "\n");
+        $output = strtok(ltrim($this->process->getErrorOutput() ?: $this->process->getOutput()), "\n");
 
         if (false === $output) {
             return 'Fatal error: Unable to lint file.';
@@ -74,7 +86,7 @@ final class ProcessLintingResult implements LintingResultInterface
         return sprintf('%s.', $output);
     }
 
-    private function isSuccessful(): bool
+    private function isSuccessful()
     {
         if (null === $this->isSuccessful) {
             $this->process->wait();

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,11 +14,15 @@ namespace PhpCsFixer\FixerConfiguration;
 
 final class FixerOption implements FixerOptionInterface
 {
-    private string $name;
+    /**
+     * @var string
+     */
+    private $name;
 
-    private string $description;
-
-    private bool $isRequired;
+    /**
+     * @var string
+     */
+    private $description;
 
     /**
      * @var mixed
@@ -28,12 +30,17 @@ final class FixerOption implements FixerOptionInterface
     private $default;
 
     /**
-     * @var null|list<string>
+     * @var bool
+     */
+    private $isRequired;
+
+    /**
+     * @var null|string[]
      */
     private $allowedTypes;
 
     /**
-     * @var null|list<null|(callable(mixed): bool)|scalar>
+     * @var null|array
      */
     private $allowedValues;
 
@@ -43,18 +50,20 @@ final class FixerOption implements FixerOptionInterface
     private $normalizer;
 
     /**
-     * @param mixed                                          $default
-     * @param null|list<string>                              $allowedTypes
-     * @param null|list<null|(callable(mixed): bool)|scalar> $allowedValues
+     * @param string        $name
+     * @param string        $description
+     * @param bool          $isRequired
+     * @param mixed         $default
+     * @param null|string[] $allowedTypes
      */
     public function __construct(
-        string $name,
-        string $description,
-        bool $isRequired = true,
+        $name,
+        $description,
+        $isRequired = true,
         $default = null,
-        ?array $allowedTypes = null,
-        ?array $allowedValues = null,
-        ?\Closure $normalizer = null
+        array $allowedTypes = null,
+        array $allowedValues = null,
+        \Closure $normalizer = null
     ) {
         if ($isRequired && null !== $default) {
             throw new \LogicException('Required options cannot have a default value.');
@@ -74,27 +83,38 @@ final class FixerOption implements FixerOptionInterface
         $this->default = $default;
         $this->allowedTypes = $allowedTypes;
         $this->allowedValues = $allowedValues;
-
         if (null !== $normalizer) {
             $this->normalizer = $this->unbind($normalizer);
         }
     }
 
-    public function getName(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getDescription(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function hasDefault(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function hasDefault()
     {
         return !$this->isRequired;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefault()
     {
         if (!$this->hasDefault()) {
@@ -104,17 +124,26 @@ final class FixerOption implements FixerOptionInterface
         return $this->default;
     }
 
-    public function getAllowedTypes(): ?array
+    /**
+     * {@inheritdoc}
+     */
+    public function getAllowedTypes()
     {
         return $this->allowedTypes;
     }
 
-    public function getAllowedValues(): ?array
+    /**
+     * {@inheritdoc}
+     */
+    public function getAllowedValues()
     {
         return $this->allowedValues;
     }
 
-    public function getNormalizer(): ?\Closure
+    /**
+     * {@inheritdoc}
+     */
+    public function getNormalizer()
     {
         return $this->normalizer;
     }
@@ -133,8 +162,10 @@ final class FixerOption implements FixerOptionInterface
      * all elements are still referenced.
      *
      * See {@see https://bugs.php.net/bug.php?id=69639 Bug #69639} for details.
+     *
+     * @return \Closure
      */
-    private function unbind(\Closure $closure): \Closure
+    private function unbind(\Closure $closure)
     {
         return $closure->bindTo(null);
     }

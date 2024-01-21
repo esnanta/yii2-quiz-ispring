@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,11 +12,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Fixer\Whitespace;
 
-use PhpCsFixer\AbstractProxyFixer;
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -26,12 +22,13 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @author Marc Aubé
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
- *
- * @deprecated in favor of SpacesInsideParenthesisFixer
  */
-final class NoSpacesInsideParenthesisFixer extends AbstractProxyFixer implements DeprecatedFixerInterface
+final class NoSpacesInsideParenthesisFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There MUST NOT be a space after the opening parenthesis. There MUST NOT be a space before the closing parenthesis.',
@@ -50,26 +47,64 @@ function foo( \$bar, \$baz )
     /**
      * {@inheritdoc}
      *
-     * Must run before FunctionToConstantFixer, GetClassToClassKeywordFixer, StringLengthToEmptyFixer.
-     * Must run after CombineConsecutiveIssetsFixer, CombineNestedDirnameFixer, IncrementStyleFixer, LambdaNotUsedImportFixer, ModernizeStrposFixer, NoUselessSprintfFixer, PowToExponentiationFixer.
+     * Must run before FunctionToConstantFixer.
+     * Must run after CombineConsecutiveIssetsFixer, CombineNestedDirnameFixer, LambdaNotUsedImportFixer, NoUselessSprintfFixer, PowToExponentiationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 3;
+        return 2;
     }
 
-    public function getSuccessorsNames(): array
-    {
-        return array_keys($this->proxyFixers);
-    }
-
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound('(');
     }
 
-    protected function createProxyFixers(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        return [new SpacesInsideParenthesesFixer()];
+        foreach ($tokens as $index => $token) {
+            if (!$token->equals('(')) {
+                continue;
+            }
+
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+
+            // ignore parenthesis for T_ARRAY
+            if (null !== $prevIndex && $tokens[$prevIndex]->isGivenKind(T_ARRAY)) {
+                continue;
+            }
+
+            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
+
+            // remove space after opening `(`
+            if (!$tokens[$tokens->getNextNonWhitespace($index)]->isComment()) {
+                $this->removeSpaceAroundToken($tokens, $index + 1);
+            }
+
+            // remove space before closing `)` if it is not `list($a, $b, )` case
+            if (!$tokens[$tokens->getPrevMeaningfulToken($endIndex)]->equals(',')) {
+                $this->removeSpaceAroundToken($tokens, $endIndex - 1);
+            }
+        }
+    }
+
+    /**
+     * Remove spaces from token at a given index.
+     *
+     * @param int $index
+     */
+    private function removeSpaceAroundToken(Tokens $tokens, $index)
+    {
+        $token = $tokens[$index];
+
+        if ($token->isWhitespace() && false === strpos($token->getContent(), "\n")) {
+            $tokens->clearAt($index);
+        }
     }
 }

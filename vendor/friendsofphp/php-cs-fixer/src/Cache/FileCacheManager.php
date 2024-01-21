@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -32,51 +30,60 @@ namespace PhpCsFixer\Cache;
  */
 final class FileCacheManager implements CacheManagerInterface
 {
-    public const WRITE_FREQUENCY = 10;
+    /**
+     * @var FileHandlerInterface
+     */
+    private $handler;
 
-    private FileHandlerInterface $handler;
-
-    private SignatureInterface $signature;
-
-    private bool $isDryRun;
-
-    private DirectoryInterface $cacheDirectory;
-
-    private int $writeCounter = 0;
-
-    private bool $signatureWasUpdated = false;
+    /**
+     * @var SignatureInterface
+     */
+    private $signature;
 
     /**
      * @var CacheInterface
      */
     private $cache;
 
+    /**
+     * @var bool
+     */
+    private $isDryRun;
+
+    /**
+     * @var DirectoryInterface
+     */
+    private $cacheDirectory;
+
+    /**
+     * @param bool $isDryRun
+     */
     public function __construct(
         FileHandlerInterface $handler,
         SignatureInterface $signature,
-        bool $isDryRun = false,
-        ?DirectoryInterface $cacheDirectory = null
+        $isDryRun = false,
+        DirectoryInterface $cacheDirectory = null
     ) {
         $this->handler = $handler;
         $this->signature = $signature;
         $this->isDryRun = $isDryRun;
-        $this->cacheDirectory = $cacheDirectory ?? new Directory('');
+        $this->cacheDirectory = $cacheDirectory ?: new Directory('');
 
         $this->readCache();
     }
 
     public function __destruct()
     {
-        if (true === $this->signatureWasUpdated || 0 !== $this->writeCounter) {
-            $this->writeCache();
-        }
+        $this->writeCache();
     }
 
     /**
      * This class is not intended to be serialized,
      * and cannot be deserialized (see __wakeup method).
+     *
+     * @return array
      */
-    public function __sleep(): array
+    public function __sleep()
     {
         throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
     }
@@ -87,19 +94,19 @@ final class FileCacheManager implements CacheManagerInterface
      *
      * @see https://owasp.org/www-community/vulnerabilities/PHP_Object_Injection
      */
-    public function __wakeup(): void
+    public function __wakeup()
     {
         throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
     }
 
-    public function needFixing(string $file, string $fileContent): bool
+    public function needFixing($file, $fileContent)
     {
         $file = $this->cacheDirectory->getRelativePathTo($file);
 
         return !$this->cache->has($file) || $this->cache->get($file) !== $this->calcHash($fileContent);
     }
 
-    public function setFile(string $file, string $fileContent): void
+    public function setFile($file, $fileContent)
     {
         $file = $this->cacheDirectory->getRelativePathTo($file);
 
@@ -107,35 +114,31 @@ final class FileCacheManager implements CacheManagerInterface
 
         if ($this->isDryRun && $this->cache->has($file) && $this->cache->get($file) !== $hash) {
             $this->cache->clear($file);
-        } else {
-            $this->cache->set($file, $hash);
+
+            return;
         }
 
-        if (self::WRITE_FREQUENCY === ++$this->writeCounter) {
-            $this->writeCounter = 0;
-            $this->writeCache();
-        }
+        $this->cache->set($file, $hash);
     }
 
-    private function readCache(): void
+    private function readCache()
     {
         $cache = $this->handler->read();
 
-        if (null === $cache || !$this->signature->equals($cache->getSignature())) {
+        if (!$cache || !$this->signature->equals($cache->getSignature())) {
             $cache = new Cache($this->signature);
-            $this->signatureWasUpdated = true;
         }
 
         $this->cache = $cache;
     }
 
-    private function writeCache(): void
+    private function writeCache()
     {
         $this->handler->write($this->cache);
     }
 
-    private function calcHash(string $content): string
+    private function calcHash($content)
     {
-        return md5($content);
+        return crc32($content);
     }
 }

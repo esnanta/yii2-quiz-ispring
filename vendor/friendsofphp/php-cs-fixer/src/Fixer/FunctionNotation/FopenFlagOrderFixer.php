@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,14 +15,19 @@ namespace PhpCsFixer\Fixer\FunctionNotation;
 use PhpCsFixer\AbstractFopenFlagFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class FopenFlagOrderFixer extends AbstractFopenFlagFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Order the flags in `fopen` calls, `b` and `t` must be last.',
@@ -34,7 +37,11 @@ final class FopenFlagOrderFixer extends AbstractFopenFlagFixer
         );
     }
 
-    protected function fixFopenFlagToken(Tokens $tokens, int $argumentStartIndex, int $argumentEndIndex): void
+    /**
+     * @param int $argumentStartIndex
+     * @param int $argumentEndIndex
+     */
+    protected function fixFopenFlagToken(Tokens $tokens, $argumentStartIndex, $argumentEndIndex)
     {
         $argumentFlagIndex = null;
 
@@ -85,15 +92,15 @@ final class FopenFlagOrderFixer extends AbstractFopenFlagFixer
     }
 
     /**
-     * @param list<string> $flags
+     * @param string[] $flags
      *
-     * @return list<string>
+     * @return string[]
      */
-    private function sortFlags(array $flags): array
+    private function sortFlags(array $flags)
     {
         usort(
             $flags,
-            static function (string $flag1, string $flag2): int {
+            static function ($flag1, $flag2) {
                 if ($flag1 === $flag2) {
                     return 0;
                 }

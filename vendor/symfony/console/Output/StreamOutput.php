@@ -12,6 +12,7 @@
 namespace Symfony\Component\Console\Output;
 
 use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 /**
@@ -57,20 +58,26 @@ class StreamOutput extends Output
     /**
      * Gets the stream attached to this StreamOutput instance.
      *
-     * @return resource
+     * @return resource A stream resource
      */
     public function getStream()
     {
         return $this->stream;
     }
 
-    protected function doWrite(string $message, bool $newline)
+    /**
+     * {@inheritdoc}
+     */
+    protected function doWrite($message, $newline)
     {
         if ($newline) {
-            $message .= \PHP_EOL;
+            $message .= PHP_EOL;
         }
 
-        @fwrite($this->stream, $message);
+        if (false === @fwrite($this->stream, $message)) {
+            // should never happen
+            throw new RuntimeException('Unable to write output.');
+        }
 
         fflush($this->stream);
     }
@@ -90,22 +97,28 @@ class StreamOutput extends Output
      */
     protected function hasColorSupport()
     {
-        // Follow https://no-color.org/
-        if (isset($_SERVER['NO_COLOR']) || false !== getenv('NO_COLOR')) {
-            return false;
-        }
-
-        if (\DIRECTORY_SEPARATOR === '\\'
-            && \function_exists('sapi_windows_vt100_support')
-            && @sapi_windows_vt100_support($this->stream)
-        ) {
+        if ('Hyper' === getenv('TERM_PROGRAM')) {
             return true;
         }
 
-        return 'Hyper' === getenv('TERM_PROGRAM')
-            || false !== getenv('ANSICON')
-            || 'ON' === getenv('ConEmuANSI')
-            || str_starts_with((string) getenv('TERM'), 'xterm')
-            || stream_isatty($this->stream);
+        if (\DIRECTORY_SEPARATOR === '\\') {
+            return (\function_exists('sapi_windows_vt100_support')
+                && @sapi_windows_vt100_support($this->stream))
+                || false !== getenv('ANSICON')
+                || 'ON' === getenv('ConEmuANSI')
+                || 'xterm' === getenv('TERM');
+        }
+
+        if (\function_exists('stream_isatty')) {
+            return @stream_isatty($this->stream);
+        }
+
+        if (\function_exists('posix_isatty')) {
+            return @posix_isatty($this->stream);
+        }
+
+        $stat = @fstat($this->stream);
+        // Check if formatted mode is S_IFCHR
+        return $stat ? 0020000 === ($stat['mode'] & 0170000) : false;
     }
 }

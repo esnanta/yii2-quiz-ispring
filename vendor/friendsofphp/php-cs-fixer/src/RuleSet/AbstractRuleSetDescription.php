@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,17 +17,19 @@ namespace PhpCsFixer\RuleSet;
  */
 abstract class AbstractRuleSetDescription implements RuleSetDescriptionInterface
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
-    public function getName(): string
+    public function getName()
     {
         $name = substr(static::class, 1 + strrpos(static::class, '\\'), -3);
 
         return '@'.str_replace('Risky', ':risky', $name);
     }
 
-    public function isRisky(): bool
+    public function isRisky()
     {
-        return str_contains(static::class, 'Risky');
+        return false !== strpos(static::class, 'Risky');
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -24,12 +22,18 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  */
 final class JunitReporter implements ReporterInterface
 {
-    public function getFormat(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormat()
     {
         return 'junit';
     }
 
-    public function generate(ReportSummary $reportSummary): string
+    /**
+     * {@inheritdoc}
+     */
+    public function generate(ReportSummary $reportSummary)
     {
         if (!\extension_loaded('dom')) {
             throw new \RuntimeException('Cannot generate report! `ext-dom` is not available!');
@@ -37,18 +41,17 @@ final class JunitReporter implements ReporterInterface
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $testsuites = $dom->appendChild($dom->createElement('testsuites'));
-
-        /** @var \DOMElement $testsuite */
+        /** @var \DomElement $testsuite */
         $testsuite = $testsuites->appendChild($dom->createElement('testsuite'));
         $testsuite->setAttribute('name', 'PHP CS Fixer');
 
-        if (\count($reportSummary->getChanged()) > 0) {
+        if (\count($reportSummary->getChanged())) {
             $this->createFailedTestCases($dom, $testsuite, $reportSummary);
         } else {
             $this->createSuccessTestCase($dom, $testsuite);
         }
 
-        if ($reportSummary->getTime() > 0) {
+        if ($reportSummary->getTime()) {
             $testsuite->setAttribute(
                 'time',
                 sprintf(
@@ -63,7 +66,7 @@ final class JunitReporter implements ReporterInterface
         return $reportSummary->isDecoratedOutput() ? OutputFormatter::escape($dom->saveXML()) : $dom->saveXML();
     }
 
-    private function createSuccessTestCase(\DOMDocument $dom, \DOMElement $testsuite): void
+    private function createSuccessTestCase(\DOMDocument $dom, \DOMElement $testsuite)
     {
         $testcase = $dom->createElement('testcase');
         $testcase->setAttribute('name', 'All OK');
@@ -76,7 +79,7 @@ final class JunitReporter implements ReporterInterface
         $testsuite->setAttribute('errors', '0');
     }
 
-    private function createFailedTestCases(\DOMDocument $dom, \DOMElement $testsuite, ReportSummary $reportSummary): void
+    private function createFailedTestCases(\DOMDocument $dom, \DOMElement $testsuite, ReportSummary $reportSummary)
     {
         $assertionsCount = 0;
         foreach ($reportSummary->getChanged() as $file => $fixResult) {
@@ -97,9 +100,12 @@ final class JunitReporter implements ReporterInterface
     }
 
     /**
-     * @param array{appliedFixers: list<string>, diff: string} $fixResult
+     * @param string $file
+     * @param bool   $shouldAddAppliedFixers
+     *
+     * @return \DOMElement
      */
-    private function createFailedTestCase(\DOMDocument $dom, string $file, array $fixResult, bool $shouldAddAppliedFixers): \DOMElement
+    private function createFailedTestCase(\DOMDocument $dom, $file, array $fixResult, $shouldAddAppliedFixers)
     {
         $appliedFixersCount = \count($fixResult['appliedFixers']);
 
@@ -124,7 +130,7 @@ final class JunitReporter implements ReporterInterface
             $failureContent = "Wrong code style\n";
         }
 
-        if ('' !== $fixResult['diff']) {
+        if (!empty($fixResult['diff'])) {
             $failureContent .= "\nDiff:\n---------------\n\n".$fixResult['diff'];
         }
 

@@ -245,11 +245,11 @@ class Archive extends BaseArchive
         // check if uploaded file can be deleted on server
         if (!unlink($file)) {
             return false;
+        } else {
+            // if deletion successful, reset your file attributes
+            $this->asset_name = null;
+            $this->asset_url = null;
         }
-
-        // if deletion successful, reset your file attributes
-        $this->asset_name = null;
-        $this->title = null;
 
         return true;
     }

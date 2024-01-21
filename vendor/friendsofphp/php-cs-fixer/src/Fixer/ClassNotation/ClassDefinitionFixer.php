@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,27 +13,33 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ClassNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\FixerConfiguration\AliasedFixerOptionBuilder;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 /**
  * Fixer for part of the rules defined in PSR2 ¶4.1 Extends and Implements and PSR12 ¶8. Anonymous Classes.
+ *
+ * @author SpacePossum
  */
-final class ClassDefinitionFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class ClassDefinitionFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
-            'Whitespace around the keywords of a class, trait, enum or interfaces definition should be one space.',
+            'Whitespace around the keywords of a class, trait or interfaces definition should be one space.',
             [
                 new CodeSample(
                     '<?php
@@ -51,9 +55,14 @@ final  class  Foo  extends  Bar  implements  Baz,  BarBaz
 trait  Foo
 {
 }
+'
+                ),
+                new VersionSpecificCodeSample(
+                    '<?php
 
 $foo = new  class  extends  Bar  implements  Baz,  BarBaz {};
-'
+',
+                    new VersionSpecification(70100)
                 ),
                 new CodeSample(
                     '<?php
@@ -84,16 +93,6 @@ interface Bar extends
 ',
                     ['multi_line_extends_each_single_line' => true]
                 ),
-                new CodeSample(
-                    '<?php
-$foo = new class(){};
-',
-                    ['space_before_parenthesis' => true]
-                ),
-                new CodeSample(
-                    "<?php\n\$foo = new class(\n    \$bar,\n    \$baz\n) {};\n",
-                    ['inline_constructor_arguments' => true]
-                ),
             ]
         );
     }
@@ -101,20 +100,25 @@ $foo = new class(){};
     /**
      * {@inheritdoc}
      *
-     * Must run before BracesFixer, SingleLineEmptyBodyFixer.
-     * Must run after NewWithBracesFixer, NewWithParenthesesFixer.
+     * Must run before BracesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 36;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         // -4, one for count to index, 3 because min. of tokens for a classy location.
         for ($index = $tokens->getSize() - 4; $index > 0; --$index) {
@@ -124,28 +128,32 @@ $foo = new class(){};
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('multi_line_extends_each_single_line', 'Whether definitions should be multiline.'))
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('multi_line_extends_each_single_line', 'Whether definitions should be multiline.'),
+                'multiLineExtendsEachSingleLine'
+            ))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            (new FixerOptionBuilder('single_item_single_line', 'Whether definitions should be single line when including a single item.'))
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('single_item_single_line', 'Whether definitions should be single line when including a single item.'),
+                'singleItemSingleLine'
+            ))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            (new FixerOptionBuilder('single_line', 'Whether definitions should be single line.'))
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('single_line', 'Whether definitions should be single line.'),
+                'singleLine'
+            ))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
-                ->getOption(),
-            (new FixerOptionBuilder('space_before_parenthesis', 'Whether there should be a single space after the parenthesis of anonymous class (PSR12) or not.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(false)
-                ->getOption(),
-            (new FixerOptionBuilder('inline_constructor_arguments', 'Whether constructor argument list in anonymous classes should be single line.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(true)
                 ->getOption(),
         ]);
     }
@@ -153,7 +161,7 @@ $foo = new class(){};
     /**
      * @param int $classyIndex Class definition token start index
      */
-    private function fixClassyDefinition(Tokens $tokens, int $classyIndex): void
+    private function fixClassyDefinition(Tokens $tokens, $classyIndex)
     {
         $classDefInfo = $this->getClassyDefinitionInfo($tokens, $classyIndex);
 
@@ -180,7 +188,6 @@ $foo = new class(){};
         // PSR12: anonymous class curly brace on same line if not multi line implements.
 
         $classDefInfo['open'] = $this->fixClassyDefinitionOpenSpacing($tokens, $classDefInfo);
-
         if ($classDefInfo['implements']) {
             $end = $classDefInfo['implements']['start'];
         } elseif ($classDefInfo['extends']) {
@@ -189,35 +196,30 @@ $foo = new class(){};
             $end = $tokens->getPrevNonWhitespace($classDefInfo['open']);
         }
 
-        if ($classDefInfo['anonymousClass'] && false === $this->configuration['inline_constructor_arguments']) {
-            if (!$tokens[$end]->equals(')')) { // anonymous class with `extends` and/or `implements`
-                $start = $tokens->getPrevMeaningfulToken($end);
-                $this->makeClassyDefinitionSingleLine($tokens, $start, $end);
-                $end = $start;
-            }
-
-            if ($tokens[$end]->equals(')')) { // skip constructor arguments of anonymous class
-                $end = $tokens->findBlockStart(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $end);
-            }
-        }
-
         // 4.1 The extends and implements keywords MUST be declared on the same line as the class name.
-        $this->makeClassyDefinitionSingleLine($tokens, $classDefInfo['start'], $end);
-
-        $this->sortClassModifiers($tokens, $classDefInfo);
+        $this->makeClassyDefinitionSingleLine(
+            $tokens,
+            $classDefInfo['anonymousClass'] ? $tokens->getPrevMeaningfulToken($classyIndex) : $classDefInfo['start'],
+            $end
+        );
     }
 
-    private function fixClassyDefinitionExtends(Tokens $tokens, int $classOpenIndex, array $classExtendsInfo): array
+    /**
+     * @param int $classOpenIndex
+     *
+     * @return array
+     */
+    private function fixClassyDefinitionExtends(Tokens $tokens, $classOpenIndex, array $classExtendsInfo)
     {
         $endIndex = $tokens->getPrevNonWhitespace($classOpenIndex);
 
-        if (true === $this->configuration['single_line'] || false === $classExtendsInfo['multiLine']) {
+        if ($this->configuration['single_line'] || false === $classExtendsInfo['multiLine']) {
             $this->makeClassyDefinitionSingleLine($tokens, $classExtendsInfo['start'], $endIndex);
             $classExtendsInfo['multiLine'] = false;
-        } elseif (true === $this->configuration['single_item_single_line'] && 1 === $classExtendsInfo['numberOfExtends']) {
+        } elseif ($this->configuration['single_item_single_line'] && 1 === $classExtendsInfo['numberOfExtends']) {
             $this->makeClassyDefinitionSingleLine($tokens, $classExtendsInfo['start'], $endIndex);
             $classExtendsInfo['multiLine'] = false;
-        } elseif (true === $this->configuration['multi_line_extends_each_single_line'] && $classExtendsInfo['multiLine']) {
+        } elseif ($this->configuration['multi_line_extends_each_single_line'] && $classExtendsInfo['multiLine']) {
             $this->makeClassyInheritancePartMultiLine($tokens, $classExtendsInfo['start'], $endIndex);
             $classExtendsInfo['multiLine'] = true;
         }
@@ -225,14 +227,19 @@ $foo = new class(){};
         return $classExtendsInfo;
     }
 
-    private function fixClassyDefinitionImplements(Tokens $tokens, int $classOpenIndex, array $classImplementsInfo): array
+    /**
+     * @param int $classOpenIndex
+     *
+     * @return array
+     */
+    private function fixClassyDefinitionImplements(Tokens $tokens, $classOpenIndex, array $classImplementsInfo)
     {
         $endIndex = $tokens->getPrevNonWhitespace($classOpenIndex);
 
-        if (true === $this->configuration['single_line'] || false === $classImplementsInfo['multiLine']) {
+        if ($this->configuration['single_line'] || false === $classImplementsInfo['multiLine']) {
             $this->makeClassyDefinitionSingleLine($tokens, $classImplementsInfo['start'], $endIndex);
             $classImplementsInfo['multiLine'] = false;
-        } elseif (true === $this->configuration['single_item_single_line'] && 1 === $classImplementsInfo['numberOfImplements']) {
+        } elseif ($this->configuration['single_item_single_line'] && 1 === $classImplementsInfo['numberOfImplements']) {
             $this->makeClassyDefinitionSingleLine($tokens, $classImplementsInfo['start'], $endIndex);
             $classImplementsInfo['multiLine'] = false;
         } else {
@@ -243,7 +250,10 @@ $foo = new class(){};
         return $classImplementsInfo;
     }
 
-    private function fixClassyDefinitionOpenSpacing(Tokens $tokens, array $classDefInfo): int
+    /**
+     * @return int
+     */
+    private function fixClassyDefinitionOpenSpacing(Tokens $tokens, array $classDefInfo)
     {
         if ($classDefInfo['anonymousClass']) {
             if (false !== $classDefInfo['implements']) {
@@ -258,8 +268,7 @@ $foo = new class(){};
         }
 
         $openIndex = $tokens->getNextTokenOfKind($classDefInfo['classy'], ['{']);
-
-        if (' ' !== $spacing && str_contains($tokens[$openIndex - 1]->getContent(), "\n")) {
+        if (' ' !== $spacing && false !== strpos($tokens[$openIndex - 1]->getContent(), "\n")) {
             return $openIndex;
         }
 
@@ -277,72 +286,54 @@ $foo = new class(){};
     }
 
     /**
-     * @return array{
-     *     start: int,
-     *     classy: int,
-     *     open: int,
-     *     extends: false|array{start: int, numberOfExtends: int, multiLine: bool},
-     *     implements: false|array{start: int, numberOfImplements: int, multiLine: bool},
-     *     anonymousClass: bool,
-     *     final: false|int,
-     *     abstract: false|int,
-     *     readonly: false|int,
-     * }
+     * @param int $classyIndex
+     *
+     * @return array
      */
-    private function getClassyDefinitionInfo(Tokens $tokens, int $classyIndex): array
+    private function getClassyDefinitionInfo(Tokens $tokens, $classyIndex)
     {
-        $tokensAnalyzer = new TokensAnalyzer($tokens);
         $openIndex = $tokens->getNextTokenOfKind($classyIndex, ['{']);
-        $def = [
-            'classy' => $classyIndex,
-            'open' => $openIndex,
-            'extends' => false,
-            'implements' => false,
-            'anonymousClass' => false,
-            'final' => false,
-            'abstract' => false,
-            'readonly' => false,
-        ];
+        $prev = $tokens->getPrevMeaningfulToken($classyIndex);
+        $startIndex = $tokens[$prev]->isGivenKind([T_FINAL, T_ABSTRACT]) ? $prev : $classyIndex;
+
+        $extends = false;
+        $implements = false;
+        $anonymousClass = false;
 
         if (!$tokens[$classyIndex]->isGivenKind(T_TRAIT)) {
             $extends = $tokens->findGivenKind(T_EXTENDS, $classyIndex, $openIndex);
-            $def['extends'] = [] !== $extends ? $this->getClassyInheritanceInfo($tokens, array_key_first($extends), 'numberOfExtends') : false;
+            $extends = \count($extends) ? $this->getClassyInheritanceInfo($tokens, key($extends), 'numberOfExtends') : false;
 
             if (!$tokens[$classyIndex]->isGivenKind(T_INTERFACE)) {
                 $implements = $tokens->findGivenKind(T_IMPLEMENTS, $classyIndex, $openIndex);
-                $def['implements'] = [] !== $implements ? $this->getClassyInheritanceInfo($tokens, array_key_first($implements), 'numberOfImplements') : false;
-                $def['anonymousClass'] = $tokensAnalyzer->isAnonymousClass($classyIndex);
+                $implements = \count($implements) ? $this->getClassyInheritanceInfo($tokens, key($implements), 'numberOfImplements') : false;
+                $tokensAnalyzer = new TokensAnalyzer($tokens);
+                $anonymousClass = $tokensAnalyzer->isAnonymousClass($classyIndex);
             }
         }
 
-        if ($def['anonymousClass']) {
-            $startIndex = $tokens->getPrevTokenOfKind($classyIndex, [[T_NEW]]); // go to "new" for anonymous class
-        } else {
-            $modifiers = $tokensAnalyzer->getClassyModifiers($classyIndex);
-            $startIndex = $classyIndex;
-
-            foreach (['final', 'abstract', 'readonly'] as $modifier) {
-                if (isset($modifiers[$modifier])) {
-                    $def[$modifier] = $modifiers[$modifier];
-                    $startIndex = min($startIndex, $modifiers[$modifier]);
-                } else {
-                    $def[$modifier] = false;
-                }
-            }
-        }
-
-        $def['start'] = $startIndex;
-
-        return $def;
+        return [
+            'start' => $startIndex,
+            'classy' => $classyIndex,
+            'open' => $openIndex,
+            'extends' => $extends,
+            'implements' => $implements,
+            'anonymousClass' => $anonymousClass,
+        ];
     }
 
-    private function getClassyInheritanceInfo(Tokens $tokens, int $startIndex, string $label): array
+    /**
+     * @param int    $startIndex
+     * @param string $label
+     *
+     * @return array
+     */
+    private function getClassyInheritanceInfo(Tokens $tokens, $startIndex, $label)
     {
         $implementsInfo = ['start' => $startIndex, $label => 1, 'multiLine' => false];
         ++$startIndex;
         $endIndex = $tokens->getNextTokenOfKind($startIndex, ['{', [T_IMPLEMENTS], [T_EXTENDS]]);
         $endIndex = $tokens[$endIndex]->equals('{') ? $tokens->getPrevNonWhitespace($endIndex) : $endIndex;
-
         for ($i = $startIndex; $i < $endIndex; ++$i) {
             if ($tokens[$i]->equals(',')) {
                 ++$implementsInfo[$label];
@@ -350,7 +341,7 @@ $foo = new class(){};
                 continue;
             }
 
-            if (!$implementsInfo['multiLine'] && str_contains($tokens[$i]->getContent(), "\n")) {
+            if (!$implementsInfo['multiLine'] && false !== strpos($tokens[$i]->getContent(), "\n")) {
                 $implementsInfo['multiLine'] = true;
             }
         }
@@ -358,17 +349,22 @@ $foo = new class(){};
         return $implementsInfo;
     }
 
-    private function makeClassyDefinitionSingleLine(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    private function makeClassyDefinitionSingleLine(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($i = $endIndex; $i >= $startIndex; --$i) {
             if ($tokens[$i]->isWhitespace()) {
-                if ($tokens[$i - 1]->isComment() || $tokens[$i + 1]->isComment()) {
-                    $content = $tokens[$i - 1]->getContent();
+                $prevNonWhite = $tokens->getPrevNonWhitespace($i);
+                $nextNonWhite = $tokens->getNextNonWhitespace($i);
 
-                    if (!('#' === $content || str_starts_with($content, '//'))) {
-                        $content = $tokens[$i + 1]->getContent();
-
-                        if (!('#' === $content || str_starts_with($content, '//'))) {
+                if ($tokens[$prevNonWhite]->isComment() || $tokens[$nextNonWhite]->isComment()) {
+                    $content = $tokens[$prevNonWhite]->getContent();
+                    if (!('#' === $content || '//' === substr($content, 0, 2))) {
+                        $content = $tokens[$nextNonWhite]->getContent();
+                        if (!('#' === $content || '//' === substr($content, 0, 2))) {
                             $tokens[$i] = new Token([T_WHITESPACE, ' ']);
                         }
                     }
@@ -376,17 +372,7 @@ $foo = new class(){};
                     continue;
                 }
 
-                if ($tokens[$i - 1]->isGivenKind(T_CLASS) && $tokens[$i + 1]->equals('(')) {
-                    if (true === $this->configuration['space_before_parenthesis']) {
-                        $tokens[$i] = new Token([T_WHITESPACE, ' ']);
-                    } else {
-                        $tokens->clearAt($i);
-                    }
-
-                    continue;
-                }
-
-                if (!$tokens[$i - 1]->equals(',') && $tokens[$i + 1]->equalsAny([',', ')']) || $tokens[$i - 1]->equals('(')) {
+                if (!$tokens[$i - 1]->equals(',') && $tokens[$i + 1]->equalsAny([',', '(', ')']) || $tokens[$i - 1]->equals('(')) {
                     $tokens->clearAt($i);
 
                     continue;
@@ -403,17 +389,11 @@ $foo = new class(){};
                 continue;
             }
 
-            if (true === $this->configuration['space_before_parenthesis'] && $tokens[$i]->isGivenKind(T_CLASS) && !$tokens[$i + 1]->isWhitespace()) {
-                $tokens->insertAt($i + 1, new Token([T_WHITESPACE, ' ']));
-
-                continue;
-            }
-
             if (!$tokens[$i]->isComment()) {
                 continue;
             }
 
-            if (!$tokens[$i + 1]->isWhitespace() && !$tokens[$i + 1]->isComment() && !str_contains($tokens[$i]->getContent(), "\n")) {
+            if (!$tokens[$i + 1]->isWhitespace() && !$tokens[$i + 1]->isComment() && false === strpos($tokens[$i]->getContent(), "\n")) {
                 $tokens->insertAt($i + 1, new Token([T_WHITESPACE, ' ']));
             }
 
@@ -423,12 +403,15 @@ $foo = new class(){};
         }
     }
 
-    private function makeClassyInheritancePartMultiLine(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    private function makeClassyInheritancePartMultiLine(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($i = $endIndex; $i > $startIndex; --$i) {
             $previousInterfaceImplementingIndex = $tokens->getPrevTokenOfKind($i, [',', [T_IMPLEMENTS], [T_EXTENDS]]);
             $breakAtIndex = $tokens->getNextMeaningfulToken($previousInterfaceImplementingIndex);
-
             // make the part of a ',' or 'implements' single line
             $this->makeClassyDefinitionSingleLine(
                 $tokens,
@@ -438,9 +421,8 @@ $foo = new class(){};
 
             // make sure the part is on its own line
             $isOnOwnLine = false;
-
             for ($j = $breakAtIndex; $j > $previousInterfaceImplementingIndex; --$j) {
-                if (str_contains($tokens[$j]->getContent(), "\n")) {
+                if (false !== strpos($tokens[$j]->getContent(), "\n")) {
                     $isOnOwnLine = true;
 
                     break;
@@ -459,41 +441,6 @@ $foo = new class(){};
             }
 
             $i = $previousInterfaceImplementingIndex + 1;
-        }
-    }
-
-    /**
-     * @param array{
-     *     final: false|int,
-     *     abstract: false|int,
-     *     readonly: false|int,
-     * } $classDefInfo
-     */
-    private function sortClassModifiers(Tokens $tokens, array $classDefInfo): void
-    {
-        if (false === $classDefInfo['readonly']) {
-            return;
-        }
-
-        $readonlyIndex = $classDefInfo['readonly'];
-
-        foreach (['final', 'abstract'] as $accessModifier) {
-            if (false === $classDefInfo[$accessModifier] || $classDefInfo[$accessModifier] < $readonlyIndex) {
-                continue;
-            }
-
-            $accessModifierIndex = $classDefInfo[$accessModifier];
-
-            /** @var Token $readonlyToken */
-            $readonlyToken = clone $tokens[$readonlyIndex];
-
-            /** @var Token $accessToken */
-            $accessToken = clone $tokens[$accessModifierIndex];
-
-            $tokens[$readonlyIndex] = $accessToken;
-            $tokens[$accessModifierIndex] = $readonlyToken;
-
-            break;
         }
     }
 }

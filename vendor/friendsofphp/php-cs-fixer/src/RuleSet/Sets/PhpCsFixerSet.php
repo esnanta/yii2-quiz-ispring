@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,11 +19,11 @@ use PhpCsFixer\RuleSet\AbstractRuleSetDescription;
  */
 final class PhpCsFixerSet extends AbstractRuleSetDescription
 {
-    public function getRules(): array
+    public function getRules()
     {
         return [
-            '@PER-CS' => true,
             '@Symfony' => true,
+            'align_multiline_comment' => true,
             'array_indentation' => true,
             'blank_line_before_statement' => [
                 'statements' => [
@@ -38,26 +36,19 @@ final class PhpCsFixerSet extends AbstractRuleSetDescription
                     'goto',
                     'include',
                     'include_once',
-                    'phpdoc',
                     'require',
                     'require_once',
                     'return',
                     'switch',
                     'throw',
                     'try',
-                    'yield',
-                    'yield_from',
                 ],
             ],
             'combine_consecutive_issets' => true,
             'combine_consecutive_unsets' => true,
-            'empty_loop_body' => true,
             'escape_implicit_backslashes' => true,
             'explicit_indirect_variable' => true,
             'explicit_string_variable' => true,
-            'fully_qualified_strict_types' => [
-                'import_symbols' => true,
-            ],
             'heredoc_to_nowdoc' => true,
             'method_argument_space' => [
                 'on_multiline' => 'ensure_fully_multiline',
@@ -69,7 +60,6 @@ final class PhpCsFixerSet extends AbstractRuleSetDescription
             ],
             'no_extra_blank_lines' => [
                 'tokens' => [
-                    'attribute',
                     'break',
                     'case',
                     'continue',
@@ -82,50 +72,33 @@ final class PhpCsFixerSet extends AbstractRuleSetDescription
                     'switch',
                     'throw',
                     'use',
+                    'use_trait',
                 ],
             ],
+            'no_null_property_initialization' => true,
             'no_superfluous_elseif' => true,
-            'no_superfluous_phpdoc_tags' => [
-                'allow_mixed' => true,
-                'remove_inheritdoc' => true,
-            ],
-            'no_unneeded_control_parentheses' => [
-                'statements' => [
-                    'break',
-                    'clone',
-                    'continue',
-                    'echo_print',
-                    'negative_instanceof',
-                    'others',
-                    'return',
-                    'switch_case',
-                    'yield',
-                    'yield_from',
-                ],
-            ],
             'no_useless_else' => true,
             'no_useless_return' => true,
-            'nullable_type_declaration_for_default_null_value' => false,
+            'operator_linebreak' => [
+                'only_booleans' => true,
+            ],
             'ordered_class_elements' => true,
-            'ordered_types' => true,
             'php_unit_internal_class' => true,
             'php_unit_test_class_requires_covers' => true,
             'phpdoc_add_missing_param_annotation' => true,
             'phpdoc_no_empty_return' => true,
+            'phpdoc_order' => true,
             'phpdoc_order_by_value' => true,
             'phpdoc_types_order' => true,
             'phpdoc_var_annotation_correct_order' => true,
-            'protected_to_private' => true,
             'return_assignment' => true,
-            'self_static_accessor' => true,
+            'simple_to_complex_string_variable' => true,
             'single_line_comment_style' => true,
-            'single_line_empty_body' => true,
             'single_line_throw' => false,
-            'whitespace_after_comma_in_array' => ['ensure_single_space' => true],
         ];
     }
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return 'Rule set as used by the PHP-CS-Fixer development team, highly opinionated.';
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,18 +15,20 @@ namespace PhpCsFixer\Fixer\ArrayNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Carlos Cirello <carlos.cirello.nl@gmail.com>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  */
 final class NoMultilineWhitespaceAroundDoubleArrowFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Operator `=>` should not be surrounded by multi-line whitespaces.',
@@ -39,29 +39,32 @@ final class NoMultilineWhitespaceAroundDoubleArrowFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      *
-     * Must run before BinaryOperatorSpacesFixer, MethodArgumentSpaceFixer.
+     * Must run before BinaryOperatorSpacesFixer, TrailingCommaInMultilineFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 31;
+        return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOUBLE_ARROW);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_DOUBLE_ARROW)) {
                 continue;
             }
 
-            if (!$tokens[$index - 2]->isComment() || str_starts_with($tokens[$index - 2]->getContent(), '/*')) {
-                $this->fixWhitespace($tokens, $index - 1);
-            }
-
+            $this->fixWhitespace($tokens, $index - 1);
             // do not move anything about if there is a comment following the whitespace
             if (!$tokens[$index + 2]->isComment()) {
                 $this->fixWhitespace($tokens, $index + 1);
@@ -69,7 +72,10 @@ final class NoMultilineWhitespaceAroundDoubleArrowFixer extends AbstractFixer
         }
     }
 
-    private function fixWhitespace(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixWhitespace(Tokens $tokens, $index)
     {
         $token = $tokens[$index];
 

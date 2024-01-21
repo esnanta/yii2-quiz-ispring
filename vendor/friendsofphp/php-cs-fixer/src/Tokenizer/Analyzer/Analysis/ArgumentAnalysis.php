@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -20,59 +18,90 @@ namespace PhpCsFixer\Tokenizer\Analyzer\Analysis;
 final class ArgumentAnalysis
 {
     /**
-     * The name of the argument.
+     * The default value of the argument.
+     *
+     * @var null|string
      */
-    private ?string $name;
+    private $default;
+
+    /**
+     * The name of the argument.
+     *
+     * @var string
+     */
+    private $name;
 
     /**
      * The index where the name is located in the supplied Tokens object.
+     *
+     * @var int
      */
-    private ?int $nameIndex;
-
-    /**
-     * The default value of the argument.
-     */
-    private ?string $default;
+    private $nameIndex;
 
     /**
      * The type analysis of the argument.
+     *
+     * @var null|TypeAnalysis
      */
-    private ?TypeAnalysis $typeAnalysis;
+    private $typeAnalysis;
 
-    public function __construct(?string $name, ?int $nameIndex, ?string $default, ?TypeAnalysis $typeAnalysis = null)
+    /**
+     * @param string      $name
+     * @param int         $nameIndex
+     * @param null|string $default
+     */
+    public function __construct($name, $nameIndex, $default, TypeAnalysis $typeAnalysis = null)
     {
         $this->name = $name;
         $this->nameIndex = $nameIndex;
-        $this->default = $default ?? null;
-        $this->typeAnalysis = $typeAnalysis ?? null;
+        $this->default = $default ?: null;
+        $this->typeAnalysis = $typeAnalysis ?: null;
     }
 
-    public function getDefault(): ?string
+    /**
+     * @return null|string
+     */
+    public function getDefault()
     {
         return $this->default;
     }
 
-    public function hasDefault(): bool
+    /**
+     * @return bool
+     */
+    public function hasDefault()
     {
         return null !== $this->default;
     }
 
-    public function getName(): ?string
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getNameIndex(): ?int
+    /**
+     * @return int
+     */
+    public function getNameIndex()
     {
         return $this->nameIndex;
     }
 
-    public function getTypeAnalysis(): ?TypeAnalysis
+    /**
+     * @return null|TypeAnalysis
+     */
+    public function getTypeAnalysis()
     {
         return $this->typeAnalysis;
     }
 
-    public function hasTypeAnalysis(): bool
+    /**
+     * @return bool
+     */
+    public function hasTypeAnalysis()
     {
         return null !== $this->typeAnalysis;
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,7 +16,6 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -35,7 +32,10 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
      */
     private $indent;
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Code MUST use configured indentation type.',
@@ -49,19 +49,25 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
      * {@inheritdoc}
      *
      * Must run before PhpdocIndentFixer.
-     * Must run after ClassAttributesSeparationFixer.
+     * Must run after ClassAttributesSeparationFixer, MethodSeparationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 50;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT, T_WHITESPACE]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $this->indent = $this->whitespacesConfig->getIndent();
 
@@ -80,7 +86,12 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
         }
     }
 
-    private function fixIndentInComment(Tokens $tokens, int $index): Token
+    /**
+     * @param int $index
+     *
+     * @return Token
+     */
+    private function fixIndentInComment(Tokens $tokens, $index)
     {
         $content = Preg::replace('/^(?:(?<! ) {1,3})?\t/m', '\1    ', $tokens[$index]->getContent(), -1, $count);
 
@@ -92,18 +103,25 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
         $indent = $this->indent;
 
         // change indent to expected one
-        $content = Preg::replaceCallback('/^(?:    )+/m', fn (array $matches): string => $this->getExpectedIndent($matches[0], $indent), $content);
+        $content = Preg::replaceCallback('/^(?:    )+/m', function ($matches) use ($indent) {
+            return $this->getExpectedIndent($matches[0], $indent);
+        }, $content);
 
         return new Token([$tokens[$index]->getId(), $content]);
     }
 
-    private function fixIndentToken(Tokens $tokens, int $index): Token
+    /**
+     * @param int $index
+     *
+     * @return Token
+     */
+    private function fixIndentToken(Tokens $tokens, $index)
     {
         $content = $tokens[$index]->getContent();
         $previousTokenHasTrailingLinebreak = false;
 
         // @TODO this can be removed when we have a transformer for "T_OPEN_TAG" to "T_OPEN_TAG + T_WHITESPACE"
-        if (str_contains($tokens[$index - 1]->getContent(), "\n")) {
+        if (false !== strpos($tokens[$index - 1]->getContent(), "\n")) {
             $content = "\n".$content;
             $previousTokenHasTrailingLinebreak = true;
         }
@@ -111,7 +129,7 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
         $indent = $this->indent;
         $newContent = Preg::replaceCallback(
             '/(\R)(\h+)/', // find indent
-            function (array $matches) use ($indent): string {
+            function (array $matches) use ($indent) {
                 // normalize mixed indent
                 $content = Preg::replace('/(?:(?<! ) {1,3})?\t/', '    ', $matches[2]);
 
@@ -129,9 +147,12 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
     }
 
     /**
+     * @param string $content
+     * @param string $indent
+     *
      * @return string mixed
      */
-    private function getExpectedIndent(string $content, string $indent): string
+    private function getExpectedIndent($content, $indent)
     {
         if ("\t" === $indent) {
             $content = str_replace('    ', $indent, $content);

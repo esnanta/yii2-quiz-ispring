@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -24,49 +22,57 @@ namespace PhpCsFixer\Error;
 final class ErrorsManager
 {
     /**
-     * @var list<Error>
+     * @var Error[]
      */
-    private array $errors = [];
+    private $errors = [];
 
     /**
      * Returns errors reported during linting before fixing.
      *
-     * @return list<Error>
+     * @return Error[]
      */
-    public function getInvalidErrors(): array
+    public function getInvalidErrors()
     {
-        return array_filter($this->errors, static fn (Error $error): bool => Error::TYPE_INVALID === $error->getType());
+        return array_filter($this->errors, static function (Error $error) {
+            return Error::TYPE_INVALID === $error->getType();
+        });
     }
 
     /**
      * Returns errors reported during fixing.
      *
-     * @return list<Error>
+     * @return Error[]
      */
-    public function getExceptionErrors(): array
+    public function getExceptionErrors()
     {
-        return array_filter($this->errors, static fn (Error $error): bool => Error::TYPE_EXCEPTION === $error->getType());
+        return array_filter($this->errors, static function (Error $error) {
+            return Error::TYPE_EXCEPTION === $error->getType();
+        });
     }
 
     /**
      * Returns errors reported during linting after fixing.
      *
-     * @return list<Error>
+     * @return Error[]
      */
-    public function getLintErrors(): array
+    public function getLintErrors()
     {
-        return array_filter($this->errors, static fn (Error $error): bool => Error::TYPE_LINT === $error->getType());
+        return array_filter($this->errors, static function (Error $error) {
+            return Error::TYPE_LINT === $error->getType();
+        });
     }
 
     /**
      * Returns true if no errors were reported.
+     *
+     * @return bool
      */
-    public function isEmpty(): bool
+    public function isEmpty()
     {
-        return [] === $this->errors;
+        return empty($this->errors);
     }
 
-    public function report(Error $error): void
+    public function report(Error $error)
     {
         $this->errors[] = $error;
     }

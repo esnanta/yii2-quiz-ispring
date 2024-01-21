@@ -529,4 +529,13 @@ return array (
       '@yii/authclient' => $vendorDir . '/yiisoft/yii2-authclient/src',
     ),
   ),
+  'victor78/yii2-zipper' => 
+  array (
+    'name' => 'victor78/yii2-zipper',
+    'version' => '0.0.4.0',
+    'alias' => 
+    array (
+      '@Victor78/Zipper' => $vendorDir . '/victor78/yii2-zipper/src',
+    ),
+  ),
 );

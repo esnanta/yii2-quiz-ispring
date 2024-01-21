@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,14 +15,12 @@ namespace PhpCsFixer\Fixer\PhpUnit;
 use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\WhitespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -34,21 +30,27 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class PhpUnitNoExpectationAnnotationFixer extends AbstractPhpUnitFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class PhpUnitNoExpectationAnnotationFixer extends AbstractPhpUnitFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
     /**
      * @var bool
      */
     private $fixMessageRegExp;
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
         $this->fixMessageRegExp = PhpUnitTargetVersion::fulfills($this->configuration['target'], PhpUnitTargetVersion::VERSION_4_3);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Usages of `@expectedException*` annotations MUST be replaced by `->setExpectedException*` methods.',
@@ -105,17 +107,23 @@ final class MyTest extends \PHPUnit_Framework_TestCase
      *
      * Must run before NoEmptyPhpdocFixer, PhpUnitExpectationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 10;
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('target', 'Target version of PHPUnit.'))
@@ -130,7 +138,10 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyPhpUnitClassFix(Tokens $tokens, $startIndex, $endIndex)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
@@ -174,7 +185,6 @@ final class MyTest extends \PHPUnit_Framework_TestCase
             if (!isset($annotations['expectedException'])) {
                 continue;
             }
-
             if (!$this->fixMessageRegExp && isset($annotations['expectedExceptionMessageRegExp'])) {
                 continue;
             }
@@ -212,11 +222,14 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    private function extractContentFromAnnotation(Annotation $annotation): string
+    /**
+     * @return string
+     */
+    private function extractContentFromAnnotation(Annotation $annotation)
     {
         $tag = $annotation->getTag()->getName();
 
-        if (!Preg::match('/@'.$tag.'\s+(.+)$/s', $annotation->getContent(), $matches)) {
+        if (1 !== Preg::match('/@'.$tag.'\s+(.+)$/s', $annotation->getContent(), $matches)) {
             return '';
         }
 
@@ -229,23 +242,16 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         return rtrim($content);
     }
 
-    /**
-     * @param array<string, string> $annotations
-     *
-     * @return list<string>
-     */
-    private function annotationsToParamList(array $annotations): array
+    private function annotationsToParamList(array $annotations)
     {
         $params = [];
         $exceptionClass = ltrim($annotations['expectedException'], '\\');
-
-        if (str_contains($exceptionClass, '*')) {
+        if (false !== strpos($exceptionClass, '*')) {
             $exceptionClass = substr($exceptionClass, 0, strpos($exceptionClass, '*'));
         }
-
         $exceptionClass = trim($exceptionClass);
 
-        if (true === $this->configuration['use_class_const']) {
+        if ($this->configuration['use_class_const']) {
             $params[] = "\\{$exceptionClass}::class";
         } else {
             $params[] = "'{$exceptionClass}'";

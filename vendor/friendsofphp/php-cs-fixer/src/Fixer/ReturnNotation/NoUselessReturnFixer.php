@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,17 +15,25 @@ namespace PhpCsFixer\Fixer\ReturnNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class NoUselessReturnFixer extends AbstractFixer
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAllTokenKindsFound([T_FUNCTION, T_RETURN]);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There should not be an empty `return` statement at the end of a function.',
@@ -49,15 +55,18 @@ function example($b) {
     /**
      * {@inheritdoc}
      *
-     * Must run before BlankLineBeforeStatementFixer, NoExtraBlankLinesFixer, NoWhitespaceInBlankLineFixer, SingleLineCommentStyleFixer, SingleLineEmptyBodyFixer.
-     * Must run after NoEmptyStatementFixer, NoUnneededBracesFixer, NoUnneededCurlyBracesFixer, NoUselessElseFixer, SimplifiedNullReturnFixer.
+     * Must run before BlankLineBeforeReturnFixer, BlankLineBeforeStatementFixer, NoExtraBlankLinesFixer, NoWhitespaceInBlankLineFixer, SingleLineCommentStyleFixer.
+     * Must run after NoEmptyStatementFixer, NoUnneededCurlyBracesFixer, NoUselessElseFixer, SimplifiedNullReturnFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -18;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_FUNCTION)) {
@@ -75,7 +84,7 @@ function example($b) {
      * @param int $start Token index of the opening brace token of the function
      * @param int $end   Token index of the closing brace token of the function
      */
-    private function fixFunction(Tokens $tokens, int $start, int $end): void
+    private function fixFunction(Tokens $tokens, $start, $end)
     {
         for ($index = $end; $index > $start; --$index) {
             if (!$tokens[$index]->isGivenKind(T_RETURN)) {

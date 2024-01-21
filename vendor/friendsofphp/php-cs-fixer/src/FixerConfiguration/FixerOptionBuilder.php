@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,24 +14,33 @@ namespace PhpCsFixer\FixerConfiguration;
 
 final class FixerOptionBuilder
 {
-    private string $name;
+    /**
+     * @var string
+     */
+    private $name;
 
-    private string $description;
+    /**
+     * @var string
+     */
+    private $description;
 
     /**
      * @var mixed
      */
     private $default;
 
-    private bool $isRequired = true;
+    /**
+     * @var bool
+     */
+    private $isRequired = true;
 
     /**
-     * @var null|list<string>
+     * @var null|string[]
      */
     private $allowedTypes;
 
     /**
-     * @var null|list<null|(callable(mixed): bool)|scalar>
+     * @var null|array
      */
     private $allowedValues;
 
@@ -47,7 +54,11 @@ final class FixerOptionBuilder
      */
     private $deprecationMessage;
 
-    public function __construct(string $name, string $description)
+    /**
+     * @param string $name
+     * @param string $description
+     */
+    public function __construct($name, $description)
     {
         $this->name = $name;
         $this->description = $description;
@@ -58,7 +69,7 @@ final class FixerOptionBuilder
      *
      * @return $this
      */
-    public function setDefault($default): self
+    public function setDefault($default)
     {
         $this->default = $default;
         $this->isRequired = false;
@@ -67,11 +78,11 @@ final class FixerOptionBuilder
     }
 
     /**
-     * @param list<string> $allowedTypes
+     * @param string[] $allowedTypes
      *
      * @return $this
      */
-    public function setAllowedTypes(array $allowedTypes): self
+    public function setAllowedTypes(array $allowedTypes)
     {
         $this->allowedTypes = $allowedTypes;
 
@@ -79,11 +90,9 @@ final class FixerOptionBuilder
     }
 
     /**
-     * @param list<null|(callable(mixed): bool)|scalar> $allowedValues
-     *
      * @return $this
      */
-    public function setAllowedValues(array $allowedValues): self
+    public function setAllowedValues(array $allowedValues)
     {
         $this->allowedValues = $allowedValues;
 
@@ -93,7 +102,7 @@ final class FixerOptionBuilder
     /**
      * @return $this
      */
-    public function setNormalizer(\Closure $normalizer): self
+    public function setNormalizer(\Closure $normalizer)
     {
         $this->normalizer = $normalizer;
 
@@ -101,16 +110,21 @@ final class FixerOptionBuilder
     }
 
     /**
+     * @param null|string $deprecationMessage
+     *
      * @return $this
      */
-    public function setDeprecationMessage(?string $deprecationMessage): self
+    public function setDeprecationMessage($deprecationMessage)
     {
         $this->deprecationMessage = $deprecationMessage;
 
         return $this;
     }
 
-    public function getOption(): FixerOptionInterface
+    /**
+     * @return FixerOptionInterface
+     */
+    public function getOption()
     {
         $option = new FixerOption(
             $this->name,

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,30 +13,29 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Basic;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\DocBlock\TypeExpression;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\FileSpecificCodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 /**
  * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @author Bram Gotink <bram@gotink.me>
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  * @author Kuba Werłos <werlos@gmail.com>
  */
-final class PsrAutoloadingFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class PsrAutoloadingFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Classes must be in a path that matches their namespace, be at least one namespace deep and the class name should match the file name.',
@@ -64,42 +61,46 @@ class InvalidName {}
         );
     }
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
         if (null !== $this->configuration['dir']) {
-            $realpath = realpath($this->configuration['dir']);
-
-            if (false === $realpath) {
-                throw new \InvalidArgumentException(sprintf('Failed to resolve configured directory "%s".', $this->configuration['dir']));
-            }
-
-            $this->configuration['dir'] = $realpath;
+            $this->configuration['dir'] = realpath($this->configuration['dir']);
         }
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
     /**
      * {@inheritdoc}
-     *
-     * Must run before SelfAccessorFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -10;
     }
 
-    public function supports(\SplFileInfo $file): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function supports(\SplFileInfo $file)
     {
         if ($file instanceof StdinFileInfo) {
             return false;
@@ -109,7 +110,7 @@ class InvalidName {}
             // ignore file with extension other than php
             ('php' !== $file->getExtension())
             // ignore file with name that cannot be a class name
-            || !Preg::match('/^'.TypeExpression::REGEX_IDENTIFIER.'$/', $file->getBasename('.php'))
+            || 0 === Preg::match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $file->getBasename('.php'))
         ) {
             return false;
         }
@@ -118,19 +119,22 @@ class InvalidName {}
             $tokens = Tokens::fromCode(sprintf('<?php class %s {}', $file->getBasename('.php')));
 
             if ($tokens[3]->isKeyword() || $tokens[3]->isMagicConstant()) {
-                // name cannot be a class name - detected by PHP 5.x
+                // name can not be a class name - detected by PHP 5.x
                 return false;
             }
         } catch (\ParseError $e) {
-            // name cannot be a class name - detected by PHP 7.x
+            // name can not be a class name - detected by PHP 7.x
             return false;
         }
 
-        // ignore stubs/fixtures, since they typically contain invalid files for various reasons
+        // ignore stubs/fixtures, since they are typically containing invalid files for various reasons
         return !Preg::match('{[/\\\\](stub|fixture)s?[/\\\\]}i', $file->getRealPath());
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('dir', 'If provided, the directory where the project code is placed.'))
@@ -140,11 +144,12 @@ class InvalidName {}
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        $tokenAnalyzer = new TokensAnalyzer($tokens);
-
-        if (null !== $this->configuration['dir'] && !str_starts_with($file->getRealPath(), $this->configuration['dir'])) {
+        if (null !== $this->configuration['dir'] && 0 !== strpos($file->getRealPath(), $this->configuration['dir'])) {
             return;
         }
 
@@ -163,9 +168,10 @@ class InvalidName {}
 
                 $namespaceStartIndex = $tokens->getNextMeaningfulToken($index);
                 $namespaceEndIndex = $tokens->getNextTokenOfKind($namespaceStartIndex, [';']);
+
                 $namespace = trim($tokens->generatePartialCode($namespaceStartIndex, $namespaceEndIndex - 1));
             } elseif ($token->isClassy()) {
-                if ($tokenAnalyzer->isAnonymousClass($index)) {
+                if ($tokens[$tokens->getPrevMeaningfulToken($index)]->isGivenKind(T_NEW)) {
                     continue;
                 }
 
@@ -198,7 +204,6 @@ class InvalidName {}
 
         $configuredDir = realpath($this->configuration['dir']);
         $fileDir = \dirname($file->getRealPath());
-
         if (\strlen($configuredDir) >= \strlen($fileDir)) {
             return;
         }
@@ -218,9 +223,16 @@ class InvalidName {}
         }
     }
 
-    private function calculateClassyName(\SplFileInfo $file, ?string $namespace, string $currentName): string
+    /**
+     * @param null|string $namespace
+     * @param string      $currentName
+     *
+     * @return string
+     */
+    private function calculateClassyName(\SplFileInfo $file, $namespace, $currentName)
     {
         $name = $file->getBasename('.php');
+
         $maxNamespace = $this->calculateMaxNamespace($file, $namespace);
 
         if (null !== $this->configuration['dir']) {
@@ -231,22 +243,24 @@ class InvalidName {}
 
         foreach ($namespaceParts as $namespacePart) {
             $nameCandidate = sprintf('%s_%s', $namespacePart, $name);
-
             if (strtolower($nameCandidate) !== strtolower(substr($currentName, -\strlen($nameCandidate)))) {
                 break;
             }
-
             $name = $nameCandidate;
         }
 
         return $name;
     }
 
-    private function calculateMaxNamespace(\SplFileInfo $file, ?string $namespace): string
+    /**
+     * @param null|string $namespace
+     *
+     * @return string
+     */
+    private function calculateMaxNamespace(\SplFileInfo $file, $namespace)
     {
         if (null === $this->configuration['dir']) {
             $root = \dirname($file->getRealPath());
-
             while ($root !== \dirname($root)) {
                 $root = \dirname($root);
             }
@@ -267,11 +281,9 @@ class InvalidName {}
             if (!isset($namespaceAccordingToFileLocationPartsReversed[$key])) {
                 break;
             }
-
             if (strtolower($namespaceParte) !== strtolower($namespaceAccordingToFileLocationPartsReversed[$key])) {
                 break;
             }
-
             unset($namespaceAccordingToFileLocationPartsReversed[$key]);
         }
 

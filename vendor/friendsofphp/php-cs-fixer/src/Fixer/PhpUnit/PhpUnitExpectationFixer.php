@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,14 +13,12 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\PhpUnit;
 
 use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\WhitespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -31,14 +27,17 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class PhpUnitExpectationFixer extends AbstractPhpUnitFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class PhpUnitExpectationFixer extends AbstractPhpUnitFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
     /**
      * @var array<string, string>
      */
-    private array $methodMap = [];
+    private $methodMap = [];
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
@@ -56,7 +55,10 @@ final class PhpUnitExpectationFixer extends AbstractPhpUnitFixer implements Conf
         }
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Usages of `->setExpectedException*` methods MUST be replaced by `->expectException*` methods.',
@@ -147,17 +149,23 @@ final class MyTest extends \PHPUnit_Framework_TestCase
      *
      * Must run after PhpUnitNoExpectationAnnotationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('target', 'Target version of PHPUnit.'))
@@ -168,14 +176,22 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyPhpUnitClassFix(Tokens $tokens, $startIndex, $endIndex)
     {
         foreach (Token::getObjectOperatorKinds() as $objectOperator) {
             $this->applyPhpUnitClassFixWithObjectOperator($tokens, $startIndex, $endIndex, $objectOperator);
         }
     }
 
-    private function applyPhpUnitClassFixWithObjectOperator(Tokens $tokens, int $startIndex, int $endIndex, int $objectOperator): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     * @param int $objectOperator
+     */
+    private function applyPhpUnitClassFixWithObjectOperator(Tokens $tokens, $startIndex, $endIndex, $objectOperator)
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
@@ -192,7 +208,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                 return;
             }
 
-            [$thisIndex, , $index] = array_keys($match);
+            list($thisIndex, , $index) = array_keys($match);
 
             if (!isset($this->methodMap[$tokens[$index]->getContent()])) {
                 continue;

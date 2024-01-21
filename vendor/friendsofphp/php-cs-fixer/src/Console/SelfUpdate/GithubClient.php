@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,16 +17,19 @@ namespace PhpCsFixer\Console\SelfUpdate;
  */
 final class GithubClient implements GithubClientInterface
 {
-    public function getTags(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getTags()
     {
-        $url = 'https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/tags';
+        $url = 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/tags';
 
         $result = @file_get_contents(
             $url,
             false,
             stream_context_create([
                 'http' => [
-                    'header' => 'User-Agent: PHP-CS-Fixer/PHP-CS-Fixer',
+                    'header' => 'User-Agent: FriendsOfPHP/PHP-CS-Fixer',
                 ],
             ])
         );

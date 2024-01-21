@@ -1,7 +1,9 @@
 <?php
 
 use common\helper\LabelHelper;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
@@ -115,6 +117,7 @@ $create = Html::a(
                         <?= Yii::t('app', 'Subject');?>
                     </th>
                     <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Remark');?></th>
+                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Asset');?></th>
                     <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Url');?></th>
                 </tr>
                 </thead>
@@ -141,17 +144,37 @@ $create = Html::a(
                         </td>
                         <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
                             <?php
+
+                            
+                                echo Html::a(
+                                    'Test',
+                                    Url::base(true).$modelDetailItem->asset_url,
+                                    ['class' => LabelHelper::getButtonCssPlus()]
+                                );
+
+                            //Html::a('Create More', "https://face.com/", ['class' => 'btn btn-primary', 'role' => 'modal-remote']);
+
+
+                            //$modelDetailItem->asset_url;
+                            ?>
+                        </td>
+                        <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
+                            <?php
                                 if($modelDetailItem->asset_name==null){
-
-                                    $upload = Html::a(
-                                        '<i class="fas fa-plus"></i>',
+                                    echo Html::a(
+                                        '<i class="fas fa-upload"></i> Upload',
                                         ['schedule-detail/update','id'=>$modelDetailItem->id],
-                                        ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']
+                                        ['class' => LabelHelper::getButtonCssPlus()]
                                     );
-
-                                    echo $upload;
                                 } else {
-                                    echo $modelDetailItem->asset_url;
+                                    echo Html::a('<i class="fas fa-trash-alt"></i> Asset',
+                                        ['schedule-detail/delete-file', 'id' => $modelDetailItem->id], [
+                                        'class' => LabelHelper::getButtonCssMinus(),
+                                        'data' => [
+                                            'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                                            'method' => 'post',
+                                        ],
+                                    ]);
                                 }
                             ?>
                         </td>

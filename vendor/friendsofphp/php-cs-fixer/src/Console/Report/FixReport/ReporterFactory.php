@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,6 +13,7 @@ declare(strict_types=1);
 namespace PhpCsFixer\Console\Report\FixReport;
 
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @author Boris Gorbylev <ekho@ekho.name>
@@ -23,23 +22,24 @@ use Symfony\Component\Finder\Finder as SymfonyFinder;
  */
 final class ReporterFactory
 {
-    /** @var array<string, ReporterInterface> */
-    private array $reporters = [];
+    /** @var ReporterInterface[] */
+    private $reporters = [];
 
-    public function registerBuiltInReporters(): self
+    public function registerBuiltInReporters()
     {
-        /** @var null|list<string> $builtInReporters */
+        /** @var null|string[] $builtInReporters */
         static $builtInReporters;
 
         if (null === $builtInReporters) {
             $builtInReporters = [];
 
+            /** @var SplFileInfo $file */
             foreach (SymfonyFinder::create()->files()->name('*Reporter.php')->in(__DIR__) as $file) {
                 $relativeNamespace = $file->getRelativePath();
                 $builtInReporters[] = sprintf(
                     '%s\\%s%s',
                     __NAMESPACE__,
-                    '' !== $relativeNamespace ? $relativeNamespace.'\\' : '',
+                    $relativeNamespace ? $relativeNamespace.'\\' : '',
                     $file->getBasename('.php')
                 );
             }
@@ -55,7 +55,7 @@ final class ReporterFactory
     /**
      * @return $this
      */
-    public function registerReporter(ReporterInterface $reporter): self
+    public function registerReporter(ReporterInterface $reporter)
     {
         $format = $reporter->getFormat();
 
@@ -69,9 +69,9 @@ final class ReporterFactory
     }
 
     /**
-     * @return list<string>
+     * @return string[]
      */
-    public function getFormats(): array
+    public function getFormats()
     {
         $formats = array_keys($this->reporters);
         sort($formats);
@@ -79,7 +79,12 @@ final class ReporterFactory
         return $formats;
     }
 
-    public function getReporter(string $format): ReporterInterface
+    /**
+     * @param string $format
+     *
+     * @return ReporterInterface
+     */
+    public function getReporter($format)
     {
         if (!isset($this->reporters[$format])) {
             throw new \UnexpectedValueException(sprintf('Reporter for format "%s" is not registered.', $format));

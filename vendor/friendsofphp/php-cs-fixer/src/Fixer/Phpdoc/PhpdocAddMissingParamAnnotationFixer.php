@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,26 +15,26 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
-use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class PhpdocAddMissingParamAnnotationFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class PhpdocAddMissingParamAnnotationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHPDoc should contain `@param` for all params.',
@@ -80,20 +78,26 @@ function f9(string $foo, $bar, $baz) {}
     /**
      * {@inheritdoc}
      *
-     * Must run before NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer, PhpdocOrderFixer.
+     * Must run before NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer, PhpdocAlignFixer, PhpdocOrderFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, GeneralPhpdocTagRenameFixer, PhpdocIndentFixer, PhpdocNoAliasTagFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 10;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
@@ -111,7 +115,7 @@ function f9(string $foo, $bar, $baz) {}
             }
 
             // ignore one-line phpdocs like `/** foo */`, as there is no place to put new annotations
-            if (!str_contains($tokenContent, "\n")) {
+            if (false === strpos($tokenContent, "\n")) {
                 continue;
             }
 
@@ -129,6 +133,7 @@ function f9(string $foo, $bar, $baz) {}
                 T_PROTECTED,
                 T_PUBLIC,
                 T_STATIC,
+                T_VAR,
             ])) {
                 $index = $tokens->getNextMeaningfulToken($index);
             }
@@ -145,12 +150,12 @@ function f9(string $foo, $bar, $baz) {}
             foreach ($argumentsAnalyzer->getArguments($tokens, $openIndex, $index) as $start => $end) {
                 $argumentInfo = $this->prepareArgumentInformation($tokens, $start, $end);
 
-                if (false === $this->configuration['only_untyped'] || '' === $argumentInfo['type']) {
+                if (!$this->configuration['only_untyped'] || '' === $argumentInfo['type']) {
                     $arguments[$argumentInfo['name']] = $argumentInfo;
                 }
             }
 
-            if (0 === \count($arguments)) {
+            if (!\count($arguments)) {
                 continue;
             }
 
@@ -160,14 +165,14 @@ function f9(string $foo, $bar, $baz) {}
             foreach ($doc->getAnnotationsOfType('param') as $annotation) {
                 $pregMatched = Preg::match('/^[^$]+(\$\w+).*$/s', $annotation->getContent(), $matches);
 
-                if ($pregMatched) {
+                if (1 === $pregMatched) {
                     unset($arguments[$matches[1]]);
                 }
 
                 $lastParamLine = max($lastParamLine, $annotation->getEnd());
             }
 
-            if (0 === \count($arguments)) {
+            if (!\count($arguments)) {
                 continue;
             }
 
@@ -182,7 +187,7 @@ function f9(string $foo, $bar, $baz) {}
             foreach ($arguments as $argument) {
                 $type = $argument['type'] ?: 'mixed';
 
-                if (!str_starts_with($type, '?') && 'null' === strtolower($argument['default'])) {
+                if ('?' !== $type[0] && 'null' === strtolower($argument['default'])) {
                     $type = 'null|'.$type;
                 }
 
@@ -197,7 +202,7 @@ function f9(string $foo, $bar, $baz) {}
 
             array_splice(
                 $lines,
-                $lastParamLine > 0 ? $lastParamLine + 1 : $linesCount - 1,
+                $lastParamLine ? $lastParamLine + 1 : $linesCount - 1,
                 0,
                 $newLines
             );
@@ -206,7 +211,10 @@ function f9(string $foo, $bar, $baz) {}
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('only_untyped', 'Whether to add missing `@param` annotations for untyped parameters only.'))
@@ -217,9 +225,12 @@ function f9(string $foo, $bar, $baz) {}
     }
 
     /**
-     * @return array{default: string, name: string, type: string}
+     * @param int $start
+     * @param int $end
+     *
+     * @return array
      */
-    private function prepareArgumentInformation(Tokens $tokens, int $start, int $end): array
+    private function prepareArgumentInformation(Tokens $tokens, $start, $end)
     {
         $info = [
             'default' => '',
@@ -232,16 +243,7 @@ function f9(string $foo, $bar, $baz) {}
         for ($index = $start; $index <= $end; ++$index) {
             $token = $tokens[$index];
 
-            if (
-                $token->isComment()
-                || $token->isWhitespace()
-                || $token->isGivenKind([
-                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
-                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
-                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
-                ])
-                || (\defined('T_READONLY') && $token->isGivenKind(T_READONLY))
-            ) {
+            if ($token->isComment() || $token->isWhitespace()) {
                 continue;
             }
 
@@ -258,7 +260,7 @@ function f9(string $foo, $bar, $baz) {}
 
             if ($sawName) {
                 $info['default'] .= $token->getContent();
-            } elseif (!$token->equals('&')) {
+            } elseif ('&' !== $token->getContent()) {
                 if ($token->isGivenKind(T_ELLIPSIS)) {
                     if ('' === $info['type']) {
                         $info['type'] = 'array';

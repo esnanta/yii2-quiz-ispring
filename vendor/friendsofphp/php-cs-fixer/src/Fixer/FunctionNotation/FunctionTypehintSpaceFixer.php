@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,22 +12,22 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Fixer\FunctionNotation;
 
-use PhpCsFixer\AbstractProxyFixer;
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\Fixer\Whitespace\TypeDeclarationSpacesFixer;
+use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Analyzer\Analysis\TypeAnalysis;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
- *
- * @deprecated
  */
-final class FunctionTypehintSpaceFixer extends AbstractProxyFixer implements DeprecatedFixerInterface
+final class FunctionTypehintSpaceFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Ensure single space between function\'s argument and its typehint.',
@@ -40,21 +38,46 @@ final class FunctionTypehintSpaceFixer extends AbstractProxyFixer implements Dep
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAnyTokenKindsFound([T_FUNCTION, T_FN]);
+        if (\PHP_VERSION_ID >= 70400 && $tokens->isTokenKindFound(T_FN)) {
+            return true;
+        }
+
+        return $tokens->isTokenKindFound(T_FUNCTION);
     }
 
-    public function getSuccessorsNames(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        return array_keys($this->proxyFixers);
-    }
+        $functionsAnalyzer = new FunctionsAnalyzer();
 
-    protected function createProxyFixers(): array
-    {
-        $fixer = new TypeDeclarationSpacesFixer();
-        $fixer->configure(['elements' => ['function']]);
+        for ($index = $tokens->count() - 1; $index >= 0; --$index) {
+            $token = $tokens[$index];
 
-        return [$fixer];
+            if (
+                !$token->isGivenKind(T_FUNCTION)
+                && (\PHP_VERSION_ID < 70400 || !$token->isGivenKind(T_FN))
+            ) {
+                continue;
+            }
+
+            $arguments = $functionsAnalyzer->getFunctionArguments($tokens, $index);
+
+            foreach (array_reverse($arguments) as $argument) {
+                $type = $argument->getTypeAnalysis();
+
+                if (!$type instanceof TypeAnalysis) {
+                    continue;
+                }
+
+                $tokens->ensureWhitespaceAtIndex($type->getEndIndex() + 1, 0, ' ');
+            }
+        }
     }
 }

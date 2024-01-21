@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,28 +21,34 @@ use PhpCsFixer\RuleSet\RuleSetDescriptionInterface;
  */
 final class JsonReporter implements ReporterInterface
 {
-    public function getFormat(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormat()
     {
         return 'json';
     }
 
-    public function generate(ReportSummary $reportSummary): string
+    /**
+     * {@inheritdoc}
+     */
+    public function generate(ReportSummary $reportSummary)
     {
-        $sets = $reportSummary->getSets();
-
-        usort($sets, static fn (RuleSetDescriptionInterface $a, RuleSetDescriptionInterface $b): int => $a->getName() <=> $b->getName());
-
         $json = ['sets' => []];
 
+        $sets = $reportSummary->getSets();
+        usort($sets, function (RuleSetDescriptionInterface $a, RuleSetDescriptionInterface $b) {
+            return $a->getName() > $b->getName() ? 1 : -1;
+        });
+
         foreach ($sets as $set) {
-            $setName = $set->getName();
-            $json['sets'][$setName] = [
+            $json['sets'][$set->getName()] = [
                 'description' => $set->getDescription(),
                 'isRisky' => $set->isRisky(),
-                'name' => $setName,
+                'name' => $set->getName(),
             ];
         }
 
-        return json_encode($json, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        return json_encode($json, JSON_PRETTY_PRINT);
     }
 }

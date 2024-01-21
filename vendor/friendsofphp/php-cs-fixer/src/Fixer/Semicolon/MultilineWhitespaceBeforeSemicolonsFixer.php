@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,42 +13,43 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Semicolon;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\WhitespacesAnalyzer;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  * @author Egidijus Girčys <e.gircys@gmail.com>
  */
-final class MultilineWhitespaceBeforeSemicolonsFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class MultilineWhitespaceBeforeSemicolonsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
     /**
      * @internal
      */
-    public const STRATEGY_NO_MULTI_LINE = 'no_multi_line';
+    const STRATEGY_NO_MULTI_LINE = 'no_multi_line';
 
     /**
      * @internal
      */
-    public const STRATEGY_NEW_LINE_FOR_CHAINED_CALLS = 'new_line_for_chained_calls';
+    const STRATEGY_NEW_LINE_FOR_CHAINED_CALLS = 'new_line_for_chained_calls';
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Forbid multi-line whitespace before the closing semicolon or move the semicolon to the new line for chained calls.',
             [
                 new CodeSample(
                     '<?php
-function foo() {
+function foo () {
     return 1 + 2
         ;
 }
@@ -58,9 +57,10 @@ function foo() {
                 ),
                 new CodeSample(
                     '<?php
-$object->method1()
-    ->method2()
-    ->method(3);
+                        $this->method1()
+                            ->method2()
+                            ->method(3);
+                    ?>
 ',
                     ['strategy' => self::STRATEGY_NEW_LINE_FOR_CHAINED_CALLS]
                 ),
@@ -72,19 +72,25 @@ $object->method1()
      * {@inheritdoc}
      *
      * Must run before SpaceAfterSemicolonFixer.
-     * Must run after CombineConsecutiveIssetsFixer, GetClassToClassKeywordFixer, NoEmptyStatementFixer, SimplifiedIfReturnFixer, SingleImportPerStatementFixer.
+     * Must run after CombineConsecutiveIssetsFixer, NoEmptyStatementFixer, SingleImportPerStatementFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(';');
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder(
@@ -97,68 +103,86 @@ $object->method1()
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
+    {
+        if (self::STRATEGY_NEW_LINE_FOR_CHAINED_CALLS === $this->configuration['strategy']) {
+            $this->applyChainedCallsFix($tokens);
+
+            return;
+        }
+
+        if (self::STRATEGY_NO_MULTI_LINE === $this->configuration['strategy']) {
+            $this->applyNoMultiLineFix($tokens);
+        }
+    }
+
+    private function applyNoMultiLineFix(Tokens $tokens)
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();
 
-        for ($index = 0, $count = \count($tokens); $index < $count; ++$index) {
-            if (!$tokens[$index]->equals(';')) {
+        foreach ($tokens as $index => $token) {
+            if (!$token->equals(';')) {
                 continue;
             }
 
             $previousIndex = $index - 1;
             $previous = $tokens[$previousIndex];
+            if (!$previous->isWhitespace() || false === strpos($previous->getContent(), "\n")) {
+                continue;
+            }
 
-            $indent = $this->findWhitespaceBeforeFirstCall($index, $tokens);
-            if (self::STRATEGY_NEW_LINE_FOR_CHAINED_CALLS === $this->configuration['strategy'] && null !== $indent) {
-                if ($previous->isWhitespace() && $previous->getContent() === $lineEnding.$indent) {
-                    continue;
-                }
-
-                // unset whitespace and semicolon
-                if ($previous->isWhitespace()) {
-                    $tokens->clearAt($previousIndex);
-                }
-                $tokens->clearAt($index);
-
-                // find the line ending token index after the semicolon
-                $index = $this->getNewLineIndex($index, $tokens);
-
-                // appended new line to the last method call
-                $newline = new Token([T_WHITESPACE, $lineEnding.$indent]);
-
-                // insert the new line with indented semicolon
-                $tokens->insertAt($index++, [$newline, new Token(';')]);
+            $content = $previous->getContent();
+            if (0 === strpos($content, $lineEnding) && $tokens[$index - 2]->isComment()) {
+                $tokens->ensureWhitespaceAtIndex($previousIndex, 0, $lineEnding);
             } else {
-                if (!$previous->isWhitespace() || !str_contains($previous->getContent(), "\n")) {
-                    continue;
-                }
-
-                $content = $previous->getContent();
-                if (str_starts_with($content, $lineEnding) && $tokens[$index - 2]->isComment()) {
-                    // if there is comment between closing parenthesis and semicolon
-
-                    // unset whitespace and semicolon
-                    $tokens->clearAt($previousIndex);
-                    $tokens->clearAt($index);
-
-                    // find the significant token index before the semicolon
-                    $significantTokenIndex = $this->getPreviousSignificantTokenIndex($index, $tokens);
-
-                    // insert the semicolon
-                    $tokens->insertAt($significantTokenIndex + 1, [new Token(';')]);
-                } else {
-                    // if there is whitespace between closing bracket and semicolon, just remove it
-                    $tokens->clearAt($previousIndex);
-                }
+                $tokens->clearAt($previousIndex);
             }
         }
     }
 
+    private function applyChainedCallsFix(Tokens $tokens)
+    {
+        for ($index = \count($tokens) - 1; $index >= 0; --$index) {
+            // continue if token is not a semicolon
+            if (!$tokens[$index]->equals(';')) {
+                continue;
+            }
+
+            // get the indent of the chained call, null in case it's not a chained call
+            $indent = $this->findWhitespaceBeforeFirstCall($index - 1, $tokens);
+
+            if (null === $indent) {
+                continue;
+            }
+
+            // unset semicolon
+            $tokens->clearAt($index);
+
+            // find the line ending token index after the semicolon
+            $index = $this->getNewLineIndex($index, $tokens);
+
+            // line ending string of the last method call
+            $lineEnding = $this->whitespacesConfig->getLineEnding();
+
+            // appended new line to the last method call
+            $newline = new Token([T_WHITESPACE, $lineEnding.$indent]);
+
+            // insert the new line with indented semicolon
+            $tokens->insertAt($index, [$newline, new Token(';')]);
+        }
+    }
+
     /**
-     * Find the index for the next new line. Return the given index when there's no new line.
+     * Find the index for the new line. Return the given index when there's no new line.
+     *
+     * @param int $index
+     *
+     * @return int
      */
-    private function getNewLineIndex(int $index, Tokens $tokens): int
+    private function getNewLineIndex($index, Tokens $tokens)
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();
 
@@ -172,57 +196,109 @@ $object->method1()
     }
 
     /**
-     * Find the index for the previous significant token. Return the given index when there's no significant token.
-     */
-    private function getPreviousSignificantTokenIndex(int $index, Tokens $tokens): int
-    {
-        $stopTokens = [
-            T_LNUMBER,
-            T_DNUMBER,
-            T_STRING,
-            T_VARIABLE,
-            T_CONSTANT_ENCAPSED_STRING,
-        ];
-        for ($index; $index > 0; --$index) {
-            if ($tokens[$index]->isGivenKind($stopTokens) || $tokens[$index]->equals(')')) {
-                return $index;
-            }
-        }
-
-        return $index;
-    }
-
-    /**
-     * Checks if the semicolon closes a multiline call and returns the whitespace of the first call at $index.
+     * Checks if the semicolon closes a chained call and returns the whitespace of the first call at $index.
      * i.e. it will return the whitespace marked with '____' in the example underneath.
      *
      * ..
      * ____$this->methodCall()
      *          ->anotherCall();
      * ..
+     *
+     * @param int $index
+     *
+     * @return null|string
      */
-    private function findWhitespaceBeforeFirstCall(int $index, Tokens $tokens): ?string
+    private function findWhitespaceBeforeFirstCall($index, Tokens $tokens)
     {
-        $isMultilineCall = false;
-        $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        // semicolon followed by a closing bracket?
+        if (!$tokens[$index]->equals(')')) {
+            return null;
+        }
 
-        while (!$tokens[$prevIndex]->equalsAny([';', ':', '{', '}', [T_OPEN_TAG], [T_OPEN_TAG_WITH_ECHO], [T_ELSE]])) {
-            $index = $prevIndex;
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-
-            $blockType = Tokens::detectBlockType($tokens[$index]);
-            if (null !== $blockType && !$blockType['isStart']) {
-                $prevIndex = $tokens->findBlockStart($blockType['type'], $index);
+        // find opening bracket
+        $openingBrackets = 1;
+        for (--$index; $index > 0; --$index) {
+            if ($tokens[$index]->equals(')')) {
+                ++$openingBrackets;
 
                 continue;
             }
 
-            if ($tokens[$index]->isObjectOperator() || $tokens[$index]->isGivenKind(T_DOUBLE_COLON)) {
-                $prevIndex = $tokens->getPrevMeaningfulToken($index);
-                $isMultilineCall |= $tokens->isPartialCodeMultiline($prevIndex, $index);
+            if ($tokens[$index]->equals('(')) {
+                if (1 === $openingBrackets) {
+                    break;
+                }
+                --$openingBrackets;
             }
         }
 
-        return $isMultilineCall ? WhitespacesAnalyzer::detectIndent($tokens, $index) : null;
+        // method name
+        if (!$tokens[--$index]->isGivenKind(T_STRING)) {
+            return null;
+        }
+
+        // ->, ?-> or ::
+        if (!$tokens[--$index]->isObjectOperator() && !$tokens[$index]->isGivenKind(T_DOUBLE_COLON)) {
+            return null;
+        }
+
+        // white space
+        if (!$tokens[--$index]->isGivenKind(T_WHITESPACE)) {
+            return null;
+        }
+
+        $closingBrackets = 0;
+        for ($index; $index >= 0; --$index) {
+            if ($tokens[$index]->equals(')')) {
+                ++$closingBrackets;
+            }
+
+            if ($tokens[$index]->equals('(')) {
+                --$closingBrackets;
+            }
+
+            // must be the variable of the first call in the chain
+            if ($tokens[$index]->isGivenKind([T_VARIABLE, T_RETURN, T_STRING]) && 0 === $closingBrackets) {
+                if ($tokens[--$index]->isGivenKind(T_WHITESPACE)
+                    || $tokens[$index]->isGivenKind(T_OPEN_TAG)) {
+                    return $this->getIndentAt($tokens, $index);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return null|string
+     */
+    private function getIndentAt(Tokens $tokens, $index)
+    {
+        $content = '';
+        $lineEnding = $this->whitespacesConfig->getLineEnding();
+
+        // find line ending token
+        for ($index; $index > 0; --$index) {
+            if (false !== strstr($tokens[$index]->getContent(), $lineEnding)) {
+                break;
+            }
+        }
+
+        if ($tokens[$index]->isWhitespace()) {
+            $content = $tokens[$index]->getContent();
+            --$index;
+        }
+
+        if ($tokens[$index]->isGivenKind(T_OPEN_TAG)) {
+            $content = $tokens[$index]->getContent().$content;
+        }
+
+        if (1 === Preg::match('/\R{1}(\h*)$/', $content, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
     }
 }

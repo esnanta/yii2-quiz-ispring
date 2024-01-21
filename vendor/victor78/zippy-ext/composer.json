@@ -1,0 +1,31 @@
+{
+    "name": "victor78/zippy-ext",
+    "type": "zippy-extension",
+    "version": "0.0.4",
+    "description": "The 7-Zip integration for the Zippy.",
+    "keywords": ["zippy", "7zip", "7-zip", "archiver", "archivator", "archive", "zip"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Victor78",
+            "homepage": "http://victor78.com/"
+        }
+    ],    
+    "support": {
+        "issues": "https://github.com/victor78/ZippyExt/issues",
+        "wiki": "https://github.com/victor78/ZippyExt/wiki",
+        "source": "https://github.com/victor78/ZippyExt"
+    },
+
+    "require": {
+        "php": ">=7.0",
+        "alchemy/zippy": "~0.4.9",
+        "symfony/process": "<4"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Victor78\\ZippyExt\\": "src/"
+        }
+    }
+}

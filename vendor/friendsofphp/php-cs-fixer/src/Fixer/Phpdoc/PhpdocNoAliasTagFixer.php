@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,24 +15,26 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 use PhpCsFixer\AbstractProxyFixer;
 use PhpCsFixer\ConfigurationException\InvalidConfigurationException;
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 
 /**
- * Case-sensitive tag replace fixer (does not process inline tags like {@inheritdoc}).
+ * Case sensitive tag replace fixer (does not process inline tags like {@inheritdoc}).
  *
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  */
-final class PhpdocNoAliasTagFixer extends AbstractProxyFixer implements ConfigurableFixerInterface
+final class PhpdocNoAliasTagFixer extends AbstractProxyFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'No alias PHPDoc tags should be used.',
@@ -76,12 +76,12 @@ final class Example
      * Must run before PhpdocAddMissingParamAnnotationFixer, PhpdocAlignFixer, PhpdocSingleLineVarSpacingFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return parent::getPriority();
     }
 
-    public function configure(array $configuration): void
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
@@ -104,9 +104,12 @@ final class Example
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolverRootless('replacements', [
             (new FixerOptionBuilder('replacements', 'Mapping between replaced annotations with new ones.'))
                 ->setAllowedTypes(['array'])
                 ->setDefault([
@@ -116,10 +119,13 @@ final class Example
                     'link' => 'see',
                 ])
                 ->getOption(),
-        ]);
+        ], $this->getName());
     }
 
-    protected function createProxyFixers(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function createProxyFixers()
     {
         return [new GeneralPhpdocTagRenameFixer()];
     }

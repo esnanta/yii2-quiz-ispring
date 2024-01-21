@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,14 +14,13 @@ namespace PhpCsFixer\Fixer\Comment;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\FixerConfiguration\AliasedFixerOptionBuilder;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -31,20 +28,35 @@ use Symfony\Component\OptionsResolver\Options;
 
 /**
  * @author Antonio J. García Lagar <aj@garcialagar.es>
+ * @author SpacePossum
  */
-final class HeaderCommentFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class HeaderCommentFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
-    /**
-     * @internal
-     */
-    public const HEADER_PHPDOC = 'PHPDoc';
+    const HEADER_PHPDOC = 'PHPDoc';
+    const HEADER_COMMENT = 'comment';
+
+    /** @deprecated will be removed in 3.0 */
+    const HEADER_LOCATION_AFTER_OPEN = 1;
+
+    /** @deprecated will be removed in 3.0 */
+    const HEADER_LOCATION_AFTER_DECLARE_STRICT = 2;
+
+    /** @deprecated will be removed in 3.0 */
+    const HEADER_LINE_SEPARATION_BOTH = 1;
+
+    /** @deprecated will be removed in 3.0 */
+    const HEADER_LINE_SEPARATION_TOP = 2;
+
+    /** @deprecated will be removed in 3.0 */
+    const HEADER_LINE_SEPARATION_BOTTOM = 3;
+
+    /** @deprecated will be removed in 3.0 */
+    const HEADER_LINE_SEPARATION_NONE = 4;
 
     /**
-     * @internal
+     * {@inheritdoc}
      */
-    public const HEADER_COMMENT = 'comment';
-
-    public function getDefinition(): FixerDefinitionInterface
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Add, replace or remove header comment.',
@@ -110,18 +122,21 @@ echo 1;
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isMonolithicPhp();
+        return isset($tokens[0]) && $tokens[0]->isGivenKind(T_OPEN_TAG) && $tokens->isMonolithicPhp();
     }
 
     /**
      * {@inheritdoc}
      *
-     * Must run before BlankLinesBeforeNamespaceFixer, SingleBlankLineBeforeNamespaceFixer, SingleLineCommentStyleFixer.
+     * Must run before SingleLineCommentStyleFixer.
      * Must run after DeclareStrictTypesFixer, NoBlankLinesAfterPhpdocFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         // When this fixer is configured with ["separate" => "bottom", "comment_type" => "PHPDoc"]
         // and the target file has no namespace or declare() construct,
@@ -129,20 +144,25 @@ echo 1;
         return -30;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $location = $this->configuration['location'];
-        $locationIndices = [];
+        $locationIndexes = [];
 
         foreach (['after_open', 'after_declare_strict'] as $possibleLocation) {
             $locationIndex = $this->findHeaderCommentInsertionIndex($tokens, $possibleLocation);
 
-            if (!isset($locationIndices[$locationIndex]) || $possibleLocation === $location) {
-                $locationIndices[$locationIndex] = $possibleLocation;
+            if (!isset($locationIndexes[$locationIndex]) || $possibleLocation === $location) {
+                $locationIndexes[$locationIndex] = $possibleLocation;
+
+                continue;
             }
         }
 
-        foreach ($locationIndices as $possibleLocation) {
+        foreach (array_values($locationIndexes) as $possibleLocation) {
             // figure out where the comment should be placed
             $headerNewIndex = $this->findHeaderCommentInsertionIndex($tokens, $possibleLocation);
 
@@ -163,7 +183,7 @@ echo 1;
             $expectedLocation = $possibleLocation === $location;
 
             if (!$sameComment || !$expectedLocation) {
-                if ($expectedLocation xor $sameComment) {
+                if ($expectedLocation ^ $sameComment) {
                     $this->removeHeader($tokens, $headerCurrentIndex);
                 }
 
@@ -182,26 +202,32 @@ echo 1;
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         $fixerName = $this->getName();
 
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('header', 'Proper header content.'))
                 ->setAllowedTypes(['string'])
-                ->setNormalizer(static function (Options $options, string $value) use ($fixerName): string {
+                ->setNormalizer(static function (Options $options, $value) use ($fixerName) {
                     if ('' === trim($value)) {
                         return '';
                     }
 
-                    if (str_contains($value, '*/')) {
+                    if (false !== strpos($value, '*/')) {
                         throw new InvalidFixerConfigurationException($fixerName, 'Cannot use \'*/\' in header.');
                     }
 
                     return $value;
                 })
                 ->getOption(),
-            (new FixerOptionBuilder('comment_type', 'Comment syntax type.'))
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('comment_type', 'Comment syntax type.'),
+                'commentType'
+            ))
                 ->setAllowedValues([self::HEADER_PHPDOC, self::HEADER_COMMENT])
                 ->setDefault(self::HEADER_COMMENT)
                 ->getOption(),
@@ -218,8 +244,10 @@ echo 1;
 
     /**
      * Enclose the given text in a comment block.
+     *
+     * @return string
      */
-    private function getHeaderAsComment(): string
+    private function getHeaderAsComment()
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();
         $comment = (self::HEADER_COMMENT === $this->configuration['comment_type'] ? '/*' : '/**').$lineEnding;
@@ -232,7 +260,12 @@ echo 1;
         return $comment.' */';
     }
 
-    private function findHeaderCommentCurrentIndex(Tokens $tokens, int $headerNewIndex): ?int
+    /**
+     * @param int $headerNewIndex
+     *
+     * @return null|int
+     */
+    private function findHeaderCommentCurrentIndex(Tokens $tokens, $headerNewIndex)
     {
         $index = $tokens->getNextNonWhitespace($headerNewIndex);
 
@@ -263,69 +296,70 @@ echo 1;
 
     /**
      * Find the index where the header comment must be inserted.
+     *
+     * @param string $location
+     *
+     * @return int
      */
-    private function findHeaderCommentInsertionIndex(Tokens $tokens, string $location): int
+    private function findHeaderCommentInsertionIndex(Tokens $tokens, $location)
     {
-        $openTagIndex = $tokens[0]->isGivenKind(T_OPEN_TAG) ? 0 : $tokens->getNextTokenOfKind(0, [[T_OPEN_TAG]]);
-
-        if (null === $openTagIndex) {
+        if ('after_open' === $location) {
             return 1;
         }
 
-        if ('after_open' === $location) {
-            return $openTagIndex + 1;
-        }
-
-        $index = $tokens->getNextMeaningfulToken($openTagIndex);
+        $index = $tokens->getNextMeaningfulToken(0);
 
         if (null === $index) {
-            return $openTagIndex + 1; // file without meaningful tokens but an open tag, comment should always be placed directly after the open tag
+            return 1; // file without meaningful tokens but an open tag, comment should always be placed directly after the open tag
         }
 
         if (!$tokens[$index]->isGivenKind(T_DECLARE)) {
-            return $openTagIndex + 1;
+            return 1;
         }
 
         $next = $tokens->getNextMeaningfulToken($index);
 
         if (null === $next || !$tokens[$next]->equals('(')) {
-            return $openTagIndex + 1;
+            return 1;
         }
 
         $next = $tokens->getNextMeaningfulToken($next);
 
         if (null === $next || !$tokens[$next]->equals([T_STRING, 'strict_types'], false)) {
-            return $openTagIndex + 1;
+            return 1;
         }
 
         $next = $tokens->getNextMeaningfulToken($next);
 
         if (null === $next || !$tokens[$next]->equals('=')) {
-            return $openTagIndex + 1;
+            return 1;
         }
 
         $next = $tokens->getNextMeaningfulToken($next);
 
         if (null === $next || !$tokens[$next]->isGivenKind(T_LNUMBER)) {
-            return $openTagIndex + 1;
+            return 1;
         }
 
         $next = $tokens->getNextMeaningfulToken($next);
 
         if (null === $next || !$tokens[$next]->equals(')')) {
-            return $openTagIndex + 1;
+            return 1;
         }
 
         $next = $tokens->getNextMeaningfulToken($next);
 
         if (null === $next || !$tokens[$next]->equals(';')) { // don't insert after close tag
-            return $openTagIndex + 1;
+            return 1;
         }
 
         return $next + 1;
     }
 
-    private function fixWhiteSpaceAroundHeader(Tokens $tokens, int $headerIndex): void
+    /**
+     * @param int $headerIndex
+     */
+    private function fixWhiteSpaceAroundHeader(Tokens $tokens, $headerIndex)
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();
 
@@ -379,7 +413,13 @@ echo 1;
         }
     }
 
-    private function getLineBreakCount(Tokens $tokens, int $index, int $direction): int
+    /**
+     * @param int $index
+     * @param int $direction
+     *
+     * @return int
+     */
+    private function getLineBreakCount(Tokens $tokens, $index, $direction)
     {
         $whitespace = '';
 
@@ -404,7 +444,7 @@ echo 1;
         return substr_count($whitespace, "\n");
     }
 
-    private function removeHeader(Tokens $tokens, int $index): void
+    private function removeHeader(Tokens $tokens, $index)
     {
         $prevIndex = $index - 1;
         $prevToken = $tokens[$prevIndex];
@@ -419,22 +459,33 @@ echo 1;
 
             $content = Preg::replace('/\R?\h*$/', '', $content);
 
-            $tokens->ensureWhitespaceAtIndex($prevIndex, 0, $content);
+            if ('' === $content) {
+                $tokens->clearAt($prevIndex);
+            } else {
+                $tokens[$prevIndex] = new Token([T_WHITESPACE, $content]);
+            }
         }
 
         $nextIndex = $index + 1;
-        $nextToken = $tokens[$nextIndex] ?? null;
+        $nextToken = isset($tokens[$nextIndex]) ? $tokens[$nextIndex] : null;
 
         if (!$newlineRemoved && null !== $nextToken && $nextToken->isWhitespace()) {
             $content = Preg::replace('/^\R/', '', $nextToken->getContent());
 
-            $tokens->ensureWhitespaceAtIndex($nextIndex, 0, $content);
+            if ('' === $content) {
+                $tokens->clearAt($nextIndex);
+            } else {
+                $tokens[$nextIndex] = new Token([T_WHITESPACE, $content]);
+            }
         }
 
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }
 
-    private function insertHeader(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function insertHeader(Tokens $tokens, $index)
     {
         $tokens->insertAt($index, new Token([self::HEADER_COMMENT === $this->configuration['comment_type'] ? T_COMMENT : T_DOC_COMMENT, $this->getHeaderAsComment()]));
         $this->fixWhiteSpaceAroundHeader($tokens, $index);

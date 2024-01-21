@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,9 +19,9 @@ use PhpCsFixer\RuleSet\AbstractRuleSetDescription;
  */
 final class SymfonyRiskySet extends AbstractRuleSetDescription
 {
-    public function getRules(): array
+    public function getRules()
     {
-        return [
+        $rules = [
             '@PHP56Migration:risky' => true,
             '@PSR12:risky' => true,
             'array_push' => true,
@@ -35,15 +33,21 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
             'fopen_flags' => [
                 'b_mode' => false,
             ],
-            'function_to_constant' => true,
-            'get_class_to_class_keyword' => true,
+            'function_to_constant' => [
+                'functions' => [
+                    'get_called_class',
+                    'get_class',
+                    'get_class_this',
+                    'php_sapi_name',
+                    'phpversion',
+                    'pi',
+                ],
+            ],
             'implode_call' => true,
             'is_null' => true,
             'logical_operators' => true,
-            'long_to_shorthand_operator' => true,
-            'modernize_strpos' => true,
             'modernize_types_casting' => true,
-            'native_constant_invocation' => ['strict' => false],
+            'native_constant_invocation' => true,
             'native_function_invocation' => [
                 'include' => [
                     '@compiler_optimized',
@@ -66,13 +70,21 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
             'psr_autoloading' => true,
             'self_accessor' => true,
             'set_type_to_cast' => true,
-            'string_length_to_empty' => true,
             'string_line_ending' => true,
             'ternary_to_elvis_operator' => true,
         ];
+
+        $rules['non_printable_character'] = \PHP_VERSION_ID < 70000
+            ? true
+            : ['use_escape_sequences_in_strings' => true]
+        ;
+
+        ksort($rules);
+
+        return $rules;
     }
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_.';
     }

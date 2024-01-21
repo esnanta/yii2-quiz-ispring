@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\StringNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -26,18 +23,18 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoBinaryStringFixer extends AbstractFixer
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAnyTokenKindsFound(
-            [
-                T_CONSTANT_ENCAPSED_STRING,
-                T_START_HEREDOC,
-                'b"',
-            ]
-        );
+        return $tokens->isAnyTokenKindsFound([T_CONSTANT_ENCAPSED_STRING, T_START_HEREDOC]);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There should not be a binary flag before strings.',
@@ -50,25 +47,18 @@ final class NoBinaryStringFixer extends AbstractFixer
 
     /**
      * {@inheritdoc}
-     *
-     * Must run before NoUselessConcatOperatorFixer, PhpUnitDedicateAssertInternalTypeFixer, RegularCallableCallFixer, SetTypeToCastFixer.
      */
-    public function getPriority(): int
-    {
-        return 40;
-    }
-
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
-            if ($token->isGivenKind([T_CONSTANT_ENCAPSED_STRING, T_START_HEREDOC])) {
-                $content = $token->getContent();
+            if (!$token->isGivenKind([T_CONSTANT_ENCAPSED_STRING, T_START_HEREDOC])) {
+                continue;
+            }
 
-                if ('b' === strtolower($content[0])) {
-                    $tokens[$index] = new Token([$token->getId(), substr($content, 1)]);
-                }
-            } elseif ($token->equals('b"')) {
-                $tokens[$index] = new Token('"');
+            $content = $token->getContent();
+
+            if ('b' === strtolower($content[0])) {
+                $tokens[$index] = new Token([$token->getId(), substr($content, 1)]);
             }
         }
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,7 +19,12 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class GotoLabelAnalyzer
 {
-    public function belongsToGoToLabel(Tokens $tokens, int $index): bool
+    /**
+     * @param int $index
+     *
+     * @return bool
+     */
+    public function belongsToGoToLabel(Tokens $tokens, $index)
     {
         if (!$tokens[$index]->equals(':')) {
             return false;
@@ -35,6 +38,6 @@ final class GotoLabelAnalyzer
 
         $prevMeaningfulTokenIndex = $tokens->getPrevMeaningfulToken($prevMeaningfulTokenIndex);
 
-        return $tokens[$prevMeaningfulTokenIndex]->equalsAny([':', ';', '{', '}', [T_OPEN_TAG]]);
+        return $tokens[$prevMeaningfulTokenIndex]->equalsAny([';', '{', '}', [T_OPEN_TAG]]);
     }
 }

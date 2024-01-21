@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,41 +17,61 @@ namespace PhpCsFixer\Tokenizer\Analyzer\Analysis;
  */
 final class NamespaceUseAnalysis implements StartEndTokenAwareAnalysis
 {
-    public const TYPE_CLASS = 1; // "classy" could be class, interface or trait
-    public const TYPE_FUNCTION = 2;
-    public const TYPE_CONSTANT = 3;
+    const TYPE_CLASS = 1;
+    const TYPE_FUNCTION = 2;
+    const TYPE_CONSTANT = 3;
 
     /**
      * The fully qualified use namespace.
+     *
+     * @var string
      */
-    private string $fullName;
+    private $fullName;
 
     /**
      * The short version of use namespace or the alias name in case of aliased use statements.
+     *
+     * @var string
      */
-    private string $shortName;
+    private $shortName;
 
     /**
      * Is the use statement being aliased?
+     *
+     * @var bool
      */
-    private bool $isAliased;
+    private $isAliased;
 
     /**
      * The start index of the namespace declaration in the analyzed Tokens.
+     *
+     * @var int
      */
-    private int $startIndex;
+    private $startIndex;
 
     /**
      * The end index of the namespace declaration in the analyzed Tokens.
+     *
+     * @var int
      */
-    private int $endIndex;
+    private $endIndex;
 
     /**
      * The type of import: class, function or constant.
+     *
+     * @var int
      */
-    private int $type;
+    private $type;
 
-    public function __construct(string $fullName, string $shortName, bool $isAliased, int $startIndex, int $endIndex, int $type)
+    /**
+     * @param string $fullName
+     * @param string $shortName
+     * @param bool   $isAliased
+     * @param int    $startIndex
+     * @param int    $endIndex
+     * @param int    $type
+     */
+    public function __construct($fullName, $shortName, $isAliased, $startIndex, $endIndex, $type)
     {
         $this->fullName = $fullName;
         $this->shortName = $shortName;
@@ -63,47 +81,74 @@ final class NamespaceUseAnalysis implements StartEndTokenAwareAnalysis
         $this->type = $type;
     }
 
-    public function getFullName(): string
+    /**
+     * @return string
+     */
+    public function getFullName()
     {
         return $this->fullName;
     }
 
-    public function getShortName(): string
+    /**
+     * @return string
+     */
+    public function getShortName()
     {
         return $this->shortName;
     }
 
-    public function isAliased(): bool
+    /**
+     * @return bool
+     */
+    public function isAliased()
     {
         return $this->isAliased;
     }
 
-    public function getStartIndex(): int
+    /**
+     * @return int
+     */
+    public function getStartIndex()
     {
         return $this->startIndex;
     }
 
-    public function getEndIndex(): int
+    /**
+     * @return int
+     */
+    public function getEndIndex()
     {
         return $this->endIndex;
     }
 
-    public function getType(): int
+    /**
+     * @return int
+     */
+    public function getType()
     {
         return $this->type;
     }
 
-    public function isClass(): bool
+    /**
+     * @return bool
+     */
+    public function isClass()
     {
         return self::TYPE_CLASS === $this->type;
     }
 
-    public function isFunction(): bool
+    /**
+     * @return bool
+     */
+    public function isFunction()
     {
         return self::TYPE_FUNCTION === $this->type;
     }
 
-    public function isConstant(): bool
+    /**
+     * @return bool
+     */
+    public function isConstant()
     {
         return self::TYPE_CONSTANT === $this->type;
     }

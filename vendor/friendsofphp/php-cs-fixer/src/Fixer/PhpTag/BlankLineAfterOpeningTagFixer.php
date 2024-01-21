@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,7 +16,6 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -27,7 +24,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class BlankLineAfterOpeningTagFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Ensure there is no code on the same line as the PHP open tag and it is followed by a blank line.',
@@ -38,20 +38,26 @@ final class BlankLineAfterOpeningTagFixer extends AbstractFixer implements White
     /**
      * {@inheritdoc}
      *
-     * Must run before BlankLinesBeforeNamespaceFixer, NoBlankLinesBeforeNamespaceFixer.
+     * Must run before NoBlankLinesBeforeNamespaceFixer.
      * Must run after DeclareStrictTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_OPEN_TAG);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();
 
@@ -61,10 +67,9 @@ final class BlankLineAfterOpeningTagFixer extends AbstractFixer implements White
         }
 
         $newlineFound = false;
-
         /** @var Token $token */
         foreach ($tokens as $token) {
-            if ($token->isWhitespace() && str_contains($token->getContent(), "\n")) {
+            if ($token->isWhitespace() && false !== strpos($token->getContent(), "\n")) {
                 $newlineFound = true;
 
                 break;
@@ -78,11 +83,11 @@ final class BlankLineAfterOpeningTagFixer extends AbstractFixer implements White
 
         $token = $tokens[0];
 
-        if (!str_contains($token->getContent(), "\n")) {
+        if (false === strpos($token->getContent(), "\n")) {
             $tokens[0] = new Token([$token->getId(), rtrim($token->getContent()).$lineEnding]);
         }
 
-        if (!str_contains($tokens[1]->getContent(), "\n")) {
+        if (false === strpos($tokens[1]->getContent(), "\n")) {
             if ($tokens[1]->isWhitespace()) {
                 $tokens[1] = new Token([T_WHITESPACE, $lineEnding.$tokens[1]->getContent()]);
             } else {

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\PhpTag;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -29,7 +26,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class FullOpeningTagFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHP code must use the long `<?php` tags or short-echo `<?=` tags and not other tag variations.',
@@ -44,18 +44,27 @@ echo "Hello!";
         );
     }
 
-    public function getPriority(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
     {
         // must run before all Token-based fixers
         return 98;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $content = $tokens->generateCode();
 
@@ -78,9 +87,8 @@ echo "Hello!";
         foreach ($newTokens as $index => $token) {
             if ($token->isGivenKind(T_OPEN_TAG)) {
                 $tokenContent = $token->getContent();
-                $possibleOpenContent = substr($content, $tokensOldContentLength, 5);
 
-                if (false === $possibleOpenContent || '<?php' !== strtolower($possibleOpenContent)) { /** @phpstan-ignore-line as pre PHP 8.0 `false` might be returned by substr @TODO clean up when PHP8+ is required */
+                if ('<?php' !== strtolower(substr($content, $tokensOldContentLength, 5))) {
                     $tokenContent = '<? ';
                 }
 

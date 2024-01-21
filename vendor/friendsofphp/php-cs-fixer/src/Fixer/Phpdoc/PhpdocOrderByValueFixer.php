@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,14 +14,12 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -33,12 +29,15 @@ use Symfony\Component\OptionsResolver\Options;
  * @author Filippo Tessarotto <zoeslam@gmail.com>
  * @author Andreas Möller <am@localheinz.com>
  */
-final class PhpdocOrderByValueFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class PhpdocOrderByValueFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
-            'Order PHPDoc tags by value.',
+            'Order phpdoc tags by value.',
             [
                 new CodeSample(
                     '<?php
@@ -75,17 +74,23 @@ final class MyTest extends \PHPUnit_Framework_TestCase
      * Must run before PhpdocAlignFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpUnitFqcnAnnotationFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -10;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         if ([] === $this->configuration['annotations']) {
             return;
@@ -101,7 +106,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
                 if (
                     !$tokens[$index]->isGivenKind(T_DOC_COMMENT)
-                    || !Preg::match($findPattern, $tokens[$index]->getContent())
+                    || 0 === Preg::match($findPattern, $tokens[$index]->getContent())
                 ) {
                     continue;
                 }
@@ -113,7 +118,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
                 if (\in_array($type, ['property', 'property-read', 'property-write'], true)) {
                     $replacePattern = sprintf(
-                        '/(?s)\*\s*@%s\s+(?P<optionalTypes>.+\s+)?\$(?P<comparableContent>\S+).*/',
+                        '/(?s)\*\s*@%s\s+(?P<optionalTypes>.+\s+)?\$(?P<comparableContent>[^\s]+).*/',
                         $type
                     );
 
@@ -166,7 +171,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    protected function createConfigurationDefinition()
     {
         $allowedValues = [
             'author',
@@ -177,7 +182,6 @@ final class MyTest extends \PHPUnit_Framework_TestCase
             'group',
             'internal',
             'method',
-            'mixin',
             'property',
             'property-read',
             'property-write',
@@ -194,11 +198,11 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                 ->setAllowedValues([
                     new AllowedValueSubset($allowedValues),
                 ])
-                ->setNormalizer(static function (Options $options, array $value): array {
+                ->setNormalizer(function (Options $options, $value) {
                     $normalized = [];
 
-                    foreach ($value as $annotation) {
-                        // since we will be using "strtolower" on the input annotations when building the sorting
+                    foreach ($value as $index => $annotation) {
+                        // since we will be using strtolower on the input annotations when building the sorting
                         // map we must match the type in lower case as well
                         $normalized[$annotation] = strtolower($annotation);
                     }

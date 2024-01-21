@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,30 +14,32 @@ namespace PhpCsFixer\Fixer\FunctionNotation;
 
 use PhpCsFixer\AbstractPhpdocToTypeDeclarationFixer;
 use PhpCsFixer\DocBlock\Annotation;
-use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocToPropertyTypeFixer extends AbstractPhpdocToTypeDeclarationFixer
 {
-    private const TYPE_CHECK_TEMPLATE = '<?php class A { private %s $b; }';
-
     /**
      * @var array<string, true>
      */
-    private array $skippedTypes = [
+    private $skippedTypes = [
+        'mixed' => true,
         'resource' => true,
         'null' => true,
     ];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'EXPERIMENTAL: Takes `@var` annotation of non-mixed types and adjusts accordingly the property signature. Requires PHP >= 7.4.',
             [
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php
 class Foo {
     /** @var int */
@@ -48,8 +48,9 @@ class Foo {
     private $bar;
 }
 ',
+                    new VersionSpecification(70400)
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php
 class Foo {
     /** @var int */
@@ -58,6 +59,7 @@ class Foo {
     private $bar;
 }
 ',
+                    new VersionSpecification(70400),
                     ['scalar_types' => false]
                 ),
             ],
@@ -66,9 +68,12 @@ class Foo {
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return \PHP_VERSION_ID >= 70400 && $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
     /**
@@ -77,17 +82,20 @@ class Foo {
      * Must run before NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 7;
     }
 
-    protected function isSkippedType(string $type): bool
+    protected function isSkippedType($type)
     {
         return isset($this->skippedTypes[$type]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = $tokens->count() - 1; 0 < $index; --$index) {
             if ($tokens[$index]->isGivenKind([T_CLASS, T_TRAIT])) {
@@ -96,17 +104,10 @@ class Foo {
         }
     }
 
-    protected function createTokensFromRawType(string $type): Tokens
-    {
-        $typeTokens = Tokens::fromCode(sprintf(self::TYPE_CHECK_TEMPLATE, $type));
-        $typeTokens->clearRange(0, 8);
-        $typeTokens->clearRange(\count($typeTokens) - 5, \count($typeTokens) - 1);
-        $typeTokens->clearEmptyTokens();
-
-        return $typeTokens;
-    }
-
-    private function fixClass(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixClass(Tokens $tokens, $index)
     {
         $index = $tokens->getNextTokenOfKind($index, ['{']);
         $classEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
@@ -127,14 +128,14 @@ class Foo {
             }
 
             $docCommentIndex = $index;
-            $propertyIndices = $this->findNextUntypedPropertiesDeclaration($tokens, $docCommentIndex);
+            $propertyIndexes = $this->findNextUntypedPropertiesDeclaration($tokens, $docCommentIndex);
 
-            if ([] === $propertyIndices) {
+            if ([] === $propertyIndexes) {
                 continue;
             }
 
-            $typeInfo = $this->resolveApplicableType(
-                $propertyIndices,
+            $typeInfo = $this->resolveAppliableType(
+                $propertyIndexes,
                 $this->getAnnotationsFromDocComment('var', $tokens, $docCommentIndex)
             );
 
@@ -142,13 +143,9 @@ class Foo {
                 continue;
             }
 
-            [$propertyType, $isNullable] = $typeInfo;
+            list($propertyType, $isNullable) = $typeInfo;
 
-            if (\in_array($propertyType, ['callable', 'never', 'void'], true)) {
-                continue;
-            }
-
-            if (!$this->isValidSyntax(sprintf(self::TYPE_CHECK_TEMPLATE, $propertyType))) {
+            if (\in_array($propertyType, ['void', 'callable'], true)) {
                 continue;
             }
 
@@ -157,17 +154,19 @@ class Foo {
                 [new Token([T_WHITESPACE, ' '])]
             );
 
-            $tokens->insertAt(current($propertyIndices), $newTokens);
+            $tokens->insertAt(current($propertyIndexes), $newTokens);
 
-            $index = max($propertyIndices) + \count($newTokens) + 1;
+            $index = max($propertyIndexes) + \count($newTokens) + 1;
             $classEndIndex += \count($newTokens);
         }
     }
 
     /**
+     * @param int $index
+     *
      * @return array<string, int>
      */
-    private function findNextUntypedPropertiesDeclaration(Tokens $tokens, int $index): array
+    private function findNextUntypedPropertiesDeclaration(Tokens $tokens, $index)
     {
         do {
             $index = $tokens->getNextMeaningfulToken($index);
@@ -184,7 +183,6 @@ class Foo {
         }
 
         $properties = [];
-
         while (!$tokens[$index]->equals(';')) {
             if ($tokens[$index]->isGivenKind(T_VARIABLE)) {
                 $properties[$tokens[$index]->getContent()] = $index;
@@ -197,10 +195,10 @@ class Foo {
     }
 
     /**
-     * @param array<string, int> $propertyIndices
+     * @param array<string, int> $propertyIndexes
      * @param Annotation[]       $annotations
      */
-    private function resolveApplicableType(array $propertyIndices, array $annotations): ?array
+    private function resolveAppliableType(array $propertyIndexes, array $annotations)
     {
         $propertyTypes = [];
 
@@ -208,51 +206,33 @@ class Foo {
             $propertyName = $annotation->getVariableName();
 
             if (null === $propertyName) {
-                if (1 !== \count($propertyIndices)) {
+                if (1 !== \count($propertyIndexes)) {
                     continue;
                 }
 
-                $propertyName = array_key_first($propertyIndices);
+                $propertyName = key($propertyIndexes);
             }
 
-            if (!isset($propertyIndices[$propertyName])) {
+            if (!isset($propertyIndexes[$propertyName])) {
                 continue;
             }
 
-            $typesExpression = $annotation->getTypeExpression();
+            $typeInfo = $this->getCommonTypeFromAnnotation($annotation, false);
 
-            if (null === $typesExpression) {
-                continue;
-            }
-
-            $typeInfo = $this->getCommonTypeInfo($typesExpression, false);
-            $unionTypes = null;
-
-            if (null === $typeInfo) {
-                $unionTypes = $this->getUnionTypes($typesExpression, false);
-            }
-
-            if (null === $typeInfo && null === $unionTypes) {
-                continue;
-            }
-
-            if (null !== $unionTypes) {
-                $typeInfo = [$unionTypes, false];
-            }
-
-            if (\array_key_exists($propertyName, $propertyTypes) && $typeInfo !== $propertyTypes[$propertyName]) {
+            if (!isset($propertyTypes[$propertyName])) {
+                $propertyTypes[$propertyName] = [];
+            } elseif ($typeInfo !== $propertyTypes[$propertyName]) {
                 return null;
             }
 
             $propertyTypes[$propertyName] = $typeInfo;
         }
 
-        if (\count($propertyTypes) !== \count($propertyIndices)) {
+        if (\count($propertyTypes) !== \count($propertyIndexes)) {
             return null;
         }
 
         $type = array_shift($propertyTypes);
-
         foreach ($propertyTypes as $propertyType) {
             if ($propertyType !== $type) {
                 return null;

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,9 +13,9 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\LanguageConstruct;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,31 +25,42 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class ExplicitIndirectVariableFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Add curly braces to indirect variables to make them clear to understand. Requires PHP >= 7.0.',
             [
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     <<<'EOT'
-                        <?php
-                        echo $$foo;
-                        echo $$foo['bar'];
-                        echo $foo->$bar['baz'];
-                        echo $foo->$callback($baz);
+<?php
+echo $$foo;
+echo $$foo['bar'];
+echo $foo->$bar['baz'];
+echo $foo->$callback($baz);
 
-                        EOT
+EOT
+,
+                    new VersionSpecification(70000)
                 ),
             ]
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(T_VARIABLE);
+        return \PHP_VERSION_ID >= 70000 && $tokens->isTokenKindFound(T_VARIABLE);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = $tokens->count() - 1; $index > 1; --$index) {
             $token = $tokens[$index];

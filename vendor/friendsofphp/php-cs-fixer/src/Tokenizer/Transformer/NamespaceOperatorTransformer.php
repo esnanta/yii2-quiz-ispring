@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -28,12 +26,18 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NamespaceOperatorTransformer extends AbstractTransformer
 {
-    public function getRequiredPhpVersionId(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredPhpVersionId()
     {
-        return 5_03_00;
+        return 50300;
     }
 
-    public function process(Tokens $tokens, Token $token, int $index): void
+    /**
+     * {@inheritdoc}
+     */
+    public function process(Tokens $tokens, Token $token, $index)
     {
         if (!$token->isGivenKind(T_NAMESPACE)) {
             return;
@@ -46,7 +50,10 @@ final class NamespaceOperatorTransformer extends AbstractTransformer
         }
     }
 
-    public function getCustomTokens(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getCustomTokens()
     {
         return [CT::T_NAMESPACE_OPERATOR];
     }

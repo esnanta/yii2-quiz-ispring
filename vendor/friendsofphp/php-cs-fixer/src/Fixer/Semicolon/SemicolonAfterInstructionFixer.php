@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,13 +15,18 @@ namespace PhpCsFixer\Fixer\Semicolon;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class SemicolonAfterInstructionFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Instructions must be terminated with a semicolon.',
@@ -36,17 +39,23 @@ final class SemicolonAfterInstructionFixer extends AbstractFixer
      *
      * Must run before SimplifiedIfReturnFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 2;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_CLOSE_TAG);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = \count($tokens) - 1; $index > 1; --$index) {
             if (!$tokens[$index]->isGivenKind(T_CLOSE_TAG)) {

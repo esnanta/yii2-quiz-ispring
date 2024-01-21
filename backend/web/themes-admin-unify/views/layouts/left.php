@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\ScheduleDetail;
 use backend\models\StockOpname;
 use kartik\widgets\SideNav;
 // OR if this package is installed separately, you can use
@@ -29,6 +30,21 @@ use common\helper\CacheCloud;
             $authItemName == Yii::$app->params['userRoleOwner']){
             $officeMenuVisibility = true;
         }
+
+        $badgeHeader = '<span class="u-badge-v1 g-bg-yellow g-rounded-50x", 
+                                style="position:relative"><i class="fa fa-exclamation"></i></span>';
+
+        $scheduleDetailBadge = ScheduleDetail::find('asset_name')
+            ->where(['office_id'=>$officeId,'asset_name'=>null])
+            ->count();
+        $scheduleDetailBadgeHeader = '';
+        $scheduleDetailBadgeDetail = '';
+        if($scheduleDetailBadge > 0):
+            $scheduleDetailBadgeHeader = $badgeHeader;
+            $scheduleDetailBadgeDetail = '<span class="u-badge-v1 g-color-white g-bg-blue g-rounded-50x g-mt-5 g-mr-5", 
+                                        style="position:relative">'.$scheduleDetailBadge.'</span>';
+        endif;
+
 
         echo SideNav::widget([
             'type' => SideNav::TYPE_DEFAULT,
@@ -69,10 +85,10 @@ use common\helper\CacheCloud;
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
 
-                ['label' => Yii::t('app', 'Quizz'), 'icon' => 'clipboard-list', 'items' => [
+                ['label' => Yii::t('app', 'Quizz') .' '.$scheduleDetailBadgeHeader, 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Import Participant'), 'url' => ['/participant/select']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
-                    ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
+                    ['label' => Yii::t('app', 'Schedule') .' '.$scheduleDetailBadgeDetail, 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment/index']],
                 ]],
 

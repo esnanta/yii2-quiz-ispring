@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,9 +13,9 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\FunctionNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -28,20 +26,24 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class UseArrowFunctionsFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Anonymous functions with one-liner return statement must use arrow functions.',
             [
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     <<<'SAMPLE'
-                        <?php
-                        foo(function ($a) use ($b) {
-                            return $a + $b;
-                        });
+<?php
+foo(function ($a) use ($b) {
+    return $a + $b;
+});
 
-                        SAMPLE
+SAMPLE
                     ,
+                    new VersionSpecification(70400)
                 ),
             ],
             null,
@@ -49,27 +51,26 @@ final class UseArrowFunctionsFixer extends AbstractFixer
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAllTokenKindsFound([T_FUNCTION, T_RETURN]);
+        return \PHP_VERSION_ID >= 70400 && $tokens->isAllTokenKindsFound([T_FUNCTION, T_RETURN]);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
     /**
      * {@inheritdoc}
-     *
-     * Must run before FunctionDeclarationFixer.
      */
-    public function getPriority(): int
-    {
-        return 32;
-    }
-
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $analyzer = new TokensAnalyzer($tokens);
 
@@ -170,10 +171,16 @@ final class UseArrowFunctionsFixer extends AbstractFixer
         }
     }
 
-    private function isMultilined(Tokens $tokens, int $start, int $end): bool
+    /**
+     * @param int $start
+     * @param int $end
+     *
+     * @return bool
+     */
+    private function isMultilined(Tokens $tokens, $start, $end)
     {
         for ($i = $start; $i < $end; ++$i) {
-            if (str_contains($tokens[$i]->getContent(), "\n")) {
+            if (false !== strpos($tokens[$i]->getContent(), "\n")) {
                 return true;
             }
         }
@@ -181,20 +188,30 @@ final class UseArrowFunctionsFixer extends AbstractFixer
         return false;
     }
 
-    private function transform(Tokens $tokens, int $index, ?int $useStart, ?int $useEnd, int $braceOpen, int $return, int $semicolon, int $braceClose): void
+    /**
+     * @param int      $index
+     * @param null|int $useStart
+     * @param null|int $useEnd
+     * @param int      $braceOpen
+     * @param int      $return
+     * @param int      $semicolon
+     * @param int      $braceClose
+     */
+    private function transform(Tokens $tokens, $index, $useStart, $useEnd, $braceOpen, $return, $semicolon, $braceClose)
     {
         $tokensToInsert = [new Token([T_DOUBLE_ARROW, '=>'])];
-
         if ($tokens->getNextMeaningfulToken($return) === $semicolon) {
             $tokensToInsert[] = new Token([T_WHITESPACE, ' ']);
             $tokensToInsert[] = new Token([T_STRING, 'null']);
         }
 
         $tokens->clearRange($semicolon, $braceClose);
+
         $tokens->clearRange($braceOpen + 1, $return);
+
         $tokens->overrideRange($braceOpen, $braceOpen, $tokensToInsert);
 
-        if (null !== $useStart) {
+        if ($useStart) {
             $tokens->clearRange($useStart, $useEnd);
         }
 

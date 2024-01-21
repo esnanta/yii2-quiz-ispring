@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,22 +13,19 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\PhpUnit;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Analyzer\ClassyAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class PhpUnitNamespacedFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class PhpUnitNamespacedFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
      * @var string
@@ -49,7 +44,10 @@ final class PhpUnitNamespacedFixer extends AbstractFixer implements Configurable
      */
     private $classMap;
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         $codeSample = '<?php
 final class MyTest extends \PHPUnit_Framework_TestCase
@@ -75,17 +73,26 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_STRING);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
@@ -122,7 +129,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                 'PHPUnit_Util_XML' => 'PHPUnit\Util\Xml',
             ];
         } elseif (PhpUnitTargetVersion::fulfills($this->configuration['target'], PhpUnitTargetVersion::VERSION_5_7)) {
-            $this->originalClassRegEx = '/^PHPUnit_Framework_(TestCase|Assert|BaseTestListener|TestListener)+$/i';
+            $this->originalClassRegEx = '/^PHPUnit_Framework_TestCase|PHPUnit_Framework_Assert|PHPUnit_Framework_BaseTestListener|PHPUnit_Framework_TestListener$/i';
             $this->classMap = [];
         } else {
             $this->originalClassRegEx = '/^PHPUnit_Framework_TestCase$/i';
@@ -130,12 +137,15 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $importedOriginalClassesMap = [];
         $currIndex = 0;
 
-        while (true) {
+        while (null !== $currIndex) {
             $currIndex = $tokens->getNextTokenOfKind($currIndex, [[T_STRING]]);
 
             if (null === $currIndex) {
@@ -143,16 +153,13 @@ final class MyTest extends \PHPUnit_Framework_TestCase
             }
 
             $prevIndex = $tokens->getPrevMeaningfulToken($currIndex);
-
             if ($tokens[$prevIndex]->isGivenKind([T_CONST, T_DOUBLE_COLON])) {
                 continue;
             }
 
             $originalClass = $tokens[$currIndex]->getContent();
-            $allowedReplacementScenarios = (new ClassyAnalyzer())->isClassyInvocation($tokens, $currIndex)
-                || $this->isImport($tokens, $currIndex);
 
-            if (!$allowedReplacementScenarios || !Preg::match($this->originalClassRegEx, $originalClass)) {
+            if (1 !== Preg::match($this->originalClassRegEx, $originalClass)) {
                 ++$currIndex;
 
                 continue;
@@ -179,7 +186,10 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('target', 'Target version of PHPUnit.'))
@@ -190,38 +200,31 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    private function generateReplacement(string $originalClassName): Tokens
+    /**
+     * @param string $originalClassName
+     *
+     * @return Tokens
+     */
+    private function generateReplacement($originalClassName)
     {
         $delimiter = '_';
         $string = $originalClassName;
 
-        $map = array_change_key_case($this->classMap);
-        if (isset($map[strtolower($originalClassName)])) {
+        if (isset($this->classMap[$originalClassName])) {
             $delimiter = '\\';
-            $string = $map[strtolower($originalClassName)];
+            $string = $this->classMap[$originalClassName];
         }
 
         $parts = explode($delimiter, $string);
-        $tokensArray = [];
 
-        while ([] !== $parts) {
+        $tokensArray = [];
+        while (!empty($parts)) {
             $tokensArray[] = new Token([T_STRING, array_shift($parts)]);
-            if ([] !== $parts) {
+            if (!empty($parts)) {
                 $tokensArray[] = new Token([T_NS_SEPARATOR, '\\']);
             }
         }
 
         return Tokens::fromArray($tokensArray);
-    }
-
-    private function isImport(Tokens $tokens, int $currIndex): bool
-    {
-        $prevIndex = $tokens->getPrevMeaningfulToken($currIndex);
-
-        if ($tokens[$prevIndex]->isGivenKind([T_NS_SEPARATOR])) {
-            $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
-        }
-
-        return $tokens[$prevIndex]->isGivenKind([T_USE]);
     }
 }

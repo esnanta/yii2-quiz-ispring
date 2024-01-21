@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,6 +14,7 @@ namespace PhpCsFixer;
 
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  *
  * @internal
  */
@@ -24,7 +23,7 @@ final class WordMatcher
     /**
      * @var string[]
      */
-    private array $candidates;
+    private $candidates;
 
     /**
      * @param string[] $candidates
@@ -34,7 +33,12 @@ final class WordMatcher
         $this->candidates = $candidates;
     }
 
-    public function match(string $needle): ?string
+    /**
+     * @param string $needle
+     *
+     * @return null|string
+     */
+    public function match($needle)
     {
         $word = null;
         $distance = ceil(\strlen($needle) * 0.35);

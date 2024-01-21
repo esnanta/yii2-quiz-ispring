@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,10 +17,13 @@ namespace PhpCsFixer\FixerDefinition;
  */
 interface CodeSampleInterface
 {
-    public function getCode(): string;
+    /**
+     * @return string
+     */
+    public function getCode();
 
     /**
-     * @return null|array<string, mixed>
+     * @return null|array
      */
-    public function getConfiguration(): ?array;
+    public function getConfiguration();
 }

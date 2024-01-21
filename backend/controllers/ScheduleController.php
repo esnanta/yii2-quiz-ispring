@@ -80,7 +80,7 @@ class ScheduleController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$title=null)
     {
         if(Yii::$app->user->can('view-schedule')){
             $model = $this->findModel($id);
@@ -211,6 +211,7 @@ class ScheduleController extends Controller
             $transaction = \Yii::$app->db->beginTransaction();
             try {
                 foreach ($modelDetails as $modelDetailItem) {
+                    $modelDetailItem->deleteAsset();
                     $modelDetailItem->delete();
                 }
                 $model->delete();

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -22,38 +20,51 @@ namespace PhpCsFixer\Console\Report\FixReport;
 final class ReportSummary
 {
     /**
-     * @var array<string, array{appliedFixers: list<string>, diff: string}>
+     * @var bool
      */
-    private array $changed;
-
-    private int $filesCount;
-
-    private int $time;
-
-    private int $memory;
-
-    private bool $addAppliedFixers;
-
-    private bool $isDryRun;
-
-    private bool $isDecoratedOutput;
+    private $addAppliedFixers;
 
     /**
-     * @param array<string, array{appliedFixers: list<string>, diff: string}> $changed
-     * @param int                                                             $time    duration in milliseconds
-     * @param int                                                             $memory  memory usage in bytes
+     * @var array
+     */
+    private $changed;
+
+    /**
+     * @var bool
+     */
+    private $isDecoratedOutput;
+
+    /**
+     * @var bool
+     */
+    private $isDryRun;
+
+    /**
+     * @var int
+     */
+    private $memory;
+
+    /**
+     * @var int
+     */
+    private $time;
+
+    /**
+     * @param int  $time              duration in milliseconds
+     * @param int  $memory            memory usage in bytes
+     * @param bool $addAppliedFixers
+     * @param bool $isDryRun
+     * @param bool $isDecoratedOutput
      */
     public function __construct(
         array $changed,
-        int $filesCount,
-        int $time,
-        int $memory,
-        bool $addAppliedFixers,
-        bool $isDryRun,
-        bool $isDecoratedOutput
+        $time,
+        $memory,
+        $addAppliedFixers,
+        $isDryRun,
+        $isDecoratedOutput
     ) {
         $this->changed = $changed;
-        $this->filesCount = $filesCount;
         $this->time = $time;
         $this->memory = $memory;
         $this->addAppliedFixers = $addAppliedFixers;
@@ -61,40 +72,50 @@ final class ReportSummary
         $this->isDecoratedOutput = $isDecoratedOutput;
     }
 
-    public function isDecoratedOutput(): bool
+    /**
+     * @return bool
+     */
+    public function isDecoratedOutput()
     {
         return $this->isDecoratedOutput;
     }
 
-    public function isDryRun(): bool
+    /**
+     * @return bool
+     */
+    public function isDryRun()
     {
         return $this->isDryRun;
     }
 
     /**
-     * @return array<string, array{appliedFixers: list<string>, diff: string}>
+     * @return array
      */
-    public function getChanged(): array
+    public function getChanged()
     {
         return $this->changed;
     }
 
-    public function getMemory(): int
+    /**
+     * @return int
+     */
+    public function getMemory()
     {
         return $this->memory;
     }
 
-    public function getTime(): int
+    /**
+     * @return int
+     */
+    public function getTime()
     {
         return $this->time;
     }
 
-    public function getFilesCount(): int
-    {
-        return $this->filesCount;
-    }
-
-    public function shouldAddAppliedFixers(): bool
+    /**
+     * @return bool
+     */
+    public function shouldAddAppliedFixers()
     {
         return $this->addAppliedFixers;
     }

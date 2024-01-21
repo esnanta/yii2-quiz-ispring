@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,33 +19,48 @@ namespace PhpCsFixer\FixerDefinition;
  */
 final class FileSpecificCodeSample implements FileSpecificCodeSampleInterface
 {
-    private CodeSampleInterface $codeSample;
-
-    private \SplFileInfo $splFileInfo;
+    /**
+     * @var CodeSampleInterface
+     */
+    private $codeSample;
 
     /**
-     * @param null|array<string, mixed> $configuration
+     * @var \SplFileInfo
+     */
+    private $splFileInfo;
+
+    /**
+     * @param string $code
      */
     public function __construct(
-        string $code,
+        $code,
         \SplFileInfo $splFileInfo,
-        ?array $configuration = null
+        array $configuration = null
     ) {
         $this->codeSample = new CodeSample($code, $configuration);
         $this->splFileInfo = $splFileInfo;
     }
 
-    public function getCode(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getCode()
     {
         return $this->codeSample->getCode();
     }
 
-    public function getConfiguration(): ?array
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration()
     {
         return $this->codeSample->getConfiguration();
     }
 
-    public function getSplFileInfo(): \SplFileInfo
+    /**
+     * {@inheritdoc}
+     */
+    public function getSplFileInfo()
     {
         return $this->splFileInfo;
     }

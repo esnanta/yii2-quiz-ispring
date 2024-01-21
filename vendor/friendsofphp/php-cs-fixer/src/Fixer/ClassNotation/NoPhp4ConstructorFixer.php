@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\ClassNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
@@ -27,7 +24,10 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class NoPhp4ConstructorFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Convert PHP4-style constructors to `__construct`.',
@@ -51,22 +51,31 @@ class Foo
      *
      * Must run before OrderedClassElementsFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 75;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_CLASS);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
         $classes = array_keys($tokens->findGivenKind(T_CLASS));
@@ -75,14 +84,13 @@ class Foo
         for ($i = 0; $i < $numClasses; ++$i) {
             $index = $classes[$i];
 
-            // is it an anonymous class definition?
+            // is it an an anonymous class definition?
             if ($tokensAnalyzer->isAnonymousClass($index)) {
                 continue;
             }
 
             // is it inside a namespace?
             $nspIndex = $tokens->getPrevTokenOfKind($index, [[T_NAMESPACE, 'namespace']]);
-
             if (null !== $nspIndex) {
                 $nspIndex = $tokens->getNextMeaningfulToken($nspIndex);
 
@@ -98,7 +106,6 @@ class Foo
 
                     // the index points to the { of a block-namespace
                     $nspEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $nspIndex);
-
                     if ($index < $nspEnd) {
                         // the class is inside a block namespace, skip other classes that might be in it
                         for ($j = $i + 1; $j < $numClasses; ++$j) {
@@ -106,7 +113,6 @@ class Foo
                                 ++$i;
                             }
                         }
-
                         // and continue checking the classes that might follow
                         continue;
                     }
@@ -131,16 +137,18 @@ class Foo
      * @param int    $classStart the class start index
      * @param int    $classEnd   the class end index
      */
-    private function fixConstructor(Tokens $tokens, string $className, int $classStart, int $classEnd): void
+    private function fixConstructor(Tokens $tokens, $className, $classStart, $classEnd)
     {
         $php4 = $this->findFunction($tokens, $className, $classStart, $classEnd);
 
         if (null === $php4) {
-            return; // no PHP4-constructor!
+            // no PHP4-constructor!
+            return;
         }
 
-        if (isset($php4['modifiers'][T_ABSTRACT]) || isset($php4['modifiers'][T_STATIC])) {
-            return; // PHP4 constructor can't be abstract or static
+        if (!empty($php4['modifiers'][T_ABSTRACT]) || !empty($php4['modifiers'][T_STATIC])) {
+            // PHP4 constructor can't be abstract or static
+            return;
         }
 
         $php5 = $this->findFunction($tokens, '__construct', $classStart, $classEnd);
@@ -156,8 +164,7 @@ class Foo
         }
 
         // does the PHP4-constructor only call $this->__construct($args, ...)?
-        [$sequences, $case] = $this->getWrapperMethodSequence($tokens, '__construct', $php4['startIndex'], $php4['bodyIndex']);
-
+        list($sequences, $case) = $this->getWrapperMethodSequence($tokens, '__construct', $php4['startIndex'], $php4['bodyIndex']);
         foreach ($sequences as $seq) {
             if (null !== $tokens->findSequence($seq, $php4['bodyIndex'] - 1, $php4['endIndex'], $case)) {
                 // good, delete it!
@@ -170,15 +177,13 @@ class Foo
         }
 
         // does __construct only call the PHP4-constructor (with the same args)?
-        [$sequences, $case] = $this->getWrapperMethodSequence($tokens, $className, $php4['startIndex'], $php4['bodyIndex']);
-
+        list($sequences, $case) = $this->getWrapperMethodSequence($tokens, $className, $php4['startIndex'], $php4['bodyIndex']);
         foreach ($sequences as $seq) {
             if (null !== $tokens->findSequence($seq, $php5['bodyIndex'] - 1, $php5['endIndex'], $case)) {
                 // that was a weird choice, but we can safely delete it and...
                 for ($i = $php5['startIndex']; $i <= $php5['endIndex']; ++$i) {
                     $tokens->clearAt($i);
                 }
-
                 // rename the PHP4 one to __construct
                 $tokens[$php4['nameIndex']] = new Token([T_STRING, '__construct']);
 
@@ -194,7 +199,7 @@ class Foo
      * @param int    $classStart the class start index
      * @param int    $classEnd   the class end index
      */
-    private function fixParent(Tokens $tokens, int $classStart, int $classEnd): void
+    private function fixParent(Tokens $tokens, $classStart, $classEnd)
     {
         // check calls to the parent constructor
         foreach ($tokens->findGivenKind(T_EXTENDS) as $index => $token) {
@@ -210,7 +215,7 @@ class Foo
             ], $classStart, $classEnd, [2 => false]);
 
             if (null !== $parentSeq) {
-                // we only need indices
+                // we only need indexes
                 $parentSeq = array_keys($parentSeq);
 
                 // match either of the possibilities
@@ -231,7 +236,7 @@ class Foo
                 ], $classStart, $classEnd, [2 => false]);
 
                 if (null !== $parentSeq) {
-                    // we only need indices
+                    // we only need indexes
                     $parentSeq = array_keys($parentSeq);
 
                     // replace call with parent::__construct()
@@ -257,7 +262,7 @@ class Foo
      * @param int    $start  the PHP4 constructor body start
      * @param int    $end    the PHP4 constructor body end
      */
-    private function fixInfiniteRecursion(Tokens $tokens, int $start, int $end): void
+    private function fixInfiniteRecursion(Tokens $tokens, $start, $end)
     {
         foreach (Token::getObjectOperatorKinds() as $objectOperatorKind) {
             $seq = [
@@ -292,7 +297,7 @@ class Foo
      *
      * @return array an array containing the sequence and case sensitiveness [ 0 => $seq, 1 => $case ]
      */
-    private function getWrapperMethodSequence(Tokens $tokens, string $method, int $startIndex, int $bodyIndex): array
+    private function getWrapperMethodSequence(Tokens $tokens, $method, $startIndex, $bodyIndex)
     {
         $sequences = [];
 
@@ -308,7 +313,6 @@ class Foo
 
             // parse method parameters, if any
             $index = $startIndex;
-
             while (true) {
                 // find the next variable name
                 $index = $tokens->getNextTokenOfKind($index, [[T_VARIABLE]]);
@@ -335,33 +339,27 @@ class Foo
             $sequences[] = $seq;
         }
 
-        return [$sequences, [3 => false]];
+        return [$sequences,  [3 => false]];
     }
 
     /**
      * Find a function or method matching a given name within certain bounds.
-     *
-     * Returns:
-     * - nameIndex (int): The index of the function/method name.
-     * - startIndex (int): The index of the function/method start.
-     * - endIndex (int): The index of the function/method end.
-     * - bodyIndex (int): The index of the function/method body.
-     * - modifiers (array): The modifiers as array keys and their index as the values, e.g. array(T_PUBLIC => 10)
      *
      * @param Tokens $tokens     the Tokens instance
      * @param string $name       the function/Method name
      * @param int    $startIndex the search start index
      * @param int    $endIndex   the search end index
      *
-     * @return null|array{
-     *     nameIndex: int,
-     *     startIndex: int,
-     *     endIndex: int,
-     *     bodyIndex: int,
-     *     modifiers: list<int>,
-     * }
+     * @return null|array An associative array, if a match is found:
+     *
+     *     - nameIndex (int): The index of the function/method name.
+     *     - startIndex (int): The index of the function/method start.
+     *     - endIndex (int): The index of the function/method end.
+     *     - bodyIndex (int): The index of the function/method body.
+     *     - modifiers (array): The modifiers as array keys and their index as
+     *       the values, e.g. array(T_PUBLIC => 10)
      */
-    private function findFunction(Tokens $tokens, string $name, int $startIndex, int $endIndex): ?array
+    private function findFunction(Tokens $tokens, $name, $startIndex, $endIndex)
     {
         $function = $tokens->findSequence([
             [T_FUNCTION],
@@ -373,7 +371,7 @@ class Foo
             return null;
         }
 
-        // keep only the indices
+        // keep only the indexes
         $function = array_keys($function);
 
         // find previous block, saving method modifiers for later use
@@ -381,7 +379,6 @@ class Foo
         $modifiers = [];
 
         $prevBlock = $tokens->getPrevMeaningfulToken($function[0]);
-
         while (null !== $prevBlock && $tokens[$prevBlock]->isGivenKind($possibleModifiers)) {
             $modifiers[$tokens[$prevBlock]->getId()] = $prevBlock;
             $prevBlock = $tokens->getPrevMeaningfulToken($prevBlock);

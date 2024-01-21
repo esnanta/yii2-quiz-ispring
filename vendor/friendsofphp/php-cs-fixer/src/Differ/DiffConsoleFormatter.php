@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -24,35 +22,56 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  */
 final class DiffConsoleFormatter
 {
-    private bool $isDecoratedOutput;
+    /**
+     * @var bool
+     */
+    private $isDecoratedOutput;
 
-    private string $template;
+    /**
+     * @var string
+     */
+    private $template;
 
-    public function __construct(bool $isDecoratedOutput, string $template = '%s')
+    /**
+     * @param bool   $isDecoratedOutput
+     * @param string $template
+     */
+    public function __construct($isDecoratedOutput, $template = '%s')
     {
         $this->isDecoratedOutput = $isDecoratedOutput;
         $this->template = $template;
     }
 
-    public function format(string $diff, string $lineTemplate = '%s'): string
+    /**
+     * @param string $diff
+     * @param string $lineTemplate
+     *
+     * @return string
+     */
+    public function format($diff, $lineTemplate = '%s')
     {
         $isDecorated = $this->isDecoratedOutput;
 
         $template = $isDecorated
             ? $this->template
-            : Preg::replace('/<[^<>]+>/', '', $this->template);
+            : Preg::replace('/<[^<>]+>/', '', $this->template)
+        ;
 
         return sprintf(
             $template,
             implode(
                 PHP_EOL,
                 array_map(
-                    static function (string $line) use ($isDecorated, $lineTemplate): string {
+                    static function ($line) use ($isDecorated, $lineTemplate) {
                         if ($isDecorated) {
                             $count = 0;
                             $line = Preg::replaceCallback(
-                                '/^([+\-@].*)/',
-                                static function (array $matches): string {
+                                [
+                                    '/^(\+.*)/',
+                                    '/^(\-.*)/',
+                                    '/^(@.*)/',
+                                ],
+                                static function ($matches) {
                                     if ('+' === $matches[0][0]) {
                                         $colour = 'green';
                                     } elseif ('-' === $matches[0][0]) {

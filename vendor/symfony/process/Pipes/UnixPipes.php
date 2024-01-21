@@ -26,23 +26,13 @@ class UnixPipes extends AbstractPipes
     private $ptyMode;
     private $haveReadSupport;
 
-    public function __construct(?bool $ttyMode, bool $ptyMode, $input, bool $haveReadSupport)
+    public function __construct($ttyMode, $ptyMode, $input, $haveReadSupport)
     {
-        $this->ttyMode = $ttyMode;
-        $this->ptyMode = $ptyMode;
-        $this->haveReadSupport = $haveReadSupport;
+        $this->ttyMode = (bool) $ttyMode;
+        $this->ptyMode = (bool) $ptyMode;
+        $this->haveReadSupport = (bool) $haveReadSupport;
 
         parent::__construct($input);
-    }
-
-    public function __sleep(): array
-    {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
-    }
-
-    public function __wakeup()
-    {
-        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
     }
 
     public function __destruct()
@@ -53,7 +43,7 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function getDescriptors(): array
+    public function getDescriptors()
     {
         if (!$this->haveReadSupport) {
             $nullstream = fopen('/dev/null', 'c');
@@ -91,7 +81,7 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function getFiles(): array
+    public function getFiles()
     {
         return [];
     }
@@ -99,7 +89,7 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function readAndWrite(bool $blocking, bool $close = false): array
+    public function readAndWrite($blocking, $close = false)
     {
         $this->unblock();
         $w = $this->write();
@@ -148,7 +138,7 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function haveReadSupport(): bool
+    public function haveReadSupport()
     {
         return $this->haveReadSupport;
     }
@@ -156,7 +146,7 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function areOpen(): bool
+    public function areOpen()
     {
         return (bool) $this->pipes;
     }

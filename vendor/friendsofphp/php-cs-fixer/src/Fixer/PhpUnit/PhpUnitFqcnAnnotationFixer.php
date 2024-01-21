@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\PhpUnit;
 use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,7 +24,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class PhpUnitFqcnAnnotationFixer extends AbstractPhpUnitFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHPUnit annotations should be a FQCNs including a root namespace.',
@@ -55,12 +55,15 @@ final class MyTest extends \PHPUnit_Framework_TestCase
      *
      * Must run before NoUnusedImportsFixer, PhpdocOrderByValueFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -9;
     }
 
-    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyPhpUnitClassFix(Tokens $tokens, $startIndex, $endIndex)
     {
         $prevDocCommentIndex = $tokens->getPrevTokenOfKind($startIndex, [[T_DOC_COMMENT]]);
 
@@ -71,7 +74,11 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         $this->fixPhpUnitClass($tokens, $startIndex, $endIndex);
     }
 
-    private function fixPhpUnitClass(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @param int $startIndex
+     * @param int $endIndex
+     */
+    private function fixPhpUnitClass(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($index = $startIndex; $index < $endIndex; ++$index) {
             if ($tokens[$index]->isGivenKind(T_DOC_COMMENT)) {

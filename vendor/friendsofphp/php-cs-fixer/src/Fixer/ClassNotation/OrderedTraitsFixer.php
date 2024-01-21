@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,57 +13,48 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ClassNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class OrderedTraitsFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Trait `use` statements must be sorted alphabetically.',
             [
                 new CodeSample("<?php class Foo { \nuse Z; use A; }\n"),
-                new CodeSample(
-                    "<?php class Foo { \nuse Aaa; use AA; }\n",
-                    [
-                        'case_sensitive' => true,
-                    ]
-                ),
             ],
             null,
             'Risky when depending on order of the imports.'
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(CT::T_USE_TRAIT);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
-    {
-        return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('case_sensitive', 'Whether the sorting should be case sensitive.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(false)
-                ->getOption(),
-        ]);
-    }
-
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($this->findUseStatementsGroups($tokens) as $uses) {
             $this->sortUseStatements($tokens, $uses);
@@ -75,7 +64,7 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
     /**
      * @return iterable<array<int, Tokens>>
      */
-    private function findUseStatementsGroups(Tokens $tokens): iterable
+    private function findUseStatementsGroups(Tokens $tokens)
     {
         $uses = [];
 
@@ -96,7 +85,6 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
                 continue;
             }
 
-            $startIndex = $tokens->getNextNonWhitespace($tokens->getPrevMeaningfulToken($index));
             $endIndex = $tokens->getNextTokenOfKind($index, [';', '{']);
 
             if ($tokens[$endIndex]->equals('{')) {
@@ -105,11 +93,11 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
 
             $use = [];
 
-            for ($i = $startIndex; $i <= $endIndex; ++$i) {
+            for ($i = $index; $i <= $endIndex; ++$i) {
                 $use[] = $tokens[$i];
             }
 
-            $uses[$startIndex] = Tokens::fromArray($use);
+            $uses[$index] = Tokens::fromArray($use);
 
             $index = $endIndex;
         }
@@ -118,7 +106,7 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
     /**
      * @param array<int, Tokens> $uses
      */
-    private function sortUseStatements(Tokens $tokens, array $uses): void
+    private function sortUseStatements(Tokens $tokens, array $uses)
     {
         foreach ($uses as $use) {
             $this->sortMultipleTraitsInStatement($use);
@@ -127,7 +115,7 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
         $this->sort($tokens, $uses);
     }
 
-    private function sortMultipleTraitsInStatement(Tokens $use): void
+    private function sortMultipleTraitsInStatement(Tokens $use)
     {
         $traits = [];
         $indexOfName = null;
@@ -164,9 +152,12 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
     /**
      * @param array<int, Tokens> $elements
      */
-    private function sort(Tokens $tokens, array $elements): void
+    private function sort(Tokens $tokens, array $elements)
     {
-        $toTraitName = static function (Tokens $use): string {
+        /**
+         * @return string
+         */
+        $toTraitName = static function (Tokens $use) {
             $string = '';
 
             foreach ($use as $token) {
@@ -183,19 +174,14 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
         };
 
         $sortedElements = $elements;
-        uasort(
-            $sortedElements,
-            fn (Tokens $useA, Tokens $useB): int => true === $this->configuration['case_sensitive']
-                ? $toTraitName($useA) <=> $toTraitName($useB)
-                : strcasecmp($toTraitName($useA), $toTraitName($useB))
-        );
+        uasort($sortedElements, static function (Tokens $useA, Tokens $useB) use ($toTraitName) {
+            return strcasecmp($toTraitName($useA), $toTraitName($useB));
+        });
 
         $sortedElements = array_combine(
             array_keys($elements),
             array_values($sortedElements)
         );
-
-        $beforeOverrideCount = $tokens->count();
 
         foreach (array_reverse($sortedElements, true) as $index => $tokensToInsert) {
             $tokens->overrideRange(
@@ -203,10 +189,6 @@ final class OrderedTraitsFixer extends AbstractFixer implements ConfigurableFixe
                 $index + \count($elements[$index]) - 1,
                 $tokensToInsert
             );
-        }
-
-        if ($beforeOverrideCount < $tokens->count()) {
-            $tokens->clearEmptyTokens();
         }
     }
 }

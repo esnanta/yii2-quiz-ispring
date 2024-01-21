@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,6 +12,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Tokenizer;
 
+use PhpCsFixer\Utils;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -29,9 +28,9 @@ final class Transformers
     /**
      * The registered transformers.
      *
-     * @var list<TransformerInterface>
+     * @var TransformerInterface[]
      */
-    private array $items = [];
+    private $items = [];
 
     /**
      * Register built in Transformers.
@@ -40,10 +39,15 @@ final class Transformers
     {
         $this->registerBuiltInTransformers();
 
-        usort($this->items, static fn (TransformerInterface $a, TransformerInterface $b): int => $b->getPriority() <=> $a->getPriority());
+        usort($this->items, static function (TransformerInterface $a, TransformerInterface $b) {
+            return Utils::cmpInt($b->getPriority(), $a->getPriority()); // TODO: update to use spaceship operator (PHP 7.0 required)
+        });
     }
 
-    public static function createSingleton(): self
+    /**
+     * @return Transformers
+     */
+    public static function createSingleton()
     {
         static $instance = null;
 
@@ -59,7 +63,7 @@ final class Transformers
      *
      * @param Tokens $tokens Tokens collection
      */
-    public function transform(Tokens $tokens): void
+    public function transform(Tokens $tokens)
     {
         foreach ($this->items as $transformer) {
             foreach ($tokens as $index => $token) {
@@ -71,14 +75,14 @@ final class Transformers
     /**
      * @param TransformerInterface $transformer Transformer
      */
-    private function registerTransformer(TransformerInterface $transformer): void
+    private function registerTransformer(TransformerInterface $transformer)
     {
         if (\PHP_VERSION_ID >= $transformer->getRequiredPhpVersionId()) {
             $this->items[] = $transformer;
         }
     }
 
-    private function registerBuiltInTransformers(): void
+    private function registerBuiltInTransformers()
     {
         static $registered = false;
 
@@ -94,14 +98,14 @@ final class Transformers
     }
 
     /**
-     * @return \Generator<TransformerInterface>
+     * @return \Generator|TransformerInterface[]
      */
-    private function findBuiltInTransformers(): iterable
+    private function findBuiltInTransformers()
     {
         /** @var SplFileInfo $file */
         foreach (Finder::create()->files()->in(__DIR__.'/Transformer') as $file) {
             $relativeNamespace = $file->getRelativePath();
-            $class = __NAMESPACE__.'\\Transformer\\'.('' !== $relativeNamespace ? $relativeNamespace.'\\' : '').$file->getBasename('.php');
+            $class = __NAMESPACE__.'\\Transformer\\'.($relativeNamespace ? $relativeNamespace.'\\' : '').$file->getBasename('.php');
 
             yield new $class();
         }

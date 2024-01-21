@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,19 +12,17 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\RuleSet\Sets;
 
-use PhpCsFixer\RuleSet\AbstractMigrationSetDescription;
+use PhpCsFixer\RuleSet\AbstractRuleSetDescription;
 
 /**
  * @internal
  */
-final class PHP80MigrationRiskySet extends AbstractMigrationSetDescription
+final class PHP80MigrationRiskySet extends AbstractRuleSetDescription
 {
-    public function getRules(): array
+    public function getRules()
     {
         return [
             '@PHP74Migration:risky' => true,
-            'get_class_to_class_keyword' => true,
-            'modernize_strpos' => true,
             'no_alias_functions' => [
                 'sets' => [
                     '@all',
@@ -36,5 +32,10 @@ final class PHP80MigrationRiskySet extends AbstractMigrationSetDescription
             'no_unneeded_final_method' => true, // final private method (not constructor) are no longer allowed >= PHP8.0
             'no_unreachable_default_argument_value' => true,
         ];
+    }
+
+    public function getDescription()
+    {
+        return 'Rules to improve code for PHP 8.0 compatibility.';
     }
 }

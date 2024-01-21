@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,7 +16,6 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -30,7 +27,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class BlankLineAfterNamespaceFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There MUST be one blank line after the namespace declaration.',
@@ -46,17 +46,23 @@ final class BlankLineAfterNamespaceFixer extends AbstractFixer implements Whites
      *
      * Must run after NoUnusedImportsFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -20;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_NAMESPACE);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $lastIndex = $tokens->count() - 1;
 
@@ -85,7 +91,12 @@ final class BlankLineAfterNamespaceFixer extends AbstractFixer implements Whites
         }
     }
 
-    private function getIndexToEnsureBlankLineAfter(Tokens $tokens, int $index): int
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    private function getIndexToEnsureBlankLineAfter(Tokens $tokens, $index)
     {
         $indexToEnsureBlankLine = $index;
         $nextIndex = $tokens->getNonEmptySibling($indexToEnsureBlankLine, 1);
@@ -94,7 +105,7 @@ final class BlankLineAfterNamespaceFixer extends AbstractFixer implements Whites
             $token = $tokens[$nextIndex];
 
             if ($token->isWhitespace()) {
-                if (Preg::match('/\R/', $token->getContent())) {
+                if (1 === Preg::match('/\R/', $token->getContent())) {
                     break;
                 }
                 $nextNextIndex = $tokens->getNonEmptySibling($nextIndex, 1);
@@ -115,12 +126,18 @@ final class BlankLineAfterNamespaceFixer extends AbstractFixer implements Whites
         return $indexToEnsureBlankLine;
     }
 
-    private function getTokenToInsert(string $currentContent, bool $isLastIndex): Token
+    /**
+     * @param string $currentContent
+     * @param bool   $isLastIndex
+     *
+     * @return Token
+     */
+    private function getTokenToInsert($currentContent, $isLastIndex)
     {
         $ending = $this->whitespacesConfig->getLineEnding();
 
         $emptyLines = $isLastIndex ? $ending : $ending.$ending;
-        $indent = Preg::match('/^.*\R( *)$/s', $currentContent, $matches) ? $matches[1] : '';
+        $indent = 1 === Preg::match('/^.*\R( *)$/s', $currentContent, $matches) ? $matches[1] : '';
 
         return new Token([T_WHITESPACE, $emptyLines.$indent]);
     }

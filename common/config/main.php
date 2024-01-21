@@ -88,6 +88,13 @@ return [
                 'path'     => '/',
             ],
         ],
+
+        //https://github.com/victor78/yii2-zipper
+        'zipper' => [
+            'class' => 'Victor78\Zipper\Zipper', //required
+            'type' => 'zip', //or 'zip' (default), 'tar', 'tar.gz', 'tar.bz2'
+            //'password' => 'password12345', //optional, only for 7zip type
+        ],
     ],
 
     'modules' => [

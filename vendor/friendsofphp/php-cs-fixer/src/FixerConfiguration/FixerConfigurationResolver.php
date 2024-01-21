@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -21,37 +19,41 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class FixerConfigurationResolver implements FixerConfigurationResolverInterface
 {
     /**
-     * @var list<FixerOptionInterface>
+     * @var FixerOptionInterface[]
      */
-    private array $options = [];
+    private $options = [];
 
     /**
-     * @var list<string>
+     * @var string[]
      */
-    private array $registeredNames = [];
+    private $registeredNames = [];
 
     /**
      * @param iterable<FixerOptionInterface> $options
      */
-    public function __construct(iterable $options)
+    public function __construct($options)
     {
-        $fixerOptionSorter = new FixerOptionSorter();
-
-        foreach ($fixerOptionSorter->sort($options) as $option) {
+        foreach ($options as $option) {
             $this->addOption($option);
         }
 
-        if (0 === \count($this->registeredNames)) {
+        if (empty($this->registeredNames)) {
             throw new \LogicException('Options cannot be empty.');
         }
     }
 
-    public function getOptions(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
     {
         return $this->options;
     }
 
-    public function resolve(array $configuration): array
+    /**
+     * {@inheritdoc}
+     */
+    public function resolve(array $options)
     {
         $resolver = new OptionsResolver();
 
@@ -61,8 +63,8 @@ final class FixerConfigurationResolver implements FixerConfigurationResolverInte
             if ($option instanceof AliasedFixerOption) {
                 $alias = $option->getAlias();
 
-                if (\array_key_exists($alias, $configuration)) {
-                    if (\array_key_exists($name, $configuration)) {
+                if (\array_key_exists($alias, $options)) {
+                    if (\array_key_exists($name, $options)) {
                         throw new InvalidOptionsException(sprintf('Aliased option "%s"/"%s" is passed multiple times.', $name, $alias));
                     }
 
@@ -72,8 +74,8 @@ final class FixerConfigurationResolver implements FixerConfigurationResolverInte
                         $name
                     )));
 
-                    $configuration[$name] = $configuration[$alias];
-                    unset($configuration[$alias]);
+                    $options[$name] = $options[$alias];
+                    unset($options[$alias]);
                 }
             }
 
@@ -87,7 +89,9 @@ final class FixerConfigurationResolver implements FixerConfigurationResolverInte
             if (null !== $allowedValues) {
                 foreach ($allowedValues as &$allowedValue) {
                     if (\is_object($allowedValue) && \is_callable($allowedValue)) {
-                        $allowedValue = static fn (/* mixed */ $values) => $allowedValue($values);
+                        $allowedValue = static function ($values) use ($allowedValue) {
+                            return $allowedValue($values);
+                        };
                     }
                 }
 
@@ -105,13 +109,15 @@ final class FixerConfigurationResolver implements FixerConfigurationResolverInte
             }
         }
 
-        return $resolver->resolve($configuration);
+        return $resolver->resolve($options);
     }
 
     /**
      * @throws \LogicException when the option is already defined
+     *
+     * @return $this
      */
-    private function addOption(FixerOptionInterface $option): void
+    private function addOption(FixerOptionInterface $option)
     {
         $name = $option->getName();
 
@@ -121,5 +127,7 @@ final class FixerConfigurationResolver implements FixerConfigurationResolverInte
 
         $this->options[] = $option;
         $this->registeredNames[] = $name;
+
+        return $this;
     }
 }

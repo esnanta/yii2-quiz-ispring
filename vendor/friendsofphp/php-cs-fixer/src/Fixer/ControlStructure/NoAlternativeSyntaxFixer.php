@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,22 +13,20 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ControlStructure;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @author Eddilbert Macharia <edd.cowan@gmail.com>
  */
-final class NoAlternativeSyntaxFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class NoAlternativeSyntaxFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Replace control structure alternative syntax to use braces.',
@@ -39,39 +35,40 @@ final class NoAlternativeSyntaxFixer extends AbstractFixer implements Configurab
                     "<?php\nif(true):echo 't';else:echo 'f';endif;\n"
                 ),
                 new CodeSample(
-                    "<?php if (\$condition): ?>\nLorem ipsum.\n<?php endif; ?>\n",
-                    ['fix_non_monolithic_code' => true]
+                    "<?php\nwhile(true):echo 'red';endwhile;\n"
+                ),
+                new CodeSample(
+                    "<?php\nfor(;;):echo 'xc';endfor;\n"
+                ),
+                new CodeSample(
+                    "<?php\nforeach(array('a') as \$item):echo 'xc';endforeach;\n"
                 ),
             ]
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->hasAlternativeSyntax() && (true === $this->configuration['fix_non_monolithic_code'] || $tokens->isMonolithicPhp());
+        return $tokens->hasAlternativeSyntax();
     }
 
     /**
      * {@inheritdoc}
      *
-     * Must run before BracesFixer, ElseifFixer, NoSuperfluousElseifFixer, NoUnneededControlParenthesesFixer, NoUselessElseFixer, SwitchContinueToBreakFixer.
+     * Must run before BracesFixer, ElseifFixer, NoSuperfluousElseifFixer, NoUselessElseFixer, SwitchContinueToBreakFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 42;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
-    {
-        return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('fix_non_monolithic_code', 'Whether to also fix code with inline HTML.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(true) // @TODO change to "false" on next major 4.0
-                ->getOption(),
-        ]);
-    }
-
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = \count($tokens) - 1; 0 <= $index; --$index) {
             $token = $tokens[$index];
@@ -81,14 +78,17 @@ final class NoAlternativeSyntaxFixer extends AbstractFixer implements Configurab
         }
     }
 
-    private function findParenthesisEnd(Tokens $tokens, int $structureTokenIndex): int
+    private function findParenthesisEnd(Tokens $tokens, $structureTokenIndex)
     {
         $nextIndex = $tokens->getNextMeaningfulToken($structureTokenIndex);
         $nextToken = $tokens[$nextIndex];
 
-        return $nextToken->equals('(')
-            ? $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex)
-            : $structureTokenIndex; // return if next token is not opening parenthesis
+        // return if next token is not opening parenthesis
+        if (!$nextToken->equals('(')) {
+            return $structureTokenIndex;
+        }
+
+        return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
     }
 
     /**
@@ -99,7 +99,7 @@ final class NoAlternativeSyntaxFixer extends AbstractFixer implements Configurab
      * @param Token  $token  the token being processed
      * @param Tokens $tokens the collection of tokens
      */
-    private function fixOpenCloseControls(int $index, Token $token, Tokens $tokens): void
+    private function fixOpenCloseControls($index, Token $token, Tokens $tokens)
     {
         if ($token->isGivenKind([T_IF, T_FOREACH, T_WHILE, T_FOR, T_SWITCH, T_DECLARE])) {
             $openIndex = $tokens->getNextTokenOfKind($index, ['(']);
@@ -147,7 +147,7 @@ final class NoAlternativeSyntaxFixer extends AbstractFixer implements Configurab
      * @param Token  $token  the token being processed
      * @param Tokens $tokens the collection of tokens
      */
-    private function fixElse(int $index, Token $token, Tokens $tokens): void
+    private function fixElse($index, Token $token, Tokens $tokens)
     {
         if (!$token->isGivenKind(T_ELSE)) {
             return;
@@ -170,7 +170,7 @@ final class NoAlternativeSyntaxFixer extends AbstractFixer implements Configurab
      * @param Token  $token  the token being processed
      * @param Tokens $tokens the collection of tokens
      */
-    private function fixElseif(int $index, Token $token, Tokens $tokens): void
+    private function fixElseif($index, Token $token, Tokens $tokens)
     {
         if (!$token->isGivenKind(T_ELSEIF)) {
             return;
@@ -195,7 +195,7 @@ final class NoAlternativeSyntaxFixer extends AbstractFixer implements Configurab
      * @param int    $index      the current token index
      * @param int    $colonIndex the index of the colon
      */
-    private function addBraces(Tokens $tokens, Token $token, int $index, int $colonIndex): void
+    private function addBraces(Tokens $tokens, Token $token, $index, $colonIndex)
     {
         $items = [
             new Token('}'),

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,9 +21,15 @@ use Composer\Semver\VersionParser;
  */
 final class NewVersionChecker implements NewVersionCheckerInterface
 {
-    private GithubClientInterface $githubClient;
+    /**
+     * @var GithubClientInterface
+     */
+    private $githubClient;
 
-    private VersionParser $versionParser;
+    /**
+     * @var VersionParser
+     */
+    private $versionParser;
 
     /**
      * @var null|string[]
@@ -38,14 +42,20 @@ final class NewVersionChecker implements NewVersionCheckerInterface
         $this->versionParser = new VersionParser();
     }
 
-    public function getLatestVersion(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getLatestVersion()
     {
         $this->retrieveAvailableVersions();
 
         return $this->availableVersions[0];
     }
 
-    public function getLatestVersionOfMajor(int $majorVersion): ?string
+    /**
+     * {@inheritdoc}
+     */
+    public function getLatestVersionOfMajor($majorVersion)
     {
         $this->retrieveAvailableVersions();
 
@@ -60,7 +70,10 @@ final class NewVersionChecker implements NewVersionCheckerInterface
         return null;
     }
 
-    public function compareVersions(string $versionA, string $versionB): int
+    /**
+     * {@inheritdoc}
+     */
+    public function compareVersions($versionA, $versionB)
     {
         $versionA = $this->versionParser->normalize($versionA);
         $versionB = $this->versionParser->normalize($versionB);
@@ -76,7 +89,7 @@ final class NewVersionChecker implements NewVersionCheckerInterface
         return 0;
     }
 
-    private function retrieveAvailableVersions(): void
+    private function retrieveAvailableVersions()
     {
         if (null !== $this->availableVersions) {
             return;

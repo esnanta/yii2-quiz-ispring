@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,38 +21,50 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  */
 final class JsonReporter implements ReporterInterface
 {
-    public function getFormat(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormat()
     {
         return 'json';
     }
 
-    public function generate(ReportSummary $reportSummary): string
+    /**
+     * {@inheritdoc}
+     */
+    public function generate(ReportSummary $reportSummary)
     {
-        $jsonFiles = [];
+        $jFiles = [];
 
         foreach ($reportSummary->getChanged() as $file => $fixResult) {
-            $jsonFile = ['name' => $file];
+            $jfile = ['name' => $file];
 
             if ($reportSummary->shouldAddAppliedFixers()) {
-                $jsonFile['appliedFixers'] = $fixResult['appliedFixers'];
+                $jfile['appliedFixers'] = $fixResult['appliedFixers'];
             }
 
-            if ('' !== $fixResult['diff']) {
-                $jsonFile['diff'] = $fixResult['diff'];
+            if (!empty($fixResult['diff'])) {
+                $jfile['diff'] = $fixResult['diff'];
             }
 
-            $jsonFiles[] = $jsonFile;
+            $jFiles[] = $jfile;
         }
 
         $json = [
-            'files' => $jsonFiles,
-            'time' => [
-                'total' => round($reportSummary->getTime() / 1000, 3),
-            ],
-            'memory' => round($reportSummary->getMemory() / 1024 / 1024, 3),
+            'files' => $jFiles,
         ];
 
-        $json = json_encode($json, JSON_THROW_ON_ERROR);
+        if (null !== $reportSummary->getTime()) {
+            $json['time'] = [
+                'total' => round($reportSummary->getTime() / 1000, 3),
+            ];
+        }
+
+        if (null !== $reportSummary->getMemory()) {
+            $json['memory'] = round($reportSummary->getMemory() / 1024 / 1024, 3);
+        }
+
+        $json = json_encode($json);
 
         return $reportSummary->isDecoratedOutput() ? OutputFormatter::escape($json) : $json;
     }

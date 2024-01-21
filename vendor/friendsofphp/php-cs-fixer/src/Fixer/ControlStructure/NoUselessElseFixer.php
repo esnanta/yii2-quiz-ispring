@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,17 +15,25 @@ namespace PhpCsFixer\Fixer\ControlStructure;
 use PhpCsFixer\AbstractNoUselessElseFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class NoUselessElseFixer extends AbstractNoUselessElseFixer
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_ELSE);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There should not be useless `else` cases.',
@@ -40,15 +46,18 @@ final class NoUselessElseFixer extends AbstractNoUselessElseFixer
     /**
      * {@inheritdoc}
      *
-     * Must run before BlankLineBeforeStatementFixer, BracesFixer, CombineConsecutiveUnsetsFixer, NoBreakCommentFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUselessReturnFixer, NoWhitespaceInBlankLineFixer, SimplifiedIfReturnFixer, StatementIndentationFixer.
-     * Must run after NoAlternativeSyntaxFixer, NoEmptyStatementFixer, NoUnneededBracesFixer, NoUnneededCurlyBracesFixer.
+     * Must run before BracesFixer, CombineConsecutiveUnsetsFixer, NoBreakCommentFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUselessReturnFixer, NoWhitespaceInBlankLineFixer, SimplifiedIfReturnFixer.
+     * Must run after NoAlternativeSyntaxFixer, NoEmptyStatementFixer, NoUnneededCurlyBracesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return parent::getPriority();
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_ELSE)) {
@@ -78,7 +87,7 @@ final class NoUselessElseFixer extends AbstractNoUselessElseFixer
      *
      * @param int $index T_ELSE index
      */
-    private function fixEmptyElse(Tokens $tokens, int $index): void
+    private function fixEmptyElse(Tokens $tokens, $index)
     {
         $next = $tokens->getNextMeaningfulToken($index);
 
@@ -103,7 +112,7 @@ final class NoUselessElseFixer extends AbstractNoUselessElseFixer
     /**
      * @param int $index index of T_ELSE
      */
-    private function clearElse(Tokens $tokens, int $index): void
+    private function clearElse(Tokens $tokens, $index)
     {
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
 

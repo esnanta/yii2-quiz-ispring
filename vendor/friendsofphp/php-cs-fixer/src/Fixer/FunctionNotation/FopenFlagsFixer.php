@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,19 +13,23 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\FunctionNotation;
 
 use PhpCsFixer\AbstractFopenFlagFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class FopenFlagsFixer extends AbstractFopenFlagFixer implements ConfigurableFixerInterface
+/**
+ * @author SpacePossum
+ */
+final class FopenFlagsFixer extends AbstractFopenFlagFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'The flags in `fopen` calls must omit `t`, and `b` must be omitted or included consistently.',
@@ -40,7 +42,10 @@ final class FopenFlagsFixer extends AbstractFopenFlagFixer implements Configurab
         );
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('b_mode', 'The `b` flag must be used (`true`) or omitted (`false`).'))
@@ -50,7 +55,11 @@ final class FopenFlagsFixer extends AbstractFopenFlagFixer implements Configurab
         ]);
     }
 
-    protected function fixFopenFlagToken(Tokens $tokens, int $argumentStartIndex, int $argumentEndIndex): void
+    /**
+     * @param int $argumentStartIndex
+     * @param int $argumentEndIndex
+     */
+    protected function fixFopenFlagToken(Tokens $tokens, $argumentStartIndex, $argumentEndIndex)
     {
         $argumentFlagIndex = null;
 
@@ -88,9 +97,8 @@ final class FopenFlagsFixer extends AbstractFopenFlagFixer implements Configurab
         }
 
         $mode = str_replace('t', '', $mode);
-
-        if (true === $this->configuration['b_mode']) {
-            if (!str_contains($mode, 'b')) {
+        if ($this->configuration['b_mode']) {
+            if (false === strpos($mode, 'b')) {
                 $mode .= 'b';
             }
         } else {

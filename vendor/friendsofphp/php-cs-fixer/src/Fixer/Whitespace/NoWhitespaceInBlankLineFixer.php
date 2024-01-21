@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,8 +16,8 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -27,7 +25,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoWhitespaceInBlankLineFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Remove trailing whitespace at the end of blank lines.',
@@ -38,19 +39,25 @@ final class NoWhitespaceInBlankLineFixer extends AbstractFixer implements Whites
     /**
      * {@inheritdoc}
      *
-     * Must run after AssignNullCoalescingToCoalesceEqualFixer, CombineConsecutiveIssetsFixer, CombineConsecutiveUnsetsFixer, FunctionToConstantFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoEmptyStatementFixer, NoUselessElseFixer, NoUselessReturnFixer, YieldFromArrayToYieldsFixer.
+     * Must run after CombineConsecutiveIssetsFixer, CombineConsecutiveUnsetsFixer, FunctionToConstantFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoEmptyStatementFixer, NoUselessElseFixer, NoUselessReturnFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return -99;
+        return -19;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         // skip first as it cannot be a white space token
         for ($i = 1, $count = \count($tokens); $i < $count; ++$i) {
@@ -60,7 +67,10 @@ final class NoWhitespaceInBlankLineFixer extends AbstractFixer implements Whites
         }
     }
 
-    private function fixWhitespaceToken(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixWhitespaceToken(Tokens $tokens, $index)
     {
         $content = $tokens[$index]->getContent();
         $lines = Preg::split("/(\r\n|\n)/", $content);
@@ -83,7 +93,11 @@ final class NoWhitespaceInBlankLineFixer extends AbstractFixer implements Whites
                 $lines[$l] = Preg::replace('/^\h+$/', '', $lines[$l]);
             }
             $content = implode($this->whitespacesConfig->getLineEnding(), $lines);
-            $tokens->ensureWhitespaceAtIndex($index, 0, $content);
+            if ('' !== $content) {
+                $tokens[$index] = new Token([T_WHITESPACE, $content]);
+            } else {
+                $tokens->clearAt($index);
+            }
         }
     }
 }

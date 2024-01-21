@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Operator;
 use PhpCsFixer\Fixer\AbstractIncrementOperatorFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,7 +24,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class StandardizeIncrementFixer extends AbstractIncrementOperatorFixer
 {
-    private const EXPRESSION_END_TOKENS = [
+    /**
+     * @internal
+     */
+    const EXPRESSION_END_TOKENS = [
         ';',
         ')',
         ']',
@@ -38,7 +38,10 @@ final class StandardizeIncrementFixer extends AbstractIncrementOperatorFixer
         [T_CLOSE_TAG],
     ];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Increment and decrement operators should be used if possible.',
@@ -53,19 +56,24 @@ final class StandardizeIncrementFixer extends AbstractIncrementOperatorFixer
      * {@inheritdoc}
      *
      * Must run before IncrementStyleFixer.
-     * Must run after LongToShorthandOperatorFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 16;
+        return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound([T_PLUS_EQUAL, T_MINUS_EQUAL]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = $tokens->count() - 1; $index > 0; --$index) {
             $expressionEnd = $tokens[$index];
@@ -102,8 +110,11 @@ final class StandardizeIncrementFixer extends AbstractIncrementOperatorFixer
 
     /**
      * Clear tokens in the given range unless they are comments.
+     *
+     * @param int $indexStart
+     * @param int $indexEnd
      */
-    private function clearRangeLeaveComments(Tokens $tokens, int $indexStart, int $indexEnd): void
+    private function clearRangeLeaveComments(Tokens $tokens, $indexStart, $indexEnd)
     {
         for ($i = $indexStart; $i <= $indexEnd; ++$i) {
             $token = $tokens[$i];

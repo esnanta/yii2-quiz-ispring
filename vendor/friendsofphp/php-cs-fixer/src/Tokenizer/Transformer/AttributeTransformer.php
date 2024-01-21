@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -26,18 +24,27 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class AttributeTransformer extends AbstractTransformer
 {
-    public function getPriority(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
     {
         // must run before all other transformers that might touch attributes
         return 200;
     }
 
-    public function getRequiredPhpVersionId(): int
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredPhpVersionId()
     {
-        return 8_00_00;
+        return 80000;
     }
 
-    public function process(Tokens $tokens, Token $token, int $index): void
+    /**
+     * {@inheritdoc}
+     */
+    public function process(Tokens $tokens, Token $token, $index)
     {
         if (!$tokens[$index]->isGivenKind(T_ATTRIBUTE)) {
             return;
@@ -58,7 +65,10 @@ final class AttributeTransformer extends AbstractTransformer
         $tokens[$index] = new Token([CT::T_ATTRIBUTE_CLOSE, ']']);
     }
 
-    public function getCustomTokens(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getCustomTokens()
     {
         return [
             CT::T_ATTRIBUTE_CLOSE,

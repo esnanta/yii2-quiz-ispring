@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -16,52 +14,85 @@ namespace PhpCsFixer\FixerConfiguration;
 
 final class DeprecatedFixerOption implements DeprecatedFixerOptionInterface
 {
-    private FixerOptionInterface $option;
+    /**
+     * @var FixerOptionInterface
+     */
+    private $option;
 
-    private string $deprecationMessage;
+    /**
+     * @var string
+     */
+    private $deprecationMessage;
 
-    public function __construct(FixerOptionInterface $option, string $deprecationMessage)
+    /**
+     * @param string $deprecationMessage
+     */
+    public function __construct(FixerOptionInterface $option, $deprecationMessage)
     {
         $this->option = $option;
         $this->deprecationMessage = $deprecationMessage;
     }
 
-    public function getName(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
     {
         return $this->option->getName();
     }
 
-    public function getDescription(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription()
     {
         return $this->option->getDescription();
     }
 
-    public function hasDefault(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function hasDefault()
     {
         return $this->option->hasDefault();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefault()
     {
         return $this->option->getDefault();
     }
 
-    public function getAllowedTypes(): ?array
+    /**
+     * {@inheritdoc}
+     */
+    public function getAllowedTypes()
     {
         return $this->option->getAllowedTypes();
     }
 
-    public function getAllowedValues(): ?array
+    /**
+     * {@inheritdoc}
+     */
+    public function getAllowedValues()
     {
         return $this->option->getAllowedValues();
     }
 
-    public function getNormalizer(): ?\Closure
+    /**
+     * {@inheritdoc}
+     */
+    public function getNormalizer()
     {
         return $this->option->getNormalizer();
     }
 
-    public function getDeprecationMessage(): string
+    /**
+     * @return string
+     */
+    public function getDeprecationMessage()
     {
         return $this->deprecationMessage;
     }

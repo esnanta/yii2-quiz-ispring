@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,38 +15,60 @@ namespace PhpCsFixer\Fixer\FunctionNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
+/**
+ * @author SpacePossum
+ */
 final class StaticLambdaFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
-            'Lambdas not (indirectly) referencing `$this` must be declared `static`.',
+            'Lambdas not (indirect) referencing `$this` must be declared `static`.',
             [new CodeSample("<?php\n\$a = function () use (\$b)\n{   echo \$b;\n};\n")],
             null,
             'Risky when using `->bindTo` on lambdas without referencing to `$this`.'
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAnyTokenKindsFound([T_FUNCTION, T_FN]);
+        if (\PHP_VERSION_ID >= 70400 && $tokens->isTokenKindFound(T_FN)) {
+            return true;
+        }
+
+        return $tokens->isTokenKindFound(T_FUNCTION);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $analyzer = new TokensAnalyzer($tokens);
-        $expectedFunctionKinds = [T_FUNCTION, T_FN];
+        $expectedFunctionKinds = [T_FUNCTION];
+
+        if (\PHP_VERSION_ID >= 70400) {
+            $expectedFunctionKinds[] = T_FN;
+        }
 
         for ($index = $tokens->count() - 4; $index > 0; --$index) {
             if (!$tokens[$index]->isGivenKind($expectedFunctionKinds) || !$analyzer->isLambda($index)) {
@@ -71,7 +91,7 @@ final class StaticLambdaFixer extends AbstractFixer
                 $lambdaEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $lambdaOpenIndex);
             } else { // T_FN
                 $lambdaOpenIndex = $tokens->getNextTokenOfKind($argumentsEndIndex, [[T_DOUBLE_ARROW]]);
-                $lambdaEndIndex = $analyzer->getLastTokenIndexOfArrowFunction($index);
+                $lambdaEndIndex = $this->findExpressionEnd($tokens, $lambdaOpenIndex);
             }
 
             if ($this->hasPossibleReferenceToThis($tokens, $lambdaOpenIndex, $lambdaEndIndex)) {
@@ -92,11 +112,47 @@ final class StaticLambdaFixer extends AbstractFixer
     }
 
     /**
-     * Returns 'true' if there is a possible reference to '$this' within the given tokens index range.
+     * @param int $index
+     *
+     * @return int
      */
-    private function hasPossibleReferenceToThis(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private function findExpressionEnd(Tokens $tokens, $index)
     {
-        for ($i = $startIndex; $i <= $endIndex; ++$i) {
+        $nextIndex = $tokens->getNextMeaningfulToken($index);
+
+        while (null !== $nextIndex) {
+            /** @var Token $nextToken */
+            $nextToken = $tokens[$nextIndex];
+
+            if ($nextToken->equalsAny([',', ';', [T_CLOSE_TAG]])) {
+                break;
+            }
+
+            /** @var null|array{isStart: bool, type: int} $blockType */
+            $blockType = Tokens::detectBlockType($nextToken);
+
+            if (null !== $blockType && $blockType['isStart']) {
+                $nextIndex = $tokens->findBlockEnd($blockType['type'], $nextIndex);
+            }
+
+            $index = $nextIndex;
+            $nextIndex = $tokens->getNextMeaningfulToken($index);
+        }
+
+        return $index;
+    }
+
+    /**
+     * Returns 'true' if there is a possible reference to '$this' within the given tokens index range.
+     *
+     * @param int $startIndex
+     * @param int $endIndex
+     *
+     * @return bool
+     */
+    private function hasPossibleReferenceToThis(Tokens $tokens, $startIndex, $endIndex)
+    {
+        for ($i = $startIndex; $i < $endIndex; ++$i) {
             if ($tokens[$i]->isGivenKind(T_VARIABLE) && '$this' === strtolower($tokens[$i]->getContent())) {
                 return true; // directly accessing '$this'
             }

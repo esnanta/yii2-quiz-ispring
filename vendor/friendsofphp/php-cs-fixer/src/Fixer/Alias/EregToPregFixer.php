@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,12 +15,12 @@ namespace PhpCsFixer\Fixer\Alias;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\PregException;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Utils;
 
 /**
  * @author Matteo Beccati <matteo@beccati.com>
@@ -30,10 +28,10 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class EregToPregFixer extends AbstractFixer
 {
     /**
-     * @var list<array<int, string>> the list of the ext/ereg function names, their preg equivalent and the preg modifier(s), if any
-     *                               all condensed in an array of arrays
+     * @var array the list of the ext/ereg function names, their preg equivalent and the preg modifier(s), if any
+     *            all condensed in an array of arrays
      */
-    private static array $functions = [
+    private static $functions = [
         ['ereg', 'preg_match', ''],
         ['eregi', 'preg_match', 'i'],
         ['ereg_replace', 'preg_replace', ''],
@@ -43,11 +41,14 @@ final class EregToPregFixer extends AbstractFixer
     ];
 
     /**
-     * @var list<string> the list of preg delimiters, in order of preference
+     * @var array the list of preg delimiters, in order of preference
      */
-    private static array $delimiters = ['/', '#', '!'];
+    private static $delimiters = ['/', '#', '!'];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Replace deprecated `ereg` regular expression functions with `preg`.',
@@ -59,25 +60,24 @@ final class EregToPregFixer extends AbstractFixer
 
     /**
      * {@inheritdoc}
-     *
-     * Must run after NoUselessConcatOperatorFixer.
      */
-    public function getPriority(): int
-    {
-        return 0;
-    }
-
-    public function isCandidate(Tokens $tokens): bool
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_STRING);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $end = $tokens->count() - 1;
         $functionsAnalyzer = new FunctionsAnalyzer();
@@ -85,9 +85,9 @@ final class EregToPregFixer extends AbstractFixer
         foreach (self::$functions as $map) {
             // the sequence is the function name, followed by "(" and a quoted string
             $seq = [[T_STRING, $map[0]], '(', [T_CONSTANT_ENCAPSED_STRING]];
-            $currIndex = 0;
 
-            while (true) {
+            $currIndex = 0;
+            while (null !== $currIndex) {
                 $match = $tokens->findSequence($seq, $currIndex, $end, false);
 
                 // did we find a match?
@@ -95,9 +95,9 @@ final class EregToPregFixer extends AbstractFixer
                     break;
                 }
 
-                // findSequence also returns the tokens, but we're only interested in the indices, i.e.:
+                // findSequence also returns the tokens, but we're only interested in the indexes, i.e.:
                 // 0 => function name,
-                // 1 => parenthesis "("
+                // 1 => bracket "("
                 // 2 => quoted string passed as 1st parameter
                 $match = array_keys($match);
 
@@ -110,24 +110,14 @@ final class EregToPregFixer extends AbstractFixer
 
                 // ensure the first parameter is just a string (e.g. has nothing appended)
                 $next = $tokens->getNextMeaningfulToken($match[2]);
-
                 if (null === $next || !$tokens[$next]->equalsAny([',', ')'])) {
                     continue;
                 }
 
                 // convert to PCRE
                 $regexTokenContent = $tokens[$match[2]]->getContent();
-
-                if ('b' === $regexTokenContent[0] || 'B' === $regexTokenContent[0]) {
-                    $quote = $regexTokenContent[1];
-                    $prefix = $regexTokenContent[0];
-                    $string = substr($regexTokenContent, 2, -1);
-                } else {
-                    $quote = $regexTokenContent[0];
-                    $prefix = '';
-                    $string = substr($regexTokenContent, 1, -1);
-                }
-
+                $string = substr($regexTokenContent, 1, -1);
+                $quote = $regexTokenContent[0];
                 $delim = $this->getBestDelimiter($string);
                 $preg = $delim.addcslashes($string, $delim).$delim.'D'.$map[2];
 
@@ -138,7 +128,7 @@ final class EregToPregFixer extends AbstractFixer
 
                 // modify function and argument
                 $tokens[$match[0]] = new Token([T_STRING, $map[1]]);
-                $tokens[$match[2]] = new Token([T_CONSTANT_ENCAPSED_STRING, $prefix.$quote.$preg.$quote]);
+                $tokens[$match[2]] = new Token([T_CONSTANT_ENCAPSED_STRING, $quote.$preg.$quote]);
             }
         }
     }
@@ -147,8 +137,10 @@ final class EregToPregFixer extends AbstractFixer
      * Check the validity of a PCRE.
      *
      * @param string $pattern the regular expression
+     *
+     * @return bool
      */
-    private function checkPreg(string $pattern): bool
+    private function checkPreg($pattern)
     {
         try {
             Preg::match($pattern, '');
@@ -166,28 +158,27 @@ final class EregToPregFixer extends AbstractFixer
      *
      * @return string the preg delimiter
      */
-    private function getBestDelimiter(string $pattern): string
+    private function getBestDelimiter($pattern)
     {
-        // try to find something that's not used
+        // try do find something that's not used
         $delimiters = [];
-
         foreach (self::$delimiters as $k => $d) {
-            if (!str_contains($pattern, $d)) {
+            if (false === strpos($pattern, $d)) {
                 return $d;
             }
 
             $delimiters[$d] = [substr_count($pattern, $d), $k];
         }
 
-        // return the least used delimiter, using the position in the list as a tiebreaker
-        uasort($delimiters, static function (array $a, array $b): int {
+        // return the least used delimiter, using the position in the list as a tie breaker
+        uasort($delimiters, static function (array $a, array $b) {
             if ($a[0] === $b[0]) {
-                return $a[1] <=> $b[1];
+                return Utils::cmpInt($a[1], $b[1]);
             }
 
-            return $a[0] <=> $b[0];
+            return $a[0] < $b[0] ? -1 : 1;
         });
 
-        return array_key_first($delimiters);
+        return key($delimiters);
     }
 }

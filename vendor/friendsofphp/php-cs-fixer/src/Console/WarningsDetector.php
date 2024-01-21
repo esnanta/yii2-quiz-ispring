@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -24,28 +22,30 @@ use PhpCsFixer\ToolInfoInterface;
  */
 final class WarningsDetector
 {
-    private ToolInfoInterface $toolInfo;
+    /**
+     * @var ToolInfoInterface
+     */
+    private $toolInfo;
 
     /**
      * @var string[]
      */
-    private array $warnings = [];
+    private $warnings = [];
 
     public function __construct(ToolInfoInterface $toolInfo)
     {
         $this->toolInfo = $toolInfo;
     }
 
-    public function detectOldMajor(): void
+    public function detectOldMajor()
     {
-        // @TODO 3.99 to be activated with new MAJOR release 4.0
-        // $currentMajorVersion = \intval(explode('.', Application::VERSION)[0], 10);
-        // $nextMajorVersion = $currentMajorVersion + 1;
-        // $this->warnings[] = "You are running PHP CS Fixer v{$currentMajorVersion}, which is not maintained anymore. Please update to v{$nextMajorVersion}.";
-        // $this->warnings[] = "You may find an UPGRADE guide at https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/v{$nextMajorVersion}.0.0/UPGRADE-v{$nextMajorVersion}.md .";
+        $currentMajorVersion = \intval(explode('.', Application::VERSION)[0], 10);
+        $nextMajorVersion = $currentMajorVersion + 1;
+        $this->warnings[] = "You are running PHP CS Fixer v{$currentMajorVersion}, which is not maintained anymore. Please update to v{$nextMajorVersion}.";
+        $this->warnings[] = "You may find an UPGRADE guide at https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/v{$nextMajorVersion}.3.0/UPGRADE-v{$nextMajorVersion}.md .";
     }
 
-    public function detectOldVendor(): void
+    public function detectOldVendor()
     {
         if ($this->toolInfo->isInstalledByComposer()) {
             $details = $this->toolInfo->getComposerInstallationDetails();
@@ -60,17 +60,17 @@ final class WarningsDetector
     }
 
     /**
-     * @return list<string>
+     * @return string[]
      */
-    public function getWarnings(): array
+    public function getWarnings()
     {
-        if (0 === \count($this->warnings)) {
+        if (!\count($this->warnings)) {
             return [];
         }
 
         return array_unique(array_merge(
             $this->warnings,
-            ['If you need help while solving warnings, ask at https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/discussions/, we will help you!']
+            ['If you need help while solving warnings, ask at https://gitter.im/PHP-CS-Fixer, we will help you!']
         ));
     }
 }

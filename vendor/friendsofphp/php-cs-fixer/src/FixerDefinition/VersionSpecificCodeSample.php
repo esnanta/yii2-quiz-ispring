@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -19,33 +17,48 @@ namespace PhpCsFixer\FixerDefinition;
  */
 final class VersionSpecificCodeSample implements VersionSpecificCodeSampleInterface
 {
-    private CodeSampleInterface $codeSample;
-
-    private VersionSpecificationInterface $versionSpecification;
+    /**
+     * @var CodeSampleInterface
+     */
+    private $codeSample;
 
     /**
-     * @param null|array<string, mixed> $configuration
+     * @var VersionSpecificationInterface
+     */
+    private $versionSpecification;
+
+    /**
+     * @param string $code
      */
     public function __construct(
-        string $code,
+        $code,
         VersionSpecificationInterface $versionSpecification,
-        ?array $configuration = null
+        array $configuration = null
     ) {
         $this->codeSample = new CodeSample($code, $configuration);
         $this->versionSpecification = $versionSpecification;
     }
 
-    public function getCode(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function getCode()
     {
         return $this->codeSample->getCode();
     }
 
-    public function getConfiguration(): ?array
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration()
     {
         return $this->codeSample->getConfiguration();
     }
 
-    public function isSuitableFor(int $version): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isSuitableFor($version)
     {
         return $this->versionSpecification->isSatisfiedBy($version);
     }

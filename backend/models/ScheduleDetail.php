@@ -29,7 +29,10 @@ class ScheduleDetail extends BaseScheduleDetail
         return [
             //TAMBAHAN
             [['subject_id', 'remark'], 'required'],
-            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 2), 'tooBig' => 'Limit is 2MB'],
+            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 3),
+                'skipOnEmpty' => true,
+                'extensions' => 'zip, rar, gz',
+                'tooBig' => 'Limit is 3MB'],
 
             [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
@@ -118,7 +121,7 @@ class ScheduleDetail extends BaseScheduleDetail
         $title              = $replaceDot;
         $tmp                = explode('.', $asset->name);
         $ext                = end($tmp);
-        $this->asset_name    = $title.'_'.uniqid().".{$ext}";
+        $asset->name        = $title.".{$ext}";
 
         // the uploaded asset instance
         return $asset;
@@ -136,8 +139,11 @@ class ScheduleDetail extends BaseScheduleDetail
         if (empty($file) || !file_exists($file)) {
             return false;
         }
-        else{
-            $this->removeDir($file);
+
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        } else {
             // if deletion successful, reset your file attributes
             $this->asset_name = null;
             $this->asset_url = null;

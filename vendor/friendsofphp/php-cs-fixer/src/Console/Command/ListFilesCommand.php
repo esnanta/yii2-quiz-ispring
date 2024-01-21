@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -18,26 +16,33 @@ use PhpCsFixer\Config;
 use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Console\ConfigurationResolver;
 use PhpCsFixer\ToolInfoInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
+use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Path;
 
 /**
  * @author Markus Staab <markus.staab@redaxo.org>
  *
  * @internal
  */
-#[AsCommand(name: 'list-files')]
 final class ListFilesCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'list-files';
 
-    private ConfigInterface $defaultConfig;
+    /**
+     * @var ConfigInterface
+     */
+    private $defaultConfig;
 
-    private ToolInfoInterface $toolInfo;
+    /**
+     * @var ToolInfoInterface
+     */
+    private $toolInfo;
 
     public function __construct(ToolInfoInterface $toolInfo)
     {
@@ -47,7 +52,10 @@ final class ListFilesCommand extends Command
         $this->toolInfo = $toolInfo;
     }
 
-    protected function configure(): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
     {
         $this
             ->setDefinition(
@@ -59,7 +67,7 @@ final class ListFilesCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $passedConfig = $input->getOption('config');
         $cwd = getcwd();
@@ -75,10 +83,10 @@ final class ListFilesCommand extends Command
 
         $finder = $resolver->getFinder();
 
-        /** @var \SplFileInfo $file */
+        /** @var SplFileInfo $file */
         foreach ($finder as $file) {
             if ($file->isFile()) {
-                $relativePath = './'.Path::makeRelative($file->getRealPath(), $cwd);
+                $relativePath = str_replace($cwd, '.', $file->getRealPath());
                 // unify directory separators across operating system
                 $relativePath = str_replace('/', \DIRECTORY_SEPARATOR, $relativePath);
 

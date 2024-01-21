@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,11 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\StringNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -29,17 +25,20 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Gregor Harlan <gharlan@web.de>
  */
-final class SingleQuoteFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class SingleQuoteFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         $codeSample = <<<'EOF'
-            <?php
+<?php
 
-            $a = "sample";
-            $b = "sample with 'single-quotes'";
+$a = "sample";
+$b = "sample with 'single-quotes'";
 
-            EOF;
+EOF;
 
         return new FixerDefinition(
             'Convert double quotes to single quotes for simple strings.',
@@ -56,20 +55,25 @@ final class SingleQuoteFixer extends AbstractFixer implements ConfigurableFixerI
     /**
      * {@inheritdoc}
      *
-     * Must run before NoUselessConcatOperatorFixer.
      * Must run after BacktickToShellExecFixer, EscapeImplicitBackslashesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 10;
+        return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_CONSTANT_ENCAPSED_STRING);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
@@ -86,7 +90,7 @@ final class SingleQuoteFixer extends AbstractFixer implements ConfigurableFixerI
 
             if (
                 '"' === $content[0]
-                && (true === $this->configuration['strings_containing_single_quote_chars'] || !str_contains($content, "'"))
+                && (true === $this->configuration['strings_containing_single_quote_chars'] || false === strpos($content, "'"))
                 // regex: odd number of backslashes, not followed by double quote or dollar
                 && !Preg::match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
             ) {
@@ -97,7 +101,10 @@ final class SingleQuoteFixer extends AbstractFixer implements ConfigurableFixerI
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('strings_containing_single_quote_chars', 'Whether to fix double-quoted strings that contains single-quotes.'))

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,15 +13,13 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ClassNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -34,11 +30,15 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  * Fixer for rules defined in PSR2 ¶4.2.
  *
  * @author Javier Spagnoletti <phansys@gmail.com>
+ * @author SpacePossum
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class SingleClassElementPerStatementFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class SingleClassElementPerStatementFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
@@ -48,12 +48,15 @@ final class SingleClassElementPerStatementFixer extends AbstractFixer implements
      *
      * Must run before ClassAttributesSeparationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 56;
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There MUST NOT be more than one property or constant declared per statement.',
@@ -81,7 +84,10 @@ final class Example
         );
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $analyzer = new TokensAnalyzer($tokens);
         $elements = array_reverse($analyzer->getClassyElements(), true);
@@ -95,20 +101,27 @@ final class Example
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         $values = ['const', 'property'];
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolverRootless('elements', [
             (new FixerOptionBuilder('elements', 'List of strings which element should be modified.'))
                 ->setDefault($values)
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset($values)])
                 ->getOption(),
-        ]);
+        ], $this->getName());
     }
 
-    private function fixElement(Tokens $tokens, string $type, int $index): void
+    /**
+     * @param string $type
+     * @param int    $index
+     */
+    private function fixElement(Tokens $tokens, $type, $index)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
         $repeatIndex = $index;
@@ -146,13 +159,16 @@ final class Example
         );
     }
 
-    private function expandElement(Tokens $tokens, string $type, int $startIndex, int $endIndex): void
+    /**
+     * @param string $type
+     * @param int    $startIndex
+     * @param int    $endIndex
+     */
+    private function expandElement(Tokens $tokens, $type, $startIndex, $endIndex)
     {
         $divisionContent = null;
-
         if ($tokens[$startIndex - 1]->isWhitespace()) {
             $divisionContent = $tokens[$startIndex - 1]->getContent();
-
             if (Preg::match('#(\n|\r\n)#', $divisionContent, $matches)) {
                 $divisionContent = $matches[0].trim($divisionContent, "\r\n");
             }
@@ -179,7 +195,6 @@ final class Example
             }
 
             $tokens[$i] = new Token(';');
-
             if ($tokens[$i + 1]->isWhitespace()) {
                 $tokens->clearAt($i + 1);
             }
@@ -195,22 +210,21 @@ final class Example
     }
 
     /**
+     * @param string $type
+     * @param int    $startIndex
+     * @param int    $endIndex
+     *
      * @return Token[]
      */
-    private function getModifiersSequences(Tokens $tokens, string $type, int $startIndex, int $endIndex): array
+    private function getModifiersSequences(Tokens $tokens, $type, $startIndex, $endIndex)
     {
         if ('property' === $type) {
-            $tokenKinds = [T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_VAR, T_STRING, T_NS_SEPARATOR, CT::T_NULLABLE_TYPE, CT::T_ARRAY_TYPEHINT, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION];
-
-            if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.1+ is required
-                $tokenKinds[] = T_READONLY;
-            }
+            $tokenKinds = [T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_VAR, T_STRING, T_NS_SEPARATOR, CT::T_NULLABLE_TYPE, CT::T_ARRAY_TYPEHINT];
         } else {
             $tokenKinds = [T_PUBLIC, T_PROTECTED, T_PRIVATE, T_CONST];
         }
 
         $sequence = [];
-
         for ($i = $startIndex; $i < $endIndex - 1; ++$i) {
             if ($tokens[$i]->isComment()) {
                 continue;

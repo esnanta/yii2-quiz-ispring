@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,15 +15,17 @@ namespace PhpCsFixer\Fixer\ClassNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class SingleTraitInsertPerStatementFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Each trait `use` must be done as single statement.',
@@ -47,17 +47,17 @@ final class Example
      *
      * Must run before BracesFixer, SpaceAfterSemicolonFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 36;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(CT::T_USE_TRAIT);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($index = \count($tokens) - 1; 1 < $index; --$index) {
             if ($tokens[$index]->isGivenKind(CT::T_USE_TRAIT)) {
@@ -70,9 +70,10 @@ final class Example
     }
 
     /**
-     * @param int[] $candidates ',' indices to fix
+     * @param int   $useTraitIndex
+     * @param int[] $candidates    ',' indexes to fix
      */
-    private function fixTraitUse(Tokens $tokens, int $useTraitIndex, array $candidates): void
+    private function fixTraitUse(Tokens $tokens, $useTraitIndex, array $candidates)
     {
         foreach ($candidates as $commaIndex) {
             $inserts = [
@@ -83,7 +84,7 @@ final class Example
             $nextImportStartIndex = $tokens->getNextMeaningfulToken($commaIndex);
 
             if ($tokens[$nextImportStartIndex - 1]->isWhitespace()) {
-                if (Preg::match('/\R/', $tokens[$nextImportStartIndex - 1]->getContent())) {
+                if (1 === Preg::match('/\R/', $tokens[$nextImportStartIndex - 1]->getContent())) {
                     array_unshift($inserts, clone $tokens[$useTraitIndex - 1]);
                 }
                 $tokens->clearAt($nextImportStartIndex - 1);
@@ -95,11 +96,13 @@ final class Example
     }
 
     /**
-     * @return list<int>
+     * @param int $index
+     *
+     * @return int[]
      */
-    private function getCandidates(Tokens $tokens, int $index): array
+    private function getCandidates(Tokens $tokens, $index)
     {
-        $indices = [];
+        $indexes = [];
         $index = $tokens->getNextTokenOfKind($index, [',', ';', '{']);
 
         while (!$tokens[$index]->equals(';')) {
@@ -107,10 +110,10 @@ final class Example
                 return []; // do not fix use cases with grouping
             }
 
-            $indices[] = $index;
+            $indexes[] = $index;
             $index = $tokens->getNextTokenOfKind($index, [',', ';', '{']);
         }
 
-        return array_reverse($indices);
+        return array_reverse($indexes);
     }
 }

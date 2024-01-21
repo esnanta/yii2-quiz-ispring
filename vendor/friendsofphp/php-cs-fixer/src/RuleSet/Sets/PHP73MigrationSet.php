@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -14,14 +12,14 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\RuleSet\Sets;
 
-use PhpCsFixer\RuleSet\AbstractMigrationSetDescription;
+use PhpCsFixer\RuleSet\AbstractRuleSetDescription;
 
 /**
  * @internal
  */
-final class PHP73MigrationSet extends AbstractMigrationSetDescription
+final class PHP73MigrationSet extends AbstractRuleSetDescription
 {
-    public function getRules(): array
+    public function getRules()
     {
         return [
             '@PHP71Migration' => true,
@@ -30,5 +28,10 @@ final class PHP73MigrationSet extends AbstractMigrationSetDescription
             'no_whitespace_before_comma_in_array' => ['after_heredoc' => true],
             'trailing_comma_in_multiline' => ['after_heredoc' => true],
         ];
+    }
+
+    public function getDescription()
+    {
+        return 'Rules to improve code for PHP 7.3 compatibility.';
     }
 }

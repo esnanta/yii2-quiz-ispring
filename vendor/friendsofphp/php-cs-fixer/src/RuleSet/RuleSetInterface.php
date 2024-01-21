@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -23,27 +21,40 @@ namespace PhpCsFixer\RuleSet;
  */
 interface RuleSetInterface
 {
-    /**
-     * @param array<string, array<string, mixed>|bool> $set
-     */
     public function __construct(array $set = []);
 
     /**
      * Get configuration for given rule.
      *
-     * @return null|array<string, mixed>
+     * @param string $rule name of rule
+     *
+     * @return null|array
      */
-    public function getRuleConfiguration(string $rule): ?array;
+    public function getRuleConfiguration($rule);
 
     /**
      * Get all rules from rules set.
      *
-     * @return array<string, array<string, mixed>|true>
+     * @return array
      */
-    public function getRules(): array;
+    public function getRules();
 
     /**
      * Check given rule is in rules set.
+     *
+     * @param string $rule name of rule
+     *
+     * @return bool
      */
-    public function hasRule(string $rule): bool;
+    public function hasRule($rule);
+
+    /**
+     * @deprecated will be removed in 3.0 Use the constructor.
+     */
+    public static function create(array $set = []);
+
+    /**
+     * @deprecated will be removed in 3.0 Use PhpCsFixer\RuleSet\RuleSets::getSetDefinitionNames
+     */
+    public function getSetDefinitionNames();
 }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Import;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -28,7 +25,10 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class NoLeadingImportSlashFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Remove leading slashes in `use` clauses.',
@@ -42,22 +42,28 @@ final class NoLeadingImportSlashFixer extends AbstractFixer
      * Must run before OrderedImportsFixer.
      * Must run after NoUnusedImportsFixer, SingleImportPerStatementFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -20;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_USE);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
-        $usesIndices = $tokensAnalyzer->getImportUseIndexes();
+        $usesIndexes = $tokensAnalyzer->getImportUseIndexes();
 
-        foreach ($usesIndices as $idx) {
+        foreach ($usesIndexes as $idx) {
             $nextTokenIdx = $tokens->getNextMeaningfulToken($idx);
             $nextToken = $tokens[$nextTokenIdx];
 
@@ -72,7 +78,10 @@ final class NoLeadingImportSlashFixer extends AbstractFixer
         }
     }
 
-    private function removeLeadingImportSlash(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function removeLeadingImportSlash(Tokens $tokens, $index)
     {
         $previousIndex = $tokens->getPrevNonWhitespace($index);
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,14 +13,8 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Phpdoc;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -31,15 +23,12 @@ use PhpCsFixer\Tokenizer\Tokens;
  * @author Ceeram <ceeram@cakephp.org>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class PhpdocToCommentFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class PhpdocToCommentFixer extends AbstractFixer
 {
     /**
-     * @var string[]
+     * {@inheritdoc}
      */
-    private array $ignoredTags = [];
-    private bool $allowBeforeReturnStatement = false;
-
-    public function isCandidate(Tokens $tokens): bool
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
@@ -47,10 +36,10 @@ final class PhpdocToCommentFixer extends AbstractFixer implements ConfigurableFi
     /**
      * {@inheritdoc}
      *
-     * Must run before GeneralPhpdocAnnotationRemoveFixer, GeneralPhpdocTagRenameFixer, NoBlankLinesAfterPhpdocFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAlignFixer, PhpdocAnnotationWithoutDotFixer, PhpdocIndentFixer, PhpdocInlineTagNormalizerFixer, PhpdocLineSpanFixer, PhpdocNoAccessFixer, PhpdocNoAliasTagFixer, PhpdocNoEmptyReturnFixer, PhpdocNoPackageFixer, PhpdocNoUselessInheritdocFixer, PhpdocOrderByValueFixer, PhpdocOrderFixer, PhpdocParamOrderFixer, PhpdocReadonlyClassCommentToKeywordFixer, PhpdocReturnSelfReferenceFixer, PhpdocSeparationFixer, PhpdocSingleLineVarSpacingFixer, PhpdocSummaryFixer, PhpdocTagCasingFixer, PhpdocTagTypeFixer, PhpdocToParamTypeFixer, PhpdocToPropertyTypeFixer, PhpdocToReturnTypeFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer, PhpdocTypesOrderFixer, PhpdocVarAnnotationCorrectOrderFixer, PhpdocVarWithoutNameFixer, SingleLineCommentSpacingFixer, SingleLineCommentStyleFixer.
+     * Must run before GeneralPhpdocAnnotationRemoveFixer, GeneralPhpdocTagRenameFixer, NoBlankLinesAfterPhpdocFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAlignFixer, PhpdocAlignFixer, PhpdocAnnotationWithoutDotFixer, PhpdocIndentFixer, PhpdocInlineTagFixer, PhpdocInlineTagNormalizerFixer, PhpdocLineSpanFixer, PhpdocNoAccessFixer, PhpdocNoAliasTagFixer, PhpdocNoEmptyReturnFixer, PhpdocNoPackageFixer, PhpdocNoUselessInheritdocFixer, PhpdocNoUselessInheritdocFixer, PhpdocOrderByValueFixer, PhpdocOrderFixer, PhpdocReturnSelfReferenceFixer, PhpdocSeparationFixer, PhpdocSingleLineVarSpacingFixer, PhpdocSummaryFixer, PhpdocTagCasingFixer, PhpdocTagTypeFixer, PhpdocToParamTypeFixer, PhpdocToPropertyTypeFixer, PhpdocToReturnTypeFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer, PhpdocTypesOrderFixer, PhpdocVarAnnotationCorrectOrderFixer, PhpdocVarWithoutNameFixer.
      * Must run after CommentToPhpdocFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         /*
          * Should be run before all other docblock fixers so that these fixers
@@ -60,7 +49,10 @@ final class PhpdocToCommentFixer extends AbstractFixer implements ConfigurableFi
         return 25;
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Docblocks should only be used on structural elements.',
@@ -69,75 +61,20 @@ final class PhpdocToCommentFixer extends AbstractFixer implements ConfigurableFi
                     '<?php
 $first = true;// needed because by default first docblock is never fixed.
 
-/** This should be a comment */
+/** This should not be a docblock */
 foreach($connections as $key => $sqlite) {
     $sqlite->open($path);
 }
 '
                 ),
-                new CodeSample(
-                    '<?php
-$first = true;// needed because by default first docblock is never fixed.
-
-/** This should be a comment */
-foreach($connections as $key => $sqlite) {
-    $sqlite->open($path);
-}
-
-/** @todo This should be a PHPDoc as the tag is on "ignored_tags" list */
-foreach($connections as $key => $sqlite) {
-    $sqlite->open($path);
-}
-',
-                    ['ignored_tags' => ['todo']]
-                ),
-                new CodeSample(
-                    '<?php
-$first = true;// needed because by default first docblock is never fixed.
-
-/** This should be a comment */
-foreach($connections as $key => $sqlite) {
-    $sqlite->open($path);
-}
-
-function returnClassName() {
-    /** @var class-string */
-    return \StdClass::class;
-}
-',
-                    ['allow_before_return_statement' => true]
-                ),
             ]
         );
     }
 
-    public function configure(array $configuration = null): void
-    {
-        parent::configure($configuration);
-
-        $this->ignoredTags = array_map(
-            static fn (string $tag): string => strtolower($tag),
-            $this->configuration['ignored_tags']
-        );
-
-        $this->allowBeforeReturnStatement = true === $this->configuration['allow_before_return_statement'];
-    }
-
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
-    {
-        return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('ignored_tags', 'List of ignored tags (matched case insensitively).'))
-                ->setAllowedTypes(['array'])
-                ->setDefault([])
-                ->getOption(),
-            (new FixerOptionBuilder('allow_before_return_statement', 'Whether to allow PHPDoc before return statement.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(false) // @TODO 4.0: set to `true`
-                ->getOption(),
-        ]);
-    }
-
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $commentsAnalyzer = new CommentsAnalyzer();
 
@@ -150,20 +87,8 @@ function returnClassName() {
                 continue;
             }
 
-            if ($this->allowBeforeReturnStatement && $commentsAnalyzer->isBeforeReturn($tokens, $index)) {
-                continue;
-            }
-
             if ($commentsAnalyzer->isBeforeStructuralElement($tokens, $index)) {
                 continue;
-            }
-
-            if (0 < Preg::matchAll('~\@([a-zA-Z0-9_\\\\-]+)\b~', $token->getContent(), $matches)) {
-                foreach ($matches[1] as $match) {
-                    if (\in_array(strtolower($match), $this->ignoredTags, true)) {
-                        continue 2;
-                    }
-                }
             }
 
             $tokens[$index] = new Token([T_COMMENT, '/*'.ltrim($token->getContent(), '/*')]);

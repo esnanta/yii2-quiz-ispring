@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,13 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ArrayNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -30,8 +28,9 @@ use PhpCsFixer\Tokenizer\Tokens;
  * @author Gregor Harlan <gharlan@web.de>
  * @author Sebastiaan Stok <s.stok@rollerscapes.net>
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  */
-final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class ArraySyntaxFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
      * @var null|int
@@ -43,7 +42,10 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerI
      */
     private $fixCallback;
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
@@ -51,17 +53,21 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerI
         $this->resolveFixCallback();
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'PHP arrays should be declared using the configured syntax.',
             [
                 new CodeSample(
-                    "<?php\narray(1,2);\n"
+                    "<?php\n[1,2];\n"
                 ),
-                new CodeSample(
-                    "<?php\n[1,2];\n",
-                    ['syntax' => 'long']
+                new VersionSpecificCodeSample(
+                    "<?php\narray(1,2);\n",
+                    new VersionSpecification(50400),
+                    ['syntax' => 'short']
                 ),
             ]
         );
@@ -70,22 +76,27 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerI
     /**
      * {@inheritdoc}
      *
-     * Must run before BinaryOperatorSpacesFixer, SingleSpaceAfterConstructFixer, SingleSpaceAroundConstructFixer, TernaryOperatorSpacesFixer.
+     * Must run before BinaryOperatorSpacesFixer, TernaryOperatorSpacesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 37;
+        return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound($this->candidateTokenKind);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $callback = $this->fixCallback;
-
         for ($index = $tokens->count() - 1; 0 <= $index; --$index) {
             if ($tokens[$index]->isGivenKind($this->candidateTokenKind)) {
                 $this->{$callback}($tokens, $index);
@@ -93,17 +104,23 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerI
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('syntax', 'Whether to use the `long` or `short` array syntax.'))
                 ->setAllowedValues(['long', 'short'])
-                ->setDefault('short')
+                ->setDefault('long') // TODO @3.0 change to short
                 ->getOption(),
         ]);
     }
 
-    private function fixToLongArraySyntax(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixToLongArraySyntax(Tokens $tokens, $index)
     {
         $closeIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index);
 
@@ -113,7 +130,10 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerI
         $tokens->insertAt($index, new Token([T_ARRAY, 'array']));
     }
 
-    private function fixToShortArraySyntax(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixToShortArraySyntax(Tokens $tokens, $index)
     {
         $openIndex = $tokens->getNextTokenOfKind($index, ['(']);
         $closeIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openIndex);
@@ -124,12 +144,12 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurableFixerI
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }
 
-    private function resolveFixCallback(): void
+    private function resolveFixCallback()
     {
         $this->fixCallback = sprintf('fixTo%sArraySyntax', ucfirst($this->configuration['syntax']));
     }
 
-    private function resolveCandidateTokenKind(): void
+    private function resolveCandidateTokenKind()
     {
         $this->candidateTokenKind = 'long' === $this->configuration['syntax'] ? CT::T_ARRAY_SQUARE_BRACE_OPEN : T_ARRAY;
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,13 +15,18 @@ namespace PhpCsFixer\Fixer\LanguageConstruct;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @author SpacePossum
+ */
 final class CombineConsecutiveIssetsFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Using `isset($var) &&` multiple times should be done in one call.',
@@ -34,19 +37,25 @@ final class CombineConsecutiveIssetsFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      *
-     * Must run before MultilineWhitespaceBeforeSemicolonsFixer, NoSinglelineWhitespaceBeforeSemicolonsFixer, NoSpacesInsideParenthesisFixer, NoTrailingWhitespaceFixer, NoWhitespaceInBlankLineFixer, SpacesInsideParenthesesFixer.
+     * Must run before MultilineWhitespaceBeforeSemicolonsFixer, NoSinglelineWhitespaceBeforeSemicolonsFixer, NoSpacesInsideParenthesisFixer, NoTrailingWhitespaceFixer, NoWhitespaceInBlankLineFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
-        return 4;
+        return 3;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAllTokenKindsFound([T_ISSET, T_BOOLEAN_AND]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokenCount = $tokens->count();
 
@@ -85,7 +94,7 @@ final class CombineConsecutiveIssetsFixer extends AbstractFixer
                 // clone what we want to move, do not clone '(' and ')' of the 'isset' statement we're merging
                 $clones = $this->getTokenClones($tokens, \array_slice($nextIssetInfo, 1, -1));
 
-                // clean up now the tokens of the 'isset' statement we're merging
+                // clean up no the tokens of the 'isset' statement we're merging
                 $this->clearTokens($tokens, array_merge($nextIssetInfo, [$issetIndex, $booleanAndTokenIndex]));
 
                 // insert the tokens to create the new statement
@@ -104,11 +113,11 @@ final class CombineConsecutiveIssetsFixer extends AbstractFixer
     }
 
     /**
-     * @param list<int> $indices
+     * @param int[] $indexes
      */
-    private function clearTokens(Tokens $tokens, array $indices): void
+    private function clearTokens(Tokens $tokens, array $indexes)
     {
-        foreach ($indices as $index) {
+        foreach ($indexes as $index) {
             $tokens->clearTokenAndMergeSurroundingWhitespace($index);
         }
     }
@@ -116,21 +125,21 @@ final class CombineConsecutiveIssetsFixer extends AbstractFixer
     /**
      * @param int $index of T_ISSET
      *
-     * @return int[] indices of meaningful tokens belonging to the isset statement
+     * @return int[] indexes of meaningful tokens belonging to the isset statement
      */
-    private function getIssetInfo(Tokens $tokens, int $index): array
+    private function getIssetInfo(Tokens $tokens, $index)
     {
         $openIndex = $tokens->getNextMeaningfulToken($index);
 
         $braceOpenCount = 1;
-        $meaningfulTokenIndices = [$openIndex];
+        $meaningfulTokenIndexes = [$openIndex];
 
         for ($i = $openIndex + 1;; ++$i) {
             if ($tokens[$i]->isWhitespace() || $tokens[$i]->isComment()) {
                 continue;
             }
 
-            $meaningfulTokenIndices[] = $i;
+            $meaningfulTokenIndexes[] = $i;
 
             if ($tokens[$i]->equals(')')) {
                 --$braceOpenCount;
@@ -142,19 +151,19 @@ final class CombineConsecutiveIssetsFixer extends AbstractFixer
             }
         }
 
-        return $meaningfulTokenIndices;
+        return $meaningfulTokenIndexes;
     }
 
     /**
-     * @param list<int> $indices
+     * @param int[] $indexes
      *
-     * @return list<Token>
+     * @return Token[]
      */
-    private function getTokenClones(Tokens $tokens, array $indices): array
+    private function getTokenClones(Tokens $tokens, array $indexes)
     {
         $clones = [];
 
-        foreach ($indices as $i) {
+        foreach ($indexes as $i) {
             $clones[] = clone $tokens[$i];
         }
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,20 +13,24 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Semicolon;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class SpaceAfterSemicolonFixer extends AbstractFixer implements ConfigurableFixerInterface
+/**
+ * @author SpacePossum
+ */
+final class SpaceAfterSemicolonFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Fix whitespace after a semicolon.',
@@ -52,17 +54,23 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurab
      *
      * Must run after CombineConsecutiveUnsetsFixer, MultilineWhitespaceBeforeSemicolonsFixer, NoEmptyStatementFixer, OrderedClassElementsFixer, SingleImportPerStatementFixer, SingleTraitInsertPerStatementFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(';');
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('remove_in_empty_for_expressions', 'Whether spaces should be removed for empty `for` expressions.'))
@@ -72,12 +80,15 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurab
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $insideForParenthesesUntil = null;
 
         for ($index = 0, $max = \count($tokens) - 1; $index < $max; ++$index) {
-            if (true === $this->configuration['remove_in_empty_for_expressions']) {
+            if ($this->configuration['remove_in_empty_for_expressions']) {
                 if ($tokens[$index]->isGivenKind(T_FOR)) {
                     $index = $tokens->getNextMeaningfulToken($index);
                     $insideForParenthesesUntil = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
@@ -99,7 +110,7 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurab
             if (!$tokens[$index + 1]->isWhitespace()) {
                 if (
                     !$tokens[$index + 1]->equalsAny([')', [T_INLINE_HTML]]) && (
-                        false === $this->configuration['remove_in_empty_for_expressions']
+                        !$this->configuration['remove_in_empty_for_expressions']
                         || !$tokens[$index + 1]->equals(';')
                     )
                 ) {

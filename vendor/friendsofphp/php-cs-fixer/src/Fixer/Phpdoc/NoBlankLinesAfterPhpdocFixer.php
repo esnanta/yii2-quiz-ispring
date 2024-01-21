@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,21 +15,26 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  */
 final class NoBlankLinesAfterPhpdocFixer extends AbstractFixer
 {
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'There should not be blank lines between docblock and the documented element.',
@@ -57,12 +60,15 @@ class Bar {}
      * Must run before HeaderCommentFixer, PhpdocAlignFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return -20;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         static $forbiddenSuccessors = [
             T_BREAK,
@@ -71,11 +77,7 @@ class Bar {}
             T_DECLARE,
             T_DOC_COMMENT,
             T_GOTO,
-            T_INCLUDE,
-            T_INCLUDE_ONCE,
             T_NAMESPACE,
-            T_REQUIRE,
-            T_REQUIRE_ONCE,
             T_RETURN,
             T_THROW,
             T_USE,
@@ -97,8 +99,10 @@ class Bar {}
 
     /**
      * Cleanup a whitespace token.
+     *
+     * @param int $index
      */
-    private function fixWhitespace(Tokens $tokens, int $index): void
+    private function fixWhitespace(Tokens $tokens, $index)
     {
         $content = $tokens[$index]->getContent();
         // if there is more than one new line in the whitespace, then we need to fix it

@@ -4,7 +4,8 @@
     </a>
 </p>
 
-# PHP Coding Standards Fixer
+PHP Coding Standards Fixer
+==========================
 
 The PHP Coding Standards Fixer (PHP CS Fixer) tool fixes your code to follow standards;
 whether you want to follow PHP coding standards as defined in the PSR-1, PSR-2, etc.,
@@ -18,22 +19,6 @@ If you are already using a linter to identify coding standards problems in your
 code, you know that fixing them by hand is tedious, especially on large
 projects. This tool does not only detect them, but also fixes them for you.
 
-## Supported PHP Versions
-
-* PHP 7.4
-* PHP 8.0
-* PHP 8.1
-* PHP 8.2
-* PHP 8.3
-
-> **Note**
-> Each new PHP version requires a huge effort to support the new syntax.
-> That's why the latest PHP version might not be supported yet. If you need it,
-> please, consider supporting the project in any convenient way, for example
-> with code contribution or reviewing existing PRs. To run PHP CS Fixer on yet
-> unsupported versions "at your own risk" - leverage the
-> [PHP_CS_FIXER_IGNORE_ENV](./doc/usage.rst#environment-options).
-
 ## Documentation
 
 ### Installation
@@ -43,14 +28,8 @@ in a dedicated `composer.json` file in your project, for example in the
 `tools/php-cs-fixer` directory:
 
 ```console
-mkdir -p tools/php-cs-fixer
-composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
-```
-
-Or using the main `composer.json`:
-
-```console
-composer require --dev friendsofphp/php-cs-fixer
+$ mkdir --parents tools/php-cs-fixer
+$ composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
 ```
 
 For more details and other installation methods, see
@@ -62,7 +41,7 @@ Assuming you installed PHP CS Fixer as instructed above, you can run the
 following command to fix the files PHP files in the `src` directory:
 
 ```console
-tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
+$ tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
 ```
 
 See [usage](./doc/usage.rst), list of [built-in rules](./doc/rules/index.rst), list of [rule sets](./doc/ruleSets/index.rst)
@@ -75,19 +54,20 @@ If you need to apply code styles that are not supported by the tool, you can
 
 Dedicated plugins exist for:
 
+* [Atom](https://github.com/Glavin001/atom-beautify)
 * [NetBeans](https://plugins.netbeans.apache.org/catalogue/?id=36)
-* [PhpStorm](https://www.jetbrains.com/help/phpstorm/using-php-cs-fixer.html)
+* [PhpStorm](https://medium.com/@valeryan/how-to-configure-phpstorm-to-use-php-cs-fixer-1844991e521f)
 * [Sublime Text](https://github.com/benmatselby/sublime-phpcs)
 * [Vim](https://github.com/stephpy/vim-php-cs-fixer)
 * [VS Code](https://github.com/junstyle/vscode-php-cs-fixer)
 
 ## Community
 
-The PHP CS Fixer is maintained on GitHub at <https://github.com/PHP-CS-Fixer/PHP-CS-Fixer>.
+The PHP CS Fixer is maintained on GitHub at https://github.com/FriendsOfPHP/PHP-CS-Fixer.
 Bug reports and ideas about new features are welcome there.
 
-You can reach us in the [GitHub Discussions](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/discussions/) regarding the
-project, configuration, possible improvements, ideas and questions. Please visit us there!
+You can reach us at https://gitter.im/PHP-CS-Fixer/Lobby about the project,
+configuration, possible improvements, ideas and questions, please visit us!
 
 ## Contribute
 

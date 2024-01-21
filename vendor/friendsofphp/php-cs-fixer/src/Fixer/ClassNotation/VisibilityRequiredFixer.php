@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,14 +13,14 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ClassNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\FixerDefinition\VersionSpecification;
+use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -32,10 +30,14 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  * Fixer for rules defined in PSR2 ¶4.3, ¶4.5.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ * @author SpacePossum
  */
-final class VisibilityRequiredFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class VisibilityRequiredFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Visibility MUST be declared on all properties and methods; `abstract` and `final` MUST be declared before the visibility; `static` MUST be declared after the visibility.',
@@ -53,13 +55,14 @@ class Sample
 }
 '
                 ),
-                new CodeSample(
+                new VersionSpecificCodeSample(
                     '<?php
 class Sample
 {
     const SAMPLE = 1;
 }
 ',
+                    new VersionSpecification(70100),
                     ['elements' => ['const']]
                 ),
             ]
@@ -68,48 +71,40 @@ class Sample
 
     /**
      * {@inheritdoc}
-     *
-     * Must run before ClassAttributesSeparationFixer.
      */
-    public function getPriority(): int
-    {
-        return 56;
-    }
-
-    public function isCandidate(Tokens $tokens): bool
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolverRootless('elements', [
             (new FixerOptionBuilder('elements', 'The structural elements to fix (PHP >= 7.1 required for `const`).'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(['property', 'method', 'const'])])
-                ->setDefault(['property', 'method', 'const'])
+                ->setDefault(['property', 'method'])  // @TODO v3 / PHP 7.1 add `const`
                 ->getOption(),
-        ]);
+        ], $this->getName());
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
-
-        $propertyTypeDeclarationKinds = [T_STRING, T_NS_SEPARATOR, CT::T_NULLABLE_TYPE, CT::T_ARRAY_TYPEHINT, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION, CT::T_DISJUNCTIVE_NORMAL_FORM_TYPE_PARENTHESIS_OPEN, CT::T_DISJUNCTIVE_NORMAL_FORM_TYPE_PARENTHESIS_CLOSE];
-
-        if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.1+ is required
-            $propertyReadOnlyType = T_READONLY;
-            $propertyTypeDeclarationKinds[] = T_READONLY;
-        } else {
-            $propertyReadOnlyType = -999;
-        }
-
-        $expectedKindsGeneric = [T_ABSTRACT, T_FINAL, T_PRIVATE, T_PROTECTED, T_PUBLIC, T_STATIC, T_VAR];
-        $expectedKindsPropertyKinds = [...$expectedKindsGeneric, ...$propertyTypeDeclarationKinds];
+        $propertyTypeDeclarationKinds = [T_STRING, T_NS_SEPARATOR, CT::T_NULLABLE_TYPE, CT::T_ARRAY_TYPEHINT, CT::T_TYPE_ALTERNATION];
 
         foreach (array_reverse($tokensAnalyzer->getClassyElements(), true) as $index => $element) {
             if (!\in_array($element['type'], $this->configuration['elements'], true)) {
+                continue;
+            }
+
+            if (\PHP_VERSION_ID < 70100 && 'const' === $element['type']) {
                 continue;
             }
 
@@ -117,19 +112,18 @@ class Sample
             $visibilityIndex = null;
             $staticIndex = null;
             $typeIndex = null;
-            $readOnlyIndex = null;
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            $expectedKinds = 'property' === $element['type']
-                ? $expectedKindsPropertyKinds
-                : $expectedKindsGeneric;
+            $expectedKinds = [T_ABSTRACT, T_FINAL, T_PRIVATE, T_PROTECTED, T_PUBLIC, T_STATIC, T_VAR];
+
+            if ('property' === $element['type']) {
+                $expectedKinds = array_merge($expectedKinds, $propertyTypeDeclarationKinds);
+            }
 
             while ($tokens[$prevIndex]->isGivenKind($expectedKinds)) {
                 if ($tokens[$prevIndex]->isGivenKind([T_ABSTRACT, T_FINAL])) {
                     $abstractFinalIndex = $prevIndex;
                 } elseif ($tokens[$prevIndex]->isGivenKind(T_STATIC)) {
                     $staticIndex = $prevIndex;
-                } elseif ($tokens[$prevIndex]->isGivenKind($propertyReadOnlyType)) {
-                    $readOnlyIndex = $prevIndex;
                 } elseif ($tokens[$prevIndex]->isGivenKind($propertyTypeDeclarationKinds)) {
                     $typeIndex = $prevIndex;
                 } else {
@@ -147,13 +141,11 @@ class Sample
                 continue;
             }
 
-            $swapIndex = $staticIndex ?? $readOnlyIndex; // "static" property cannot be "readonly", so there can always be at most one swap
-
-            if (null !== $swapIndex) {
-                if ($this->isKeywordPlacedProperly($tokens, $swapIndex, $index)) {
-                    $index = $swapIndex;
+            if (null !== $staticIndex) {
+                if ($this->isKeywordPlacedProperly($tokens, $staticIndex, $index)) {
+                    $index = $staticIndex;
                 } else {
-                    $this->moveTokenAndEnsureSingleSpaceFollows($tokens, $swapIndex, $index);
+                    $this->moveTokenAndEnsureSingleSpaceFollows($tokens, $staticIndex, $index);
                 }
             }
 
@@ -182,16 +174,26 @@ class Sample
         }
     }
 
-    private function isKeywordPlacedProperly(Tokens $tokens, int $keywordIndex, int $comparedIndex): bool
+    /**
+     * @param int $keywordIndex
+     * @param int $comparedIndex
+     *
+     * @return bool
+     */
+    private function isKeywordPlacedProperly(Tokens $tokens, $keywordIndex, $comparedIndex)
     {
         return $keywordIndex + 2 === $comparedIndex && ' ' === $tokens[$keywordIndex + 1]->getContent();
     }
 
-    private function moveTokenAndEnsureSingleSpaceFollows(Tokens $tokens, int $fromIndex, int $toIndex): void
+    /**
+     * @param int $fromIndex
+     * @param int $toIndex
+     */
+    private function moveTokenAndEnsureSingleSpaceFollows(Tokens $tokens, $fromIndex, $toIndex)
     {
         $tokens->insertAt($toIndex, [$tokens[$fromIndex], new Token([T_WHITESPACE, ' '])]);
-        $tokens->clearAt($fromIndex);
 
+        $tokens->clearAt($fromIndex);
         if ($tokens[$fromIndex + 1]->isWhitespace()) {
             $tokens->clearAt($fromIndex + 1);
         }

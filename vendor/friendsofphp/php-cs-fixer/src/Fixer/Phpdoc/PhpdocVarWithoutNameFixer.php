@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,21 +15,22 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
-use PhpCsFixer\DocBlock\TypeExpression;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
- * @author Graham Campbell <hello@gjcampbell.co.uk>
+ * @author Graham Campbell <graham@alt-three.com>
  * @author Dave van der Brugge <dmvdbrugge@gmail.com>
  */
 final class PhpdocVarWithoutNameFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             '`@var` and `@type` annotations of classy properties should not contain the name.',
@@ -58,17 +57,23 @@ final class Foo
      * Must run before PhpdocAlignFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT) && $tokens->isAnyTokenKindsFound([T_CLASS, T_TRAIT]);
+        return $tokens->isTokenKindFound(T_DOC_COMMENT) && $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
@@ -81,19 +86,13 @@ final class Foo
                 continue;
             }
 
-            // For people writing "static public $foo" instead of "public static $foo"
+            // For people writing static public $foo instead of public static $foo
             if ($tokens[$nextIndex]->isGivenKind(T_STATIC)) {
                 $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
             }
 
             // We want only doc blocks that are for properties and thus have specified access modifiers next
-            $propertyModifierKinds = [T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR];
-
-            if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.1+ is required
-                $propertyModifierKinds[] = T_READONLY;
-            }
-
-            if (!$tokens[$nextIndex]->isGivenKind($propertyModifierKinds)) {
+            if (!$tokens[$nextIndex]->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR])) {
                 continue;
             }
 
@@ -112,21 +111,21 @@ final class Foo
         }
     }
 
-    private function fixLine(Line $line): void
+    private function fixLine(Line $line)
     {
-        Preg::matchAll('/ \$'.TypeExpression::REGEX_IDENTIFIER.'(?<!\$this)/', $line->getContent(), $matches);
+        $content = $line->getContent();
 
-        if (isset($matches[0])) {
-            foreach ($matches[0] as $match) {
-                $line->setContent(str_replace($match, '', $line->getContent()));
-            }
+        Preg::matchAll('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $content, $matches);
+
+        if (isset($matches[0][0])) {
+            $line->setContent(str_replace($matches[0][0], '', $content));
         }
     }
 
     /**
      * @return Line[]
      */
-    private function getFirstLevelLines(DocBlock $docBlock): array
+    private function getFirstLevelLines(DocBlock $docBlock)
     {
         $nested = 0;
         $lines = $docBlock->getLines();

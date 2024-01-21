@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,14 +13,12 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Comment;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -32,19 +28,25 @@ use PhpCsFixer\Utils;
 /**
  * @author Kuba Werłos <werlos@gmail.com>
  */
-final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, WhitespacesAwareFixerInterface
 {
     /**
      * @var string[]
      */
-    private array $ignoredTags = [];
+    private $ignoredTags = [];
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_COMMENT);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
@@ -52,16 +54,19 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
     /**
      * {@inheritdoc}
      *
-     * Must run before GeneralPhpdocAnnotationRemoveFixer, GeneralPhpdocTagRenameFixer, NoBlankLinesAfterPhpdocFixer, NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAlignFixer, PhpdocAnnotationWithoutDotFixer, PhpdocInlineTagNormalizerFixer, PhpdocLineSpanFixer, PhpdocNoAccessFixer, PhpdocNoAliasTagFixer, PhpdocNoEmptyReturnFixer, PhpdocNoPackageFixer, PhpdocNoUselessInheritdocFixer, PhpdocOrderByValueFixer, PhpdocOrderFixer, PhpdocParamOrderFixer, PhpdocReadonlyClassCommentToKeywordFixer, PhpdocReturnSelfReferenceFixer, PhpdocSeparationFixer, PhpdocSingleLineVarSpacingFixer, PhpdocSummaryFixer, PhpdocTagCasingFixer, PhpdocTagTypeFixer, PhpdocToCommentFixer, PhpdocToParamTypeFixer, PhpdocToPropertyTypeFixer, PhpdocToReturnTypeFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer, PhpdocTypesOrderFixer, PhpdocVarAnnotationCorrectOrderFixer, PhpdocVarWithoutNameFixer.
+     * Must run before GeneralPhpdocAnnotationRemoveFixer, GeneralPhpdocTagRenameFixer, NoBlankLinesAfterPhpdocFixer, NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAlignFixer, PhpdocAlignFixer, PhpdocAnnotationWithoutDotFixer, PhpdocInlineTagFixer, PhpdocInlineTagNormalizerFixer, PhpdocLineSpanFixer, PhpdocNoAccessFixer, PhpdocNoAliasTagFixer, PhpdocNoEmptyReturnFixer, PhpdocNoPackageFixer, PhpdocNoUselessInheritdocFixer, PhpdocOrderByValueFixer, PhpdocOrderFixer, PhpdocReturnSelfReferenceFixer, PhpdocSeparationFixer, PhpdocSingleLineVarSpacingFixer, PhpdocSummaryFixer, PhpdocTagCasingFixer, PhpdocTagTypeFixer, PhpdocToCommentFixer, PhpdocToParamTypeFixer, PhpdocToPropertyTypeFixer, PhpdocToReturnTypeFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer, PhpdocTypesOrderFixer, PhpdocVarAnnotationCorrectOrderFixer, PhpdocVarWithoutNameFixer.
      * Must run after AlignMultilineCommentFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         // Should be run before all other PHPDoc fixers
         return 26;
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Comments with annotation should be docblock when used on structural elements.',
@@ -74,27 +79,38 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
         );
     }
 
-    public function configure(array $configuration): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
         $this->ignoredTags = array_map(
-            static fn (string $tag): string => strtolower($tag),
+            static function ($tag) {
+                return strtolower($tag);
+            },
             $this->configuration['ignored_tags']
         );
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('ignored_tags', 'List of ignored tags.'))
+            (new FixerOptionBuilder('ignored_tags', 'List of ignored tags'))
                 ->setAllowedTypes(['array'])
                 ->setDefault([])
                 ->getOption(),
         ]);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $commentsAnalyzer = new CommentsAnalyzer();
 
@@ -125,16 +141,18 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
 
     /**
      * @param int[] $indices
+     *
+     * @return bool
      */
-    private function isCommentCandidate(Tokens $tokens, array $indices): bool
+    private function isCommentCandidate(Tokens $tokens, array $indices)
     {
         return array_reduce(
             $indices,
-            function (bool $carry, int $index) use ($tokens): bool {
+            function ($carry, $index) use ($tokens) {
                 if ($carry) {
                     return true;
                 }
-                if (!Preg::match('~(?:#|//|/\*+|\R(?:\s*\*)?)\s*\@([a-zA-Z0-9_\\\\-]+)(?=\s|\(|$)~', $tokens[$index]->getContent(), $matches)) {
+                if (1 !== Preg::match('~(?:#|//|/\*+|\R(?:\s*\*)?)\s*\@([a-zA-Z0-9_\\\\-]+)(?=\s|\(|$)~', $tokens[$index]->getContent(), $matches)) {
                     return false;
                 }
 
@@ -147,7 +165,7 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
     /**
      * @param int[] $indices
      */
-    private function fixComment(Tokens $tokens, array $indices): void
+    private function fixComment(Tokens $tokens, $indices)
     {
         if (1 === \count($indices)) {
             $this->fixCommentSingleLine($tokens, reset($indices));
@@ -156,7 +174,10 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
         }
     }
 
-    private function fixCommentSingleLine(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function fixCommentSingleLine(Tokens $tokens, $index)
     {
         $message = $this->getMessage($tokens[$index]->getContent());
 
@@ -174,7 +195,7 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
     /**
      * @param int[] $indices
      */
-    private function fixCommentMultiLine(Tokens $tokens, array $indices): void
+    private function fixCommentMultiLine(Tokens $tokens, array $indices)
     {
         $startIndex = reset($indices);
         $indent = Utils::calculateTrailingWhitespaceIndent($tokens[$startIndex - 1]);
@@ -186,7 +207,7 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
             if (!$tokens[$index]->isComment()) {
                 continue;
             }
-            if (str_contains($tokens[$index]->getContent(), '*/')) {
+            if (false !== strpos($tokens[$index]->getContent(), '*/')) {
                 return;
             }
             $message = $this->getMessage($tokens[$index]->getContent());
@@ -205,12 +226,12 @@ final class CommentToPhpdocFixer extends AbstractFixer implements ConfigurableFi
         $tokens->insertAt($startIndex, new Token([T_DOC_COMMENT, $newContent]));
     }
 
-    private function getMessage(string $content): string
+    private function getMessage($content)
     {
-        if (str_starts_with($content, '#')) {
+        if (0 === strpos($content, '#')) {
             return substr($content, 1);
         }
-        if (str_starts_with($content, '//')) {
+        if (0 === strpos($content, '//')) {
             return substr($content, 2);
         }
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,19 +15,18 @@ namespace PhpCsFixer\Fixer\ControlStructure;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class SwitchContinueToBreakFixer extends AbstractFixer
 {
-    /**
-     * @var int[]
-     */
-    private array $switchLevels = [];
+    private $switchLevels = [];
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Switch case must not be ended with `continue` but with `break`.',
@@ -69,17 +66,23 @@ switch ($foo) {
      *
      * Must run after NoAlternativeSyntaxFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
-        return $tokens->isAllTokenKindsFound([T_SWITCH, T_CONTINUE]) && !$tokens->hasAlternativeSyntax();
+        return $tokens->isAllTokenKindsFound([T_SWITCH, T_CONTINUE, T_LNUMBER]) && !$tokens->hasAlternativeSyntax();
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $count = \count($tokens);
 
@@ -89,9 +92,13 @@ switch ($foo) {
     }
 
     /**
-     * @param int $depth >= 0
+     * @param int  $index
+     * @param int  $depth      >= 0
+     * @param bool $isInSwitch
+     *
+     * @return int
      */
-    private function doFix(Tokens $tokens, int $index, int $depth, bool $isInSwitch): int
+    private function doFix(Tokens $tokens, $index, $depth, $isInSwitch)
     {
         $token = $tokens[$index];
 
@@ -123,7 +130,13 @@ switch ($foo) {
         return $index;
     }
 
-    private function fixInSwitch(Tokens $tokens, int $switchIndex, int $depth): int
+    /**
+     * @param int $switchIndex
+     * @param int $depth
+     *
+     * @return int
+     */
+    private function fixInSwitch(Tokens $tokens, $switchIndex, $depth)
     {
         $this->switchLevels[] = $depth;
 
@@ -142,11 +155,17 @@ switch ($foo) {
         return $closeIndex;
     }
 
-    private function fixInLoop(Tokens $tokens, int $openIndex, int $depth): int
+    /**
+     * @param int $openIndex
+     * @param int $depth
+     *
+     * @return int
+     */
+    private function fixInLoop(Tokens $tokens, $openIndex, $depth)
     {
         $openCount = 1;
 
-        while (true) {
+        do {
             ++$openIndex;
             $token = $tokens[$openIndex];
 
@@ -167,12 +186,19 @@ switch ($foo) {
             }
 
             $openIndex = $this->doFix($tokens, $openIndex, $depth, false);
-        }
+        } while (true);
 
         return $openIndex;
     }
 
-    private function fixContinueWhenActsAsBreak(Tokens $tokens, int $continueIndex, bool $isInSwitch, int $depth): int
+    /**
+     * @param int  $continueIndex
+     * @param bool $isInSwitch
+     * @param int  $depth
+     *
+     * @return int
+     */
+    private function fixContinueWhenActsAsBreak(Tokens $tokens, $continueIndex, $isInSwitch, $depth)
     {
         $followingContinueIndex = $tokens->getNextMeaningfulToken($continueIndex);
         $followingContinueToken = $tokens[$followingContinueIndex];
@@ -204,7 +230,7 @@ switch ($foo) {
             $jump = bindec($jump); // binary - 0b1
         } elseif (\strlen($jump) > 1 && '0' === $jump[0]) {
             $jump = octdec($jump); // octal 01
-        } elseif (Preg::match('#^\d+$#', $jump)) { // positive int
+        } elseif (1 === Preg::match('#^\d+$#', $jump)) { // positive int
             $jump = (float) $jump; // cast to float, might be a number bigger than PHP max. int value
         } else {
             return $afterFollowingContinueIndex; // cannot process value, ignore
@@ -233,7 +259,10 @@ switch ($foo) {
         return $afterFollowingContinueIndex;
     }
 
-    private function replaceContinueWithBreakToken(Tokens $tokens, int $index): void
+    /**
+     * @param int $index
+     */
+    private function replaceContinueWithBreakToken(Tokens $tokens, $index)
     {
         $tokens[$index] = new Token([T_BREAK, 'break']);
     }

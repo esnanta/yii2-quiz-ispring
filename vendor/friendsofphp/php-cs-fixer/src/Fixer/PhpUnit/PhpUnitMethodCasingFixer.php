@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,13 +15,11 @@ namespace PhpCsFixer\Fixer\PhpUnit;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -33,19 +29,22 @@ use PhpCsFixer\Utils;
 /**
  * @author Filippo Tessarotto <zoeslam@gmail.com>
  */
-final class PhpUnitMethodCasingFixer extends AbstractPhpUnitFixer implements ConfigurableFixerInterface
+final class PhpUnitMethodCasingFixer extends AbstractPhpUnitFixer implements ConfigurationDefinitionFixerInterface
 {
     /**
      * @internal
      */
-    public const CAMEL_CASE = 'camel_case';
+    const CAMEL_CASE = 'camel_case';
 
     /**
      * @internal
      */
-    public const SNAKE_CASE = 'snake_case';
+    const SNAKE_CASE = 'snake_case';
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Enforce camel (or snake) case for PHPUnit test methods, following configuration.',
@@ -76,22 +75,28 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
      *
      * Must run after PhpUnitTestAnnotationFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('case', 'Apply camel or snake case to test methods.'))
+            (new FixerOptionBuilder('case', 'Apply camel or snake case to test methods'))
                 ->setAllowedValues([self::CAMEL_CASE, self::SNAKE_CASE])
                 ->setDefault(self::CAMEL_CASE)
                 ->getOption(),
         ]);
     }
 
-    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyPhpUnitClassFix(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($index = $endIndex - 1; $index > $startIndex; --$index) {
             if (!$this->isTestMethod($tokens, $index)) {
@@ -114,7 +119,12 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
         }
     }
 
-    private function updateMethodCasing(string $functionName): string
+    /**
+     * @param string $functionName
+     *
+     * @return string
+     */
+    private function updateMethodCasing($functionName)
     {
         $parts = explode('::', $functionName);
 
@@ -134,9 +144,14 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
         return implode('::', $parts);
     }
 
-    private function isTestMethod(Tokens $tokens, int $index): bool
+    /**
+     * @param int $index
+     *
+     * @return bool
+     */
+    private function isTestMethod(Tokens $tokens, $index)
     {
-        // Check if we are dealing with a (non-abstract, non-lambda) function
+        // Check if we are dealing with a (non abstract, non lambda) function
         if (!$this->isMethod($tokens, $index)) {
             return false;
         }
@@ -145,7 +160,7 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
         $functionNameIndex = $tokens->getNextMeaningfulToken($index);
         $functionName = $tokens[$functionNameIndex]->getContent();
 
-        if (str_starts_with($functionName, 'test')) {
+        if ($this->startsWith('test', $functionName)) {
             return true;
         }
 
@@ -153,17 +168,37 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
 
         return
             $this->isPHPDoc($tokens, $docBlockIndex) // If the function doesn't have test in its name, and no doc block, it's not a test
-            && str_contains($tokens[$docBlockIndex]->getContent(), '@test');
+            && false !== strpos($tokens[$docBlockIndex]->getContent(), '@test')
+        ;
     }
 
-    private function isMethod(Tokens $tokens, int $index): bool
+    /**
+     * @param int $index
+     *
+     * @return bool
+     */
+    private function isMethod(Tokens $tokens, $index)
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
         return $tokens[$index]->isGivenKind(T_FUNCTION) && !$tokensAnalyzer->isLambda($index);
     }
 
-    private function updateDocBlock(Tokens $tokens, int $docBlockIndex): void
+    /**
+     * @param string $needle
+     * @param string $haystack
+     *
+     * @return bool
+     */
+    private function startsWith($needle, $haystack)
+    {
+        return substr($haystack, 0, \strlen($needle)) === $needle;
+    }
+
+    /**
+     * @param int $docBlockIndex
+     */
+    private function updateDocBlock(Tokens $tokens, $docBlockIndex)
     {
         $doc = new DocBlock($tokens[$docBlockIndex]->getContent());
         $lines = $doc->getLines();
@@ -171,16 +206,18 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
         $docBlockNeedsUpdate = false;
         for ($inc = 0; $inc < \count($lines); ++$inc) {
             $lineContent = $lines[$inc]->getContent();
-            if (!str_contains($lineContent, '@depends')) {
+            if (false === strpos($lineContent, '@depends')) {
                 continue;
             }
 
-            $newLineContent = Preg::replaceCallback('/(@depends\s+)(.+)(\b)/', fn (array $matches): string => sprintf(
-                '%s%s%s',
-                $matches[1],
-                $this->updateMethodCasing($matches[2]),
-                $matches[3]
-            ), $lineContent);
+            $newLineContent = Preg::replaceCallback('/(@depends\s+)(.+)(\b)/', function (array $matches) {
+                return sprintf(
+                    '%s%s%s',
+                    $matches[1],
+                    $this->updateMethodCasing($matches[2]),
+                    $matches[3]
+                );
+            }, $lineContent);
 
             if ($newLineContent !== $lineContent) {
                 $lines[$inc] = new Line($newLineContent);

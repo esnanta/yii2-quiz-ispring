@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\StringNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -27,18 +24,21 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class HeredocToNowdocFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Convert `heredoc` to `nowdoc` where possible.',
             [
                 new CodeSample(
                     <<<'EOF'
-                        <?php $a = <<<"TEST"
-                        Foo
-                        TEST;
+<?php $a = <<<"TEST"
+Foo
+TEST;
 
-                        EOF
+EOF
                 ),
             ]
         );
@@ -49,20 +49,26 @@ final class HeredocToNowdocFixer extends AbstractFixer
      *
      * Must run after EscapeImplicitBackslashesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 0;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_START_HEREDOC);
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind(T_START_HEREDOC) || str_contains($token->getContent(), "'")) {
+            if (!$token->isGivenKind(T_START_HEREDOC) || false !== strpos($token->getContent(), "'")) {
                 continue;
             }
 
@@ -96,8 +102,10 @@ final class HeredocToNowdocFixer extends AbstractFixer
 
     /**
      * Transforms the heredoc start token to nowdoc notation.
+     *
+     * @return Token
      */
-    private function convertToNowdoc(Token $token): Token
+    private function convertToNowdoc(Token $token)
     {
         return new Token([
             $token->getId(),

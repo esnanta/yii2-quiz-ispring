@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,18 +15,19 @@ namespace PhpCsFixer\Fixer\Phpdoc;
 use PhpCsFixer\AbstractProxyFixer;
 use PhpCsFixer\ConfigurationException\InvalidConfigurationException;
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 
-final class PhpdocTagCasingFixer extends AbstractProxyFixer implements ConfigurableFixerInterface
+final class PhpdocTagCasingFixer extends AbstractProxyFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Fixes casing of PHPDoc tags.',
@@ -47,12 +46,12 @@ final class PhpdocTagCasingFixer extends AbstractProxyFixer implements Configura
      * Must run before PhpdocAlignFixer.
      * Must run after AlignMultilineCommentFixer, CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return parent::getPriority();
     }
 
-    public function configure(array $configuration): void
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
@@ -80,7 +79,10 @@ final class PhpdocTagCasingFixer extends AbstractProxyFixer implements Configura
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('tags', 'List of tags to fix with their expected casing.'))
@@ -90,7 +92,10 @@ final class PhpdocTagCasingFixer extends AbstractProxyFixer implements Configura
         ]);
     }
 
-    protected function createProxyFixers(): array
+    /**
+     * {@inheritdoc}
+     */
+    protected function createProxyFixers()
     {
         return [new GeneralPhpdocTagRenameFixer()];
     }

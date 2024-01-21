@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -17,7 +15,6 @@ namespace PhpCsFixer\Fixer\Alias;
 use PhpCsFixer\AbstractFunctionReferenceFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -28,17 +25,9 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class MbStrFunctionsFixer extends AbstractFunctionReferenceFixer
 {
     /**
-     * list of the string-related function names and their mb_ equivalent.
-     *
-     * @var array<
-     *     string,
-     *     array{
-     *         alternativeName: string,
-     *         argumentCount: list<int>,
-     *     },
-     * >
+     * @var array the list of the string-related function names and their mb_ equivalent
      */
-    private static array $functionsMap = [
+    private static $functionsMap = [
         'str_split' => ['alternativeName' => 'mb_str_split', 'argumentCount' => [1, 2, 3]],
         'stripos' => ['alternativeName' => 'mb_stripos', 'argumentCount' => [2, 3]],
         'stristr' => ['alternativeName' => 'mb_stristr', 'argumentCount' => [2, 3]],
@@ -55,31 +44,26 @@ final class MbStrFunctionsFixer extends AbstractFunctionReferenceFixer
     ];
 
     /**
-     * @var array<
-     *     string,
-     *     array{
-     *         alternativeName: string,
-     *         argumentCount: list<int>,
-     *     },
-     * >
+     * @var array<string, array>
      */
-    private array $functions;
+    private $functions;
 
     public function __construct()
     {
         parent::__construct();
 
-        if (\PHP_VERSION_ID >= 8_03_00) {
-            self::$functionsMap['str_pad'] = ['alternativeName' => 'mb_str_pad', 'argumentCount' => [1, 2, 3, 4]];
-        }
-
         $this->functions = array_filter(
             self::$functionsMap,
-            static fn (array $mapping): bool => (new \ReflectionFunction($mapping['alternativeName']))->isInternal()
+            static function (array $mapping) {
+                return \function_exists($mapping['alternativeName']) && (new \ReflectionFunction($mapping['alternativeName']))->isInternal();
+            }
         );
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Replace non multibyte-safe functions with corresponding mb function.',
@@ -102,16 +86,27 @@ $a = substr_count($a, $b);
                 ),
             ],
             null,
-            'Risky when any of the functions are overridden, or when relying on the string byte size rather than its length in characters.'
+            'Risky when any of the functions are overridden.'
         );
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
+    {
+        return $tokens->isTokenKindFound(T_STRING);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
         foreach ($this->functions as $functionIdentity => $functionReplacement) {
             $currIndex = 0;
-            do {
+            while (null !== $currIndex) {
                 // try getting function reference and translate boundaries for humans
                 $boundaries = $this->find($functionIdentity, $tokens, $currIndex, $tokens->count() - 1);
                 if (null === $boundaries) {
@@ -119,7 +114,7 @@ $a = substr_count($a, $b);
                     continue 2;
                 }
 
-                [$functionName, $openParenthesis, $closeParenthesis] = $boundaries;
+                list($functionName, $openParenthesis, $closeParenthesis) = $boundaries;
                 $count = $argumentsAnalyzer->countArguments($tokens, $openParenthesis, $closeParenthesis);
                 if (!\in_array($count, $functionReplacement['argumentCount'], true)) {
                     continue 2;
@@ -129,7 +124,7 @@ $a = substr_count($a, $b);
                 $currIndex = $openParenthesis;
 
                 $tokens[$functionName] = new Token([T_STRING, $functionReplacement['alternativeName']]);
-            } while (null !== $currIndex);
+            }
         }
     }
 }

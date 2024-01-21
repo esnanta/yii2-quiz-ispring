@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,13 +13,13 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\ClassNotation;
 
 use PhpCsFixer\AbstractFixer;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\FixerConfiguration\AliasedFixerOptionBuilder;
+use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -29,28 +27,22 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Gregor Harlan <gharlan@web.de>
  */
-final class OrderedClassElementsFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class OrderedClassElementsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /** @internal */
-    public const SORT_ALPHA = 'alpha';
+    const SORT_ALPHA = 'alpha';
 
     /** @internal */
-    public const SORT_NONE = 'none';
-
-    private const SUPPORTED_SORT_ALGORITHMS = [
-        self::SORT_NONE,
-        self::SORT_ALPHA,
-    ];
+    const SORT_NONE = 'none';
 
     /**
-     * @var array<string, null|list<string>> Array containing all class element base types (keys) and their parent types (values)
+     * @var array Array containing all class element base types (keys) and their parent types (values)
      */
-    private static array $typeHierarchy = [
+    private static $typeHierarchy = [
         'use_trait' => null,
         'public' => null,
         'protected' => null,
         'private' => null,
-        'case' => ['public'],
         'constant' => null,
         'constant_public' => ['constant', 'public'],
         'constant_protected' => ['constant', 'protected'],
@@ -60,9 +52,6 @@ final class OrderedClassElementsFixer extends AbstractFixer implements Configura
         'property_public' => ['property', 'public'],
         'property_protected' => ['property', 'protected'],
         'property_private' => ['property', 'private'],
-        'property_public_readonly' => ['property_readonly', 'property_public'],
-        'property_protected_readonly' => ['property_readonly', 'property_protected'],
-        'property_private_readonly' => ['property_readonly', 'property_private'],
         'property_public_static' => ['property_static', 'property_public'],
         'property_protected_static' => ['property_static', 'property_protected'],
         'property_private_static' => ['property_static', 'property_private'],
@@ -74,19 +63,17 @@ final class OrderedClassElementsFixer extends AbstractFixer implements Configura
         'method_private' => ['method', 'private'],
         'method_public_abstract' => ['method_abstract', 'method_public'],
         'method_protected_abstract' => ['method_abstract', 'method_protected'],
-        'method_private_abstract' => ['method_abstract', 'method_private'],
         'method_public_abstract_static' => ['method_abstract', 'method_static', 'method_public'],
         'method_protected_abstract_static' => ['method_abstract', 'method_static', 'method_protected'],
-        'method_private_abstract_static' => ['method_abstract', 'method_static', 'method_private'],
         'method_public_static' => ['method_static', 'method_public'],
         'method_protected_static' => ['method_static', 'method_protected'],
         'method_private_static' => ['method_static', 'method_private'],
     ];
 
     /**
-     * @var array<string, null> Array containing special method types
+     * @var array Array containing special method types
      */
-    private static array $specialTypes = [
+    private static $specialTypes = [
         'construct' => null,
         'destruct' => null,
         'magic' => null,
@@ -94,17 +81,29 @@ final class OrderedClassElementsFixer extends AbstractFixer implements Configura
     ];
 
     /**
-     * @var array<string, int> Resolved configuration array (type => position)
+     * Array of supported sort algorithms in configuration.
+     *
+     * @var string[]
      */
-    private array $typePosition;
+    private $supportedSortAlgorithms = [
+        self::SORT_NONE,
+        self::SORT_ALPHA,
+    ];
 
-    public function configure(array $configuration): void
+    /**
+     * @var array Resolved configuration array (type => position)
+     */
+    private $typePosition;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configure(array $configuration = null)
     {
         parent::configure($configuration);
 
         $this->typePosition = [];
         $pos = 0;
-
         foreach ($this->configuration['order'] as $type) {
             $this->typePosition[$type] = $pos++;
         }
@@ -114,7 +113,7 @@ final class OrderedClassElementsFixer extends AbstractFixer implements Configura
                 continue;
             }
 
-            if (null === $parents) {
+            if (!$parents) {
                 $this->typePosition[$type] = null;
 
                 continue;
@@ -132,25 +131,30 @@ final class OrderedClassElementsFixer extends AbstractFixer implements Configura
         }
 
         $lastPosition = \count($this->configuration['order']);
-
         foreach ($this->typePosition as &$pos) {
             if (null === $pos) {
                 $pos = $lastPosition;
             }
-
-            $pos *= 10; // last digit is used by phpunit method ordering
+            // last digit is used by phpunit method ordering
+            $pos *= 10;
         }
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
-            'Orders the elements of classes/interfaces/traits/enums.',
+            'Orders the elements of classes/interfaces/traits.',
             [
                 new CodeSample(
                     '<?php
@@ -205,45 +209,27 @@ class Example
     public function C(){}
 }
 ',
-                    ['order' => ['method_public'], 'sort_algorithm' => self::SORT_ALPHA]
+                    ['order' => ['method_public'], 'sort_algorithm' => 'alpha']
                 ),
-                new CodeSample(
-                    '<?php
-class Example
-{
-    public function Aa(){}
-    public function AA(){}
-    public function AwS(){}
-    public function AWs(){}
-}
-',
-                    ['order' => ['method_public'], 'sort_algorithm' => self::SORT_ALPHA, 'case_sensitive' => true]
-                ),
-            ],
-            'Accepts a subset of pre-defined element types, special element groups, and custom patterns.
-
-Element types: `[\''.implode('\', \'', array_keys(self::$typeHierarchy)).'\']`
-
-Special element types: `[\''.implode('\', \'', array_keys(self::$specialTypes)).'\']`
-
-Custom values:
-
-- `method:*`: specify a single method name (e.g. `method:__invoke`) to set the order of that specific method.'
+            ]
         );
     }
 
     /**
      * {@inheritdoc}
      *
-     * Must run before ClassAttributesSeparationFixer, NoBlankLinesAfterClassOpeningFixer, SpaceAfterSemicolonFixer.
+     * Must run before ClassAttributesSeparationFixer, MethodSeparationFixer, NoBlankLinesAfterClassOpeningFixer, SpaceAfterSemicolonFixer.
      * Must run after NoPhp4ConstructorFixer, ProtectedToPrivateFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 65;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         for ($i = 1, $count = $tokens->count(); $i < $count; ++$i) {
             if (!$tokens[$i]->isClassy()) {
@@ -268,31 +254,17 @@ Custom values:
         }
     }
 
-    protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
     {
-        $builtIns = array_keys(array_merge(self::$typeHierarchy, self::$specialTypes));
-
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolverRootless('order', [
             (new FixerOptionBuilder('order', 'List of strings defining order of elements.'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues([
-                    static function (array $values) use ($builtIns): bool {
-                        foreach ($values as $value) {
-                            if (\in_array($value, $builtIns, true)) {
-                                return true;
-                            }
-
-                            if (\is_string($value) && 'method:' === substr($value, 0, 7)) {
-                                return true;
-                            }
-                        }
-
-                        return false;
-                    },
-                ])
+                ->setAllowedValues([new AllowedValueSubset(array_keys(array_merge(self::$typeHierarchy, self::$specialTypes)))])
                 ->setDefault([
                     'use_trait',
-                    'case',
                     'constant_public',
                     'constant_protected',
                     'constant_private',
@@ -308,32 +280,24 @@ Custom values:
                     'method_private',
                 ])
                 ->getOption(),
-            (new FixerOptionBuilder('sort_algorithm', 'How multiple occurrences of same type statements should be sorted.'))
-                ->setAllowedValues(self::SUPPORTED_SORT_ALGORITHMS)
+            (new AliasedFixerOptionBuilder(
+                new FixerOptionBuilder('sort_algorithm', 'How multiple occurrences of same type statements should be sorted'),
+                'sortAlgorithm'
+            ))
+                ->setAllowedValues($this->supportedSortAlgorithms)
                 ->setDefault(self::SORT_NONE)
                 ->getOption(),
-            (new FixerOptionBuilder('case_sensitive', 'Whether the sorting should be case sensitive.'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault(false)
-                ->getOption(),
-        ]);
+        ], $this->getName());
     }
 
     /**
-     * @return list<array{
-     *     start: int,
-     *     visibility: string,
-     *     abstract: bool,
-     *     static: bool,
-     *     readonly: bool,
-     *     type: string,
-     *     name: string,
-     *     end: int,
-     * }>
+     * @param int $startIndex
+     *
+     * @return array[]
      */
-    private function getElements(Tokens $tokens, int $startIndex): array
+    private function getElements(Tokens $tokens, $startIndex)
     {
-        static $elementTokenKinds = [CT::T_USE_TRAIT, T_CASE, T_CONST, T_VARIABLE, T_FUNCTION];
+        static $elementTokenKinds = [CT::T_USE_TRAIT, T_CONST, T_VARIABLE, T_FUNCTION];
 
         ++$startIndex;
         $elements = [];
@@ -344,7 +308,6 @@ Custom values:
                 'visibility' => 'public',
                 'abstract' => false,
                 'static' => false,
-                'readonly' => false,
             ];
 
             for ($i = $startIndex;; ++$i) {
@@ -367,10 +330,6 @@ Custom values:
                     continue;
                 }
 
-                if (\defined('T_READONLY') && $token->isGivenKind(T_READONLY)) { // @TODO: drop condition when PHP 8.1+ is required
-                    $element['readonly'] = true;
-                }
-
                 if ($token->isGivenKind([T_PROTECTED, T_PRIVATE])) {
                     $element['visibility'] = strtolower($token->getContent());
 
@@ -382,7 +341,6 @@ Custom values:
                 }
 
                 $type = $this->detectElementType($tokens, $i);
-
                 if (\is_array($type)) {
                     $element['type'] = $type[0];
                     $element['name'] = $type[1];
@@ -392,7 +350,7 @@ Custom values:
 
                 if ('property' === $element['type']) {
                     $element['name'] = $tokens[$i]->getContent();
-                } elseif (\in_array($element['type'], ['use_trait', 'case', 'constant', 'method', 'magic', 'construct', 'destruct'], true)) {
+                } elseif (\in_array($element['type'], ['use_trait', 'constant', 'method', 'magic', 'construct', 'destruct'], true)) {
                     $element['name'] = $tokens[$tokens->getNextMeaningfulToken($i)]->getContent();
                 }
 
@@ -407,18 +365,16 @@ Custom values:
     }
 
     /**
-     * @return array<string>|string type or array of type and name
+     * @param int $index
+     *
+     * @return array|string type or array of type and name
      */
-    private function detectElementType(Tokens $tokens, int $index)
+    private function detectElementType(Tokens $tokens, $index)
     {
         $token = $tokens[$index];
 
         if ($token->isGivenKind(CT::T_USE_TRAIT)) {
             return 'use_trait';
-        }
-
-        if ($token->isGivenKind(T_CASE)) {
-            return 'case';
         }
 
         if ($token->isGivenKind(T_CONST)) {
@@ -447,8 +403,6 @@ Custom values:
                 [T_STRING, 'doTearDownAfterClass'],
                 [T_STRING, 'setUp'],
                 [T_STRING, 'doSetUp'],
-                [T_STRING, 'assertPreConditions'],
-                [T_STRING, 'assertPostConditions'],
                 [T_STRING, 'tearDown'],
                 [T_STRING, 'doTearDown'],
             ], false)
@@ -456,10 +410,19 @@ Custom values:
             return ['phpunit', strtolower($nameToken->getContent())];
         }
 
-        return str_starts_with($nameToken->getContent(), '__') ? 'magic' : 'method';
+        if ('__' === substr($nameToken->getContent(), 0, 2)) {
+            return 'magic';
+        }
+
+        return 'method';
     }
 
-    private function findElementEnd(Tokens $tokens, int $index): int
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    private function findElementEnd(Tokens $tokens, $index)
     {
         $index = $tokens->getNextTokenOfKind($index, ['{', ';']);
 
@@ -475,19 +438,11 @@ Custom values:
     }
 
     /**
-     * @return list<array{
-     *     start: int,
-     *     visibility: string,
-     *     abstract: bool,
-     *     static: bool,
-     *     readonly: bool,
-     *     type: string,
-     *     name: string,
-     *     end: int,
-     *     position: int,
-     * }>
+     * @param array[] $elements
+     *
+     * @return array[]
      */
-    private function sortElements(array $elements): array
+    private function sortElements(array $elements)
     {
         static $phpunitPositions = [
             'setupbeforeclass' => 1,
@@ -496,25 +451,16 @@ Custom values:
             'doteardownafterclass' => 4,
             'setup' => 5,
             'dosetup' => 6,
-            'assertpreconditions' => 7,
-            'assertpostconditions' => 8,
-            'teardown' => 9,
-            'doteardown' => 10,
+            'teardown' => 7,
+            'doteardown' => 8,
         ];
 
         foreach ($elements as &$element) {
             $type = $element['type'];
 
-            if (\in_array($type, ['method', 'magic', 'phpunit'], true) && isset($this->typePosition["method:{$element['name']}"])) {
-                $element['position'] = $this->typePosition["method:{$element['name']}"];
-
-                continue;
-            }
-
             if (\array_key_exists($type, self::$specialTypes)) {
                 if (isset($this->typePosition[$type])) {
                     $element['position'] = $this->typePosition[$type];
-
                     if ('phpunit' === $type) {
                         $element['position'] += $phpunitPositions[$element['name']];
                     }
@@ -527,85 +473,46 @@ Custom values:
 
             if (\in_array($type, ['constant', 'property', 'method'], true)) {
                 $type .= '_'.$element['visibility'];
-
                 if ($element['abstract']) {
                     $type .= '_abstract';
                 }
-
                 if ($element['static']) {
                     $type .= '_static';
-                }
-
-                if ($element['readonly']) {
-                    $type .= '_readonly';
                 }
             }
 
             $element['position'] = $this->typePosition[$type];
         }
-
         unset($element);
 
-        usort($elements, function (array $a, array $b): int {
+        usort($elements, function (array $a, array $b) {
             if ($a['position'] === $b['position']) {
                 return $this->sortGroupElements($a, $b);
             }
 
-            return $a['position'] <=> $b['position'];
+            return $a['position'] > $b['position'] ? 1 : -1;
         });
 
         return $elements;
     }
 
-    /**
-     * @param array{
-     *     start: int,
-     *     visibility: string,
-     *     abstract: bool,
-     *     static: bool,
-     *     readonly: bool,
-     *     type: string,
-     *     name: string,
-     *     end: int,
-     *     position: int,
-     * } $a
-     * @param array{
-     *     start: int,
-     *     visibility: string,
-     *     abstract: bool,
-     *     static: bool,
-     *     readonly: bool,
-     *     type: string,
-     *     name: string,
-     *     end: int,
-     *     position: int,
-     * } $b
-     */
-    private function sortGroupElements(array $a, array $b): int
+    private function sortGroupElements(array $a, array $b)
     {
-        if (self::SORT_ALPHA === $this->configuration['sort_algorithm']) {
-            return true === $this->configuration['case_sensitive']
-                ? $a['name'] <=> $b['name']
-                : strcasecmp($a['name'], $b['name']);
+        $selectedSortAlgorithm = $this->configuration['sort_algorithm'];
+
+        if (self::SORT_ALPHA === $selectedSortAlgorithm) {
+            return strcasecmp($a['name'], $b['name']);
         }
 
-        return $a['start'] <=> $b['start'];
+        return $a['start'] > $b['start'] ? 1 : -1;
     }
 
     /**
-     * @param list<array{
-     *     start: int,
-     *     visibility: string,
-     *     abstract: bool,
-     *     static: bool,
-     *     readonly: bool,
-     *     type: string,
-     *     name: string,
-     *     end: int,
-     *     position: int,
-     * }> $elements
+     * @param int     $startIndex
+     * @param int     $endIndex
+     * @param array[] $elements
      */
-    private function sortTokens(Tokens $tokens, int $startIndex, int $endIndex, array $elements): void
+    private function sortTokens(Tokens $tokens, $startIndex, $endIndex, array $elements)
     {
         $replaceTokens = [];
 

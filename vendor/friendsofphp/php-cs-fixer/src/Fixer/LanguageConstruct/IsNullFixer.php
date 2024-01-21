@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of PHP CS Fixer.
  *
@@ -15,9 +13,11 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\LanguageConstruct;
 
 use PhpCsFixer\AbstractFixer;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -25,9 +25,12 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @author Vladimir Reznichenko <kalessil@gmail.com>
  */
-final class IsNullFixer extends AbstractFixer
+final class IsNullFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    public function getDefinition(): FixerDefinitionInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefinition()
     {
         return new FixerDefinition(
             'Replaces `is_null($var)` expression with `null === $var`.',
@@ -44,29 +47,37 @@ final class IsNullFixer extends AbstractFixer
      *
      * Must run before YodaStyleFixer.
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_STRING);
     }
 
-    public function isRisky(): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function isRisky()
     {
         return true;
     }
 
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
+    /**
+     * {@inheritdoc}
+     */
+    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         static $sequenceNeeded = [[T_STRING, 'is_null'], '('];
         $functionsAnalyzer = new FunctionsAnalyzer();
-        $currIndex = 0;
 
-        while (true) {
-            // recalculate "end" because we might have added tokens in previous iteration
+        $currIndex = 0;
+        while (null !== $currIndex) {
             $matches = $tokens->findSequence($sequenceNeeded, $currIndex, $tokens->count() - 1, false);
 
             // stop looping if didn't find any new matches
@@ -78,14 +89,13 @@ final class IsNullFixer extends AbstractFixer
             $matches = array_keys($matches);
 
             // move the cursor just after the sequence
-            [$isNullIndex, $currIndex] = $matches;
+            list($isNullIndex, $currIndex) = $matches;
 
             if (!$functionsAnalyzer->isGlobalFunctionCall($tokens, $matches[0])) {
                 continue;
             }
 
             $next = $tokens->getNextMeaningfulToken($currIndex);
-
             if ($tokens[$next]->equals(')')) {
                 continue;
             }
@@ -102,7 +112,6 @@ final class IsNullFixer extends AbstractFixer
 
             // check if inversion being used, text comparison is due to not existing constant
             $isInvertedNullCheck = false;
-
             if ($tokens[$prevTokenIndex]->equals('!')) {
                 $isInvertedNullCheck = true;
 
@@ -114,7 +123,6 @@ final class IsNullFixer extends AbstractFixer
             // before getting rind of `()` around a parameter, ensure it's not assignment/ternary invariant
             $referenceEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $matches[1]);
             $isContainingDangerousConstructs = false;
-
             for ($paramTokenIndex = $matches[1]; $paramTokenIndex <= $referenceEnd; ++$paramTokenIndex) {
                 if (\in_array($tokens[$paramTokenIndex]->getContent(), ['?', '?:', '=', '??'], true)) {
                     $isContainingDangerousConstructs = true;
@@ -123,15 +131,14 @@ final class IsNullFixer extends AbstractFixer
                 }
             }
 
-            // edge cases: is_null() followed/preceded by ==, ===, !=, !==, <>, (int-or-other-casting)
+            // edge cases: is_null() followed/preceded by ==, ===, !=, !==, <>
             $parentLeftToken = $tokens[$tokens->getPrevMeaningfulToken($isNullIndex)];
             $parentRightToken = $tokens[$tokens->getNextMeaningfulToken($referenceEnd)];
             $parentOperations = [T_IS_EQUAL, T_IS_NOT_EQUAL, T_IS_IDENTICAL, T_IS_NOT_IDENTICAL];
-            $wrapIntoParentheses = $parentLeftToken->isCast() || $parentLeftToken->isGivenKind($parentOperations) || $parentRightToken->isGivenKind($parentOperations);
+            $wrapIntoParentheses = $parentLeftToken->isGivenKind($parentOperations) || $parentRightToken->isGivenKind($parentOperations);
 
             // possible trailing comma removed
             $prevIndex = $tokens->getPrevMeaningfulToken($referenceEnd);
-
             if ($tokens[$prevIndex]->equals(',')) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($prevIndex);
             }
@@ -155,15 +162,42 @@ final class IsNullFixer extends AbstractFixer
                 new Token([T_WHITESPACE, ' ']),
             ];
 
-            if ($wrapIntoParentheses) {
-                array_unshift($replacement, new Token('('));
-                $tokens->insertAt($referenceEnd + 1, new Token(')'));
-            }
+            if (true === $this->configuration['use_yoda_style']) {
+                if ($wrapIntoParentheses) {
+                    array_unshift($replacement, new Token('('));
+                    $tokens->insertAt($referenceEnd + 1, new Token(')'));
+                }
 
-            $tokens->overrideRange($isNullIndex, $isNullIndex, $replacement);
+                $tokens->overrideRange($isNullIndex, $isNullIndex, $replacement);
+            } else {
+                $replacement = array_reverse($replacement);
+                if ($wrapIntoParentheses) {
+                    $replacement[] = new Token(')');
+                    $tokens[$isNullIndex] = new Token('(');
+                } else {
+                    $tokens->clearAt($isNullIndex);
+                }
+
+                $tokens->insertAt($referenceEnd + 1, $replacement);
+            }
 
             // nested is_null calls support
             $currIndex = $isNullIndex;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function createConfigurationDefinition()
+    {
+        // @todo 3.0 drop `ConfigurationDefinitionFixerInterface`
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('use_yoda_style', 'Whether Yoda style conditions should be used.'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault(true)
+                ->setDeprecationMessage('Use `yoda_style` fixer instead.')
+                ->getOption(),
+        ]);
     }
 }
