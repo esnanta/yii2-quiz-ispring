@@ -164,7 +164,6 @@ class ScheduleDetailController extends Controller
                     // process uploaded asset file instance
                     $asset = $model->uploadAsset();
                     $model->asset_name  = $asset->name;
-                    $model->asset_url   = $model->getPath().'/'.$asset->name;
 
                     // revert back if no valid file instance uploaded
                     if ($asset === false) {
@@ -174,14 +173,12 @@ class ScheduleDetailController extends Controller
                     if ($model->save()) :
                         // upload only if valid uploaded file instance found
                         if ($asset !== false) { // delete old and overwrite
-                            file_exists($oldFile) ? unlink($oldFile) : '';
+                            if(file_exists($oldFile)):
+                                unlink($oldFile);
+                            endif;
                             $path = $model->getAssetFile();
                             $asset->saveAs($path);
-
-                            //$zip = new ZipArchive;
-
-
-
+                            $model->extract();
                         }
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
@@ -221,11 +218,17 @@ class ScheduleDetailController extends Controller
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws NotFoundHttpException
+     * @throws ForbiddenHttpException
+     */
     public function actionDeleteFile($id)
     {
         if (Yii::$app->user->can('delete-scheduledetail')) {
-            $model  = ScheduleDetail::find()->where(['id'=>$id])->one();
+            $model  = $this->findModel($id);
             $model->deleteAsset();
+            $model->removeExtractFolder($model->getExtractDir());
             $model->save();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect([
@@ -254,42 +257,4 @@ class ScheduleDetailController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-    /**
-     * @throws Exception
-     * @throws NotFoundHttpException
-     */
-    public function actionTest(){
-        $model = $this->findModel(53);
-
-        //Get the file then extract
-        $fileLocation = Yii::getAlias('@backend').'/web'.$model->asset_url;
-        $zipArchive = Yii::$app->zipper->open($fileLocation, 'zip');
-
-        /*
-            Create an extract directory
-            1. FORMAT : DATE-SUBJECT
-        */
-
-        //Combine date and subject and id
-        $tmpDate = substr($model->schedule->date_start,0,10);
-        $date = str_replace('-','',$tmpDate);
-        $combinedName = $model->getPath().'/'.$date.'-'.$model->subject->title.'-'.$model->id;
-
-        //Create extract directory -> PATH / DATE AND SUBJECT
-        $extractDirectory = Yii::getAlias('@backend').'/web'.$combinedName;
-        FileHelper::createDirectory($extractDirectory, $mode = 0777);
-        $zipArchive->extract($extractDirectory);
-
-        //THIS IS FOR INDEX.HTML DIRECTORY
-        $deleteExt = substr($model->asset_name, 0, strpos($model->asset_name, "."));
-        $url = $combinedName.'/'.$deleteExt;
-
-
-        $model->asset_name = 'index.html';
-        $model->asset_url = $url;
-        $model->save();
-
-    }
-
 }

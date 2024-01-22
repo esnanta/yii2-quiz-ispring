@@ -8,6 +8,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Yii;
 use \backend\models\base\ScheduleDetail as BaseScheduleDetail;
+use yii\base\Exception;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
@@ -152,7 +153,57 @@ class ScheduleDetail extends BaseScheduleDetail
         return true;
     }
 
-    private function removeDir(string $dir): void {
+    /**
+     * @throws Exception
+     */
+    public function extract()
+    {
+        //Get the file then extract
+        //Source located at backend
+        $fileSource = $this->getAssetFile();
+        $zipArchive = Yii::$app->zipper->open($fileSource, 'zip');
+
+        //Extract to frontend
+        $zipArchive->extract($this->getExtractDir());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getExtractDir(): ?string
+    {
+        //Create extract directory -> PATH / DATE-SUBJECT TITLE
+        $combinedName = $this->getExtractFolderName();
+        $directory  = str_replace('backend', 'frontend', Yii::getAlias('@webroot')) .
+            $this->getPath().'/'.$combinedName;
+        if (!is_dir($directory)) {
+            FileHelper::createDirectory($directory, $mode = 0777);
+        }
+        return $directory;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getExtractUrl(): string
+    {
+        $assetNameWithoutExtension = substr($this->asset_name, 0, strpos($this->asset_name, "."));
+        $indexFile = $assetNameWithoutExtension.'/index.html';
+        return $this->getPath().'/'.$this->getExtractFolderName().'/'.$indexFile;
+    }
+
+    private function getExtractFolderName(): string
+    {
+        //Rename date to Ymd
+        $tmpDate = substr($this->schedule->date_start,0,10);
+        $date = str_replace('-','',$tmpDate);
+        //Remove space in title
+        $subjectTitle = str_replace('','-',$this->subject->title);
+
+        return $date.'-'.$subjectTitle.'-'.$this->id;
+    }
+
+    public function removeExtractFolder(string $dir): void {
         $it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it,
             RecursiveIteratorIterator::CHILD_FIRST);
@@ -165,6 +216,10 @@ class ScheduleDetail extends BaseScheduleDetail
         }
         rmdir($dir);
     }
+
+
+
+
 
     public function getUrl(): string
     {

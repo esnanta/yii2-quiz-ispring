@@ -118,7 +118,7 @@ $create = Html::a(
                     </th>
                     <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Remark');?></th>
                     <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Asset');?></th>
-                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', 'Url');?></th>
+                    <th class="g-brd-top-none g-font-weight-500 g-py-15"><?= Yii::t('app', '');?></th>
                 </tr>
                 </thead>
 
@@ -145,29 +145,28 @@ $create = Html::a(
                         <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
                             <?php
 
-                            
-                                echo Html::a(
-                                    'Test',
-                                    Url::base(true).$modelDetailItem->asset_url,
-                                    ['class' => LabelHelper::getButtonCssPlus()]
-                                );
-
-                            //Html::a('Create More', "https://face.com/", ['class' => 'btn btn-primary', 'role' => 'modal-remote']);
-
-
-                            //$modelDetailItem->asset_url;
+                                if(empty($modelDetailItem->asset_name)){
+                                    echo '<i>Null</i>';
+                                } else {
+                                    $textLink  = Yii::$app->urlManager->baseUrl.$modelDetailItem->getExtractUrl();
+                                    echo Html::a(
+                                        'Open',
+                                        str_replace('admin','frontend/web',$textLink),
+                                        ['class' => LabelHelper::getButtonCssPlus()]
+                                    );
+                                }
                             ?>
                         </td>
                         <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
                             <?php
                                 if($modelDetailItem->asset_name==null){
                                     echo Html::a(
-                                        '<i class="fas fa-upload"></i> Upload',
+                                        '<i class="fas fa-upload"></i>',
                                         ['schedule-detail/update','id'=>$modelDetailItem->id],
                                         ['class' => LabelHelper::getButtonCssPlus()]
                                     );
                                 } else {
-                                    echo Html::a('<i class="fas fa-trash-alt"></i> Asset',
+                                    echo Html::a('<i class="fas fa-trash-alt"></i>',
                                         ['schedule-detail/delete-file', 'id' => $modelDetailItem->id], [
                                         'class' => LabelHelper::getButtonCssMinus(),
                                         'data' => [
