@@ -117,17 +117,17 @@ return [
 
             'controllerMap' => [
                 'registration' => [
-                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'class' => \dektrium\user\controllers\RegistrationController::class,
                     'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_REGISTER => function ($e) {
                         Yii::$app->response->redirect(array('/user/security/login'))->send();
                         Yii::$app->end();
                     },
-                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'class' => \dektrium\user\controllers\RegistrationController::class,
                     'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_CONFIRM => function ($e) {
                         Yii::$app->response->redirect(array('/user/security/login'))->send();
                         Yii::$app->end();
                     },
-                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'class' => \dektrium\user\controllers\RegistrationController::class,
                     'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_RESEND => function ($e) {
                         Yii::$app->response->redirect(array('/user/security/login'))->send();
                         Yii::$app->end();
@@ -139,7 +139,7 @@ return [
             //CHECK MAILER IN MAIN-LOCAL.PHP
             'mailer' => [
                 'viewPath' => '@common/mail',
-                'sender' => ['no-reply@smanmba.sch.id' => 'PSB SMAN Modal Bangsa Arun']
+                'sender' => ['no-reply@smanmba.sch.id' => 'Sender']
             ]
         ],
 

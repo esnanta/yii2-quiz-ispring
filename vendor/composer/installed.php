@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-cbt-ispring',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '081f03e7016bbde0c1932ade25d30522a09f1bb3',
+        'reference' => 'aba6491de6df61ae2de8ac2e3f05bf021cae5779',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -328,7 +328,7 @@
         'esnanta/yii2-cbt-ispring' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '081f03e7016bbde0c1932ade25d30522a09f1bb3',
+            'reference' => 'aba6491de6df61ae2de8ac2e3f05bf021cae5779',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -431,6 +431,17 @@
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../kartik-v/yii2-bootstrap4-dropdown',
             'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'kartik-v/yii2-bootstrap5-dropdown' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '459e4c06c64e49f89ac372ce7c2cabb961f56ec9',
+            'type' => 'yii2-extension',
+            'install_path' => __DIR__ . '/../kartik-v/yii2-bootstrap5-dropdown',
+            'aliases' => array(
+                0 => '1.0.x-dev',
+            ),
             'dev_requirement' => false,
         ),
         'kartik-v/yii2-builder' => array(

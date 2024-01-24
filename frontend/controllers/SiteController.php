@@ -2,16 +2,12 @@
 
 namespace frontend\controllers;
 
-use backend\models\TestResult;
-use common\helper\CacheCloud;
+use backend\models\Participant;
 use common\helper\ReadFilter;
-use common\models\LoginForm;
+use common\models\LoginParticipantForm;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
-use QuizReportFactory;
-use QuizResults;
-use RequestParametersParser;
 use Yii;
 
 use yii\web\BadRequestHttpException;
@@ -25,6 +21,8 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+
+    private $username = null;
     /**
      * {@inheritdoc}
      */
@@ -48,7 +46,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -88,12 +86,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['user/login']);
-        } else {
 
+        //https://stackoverflow.com/questions/62553927/facing-issue-with-identity-object-after-login-while-using-multiple-user-identity
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        } else {
+            $participant = Participant::findone(['id'=>Yii::$app->user->id]);
             //$officeId   = CacheCloud::getInstance()->getOfficeId();
-            return $this->render('index');
+            return $this->render('index',[
+                'participant'=>$participant
+            ]);
         }
     }
     /**
@@ -103,13 +105,14 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
-        $model = new LoginForm();
+        $model = new LoginParticipantForm();
+
+        $model->username = 'U0078294733';
+        $model->password = '1b832';
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect('index');
         } else {
             return $this->render('login', [
                 'model' => $model,

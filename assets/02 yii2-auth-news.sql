@@ -9,6 +9,7 @@ delete from tx_auth_item;
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values 
 ('admin',1,'Admin',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('reguler',1,'Reguler',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+('participant',1,'Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('guest',1,'Guest',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 

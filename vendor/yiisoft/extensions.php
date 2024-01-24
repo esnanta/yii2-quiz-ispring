@@ -538,4 +538,13 @@ return array (
       '@Victor78/Zipper' => $vendorDir . '/victor78/yii2-zipper/src',
     ),
   ),
+  'kartik-v/yii2-bootstrap5-dropdown' => 
+  array (
+    'name' => 'kartik-v/yii2-bootstrap5-dropdown',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@kartik/bs5dropdown' => $vendorDir . '/kartik-v/yii2-bootstrap5-dropdown/src',
+    ),
+  ),
 );

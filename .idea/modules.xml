@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../cbt/.idea/cbt.iml" filepath="$PROJECT_DIR$/../cbt/.idea/cbt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/yii2-cbt-ispring.iml" filepath="$PROJECT_DIR$/.idea/yii2-cbt-ispring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" filepath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" />
     </modules>
   </component>
 </project>

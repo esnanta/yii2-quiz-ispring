@@ -32,14 +32,14 @@ if (!Yii::$app->user->isGuest) {
                 if (!Yii::$app->user->isGuest) :
                     ?>
                     <a class="btn btn-md btn-success" style="margin-right:2px"
-                       href="<?= str_replace('', '', Url::to(['fuel-sales/create'])) ?>">
-                        Penjualan
+                       href="<?= str_replace('', '', Url::to(['schedule/index'])) ?>">
+                        <?= Yii::t('app', 'Schedule') ?>
                     </a>
 
                     <a class="btn btn-md btn-primary"
                             href="<?= Url::to(['admin/site/index']) ?>"
                        target="_blank">
-                        Backend
+                        <?= Yii::t('app', 'Admin') ?>
                     </a>
 
 
@@ -61,14 +61,15 @@ if (!Yii::$app->user->isGuest) {
 
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                         <div class="message-body">
-                            <?php if (!Yii::$app->user->isGuest) : ?>
+                            <?php if (!Yii::$app->user->isGuest) { ?>
                                 <a href="<?= Url::to(['admin/staff/view', 'id' => $model->id]) ?>"
                                    class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user fs-6"></i>
                                     <p class="mb-0 fs-3">My Profile</p>
                                 </a>
 
-                                <?= Html::a(
+                                <?=
+                                Html::a(
                                     'Logout',
                                     ['/user/logout'],
                                     [
@@ -76,8 +77,19 @@ if (!Yii::$app->user->isGuest) {
                                         'data-confirm' => "Logout?",
                                         'class' => 'btn btn-outline-primary mx-3 mt-2 d-block'
                                     ]
-                                ) ?>
-                            <?php endif ?>
+                                )
+                                ?>
+                            <?php } else { ?>
+                            <?=
+                                Html::a(
+                                    'Admin',
+                                    ['/user/login'],
+                                    [
+                                        'class' => 'btn btn-outline-primary mx-3 mt-2 d-block'
+                                    ]
+                                )
+                            ?>
+                            <?php } ?>
                         </div>
 
                     </div>

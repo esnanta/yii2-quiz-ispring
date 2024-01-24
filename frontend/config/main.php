@@ -24,7 +24,18 @@ return [
     ],
     
     'components' => [
-        
+
+        'user' => [
+            'identityClass' => 'common\models\UserParticipant',
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+        ],
+
+        'session' => [
+            // this is the name of the session cookie used for login on the frontend
+            'name' => 'quiz-frontend',
+        ],
+
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'class' => 'common\components\Request',
@@ -45,52 +56,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
-        //DEFAULT
-//        'view' => [
-//            'theme' => [
-//                'pathMap' => [
-//                    '@app/views' => '@app/views',
-//                    '@dektrium/user/views' => '@app/views/user'
-//                ],
-//            ],
-//        ],
-
-        //BOOSTRAP 4
-//        'view' => [
-//            'theme' => [
-//                'pathMap' => [
-//                    '@app/views' => '@app/web/themes-b4/unify263-charity/views',
-//                    '@dektrium/user/views' => '@app/web/themes-b4/unify263-charity/views/user'
-//                ],
-//                'basePath' => '@app/web/themes-b4/unify263-charity',
-//                'baseUrl' => '@web/web/themes-b4/unify263-charity',
-//            ],
-//        ],
-        
-        
-//        'view' => [
-//            'theme' => [
-//                'pathMap' => [
-//                    '@app/views' => '@app/web/themes-b4/unify263-marketing/views',
-//                    '@dektrium/user/views' => '@app/web/themes-b4/unify263-marketing/views/user'
-//                ],
-//                'basePath' => '@app/web/themes-b4/unify263-marketing',
-//                'baseUrl' => '@web/web/themes-b4/unify263-marketing',
-//            ],
-//        ],
-        
-        //BOOSTRAP 5 - Unify 322 Customer-Stories
-//        'view' => [
-//            'theme' => [
-//                'pathMap' => [
-//                    '@app/views' => '@app/web/themes-b5/unify322-cust-stories/views',
-//                    '@dektrium/user/views' => '@app/web/themes-b5/unify322-cust-stories/views/user'
-//                ],
-//                'basePath' => '@app/web/themes-b5/unify322-cust-stories',
-//                'baseUrl' => '@web/web/themes-b5/unify322-cust-stories',
-//            ],
-//        ],
 
         //BOOSTRAP 5 - Modernize
         'view' => [

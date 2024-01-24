@@ -37,7 +37,9 @@ function getMenu($_menuName, $_classIcon): string
                 <?php if (!Yii::$app->user->isGuest) { ?>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
+                        <span class="hide-menu">
+                            Home
+                        </span>
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
@@ -49,6 +51,13 @@ function getMenu($_menuName, $_classIcon): string
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">CBT</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <?= Html::a(
+                            getMenu('Schedule', 'fa fa-angle-right'),
+                            ['/schedule/index'],
+                            ['class' => 'sidebar-link']
+                        ) ?>
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
@@ -72,7 +81,7 @@ function getMenu($_menuName, $_classIcon): string
                         <?=
                         Html::a(
                             getMenu('Logout', 'fa fa-sign-out'),
-                            ['/user/logout'],
+                            ['/site/logout'],
                             ['data-method' => 'POST', 'data-confirm' => "Logout?", 'class' => 'sidebar-link']
                         )
                         ?>
@@ -83,7 +92,13 @@ function getMenu($_menuName, $_classIcon): string
                         <span class="hide-menu">AUTH</span>
                     </li>
                     <li class="sidebar-item">
-                    <?= Html::a(getMenu('Login', 'fa fa-sign-in'), ['/user/login'], ['class' => 'sidebar-link']) ?>
+                    <?=
+                    Html::a(
+                        getMenu('Login', 'fa fa-sign-in'),
+                        ['/site/login'],
+                        ['class' => 'sidebar-link']
+                    )
+                    ?>
                     </li>
 
                 <?php } ?>

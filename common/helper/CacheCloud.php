@@ -2,7 +2,6 @@
 namespace common\helper;
 
 use backend\models\AuthAssignment;
-use backend\models\Office;
 use backend\models\Staff;
 
 
@@ -17,13 +16,13 @@ use Yii;
 class CacheCloud {
 
     private static $instance = null;
-    private $cacheOfficeId;
-    private $cacheOfficeTitle;
-    private $cacheOfficeUniqueId;
-    private $cacheStaffId;
-    private $cacheStaffTitle;
-    private $cacheAuthItemName;
-    private $combineCache;
+    private string $cacheOfficeId;
+    private string $cacheOfficeTitle;
+    private string $cacheOfficeUniqueId;
+    private string $cacheStaffId;
+    private string $cacheStaffTitle;
+    private string $cacheAuthItemName;
+    private string $combineCache;
     
     private $userId;
 

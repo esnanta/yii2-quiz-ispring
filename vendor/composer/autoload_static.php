@@ -108,6 +108,7 @@ class ComposerStaticInit5a032a54ad0408e06e74fe250037b1b9
             'kartik\\date\\' => 12,
             'kartik\\color\\' => 13,
             'kartik\\builder\\' => 15,
+            'kartik\\bs5dropdown\\' => 19,
             'kartik\\bs4dropdown\\' => 19,
             'kartik\\base\\' => 12,
             'kartik\\alert\\' => 13,
@@ -467,6 +468,10 @@ class ComposerStaticInit5a032a54ad0408e06e74fe250037b1b9
         'kartik\\builder\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-builder/src',
+        ),
+        'kartik\\bs5dropdown\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-bootstrap5-dropdown/src',
         ),
         'kartik\\bs4dropdown\\' => 
         array (

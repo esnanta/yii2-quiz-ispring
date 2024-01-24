@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use backend\models\Office;
 use backend\models\TestResult;
 use common\helper\CacheCloud;
+use common\models\LoginParticipantForm;
 use Yii;
 use backend\models\Assessment;
 use backend\models\AssessmentSearch;
@@ -277,6 +278,5 @@ class AssessmentController extends Controller
         $logMessage .= ',' . PHP_EOL;
         @file_put_contents($logFilename, $logMessage, FILE_APPEND);
     }
-
 
 }

@@ -4,15 +4,20 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/backend/tests" isTestSource="true" packagePrefix="backend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/backend/tests/_support" isTestSource="true" packagePrefix="backend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/2274fc21/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/2f252f49/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/40b9ab95/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/a3358d1c/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/ab48894d/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/dd601be4/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <sourceFolder url="file://$MODULE_DIR$/common/tests" isTestSource="true" packagePrefix="common\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/common/tests/_support" isTestSource="true" packagePrefix="common\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/frontend/web/assets/2274fc21/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
+      <sourceFolder url="file://$MODULE_DIR$/frontend/web/assets/a3358d1c/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/2f252f49/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
-      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/ab48894d/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
-      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/dd601be4/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/alchemy/zippy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bajadev/yii2-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/bootstrap" />
@@ -37,6 +42,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/verify" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/components/flag-icon-css" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/collections" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
@@ -54,6 +61,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/dependent-dropdown" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/php-date-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-bootstrap4-dropdown" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-builder" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-date-range" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-datecontrol" />
@@ -109,6 +117,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/pdepend/pdepend" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-cs-fixer/diff" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpmd/phpmd" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpspec/php-diff" />
@@ -119,6 +128,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-client" />
@@ -149,6 +159,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/browser-kit" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/config" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/css-selector" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dependency-injection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/deprecation-contracts" />
@@ -174,29 +185,23 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/thtmorais/yii2-test" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/victor78/yii2-zipper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/victor78/zippy-ext" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/warrence/yii2-kartikgii" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yii2tech/ar-softdelete" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yii2tech/spreadsheet" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-bootstrap5" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-debug" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-faker" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-gii" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-jui" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-authclient" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-bootstrap4" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-bootstrap5" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-debug" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-faker" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-gii" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-httpclient" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-imagine" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-jui" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-symfonymailer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/alchemy/zippy" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/collections" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/php-cs-fixer/diff" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/contracts" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/victor78/yii2-zipper" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/victor78/zippy-ext" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

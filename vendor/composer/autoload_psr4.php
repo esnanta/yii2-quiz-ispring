@@ -64,6 +64,7 @@ return array(
     'kartik\\date\\' => array($vendorDir . '/kartik-v/yii2-widget-datepicker/src'),
     'kartik\\color\\' => array($vendorDir . '/kartik-v/yii2-widget-colorinput/src'),
     'kartik\\builder\\' => array($vendorDir . '/kartik-v/yii2-builder/src'),
+    'kartik\\bs5dropdown\\' => array($vendorDir . '/kartik-v/yii2-bootstrap5-dropdown/src'),
     'kartik\\bs4dropdown\\' => array($vendorDir . '/kartik-v/yii2-bootstrap4-dropdown/src'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base/src'),
     'kartik\\alert\\' => array($vendorDir . '/kartik-v/yii2-widget-alert/src'),

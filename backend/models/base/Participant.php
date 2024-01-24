@@ -17,6 +17,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $identity_number
  * @property string $username
  * @property string $password
+ * @property string $auth_key
+ * @property string $email
+ * @property integer $status
+ * @property string $last_login_at
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -69,11 +73,12 @@ class Participant extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'group_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title', 'identity_number'], 'string', 'max' => 100],
+            [['office_id', 'group_id', 'status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['last_login_at', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title', 'identity_number', 'email'], 'string', 'max' => 100],
             [['username'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 10],
+            [['auth_key'], 'string', 'max' => 32],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -112,6 +117,10 @@ class Participant extends \yii\db\ActiveRecord
             'identity_number' => Yii::t('app', 'Identity Number'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
+            'last_login_at' => Yii::t('app', 'Last Login At'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),
