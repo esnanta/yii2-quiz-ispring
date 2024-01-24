@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use backend\models\Participant;
+use backend\models\Schedule;
 use common\helper\ReadFilter;
 use common\models\LoginParticipantForm;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
@@ -86,15 +87,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        //https://stackoverflow.com/questions/62553927/facing-issue-with-identity-object-after-login-while-using-multiple-user-identity
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         } else {
             $participant = Participant::findone(['id'=>Yii::$app->user->id]);
-            //$officeId   = CacheCloud::getInstance()->getOfficeId();
+            $schedules = Schedule::find()
+                ->where(['group_id'=>$participant->group_id])
+                ->all();
             return $this->render('index',[
-                'participant'=>$participant
+                'participant'=>$participant,
+                'schedules' => $schedules
             ]);
         }
     }

@@ -134,6 +134,10 @@ class ComposerStaticInit5a032a54ad0408e06e74fe250037b1b9
             'bajadev\\ckeditor\\' => 17,
             'backend\\tests\\' => 14,
         ),
+        'a' => 
+        array (
+            'aneeshikmat\\yii2\\Yii2TimerCountDown\\' => 36,
+        ),
         'Z' => 
         array (
             'ZipStream\\' => 10,
@@ -523,6 +527,10 @@ class ComposerStaticInit5a032a54ad0408e06e74fe250037b1b9
         array (
             0 => __DIR__ . '/../..' . '/backend/tests',
             1 => __DIR__ . '/../..' . '/backend/tests/_support',
+        ),
+        'aneeshikmat\\yii2\\Yii2TimerCountDown\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aneeshikmat/yii2-time-down-counter',
         ),
         'ZipStream\\' => 
         array (

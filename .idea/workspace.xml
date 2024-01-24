@@ -5,85 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/models/Identity.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/models/UserParticipant.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleDetailController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule-detail/_form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule-detail/_search.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule-detail/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule-detail/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule-detail/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule-detail/view.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/_form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/_formScheduleDetail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/_script.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/_search.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/view.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/.github/CODE_OF_CONDUCT.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/.github/CONTRIBUTING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/.github/ISSUE_TEMPLATE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/.github/PULL_REQUEST_TEMPLATE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/.github/stale.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/CHANGE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/LICENSE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/ButtonDropdown.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/Dropdown.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/DropdownAsset.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/assets/css/dropdown.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/assets/css/dropdown.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/assets/js/dropdown.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown/src/assets/js/dropdown.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/01 yii2-cbt-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01 yii2-cbt-ispring.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/02 yii2-auth-news.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/02 yii2-auth-news.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ArchiveCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ArchiveCategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/EmploymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/EmploymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/GroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/GroupController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/OfficeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/OfficeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/RoomController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/RoomController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/StaffController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/StaffController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/SubjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/SubjectController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ThemeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ThemeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Participant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/base/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/base/Participant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/CacheCloud.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/CacheCloud.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/yiisoft/extensions.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/yiisoft/extensions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar.asc" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar.asc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +42,9 @@
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable path="composer" />
+    </execution>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -307,6 +245,7 @@
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap5" />
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-debug" />
       <path value="$PROJECT_DIR$/vendor/php-cs-fixer/diff" />
+      <path value="$PROJECT_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -360,6 +299,8 @@
       <workItem from="1705991651242" duration="6677000" />
       <workItem from="1706011873060" duration="15167000" />
       <workItem from="1706079530868" duration="10876000" />
+      <workItem from="1706099938255" duration="3396000" />
+      <workItem from="1706106570501" duration="7002000" />
     </task>
     <servers />
   </component>

@@ -42,6 +42,7 @@
         "bajadev/yii2-ckeditor": "*",
         "budyaga/yii2-cropper": "*",
         "victor78/yii2-zipper": "~0.0.4",
+        "aneeshikmat/yii2-time-down-counter": "v1.1.0-stable",
 
         "mootensai/yii2-enhanced-gii": "dev-master",
         "warrence/yii2-kartikgii": "dev-master"

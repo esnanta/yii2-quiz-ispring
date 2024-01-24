@@ -77,6 +77,7 @@ return array(
     'budyaga\\cropper\\' => array($vendorDir . '/budyaga/yii2-cropper'),
     'bajadev\\ckeditor\\' => array($vendorDir . '/bajadev/yii2-ckeditor'),
     'backend\\tests\\' => array($baseDir . '/backend/tests', $baseDir . '/backend/tests/_support'),
+    'aneeshikmat\\yii2\\Yii2TimerCountDown\\' => array($vendorDir . '/aneeshikmat/yii2-time-down-counter'),
     'ZipStream\\' => array($vendorDir . '/maennchen/zipstream-php/src'),
     'Victor78\\ZippyExt\\' => array($vendorDir . '/victor78/zippy-ext/src'),
     'Victor78\\Zipper\\' => array($vendorDir . '/victor78/yii2-zipper/src'),

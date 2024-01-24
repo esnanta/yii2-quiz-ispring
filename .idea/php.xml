@@ -212,6 +212,7 @@
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap5" />
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-debug" />
       <path value="$PROJECT_DIR$/vendor/php-cs-fixer/diff" />
+      <path value="$PROJECT_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4">

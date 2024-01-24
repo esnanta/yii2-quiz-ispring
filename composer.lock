@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d014bca6f65ef8afb9882ca49d67e27",
+    "content-hash": "24d5d79cbc66259997c3a3bd4e8423d6",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -73,6 +73,55 @@
                 "source": "https://github.com/alchemy-fr/Zippy/tree/master"
             },
             "time": "2018-02-22T13:58:36+00:00"
+        },
+        {
+            "name": "aneeshikmat/yii2-time-down-counter",
+            "version": "v1.1.0-stable",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aneeshikmat/yii2-time-down-counter.git",
+                "reference": "aa0aa49b257f191cd70e11b2ff2ea9693c5711ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aneeshikmat/yii2-time-down-counter/zipball/aa0aa49b257f191cd70e11b2ff2ea9693c5711ae",
+                "reference": "aa0aa49b257f191cd70e11b2ff2ea9693c5711ae",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-widget",
+            "autoload": {
+                "psr-4": {
+                    "aneeshikmat\\yii2\\Yii2TimerCountDown\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anees Hikmat",
+                    "email": "aneeshikmat@gmail.com"
+                }
+            ],
+            "description": "Widget for yii2, to start count down timer with a lot of options, This widget build dependence of timeDownCounter JS library",
+            "keywords": [
+                "counter",
+                "down",
+                "time",
+                "widget",
+                "yii2",
+                "yii2 countdown timer",
+                "yii2 timer"
+            ],
+            "support": {
+                "issues": "https://github.com/aneeshikmat/yii2-time-down-counter/issues",
+                "source": "https://github.com/aneeshikmat/yii2-time-down-counter/tree/v1.1.0-stable"
+            },
+            "time": "2020-02-14T12:37:16+00:00"
         },
         {
             "name": "bajadev/yii2-ckeditor",
@@ -185,7 +234,7 @@
             "version": "3.6.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "91ef2d8836342875f2519b5815197ea0f23613cf"
             },
             "dist": {
@@ -8642,16 +8691,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.56",
+            "version": "1.10.57",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "27816a01aea996191ee14d010f325434c0ee76fa"
+                "reference": "1627b1d03446904aaa77593f370c5201d2ecc34e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/27816a01aea996191ee14d010f325434c0ee76fa",
-                "reference": "27816a01aea996191ee14d010f325434c0ee76fa",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1627b1d03446904aaa77593f370c5201d2ecc34e",
+                "reference": "1627b1d03446904aaa77593f370c5201d2ecc34e",
                 "shasum": ""
             },
             "require": {
@@ -8700,7 +8749,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-15T10:43:00+00:00"
+            "time": "2024-01-24T11:51:34+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

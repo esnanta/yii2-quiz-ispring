@@ -146,7 +146,7 @@ $create = Html::a(
                             <?php
 
                                 if(empty($modelDetailItem->asset_name)){
-                                    echo '<i>Null</i>';
+                                    echo '<i>Asset not available</i>';
                                 } else {
                                     $textLink  = Yii::$app->urlManager->baseUrl.$modelDetailItem->getExtractUrl();
                                     echo Html::a(

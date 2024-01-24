@@ -72,6 +72,58 @@
             "install-path": "../alchemy/zippy"
         },
         {
+            "name": "aneeshikmat/yii2-time-down-counter",
+            "version": "v1.1.0-stable",
+            "version_normalized": "1.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aneeshikmat/yii2-time-down-counter.git",
+                "reference": "aa0aa49b257f191cd70e11b2ff2ea9693c5711ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aneeshikmat/yii2-time-down-counter/zipball/aa0aa49b257f191cd70e11b2ff2ea9693c5711ae",
+                "reference": "aa0aa49b257f191cd70e11b2ff2ea9693c5711ae",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "time": "2020-02-14T12:37:16+00:00",
+            "type": "yii2-widget",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "aneeshikmat\\yii2\\Yii2TimerCountDown\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anees Hikmat",
+                    "email": "aneeshikmat@gmail.com"
+                }
+            ],
+            "description": "Widget for yii2, to start count down timer with a lot of options, This widget build dependence of timeDownCounter JS library",
+            "keywords": [
+                "counter",
+                "down",
+                "time",
+                "widget",
+                "yii2",
+                "yii2 countdown timer",
+                "yii2 timer"
+            ],
+            "support": {
+                "issues": "https://github.com/aneeshikmat/yii2-time-down-counter/issues",
+                "source": "https://github.com/aneeshikmat/yii2-time-down-counter/tree/v1.1.0-stable"
+            },
+            "install-path": "../aneeshikmat/yii2-time-down-counter"
+        },
+        {
             "name": "bajadev/yii2-ckeditor",
             "version": "1.3.3",
             "version_normalized": "1.3.3.0",
@@ -6349,17 +6401,17 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.56",
-            "version_normalized": "1.10.56.0",
+            "version": "1.10.57",
+            "version_normalized": "1.10.57.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "27816a01aea996191ee14d010f325434c0ee76fa"
+                "reference": "1627b1d03446904aaa77593f370c5201d2ecc34e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/27816a01aea996191ee14d010f325434c0ee76fa",
-                "reference": "27816a01aea996191ee14d010f325434c0ee76fa",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1627b1d03446904aaa77593f370c5201d2ecc34e",
+                "reference": "1627b1d03446904aaa77593f370c5201d2ecc34e",
                 "shasum": ""
             },
             "require": {
@@ -6368,7 +6420,7 @@
             "conflict": {
                 "phpstan/phpstan-shim": "*"
             },
-            "time": "2024-01-15T10:43:00+00:00",
+            "time": "2024-01-24T11:51:34+00:00",
             "bin": [
                 "phpstan",
                 "phpstan.phar"
