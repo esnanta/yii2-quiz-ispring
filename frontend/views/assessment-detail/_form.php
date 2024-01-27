@@ -7,12 +7,12 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Participant $model
+ * @var backend\models\AssessmentDetail $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="participant-form">
+<div class="assessment-detail-form">
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); echo Form::widget([
 
@@ -23,7 +23,9 @@ use kartik\datecontrol\DateControl;
 
             'office_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Office ID...']],
 
-            'group_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Group ID...']],
+            'assessment_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Assessment ID...']],
+
+            'participant_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Participant ID...']],
 
             'created_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter created_by...']],
 
@@ -35,19 +37,33 @@ use kartik\datecontrol\DateControl;
 
             'verlock' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Verlock...']],
 
+            'earned_points' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Earned Points...', 'maxlength' => 18]],
+
+            'passing_score' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Passing Score...', 'maxlength' => 18]],
+
+            'passing_score_percent' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Passing Score Percent...', 'maxlength' => 18]],
+
+            'gained_score' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Gained Score...', 'maxlength' => 18]],
+
             'created_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],
 
             'updated_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],
 
             'deleted_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],
 
-            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
+            'app_version' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter App Version...', 'maxlength' => 50]],
 
-            'identity_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Identity Number...', 'maxlength' => 100]],
+            'quiz_title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Quiz Title...', 'maxlength' => 50]],
+
+            'quiz_type' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Quiz Type...', 'maxlength' => 50]],
 
             'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Username...', 'maxlength' => 50]],
 
-            'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => 'Enter Password...', 'maxlength' => 10]],
+            'time_limit' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Time Limit...', 'maxlength' => 50]],
+
+            'used_time' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Used Time...', 'maxlength' => 50]],
+
+            'time_spent' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Time Spent...', 'maxlength' => 50]],
 
             'uuid' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Uuid...', 'maxlength' => 36]],
 

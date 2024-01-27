@@ -223,8 +223,6 @@ class ScheduleController extends Controller
                 $transaction->rollBack();
                 throw $e;
             }
-
-            return $this->redirect(['index']);
         }
         else{
             MessageHelper::getFlashLoginInfo();

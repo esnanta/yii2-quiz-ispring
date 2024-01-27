@@ -5,21 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentDetailController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/views/assessment/_formAssessmentDetail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01 yii2-cbt-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01 yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/04 yii2-auth-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/04 yii2-auth-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/05 yii2-auth-ispring_rule.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/05 yii2-auth-ispring_rule.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/AssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/AssessmentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/AssessmentSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/base/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/base/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/base/AssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/_formAssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/_formAssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/_search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_search.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-admin-unify/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-admin-unify/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleDetailController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/TestResultController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/_search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/read.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule-detail/_form.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule-detail/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/_search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule-detail/create.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule-detail/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule-detail/update.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule-detail/view.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/_form.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/_formScheduleDetail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/_script.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/_script.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/_search.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/create.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/update.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/view.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar.asc" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpstan/phpstan/phpstan.phar.asc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,22 +300,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.web.browsers&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/htdocs/application/yii2-quiz-ispring/frontend/views",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\views" />
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="CodeceptionConfigurationType" factoryName="Codeception">
       <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/codeception.yml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
@@ -301,6 +351,14 @@
       <workItem from="1706079530868" duration="10876000" />
       <workItem from="1706099938255" duration="3396000" />
       <workItem from="1706106570501" duration="7002000" />
+      <workItem from="1706165840804" duration="595000" />
+      <workItem from="1706188129652" duration="865000" />
+      <workItem from="1706190038288" duration="2596000" />
+      <workItem from="1706201517172" duration="2553000" />
+      <workItem from="1706260231215" duration="2479000" />
+      <workItem from="1706275916398" duration="10105000" />
+      <workItem from="1706290476159" duration="3034000" />
+      <workItem from="1706325251638" duration="5197000" />
     </task>
     <servers />
   </component>

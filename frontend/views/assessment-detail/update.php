@@ -2,14 +2,16 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\Assessment */
+/**
+ * @var yii\web\View $this
+ * @var backend\models\AssessmentDetail $model
+ */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Assessment',
-]) . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+    'modelClass' => 'Assessment Detail',
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 
@@ -18,15 +20,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="panel-title">
             Please fill out the form below
             <div class="pull-right">
-                Assessment            </div>
+                AssessmentDetail            </div>
         </div>
     </div>
     <div class="panel-body">
-        <div class="assessment-update">
+        <div class="assessment-detail-update">
             <?= $this->render('_form', [
                 'model' => $model,
-                'scheduleList' => $scheduleList,
             ]) ?>
         </div>
     </div>
 </div>
+
+
+

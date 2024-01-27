@@ -13,7 +13,9 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property integer $office_id
  * @property integer $assessment_id
+ * @property integer $schedule_detail_id
  * @property integer $participant_id
+ * @property integer $subject_id
  * @property string $app_version
  * @property string $earned_points
  * @property string $passing_score
@@ -22,9 +24,9 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $quiz_title
  * @property string $quiz_type
  * @property string $username
- * @property integer $time_limit
- * @property integer $used_time
- * @property integer $time_spent
+ * @property string $time_limit
+ * @property string $used_time
+ * @property string $time_spent
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -38,6 +40,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \backend\models\Assessment $assessment
  * @property \backend\models\Office $office
  * @property \backend\models\Participant $participant
+ * @property \backend\models\ScheduleDetail $scheduleDetail
+ * @property \backend\models\Subject $subject
  */
 class AssessmentDetail extends \yii\db\ActiveRecord
 {
@@ -67,7 +71,9 @@ class AssessmentDetail extends \yii\db\ActiveRecord
         return [
             'assessment',
             'office',
-            'participant'
+            'participant',
+            'scheduleDetail',
+            'subject'
         ];
     }
 
@@ -77,10 +83,10 @@ class AssessmentDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'assessment_id', 'participant_id', 'time_limit', 'used_time', 'time_spent', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'assessment_id', 'schedule_detail_id', 'participant_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['app_version', 'quiz_title', 'quiz_type', 'username'], 'string', 'max' => 50],
+            [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -115,7 +121,9 @@ class AssessmentDetail extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'assessment_id' => Yii::t('app', 'Assessment ID'),
+            'schedule_detail_id' => Yii::t('app', 'Schedule Detail ID'),
             'participant_id' => Yii::t('app', 'Participant ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
             'app_version' => Yii::t('app', 'App Version'),
             'earned_points' => Yii::t('app', 'Earned Points'),
             'passing_score' => Yii::t('app', 'Passing Score'),
@@ -155,6 +163,22 @@ class AssessmentDetail extends \yii\db\ActiveRecord
     public function getParticipant()
     {
         return $this->hasOne(\backend\models\Participant::className(), ['id' => 'participant_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScheduleDetail()
+    {
+        return $this->hasOne(\backend\models\ScheduleDetail::className(), ['id' => 'schedule_detail_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubject()
+    {
+        return $this->hasOne(\backend\models\Subject::className(), ['id' => 'subject_id']);
     }
     
     /**

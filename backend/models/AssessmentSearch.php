@@ -6,28 +6,40 @@ use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use kartik\daterange\DateRangeBehavior;
 use backend\models\Assessment;
 
 /**
- * AssessmentSearch represents the model behind the search form about `backend\models\Assessment`.
+ * backend\models\AssessmentSearch represents the model behind the search form about `backend\models\Assessment`.
  */
-class AssessmentSearch extends Assessment
+ class AssessmentSearch extends Assessment
 {
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['id', 'office_id', 'created_by', 'updated_by', 'verlock', 'is_deleted', 'deleted_by'], 'integer'],
-            [['test1', 'test2', 'test3', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'schedule_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
     public function search($params)
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
@@ -37,26 +49,30 @@ class AssessmentSearch extends Assessment
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
+            'schedule_id' => $this->schedule_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'verlock' => $this->verlock,
             'is_deleted' => $this->is_deleted,
             'deleted_at' => $this->deleted_at,
             'deleted_by' => $this->deleted_by,
+            'verlock' => $this->verlock,
         ]);
 
-        $query->andFilterWhere(['like', 'test1', $this->test1])
-            ->andFilterWhere(['like', 'test2', $this->test2])
-            ->andFilterWhere(['like', 'test3', $this->test3])
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;

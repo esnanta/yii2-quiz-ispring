@@ -12,6 +12,7 @@
   05 assessment
   06 schedule
   07 schedule detail
+  08 assessment detail
 
   xx Ispring Master
   yy Ispring Transaction
@@ -84,6 +85,15 @@ values
     ('view-assessment',2,'View Assessment',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('delete-assessment',2,'Delete Assessment',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('report-assessment',2,'Report Assessment',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
+    ('index-assessmentdetail',2,'Index Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-assessmentdetail',2,'Create Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-assessmentdetail',2,'Update Assessment  Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-assessmentdetail',2,'View Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-assessmentdetail',2,'Delete Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-assessmentdetail',2,'Report Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values

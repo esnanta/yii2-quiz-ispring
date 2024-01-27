@@ -2,15 +2,12 @@
 
 use yii\helpers\Html;
 
-/**
- * @var yii\web\View $this
- * @var backend\models\Assessment $model
- */
 
-$this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Assessment',
-]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessments'), 'url' => ['index']];
+/* @var $this yii\web\View */
+/* @var $model backend\models\Assessment */
+
+$this->title = Yii::t('app', 'Create Assessment');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -24,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="assessment-create">
             <?= $this->render('_form', [
                 'model' => $model,
+                'scheduleList' => $scheduleList,
             ]) 
             ?>
         </div>

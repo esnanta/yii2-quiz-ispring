@@ -3,13 +3,12 @@
 namespace frontend\controllers;
 
 use backend\models\Office;
-use backend\models\TestResult;
+use backend\models\Schedule;
+use backend\models\Subject;
 use common\helper\CacheCloud;
-use common\models\LoginParticipantForm;
 use Yii;
 use backend\models\Assessment;
 use backend\models\AssessmentSearch;
-use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
@@ -23,7 +22,6 @@ use common\helper\MessageHelper;
  */
 class AssessmentController extends Controller
 {
-    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -43,18 +41,19 @@ class AssessmentController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->can('index-assessment')){
-            $searchModel = new AssessmentSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $searchModel = new AssessmentSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
             return $this->render('index', [
-                'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList'=>$officeList
+                'dataProvider' => $dataProvider,
+                'scheduleList' => $scheduleList,
             ]);
         }
         else{
@@ -72,18 +71,19 @@ class AssessmentController extends Controller
     {
         if(Yii::$app->user->can('view-assessment')){
             $model = $this->findModel($id);
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
+            $providerAssessmentDetail = new \yii\data\ArrayDataProvider([
+                'allModels' => $model->assessmentDetails,
+            ]);
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $model->office_id])
                 ->asArray()->all(), 'id', 'title');
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('view', [
-                    'model' => $model,
-                    'officeList' => $officeList
-                ]);
-            }
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'providerAssessmentDetail' => $providerAssessmentDetail,
+                'scheduleList' => $scheduleList,
+            ]);
         }
         else{
             MessageHelper::getFlashAccessDenied();
@@ -99,27 +99,21 @@ class AssessmentController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-assessment')){
+            $model = new Assessment();
+
             $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            $model = new Assessment;
-            $model->office_id = $officeId;
-
-            try {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } 
-                else {
-                    return $this->render('create', [
-                        'model' => $model,
-                        'officeList' => $officeList
-                    ]);
-                }
-            }
-            catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+            if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'scheduleList' => $scheduleList,
+                ]);
             }
         }
         else{
@@ -137,23 +131,19 @@ class AssessmentController extends Controller
     public function actionUpdate($id)
     {
         if(Yii::$app->user->can('update-assessment')){
-            try {
-                $model = $this->findModel($id);
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+            $model = $this->findModel($id);
 
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('update', [
-                        'model' => $model,
-                        'officeList' => $officeList
-                    ]);
-                }
-            }
-            catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
+            if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                    'scheduleList' => $scheduleList,
+                ]);
             }
         }
         else{
@@ -171,9 +161,22 @@ class AssessmentController extends Controller
     public function actionDelete($id)
     {
         if(Yii::$app->user->can('delete-assessment')){
-            $this->findModel($id)->delete();
+            $model          = $this->findModel($id);
+            $modelDetails   = $model->assessmentDetails;
 
-            return $this->redirect(['index']);
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {
+                foreach ($modelDetails as $modelDetailItem) {
+                    $modelDetailItem->delete();
+                }
+                $model->delete();
+                $transaction->commit();
+                MessageHelper::getFlashDeleteSuccess();
+                return $this->redirect(['index']);
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
         }
         else{
             MessageHelper::getFlashLoginInfo();
@@ -181,6 +184,7 @@ class AssessmentController extends Controller
         }
     }
 
+    
     /**
      * Finds the Assessment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -193,90 +197,30 @@ class AssessmentController extends Controller
         if (($model = Assessment::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-
-    public function actionRead()
+    
+    /**
+    * Action to load a tabular form grid
+    * for AssessmentDetail
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddAssessmentDetail()
     {
-
-        header('Access-Control-Allow-Origin: *');
-        if ($_SERVER['REQUEST_METHOD'] != 'POST')
-        {
-            echo "POST request expected";
-            return;
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('AssessmentDetail');
+            if (!empty($row)) {
+                $row = array_values($row);
+            }
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formAssessmentDetail', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
-        error_reporting(E_ALL && E_WARNING && E_NOTICE);
-        ini_set('display_errors', 0);
-        ini_set('log_errors', 1);
-
-        require_once Yii::getAlias('@common').'\quizresult\includes\common.inc.php';
-//        require_once Yii::getAlias('@common').'\quizresult\classes\QuizResults.class.php';
-//        require_once Yii::getAlias('@common').'\quizresult\classes\QuizReportGenerator.class.php';
-//        require_once Yii::getAlias('@common').'\quizresult\classes\QuizDetails.class.php';
-
-//        $requestParameters = RequestParametersParser::getRequestParameters($_POST, !empty($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : null);
-//        $this->_log($requestParameters);
-
-        try
-        {
-//            $quizResults = new QuizResults();
-//            $quizResults->InitFromRequest($requestParameters);
-//            $generator = QuizReportFactory::CreateGenerator($quizResults, $requestParameters);
-//            $report = $generator->createReport();
-
-            $version                = $_POST['v'];
-            $earnedPoints           = $_POST['sp'];
-            $passingScore           = $_POST['ps'];
-            $passingScorePercent    = $_POST['psp'];
-            $gainedScore            = $_POST['tp'];
-            $quizTitle              = $_POST['qt'];
-            $quizType               = $_POST['t'];
-            $userId                 = $_POST['sid'];
-            $timeLimit              = $_POST['tl'];
-            $usedTime               = $_POST['ut'];
-            $timeSpent              = $_POST['fut'];
-
-            $assessment = new Assessment();
-            $assessment->office_id = 1;
-            $assessment->test1 =
-                'version = '.$version.'/'.'<br>'.
-                'earnedPoints = '.$earnedPoints.'/'.'<br>'.
-                'passingScore = '.$passingScore.'/'.'<br>'.
-                'passingScorePercent = '.$passingScorePercent.'/'.'<br>'.
-                'gainedScore = '.$gainedScore.'/'.'<br>'.
-                'quizTitle = '.$quizTitle.'/'.'<br>'.
-                'quizType = '.$quizType.'/'.'<br>'.
-                'userId = '.$userId.'/'.'<br>'.
-                'timeLimit = '.gmdate("H:i:s", $timeLimit).'/'.'<br>'.
-                'usedTime = '.gmdate("H:i:s", $usedTime).'/'.'<br>'.
-                'timeSpent = '.gmdate("H:i:s", $timeSpent);
-            $assessment->save();
-
-
-//            $dateTime = date('Y-m-d_H-i-s');
-//            $resultFilename = Yii::getAlias('@common') . "/quizresult/result/quiz_result_{$dateTime}.txt";
-//            @file_put_contents($resultFilename, $report);
-
-            //echo "OK";
-        }
-        catch (\Exception $e)
-        {
-            error_log($e);
-            echo "Error: " . $e->getMessage();
-        }
-
-        //return $this->render('read');
-
     }
-
-    private function _log($requestParameters)
-    {
-        $logFilename = dirname(__FILE__) . '/log/quiz_results.log';
-        $event       = array('ts' => date('Y-m-d H:i:s'), 'request_parameters' => $requestParameters, 'ts_' => time());
-        $logMessage  = json_encode($event);
-        $logMessage .= ',' . PHP_EOL;
-        @file_put_contents($logFilename, $logMessage, FILE_APPEND);
-    }
-
 }

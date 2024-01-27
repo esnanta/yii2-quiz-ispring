@@ -145,8 +145,8 @@ $create = Html::a(
                         <td class="g-color-gray-dark-v4 g-font-weight-600 g-py-15">
                             <?php
 
-                                if(empty($modelDetailItem->asset_name)){
-                                    echo '<i>Asset not available</i>';
+                                if(empty($modelDetailItem->asset_name)) {
+                                    echo Yii::t('app', 'Please upload files in zip');
                                 } else {
                                     $textLink  = Yii::$app->urlManager->baseUrl.$modelDetailItem->getExtractUrl();
                                     echo Html::a(

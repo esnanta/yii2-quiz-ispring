@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel AssessmentSearch */
+/* @var $searchModel backend\models\AssessmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;
@@ -27,63 +27,51 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
-        [
-                'attribute' => 'office_id',
-                'label' => Yii::t('app', 'Office'),
-                'value' => function($model){
-                    if ($model->office)
-                    {return $model->office->title;}
-                    else
-                    {return NULL;}
-                },
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\Office::find()->asArray()->all(), 'id', 'title'),
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
-                'filterInputOptions' => ['placeholder' => 'Tx office', 'id' => 'grid-assessment-search-office_id']
-            ],
+
         'title',
         [
-                'attribute' => 'subject_id',
-                'label' => Yii::t('app', 'Subject'),
+                'attribute' => 'schedule_id',
+                'label' => Yii::t('app', 'Schedule'),
                 'value' => function($model){
-                    if ($model->subject)
-                    {return $model->subject->title;}
+                    if ($model->schedule)
+                    {return $model->schedule->title;}
                     else
                     {return NULL;}
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\Subject::find()->asArray()->all(), 'id', 'title'),
+                'filter' => $scheduleList,
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
-                'filterInputOptions' => ['placeholder' => 'Tx subject', 'id' => 'grid-assessment-search-subject_id']
+                'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-assessment-search-schedule_id']
             ],
-        [
-                'attribute' => 'room_id',
-                'label' => Yii::t('app', 'Room'),
-                'value' => function($model){
-                    if ($model->room)
-                    {return $model->room->title;}
-                    else
-                    {return NULL;}
-                },
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\Room::find()->asArray()->all(), 'id', 'title'),
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
-                'filterInputOptions' => ['placeholder' => 'Tx room', 'id' => 'grid-assessment-search-room_id']
-            ],
-        'date_start',
-        'date_end',
+
         'description:ntext',
-        'is_deleted',
-        ['attribute' => 'verlock', 'visible' => false],
-        'uuid',
+
         [
-            'class' => 'yii\grid\ActionColumn',
+            'class' => 'common\widgets\ActionColumn',
+            'contentOptions' => ['style' => 'white-space:nowrap;'],
+            'template'=>'{update} {view}',
+            'buttons' => [
+                'update' => function ($url, $model) {
+                    return Html::a('<i class="fas fa-pencil-alt"></i>',
+                        Yii::$app->urlManager->createUrl(['assessment/update', 'id' => $model->id]),
+                        [
+                            'title' => Yii::t('yii', 'Edit'),
+                            'class'=>'btn btn-sm btn-info',
+                        ]
+                    );
+                },
+                'view' => function ($url, $model) {
+                    return Html::a('<i class="fas fa-eye"></i>',
+                        Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
+                        [
+                            'title' => Yii::t('yii', 'View'),
+                            'class'=>'btn btn-sm btn-info',
+                        ]
+                    );
+                },
+            ],
         ],
     ]; 
     ?>

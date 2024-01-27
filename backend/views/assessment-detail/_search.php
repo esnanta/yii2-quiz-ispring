@@ -5,12 +5,12 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\ScheduleDetailSearch $model
+ * @var backend\models\AssessmentDetailSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="schedule-detail-search">
+<div class="assessment-detail-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -21,15 +21,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'office_id') ?>
 
-    <?= $form->field($model, 'schedule_id') ?>
+    <?= $form->field($model, 'assessment_id') ?>
 
-    <?= $form->field($model, 'subject_id') ?>
+    <?= $form->field($model, 'participant_id') ?>
 
-    <?= $form->field($model, 'remark') ?>
+    <?= $form->field($model, 'app_version') ?>
 
-    <?php // echo $form->field($model, 'asset_name') ?>
+    <?php // echo $form->field($model, 'earned_points') ?>
 
-    <?php // echo $form->field($model, 'asset_url') ?>
+    <?php // echo $form->field($model, 'passing_score') ?>
+
+    <?php // echo $form->field($model, 'passing_score_percent') ?>
+
+    <?php // echo $form->field($model, 'gained_score') ?>
+
+    <?php // echo $form->field($model, 'quiz_title') ?>
+
+    <?php // echo $form->field($model, 'quiz_type') ?>
+
+    <?php // echo $form->field($model, 'username') ?>
+
+    <?php // echo $form->field($model, 'time_limit') ?>
+
+    <?php // echo $form->field($model, 'used_time') ?>
+
+    <?php // echo $form->field($model, 'time_spent') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

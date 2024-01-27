@@ -2,8 +2,12 @@
 
 namespace frontend\controllers;
 
+use backend\models\Assessment;
+use backend\models\AssessmentDetail;
+
 use backend\models\Participant;
 use backend\models\Schedule;
+use backend\models\ScheduleDetail;
 use common\helper\ReadFilter;
 use common\models\LoginParticipantForm;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
@@ -22,7 +26,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
-
+    public $enableCsrfValidation = false;
     private $username = null;
     /**
      * {@inheritdoc}
@@ -107,7 +111,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-
         $model = new LoginParticipantForm();
 
         $model->username = 'U0078294733';
@@ -130,21 +133,20 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
     public function actionRead()
     {
         header('Access-Control-Allow-Origin: *');
+        if ($_SERVER['REQUEST_METHOD'] != 'POST')
+        {
+            echo "POST request expected";
+            return;
+        }
         error_reporting(E_ALL && E_WARNING && E_NOTICE);
         ini_set('display_errors', 0);
         ini_set('log_errors', 1);
-
-//        $testResult = new TestResult();
-//        $testResult->office_id = 1;
-//        $testResult->test1 = 'test';
-//        $testResult->save();
 
         require_once Yii::getAlias('@common').'\quizresult\includes\common.inc.php';
 //        require_once Yii::getAlias('@common').'\quizresult\classes\QuizResults.class.php';
@@ -162,39 +164,76 @@ class SiteController extends Controller
 //            $report = $generator->createReport();
 
 
+            $username               = $_POST['USER_NAME']; //Quiz taker's username
+            $pv                     = $_POST['pv']; //User variables
+            $sa                     = $_POST['sa']; //Include user responses in quiz taker’s report
+            $sc                     = $_POST['sc']; //Include user’s correct answers in quiz taker report
+            $sf                     = $_POST['sf']; //Include feedback messages in quiz taker report
+            $vt                     = $_POST['vt']; //Array of available user variables
 
-            $version = $_POST['v'];
-            $points = $_POST['sp'];
-            $passing_percent = $_POST['psp'];
-            $gained_score = $_POST['tp'];
-            $quiz_title = $_POST['qt'];
+            $scheduleDetailId       = $_POST['SCD']; //SCHEDULE DETAIL ID
 
-            $testResult = new TestResult();
-            $testResult->office_id = 1;
-            $testResult->test1 = $version.'/'.$points.'/'.$passing_percent.'/'.$gained_score.'/'.$quiz_title;
-            $testResult->save();
+            $scheduleDetail = ScheduleDetail::find()
+                ->where(['id'=>$scheduleDetailId])
+                ->one();
+
+            $scheduleId = $scheduleDetail->schedule->id;
+            $subjectId  = $scheduleDetail->subject_id;
+            $officeId   = $scheduleDetail->office_id;
+
+            $participant = Participant::find()
+                ->select('id')
+                ->where(['username' => $username])
+                ->one();
+
+            $assessment = Assessment::find()
+                ->where([
+                    'office_id'     => $officeId,
+                    'schedule_id'   => $scheduleId,
+                ])
+                ->one();
+
+            if(empty($assessment)){
+                $assessment                 = new Assessment();
+                $assessment->office_id      = $officeId;
+                $assessment->schedule_id    = $scheduleId;
+                $assessment->title          = $assessment->schedule->title;
+                $assessment->save();
+            }
+
+            $assessmentDetail = new AssessmentDetail();
+            $assessmentDetail->assessment_id            = $assessment->id;
+            $assessmentDetail->schedule_detail_id       = $scheduleDetailId;
+            $assessmentDetail->subject_id               = $subjectId;
+            $assessmentDetail->office_id                = $officeId;
+            $assessmentDetail->participant_id           = $participant->id;
+            $assessmentDetail->username                 = $username;
+            $assessmentDetail->app_version              = $_POST['v'];
+            $assessmentDetail->earned_points            = $_POST['sp'];
+            $assessmentDetail->passing_score            = $_POST['ps'];
+            $assessmentDetail->passing_score_percent    = $_POST['psp'];
+            $assessmentDetail->gained_score             = $_POST['tp'];
+            $assessmentDetail->quiz_title               = $_POST['qt'];
+            $assessmentDetail->quiz_type                = $_POST['t'];
+            $assessmentDetail->time_limit               = $_POST['tl'];// read = gmdate("H:i:s", $timeLimit)
+            $assessmentDetail->used_time                = $_POST['ut'];
+            $assessmentDetail->time_spent               = $_POST['fut'];
+            $assessmentDetail->save();
+
 
 //            $dateTime = date('Y-m-d_H-i-s');
 //            $resultFilename = Yii::getAlias('@common') . "/quizresult/result/quiz_result_{$dateTime}.txt";
 //            @file_put_contents($resultFilename, $report);
 
-            echo "OK";
-
-
-
-
-
-
-
+            //echo "OK";
         }
         catch (\Exception $e)
         {
             error_log($e);
-
             echo "Error: " . $e->getMessage();
         }
 
-        return $this->redirect('index');
+        //return $this->render('read');
 
     }
 
@@ -241,48 +280,5 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    /**
-     * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     */
-    public function actionImport(){
 
-        //$inputFileName  = 'https://localhost/application/yii2-cbt-ispring/admin/uploads/archive/65a7fb0e28f7b/_65a80ac0ce7e2.xlsx';
-        $inputFileName  = Yii::getAlias('@backend').'\web\uploads\archive\65a7fb0e28f7b\_65a80ac0ce7e2.xlsx';
-        $sheetName = 'Foto';
-        $filterSubset = new ReadFilter();
-
-        $helper = new Sample();
-
-        $inputFileType = IOFactory::identify($inputFileName);
-        $reader = IOFactory::createReader($inputFileType);
-        $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
-        $reader->setLoadSheetsOnly($sheetName);
-        $reader->setReadFilter($filterSubset);
-        $spreadsheet = $reader->load($inputFileName);
-
-        $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-        $sheetData = $spreadsheet->getActiveSheet()->rangeToArray($activeRange, null, true, true, true);
-        $data = $spreadsheet->getActiveSheet();
-
-        $helper->displayGrid($sheetData);
-
-        foreach ($data->getRowIterator() as $row) {
-            $cellIterator = $row->getCellIterator();
-
-            /*
-             * setIterateOnlyExistingCells
-             * Default value is 'false'
-             * FALSE = This loops through all cells, even if a cell value is not set.
-             * TRUE = Loop through cells only when their value is set.
-             */
-            $cellIterator->setIterateOnlyExistingCells(FALSE);
-
-            foreach ($cellIterator as $i=>$cell) {
-                $helper->log('Cell "' . $i.' '.$cell->getValue());
-            }
-        }
-
-
-    }
 }

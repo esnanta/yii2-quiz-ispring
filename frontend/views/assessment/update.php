@@ -2,16 +2,14 @@
 
 use yii\helpers\Html;
 
-/**
- * @var yii\web\View $this
- * @var backend\models\Assessment $model
- */
+/* @var $this yii\web\View */
+/* @var $model backend\models\Assessment */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Assessment',
-]) . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessments'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+]) . ' ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 
@@ -27,10 +25,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="assessment-update">
             <?= $this->render('_form', [
                 'model' => $model,
+                'scheduleList' => $scheduleList,
             ]) ?>
         </div>
     </div>
 </div>
-
-
-

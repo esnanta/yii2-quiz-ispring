@@ -17,9 +17,9 @@ class Assessment extends BaseAssessment
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['office_id', 'subject_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['office_id', 'schedule_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 15],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],

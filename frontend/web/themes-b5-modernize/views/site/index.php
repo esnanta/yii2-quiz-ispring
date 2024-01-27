@@ -11,7 +11,7 @@ $this->title = Yii::$app->name;
 ?>
 
 <div class="row">
-    <div class="col-sm-6 col-xl-3">
+    <div class="col-xs-6 col-sm-3 col-xl-3">
         <div class="card overflow-hidden rounded-2">
             <div class="position-relative">
                 <a href="javascript:void(0)">
@@ -29,22 +29,13 @@ $this->title = Yii::$app->name;
                     <?=$participant->title;?> <br>
                     <?=$participant->group->title;?>
                 </div>
-<!--                <div class="d-flex align-items-center justify-content-between">-->
-<!--                    <h6 class="fw-semibold fs-4 mb-0">$50 <span class="ms-2 fw-normal text-muted fs-3"><del>$65</del></span></h6>-->
-<!--                    <ul class="list-unstyled d-flex align-items-center mb-0">-->
-<!--                        <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>-->
-<!--                        <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>-->
-<!--                        <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>-->
-<!--                        <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>-->
-<!--                        <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+
             </div>
         </div>
     </div>
 
 
-    <div class="col-sm-6 col-xl-9 d-flex align-items-stretch">
+    <div class="col-xs-6 col-sm-9 col-xl-9 d-flex align-items-stretch">
         <div class="card w-100">
             <div class="card-body p-4">
                 <div class="mb-4">
@@ -54,7 +45,22 @@ $this->title = Yii::$app->name;
                 </div>
 
                 <ul class="timeline-widget mb-0 position-relative mb-n5">
-                <?php foreach ($schedules as $scheduleItem) { ?>
+                <?php
+                    foreach ($schedules as $scheduleItem) {
+                        $timeReference      = strtotime($scheduleItem->date_start);
+                        $currentTime        = strtotime("now");
+                        $minutesDifference  = round(abs(($timeReference - $currentTime) / 60));
+                        $minutesTolerance   = 10; //minutes
+
+                        //10 MINUTES BEFORE START, CHANGE REFERENCE TO DATE_END
+                        if($timeReference < $currentTime) :
+                            $timeReference = strtotime($scheduleItem->date_end);
+                        endif;
+
+                    ?>
+
+
+
 
                     <li class="timeline-item d-flex position-relative overflow-hidden">
                         <div class="timeline-time text-dark flex-shrink-0 text-end">
@@ -67,17 +73,9 @@ $this->title = Yii::$app->name;
                             <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
                             <span class="timeline-badge-border d-block flex-shrink-0"></span>
                         </div>
+
                         <div class="timeline-desc fs-3 text-dark mt-n1">
                             <?= $scheduleItem->room->title.' - '.$scheduleItem->title?>
-                            <span class="float-right">
-                                <div id="time-down-counter"></div>
-                                <?=
-                                $test = Yii2TimerCountDown::widget([
-                                    'countDownIdSelector' => 'time-down-counter',
-                                    'countDownDate' => strtotime($scheduleItem->date_start) * 1000
-                                ]);
-                                ?>
-                            </span>
                             <div class="table-responsive">
                                 <table class="table text-nowrap mb-0 align-middle">
                                     <tbody>
@@ -92,23 +90,24 @@ $this->title = Yii::$app->name;
                                                 echo '<i>Asset not available</i>';
                                             } else {
 
-                                                $startTime      = strtotime($scheduleItem->date_start);
-                                                $currentTime    = strtotime("now");
-                                                $minutes        = round(abs(($startTime-$currentTime)/60));
+                                                $textLink           = '';
+                                                $linkLabel          = Yii::t('app', 'Closed');
+                                                $labelClass         = LabelHelper::getButtonCssPlus().' disabled';
 
-                                                $textLink  = '';
-                                                $linkLabel  = Yii::t('app', 'Not yet available');
-                                                $isDisabled = 'disabled';
-                                                if($minutes < 10) :
-                                                    $textLink  = Yii::$app->urlManager->baseUrl.$scheduleDetailItem->getExtractUrl();
-                                                    $linkLabel = Yii::t('app', 'Not yet available');
-                                                    $isDisabled = '';
+                                                if($timeReference > $currentTime) :
+                                                    //http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
+                                                    $userinfo   = '?USER_NAME=' . Yii::$app->user->identity->username .
+                                                        '&SCD='.$scheduleDetailItem->id;
+                                                    $textLink   = Yii::$app->urlManager->baseUrl .
+                                                        $scheduleDetailItem->getExtractUrl() . $userinfo;
+                                                    $linkLabel  = Yii::t('app', 'Open');
+                                                    $labelClass = LabelHelper::getButtonCssPrint();
                                                 endif;
 
                                                 echo Html::a(
                                                     $linkLabel,
                                                     $textLink,
-                                                    ['class' => LabelHelper::getButtonCssPlus().' '.$isDisabled]
+                                                    ['class' => $labelClass]
                                                 );
                                             }
                                             ?>
@@ -118,6 +117,29 @@ $this->title = Yii::$app->name;
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+
+                        <div class="timeline-desc fs-3 text-dark mt-n1">
+                            <?php
+                                $labelAlertTimer = 'alert-warning';
+                                if($minutesDifference < $minutesTolerance) :
+                                    $labelAlertTimer = 'alert-success';
+                                endif;
+
+                            ?>
+
+                            <div class="alert <?=$labelAlertTimer;?>">
+                                <div id="time-down-counter"></div>
+                            </div>
+
+                            <?=
+                            Yii2TimerCountDown::widget([
+                                'countDownIdSelector' => 'time-down-counter',
+                                'countDownDate' => strtotime(date("Y-m-d H:i:s", $timeReference)) * 1000
+                            ]);
+                            ?>
+
+
                         </div>
                     </li>
 

@@ -71,9 +71,12 @@ values
     ('view-ispring-master','view-scheduledetail'),
     ('delete-ispring-master','delete-scheduledetail'),
     ('report-ispring-master','report-scheduledetail');
+
+
 /**
   MENU FOR ISPRING TRANSACTION
   01 Assessment
+  02 Assessment Detail
 
  */
 
@@ -86,6 +89,14 @@ values
     ('delete-ispring-transaction','delete-assessment'),
     ('report-ispring-transaction','report-assessment');
 
+insert  into `tx_auth_item_child`(`parent`,`child`)
+values
+    ('index-ispring-transaction','index-assessmentdetail'),
+    ('create-ispring-transaction','create-assessmentdetail'),
+    ('update-ispring-transaction','update-assessmentdetail'),
+    ('view-ispring-transaction','view-assessmentdetail'),
+    ('delete-ispring-transaction','delete-assessmentdetail'),
+    ('report-ispring-transaction','report-assessmentdetail');
 
 /**
  * MENU FOR ADMIN

@@ -2,9 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\models\Office;
+use backend\models\Schedule;
+use backend\models\Subject;
+use common\helper\CacheCloud;
 use Yii;
 use backend\models\Assessment;
-use AssessmentSearch;
+use backend\models\AssessmentSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -39,9 +44,15 @@ class AssessmentController extends Controller
             $searchModel = new AssessmentSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'scheduleList' => $scheduleList,
             ]);
         }
         else{
@@ -62,9 +73,15 @@ class AssessmentController extends Controller
             $providerAssessmentDetail = new \yii\data\ArrayDataProvider([
                 'allModels' => $model->assessmentDetails,
             ]);
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
             return $this->render('view', [
                 'model' => $this->findModel($id),
                 'providerAssessmentDetail' => $providerAssessmentDetail,
+                'scheduleList' => $scheduleList,
             ]);
         }
         else{
@@ -83,11 +100,18 @@ class AssessmentController extends Controller
         if(Yii::$app->user->can('create-assessment')){
             $model = new Assessment();
 
+            $officeId   = CacheCloud::getInstance()->getOfficeId();
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'scheduleList' => $scheduleList,
                 ]);
             }
         }
@@ -108,11 +132,16 @@ class AssessmentController extends Controller
         if(Yii::$app->user->can('update-assessment')){
             $model = $this->findModel($id);
 
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'scheduleList' => $scheduleList,
                 ]);
             }
         }
@@ -131,9 +160,22 @@ class AssessmentController extends Controller
     public function actionDelete($id)
     {
         if(Yii::$app->user->can('delete-assessment')){
-            $this->findModel($id)->deleteWithRelated();
+            $model          = $this->findModel($id);
+            $modelDetails   = $model->assessmentDetails;
 
-            return $this->redirect(['index']);
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {
+                foreach ($modelDetails as $modelDetailItem) {
+                    $modelDetailItem->delete();
+                }
+                $model->delete();
+                $transaction->commit();
+                MessageHelper::getFlashDeleteSuccess();
+                return $this->redirect(['index']);
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
         }
         else{
             MessageHelper::getFlashLoginInfo();

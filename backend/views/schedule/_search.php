@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'office_id')->widget(\kartik\widgets\Select2::classname(), [
+    <?= $form->field($model, 'office_id')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Office::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
         'pluginOptions' => [
@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title']) ?>
 
-    <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::classname(), [
+    <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Group::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Tx group')],
         'pluginOptions' => [
@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::classname(), [
+    <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Room::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Tx room')],
         'pluginOptions' => [
@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?php /* echo $form->field($model, 'date_start')->widget(\kartik\datecontrol\DateControl::classname(), [
+    <?php /* echo $form->field($model, 'date_start')->widget(\kartik\datecontrol\DateControl::class, [
         'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
         'saveFormat' => 'php:Y-m-d H:i:s',
         'ajaxConversion' => true,
@@ -55,7 +55,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); */ ?>
 
-    <?php /* echo $form->field($model, 'date_end')->widget(\kartik\datecontrol\DateControl::classname(), [
+    <?php /* echo $form->field($model, 'date_end')->widget(\kartik\datecontrol\DateControl::class, [
         'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
         'saveFormat' => 'php:Y-m-d H:i:s',
         'ajaxConversion' => true,
