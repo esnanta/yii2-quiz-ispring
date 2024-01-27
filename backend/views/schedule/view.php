@@ -33,7 +33,13 @@ $create = Html::a(
                 ['class' => LabelHelper::getButtonCssPlus()]
             );
             ?>
-
+            <?=
+            Html::a(
+                '<i class="fas fa-pencil-alt"></i> Update',
+                ['update','id'=>$model->id],
+                ['class' => LabelHelper::getButtonCssUpdate()]
+            );
+            ?>
             <?=
             Html::a('<i class="fas fa-minus"></i> Delete', ['delete', 'id' => $model->id], [
                 'class' => LabelHelper::getButtonCssMinus(),

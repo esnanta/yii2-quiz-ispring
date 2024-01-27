@@ -33,24 +33,25 @@ use kartik\datecontrol\DateControl;
 //                    'allowClear' => true
 //                ],
 //            ],
-            'group_id' => [
-                'type' => Form::INPUT_WIDGET,
-                'widgetClass' => Select2::class,
-                'options' => [
-                    'data' => $groupList,
-                    'options' => ['placeholder' => 'Choose Group', 'disabled' => true],
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ],
 
             'archive_id' => [
                 'type' => Form::INPUT_WIDGET,
                 'widgetClass' => Select2::class,
                 'options' => [
                     'data' => $archiveList,
-                    'options' => ['placeholder' => 'Choose Archive'],
+                    'options' => ['placeholder' => '', 'disabled' => true],
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ],
+
+            'group_id' => [
+                'type' => Form::INPUT_WIDGET,
+                'widgetClass' => Select2::class,
+                'options' => [
+                    'data' => $groupList,
+                    'options' => ['placeholder' => '', 'disabled' => false],
                 ],
                 'pluginOptions' => [
                     'allowClear' => true

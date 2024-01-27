@@ -104,7 +104,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => true,
+        'enableEditMode' => Yii::$app->user->can('update-participant'),
     ]) ?>
 
 </div>

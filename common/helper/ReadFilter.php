@@ -11,7 +11,7 @@ class ReadFilter implements IReadFilter
     {
         // Read rows 2 to 50 and columns A to E only
         if ($row >= 2 && $row <= 50) {
-            if (in_array($columnAddress, range('A', 'C'))) {
+            if (in_array($columnAddress, range('A', 'D'))) {
                 return true;
             }
         }

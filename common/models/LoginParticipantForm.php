@@ -5,6 +5,8 @@ namespace common\models;
 use backend\models\Participant;
 use Yii;
 use yii\base\Model;
+use yii\base\NotSupportedException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Login form
@@ -44,8 +46,17 @@ class LoginParticipantForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user ) {
+                $this->addError($attribute, 'Check if user is active or not existed.');
+            }
+            elseif (!$user->validatePassword($this->password)){
                 $this->addError($attribute, 'Incorrect username or password.');
+            }
+            else{
+                $user->status = Participant::STATUS_ACTIVE;
+                $user->last_login_at = date(Yii::$app->params['datetimeSaveFormat']);
+                $user->generateAuthKey();
+                $user->save();
             }
         }
     }
@@ -73,11 +84,7 @@ class LoginParticipantForm extends Model
     {
         if ($this->_user === null) {
             $this->_user = UserParticipant::findByUsername($this->username);
-            $this->_user->last_login_at = date(Yii::$app->params['datetimeSaveFormat']);
-            $this->_user->generateAuthKey();
-            $this->_user->save();
         }
-
         return $this->_user;
     }
 }

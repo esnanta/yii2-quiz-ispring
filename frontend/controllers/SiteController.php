@@ -94,7 +94,7 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         } else {
-            $participant = Participant::findone(['id'=>Yii::$app->user->id]);
+            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
             $schedules = Schedule::find()
                 ->where(['group_id'=>$participant->group_id])
                 ->all();
@@ -114,7 +114,7 @@ class SiteController extends Controller
         $model = new LoginParticipantForm();
 
         $model->username = 'U0078294733';
-        $model->password = '1b832';
+        $model->password = '8a5fb';
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->redirect('index');
@@ -132,8 +132,18 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
-        return $this->goHome();
+        try {
+            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
+            $participant->status = Participant::STATUS_INACTIVE;
+            $participant->save();
+            Yii::$app->user->logout();
+            return $this->goHome();
+        } catch (\Exception $e)
+        {
+            error_log($e);
+            echo "Error: " . $e->getMessage();
+            return $this->goHome();
+        }
     }
 
     public function actionRead()

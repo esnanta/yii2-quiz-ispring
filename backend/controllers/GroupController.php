@@ -79,7 +79,7 @@ class GroupController extends Controller
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList'=>$officeList
+                    'officeList'=>$officeList,
                 ]);
             }
         }

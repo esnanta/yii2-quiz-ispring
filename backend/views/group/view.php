@@ -1,8 +1,10 @@
 <?php
 
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
+use yii\widgets\Pjax;
 
 /**
  * @var yii\web\View $this

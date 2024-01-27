@@ -85,19 +85,21 @@ use common\helper\CacheCloud;
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
 
+                ['label' => Yii::t('app', 'Download'), 'icon' => 'download', 'items' => [
+                    ['label' => Yii::t('app', 'Participant Template'), 'url' => ['/participant/download']],
+
+                ]],
+
                 ['label' => Yii::t('app', 'Quiz Master') .' '.$scheduleDetailBadgeHeader, 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Import Participant'), 'url' => ['/participant/select']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
                     ['label' => Yii::t('app', 'Schedule') .' '.$scheduleDetailBadgeDetail, 'url' => ['/schedule/index']],
 
                 ]],
-                ['label' => Yii::t('app', 'Assessment'), 'icon' => 'clipboard-list', 'items' => [
+                ['label' => Yii::t('app', 'Assessment'), 'icon' => 'book-reader', 'items' => [
                     ['label' => Yii::t('app', 'Index'), 'url' => ['/assessment/index']],
                     ['label' => Yii::t('app', 'Detail'), 'url' => ['/assessment-detail/index']],
                 ]],
-                ['label' => Yii::t('app', 'Report'), 'icon' => 'stream', 'items' => [
-                    ['label' => Yii::t('app', 'Export Fuel Sales'), 'url' => ['/fuel-sales/report']],
-                ],'visible' => $officeMenuVisibility],
                 
                 ['label' => Yii::t('app', 'Admin'), 'icon' => 'user-secret', 'items' => [
                     ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create-owner']],

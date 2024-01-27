@@ -9,6 +9,10 @@ class LabelHelper {
     {
         return 'btn btn-success';
     }
+    public static function getButtonCssUpdate(): string
+    {
+        return 'btn btn-warning';
+    }
     public static function getButtonCssMinus(): string
     {
         return 'btn btn-danger';

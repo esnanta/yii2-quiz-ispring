@@ -80,7 +80,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => (Yii::$app->user->can('update-office')) ? true : false,
+        'enableEditMode' => Yii::$app->user->can('update-office'),
     ]) ?>
 
 </div>

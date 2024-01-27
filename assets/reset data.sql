@@ -19,60 +19,17 @@
  * 12 Account Receivable OK
  */
 
-delete from tx_account_receivable_detail;
-ALTER TABLE tx_account_receivable_detail AUTO_INCREMENT=0;
-delete from tx_account_receivable;
-ALTER TABLE tx_account_receivable AUTO_INCREMENT=0;
+delete from tx_assessment_detail;
+ALTER TABLE tx_assessment_detail AUTO_INCREMENT=0;
 
-delete from tx_account_payable_detail;
-ALTER TABLE tx_account_payable_detail AUTO_INCREMENT=0;
-delete from tx_account_payable;
-ALTER TABLE tx_account_payable AUTO_INCREMENT=0;
+delete from tx_assessment;
+ALTER TABLE tx_assessment AUTO_INCREMENT=0;
 
-delete from tx_counter;
-ALTER TABLE tx_counter AUTO_INCREMENT=0; 
+delete from tx_schedule_detail;
+ALTER TABLE tx_schedule_detail AUTO_INCREMENT=0;
 
-
-DELETE FROM tx_stock_distribution_detail;
-ALTER TABLE tx_stock_distribution_detail AUTO_INCREMENT=0; 
-
-DELETE FROM tx_stock_distribution;
-ALTER TABLE tx_stock_distribution AUTO_INCREMENT=0; 
-
-DELETE FROM tx_purchase_receive_detail;
-ALTER TABLE tx_purchase_receive_detail AUTO_INCREMENT=0; 
-
-DELETE FROM tx_purchase_receive;
-ALTER TABLE tx_purchase_receive AUTO_INCREMENT=0; 
-
-DELETE FROM tx_purchase_detail;
-ALTER TABLE tx_purchase_detail AUTO_INCREMENT=0; 
-
-DELETE FROM tx_purchase;
-ALTER TABLE tx_purchase AUTO_INCREMENT=0; 
-
-DELETE FROM tx_supplier WHERE office_id <> 1;;
-ALTER TABLE tx_supplier AUTO_INCREMENT=1; 
-
-DELETE FROM tx_fuel_sales;
-ALTER TABLE tx_fuel_sales AUTO_INCREMENT=0;
-
-DELETE FROM tx_work_shift WHERE office_id <> 1;
-
-DELETE FROM tx_inventory;
-ALTER TABLE tx_inventory AUTO_INCREMENT=0;
-
-DELETE FROM tx_warehouse WHERE office_id <> 1;
-
-DELETE FROM tx_item;
-ALTER TABLE tx_item AUTO_INCREMENT=0;
-
-DELETE FROM tx_item_brand;
-ALTER TABLE tx_item_brand AUTO_INCREMENT=0;
-DELETE FROM tx_item_category;
-ALTER TABLE tx_item_category AUTO_INCREMENT=0;
-DELETE FROM tx_item_unit ;
-ALTER TABLE tx_item_unit AUTO_INCREMENT=0;
+delete from tx_schedule;
+ALTER TABLE tx_schedule AUTO_INCREMENT=0;
 
 DELETE FROM tx_staff WHERE id <> 1;
 ALTER TABLE tx_staff AUTO_INCREMENT=1;

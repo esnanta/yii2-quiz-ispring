@@ -62,10 +62,38 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'password',
             [
+                'attribute'=>'status',
+                'vAlign'=>'middle',
+                'width'=>'120px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->status!=null) ? $model->getOneStatus($model->status):'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$statusList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
+            [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',
+                'template'=>'{reset} {update} {view}',
                 'buttons' => [
+                    'reset' => function ($url, $model) {
+                        return Html::a('<i class="fas fa-sync"></i>',
+                            Yii::$app->urlManager->createUrl([
+                                    'participant/reset',
+                                    'id' => $model->id,
+                                    'title'=>$model->title
+                            ]),
+                            [
+                                'title' => Yii::t('yii', 'Reset'),
+                                'class'=>'btn btn-sm btn-info',
+                            ]
+                        );
+                    },
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
                             Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'edit' => 't']),
@@ -97,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'responsiveWrap' => false,
 
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title).' </h3>',
             'type' => 'default',
             //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
             //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),

@@ -4,8 +4,6 @@ namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 use backend\models\Participant;
@@ -27,20 +25,6 @@ use backend\models\Participant;
  */
 class UserParticipant extends Participant implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
-    const STATUS_ACTIVE = 10;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-        ];
-    }
 
     /**
      * {@inheritdoc}
@@ -63,10 +47,11 @@ class UserParticipant extends Participant implements IdentityInterface
      *
      * @param string $username
      * @return static|null
+     * @throws NotSupportedException
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => self::STATUS_INACTIVE]);
     }
 
     /**

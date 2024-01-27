@@ -30,6 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'archiveList' => $archiveList
             ]) 
             ?>
+            <br>
+            <?= $helper->displayGrid($sheetData); ?>
         </div>
     </div>
 </div>

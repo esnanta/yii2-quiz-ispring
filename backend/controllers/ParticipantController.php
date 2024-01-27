@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Archive;
+use backend\models\ArchiveSearch;
 use backend\models\Group;
 use backend\models\GroupSearch;
 use backend\models\Office;
@@ -59,11 +60,14 @@ class ParticipantController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $statusList = Participant::getArrayStatus();
+
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
-                'groupList' => $groupList
+                'groupList' => $groupList,
+                'statusList' => $statusList
             ]);
         }
         else{
@@ -147,15 +151,16 @@ class ParticipantController extends Controller
 
     public function actionSelect(){
         if(Yii::$app->user->can('create-participant')){
-            $searchModel    = new GroupSearch();
+            $searchModel    = new ArchiveSearch();
             $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->query->andWhere(['archive_type' => Archive::ARCHIVE_TYPE_SPREADSHEET]);
 
             $officeId   = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            return $this->render('select_group', [
+            return $this->render('select_archive', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'officeList' => $officeList,
@@ -167,7 +172,8 @@ class ParticipantController extends Controller
         }
     }
 
-    public function actionImport($groupId)
+    //$id = archive id
+    public function actionImport($id)
     {
         if(Yii::$app->user->can('create-participant')){
             $officeId   = CacheCloud::getInstance()->getOfficeId();
@@ -176,40 +182,43 @@ class ParticipantController extends Controller
                 ->asArray()->all(), 'id', 'title');
 
             $archiveList = ArrayHelper::map(Archive::find()
-                ->where(['office_id' => $officeId,'archive_type'=>Archive::ARCHIVE_TYPE_SPREADSHEET])
+                ->where(['id' => $id])
                 ->asArray()->all(), 'id', 'title');
 
             $groupList = ArrayHelper::map(Group::find()
-                ->where(['id' => $groupId,'office_id' => $officeId,])
+                ->where(['office_id' => $officeId,])
                 ->asArray()->all(), 'id', 'title');
 
             $model = new ParticipantImport();
             $model->office_id = $officeId;
-            $model->group_id = $groupId;
+            $model->archive_id = $id;
+
+            $filterSubset = new ReadFilter();
+            $helper = new Sample();
+
+            $archive = Archive::find()->where(['id'=>$model->archive_id])->one();
+            $path = Yii::getAlias('@backend').'/web/'.$archive->getPath();
+            $inputFileName  = $path.'/'.$archive->asset_name;
+            $sheetName = 'Participant';
+
+            $inputFileType = IOFactory::identify($inputFileName);
+            $reader = IOFactory::createReader($inputFileType);
+            $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
+            $reader->setLoadSheetsOnly($sheetName);
+            $reader->setReadFilter($filterSubset);
+            $spreadsheet = $reader->load($inputFileName);
+
+            $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+            $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                $activeRange, null, true, true, true
+            );
+            $data = $spreadsheet->getActiveSheet();
+
+            //$helper->displayGrid($sheetData);
+            //throw new NotFoundHttpException('The object being updated is outdated.');
 
             try {
                 if ($model->load(Yii::$app->request->post())) {
-                    $archive = Archive::find()->where(['id'=>$model->archive_id])->one();
-                    $path = Yii::getAlias('@backend').'/web/'.$archive->getPath();
-                    $inputFileName  = $path.'/'.$archive->asset_name;
-                    $sheetName = 'Participant';
-                    $filterSubset = new ReadFilter();
-
-                    $helper = new Sample();
-
-                    $inputFileType = IOFactory::identify($inputFileName);
-                    $reader = IOFactory::createReader($inputFileType);
-                    $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
-                    $reader->setLoadSheetsOnly($sheetName);
-                    $reader->setReadFilter($filterSubset);
-                    $spreadsheet = $reader->load($inputFileName);
-
-                    $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-                    $sheetData = $spreadsheet->getActiveSheet()->rangeToArray($activeRange, null, true, true, true);
-                    $data = $spreadsheet->getActiveSheet();
-
-                    $helper->displayGrid($sheetData);
-                    //throw new NotFoundHttpException('The object being updated is outdated.');
 
                     $transaction = \Yii::$app->db->beginTransaction();
                     $dataList = [];
@@ -238,12 +247,13 @@ class ParticipantController extends Controller
 
                         $counter = 0;
                         foreach (array_filter($dataList) as $i=>$data){
-                            if(sizeof($data) > 1){
+                            if(sizeof($data) > 2){
                                 $participant = new Participant();
                                 $participant->office_id         = $model->office_id;
                                 $participant->group_id          = $model->group_id;
                                 $participant->identity_number   = $data[0]; //identity_number
                                 $participant->title             = $data[1]; //title
+                                $participant->email             = $data[2]; //email
                                 $participant->save();
                                 $counter = $counter+1;
                             }
@@ -269,7 +279,9 @@ class ParticipantController extends Controller
                         'model' => $model,
                         'officeList' => $officeList,
                         'groupList' => $groupList,
-                        'archiveList' => $archiveList
+                        'archiveList' => $archiveList,
+                        'helper' => $helper,
+                        'sheetData' => $sheetData
                     ]);
                 }
             }
@@ -352,6 +364,42 @@ class ParticipantController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionDownload()
+    {
+        $path  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
+            '/uploads/template_participant.xlsx';
+
+        if (!empty($path)) {
+
+            header('Content-Type:text/plain; charset=ISO-8859-15');
+            //if you want to read text file using text/plain header
+            header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+            header('Content-Length: ' . filesize($path));
+            readfile($path);
+
+            Yii::app()->end();
+
+        } else {
+            throw new NotFoundHttpException();
+        }
+    }
+
+
+    public function actionReset($id, $title=null)
+    {
+        if(Yii::$app->user->can('update-participant')){
+            $model = Participant::findOne($id);
+            $model->status = Participant::STATUS_INACTIVE;
+            $model->save();
+            MessageHelper::getFlashUpdateSuccess();
+            return $this->redirect(['index']);
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 }

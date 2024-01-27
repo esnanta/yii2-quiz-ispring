@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 
-$this->title = Yii::t('app', 'Choose Data');
+$this->title = Yii::t('app', 'Choose Data Archive');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 if ($model->id) {
                     $button = Html::a(
                         '<i class="fas fa-plus"></i> '.Yii::t('app', 'Proceed'),
-                        ['import','groupId'=>$model->id],
+                        ['import','id'=>$model->id],
                         ['class' => 'btn btn-sm btn-info pull-right']
                     );
                     return $button;
