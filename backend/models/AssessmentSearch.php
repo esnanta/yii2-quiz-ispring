@@ -19,7 +19,7 @@ use backend\models\Assessment;
     public function rules()
     {
         return [
-            [['id', 'office_id', 'schedule_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'schedule_id', 'date_start', 'date_end','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -61,6 +61,8 @@ use backend\models\Assessment;
             'id' => $this->id,
             'office_id' => $this->office_id,
             'schedule_id' => $this->schedule_id,
+            'date_start' => $this->date_start,
+            'date_end' => $this->date_end,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

@@ -14,6 +14,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $office_id
  * @property string $title
  * @property integer $schedule_id
+ * @property string $date_start
+ * @property string $date_end
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -68,8 +70,8 @@ class Assessment extends \yii\db\ActiveRecord
     {
         return [
             [['office_id', 'schedule_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 15],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
@@ -106,6 +108,8 @@ class Assessment extends \yii\db\ActiveRecord
             'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
             'schedule_id' => Yii::t('app', 'Schedule ID'),
+            'date_start' => Yii::t('app', 'Date Start'),
+            'date_end' => Yii::t('app', 'Date End'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),

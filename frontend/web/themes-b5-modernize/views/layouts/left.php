@@ -21,7 +21,8 @@ function getMenu($_menuName, $_classIcon): string
     <!-- Sidebar scroll-->
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="<?= Url::to(['site/index'])?>" class="text-nowrap logo-img">
+            <?php $urlHome = str_replace('user/site','site',Url::to(['site/index']));?>
+            <a href="<?= $urlHome ?>" class="text-nowrap logo-img">
                 <img src="<?= Url::base() ?>/frontend/web/themes-b5-modernize/assets/images/logos/dark-logo.svg"
                      width="180" alt="" />
             </a>
@@ -51,13 +52,6 @@ function getMenu($_menuName, $_classIcon): string
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">Quiz Assessment</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <?= Html::a(
-                            getMenu('Index', 'fa fa-angle-right'),
-                            ['/assessment/index'],
-                            ['class' => 'sidebar-link']
-                        ) ?>
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(

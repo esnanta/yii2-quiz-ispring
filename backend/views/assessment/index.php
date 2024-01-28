@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AssessmentSearch */
+
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;
@@ -21,44 +22,42 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="search-form" style="display:none">
-        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+        <?= $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-    <?php 
+    <?php
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
-
-        'title',
         [
-                'attribute' => 'schedule_id',
-                'label' => Yii::t('app', 'Schedule'),
-                'value' => function($model){
-                    if ($model->schedule)
-                    {return $model->schedule->title;}
-                    else
-                    {return NULL;}
-                },
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter' => $scheduleList,
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
-                'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-assessment-search-schedule_id']
+            'attribute' => 'schedule_id',
+            'label' => Yii::t('app', 'Schedule'),
+            'value' => function ($model) {
+                if ($model->schedule) {
+                    return $model->schedule->title;
+                } else {
+                    return NULL;
+                }
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter' => $scheduleList,
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
             ],
-
+            'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-assessment-search-schedule_id']
+        ],
+        'title',
         'description:ntext',
-
         [
             'class' => 'common\widgets\ActionColumn',
             'contentOptions' => ['style' => 'white-space:nowrap;'],
-            'template'=>'{update} {view}',
+            'template' => '{update} {view}',
             'buttons' => [
                 'update' => function ($url, $model) {
                     return Html::a('<i class="fas fa-pencil-alt"></i>',
                         Yii::$app->urlManager->createUrl(['assessment/update', 'id' => $model->id]),
                         [
                             'title' => Yii::t('yii', 'Edit'),
-                            'class'=>'btn btn-sm btn-info',
+                            'class' => 'btn btn-sm btn-info',
                         ]
                     );
                 },
@@ -67,13 +66,13 @@ $this->registerJs($search);
                         Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
                         [
                             'title' => Yii::t('yii', 'View'),
-                            'class'=>'btn btn-sm btn-info',
+                            'class' => 'btn btn-sm btn-info',
                         ]
                     );
                 },
             ],
         ],
-    ]; 
+    ];
     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -83,22 +82,22 @@ $this->registerJs($search);
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-assessment']],
         'panel' => [
             'type' => GridView::TYPE_DEFAULT,
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i>  ' . Html::encode($this->title).' </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i>  ' . Html::encode($this->title) . ' </h3>',
         ],
         'export' => false,
         // your toolbar can include the additional full export menu
         'toolbar' => [
-        
+
             [
-                'content'=>
+                'content' =>
                     Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                    . ' '.
+                    . ' ' .
                     Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info'])
-                    . ' '.
+                    . ' ' .
                     Html::a('<i class="fas fa-search"></i> Advance Search', ['#'], ['class' => 'btn btn-warning search-button']),
-                'options' => ['class' => 'btn-group-md', 'style'=>'margin-right:5px']
+                'options' => ['class' => 'btn-group-md', 'style' => 'margin-right:5px']
             ],
-            
+
             '{export}',
             ExportMenu::widget([
                 'dataProvider' => $dataProvider,
@@ -115,9 +114,9 @@ $this->registerJs($search);
                 'exportConfig' => [
                     ExportMenu::FORMAT_PDF => false
                 ]
-            ]) ,
+            ]),
         ],
-        
+
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
@@ -126,8 +125,8 @@ $this->registerJs($search);
         'bordered' => true,
         'striped' => false,
         'responsiveWrap' => false,
-        
-        
+
+
     ]); ?>
 
 </div>

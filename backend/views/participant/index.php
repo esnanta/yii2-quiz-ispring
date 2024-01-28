@@ -57,14 +57,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-group-search-group_id']
             ],
-            'identity_number',
+            [
+                'attribute' => 'identity_number',
+                'label' => Yii::t('app', 'No Id'),
+            ],
             'title',
             'username',
             'password',
             [
                 'attribute'=>'status',
                 'vAlign'=>'middle',
-                'width'=>'120px',
+                //'width'=>'120px',
                 'value'=>function ($model, $key, $index, $widget) {
                     return ($model->status!=null) ? $model->getOneStatus($model->status):'';
                 },
@@ -75,6 +78,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'filterInputOptions'=>['placeholder'=>''],
                 'format'=>'raw'
+            ],
+            [
+                'attribute' => 'last_login_at',
+                'label' => Yii::t('app', 'Last Login'),
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->last_login_at!=null) ? date('h:i:s a', strtotime($model->last_login_at)):'';
+                },
             ],
             [
                 'class' => 'common\widgets\ActionColumn',

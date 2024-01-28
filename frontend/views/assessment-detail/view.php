@@ -13,7 +13,6 @@ use kartik\datecontrol\DateControl;
 $this->title = $model->quiz_title . '-'.$model->assessment->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']);
 
 ?>
 <div class="assessment-detail-view">
@@ -24,7 +23,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'hover' => true,
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
-            'heading' => $this->title.$create,
+            'heading' => $this->title,
             'type' => DetailView::TYPE_DEFAULT,
         ],
         'attributes' => [

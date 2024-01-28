@@ -30,7 +30,6 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-md-6 col-xs-12">
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => '']) ?>
 
             <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::class, [
                 'data' => $groupList,
@@ -73,7 +72,6 @@ use yii\widgets\ActiveForm;
                 ],
             ]); ?>
 
-            <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
         </div>
     </div>
 
@@ -98,6 +96,10 @@ use yii\widgets\ActiveForm;
         ],
     ]);
     ?>
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6"><?= $form->field($model, 'description')->textarea(['rows' => 3]) ?></div>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

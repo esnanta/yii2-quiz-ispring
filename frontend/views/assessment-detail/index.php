@@ -29,8 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'toolbar' => [
             [
                 'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                     . ' '.
                     Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
                 'options' => ['class' => 'btn-group-md']
             ],
@@ -91,17 +89,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',
+                'template'=>'{view}',
                 'buttons' => [
-                    'update' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['assessment-detail/view', 'id' => $model->id, 'edit' => 't']),
-                            [
-                                'title' => Yii::t('yii', 'Edit'),
-                                'class'=>'btn btn-sm btn-info',
-                            ]
-                        );
-                    },
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
                             Yii::$app->urlManager->createUrl(['assessment-detail/view', 'id' => $model->id]),

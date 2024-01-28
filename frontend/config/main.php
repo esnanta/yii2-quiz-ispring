@@ -27,13 +27,17 @@ return [
 
         'user' => [
             'identityClass' => 'common\models\UserParticipant',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
 
         'session' => [
+            'class' => 'yii\web\Session',
             // this is the name of the session cookie used for login on the frontend
             'name' => 'quiz-frontend',
+            'cookieParams' => ['httponly' => true, 'lifetime' => 3600 * 4],
+            'timeout' => 3600*4, //session expire after 4 hour
+            'useCookies' => true,
         ],
 
         'request' => [

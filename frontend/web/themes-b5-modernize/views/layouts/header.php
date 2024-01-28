@@ -82,8 +82,8 @@ if (!Yii::$app->user->isGuest) {
                             <?php } else { ?>
                             <?=
                                 Html::a(
-                                    'Admin',
-                                    ['/user/login'],
+                                    'User',
+                                    ['/site/login'],
                                     [
                                         'class' => 'btn btn-outline-primary mx-3 mt-2 d-block'
                                     ]

@@ -20,7 +20,7 @@ class Schedule extends BaseSchedule
     {
         return [
             //TAMBAHAN
-            [['title','group_id', 'room_id','date_start','date_end'], 'required'],
+            [['group_id', 'room_id','date_start','date_end'], 'required'],
 
             [['office_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
@@ -31,5 +31,15 @@ class Schedule extends BaseSchedule
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
+    public function beforeSave($insert) {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
 
+        if ($this->isNewRecord) {
+            $this->title = Counter::getDataNumber(Counter::CODE_OF_SCHEDULE);
+        }
+
+        return true;
+    }
 }

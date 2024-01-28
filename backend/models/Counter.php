@@ -11,13 +11,8 @@ use common\helper\CacheCloud;
  */
 class Counter extends BaseCounter
 {
-    const CODE_OF_ACCOUNT_PAYABLE       = 'APX';
-    const CODE_OF_ACCOUNT_RECEIVABLE    = 'ARX';
-    const CODE_OF_FUELSALES             = 'FSX';
-    const CODE_OF_PURCHASE              = 'PCX';
-    const CODE_OF_STOCK_DISTRIBUTION    = 'SDT';
-    const CODE_OF_STOCK_OPNAME          = 'SOP';
-    const CODE_OF_STOCK_ADJUSTMENT      = 'SAD';
+    const CODE_OF_SCHEDULE       = 'SCD';
+
     /**
      * @inheritdoc
      */
