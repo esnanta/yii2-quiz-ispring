@@ -1,25 +1,29 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
+<p text-align="center">
+    <h1 text-align="center">Yii2 Quiz ISPRING</h1>
     <br>
 </p>
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+iSpring QuizMaker provides a variety of ways to deliver results. 
+If a Learning Management System that automatically tracks quiz progress 
+is not an option in your case, you can also send results via email or send 
+quiz results to server, which will be the main topic of this article.
 
-The template includes three tiers: front end, back end, and console, each of which
+With this approach, you may extend your own tracking system on your server. 
+This solution will require additional development and may incur extra costs, 
+depending on the requirements for creating your custom system.
+
+
+
+
+A copy of iSpring QuizMaker or another iSpring authoring tool that includes QuizMaker (iSpring Suite).
+
+A server with full access to the file directory and to configuration settings.
+
+Server-side application programming skills (PHP or C#, SQL, XML).
+
+
+The program includes three tiers: front end, back end, and console, each of which
 is a separate Yii application.
-
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
-
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![build](https://github.com/yiisoft/yii2-app-advanced/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-advanced/actions?query=workflow%3Abuild)
 
 DIRECTORY STRUCTURE
 -------------------
