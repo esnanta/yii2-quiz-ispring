@@ -56,8 +56,8 @@ class Participant extends BaseParticipant
         return [
             //MASTER
             self::STATUS_DELETED => Yii::t('app', 'Deleted'),
-            self::STATUS_INACTIVE  => Yii::t('app', 'Inactive'),
-            self::STATUS_ACTIVE  => Yii::t('app', 'Active'),
+            self::STATUS_INACTIVE  => Yii::t('app', 'Offline'),
+            self::STATUS_ACTIVE  => Yii::t('app', 'Online'),
         ];
     }
 
