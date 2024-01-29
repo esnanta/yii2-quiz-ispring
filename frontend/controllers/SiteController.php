@@ -114,13 +114,6 @@ class SiteController extends Controller
         $model = new LoginParticipantForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
-            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
-            $participant->status = Participant::STATUS_ACTIVE;
-            $participant->last_login_at = date(Yii::$app->params['datetimeSaveFormat']);
-            $participant->generateAuthKey();
-            $participant->save();
-
             return $this->redirect('index');
         } else {
             return $this->render('login', [
