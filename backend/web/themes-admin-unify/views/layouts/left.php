@@ -72,6 +72,7 @@ use common\helper\CacheCloud;
                         ['label' => Yii::t('app', 'Staff'), 'url' => ['/staff/index'] ],
                     ]],
                     ['label' => Yii::t('app', 'Office'), 'url' => ['/office/index']],
+                    ['label' => Yii::t('app', 'Add Staff'), 'url' => ['/site/create-reguler']]
                     //['label' => Yii::t('app', 'Theme'), 'url' => ['/theme/index']],
                 ],'visible' => $officeMenuVisibility],
 

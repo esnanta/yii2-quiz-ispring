@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -48,7 +49,8 @@ class ArchiveCategorySearch extends ArchiveCategory
 
     public function search($params)
     {
-        $query = ArchiveCategory::find();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $query = ArchiveCategory::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -46,7 +46,7 @@ class User extends BaseUser
             'usernameUnique'   => [
                 'username',
                 'unique',
-                'message' => \Yii::t('user', 'This username has already been taken')
+                'message' => \Yii::t('app', 'This username has already been taken')
             ],
 
             // email rules
@@ -57,7 +57,7 @@ class User extends BaseUser
             'emailUnique'   => [
                 'email',
                 'unique',
-                'message' => \Yii::t('user', 'This email address has already been taken')
+                'message' => \Yii::t('app', 'This email address has already been taken')
             ],
 
             // password rules

@@ -5,41 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/web/images/if_skype2512x512_197582.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/01 yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01 yii2-quiz-ispring.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/AssessmentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/AssessmentSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Counter.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Counter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/base/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/reset data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/reset data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ArchiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ArchiveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/ArchiveCategorySearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/ArchiveCategorySearch.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/web/themes-admin-unify/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-admin-unify/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Identity.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentDetailController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/_form.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/_formAssessmentDetail.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/_script.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/_search.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/create.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/update.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/view.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/test-result/_form.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/test-result/_search.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/test-result/create.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/test-result/index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/test-result/update.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/test-result/view.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/config/main.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +257,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/htdocs/application/yii2-quiz-ispring/frontend/web/themes-b5-modernize/views/site",
+    "last_opened_file_path": "D:/htdocs/application/yii2-quiz-ispring/backend/web/images",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -296,6 +269,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\images" />
       <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views\site" />
       <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\views" />
       <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views" />
@@ -340,7 +314,8 @@
       <workItem from="1706349223178" duration="8061000" />
       <workItem from="1706359385746" duration="12327000" />
       <workItem from="1706409115945" duration="634000" />
-      <workItem from="1706410155264" duration="7146000" />
+      <workItem from="1706410155264" duration="9837000" />
+      <workItem from="1706438404274" duration="6646000" />
     </task>
     <servers />
   </component>

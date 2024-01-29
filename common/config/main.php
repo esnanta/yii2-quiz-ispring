@@ -20,9 +20,17 @@ return [
             'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => 'tx_',
-            'enableSchemaCache' => false,
-            'schemaCacheDuration' => 3600, // Duration of schema cache.
-            'schemaCache' => 'cache', // Name of the cache component used to store schema information
+            //'enableSchemaCache' => false,
+            //'schemaCacheDuration' => 3600, // Duration of schema cache.
+            //'schemaCache' => 'cache', // Name of the cache component used to store schema information
+
+            'enableSchemaCache' => true,
+            'schemaCacheDuration' => 600,
+            'schemaCache' => 'cache',
+            'enableQueryCache'=> true,
+            'queryCacheDuration' => 3600,
+
+
         ],
 
         'authManager' => [
@@ -32,6 +40,16 @@ return [
 
         'cache' => [
             'class' => \yii\caching\FileCache::class,
+
+//            'class' => 'yii\caching\MemCache',
+//            'servers' => [
+//                [
+//                    'host' => 'localhost',
+//                    'port' => 11211,
+//                    'weight' => 100,
+//                ],
+//            ],
+//            'useMemcached' => true,
         ],
 
         'urlManager' => [

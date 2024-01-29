@@ -44,17 +44,20 @@ class ArchiveController extends Controller
             $searchModel = new ArchiveSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $officeId = CacheCloud::getInstance()->getOfficeId();
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            $archiveCategoryList   = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
-            $isVisibleList         = Archive::getArrayIsVisible();
+            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $isVisibleList = Archive::getArrayIsVisible();
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' =>$officeList,
+                'officeList' => $officeList,
                 'archiveCategoryList' => $archiveCategoryList,
                 'isVisibleList' => $isVisibleList,
             ]);
@@ -72,13 +75,17 @@ class ArchiveController extends Controller
     public function actionView($id)
     {
         if (Yii::$app->user->can('view-archive')) {
-            $model                  = $this->findModel($id);
-            $officeList             = ArrayHelper::map(Office::find()
-                                        ->where(['id' => $model->office_id])
-                                        ->asArray()->all(), 'id', 'title');
-            $archiveCategoryList    = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
-            $isVisibleList          = Archive::getArrayIsVisible();
-            $archiveTypeList        = Archive::getArrayArchiveType();
+            $model = $this->findModel($id);
+            $officeList = ArrayHelper::map(Office::find()
+                ->where(['id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
+            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
+                ->where(['office_id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
+            $isVisibleList = Archive::getArrayIsVisible();
+            $archiveTypeList = Archive::getArrayArchiveType();
 
             $oldFile = $model->getAssetFile();
             $oldAvatar = $model->asset_name;
@@ -96,12 +103,12 @@ class ArchiveController extends Controller
                 if ($model->save()) {
                     // upload only if valid uploaded file instance found
                     if ($asset !== false) { // delete old and overwrite
-                        file_exists($oldFile) ? unlink($oldFile) : '' ;
+                        file_exists($oldFile) ? unlink($oldFile) : '';
                         $path = $model->getAssetFile();
                         $asset->saveAs($path);
                     }
                     MessageHelper::getFlashUpdateSuccess();
-                    return $this->redirect(['view', 'id'=>$model->id]);
+                    return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     // error in saving model
                 }
@@ -109,7 +116,7 @@ class ArchiveController extends Controller
                 return $this->render('view', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'archiveCategoryList'=>$archiveCategoryList,
+                    'archiveCategoryList' => $archiveCategoryList,
                     'isVisibleList' => $isVisibleList,
                     'archiveTypeList' => $archiveTypeList
                 ]);
@@ -129,25 +136,29 @@ class ArchiveController extends Controller
     {
         if (Yii::$app->user->can('create-archive')) {
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $officeId = CacheCloud::getInstance()->getOfficeId();
+
             $officeList = ArrayHelper::map(Office::find()
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             $model = new Archive;
-            $model->office_id       = $officeId;
-            $model->date_issued     = date(Yii::$app->params['dateSaveFormat']);
-            $model->is_visible      = Archive::IS_VISIBLE_PRIVATE;
-            
-            $archiveCategoryList    = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
-            $archiveTypeList        = Archive::getArrayArchiveType();
-            $isVisibleList          = Archive::getArrayIsVisible();
-            
+            $model->office_id = $officeId;
+            $model->date_issued = date(Yii::$app->params['dateSaveFormat']);
+            $model->is_visible = Archive::IS_VISIBLE_PRIVATE;
+
+            $archiveTypeList = Archive::getArrayArchiveType();
+            $isVisibleList = Archive::getArrayIsVisible();
+
             try {
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
                     $asset = $model->uploadAsset();
-                    $model->asset_url = $model->getPath().'/'.$asset->name;
+                    $model->asset_url = $model->getPath() . '/' . $asset->name;
 
                     if ($model->save()) :
                         // upload only if valid uploaded file instance found
@@ -158,12 +169,12 @@ class ArchiveController extends Controller
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
 
-                    return $this->redirect(['view', 'id'=>$model->id]);
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
                 return $this->render('create', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'archiveCategoryList'=>$archiveCategoryList,
+                    'archiveCategoryList' => $archiveCategoryList,
                     'isVisibleList' => $isVisibleList,
                     'archiveTypeList' => $archiveTypeList,
                 ]);
@@ -190,9 +201,12 @@ class ArchiveController extends Controller
                 ->where(['id' => $model->office_id])
                 ->asArray()->all(), 'id', 'title');
 
-            $archiveCategoryList    = ArrayHelper::map(ArchiveCategory::find()->asArray()->all(), 'id', 'title');
-            $archiveTypeList        = Archive::getArrayArchiveType();
-            $isVisibleList          = Archive::getArrayIsVisible();
+            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
+                ->where(['office_id' => $model->office_id])
+                ->asArray()->all(), 'id', 'title');
+
+            $archiveTypeList = Archive::getArrayArchiveType();
+            $isVisibleList = Archive::getArrayIsVisible();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -201,7 +215,7 @@ class ArchiveController extends Controller
                 return $this->render('update', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'archiveCategoryList'=>$archiveCategoryList,
+                    'archiveCategoryList' => $archiveCategoryList,
                     'isVisibleList' => $isVisibleList,
                     'archiveTypeList' => $archiveTypeList,
                 ]);
@@ -236,15 +250,15 @@ class ArchiveController extends Controller
             throw new ForbiddenHttpException;
         }
     }
-    
+
     public function actionDeleteFile($id)
     {
         if (Yii::$app->user->can('delete-archive')) {
-            $model  = Archive::find()->where(['id'=>$id])->one();
+            $model = Archive::find()->where(['id' => $id])->one();
             $model->deleteAsset();
             $model->save();
             MessageHelper::getFlashDeleteSuccess();
-            return $this->redirect(['archive/view', 'id' => $model->id, 'title'=>$model->title]);
+            return $this->redirect(['archive/view', 'id' => $model->id, 'title' => $model->title]);
         } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;
@@ -267,10 +281,10 @@ class ArchiveController extends Controller
         }
     }
 
-    public function actionDownload($id,$title=null)
+    public function actionDownload($id, $title = null)
     {
-        $model  = $this->findModel($id);
-        $path   = $model->getAssetFile();
+        $model = $this->findModel($id);
+        $path = $model->getAssetFile();
         if (!empty($path)) {
             return $model->downloadFile($path);
         } else {
