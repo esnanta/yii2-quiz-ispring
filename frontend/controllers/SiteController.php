@@ -113,10 +113,14 @@ class SiteController extends Controller
     {
         $model = new LoginParticipantForm();
 
-        $model->username = 'U0078294733';
-        $model->password = '8a5fb';
-
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
+            $participant->status = Participant::STATUS_ACTIVE;
+            $participant->last_login_at = date(Yii::$app->params['datetimeSaveFormat']);
+            $participant->generateAuthKey();
+            $participant->save();
+
             return $this->redirect('index');
         } else {
             return $this->render('login', [

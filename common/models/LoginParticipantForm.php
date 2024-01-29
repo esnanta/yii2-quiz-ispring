@@ -46,17 +46,11 @@ class LoginParticipantForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user ) {
-                $this->addError($attribute, 'Check if user is active or not existed.');
+            if (!$user) {
+                $this->addError($attribute, 'Check if user is active or existed.');
             }
             elseif (!$user->validatePassword($this->password)){
                 $this->addError($attribute, 'Incorrect username or password.');
-            }
-            else{
-                $user->status = Participant::STATUS_ACTIVE;
-                $user->last_login_at = date(Yii::$app->params['datetimeSaveFormat']);
-                $user->generateAuthKey();
-                $user->save();
             }
         }
     }
