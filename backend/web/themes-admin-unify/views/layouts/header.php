@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use yii\bootstrap4\Html;
 
-use backend\models\Staff;
+use common\models\Staff;
 use common\helper\CacheCloud;
 
 $flushMenuEnabled       = false;

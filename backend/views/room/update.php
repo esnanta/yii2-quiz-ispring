@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Room $model
+ * @var common\models\Room $model
  */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [

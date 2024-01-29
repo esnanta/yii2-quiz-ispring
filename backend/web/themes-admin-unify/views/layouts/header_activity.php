@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Url;
-use backend\models\FuelSales;
-use backend\models\User;
+use common\models\FuelSales;
+use common\models\User;
 use common\helper\MessageHelper;
 
 $firstDate  =date("Y-m-01");

@@ -6,7 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\web\IdentityInterface;
 
-use backend\models\Participant;
+use common\models\Participant;
 
 /**
  * User model
@@ -134,7 +134,7 @@ class UserParticipant extends Participant implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return ($this->password == $password);
+        return ($this->password === $password);
         //return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 

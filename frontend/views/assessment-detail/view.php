@@ -7,7 +7,7 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\AssessmentDetail $model
+ * @var common\models\AssessmentDetail $model
  */
 
 $this->title = $model->quiz_title . '-'.$model->assessment->title;
@@ -92,13 +92,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'attribute'=>'created_by',
-                        'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
+                        'value'=>($model->created_by!=null) ? \common\models\User::getName($model->created_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
                         'attribute'=>'updated_by',
-                        'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
+                        'value'=>($model->updated_by!=null) ? \common\models\User::getName($model->updated_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],

@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Staff;
+use common\models\Staff;
 use common\helper\CacheCloud;
 use yii\helpers\Html;
 use yii\helpers\Url;

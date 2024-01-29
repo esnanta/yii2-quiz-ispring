@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\AssessmentSearch */
+/* @var $model common\models\AssessmentSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?= $form->field($model, 'office_id')->widget(\kartik\widgets\Select2::class, [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Office::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Office::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
         'pluginOptions' => [
             'allowClear' => true
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title']) ?>
 
     <?= $form->field($model, 'schedule_id')->widget(\kartik\widgets\Select2::class, [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Schedule::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Schedule::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Tx schedule')],
         'pluginOptions' => [
             'allowClear' => true

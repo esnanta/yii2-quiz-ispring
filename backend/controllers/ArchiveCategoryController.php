@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use backend\models\Office;
+use common\models\Office;
 use common\helper\CacheCloud;
 use Yii;
-use backend\models\ArchiveCategory;
-use backend\models\ArchiveCategorySearch;
+use common\models\ArchiveCategory;
+use common\models\ArchiveCategorySearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;

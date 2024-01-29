@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\ArchiveCategorySearch $searchModel
+ * @var common\models\ArchiveCategorySearch $searchModel
  */
 
 $this->title = Yii::t('app', 'Archive Categories');

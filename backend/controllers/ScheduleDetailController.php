@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use backend\models\Office;
-use backend\models\Schedule;
-use backend\models\Subject;
+use common\models\Office;
+use common\models\Schedule;
+use common\models\Subject;
 use common\helper\CacheCloud;
 use Yii;
-use backend\models\ScheduleDetail;
-use backend\models\ScheduleDetailSearch;
+use common\models\ScheduleDetail;
+use common\models\ScheduleDetailSearch;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;

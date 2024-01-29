@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Theme;
-use backend\models\ThemeSearch;
-use backend\models\Office;
+use common\models\Theme;
+use common\models\ThemeSearch;
+use common\models\Office;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;

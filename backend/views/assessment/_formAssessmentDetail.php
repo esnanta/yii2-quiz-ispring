@@ -27,7 +27,7 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Office::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
+                'data' => \yii\helpers\ArrayHelper::map(\common\models\Office::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
             ],
             'columnOptions' => ['width' => '200px']
@@ -37,7 +37,7 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Participant::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
+                'data' => \yii\helpers\ArrayHelper::map(\common\models\Participant::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Tx participant')],
             ],
             'columnOptions' => ['width' => '200px']

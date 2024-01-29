@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use backend\models\Group;
-use backend\models\Office;
-use backend\models\Participant;
-use backend\models\Room;
-use backend\models\ScheduleDetail;
-use backend\models\Subject;
+use common\models\Group;
+use common\models\Office;
+use common\models\Participant;
+use common\models\Room;
+use common\models\ScheduleDetail;
+use common\models\Subject;
 use common\helper\CacheCloud;
 use Yii;
-use backend\models\Schedule;
-use backend\models\ScheduleSearch;
+use common\models\Schedule;
+use common\models\ScheduleSearch;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

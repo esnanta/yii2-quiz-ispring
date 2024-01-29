@@ -13,7 +13,7 @@ class ArchiveTest extends \Codeception\Test\Unit
 
     public function TestValidateArchiveTest()
     {
-        $archivetest = new backend\models\ArchiveCategory();
+        $archivetest = new common\models\ArchiveCategory();
 
                     /* sequence */
                             $archivetest->setAttribute('sequence', '99');

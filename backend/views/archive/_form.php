@@ -8,7 +8,7 @@ use kartik\select2\Select2;
 use kartik\widgets\FileInput;
 /**
  * @var yii\web\View $this
- * @var backend\models\Archive $model
+ * @var common\models\Archive $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

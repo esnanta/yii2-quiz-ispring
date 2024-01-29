@@ -7,7 +7,7 @@ use kartik\widgets\Select2;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Fuel $model
+ * @var common\models\Fuel $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

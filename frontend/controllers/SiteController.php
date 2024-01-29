@@ -2,12 +2,12 @@
 
 namespace frontend\controllers;
 
-use backend\models\Assessment;
-use backend\models\AssessmentDetail;
+use common\models\Assessment;
+use common\models\AssessmentDetail;
 
-use backend\models\Participant;
-use backend\models\Schedule;
-use backend\models\ScheduleDetail;
+use common\models\Participant;
+use common\models\Schedule;
+use common\models\ScheduleDetail;
 use common\helper\ReadFilter;
 use common\models\LoginParticipantForm;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;

@@ -4,8 +4,8 @@ namespace backend\controllers;
 
 use common\helper\MessageHelper;
 use Yii;
-use backend\models\User;
-use backend\models\UserSearch;
+use common\models\User;
+use common\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

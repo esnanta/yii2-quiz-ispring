@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\AssessmentSearch */
+/* @var $searchModel common\models\AssessmentSearch */
 
 /* @var $dataProvider yii\data\ActiveDataProvider */
 

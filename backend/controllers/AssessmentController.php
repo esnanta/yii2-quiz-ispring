@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use backend\models\Office;
-use backend\models\Schedule;
-use backend\models\Subject;
+use common\models\Office;
+use common\models\Schedule;
+use common\models\Subject;
 use common\helper\CacheCloud;
 use Yii;
-use backend\models\Assessment;
-use backend\models\AssessmentSearch;
+use common\models\Assessment;
+use common\models\AssessmentSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;

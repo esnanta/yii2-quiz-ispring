@@ -6,7 +6,7 @@ use kartik\select2\Select2;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Employment $model
+ * @var common\models\Employment $model
  */
 
 $this->title = $model->title;
@@ -71,13 +71,13 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
                 'columns' => [
                     [
                         'attribute'=>'created_by',
-                        'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
+                        'value'=>($model->created_by!=null) ? \common\models\User::getName($model->created_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
                         'attribute'=>'updated_by',
-                        'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
+                        'value'=>($model->updated_by!=null) ? \common\models\User::getName($model->updated_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],                                

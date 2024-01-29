@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\RoomSearch $searchModel
+ * @var common\models\RoomSearch $searchModel
  */
 
 $this->title = Yii::t('app', 'Rooms');

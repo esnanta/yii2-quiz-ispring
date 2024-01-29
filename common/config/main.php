@@ -130,7 +130,7 @@ return [
             // or if need different configuration for frontend and backend you may
             // configure in needed configs
             'modelMap' => [
-                'User' => 'common\models\User',
+                'User' => 'common\models\UserDektrium',
             ],
 
             'controllerMap' => [

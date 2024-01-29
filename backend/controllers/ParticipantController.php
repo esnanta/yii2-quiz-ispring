@@ -2,20 +2,20 @@
 
 namespace backend\controllers;
 
-use backend\models\Archive;
-use backend\models\ArchiveSearch;
-use backend\models\Group;
-use backend\models\GroupSearch;
-use backend\models\Office;
-use backend\models\ParticipantImport;
-use backend\models\Subject;
+use common\models\Archive;
+use common\models\ArchiveSearch;
+use common\models\Group;
+use common\models\GroupSearch;
+use common\models\Office;
+use common\models\ParticipantImport;
+use common\models\Subject;
 use common\helper\CacheCloud;
 use common\helper\ReadFilter;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
-use backend\models\Participant;
-use backend\models\ParticipantSearch;
+use common\models\Participant;
+use common\models\ParticipantSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;

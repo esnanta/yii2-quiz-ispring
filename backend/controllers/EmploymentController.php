@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Employment;
-use backend\models\EmploymentSearch;
-use backend\models\Office;
+use common\models\Employment;
+use common\models\EmploymentSearch;
+use common\models\Office;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;

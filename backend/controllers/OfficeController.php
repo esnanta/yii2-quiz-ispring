@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Office;
-use backend\models\OfficeSearch;
+use common\models\Office;
+use common\models\OfficeSearch;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;

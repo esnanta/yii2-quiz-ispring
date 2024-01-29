@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Fuel $model
+ * @var common\models\Fuel $model
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [

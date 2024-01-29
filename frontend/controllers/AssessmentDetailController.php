@@ -2,12 +2,12 @@
 
 namespace frontend\controllers;
 
-use backend\models\Assessment;
-use backend\models\Participant;
+use common\models\Assessment;
+use common\models\Participant;
 
 use Yii;
-use backend\models\AssessmentDetail;
-use backend\models\AssessmentDetailSearch;
+use common\models\AssessmentDetail;
+use common\models\AssessmentDetailSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

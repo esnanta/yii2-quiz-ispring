@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Assessment */
+/* @var $model common\models\Assessment */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
@@ -185,7 +185,7 @@ $create = Html::a(
                         </li>
                         <li class="my-1"><span class="g-font-weight-600">
                             <?= Yii::t('app', 'Created By');?> :
-                             <?= \backend\models\User::getName($model->created_by);?>
+                             <?= \common\models\User::getName($model->created_by);?>
                         </li>
 
                     </ul>

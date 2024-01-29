@@ -9,14 +9,14 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 
-use backend\models\Employment;
-use backend\models\Office;
-use backend\models\Staff;
-use backend\models\Theme;
+use common\models\Employment;
+use common\models\Office;
+use common\models\Staff;
+use common\models\Theme;
 
 use common\helper\CacheCloud;
 use common\helper\MessageHelper;
-use common\models\User;
+use common\models\UserDektrium;
 
 /**
  * Site controller
@@ -113,7 +113,7 @@ class SiteController extends Controller
     public function actionCreateOwner()
     {
         if (Yii::$app->user->identity->isAdmin) {
-            $model          = new User;
+            $model          = new UserDektrium;
             $userTypeList[] = [Yii::$app->params['userRoleOwner'] => 'Owner'];
 
             $transaction    = Yii::$app->db->beginTransaction();
@@ -189,7 +189,7 @@ class SiteController extends Controller
         }
 
         if ($canCreateReguler==true) {
-            $model          = new User;
+            $model          = new UserDektrium;
             $userTypeList[] = [Yii::$app->params['userRoleReguler'] => 'Staff'];
 
             $employmentList = ArrayHelper::map(Employment::find()
@@ -295,11 +295,11 @@ class SiteController extends Controller
             $office->address = 'Jl. Office iterator '.$i;
             $office->save();
             
-            $workShift = new \backend\models\WorkShift;
+            $workShift = new \common\models\WorkShift;
             $workShift->office_id = $office->id;
             $workShift->
             
-            $supplier = new \backend\models\Supplier;
+            $supplier = new \common\models\Supplier;
             $supplier->office_id = $office->id;
             $supplier->title = 'Supplier - '.$i;
             $supplier->phone_number = '0192837465';

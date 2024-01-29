@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use backend\models\Office;
+use common\models\Office;
 use common\helper\CacheCloud;
 use Yii;
-use backend\models\Archive;
-use backend\models\ArchiveCategory;
-use backend\models\ArchiveSearch;
+use common\models\Archive;
+use common\models\ArchiveCategory;
+use common\models\ArchiveSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;

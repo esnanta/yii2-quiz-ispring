@@ -6,7 +6,7 @@ use kartik\widgets\Select2;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Staff $model
+ * @var common\models\Staff $model
  */
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
@@ -216,13 +216,13 @@ $create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['site/create-regu
                         'columns' => [
                             [
                                 'attribute' => 'created_by',
-                                'value' => ($model->created_by != null) ? \backend\models\User::getName($model->created_by) : '',
+                                'value' => ($model->created_by != null) ? \common\models\User::getName($model->created_by) : '',
                                 'type' => DetailView::INPUT_HIDDEN,
                                 'valueColOptions' => ['style' => 'width:30%']
                             ],
                             [
                                 'attribute' => 'updated_by',
-                                'value' => ($model->updated_by != null) ? \backend\models\User::getName($model->updated_by) : '',
+                                'value' => ($model->updated_by != null) ? \common\models\User::getName($model->updated_by) : '',
                                 'type' => DetailView::INPUT_HIDDEN,
                                 'valueColOptions' => ['style' => 'width:30%']
                             ],

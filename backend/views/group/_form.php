@@ -7,7 +7,7 @@ use kartik\select2\Select2;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Group $model
+ * @var common\models\Group $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

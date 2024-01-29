@@ -3,10 +3,10 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Staff;
-use backend\models\StaffSearch;
-use backend\models\Employment;
-use backend\models\Office;
+use common\models\Staff;
+use common\models\StaffSearch;
+use common\models\Employment;
+use common\models\Office;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;

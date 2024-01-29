@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\ScheduleDetailSearch $model
+ * @var common\models\ScheduleDetailSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

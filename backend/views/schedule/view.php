@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Schedule */
+/* @var $model common\models\Schedule */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Schedule'), 'url' => ['index']];
@@ -211,7 +211,7 @@ $create = Html::a(
                         </li>
                         <li class="my-1"><span class="g-font-weight-600">
                             <?= Yii::t('app', 'Created By');?> :
-                            </span> <?= \backend\models\User::getName($model->created_by);?>
+                            </span> <?= \common\models\User::getName($model->created_by);?>
                         </li>
 
                     </ul>

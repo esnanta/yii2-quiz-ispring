@@ -1,12 +1,12 @@
 <?php
 
-use backend\models\ScheduleDetail;
-use backend\models\StockOpname;
+use common\models\ScheduleDetail;
+use common\models\StockOpname;
 use kartik\widgets\SideNav;
 // OR if this package is installed separately, you can use
 // use kartik\sidenav\SideNav;
 
-use backend\models\Purchase;
+use common\models\Purchase;
 use common\helper\CacheCloud;
 ?>
 

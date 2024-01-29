@@ -9,7 +9,7 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\ScheduleDetail $model
+ * @var common\models\ScheduleDetail $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

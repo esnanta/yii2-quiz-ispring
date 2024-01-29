@@ -1,68 +1,42 @@
 <?php
+
 namespace common\models;
 
 use Yii;
-use dektrium\user\models\User as BaseUser;
-use dektrium\user\models\Profile;
+use \common\models\base\User as BaseUser;
 
 /**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * This is the model class for table "tx_user".
  */
 class User extends BaseUser
 {
-    
-    public $office_title;
-    public $staff_title;
-    public $employment_id;
-    public $user_type;
-    public $password;
- 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
-        return [
-            
-            [['employment_id'], 'integer'],
-            [['office_title', 'staff_title', 'password', 'user_type'], 'string'],
-            [['office_title', 'staff_title', 'user_type','employment_id'], 'safe'],
-            
-
-            // username rules
-            'usernameTrim'     => ['username', 'trim'],
-            'usernameRequired' => ['username', 'required', 'on' => ['register', 'create', 'connect', 'update']],
-            'usernameMatch'    => ['username', 'match', 'pattern' => static::$usernameRegexp],
-            'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
-            'usernameUnique'   => [
-                'username',
-                'unique',
-                'message' => \Yii::t('app', 'This username has already been taken')
-            ],
-
-            // email rules
-            'emailTrim'     => ['email', 'trim'],
-            'emailRequired' => ['email', 'required', 'on' => ['register', 'connect', 'create', 'update']],
-            'emailPattern'  => ['email', 'email'],
-            'emailLength'   => ['email', 'string', 'max' => 255],
-            'emailUnique'   => [
-                'email',
-                'unique',
-                'message' => \Yii::t('app', 'This email address has already been taken')
-            ],
-
-            // password rules
-            'passwordRequired' => ['password', 'required', 'on' => ['register']],
-            'passwordLength'   => ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
-        ];
+        return array_replace_recursive(parent::rules(),
+	    [
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['status', 'created_at', 'updated_at', 'last_login'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['email'], 'unique'],
+            [['username'], 'unique'],
+            [['password_reset_token'], 'unique'],
+            [['verlock'], 'default', 'value' => '0'],
+            [['verlock'], 'mootensai\components\OptimisticLockValidator']
+        ]);
     }
+    public static function getName($_id){ 
+        //https://www.yiiframework.com/doc/guide/2.0/en/caching-data
+        //$db = Yii::$app->db;// or Category::getDb()
+        $value = User::getDb()->cache(function () use ($_id) {
+            $model = User::find()->where(['id' => $_id])->one();
+            return $model->username;
+        });       
+
+       return $value;           
+        
+    } 
 }

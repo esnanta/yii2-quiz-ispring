@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\GroupSearch $searchModel
+ * @var common\models\GroupSearch $searchModel
  */
 
 $this->title = Yii::t('app', 'Groups');

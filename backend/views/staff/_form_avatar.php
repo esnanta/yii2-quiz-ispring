@@ -6,7 +6,7 @@ use kartik\widgets\ActiveForm;
 use budyaga\cropper\Widget;
 /**
  * @var yii\web\View $this
- * @var backend\models\Author $model
+ * @var common\models\Author $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

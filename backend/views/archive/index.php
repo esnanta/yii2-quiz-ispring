@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\ArchiveSearch $searchModel
+ * @var common\models\ArchiveSearch $searchModel
  */
 
 $this->title = Yii::t('app', 'Archives');
