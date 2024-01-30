@@ -6,7 +6,7 @@ return [
         '@npm' => '@vendor/npm-asset',
     ],
 
-    'name'=>'CBT-ISpring',
+    'name'=>'Quiz-ISpring',
     'timeZone' => 'Asia/Bangkok',
     'language' => 'id-ID',
     

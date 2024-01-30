@@ -5,9 +5,335 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/assets/MaterialDashboard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/css/material-dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/css/material-dashboard.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/css/material-dashboard.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/css/nucleo-icons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/css/nucleo-svg.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo-icons.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo-icons.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo-icons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo-icons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo-icons.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/fonts/nucleo.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/apple-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/bg-pricing.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/bg-smart-home-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/bg-smart-home-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/bruce-mars.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/down-arrow-dark.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/down-arrow-white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/down-arrow.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/drake.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/home-decor-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/home-decor-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/home-decor-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/icons/flags/AU.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/icons/flags/BR.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/icons/flags/DE.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/icons/flags/GB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/icons/flags/US.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/chat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/danger-chat-ill.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/dark-lock-ill.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/error-404.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/error-500.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/illustration-lock.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/illustration-reset.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/illustration-signin.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/illustration-signup.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/illustration-verification.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/lock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/pattern-tree.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/illustrations/rocket-white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/ivana-square.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/ivana-squares.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/ivancik.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/kal-visuals-square.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logo-ct-dark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logo-ct.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/gray-logos/logo-coinbase.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/gray-logos/logo-nasa.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/gray-logos/logo-netflix.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/gray-logos/logo-pinterest.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/gray-logos/logo-spotify.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/gray-logos/logo-vodafone.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/mastercard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/logos/visa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/marie.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/meeting.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/office-dark.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/product-12.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-1-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-11.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-2-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-3-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-4-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-5-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-6-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-7-min.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-details-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-details-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-details-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-details-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/products/product-details-5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/shapes/pattern-lines.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/shapes/waves-white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/bootstrap.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/creative-tim.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/devto.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/github.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/google-webdev.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/icon-bulb.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/icon-sun-cloud.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-asana.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-atlassian.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-invision.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-jira.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-slack.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-spotify.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/small-logos/logo-xd.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/team-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/team-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/team-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/team-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/team-5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/tesla-model-s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/img/vr-bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/core/bootstrap.bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/core/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/core/popper.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/material-dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/material-dashboard.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/material-dashboard.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/Chart.extension.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/bootstrap-notify.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/chartjs.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/countup.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/perfect-scrollbar.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/smooth-scrollbar.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/js/plugins/world.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_alert.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_avatars.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_badge.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_breadcrumbs.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_cards.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_dark-version.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_dropdown.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_dropup.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_fixed-plugin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_footer.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_forms.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_gradients.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_header.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_icons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_info-areas.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_misc.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_nav.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_navbar-vertical.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_navbar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_popovers.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_progress.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_ripple.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_social-buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_tables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_tilt.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_timeline.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_tooltips.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_typography.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_utilities-extend.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_utilities.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_accordion.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_alert.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_badge.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_breadcrumb.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_button-group.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_card.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_carousel.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_close.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_containers.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_dropdown.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_forms.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_functions.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_grid.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_helpers.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_images.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_list-group.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_maps.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_mixins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_modal.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_nav.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_navbar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_offcanvas.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_placeholders.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_popover.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_progress.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_reboot.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_root.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_spinners.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_tables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_toasts.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_tooltip.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_transitions.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_type.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_utilities.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/bootstrap-grid.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/bootstrap-reboot.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/bootstrap-utilities.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/bootstrap.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_floating-labels.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_form-check.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_form-control.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_form-range.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_form-select.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_form-text.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_input-group.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_labels.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/forms/_validation.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_clearfix.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_color-bg.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_colored-links.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_position.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_ratio.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_stacks.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_stretched-link.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_text-truncation.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_visually-hidden.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/helpers/_vr.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_alert.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_backdrop.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_banner.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_border-radius.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_box-shadow.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_breakpoints.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_caret.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_clearfix.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_color-scheme.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_container.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_deprecate.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_forms.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_gradients.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_grid.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_image.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_list-group.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_lists.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_reset-text.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_resize.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_table-variants.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_text-truncate.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_transition.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_utilities.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/mixins/_visually-hidden.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/utilities/_api.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/bootstrap/vendor/_rfs.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/cards/card-background.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/cards/card-rotate.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/custom/_styles.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/custom/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_form-check.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_form-select.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_form-switch.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_forms.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_input-group.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_inputs.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/forms/_labels.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/_badge.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/_buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/_colored-shadows.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/_hover.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/_social-buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/_vendor.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/mixins/mixins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/plugins/free/_flatpickr.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/plugins/free/_nouislider.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/plugins/free/_perfect-scrollbar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/plugins/free/_prism.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/plugins/free/plugins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/theme.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_animations.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_avatars.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_badge.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_breadcrumb.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_cards-extend.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_cards.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_choices.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_dark-version.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_dropdowns.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_fixed-plugin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_form-switch.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_full-calendar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_header.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_info-areas.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_misc-extend.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_misc.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_navbar-vertical.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_navbar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_ripple.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_social-buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_table.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_timeline.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_utilities-extend.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_utilities.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/assets/scss/material-dashboard/variables/_virtual-reality.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/layout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/migration.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/permission/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/permission/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/permission/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/permission/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/role/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/role/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/role/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/role/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/rule/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/rule/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/rule/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/rbac/rule/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/_account.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/_assignments.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/_info.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/_menu.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/_profile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/_user.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/admin/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/registration/connect.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/registration/register.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/registration/resend.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/dektrium/user/security/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/footer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/header.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/header_activity.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/header_notification.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/header_top_user.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/left.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/layouts/main.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/site/error.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/site/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-material-dashboard/views/site/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/main.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/params.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/params.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/config/main.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,32 +508,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/htdocs/application/yii2-quiz-ispring/backend/web/images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.web.browsers&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/htdocs/application/yii2-quiz-ispring/backend/web/themes-material-dashboard/assets",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\images" />
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views\site" />
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\views" />
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views" />
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard\assets" />
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard\assets\js" />
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard\assets\css" />
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard\views\layouts" />
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard\assets\css" />
       <recent name="D:\htdocs\application\yii2-quiz-ispring\common\models" />
       <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\template" />
     </key>
@@ -254,7 +582,8 @@
       <workItem from="1706410155264" duration="9837000" />
       <workItem from="1706438404274" duration="6646000" />
       <workItem from="1706519650263" duration="7151000" />
-      <workItem from="1706536973613" duration="4189000" />
+      <workItem from="1706536973613" duration="5202000" />
+      <workItem from="1706607364407" duration="6450000" />
     </task>
     <servers />
   </component>
@@ -263,21 +592,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/frontend/controllers/SiteController.php</url>
-          <line>96</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/common/models/LoginParticipantForm.php</url>
-          <line>53</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

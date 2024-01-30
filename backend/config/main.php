@@ -47,14 +47,25 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' =>
+//                [
+//                    '@dektrium/user/views' => '@app/web/themes-admin/dektrium/user',
+//                    '@dektrium/rbac/views' => '@app/web/themes-admin/dektrium/rbac',
+//                    '@backend/views' => '@backend/web/themes-admin/views',
+//                ],
+//                'basePath' => '@backend/web/themes-admin',
+//                'baseUrl' => '@web/web/themes-admin',
+
                 [
-                    '@dektrium/user/views' => '@app/web/themes-admin/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/web/themes-admin/dektrium/rbac',
-                    '@backend/views' => '@backend/web/themes-admin/views',
+                    '@dektrium/user/views' => '@app/web/themes-material-dashboard/dektrium/user',
+                    '@dektrium/rbac/views' => '@app/web/themes-material-dashboard/dektrium/rbac',
+                    '@backend/views' => '@backend/web/themes-material-dashboard/views',
                 ],
-                'basePath' => '@backend/web/themes-admin',
-                'baseUrl' => '@web/web/themes-admin',
+                'basePath' => '@backend/web/themes-material-dashboard',
+                'baseUrl' => '@web/web/themes-material-dashboard',
+
+
             ],
+
         ],
     ],              
     'params' => $params,
