@@ -1,8 +1,8 @@
 <?php
 namespace common\helper;
 
-use backend\models\AuthAssignment;
-use backend\models\Staff;
+use common\models\AuthAssignment;
+use common\models\Staff;
 
 
 /*
