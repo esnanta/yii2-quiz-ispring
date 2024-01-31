@@ -55,13 +55,13 @@ return [
 //                'basePath' => '@backend/web/themes-admin',
 //                'baseUrl' => '@web/web/themes-admin',
 
-                [
-                    '@dektrium/user/views' => '@app/web/themes-material-dashboard/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/web/themes-material-dashboard/dektrium/rbac',
-                    '@backend/views' => '@backend/web/themes-material-dashboard/views',
-                ],
-                'basePath' => '@backend/web/themes-material-dashboard',
-                'baseUrl' => '@web/web/themes-material-dashboard',
+                    [
+                        '@dektrium/user/views' => '@app/web/themes-sbadmin2/dektrium/user',
+                        '@dektrium/rbac/views' => '@app/web/themes-sbadmin2/dektrium/rbac',
+                        '@backend/views' => '@backend/web/themes-sbadmin2/views',
+                    ],
+                'basePath' => '@backend/web/themes-sbadmin2',
+                'baseUrl' => '@web/web/themes-sbadmin2',
 
 
             ],
