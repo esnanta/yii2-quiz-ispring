@@ -18,6 +18,8 @@
       <sourceFolder url="file://$MODULE_DIR$/frontend/web/assets/a3358d1c/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/6df8bd21/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/ecb9cc1c/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/alchemy/zippy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bajadev/yii2-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/bootstrap" />

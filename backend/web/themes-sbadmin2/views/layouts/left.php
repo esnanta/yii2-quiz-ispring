@@ -10,11 +10,12 @@ use common\helper\CacheCloud;
 
 <?php //$this->registerCsrfMetaTags() ?>
 
-<style type="text/css" media="print">
+<style media="print">
     .dontprint {
         display: none;
     }
 </style>
+
 
 <div>
 
@@ -50,12 +51,12 @@ use common\helper\CacheCloud;
             'encodeLabels' => false,
             
             //FOR <ul>
-//            'options' => [
-//                'id'=>'accordionSidebar',
-//                'class' => 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
-//            ], // Modify the menu's HTML attributes
+            'options' => [
+                'id'=>'accordionSidebar',
+                'class' => 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
+            ], // Modify the menu's HTML attributes
 //
-//            'addlCssClass' => 'text-secondary',
+            'addlCssClass' => 'text-warning',
 //
 //            // Add this class to the active menu item
 //            'activeCssClass' => 'active',

@@ -39,16 +39,8 @@ SbAdmin2::register($this);
                 <?= $this->render('header.php'); ?>
 
                 <div class="container-fluid">
-
-                    <?=
-                    Breadcrumbs::widget([
-                        'links' => isset($this->params['breadcrumbs']) ?
-                            $this->params['breadcrumbs'] : [],
-                    ])
-                    ?>
                     <?= AlertBootstrap4::widget() ?>
                     <?= $content ?>
-
                 </div>
             </div>
 
