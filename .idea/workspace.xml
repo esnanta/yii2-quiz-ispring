@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Staff.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Staff.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,7 +329,7 @@
       <workItem from="1706536973613" duration="5202000" />
       <workItem from="1706607364407" duration="6450000" />
       <workItem from="1706739954858" duration="7338000" />
-      <workItem from="1706791464432" duration="1492000" />
+      <workItem from="1706791464432" duration="2070000" />
     </task>
     <servers />
   </component>

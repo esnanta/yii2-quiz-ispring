@@ -157,7 +157,7 @@ class Staff extends BaseStaff
      */
     public function getImageFile()
     {
-        $directory = Staff . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }

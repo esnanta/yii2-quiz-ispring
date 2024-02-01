@@ -56,7 +56,7 @@ use common\helper\CacheCloud;
                 'class' => 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
             ], // Modify the menu's HTML attributes
 //
-            'addlCssClass' => 'text-warning',
+            'addlCssClass' => 'text-dark bg-white',
 //
 //            // Add this class to the active menu item
 //            'activeCssClass' => 'active',
