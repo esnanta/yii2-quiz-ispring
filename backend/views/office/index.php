@@ -23,7 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); echo GridView::widget([
         'dataProvider' => $dataProvider,
-        
+        'pageSummaryPosition' => GridView::POS_BOTTOM,
+        'showPageSummary' => true,
         'toolbar' => [
             [
                 'content'=>

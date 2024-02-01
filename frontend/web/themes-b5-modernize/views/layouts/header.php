@@ -53,7 +53,7 @@ if (!Yii::$app->user->isGuest) {
                             <img src="<?= Url::base() ?>/frontend/web/themes-b5-modernize/assets/images/profile/user-1.jpg"
                                  alt="" width="35" height="35" class="rounded-circle">
                         <?php } else { ?>
-                            <img src="<?= $model->getImageUrl(); ?>"
+                            <img src="<?= $model->getAssetUrl(); ?>"
                                  alt="" width="35" height="35" class="rounded-circle" alt="<?= $model->title; ?>">
                         <?php } ?>
 

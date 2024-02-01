@@ -13,7 +13,7 @@ use bajadev\ckeditor\CKEditor;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Themes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']);
+$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
 $stripTagsButton = Html::a('Remove Tags', ['strip-tags','id'=>$model->id], ['class' => 'pull-right detail-button label-warning','style'=>'padding:0 5px']);
 ?>
 <div class="theme-view">

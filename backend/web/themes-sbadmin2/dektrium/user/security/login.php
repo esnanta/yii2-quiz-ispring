@@ -26,75 +26,79 @@ $forgotPassword = Html::a('Forgot password?', ['/user/recovery/request']);
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
+<div class="row justify-content-center">
 
+    <div class="col-xl-10 col-lg-12 col-md-9">
 
-<div class="row">
-    <!-- 1-st column -->
-    
-    <div class="col-md-6 offset-md-3">
-        <!-- Checkboxes -->
-        <div class="g-brd-around g-brd-gray-light-v7 g-rounded-4 g-pa-15 g-pa-20--md g-mb-30">
+        <div class="card o-hidden border-0 shadow-lg my-0">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="p-5">
 
-            <span class="pull-right">
-                <?php
-                $tmpHome = Html::a('<i class="fa fa-home"></i> Back To Home ', ['site/index'], ['class' => 'logo']);
-                $home = str_replace('user/', '', $tmpHome);
-                ?>
-                <b><?= str_replace('admin/', '', $home) ?></b>    
-            </span>
+                            <?php
+                            $tmpHome = Html::a('<i class="fa fa-home"></i> Back To Home ',
+                                ['site/index']);
+                            $home = str_replace('user/', '', $tmpHome);
+                            ?>
 
-            <h4 class="h6 g-font-weight-600 g-color-black g-mb-20">Sign in to start your session</h4>
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                Sign in to start your session <br>
+                                <small>or <?= $home ?></small>
+                            </div>
 
-            <?php
-            $form = ActiveForm::begin([
-                        'id' => 'login-form',
-                        'enableAjaxValidation' => true,
-                        'enableClientValidation' => false,
-                        'validateOnBlur' => false,
-                        'validateOnType' => false,
-                        'validateOnChange' => false,
-                    ])
-            ?>                 
+                            <?php
+                            $form = ActiveForm::begin([
+                                'id' => 'login-form',
+                                'enableAjaxValidation' => true,
+                                'enableClientValidation' => false,
+                                'validateOnBlur' => false,
+                                'validateOnType' => false,
+                                'validateOnChange' => false,
+                            ])
+                            ?>
 
-            <?php if ($module->debug): ?>
-                <?=
-                $form->field($model, 'login', [
-                    'inputOptions' => [
-                        'autofocus' => 'autofocus',
-                        'class' => 'form-control form-control-md g-brd-gray-light-v7 g-brd-gray-light-v3--focus g-rounded-4 g-px-14 g-py-10',
-                        'tabindex' => '1']])->dropDownList(LoginForm::loginList());
-                ?>
+                            <?php if ($module->debug): ?>
+                                <?=
+                                $form->field($model, 'login', [
+                                    'inputOptions' => [
+                                        'autofocus' => 'autofocus',
+                                        'class' => 'form-control form-control-user',
+                                        'tabindex' => '1']])->dropDownList(LoginForm::loginList());
+                                ?>
 
-            <?php else: ?>
+                            <?php else: ?>
 
-                <?=
-                $form->field($model, 'login',
-                        ['inputOptions' => [
-                                'autofocus' => 'autofocus',
-                                'class' => 'form-control form-control-md g-brd-gray-light-v7 g-brd-gray-light-v3--focus g-rounded-4 g-px-14 g-py-10',
-                                'tabindex' => '1',
-                                'placeholder' => 'Email'
-                            ]]
-                )->label('Email', ['options' => ['class' => 'g-mb-10']]);
-                ?>
+                                <?=
+                                $form->field($model, 'login',
+                                    ['inputOptions' => [
+                                        'autofocus' => 'autofocus',
+                                        'class' => 'form-control form-control-user',
+                                        'tabindex' => '1',
+                                        'placeholder' => 'Email'
+                                    ]]
+                                )->label('Email', ['options' => ['class' => 'g-mb-10']]);
+                                ?>
 
-            <?php endif ?>                 
-                <?php if ($module->debug): ?>
-                <div class="alert alert-warning">
-                    <?= Yii::t('user', 'Password is not necessary because the module is in DEBUG mode.'); ?>
-                </div>
-            <?php else: ?>
-                <?=
-                    $form->field(
-                            $model,
-                            'password',
-                            ['inputOptions' => [
-                                    'class' => 'form-control form-control-md g-brd-gray-light-v7 g-brd-gray-light-v3 g-rounded-4 g-px-14 g-py-10',
-                                    'tabindex' => '2',
-                                    'placeholder' => 'Password'
-                                ]])
-                    ->label('Password', ['options' => ['class' => 'g-mb-10']])
-                    ->passwordInput()
+                            <?php endif ?>
+                            <?php if ($module->debug): ?>
+                                <div class="alert alert-warning">
+                                    <?= Yii::t('user', 'Password is not necessary because the module is in DEBUG mode.'); ?>
+                                </div>
+                            <?php else: ?>
+                                <?=
+                                $form->field(
+                                    $model,
+                                    'password',
+                                    ['inputOptions' => [
+                                        'class' => 'form-control form-control-user',
+                                        'tabindex' => '2',
+                                        'placeholder' => 'Password'
+                                    ]])
+                                    ->label('Password', ['options' => ['class' => 'g-mb-10']])
+                                    ->passwordInput()
 //                                    ->label(
 //                                        Yii::t('user', 'Password')
 //                                        . ($module->enablePasswordRecovery ?
@@ -104,52 +108,63 @@ $forgotPassword = Html::a('Forgot password?', ['/user/recovery/request']);
 //                                                ['tabindex' => '5']
 //                                            )
 //                                            . ')' : '')
-//                                    ) 
-                ?>
-            <?php endif ?>                     
-
-            
-            <?=
-                $form->field($model, 'rememberMe')
-                ->checkbox([
-                    'tabindex' => '3',
-                    'class' => 'u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0',
-                    'labelOptions' => ['class' => 'form-check-inline u-check g-pl-25'],
-                ])->label('')
-            ?>   
+//                                    )
+                                ?>
+                            <?php endif ?>
 
 
-            <?=
-            Html::submitButton(
-                    Yii::t('user', 'Sign in'),
-                    ['class' => 'btn btn-primary btn-block btn-flat', 'tabindex' => '4']
-            )
-            ?>   
+                            <?=
+                            $form->field($model, 'rememberMe')
+                                ->checkbox([
+                                    'tabindex' => '3',
+                                    'class' => 'custom-control custom-checkbox small',
+                                    'labelOptions' => ['class' => 'form-check-inline u-check g-pl-25'],
+                                ])->label('')
+                            ?>
 
-            <?php ActiveForm::end(); ?>
 
-            <?=
-            ($module->enablePasswordRecovery) ?
-                    str_replace('backend', 'frontend', Html::a('Forgot password?', ['/user/recovery/request'])) :
-                    '';
-            ?>
-            <br>
-            <?php if ($module->enableRegistration): ?>
+                            <?=
+                            Html::submitButton(
+                                Yii::t('user', 'Sign in'),
+                                ['class' => 'btn btn-primary btn-block btn-flat', 'tabindex' => '4']
+                            )
+                            ?>
 
-                <?= str_replace('backend', 'frontend', Html::a(Yii::t('user', 'Register a new membership'), ['/user/registration/register'])) ?>
+                            <?php ActiveForm::end(); ?>
 
-            <?php endif ?>                    
-            <br>
-            <?php if ($module->enableConfirmation): ?>
-                <br>
-                <?= "Didn't receive confirmation message? " . str_replace('backend', 'frontend', Html::a(Yii::t('user', 'resend'), ['/user/registration/resend'])) ?>
-            <?php endif ?>
-            <br>
-            <?=
-            Connect::widget([
-                'baseAuthUrl' => ['/user/security/auth'],
-            ])
-            ?>
+                            <?=
+                            ($module->enablePasswordRecovery) ?
+                                str_replace('backend', 'frontend', Html::a('Forgot password?', ['/user/recovery/request'])) :
+                                '';
+                            ?>
+                            <br>
+                            <?php if ($module->enableRegistration): ?>
+
+                                <?= str_replace('backend', 'frontend', Html::a(Yii::t('user', 'Register a new membership'), ['/user/registration/register'])) ?>
+
+                            <?php endif ?>
+                            <br>
+                            <?php if ($module->enableConfirmation): ?>
+                                <br>
+                                <?= "Didn't receive confirmation message? " . str_replace('backend', 'frontend', Html::a(Yii::t('user', 'resend'), ['/user/registration/resend'])) ?>
+                            <?php endif ?>
+                            <br>
+                            <?=
+                            Connect::widget([
+                                'baseAuthUrl' => ['/user/security/auth'],
+                            ])
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-none d-lg-block"
+                         style="background: url(<?=Yii::$app->urlManager->baseUrl.'/themes-sbadmin2/assets/img/20944201.jpg'?>) center;
+                         background-size:cover">
+<!--                        <small><a href="http://www.freepik.com">Designed by vectorjuice / Freepik</a></small>-->
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+

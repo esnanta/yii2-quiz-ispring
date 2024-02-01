@@ -98,23 +98,23 @@ $this->registerJs($search);
                 'options' => ['class' => 'btn-group-md', 'style' => 'margin-right:5px']
             ],
 
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
-                ],
-                'exportConfig' => [
-                    ExportMenu::FORMAT_PDF => false
-                ]
-            ]),
+//            '{export}',
+//            ExportMenu::widget([
+//                'dataProvider' => $dataProvider,
+//                'columns' => $gridColumn,
+//                'target' => ExportMenu::TARGET_BLANK,
+//                'fontAwesome' => true,
+//                'dropdownOptions' => [
+//                    'label' => 'Full',
+//                    'class' => 'btn btn-default',
+//                    'itemsBefore' => [
+//                        '<li class="dropdown-header">Export All Data</li>',
+//                    ],
+//                ],
+//                'exportConfig' => [
+//                    ExportMenu::FORMAT_PDF => false
+//                ]
+//            ]),
         ],
 
         'responsive' => true,

@@ -14,7 +14,7 @@ $signOut = '<span class="d-flex align-self-center g-mr-12">
             <span class="g-pos-rel">
                 <span class="u-badge-v2--xs u-badge--top-right g-hidden-sm-up g-bg-secondary g-mr-5"></span>
                 <img class="g-width-30 g-width-40--md g-height-30 g-height-40--md rounded-circle g-mr-10--sm" 
-                     src="<?= $model->getImageUrl();?>" alt="<?= $model->title;?>">
+                     src="<?= $model->getAssetUrl();?>" alt="<?= $model->title;?>">
             </span>
             <span class="g-pos-rel g-top-2">
                 <span class="g-hidden-sm-down"><?= $model->title; ?></span>

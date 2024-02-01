@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
@@ -23,7 +24,6 @@ class Staff extends BaseStaff
     const ACTIVE_STATUS_NO      = 2;
 
     public $image;
-    public static $path='/uploads/staff';
 
     /**
      * @inheritdoc
@@ -157,7 +157,7 @@ class Staff extends BaseStaff
      */
     public function getImageFile()
     {
-        $directory = Staff . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
+        $directory = Staff . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
@@ -168,12 +168,35 @@ class Staff extends BaseStaff
      * fetch stored image url
      * @return string
      */
-    public function getImageUrl()
+//    public function getImageUrl()
+//    {
+//        // return a default image placeholder if your source avatar is not found
+//        $defaultImage = '/images/if_skype2512x512_197582.png';
+//        $asset_name = isset($this->asset_name) ? $this->getPath().'/'.$this->asset_name : '/images/'.'if_skype2512x512_197582.png';
+//        return Yii::$app->urlManager->baseUrl . $asset_name;
+//    }
+
+
+    public function getAssetUrl(): string
     {
         // return a default image placeholder if your source avatar is not found
-        $asset_name = isset($this->asset_name) ? self::$path.'/'.$this->asset_name : '/images/'.'if_skype2512x512_197582.png';
-        return Yii::$app->urlManager->baseUrl . $asset_name;
+        $defaultImage = '/images/if_skype2512x512_197582.png';
+        $asset_name = (!empty($this->asset_name)) ? $this->asset_name : $defaultImage;
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+
+        if (file_exists($directory.'/'.$asset_name)) {
+            $file_parts = pathinfo($directory.'/'.$asset_name);
+            if($file_parts['extension']=='pdf'){
+                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$asset_name;
+            }
+
+            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$asset_name;
+        }
+        else{
+            return Yii::$app->urlManager->baseUrl . $defaultImage;
+        }
     }
+
 
     /**
     * Process upload of image
@@ -241,4 +264,8 @@ class Staff extends BaseStaff
         return $model->title;
     }
 
+    public function getPath() : string {
+        $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
+        return '/uploads/staff/'.$officeUniqueId;
+    }
 }

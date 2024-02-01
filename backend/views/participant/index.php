@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); echo GridView::widget([
         'dataProvider' => $dataProvider,
-        
+        'pageSummaryPosition' => GridView::POS_BOTTOM,
+        'showPageSummary' => true,
         'toolbar' => [
             [
                 'content'=>
@@ -135,7 +136,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'responsiveWrap' => false,
 
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title).' </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' .
+                Html::encode($this->title).' </h3>',
             'type' => 'default',
             //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
             //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),

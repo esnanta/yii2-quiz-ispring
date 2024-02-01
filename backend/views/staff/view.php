@@ -27,7 +27,7 @@ $create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['site/create-regu
 
                         <?= Html::a('<i class="hs-admin-pencil g-absolute-centered g-font-size-16 g-color-white"></i>', ['/staff/update', 'id' => $model->id], ['class' => 'u-badge-v2--lg u-badge--bottom-right g-width-32 g-height-32 g-bg-secondary g-bg-primary--hover g-transition-0_3 g-mb-20 g-mr-20']); ?>
 
-                        <img class="img-fluid rounded-circle" src="<?= $model->getImageUrl() ?>" alt="<?= $model->title; ?>">
+                        <img class="img-fluid rounded-circle" src="<?= $model->getAssetUrl() ?>" alt="<?= $model->title; ?>">
                     </div>
 
                     <h3 class="g-font-weight-300 g-font-size-20 g-color-black mb-0"><?= Html::a($model->title, ['/staff/update', 'id' => $model->id,]); ?></h3>

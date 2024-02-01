@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Group;
+use common\models\Participant;
+use common\models\Subject;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -86,11 +89,30 @@ class SiteController extends Controller
             $office     = Office::find()->where(['id' => $officeId])->one();
             $staff      = Staff::find()->where(['id' => $staffId])->one();
 
-            
+            $countOfflineParticipant = Participant::find('id')
+                ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_INACTIVE])
+                ->count();
+
+            $countOnlineParticipant = Participant::find('id')
+                ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_ACTIVE])
+                ->count();
+
+            $countGroup = Group::find('id')
+                ->where(['office_id'=>$officeId])
+                ->count();
+
+            $countSubject = Subject::find('id')
+                ->where(['office_id'=>$officeId])
+                ->count();
+
             return $this->render('index', [
                 'office'=>$office,
                 'staff'=>$staff,
                 'authItemName'=>$authItemName,
+                'countOfflineParticipant' => $countOfflineParticipant,
+                'countOnlineParticipant' => $countOnlineParticipant,
+                'countGroup' => $countGroup,
+                'countSubject' => $countSubject
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

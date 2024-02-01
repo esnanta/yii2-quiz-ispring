@@ -160,7 +160,7 @@ class Archive extends BaseArchive
      */
     public function getAssetFile(): ?string
     {
-        $directory  = Archive . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
+        $directory  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
             $this->getPath();
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
@@ -177,7 +177,7 @@ class Archive extends BaseArchive
         // return a default image placeholder if your source avatar is not found
         $defaultImage = '/images/no-picture-available-icon-1.jpg';
         $asset_name = (!empty($this->asset_name)) ? $this->asset_name : $defaultImage;
-        $directory = Archive . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
 
         if (file_exists($directory.'/'.$asset_name)) {
             $file_parts = pathinfo($directory.'/'.$asset_name);

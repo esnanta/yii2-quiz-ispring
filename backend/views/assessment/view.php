@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $create = Html::a(
     '<i class="fas fa-plus"></i>',
     ['create'],
-    ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']
+    ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']
 );
 ?>
 

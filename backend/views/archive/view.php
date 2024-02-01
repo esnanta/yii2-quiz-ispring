@@ -16,10 +16,10 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Archives'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']);
+$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
 
 $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/delete-file','id' => $model->id],
-                    ['class' => 'pull-right', 'data-confirm' => "Delete Asset?", 
+                    ['class' => 'float-right', 'data-confirm' => "Delete Asset?", 
                     'data-method' => 'POST', 'title' => 'Delete Asset?']);
 ?>
 
