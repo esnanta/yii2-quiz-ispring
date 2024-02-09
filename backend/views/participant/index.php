@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pluginOptions'=>['allowClear'=>true],
                 ],
                 'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
+                'format'=>'html'
             ],
             [
                 'attribute' => 'last_login_at',
@@ -101,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]),
                             [
                                 'title' => Yii::t('yii', 'Reset'),
-                                'class'=>'btn btn-sm btn-info',
+                                'class'=>'btn btn-sm btn-danger',
                             ]
                         );
                     },
