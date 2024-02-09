@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/LabelHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/LabelHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -332,12 +331,23 @@
       <workItem from="1706791464432" duration="2070000" />
       <workItem from="1707367591134" duration="1690000" />
       <workItem from="1707453111962" duration="2344000" />
-      <workItem from="1707467225220" duration="3704000" />
+      <workItem from="1707467225220" duration="4660000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
