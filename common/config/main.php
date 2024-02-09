@@ -29,8 +29,6 @@ return [
             'schemaCache' => 'cache',
             'enableQueryCache'=> true,
             'queryCacheDuration' => 3600,
-
-
         ],
 
         'authManager' => [
@@ -65,10 +63,7 @@ return [
         ],
 
         /*
-         * 'locale' => 'id-ID', 
-         * This configuration also used in
-         *  - account_payable.js
-         *  - purchase.js
+         * 'locale' => 'id-ID',
          */
         'formatter' => [
             'class' => 'yii\i18n\Formatter',

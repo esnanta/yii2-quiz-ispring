@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'office_id')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Office::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
+        'options' => ['placeholder' => Yii::t('app', '')],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'schedule_id')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Schedule::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Tx schedule')],
+        'options' => ['placeholder' => Yii::t('app', '')],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -54,7 +54,8 @@ use yii\widgets\ActiveForm;
     <?php
     $forms = [
         [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'AssessmentDetail')),
+            'label' => '<i class="glyphicon glyphicon-book"></i> ' .
+                Html::encode(Yii::t('app', 'AssessmentDetail')),
             'content' => $this->render('_formAssessmentDetail', [
                 'row' => \yii\helpers\ArrayHelper::toArray($model->assessmentDetails),
             ]),

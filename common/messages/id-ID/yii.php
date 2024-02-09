@@ -19,6 +19,7 @@
 return [
     'Delete' => '',
     'Edit' => '',
+    'Reset' => '',
     'Update' => '',
     'View' => '',
 ];

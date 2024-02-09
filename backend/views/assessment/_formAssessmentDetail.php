@@ -28,7 +28,7 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\common\models\Office::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tx office')],
+                'options' => ['placeholder' => Yii::t('app', '')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
@@ -38,7 +38,7 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\common\models\Participant::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tx participant')],
+                'options' => ['placeholder' => Yii::t('app', '')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
@@ -72,7 +72,8 @@ echo TabularForm::widget([
             'type' => GridView::TYPE_DEFAULT,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Tx Assessment Detail'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowAssessmentDetail()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' .
+                Yii::t('app', 'Add Assessment Detail'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowAssessmentDetail()']),
         ]
     ]
 ]);
