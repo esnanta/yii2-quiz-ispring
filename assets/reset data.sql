@@ -3,22 +3,6 @@
  * Created: Sep 24, 2023
  */
 
-/**
- * DAFTAR MENU
- * 01 Fuel Sales        OK
- * 02 Item Brand        OK
- * 03 Item Category     OK
- * 04 Item              OK
- * 05 Item Unit         OK
- * 06 Purchase          OK
- * 07 Purchase Receive  OK
- * 08 Supplier          OK
- * 09 Warehouse         OK
- * 10 Work Shift        OK
- * 11 Account Payable   OK
- * 12 Account Receivable OK
- */
-
 delete from tx_assessment_detail;
 ALTER TABLE tx_assessment_detail AUTO_INCREMENT=0;
 

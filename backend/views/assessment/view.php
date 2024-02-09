@@ -87,13 +87,13 @@ $create = Html::a(
                     <span class="g-font-weight-700">
                         <?= Yii::t('app', 'Date Start');?>:
                     </span>
-                    <?= $model->schedule->date_start;?>
+                    <?= $model->date_start;?>
                 </li>
                 <li>
                     <span class="g-font-weight-700">
                         <?= Yii::t('app', 'Date End');?>:
                     </span>
-                    <?= $model->schedule->date_end;?>
+                    <?= $model->date_end;?>
                 </li>
             </ul>
         </div>

@@ -2,21 +2,28 @@
 
 namespace backend\controllers;
 
-use common\models\Office;
+use common\models\AssessmentDetail;
+
+use common\models\reports\ExportAssessment;
 use common\models\Schedule;
 use common\models\Subject;
 use common\helper\CacheCloud;
 use Yii;
 use common\models\Assessment;
 use common\models\AssessmentSearch;
+use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\db\StaleObjectException;
+
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 use common\helper\MessageHelper;
+
+use yii2tech\spreadsheet\Spreadsheet;
+use yii\data\ArrayDataProvider;
+
 /**
  * AssessmentController implements the CRUD actions for Assessment model.
  */
@@ -40,11 +47,11 @@ class AssessmentController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('index-assessment')){
+        if (Yii::$app->user->can('index-assessment')) {
             $searchModel = new AssessmentSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $officeId = CacheCloud::getInstance()->getOfficeId();
             $scheduleList = ArrayHelper::map(Schedule::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -54,8 +61,7 @@ class AssessmentController extends Controller
                 'dataProvider' => $dataProvider,
                 'scheduleList' => $scheduleList,
             ]);
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -68,7 +74,7 @@ class AssessmentController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('view-assessment')){
+        if (Yii::$app->user->can('view-assessment')) {
             $model = $this->findModel($id);
             $providerAssessmentDetail = new \yii\data\ArrayDataProvider([
                 'allModels' => $model->assessmentDetails,
@@ -83,8 +89,7 @@ class AssessmentController extends Controller
                 'providerAssessmentDetail' => $providerAssessmentDetail,
                 'scheduleList' => $scheduleList,
             ]);
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -97,10 +102,10 @@ class AssessmentController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('create-assessment')){
+        if (Yii::$app->user->can('create-assessment')) {
             $model = new Assessment();
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
+            $officeId = CacheCloud::getInstance()->getOfficeId();
 
             $scheduleList = ArrayHelper::map(Schedule::find()
                 ->where(['office_id' => $officeId])
@@ -114,8 +119,7 @@ class AssessmentController extends Controller
                     'scheduleList' => $scheduleList,
                 ]);
             }
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -129,7 +133,7 @@ class AssessmentController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('update-assessment')){
+        if (Yii::$app->user->can('update-assessment')) {
             $model = $this->findModel($id);
 
             $scheduleList = ArrayHelper::map(Schedule::find()
@@ -144,8 +148,7 @@ class AssessmentController extends Controller
                     'scheduleList' => $scheduleList,
                 ]);
             }
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -159,9 +162,9 @@ class AssessmentController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('delete-assessment')){
-            $model          = $this->findModel($id);
-            $modelDetails   = $model->assessmentDetails;
+        if (Yii::$app->user->can('delete-assessment')) {
+            $model = $this->findModel($id);
+            $modelDetails = $model->assessmentDetails;
 
             $transaction = \Yii::$app->db->beginTransaction();
             try {
@@ -176,14 +179,13 @@ class AssessmentController extends Controller
                 $transaction->rollBack();
                 throw $e;
             }
-        }
-        else{
+        } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;
         }
     }
 
-    
+
     /**
      * Finds the Assessment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -199,15 +201,15 @@ class AssessmentController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for AssessmentDetail
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
+     * Action to load a tabular form grid
+     * for AssessmentDetail
+     * @return mixed
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     */
     public function actionAddAssessmentDetail()
     {
         if (Yii::$app->request->isAjax) {
@@ -215,11 +217,123 @@ class AssessmentController extends Controller
             if (!empty($row)) {
                 $row = array_values($row);
             }
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formAssessmentDetail', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+
+
+    public function actionReport()
+    {
+        $model      = new ExportAssessment();
+        $file_name  = 'assessment.xls';
+        $officeId   = CacheCloud::getInstance()->getOfficeId();
+
+        $assessmentList = ArrayHelper::map(Assessment::find()
+            ->asArray(['office_id' => $officeId])
+            ->all(), 'id', 'title');
+
+        $subjectList = ArrayHelper::map(Subject::find()
+            ->asArray(['office_id' => $officeId])
+            ->all(), 'id', 'title');
+
+        if (Yii::$app->user->can('report-assessment')) {
+            if ($model->load(Yii::$app->request->post())) {
+
+                $query = AssessmentDetail::find()
+                    ->where(['assessment_id' => $model->assessment_id])
+                    ->orderBy(['id' => SORT_ASC]);
+
+                $assessment = Assessment::find('title')
+                    ->where(['id' => $model->assessment_id])
+                    ->one();
+
+                $file_name = $assessment->title.'-'.$file_name;
+
+                if (!empty($model->subject_id)) {
+                    $query->andWhere(['subject_id' => $model->subject_id]);
+                }
+
+                $exporter = (new Spreadsheet([
+                    'title' => 'Sheet1',
+                    'dataProvider' => new ActiveDataProvider([
+                        'query' => $query,
+                        'pagination' => [
+                            'pageSize' => 20, // export batch size
+                        ],
+                    ]),
+                    'columns' => [
+                        [
+                            'attribute' => 'assessment.date_start',
+                            'header' => Yii::t('app', 'Date Start'),
+                            'contentOptions' => [
+                                'alignment' => [
+                                    'horizontal' => 'center',
+                                    'vertical' => 'center',
+                                ],
+                            ],
+                        ],
+                        [
+                            'attribute' => 'participant.title',
+                            'header' => Yii::t('app', 'Participant'),
+                        ],
+                        [
+                            'attribute' => 'subject.title',
+                            'header' => Yii::t('app', 'Subject'),
+                        ],
+                        [
+                            'attribute' => 'earned_points',
+                            'header' => Yii::t('app', 'Earned Points'),
+                        ],
+                        [
+                            'attribute' => 'passing_score',
+                            'header' => Yii::t('app', 'Passing Score'),
+                        ],
+                        [
+                            'attribute' => 'gained_score',
+                            'header' => Yii::t('app', 'Gained Score'),
+                        ],
+                        [
+                            'attribute' => 'quiz_title',
+                            'header' => Yii::t('app', 'Quiz Title'),
+                        ],
+                        [
+                            'attribute' => 'quiz_type',
+                            'header' => Yii::t('app', 'Quiz Type'),
+                        ],
+                        [
+                            'attribute' => 'time_limit',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return gmdate("H:i:s", $model->time_limit);
+                            },
+                            'header' => Yii::t('app', 'Time Limit'),
+                        ],
+                        [
+                            'attribute' => 'used_time',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return gmdate("H:i:s", $model->used_time);
+                            },
+                            'header' => Yii::t('app', 'Used Time'),
+                        ],
+                    ],
+                ]))
+                    ->render(); // call `render()` to create a single worksheet
+
+
+                return $exporter->send($file_name);
+            } else {
+                return $this->render('report', [
+                    'model' => $model,
+                    'assessmentList' => $assessmentList,
+                    'subjectList' => $subjectList,
+                ]);
+            }
+        } else {
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 }

@@ -103,6 +103,7 @@ use common\helper\CacheCloud;
                 ['label' => Yii::t('app', 'Assessment'), 'icon' => 'book-reader', 'items' => [
                     ['label' => Yii::t('app', 'Index'), 'url' => ['/assessment/index']],
                     ['label' => Yii::t('app', 'Detail'), 'url' => ['/assessment-detail/index']],
+                    ['label' => Yii::t('app', 'Export'), 'url' => ['/assessment/report']],
                 ]],
                 
                 ['label' => Yii::t('app', 'Admin'), 'icon' => 'user-secret', 'items' => [

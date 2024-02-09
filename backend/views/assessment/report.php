@@ -2,15 +2,17 @@
 
 use yii\helpers\Html;
 
+/**
+ * @var yii\web\View $this
+ * @var backend\models\FuelSales $model
+ */
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Assessment */
-
-$this->title = Yii::t('app', 'Create Assessment');
+$this->title = Yii::t('app', 'Report {modelClass}', [
+    'modelClass' => 'Fuel Sales',
+]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 
 <div class="card border-default mb-3">
     <div class="card-header">
@@ -21,10 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="card-body text-default">
         <div class="assessment-create">
-            <?= $this->render('_form', [
+            <?= $this->render('_form_report', [
                 'model' => $model,
-                'scheduleList' => $scheduleList,
-            ]) 
+                'assessmentList' => $assessmentList,
+                'subjectList' => $subjectList,
+            ])
             ?>
         </div>
     </div>

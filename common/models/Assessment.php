@@ -32,7 +32,8 @@ class Assessment extends BaseAssessment
         }
 
         if ($this->isNewRecord) {
-            $this->date_start = Counter::getDataNumber(Counter::CODE_OF_SCHEDULE);
+            $this->date_start = $this->schedule->date_start;
+            $this->date_end = $this->schedule->date_end;
         }
 
         return true;
