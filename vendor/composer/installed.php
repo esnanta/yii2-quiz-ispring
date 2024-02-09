@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-cbt-ispring',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '71b168810a16eac007a55f0d3e62126cc152af15',
+        'reference' => 'd64d933683d89785afb946db0d9a4817b9b02780',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -337,7 +337,7 @@
         'esnanta/yii2-cbt-ispring' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '71b168810a16eac007a55f0d3e62126cc152af15',
+            'reference' => 'd64d933683d89785afb946db0d9a4817b9b02780',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

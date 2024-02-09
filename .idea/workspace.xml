@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/02-yii2-auth.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Staff.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Staff.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01 yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/02 yii2-auth-news.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/03 yii2-auth-news-role.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/04 yii2-auth-ispring.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/05 yii2-auth-ispring_rule.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,6 +340,9 @@
       <workItem from="1706607364407" duration="6450000" />
       <workItem from="1706739954858" duration="7338000" />
       <workItem from="1706791464432" duration="2070000" />
+      <workItem from="1707367591134" duration="1690000" />
+      <workItem from="1707453111962" duration="2344000" />
+      <workItem from="1707467225220" duration="458000" />
     </task>
     <servers />
   </component>

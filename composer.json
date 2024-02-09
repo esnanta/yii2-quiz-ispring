@@ -46,7 +46,6 @@
 
         "mootensai/yii2-enhanced-gii": "dev-master",
         "warrence/yii2-kartikgii": "dev-master"
-
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

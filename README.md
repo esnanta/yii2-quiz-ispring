@@ -1,25 +1,28 @@
-<p text-align="center">
-    <h1 text-align="center">Yii2 Quiz ISPRING</h1>
-    <br>
-</p>
+Yii2 Quiz ISPRING
 
-iSpring QuizMaker provides a variety of ways to deliver results. 
-If a Learning Management System that automatically tracks quiz progress 
-is not an option in your case, you can also send results via email or send 
+iSpring QuizMaker provides a variety of ways to deliver results.
+If a Learning Management System that automatically tracks quiz progress
+is not an option in your case, you can also send results via email or send
 quiz results to server, which will be the main topic of this article.
 
-With this approach, you may extend your own tracking system on your server. 
-This solution will require additional development and may incur extra costs, 
+With this approach, you may extend your own tracking system on your server.
+This solution will require additional development and may incur extra costs,
 depending on the requirements for creating your custom system.
 
-
-
-
 A copy of iSpring QuizMaker or another iSpring authoring tool that includes QuizMaker (iSpring Suite).
-
 A server with full access to the file directory and to configuration settings.
-
 Server-side application programming skills (PHP or C#, SQL, XML).
+
+User Variable
+
+You must add custom variable that will be used for to collect data schedule.
+
+Field Name	        Condition	    Field Type	    Variable	
+Name	            Dont Ask	    Text            USER_NAME
+Email	            Dont Ask	    Email           USER_EMAIL
+Schedule	        Dont Ask	    Text            SCD	            (You must add this!)
+
+
 
 
 The program includes three tiers: front end, back end, and console, each of which
