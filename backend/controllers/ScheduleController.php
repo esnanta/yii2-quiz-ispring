@@ -2,26 +2,18 @@
 
 namespace backend\controllers;
 
-use common\models\Group;
-use common\models\Office;
-use common\models\Participant;
-use common\models\Period;
-use common\models\Room;
-use common\models\ScheduleDetail;
-use common\models\Subject;
-use common\helper\CacheCloud;
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use Yii;
 use common\models\Schedule;
 use common\models\ScheduleSearch;
-use yii\base\Model;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 use common\helper\MessageHelper;
+
 /**
  * ScheduleController implements the CRUD actions for Schedule model.
  */
@@ -45,36 +37,22 @@ class ScheduleController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('index-schedule')){
+        if (Yii::$app->user->can('index-schedule')) {
             $searchModel = new ScheduleSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $groupList = ArrayHelper::map(Group::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $roomList = ArrayHelper::map(Room::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $periodList = DataListUseCase::getPeriod();
+            $roomList = DataListUseCase::getRoom();
+            $groupList = DataListUseCase::getGroup();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'periodList' => $periodList,
-                'groupList' => $groupList,
-                'roomList' => $roomList
+                'roomList' => $roomList,
+                'groupList' => $groupList
             ]);
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -85,9 +63,9 @@ class ScheduleController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id,$title=null)
+    public function actionView($id, $title = null)
     {
-        if(Yii::$app->user->can('view-schedule')){
+        if (Yii::$app->user->can('view-schedule')) {
             $model = $this->findModel($id);
             $providerScheduleDetail = new \yii\data\ArrayDataProvider([
                 'allModels' => $model->scheduleDetails,
@@ -96,8 +74,7 @@ class ScheduleController extends Controller
                 'model' => $this->findModel($id),
                 'providerScheduleDetail' => $providerScheduleDetail,
             ]);
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -110,32 +87,17 @@ class ScheduleController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('create-schedule')){
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $subjectList = ArrayHelper::map(Subject::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $roomList = ArrayHelper::map(Room::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $groupList = ArrayHelper::map(Group::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+        if (Yii::$app->user->can('create-schedule')) {
 
             $model = new Schedule();
-            $model->office_id = $officeId;
+            $model->office_id = DataIdUseCase::getOfficeId();
             $model->date_start = date(Yii::$app->params['datetimeSaveFormat']);
             $model->date_end = date(Yii::$app->params['datetimeSaveFormat']);
+
+            $periodList = DataListUseCase::getPeriod();
+            $roomList = DataListUseCase::getRoom();
+            $groupList = DataListUseCase::getGroup();
+            $subjectList = DataListUseCase::getSubject();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 MessageHelper::getFlashSaveSuccess();
@@ -144,13 +106,12 @@ class ScheduleController extends Controller
                 return $this->render('create', [
                     'model' => $model,
                     'periodList' => $periodList,
-                    'subjectList' => $subjectList,
                     'roomList' => $roomList,
-                    'groupList' => $groupList
+                    'groupList' => $groupList,
+                    'subjectList' => $subjectList
                 ]);
             }
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -164,28 +125,13 @@ class ScheduleController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('update-schedule')){
-            $model      = $this->findModel($id);
-            $officeId   = $model->office_id;
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $subjectList = ArrayHelper::map(Subject::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $roomList = ArrayHelper::map(Room::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $groupList = ArrayHelper::map(Group::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+        if (Yii::$app->user->can('update-schedule')) {
+            $model = $this->findModel($id);
+            $officeList = DataListUseCase::getOffice();
+            $periodList = DataListUseCase::getPeriod();
+            $roomList = DataListUseCase::getRoom();
+            $groupList = DataListUseCase::getGroup();
+            $subjectList = DataListUseCase::getSubject();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -194,14 +140,13 @@ class ScheduleController extends Controller
                 return $this->render('update', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'subjectList' => $subjectList,
+                    'periodList' => $periodList,
                     'roomList' => $roomList,
                     'groupList' => $groupList,
-                    'periodList' => $periodList
+                    'subjectList' => $subjectList
                 ]);
             }
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
@@ -217,9 +162,9 @@ class ScheduleController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('delete-schedule')){
-            $model          = $this->findModel($id);
-            $modelDetails   = $model->scheduleDetails;
+        if (Yii::$app->user->can('delete-schedule')) {
+            $model = $this->findModel($id);
+            $modelDetails = $model->scheduleDetails;
 
             $transaction = \Yii::$app->db->beginTransaction();
             try {
@@ -236,14 +181,13 @@ class ScheduleController extends Controller
                 $transaction->rollBack();
                 throw $e;
             }
-        }
-        else{
+        } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;
         }
     }
 
-    
+
     /**
      * Finds the Schedule model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -259,28 +203,25 @@ class ScheduleController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for ScheduleDetail
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
+     * Action to load a tabular form grid
+     * for ScheduleDetail
+     * @return mixed
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     */
     public function actionAddScheduleDetail()
     {
         if (Yii::$app->request->isAjax) {
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $subjectList = ArrayHelper::map(Subject::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $subjectList = DataListUseCase::getSubject();
 
             $row = Yii::$app->request->post('ScheduleDetail');
             if (!empty($row)) {
                 $row = array_values($row);
             }
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formScheduleDetail', [
                 'row' => $row,

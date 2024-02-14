@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use common\models\Office;
-use common\helper\CacheCloud;
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use Yii;
 use common\models\ArchiveCategory;
 use common\models\ArchiveCategorySearch;
@@ -43,10 +43,7 @@ class ArchiveCategoryController extends Controller
             $searchModel = new ArchiveCategorySearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $officeList = DataListUseCase::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -68,9 +65,7 @@ class ArchiveCategoryController extends Controller
     {
         if (Yii::$app->user->can('view-archivecategory')) {
             $model = $this->findModel($id);
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $officeList = DataListUseCase::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -95,10 +90,8 @@ class ArchiveCategoryController extends Controller
     {
         if (Yii::$app->user->can('create-archivecategory')) {
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $officeId   = DataIdUseCase::getOfficeId();
+            $officeList = DataListUseCase::getOffice();
 
             $model = new ArchiveCategory;
             $model->office_id = $officeId;
@@ -133,9 +126,7 @@ class ArchiveCategoryController extends Controller
         if (Yii::$app->user->can('update-archivecategory')) {
             try {
                 $model = $this->findModel($id);
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+                $officeList = DataListUseCase::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

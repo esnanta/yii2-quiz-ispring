@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\domain\DataListUseCase;
 use Yii;
 use common\models\Staff;
 use common\models\StaffSearch;
@@ -67,16 +68,8 @@ class StaffController extends Controller
         if (Yii::$app->user->can('index-staff')) {
             $searchModel = new StaffSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-
-            $employmentList   = ArrayHelper::map(Employment::find()
-                    ->where(['office_id'=> $officeId ])
-                    ->asArray()->all(), 'id', 'title');
-            
+            $officeList         = DataListUseCase::getOffice();
+            $employmentList     = DataListUseCase::getEmployment();
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
             
@@ -84,7 +77,7 @@ class StaffController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
-                'employmentList'=>$employmentList,
+                'employmentList'=> $employmentList,
                 'genderList' => $genderList,
                 'activeStatusList' => $activeStatusList
                     
@@ -99,32 +92,25 @@ class StaffController extends Controller
      * Displays a single Staff model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
         if (Yii::$app->user->can('view-staff')) {
-            $model = $this->findModel($id);
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-            
-            $employmentList   = ArrayHelper::map(Employment::find()
-                    ->where(['office_id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-            
+            $model              = $this->findModel($id);
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
-            
+            $officeList         = DataListUseCase::getOffice();
+            $employmentList     = DataListUseCase::getEmployment();
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList'=>$officeList,
-                    'employmentList'=>$employmentList,
+                    'officeList' => $officeList,
+                    'employmentList'=> $employmentList,
                     'genderList' => $genderList,
                     'activeStatusList' => $activeStatusList
                 ]);
@@ -144,19 +130,11 @@ class StaffController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-staff')) {
-            $model = new Staff;
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-            
-            $employmentList   = ArrayHelper::map(Employment::find()
-                    ->where(['office_id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-
+            $model              = new Staff;
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
+            $officeList         = DataListUseCase::getOffice();
+            $employmentList     = DataListUseCase::getEmployment();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -165,8 +143,8 @@ class StaffController extends Controller
                 } else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList'=>$officeList,
-                        'employmentList'=>$employmentList,
+                        'officeList' => $officeList,
+                        'employmentList'=> $employmentList,
                         'genderList' => $genderList,
                         'activeStatusList' => $activeStatusList
                     ]);
@@ -194,13 +172,8 @@ class StaffController extends Controller
         if (Yii::$app->user->can('update-staff')) {
             try {
 
-                $officeId   = CacheCloud::getInstance()->getOfficeId();
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-                
                 $model = $this->findModel($id);
-                $oldFile = $model->getImageFile();
+                $officeList = DataListUseCase::getOffice();
 
                 if ($model->load(Yii::$app->request->post())) {
                     $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
@@ -219,8 +192,8 @@ class StaffController extends Controller
                     }
                 }
                 return $this->render('update', [
-                    'model'=>$model,
-                    'officeList'=>$officeList
+                    'model' => $model,
+                    'officeList' => $officeList
                 ]);
             } catch (StaleObjectException $e) {
                 throw new StaleObjectException('The object being updated is outdated.');

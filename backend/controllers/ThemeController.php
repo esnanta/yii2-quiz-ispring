@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use Yii;
 use common\models\Theme;
 use common\models\ThemeSearch;
@@ -68,10 +70,8 @@ class ThemeController extends Controller
             $searchModel = new ThemeSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId       = CacheCloud::getInstance()->getOfficeId();
-            $officeList     = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
+            $officeId       = DataIdUseCase::getOfficeId();
+            $officeList     = DataListUseCase::getOffice();
             $themTypeList   = Theme::getArrayThemeType();
 
             if ($dataProvider->getTotalCount() == 0) {
@@ -106,12 +106,8 @@ class ThemeController extends Controller
     public function actionView($id)
     {
         if (Yii::$app->user->can('view-theme')) {
-            $model = $this->findModel($id);
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
+            $model      = $this->findModel($id);
+            $officeList = DataListUseCase::getOffice();;
 
             $oldFile = $model->getImageFile();
             $oldAvatar = $model->asset_name;
@@ -166,11 +162,8 @@ class ThemeController extends Controller
         
         
         if (Yii::$app->user->can('create-theme')) {
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-            
+            $officeId       = DataIdUseCase::getOfficeId();
+            $officeList     = DataListUseCase::getOffice();;
             $themTypeList   = Theme::getArrayThemeType();
 
             $model = new Theme;
@@ -206,14 +199,9 @@ class ThemeController extends Controller
     {
         if (Yii::$app->user->can('update-theme')) {
             try {
-                $model = $this->findModel($id);
-
-                $officeId   = CacheCloud::getInstance()->getOfficeId();
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-                
-                $themTypeList         = Theme::getArrayThemeType();
+                $model          = $this->findModel($id);
+                $officeList     = DataListUseCase::getOffice();;
+                $themTypeList   = Theme::getArrayThemeType();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashUpdateSuccess();

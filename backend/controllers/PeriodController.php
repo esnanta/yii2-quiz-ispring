@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use common\helper\CacheCloud;
 use common\models\Office;
 use Yii;
@@ -42,11 +44,12 @@ class PeriodController extends Controller
         if (Yii::$app->user->can('index-period')) {
             $searchModel = new PeriodSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $officeList = DataListUseCase::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' => $this->getOfficeList()
+                'officeList' => $officeList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -63,13 +66,14 @@ class PeriodController extends Controller
     {
         if (Yii::$app->user->can('view-period')) {
             $model = $this->findModel($id);
+            $officeList = DataListUseCase::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList' => $this->getOfficeList()
+                    'officeList' => $officeList
                 ]);
             }
         } else {
@@ -87,8 +91,9 @@ class PeriodController extends Controller
     {
         if (Yii::$app->user->can('create-period')) {
 
-            $model = new Period;
-            $model->office_id = CacheCloud::getInstance()->getOfficeId();
+            $model              = new Period;
+            $model->office_id   = DataIdUseCase::getOfficeId();
+            $officeList         = DataListUseCase::getOffice();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -96,7 +101,7 @@ class PeriodController extends Controller
                 } else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList' => $this->getOfficeList()
+                        'officeList' => $officeList
                     ]);
                 }
             } catch (StaleObjectException $e) {
@@ -118,14 +123,15 @@ class PeriodController extends Controller
     {
         if (Yii::$app->user->can('update-period')) {
             try {
-                $model = $this->findModel($id);
+                $model      = $this->findModel($id);
+                $officeList = DataListUseCase::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('update', [
                         'model' => $model,
-                        'officeList' => $this->getOfficeList()
+                        'officeList' => $officeList
                     ]);
                 }
             } catch (StaleObjectException $e) {
@@ -169,13 +175,5 @@ class PeriodController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    private function getOfficeList(): array
-    {
-        $officeId   = CacheCloud::getInstance()->getOfficeId();
-        return ArrayHelper::map(Office::find()
-            ->where(['id' => $officeId])
-            ->asArray()->all(), 'id', 'title');
     }
 }

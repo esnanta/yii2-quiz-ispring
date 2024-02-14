@@ -2,28 +2,24 @@
 
 namespace backend\controllers;
 
-use common\models\AssessmentDetail;
 
-use common\models\Period;
-use common\models\reports\ExportAssessment;
-use common\models\Schedule;
-use common\models\Subject;
-use common\helper\CacheCloud;
+
+
 use Yii;
-use common\models\Assessment;
-use common\models\AssessmentSearch;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
-
 use yii2tech\spreadsheet\Spreadsheet;
-use yii\data\ArrayDataProvider;
+
+use common\models\Assessment;
+use common\models\AssessmentSearch;
+use common\models\AssessmentDetail;
+use common\models\reports\ExportAssessment;
+
+use common\domain\DataListUseCase;
+use common\helper\MessageHelper;
 
 /**
  * AssessmentController implements the CRUD actions for Assessment model.
@@ -52,14 +48,8 @@ class AssessmentController extends Controller
             $searchModel = new AssessmentSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            $officeId = CacheCloud::getInstance()->getOfficeId();
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $scheduleList = DataListUseCase::getSchedule();
+            $periodList  = DataListUseCase::getPeriod();
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
@@ -86,14 +76,12 @@ class AssessmentController extends Controller
                 'allModels' => $model->assessmentDetails,
             ]);
 
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $scheduleList = DataListUseCase::getSchedule();
 
             return $this->render('view', [
                 'model' => $this->findModel($id),
                 'providerAssessmentDetail' => $providerAssessmentDetail,
-                'scheduleList' => $scheduleList,
+                'scheduleList' => $scheduleList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -110,16 +98,8 @@ class AssessmentController extends Controller
     {
         if (Yii::$app->user->can('create-assessment')) {
             $model = new Assessment();
-
-            $officeId = CacheCloud::getInstance()->getOfficeId();
-
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $scheduleList = DataListUseCase::getSchedule();
+            $periodList  = DataListUseCase::getPeriod();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -147,13 +127,8 @@ class AssessmentController extends Controller
         if (Yii::$app->user->can('update-assessment')) {
             $model = $this->findModel($id);
 
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $scheduleList = DataListUseCase::getSchedule();
+            $periodList  = DataListUseCase::getPeriod();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -246,15 +221,9 @@ class AssessmentController extends Controller
     {
         $model      = new ExportAssessment();
         $file_name  = 'assessment.xls';
-        $officeId   = CacheCloud::getInstance()->getOfficeId();
 
-        $assessmentList = ArrayHelper::map(Assessment::find()
-            ->asArray(['office_id' => $officeId])
-            ->all(), 'id', 'title');
-
-        $subjectList = ArrayHelper::map(Subject::find()
-            ->asArray(['office_id' => $officeId])
-            ->all(), 'id', 'title');
+        $assessmentList = DataListUseCase::getAssessment();
+        $subjectList = DataListUseCase::getSubject();
 
         if (Yii::$app->user->can('report-assessment')) {
             if ($model->load(Yii::$app->request->post())) {

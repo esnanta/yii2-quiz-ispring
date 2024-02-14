@@ -2,16 +2,13 @@
 
 namespace backend\controllers;
 
-use common\models\Office;
-use common\models\Schedule;
-use common\models\Subject;
-use common\helper\CacheCloud;
+
 use Yii;
 use common\models\ScheduleDetail;
 use common\models\ScheduleDetailSearch;
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use yii\base\Exception;
-use yii\helpers\ArrayHelper;
-use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -69,17 +66,9 @@ class ScheduleDetailController extends Controller
         if (Yii::$app->user->can('view-scheduledetail')) {
             $model = $this->findModel($id);
 
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
-
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['id' => $model->schedule_id])
-                ->asArray()->all(), 'id', 'title');
-
-            $subjectList = ArrayHelper::map(Subject::find()
-                ->where(['id' => $model->subject_id])
-                ->asArray()->all(), 'id', 'title');
+            $officeList = DataListUseCase::getOffice();
+            $scheduleList = DataListUseCase::getSchedule();
+            $subjectList = DataListUseCase::getSubject();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -105,17 +94,11 @@ class ScheduleDetailController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-scheduledetail')) {
-            $officeId = CacheCloud::getInstance()->getOfficeId();
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $subjectList = ArrayHelper::map(Subject::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
             $model = new ScheduleDetail;
-            $model->office_id = $officeId;
+            $model->office_id = DataIdUseCase::getOfficeId();
+
+            $scheduleList = DataListUseCase::getSchedule();
+            $subjectList = DataListUseCase::getSubject();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -148,14 +131,8 @@ class ScheduleDetailController extends Controller
             try {
 
                 $model = $this->findModel($id);
-
-                $scheduleList = ArrayHelper::map(Schedule::find()
-                    ->where(['id' => $model->schedule_id])
-                    ->asArray()->all(), 'id', 'title');
-
-                $subjectList = ArrayHelper::map(Subject::find()
-                    ->where(['id' => $model->subject_id])
-                    ->asArray()->all(), 'id', 'title');
+                $scheduleList = DataListUseCase::getSchedule();
+                $subjectList = DataListUseCase::getSubject();
 
                 $oldFile = $model->getAssetFile();
                 $oldAvatar = $model->asset_name;

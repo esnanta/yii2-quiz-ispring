@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use common\models\Office;
 use common\helper\CacheCloud;
 use Yii;
@@ -44,14 +46,8 @@ class ArchiveController extends Controller
             $searchModel = new ArchiveSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $officeList             = DataListUseCase::getOffice();
+            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
 
             $isVisibleList = Archive::getArrayIsVisible();
             return $this->render('index', [
@@ -76,13 +72,9 @@ class ArchiveController extends Controller
     {
         if (Yii::$app->user->can('view-archive')) {
             $model = $this->findModel($id);
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
 
-            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $officeList             = DataListUseCase::getOffice();
+            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
 
             $isVisibleList = Archive::getArrayIsVisible();
             $archiveTypeList = Archive::getArrayArchiveType();
@@ -136,15 +128,9 @@ class ArchiveController extends Controller
     {
         if (Yii::$app->user->can('create-archive')) {
 
-            $officeId = CacheCloud::getInstance()->getOfficeId();
-
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $officeId               = DataIdUseCase::getOfficeId();
+            $officeList             = DataListUseCase::getOffice();
+            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
 
             $model = new Archive;
             $model->office_id = $officeId;
@@ -197,13 +183,9 @@ class ArchiveController extends Controller
     {
         if (Yii::$app->user->can('update-archive')) {
             $model = $this->findModel($id);
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
 
-            $archiveCategoryList = ArrayHelper::map(ArchiveCategory::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $officeList             = DataListUseCase::getOffice();
+            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
 
             $archiveTypeList = Archive::getArrayArchiveType();
             $isVisibleList = Archive::getArrayIsVisible();

@@ -2,18 +2,18 @@
 
 namespace backend\controllers;
 
+
 use Yii;
 use common\models\Employment;
 use common\models\EmploymentSearch;
-use common\models\Office;
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
 
-use common\helper\CacheCloud;
 use common\helper\MessageHelper;
 
 /**
@@ -42,16 +42,12 @@ class EmploymentController extends Controller
         if (Yii::$app->user->can('index-employment')) {
             $searchModel = new EmploymentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $officeList   = DataListUseCase::getOffice();
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-            
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList'=>$officeList
+                'officeList' => $officeList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -69,9 +65,7 @@ class EmploymentController extends Controller
         if (Yii::$app->user->can('view-employment')) {
             $model = $this->findModel($id);
 
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+            $officeList = DataListUseCase::getOffice();
             
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -96,10 +90,8 @@ class EmploymentController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-employment')) {
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
+            $officeId   = DataIdUseCase::getOfficeId();
+            $officeList = DataListUseCase::getOffice();
             
             $model = new Employment;
             $model->office_id = $officeId;
@@ -134,10 +126,8 @@ class EmploymentController extends Controller
         if (Yii::$app->user->can('update-employment')) {
             try {
                 
-                $model = $this->findModel($id);
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+                $model      = $this->findModel($id);
+                $officeList = DataListUseCase::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashUpdateSuccess();

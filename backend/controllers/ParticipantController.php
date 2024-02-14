@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use common\models\Archive;
 use common\models\ArchiveSearch;
 use common\models\Group;
@@ -51,15 +53,8 @@ class ParticipantController extends Controller
             $searchModel = new ParticipantSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $groupList = ArrayHelper::map(Group::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
+            $officeList = DataListUseCase::getOffice();
+            $groupList  = DataListUseCase::getGroup();
             $statusList = Participant::getArrayStatus();
 
             return $this->render('index', [
@@ -84,15 +79,9 @@ class ParticipantController extends Controller
     public function actionView($id)
     {
         if(Yii::$app->user->can('view-participant')){
-            $model = $this->findModel($id);
-
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
-
-            $groupList = ArrayHelper::map(Group::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $model      = $this->findModel($id);
+            $officeList = DataListUseCase::getOffice();
+            $groupList  = DataListUseCase::getGroup();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -119,10 +108,8 @@ class ParticipantController extends Controller
     {
         if(Yii::$app->user->can('create-participant')){
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $officeId   = DataIdUseCase::getOfficeId();
+            $officeList = DataListUseCase::getOffice();
 
             $model = new Participant;
             $model->office_id = $officeId;
@@ -155,10 +142,7 @@ class ParticipantController extends Controller
             $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->query->andWhere(['archive_type' => Archive::ARCHIVE_TYPE_SPREADSHEET]);
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $officeList = DataListUseCase::getOffice();
 
             return $this->render('select_archive', [
                 'searchModel' => $searchModel,
@@ -176,18 +160,10 @@ class ParticipantController extends Controller
     public function actionImport($id)
     {
         if(Yii::$app->user->can('create-participant')){
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $archiveList = ArrayHelper::map(Archive::find()
-                ->where(['id' => $id])
-                ->asArray()->all(), 'id', 'title');
-
-            $groupList = ArrayHelper::map(Group::find()
-                ->where(['office_id' => $officeId,])
-                ->asArray()->all(), 'id', 'title');
+            $officeId       = DataIdUseCase::getOfficeId();
+            $officeList     = DataListUseCase::getOffice();
+            $archiveList    = DataListUseCase::getArchive();
+            $groupList      = DataListUseCase::getGroup();
 
             $model = new ParticipantImport();
             $model->office_id = $officeId;
@@ -306,11 +282,8 @@ class ParticipantController extends Controller
     {
         if(Yii::$app->user->can('update-participant')){
             try {
-                $model = $this->findModel($id);
-
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+                $model      = $this->findModel($id);
+                $officeList = DataListUseCase::getOffice();;
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashSaveSuccess();

@@ -2,12 +2,11 @@
 
 namespace backend\controllers;
 
-use common\models\Office;
-use common\helper\CacheCloud;
 use Yii;
 use common\models\Subject;
 use common\models\SubjectSearch;
-use yii\helpers\ArrayHelper;
+use common\domain\DataIdUseCase;
+use common\domain\DataListUseCase;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -39,13 +38,9 @@ class SubjectController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->can('index-subject')){
-            $searchModel = new SubjectSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $searchModel    = new SubjectSearch;
+            $dataProvider   = $searchModel->search(Yii::$app->request->getQueryParams());
+            $officeList     = DataListUseCase::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -67,11 +62,8 @@ class SubjectController extends Controller
     public function actionView($id)
     {
         if(Yii::$app->user->can('view-subject')){
-            $model = $this->findModel($id);
-
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $model      = $this->findModel($id);
+            $officeList = DataListUseCase::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -96,14 +88,9 @@ class SubjectController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-subject')){
-
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-            $officeList = ArrayHelper::map(Office::find()
-                ->where(['id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
             $model = new Subject;
-            $model->office_id = $officeId;
+            $model->office_id = DataIdUseCase::getOfficeId();
+            $officeList = DataListUseCase::getOffice();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -137,10 +124,7 @@ class SubjectController extends Controller
         if(Yii::$app->user->can('update-subject')){
             try {
                 $model = $this->findModel($id);
-
-                $officeList = ArrayHelper::map(Office::find()
-                    ->where(['id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+                $officeList = DataListUseCase::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

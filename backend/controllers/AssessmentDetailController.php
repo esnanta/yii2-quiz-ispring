@@ -2,14 +2,10 @@
 
 namespace backend\controllers;
 
-use common\models\Assessment;
-use common\models\Participant;
-use common\models\Schedule;
-use common\helper\CacheCloud;
+use common\domain\DataListUseCase;
 use Yii;
 use common\models\AssessmentDetail;
 use common\models\AssessmentDetailSearch;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -45,15 +41,8 @@ class AssessmentDetailController extends Controller
             $searchModel = new AssessmentDetailSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-
-            $assessmentList = ArrayHelper::map(Assessment::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $assessmentList = DataListUseCase::getAssessment();
+            $participantList  = DataListUseCase::getParticipant();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -77,13 +66,8 @@ class AssessmentDetailController extends Controller
         if (Yii::$app->user->can('view-assessmentdetail')) {
             $model = $this->findModel($id);
 
-            $assessmentList = ArrayHelper::map(Assessment::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
-
-            $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $assessmentList = DataListUseCase::getAssessment();
+            $participantList  = DataListUseCase::getParticipant();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -109,15 +93,8 @@ class AssessmentDetailController extends Controller
     {
         if (Yii::$app->user->can('create-assessmentdetail')) {
             $model = new AssessmentDetail;
-            $officeId   = CacheCloud::getInstance()->getOfficeId();
-
-            $assessmentList = ArrayHelper::map(Assessment::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $assessmentList = DataListUseCase::getAssessment();
+            $participantList  = DataListUseCase::getParticipant();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -149,15 +126,8 @@ class AssessmentDetailController extends Controller
         if (Yii::$app->user->can('update-assessmentdetail')) {
             try {
                 $model = $this->findModel($id);
-                $officeId   = CacheCloud::getInstance()->getOfficeId();
-
-                $assessmentList = ArrayHelper::map(Assessment::find()
-                    ->where(['office_id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
-
-                $participantList = ArrayHelper::map(Participant::find()
-                    ->where(['office_id' => $model->office_id])
-                    ->asArray()->all(), 'id', 'title');
+                $assessmentList = DataListUseCase::getAssessment();
+                $participantList  = DataListUseCase::getParticipant();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -187,7 +157,6 @@ class AssessmentDetailController extends Controller
     {
         if (Yii::$app->user->can('delete-assessmentdetail')) {
             $this->findModel($id)->delete();
-
             return $this->redirect(['index']);
         } else {
             MessageHelper::getFlashLoginInfo();
