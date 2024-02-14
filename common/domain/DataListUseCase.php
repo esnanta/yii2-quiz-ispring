@@ -2,7 +2,6 @@
 
 namespace common\domain;
 
-use common\helper\CacheCloud;
 use common\models\Archive;
 use common\models\ArchiveCategory;
 use common\models\Assessment;
