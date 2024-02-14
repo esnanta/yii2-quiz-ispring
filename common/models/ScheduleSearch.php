@@ -19,7 +19,7 @@ use common\models\Schedule;
     public function rules()
     {
         return [
-            [['id', 'office_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'period_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'date_start', 'date_end', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -62,6 +62,7 @@ use common\models\Schedule;
             'id' => $this->id,
             'office_id' => $this->office_id,
             'group_id' => $this->group_id,
+            'period_id' => $this->period_id,
             'room_id' => $this->room_id,
             'date_start' => $this->date_start,
             'date_end' => $this->date_end,

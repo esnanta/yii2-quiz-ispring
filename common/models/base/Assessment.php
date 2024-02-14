@@ -14,6 +14,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $office_id
  * @property string $title
  * @property integer $schedule_id
+ * @property integer $period_id
  * @property string $date_start
  * @property string $date_end
  * @property string $description
@@ -28,6 +29,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \common\models\Office $office
+ * @property \common\models\Period $period
  * @property \common\models\Schedule $schedule
  * @property \common\models\AssessmentDetail[] $assessmentDetails
  */
@@ -58,6 +60,7 @@ class Assessment extends \yii\db\ActiveRecord
     {
         return [
             'office',
+            'period',
             'schedule',
             'assessmentDetails'
         ];
@@ -69,7 +72,7 @@ class Assessment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'schedule_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'period_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 15],
@@ -108,6 +111,7 @@ class Assessment extends \yii\db\ActiveRecord
             'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
             'schedule_id' => Yii::t('app', 'Schedule ID'),
+            'period_id' => Yii::t('app', 'Period ID'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
             'description' => Yii::t('app', 'Description'),
@@ -123,6 +127,14 @@ class Assessment extends \yii\db\ActiveRecord
     public function getOffice()
     {
         return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPeriod()
+    {
+        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
     }
         
     /**

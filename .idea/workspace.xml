@@ -5,8 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/controllers/PeriodController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/period/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/period/_search.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/period/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/period/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/period/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/period/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/Period.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/PeriodSearch.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/base/Period.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/02-yii2-auth.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/02-yii2-auth.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/assessment/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/room/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/room/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssessmentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ScheduleSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Schedule.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +77,11 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpDebugGeneral" listening_started="true" notify_if_session_was_finished_without_being_paused="false" />
+  <component name="PhpDebugGeneral" listening_started="true" notify_if_session_was_finished_without_being_paused="false">
+    <xdebug_debug_ports port="9003" />
+    <xdebug_debug_ports port="9000" />
+    <xdebug_debug_ports port="9004" />
+  </component>
   <component name="PhpServers">
     <servers>
       <server host="localhost" id="39925484-4ff4-4d6c-8548-10c177f96b0f" name="localhost" />
@@ -334,7 +372,10 @@
       <workItem from="1707467225220" duration="4827000" />
       <workItem from="1707488221967" duration="4042000" />
       <workItem from="1707492430626" duration="1430000" />
-      <workItem from="1707754311435" duration="2985000" />
+      <workItem from="1707754311435" duration="3292000" />
+      <workItem from="1707875944194" duration="4098000" />
+      <workItem from="1707880135119" duration="1909000" />
+      <workItem from="1707882421237" duration="2044000" />
     </task>
     <servers />
   </component>

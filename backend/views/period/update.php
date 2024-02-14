@@ -2,13 +2,15 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Assessment */
+/**
+ * @var yii\web\View $this
+ * @var common\models\Period $model
+ */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Assessment',
+    'modelClass' => 'Period',
 ]) . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Periods'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
@@ -18,17 +20,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="panel-title">
             Please fill out the form below
             <div class="pull-right">
-                <?=Yii::t('app', 'Assessment');?>
-            </div>
+                Period            </div>
         </div>
     </div>
     <div class="panel-body">
-        <div class="assessment-update">
+        <div class="period-update">
             <?= $this->render('_form', [
                 'model' => $model,
-                'scheduleList' => $scheduleList,
-                'periodList' => $periodList
             ]) ?>
         </div>
     </div>
 </div>
+
+
+

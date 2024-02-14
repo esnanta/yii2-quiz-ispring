@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Group;
 use common\models\Office;
 use common\models\Participant;
+use common\models\Period;
 use common\models\Room;
 use common\models\ScheduleDetail;
 use common\models\Subject;
@@ -53,6 +54,10 @@ class ScheduleController extends Controller
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             $groupList = ArrayHelper::map(Group::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -64,7 +69,7 @@ class ScheduleController extends Controller
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' => $officeList,
+                'periodList' => $periodList,
                 'groupList' => $groupList,
                 'roomList' => $roomList
             ]);
@@ -111,6 +116,10 @@ class ScheduleController extends Controller
                 ->where(['id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             $subjectList = ArrayHelper::map(Subject::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
@@ -134,7 +143,7 @@ class ScheduleController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'officeList' => $officeList,
+                    'periodList' => $periodList,
                     'subjectList' => $subjectList,
                     'roomList' => $roomList,
                     'groupList' => $groupList
@@ -174,6 +183,9 @@ class ScheduleController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -184,7 +196,8 @@ class ScheduleController extends Controller
                     'officeList' => $officeList,
                     'subjectList' => $subjectList,
                     'roomList' => $roomList,
-                    'groupList' => $groupList
+                    'groupList' => $groupList,
+                    'periodList' => $periodList
                 ]);
             }
         }

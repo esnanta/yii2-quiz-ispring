@@ -29,6 +29,22 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
         [
+            'attribute' => 'period_id',
+            'label' => Yii::t('app', 'Period'),
+            'value' => function($model){
+                if ($model->period)
+                {return $model->period->title;}
+                else
+                {return NULL;}
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter' => $periodList,
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-office_id']
+        ],
+        [
             'attribute' => 'schedule_id',
             'label' => Yii::t('app', 'Schedule'),
             'value' => function ($model) {

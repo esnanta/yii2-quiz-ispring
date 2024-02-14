@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card border-default mb-3">
     <div class="card-header">Please fill out the form below 
         <span class="pull-right">
-            Participant        </span>
+            <?= Html::encode($this->title) ?>
+        </span>
     </div>
     <div class="card-body text-default">
         <div class="participant-create">

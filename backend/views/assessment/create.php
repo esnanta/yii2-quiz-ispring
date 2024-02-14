@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header">
         <?=Yii::t('app', 'Please fill out the form below');?>
         <span class="pull-right">
-            <?= Html::encode($this->title) ?>
+            <?=Yii::t('app', 'Assessment');?>
         </span>
     </div>
     <div class="card-body text-default">
@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $this->render('_form', [
                 'model' => $model,
                 'scheduleList' => $scheduleList,
+                'periodList' => $periodList
             ]) 
             ?>
         </div>

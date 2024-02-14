@@ -30,17 +30,15 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-md-6 col-xs-12">
-
-            <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::class, [
-                'data' => $groupList,
+            <?= $form->field($model, 'period_id')->widget(\kartik\widgets\Select2::class, [
+                'data' => $periodList,
                 'options' => ['placeholder' => Yii::t('app', '')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
             ]); ?>
-
-            <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::class, [
-                'data' => $roomList,
+            <?= $form->field($model, 'group_id')->widget(\kartik\widgets\Select2::class, [
+                'data' => $groupList,
                 'options' => ['placeholder' => Yii::t('app', '')],
                 'pluginOptions' => [
                     'allowClear' => true
@@ -59,7 +57,6 @@ use yii\widgets\ActiveForm;
                     ]
                 ],
             ]); ?>
-
             <?= $form->field($model, 'date_end')->widget(\kartik\datecontrol\DateControl::class, [
                 'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
                 'saveFormat' => 'php:Y-m-d H:i:s',
@@ -71,7 +68,18 @@ use yii\widgets\ActiveForm;
                     ]
                 ],
             ]); ?>
-
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <?= $form->field($model, 'room_id')->widget(\kartik\widgets\Select2::class, [
+                'data' => $roomList,
+                'options' => ['placeholder' => Yii::t('app', '')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
         </div>
     </div>
 
@@ -96,9 +104,6 @@ use yii\widgets\ActiveForm;
         ],
     ]);
     ?>
-
-    <div class="col-md-6"></div>
-    <div class="col-md-6"><?= $form->field($model, 'description')->textarea(['rows' => 3]) ?></div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

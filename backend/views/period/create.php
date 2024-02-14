@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Room $model
+ * @var common\models\Period $model
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Room',
+    'modelClass' => 'Period',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Rooms'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Periods'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -18,14 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card border-default mb-3">
     <div class="card-header"> <?=Yii::t('app', 'Please fill out the form below');?>
         <span class="pull-right">
-            <?=Yii::t('app', 'Room');?>
+            <?=Yii::t('app', 'Period');?>
         </span>
     </div>
     <div class="card-body text-default">
-        <div class="room-create">
+        <div class="period-create">
             <?= $this->render('_form', [
                 'model' => $model,
-                'officeList' => $officeList
             ]) 
             ?>
         </div>

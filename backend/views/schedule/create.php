@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card border-default mb-3">
     <div class="card-header">Please fill out the form below 
         <span class="pull-right">
-            Schedule        </span>
+            <?=Yii::t('app', 'Schedule');?>
+        </span>
     </div>
     <div class="card-body text-default">
         <div class="schedule-create">
@@ -23,7 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'subjectList' => $subjectList,
                 'roomList' => $roomList,
-                'groupList' => $groupList
+                'groupList' => $groupList,
+                'periodList' => $periodList
             ]) 
             ?>
         </div>

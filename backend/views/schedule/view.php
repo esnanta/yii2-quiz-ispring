@@ -59,7 +59,7 @@ $create = Html::a(
 
 <section class="container g-pt-10 g-pb-10">
     <div class="row">
-        <div class="col-md-6 g-mb-30">
+        <div class="col-md-4 g-mb-30">
 
             <h2 class="h4 g-font-weight-700 text-uppercase"><?= $model->office->title;?></h2>
             <p class="g-color-gray-dark-v4"><?= $model->office->phone_number;?>
@@ -67,7 +67,7 @@ $create = Html::a(
                 <br><?= $model->office->address;?></p>
         </div>
 
-        <div class="col-md-3 g-mb-30">
+        <div class="col-md-4 g-mb-30">
             <h3 class="h5 g-color-black g-font-weight-600 text-uppercase">
                 <?= Yii::t('app', 'Details');?>
             </h3>
@@ -76,6 +76,9 @@ $create = Html::a(
                         <?= Yii::t('app', 'Schedule')?>
                     </span>
                     <?= $model->title;?>
+                </li>
+                <li><span class="g-font-weight-700"><?= Yii::t('app', 'Period');?>:</span>
+                    <?= $model->period->title;?>
                 </li>
                 <li><span class="g-font-weight-700"><?= Yii::t('app', 'Group');?>:</span>
                     <?= $model->group->title;?>
@@ -86,7 +89,7 @@ $create = Html::a(
             </ul>
         </div>
 
-        <div class="col-md-3 g-mb-30">
+        <div class="col-md-4 g-mb-30">
             <h3 class="h5 g-color-black g-font-weight-600 text-uppercase">
                 <?= Yii::t('app', 'Time')?>:
             </h3>
@@ -198,7 +201,7 @@ $create = Html::a(
 
                         <li class="my-1"><span class="g-font-weight-600">
                             <?= Yii::t('app', 'Description');?>:
-                            <br><?=($model->description==null) ? '-':'';?>
+                            <br><?=($model->description==null) ? '-':$model->description;?>
                             <br>
                             <br>
                         </li>

@@ -173,11 +173,6 @@ values
     ('report-transaction','report-archive');
 
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  * Author:  Nanta Es
  * Created: Aug 29, 2021
@@ -285,6 +280,15 @@ values
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
+    ('index-period',2,'Index Period',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-period',2,'Create Period',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-period',2,'Update Period',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-period',2,'View Period',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-period',2,'Delete Period',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-period',2,'Report Period',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
     ('index-schedule',2,'Index Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('create-schedule',2,'Create Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('update-schedule',2,'Update Schedule',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -384,6 +388,15 @@ values
     ('view-ispring-master','view-subject'),
     ('delete-ispring-master','delete-subject'),
     ('report-ispring-master','report-subject');
+
+insert  into `tx_auth_item_child`(`parent`,`child`)
+values
+    ('index-ispring-master','index-period'),
+    ('create-ispring-master','create-period'),
+    ('update-ispring-master','update-period'),
+    ('view-ispring-master','view-period'),
+    ('delete-ispring-master','delete-period'),
+    ('report-ispring-master','report-period');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values

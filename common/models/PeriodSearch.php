@@ -6,64 +6,45 @@ use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Assessment;
+use kartik\daterange\DateRangeBehavior;
+use common\models\Period;
 
 /**
- * common\models\AssessmentSearch represents the model behind the search form about `common\models\Assessment`.
+ * PeriodSearch represents the model behind the search form about `common\models\Period`.
  */
- class AssessmentSearch extends Assessment
+class PeriodSearch extends Period
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
-            [['id', 'office_id', 'period_id', 'schedule_id', 'date_start', 'date_end','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'sequence', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params)
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
-        $query = Assessment::find()->where(['office_id'=>$officeId]);
+        $query = Period::find()->where(['office_id'=>$officeId])
+            ->orderBy('sequence ASC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'period_id' => $this->period_id,
-            'schedule_id' => $this->schedule_id,
-            'date_start' => $this->date_start,
-            'date_end' => $this->date_end,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -75,6 +56,7 @@ use common\models\Assessment;
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'sequence', $this->sequence])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 

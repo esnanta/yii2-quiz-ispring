@@ -22,7 +22,7 @@ class Schedule extends BaseSchedule
             //TAMBAHAN
             [['group_id', 'room_id','date_start','date_end'], 'required'],
 
-            [['office_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],

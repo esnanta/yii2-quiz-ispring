@@ -16,6 +16,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $schedule_detail_id
  * @property integer $participant_id
  * @property integer $subject_id
+ * @property integer $period_id
  * @property string $app_version
  * @property string $earned_points
  * @property string $passing_score
@@ -40,6 +41,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \common\models\Assessment $assessment
  * @property \common\models\Office $office
  * @property \common\models\Participant $participant
+ * @property \common\models\Period $period
  * @property \common\models\ScheduleDetail $scheduleDetail
  * @property \common\models\Subject $subject
  */
@@ -72,6 +74,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
             'assessment',
             'office',
             'participant',
+            'period',
             'scheduleDetail',
             'subject'
         ];
@@ -83,7 +86,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'assessment_id', 'schedule_detail_id', 'participant_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'assessment_id', 'schedule_detail_id', 'participant_id', 'subject_id', 'period_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
@@ -124,6 +127,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
             'schedule_detail_id' => Yii::t('app', 'Schedule Detail ID'),
             'participant_id' => Yii::t('app', 'Participant ID'),
             'subject_id' => Yii::t('app', 'Subject ID'),
+            'period_id' => Yii::t('app', 'Period ID'),
             'app_version' => Yii::t('app', 'App Version'),
             'earned_points' => Yii::t('app', 'Earned Points'),
             'passing_score' => Yii::t('app', 'Passing Score'),
@@ -163,6 +167,14 @@ class AssessmentDetail extends \yii\db\ActiveRecord
     public function getParticipant()
     {
         return $this->hasOne(\common\models\Participant::className(), ['id' => 'participant_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPeriod()
+    {
+        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
     }
         
     /**

@@ -8,16 +8,12 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "tx_schedule".
+ * This is the base model class for table "tx_period".
  *
  * @property integer $id
  * @property integer $office_id
  * @property string $title
- * @property integer $period_id
- * @property integer $group_id
- * @property integer $room_id
- * @property string $date_start
- * @property string $date_end
+ * @property integer $sequence
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -30,13 +26,11 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \common\models\Assessment[] $assessments
- * @property \common\models\Group $group
+ * @property \common\models\AssessmentDetail[] $assessmentDetails
  * @property \common\models\Office $office
- * @property \common\models\Period $period
- * @property \common\models\Room $room
- * @property \common\models\ScheduleDetail[] $scheduleDetails
+ * @property \common\models\Schedule[] $schedules
  */
-class Schedule extends \yii\db\ActiveRecord
+class Period extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -63,11 +57,9 @@ class Schedule extends \yii\db\ActiveRecord
     {
         return [
             'assessments',
-            'group',
+            'assessmentDetails',
             'office',
-            'period',
-            'room',
-            'scheduleDetails'
+            'schedules'
         ];
     }
 
@@ -77,10 +69,11 @@ class Schedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'period_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
+            [['sequence'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -92,7 +85,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tx_schedule';
+        return 'tx_period';
     }
 
     /**
@@ -115,11 +108,7 @@ class Schedule extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
-            'period_id' => Yii::t('app', 'Period ID'),
-            'group_id' => Yii::t('app', 'Group ID'),
-            'room_id' => Yii::t('app', 'Room ID'),
-            'date_start' => Yii::t('app', 'Date Start'),
-            'date_end' => Yii::t('app', 'Date End'),
+            'sequence' => Yii::t('app', 'Sequence'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
@@ -132,15 +121,15 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::className(), ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['period_id' => 'id']);
     }
         
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroup()
+    public function getAssessmentDetails()
     {
-        return $this->hasOne(\common\models\Group::className(), ['id' => 'group_id']);
+        return $this->hasMany(\common\models\AssessmentDetail::className(), ['period_id' => 'id']);
     }
         
     /**
@@ -154,25 +143,9 @@ class Schedule extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPeriod()
+    public function getSchedules()
     {
-        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoom()
-    {
-        return $this->hasOne(\common\models\Room::className(), ['id' => 'room_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getScheduleDetails()
-    {
-        return $this->hasMany(\common\models\ScheduleDetail::className(), ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\Schedule::className(), ['period_id' => 'id']);
     }
     
     /**

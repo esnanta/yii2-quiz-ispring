@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\AssessmentDetail;
 
+use common\models\Period;
 use common\models\reports\ExportAssessment;
 use common\models\Schedule;
 use common\models\Subject;
@@ -56,10 +57,15 @@ class AssessmentController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'scheduleList' => $scheduleList,
+                'periodList' => $periodList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -111,12 +117,17 @@ class AssessmentController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
                     'scheduleList' => $scheduleList,
+                    'periodList' => $periodList
                 ]);
             }
         } else {
@@ -140,12 +151,17 @@ class AssessmentController extends Controller
                 ->where(['office_id' => $model->office_id])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
                     'scheduleList' => $scheduleList,
+                    'periodList' => $periodList
                 ]);
             }
         } else {

@@ -17,8 +17,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <div class="panel-heading">
         <div class="panel-title">
             Please fill out the form below
-            <div class="pull-right">
-                Schedule            </div>
+            <div class="float-right">
+                <?=Yii::t('app', 'Schedule');?>
+            </div>
         </div>
     </div>
     <div class="panel-body">
@@ -27,7 +28,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 'model' => $model,
                 'subjectList' => $subjectList,
                 'roomList' => $roomList,
-                'groupList' => $groupList
+                'groupList' => $groupList,
+                'periodList' => $periodList
             ]) ?>
         </div>
     </div>

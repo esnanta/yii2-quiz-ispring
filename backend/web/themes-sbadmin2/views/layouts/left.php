@@ -53,7 +53,7 @@ use common\helper\CacheCloud;
             //FOR <ul>
             'options' => [
                 'id'=>'accordionSidebar',
-                'class' => 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
+                'class' => 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion dontprint'
             ], // Modify the menu's HTML attributes
 //
             'addlCssClass' => 'text-dark bg-white',
@@ -84,6 +84,7 @@ use common\helper\CacheCloud;
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
                     ['label' => Yii::t('app', 'Archive Category'), 'url' => ['/archive-category/index']],
                     ['label' => Yii::t('app', 'Archive'), 'url' => ['/archive/index']],
+                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],

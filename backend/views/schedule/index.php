@@ -28,16 +28,16 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
         [
-                'attribute' => 'office_id',
-                'label' => Yii::t('app', 'Office'),
+                'attribute' => 'period_id',
+                'label' => Yii::t('app', 'Period'),
                 'value' => function($model){
-                    if ($model->office)
-                    {return $model->office->title;}
+                    if ($model->period)
+                    {return $model->period->title;}
                     else
                     {return NULL;}
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter' => $officeList,
+                'filter' => $periodList,
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
