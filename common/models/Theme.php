@@ -120,7 +120,7 @@ class Theme extends BaseTheme
      */
     public function getImageFile() 
     {
-        $directory = Theme . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);      
         }

@@ -7,19 +7,19 @@ use Yii;
 class LabelHelper {
     public static function getButtonCssPlus(): string
     {
-        return 'btn btn-success';
+        return 'btn btn-sm btn-success';
     }
     public static function getButtonCssUpdate(): string
     {
-        return 'btn btn-warning';
+        return 'btn btn-sm btn-warning';
     }
     public static function getButtonCssMinus(): string
     {
-        return 'btn btn-danger';
+        return 'btn btn-sm btn-danger';
     }
     public static function getButtonCssPrint(): string
     {
-        return 'btn btn-info';
+        return 'btn btn-sm btn-info';
     }
     
     public static function getArchiveTypeDocument($text): string

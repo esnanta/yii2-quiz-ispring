@@ -105,7 +105,7 @@ environments/            contains environment-based overrides
 <p>If you find value in this application and believe in its benefit, every little bit helps. 
 You can even spread the word and tell your friends, colleagues, or community.</p>
 
-<p>Buy me a cup of coffee ;D</p>
+<p>Buy me a cup of coffee</p>
 
 <ul>
 	<li><a href="https://www.paypal.me/esnanta">https://www.paypal.me/esnanta</a></li>

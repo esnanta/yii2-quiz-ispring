@@ -64,7 +64,7 @@ class ScheduleDetail extends BaseScheduleDetail
      */
     public function getAssetFile(): ?string
     {
-        $directory  = ScheduleDetail . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
+        $directory  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
             $this->getPath();
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
@@ -81,7 +81,7 @@ class ScheduleDetail extends BaseScheduleDetail
         // return a default image placeholder if your source avatar is not found
         $defaultImage = '/images/no-picture-available-icon-1.jpg';
         $asset_name = (!empty($this->asset_name)) ? $this->asset_name : $defaultImage;
-        $directory = ScheduleDetail . phpstr_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
 
         if (file_exists($directory.'/'.$asset_name)) {
             $file_parts = pathinfo($directory.'/'.$asset_name);
@@ -174,7 +174,7 @@ class ScheduleDetail extends BaseScheduleDetail
     {
         //Create extract directory -> PATH / DATE-SUBJECT TITLE
         $combinedName = $this->getExtractFolderName();
-        $directory  = ScheduleDetail . phpstr_replace('backend', 'frontend', Yii::getAlias('@webroot')) .
+        $directory  = str_replace('backend', 'frontend', Yii::getAlias('@webroot')) .
             $this->getPath() .'/'.$combinedName;
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
