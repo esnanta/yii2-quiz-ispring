@@ -2,19 +2,16 @@
 
 namespace frontend\controllers;
 
-use common\models\Assessment;
+use common\domain\DataListUseCase;
 use common\models\Participant;
 
 use Yii;
 use common\models\AssessmentDetail;
 use common\models\AssessmentDetailSearch;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
-use common\helper\MessageHelper;
 
 /**
  * AssessmentDetailController implements the CRUD actions for AssessmentDetail model.
@@ -46,14 +43,8 @@ class AssessmentDetailController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
             $dataProvider->query->andWhere(['participant_id' => $participant->id]);
 
-            $officeId = $participant->office_id;
-            $assessmentList = ArrayHelper::map(Assessment::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
+            $assessmentList = DataListUseCase::getAssessment();
+            $participantList = DataListUseCase::getParticipant();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -80,13 +71,8 @@ class AssessmentDetailController extends Controller
             ->where(['id'=>$id,'participant_id'=>$participant->id])
             ->one();
 
-            $assessmentList = ArrayHelper::map(Assessment::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
-
-            $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $model->office_id])
-                ->asArray()->all(), 'id', 'title');
+            $assessmentList = DataListUseCase::getAssessment();
+            $participantList = DataListUseCase::getParticipant();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -102,19 +88,4 @@ class AssessmentDetailController extends Controller
         }
     }
 
-    /**
-     * Finds the AssessmentDetail model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return AssessmentDetail the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = AssessmentDetail::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }
