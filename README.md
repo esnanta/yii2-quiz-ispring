@@ -16,6 +16,14 @@
     This solution may require additional development or may incur extra costs,
     depending on the requirements for creating your custom system.
 </p>
+
+<p>
+    If you have questions, you can email:
+</p>
+
+* Nanta Es (programmer) - ombakrinai@gmail.com
+* [Saroel](https://github.com/saroel01) (quality control) - syahrul.hamdi@smanmba.sch.id
+
 <h3>
     <strong>Prerequisites</strong>
 </h3>
@@ -93,53 +101,12 @@
 
 <hr>
 
-<div>
-The program includes three tiers: frontend, backend, and console, 
-each of which is a separate Yii application.
-</div>
+<h3>Contribute</h3>
+Contributions are always welcome! Please create a PR to add Github Profile.
 
-DIRECTORY STRUCTURE
--------------------
-
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
-
-<h3>DONATION</h3>
-
-<p>If you find value in this application and believe in its benefit, every little bit helps. 
-You can even spread the word and tell your friends, colleagues, or community.</p>
+<h3>Support</h3>
+<p>If you find value in this application and believe in its benefit, every little bit helps. <br>
+Give a ⭐️ or You can even spread the word and tell your friends, colleagues, or community.</p>
 
 <p>Buy me a cup of coffee</p>
 
