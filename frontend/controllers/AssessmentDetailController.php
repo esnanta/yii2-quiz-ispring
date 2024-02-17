@@ -49,8 +49,10 @@ class AssessmentDetailController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
                 ->where(['office_id' => $officeId])
+                ->andWhere(['id' => $participant->id])
                 ->asArray()->all(), 'id', 'title');
 
             return $this->render('index', [
