@@ -6,8 +6,6 @@ use frontend\assets\B5AdminModernizeAsset;
 use common\widgets\AlertBootstrap5;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 
 B5AdminModernizeAsset::register($this);
 ?>
