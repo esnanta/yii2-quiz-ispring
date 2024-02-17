@@ -94,8 +94,8 @@
 <hr>
 
 <div>
-The program includes three tiers: front end, back end, and console, each of which is 
-a separate Yii application.
+The program includes three tiers: frontend, backend, and console, 
+each of which is a separate Yii application.
 </div>
 
 DIRECTORY STRUCTURE

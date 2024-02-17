@@ -1,13 +1,11 @@
 <?php
 
-use common\models\Staff;
-use common\helper\CacheCloud;
+use common\models\Participant;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 if (!Yii::$app->user->isGuest) {
-    $staffId = CacheCloud::getInstance()->getStaffId();
-    $model = Staff::find()->where(['id' => $staffId])->one();
+    $model = Participant::findone(['username' => Yii::$app->user->identity->username]);
 }
 ?>
 <header class="app-header">
@@ -46,7 +44,7 @@ if (!Yii::$app->user->isGuest) {
                             <img src="<?= Url::base() ?>/frontend/web/themes-b5-modernize/assets/images/profile/user-1.jpg"
                                  alt="" width="35" height="35" class="rounded-circle">
                         <?php } else { ?>
-                            <img src="<?= $model->getAssetUrl(); ?>"
+                            <img src="<?= Url::base() ?>/frontend/web/themes-b5-modernize/assets/images/profile/user-1.jpg"
                                  alt="" width="35" height="35" class="rounded-circle" alt="<?= $model->title; ?>">
                         <?php } ?>
 
