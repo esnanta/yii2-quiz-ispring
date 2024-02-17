@@ -15,7 +15,7 @@ use Yii;
 //SINGLETON CLASS
 class CacheCloud {
 
-    private static $instance = null;
+    private static ?CacheCloud $instance = null;
     private string $cacheOfficeId;
     private string $cacheOfficeTitle;
     private string $cacheOfficeUniqueId;
