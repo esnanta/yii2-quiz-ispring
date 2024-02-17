@@ -136,7 +136,7 @@ vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
 
-<strong>DONATION</strong>
+<h3>DONATION</h3>
 
 <p>If you find value in this application and believe in its benefit, every little bit helps. 
 You can even spread the word and tell your friends, colleagues, or community.</p>
