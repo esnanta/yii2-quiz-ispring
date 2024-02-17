@@ -18,11 +18,11 @@
 </p>
 
 <p>
-    If you have questions, you can email:
+    Any questions please email:
 </p>
 
 * Nanta Es (programmer) - ombakrinai@gmail.com
-* [Saroel](https://github.com/saroel01) (quality control) - syahrul.hamdi@smanmba.sch.id
+* [Saroel](https://github.com/saroel01) (contributor, qc) - syahrul.hamdi@smanmba.sch.id
 
 <h3>
     <strong>Prerequisites</strong>
