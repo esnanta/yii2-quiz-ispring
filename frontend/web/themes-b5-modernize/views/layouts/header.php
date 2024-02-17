@@ -31,17 +31,10 @@ if (!Yii::$app->user->isGuest) {
                 <?php
                 if (!Yii::$app->user->isGuest) :
                     ?>
-                    <a class="btn btn-md btn-success" style="margin-right:2px"
-                       href="<?= str_replace('', '', Url::to(['schedule/index'])) ?>">
-                        <?= Yii::t('app', 'Schedule') ?>
+                    <a class="btn btn-md btn-primary" style="margin-right:2px"
+                       href="<?= str_replace('', '', Url::to(['assessment-detail/index'])) ?>">
+                        <?= Yii::t('app', 'Assessment') ?>
                     </a>
-
-                    <a class="btn btn-md btn-primary"
-                            href="<?= Url::to(['admin/site/index']) ?>"
-                       target="_blank">
-                        <?= Yii::t('app', 'Admin') ?>
-                    </a>
-
 
                 <?php endif; ?>
 
@@ -62,10 +55,10 @@ if (!Yii::$app->user->isGuest) {
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                         <div class="message-body">
                             <?php if (!Yii::$app->user->isGuest) { ?>
-                                <a href="<?= Url::to(['admin/staff/view', 'id' => $model->id]) ?>"
+                                <a href="<?= Url::to(['site/index']) ?>"
                                    class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="ti ti-user fs-6"></i>
-                                    <p class="mb-0 fs-3">My Profile</p>
+                                    <p class="mb-0 fs-3">Dashboard</p>
                                 </a>
 
                                 <?=

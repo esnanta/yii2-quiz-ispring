@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -347,7 +348,7 @@
       <workItem from="1707891258845" duration="3220000" />
       <workItem from="1707911861063" duration="5631000" />
       <workItem from="1708178250852" duration="563000" />
-      <workItem from="1708178878219" duration="113000" />
+      <workItem from="1708178878219" duration="4961000" />
     </task>
     <servers />
   </component>
