@@ -46,6 +46,9 @@ class ScheduleDetail extends BaseScheduleDetail
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     public function beforeSave($insert) {
         if (!parent::beforeSave($insert)) {
             return false;
@@ -54,6 +57,8 @@ class ScheduleDetail extends BaseScheduleDetail
         if ($this->isNewRecord) {
             $this->office_id    = $this->schedule->office_id;
         }
+
+        $this->asset_url = $this->getExtractUrl();
 
         return true;
     }
@@ -113,18 +118,12 @@ class ScheduleDetail extends BaseScheduleDetail
         }
 
         //generate a unique file name
-        //$ext = end((explode(".", $asset->name)));
-        $deleteExt          = substr($asset->name, 0, strpos($asset->name, "."));
-        $replaceSpace       = str_replace(' ','_', $deleteExt);
-        $replaceSlash       = str_replace('/','_', $replaceSpace);
-        $replaceComma       = str_replace(',','_', $replaceSlash);
-        $replaceDot         = str_replace('.','_', $replaceComma);
-        $title              = $replaceDot;
-        $tmp                = explode('.', $asset->name);
-        $ext                = end($tmp);
-        $asset->name        = $title.".{$ext}";
+        $pattern        = '/[\s\/,.]/'; // Regular expression for spaces, slashes, commas, and dots
+        $title          = preg_replace($pattern, '_', substr($asset->name, 0, strpos($asset->name, ".")));
+        $tmp            = explode('.', $asset->name);
+        $ext            = end($tmp);
+        $asset->name    = $title.".{$ext}";
 
-        // the uploaded asset instance
         return $asset;
     }
 
@@ -189,7 +188,7 @@ class ScheduleDetail extends BaseScheduleDetail
     {
         $assetNameWithoutExtension = substr($this->asset_name, 0, strpos($this->asset_name, "."));
         $indexFile = $assetNameWithoutExtension.'/index.html';
-        return $this->getPath() . 'ScheduleDetail.php/' .$this->getExtractFolderName().'/'.$indexFile;
+        return $this->getPath() . '/' .$this->getExtractFolderName().'/'.$indexFile;
     }
 
     private function getExtractFolderName(): string

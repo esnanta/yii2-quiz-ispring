@@ -128,7 +128,7 @@ $this->title = Yii::$app->name;
                                             $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
                                                 '&SCD=' . $scheduleDetailItem->id;
                                             $textLink = Yii::$app->urlManager->baseUrl .
-                                                $scheduleDetailItem->getExtractUrl() . $userinfo;
+                                                $scheduleDetailItem->asset_url . $userinfo;
                                             $linkLabel = Yii::t('app', 'Open');
                                             $labelClass = LabelHelper::getButtonCssPrint();
                                         endif;
