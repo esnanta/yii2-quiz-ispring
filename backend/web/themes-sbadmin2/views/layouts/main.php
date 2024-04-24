@@ -5,10 +5,7 @@
 
 use backend\assets\SbAdmin2;
 use common\widgets\AlertBootstrap4;
-use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
 
 SbAdmin2::register($this);
 ?>

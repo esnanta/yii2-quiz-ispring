@@ -73,8 +73,8 @@ if (!Yii::$app->user->isGuest) {
                             <?php } else { ?>
                             <?=
                                 Html::a(
-                                    'User',
-                                    ['/site/login'],
+                                    Yii::t('app', 'Admin'),
+                                    ['/admin/user/login'],
                                     [
                                         'class' => 'btn btn-outline-primary mx-3 mt-2 d-block'
                                     ]

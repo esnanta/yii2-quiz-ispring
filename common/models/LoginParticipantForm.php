@@ -2,9 +2,9 @@
 
 namespace common\models;
 
-use common\models\Participant;
 use Yii;
 use yii\base\Model;
+use yii\base\NotSupportedException;
 
 /**
  * Login form
@@ -78,11 +78,12 @@ class LoginParticipantForm extends Model
      * Finds user by [[username]]
      *
      * @return UserParticipant
+     * @throws NotSupportedException
      */
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = UserParticipant::findByUsername($this->username);
+            $this->_user = UserParticipant::findByUsername($this->username, Participant::STATUS_INACTIVE);
         }
         return $this->_user;
     }

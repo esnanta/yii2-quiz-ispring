@@ -145,7 +145,7 @@ if (!Yii::$app->user->isGuest) {
 
             <?=
                 Html::a(
-                    '<i class="fas fa-recycle fa-fw"></i> Login',
+                    'Login &#160; <i class="fas fa-sign-in-alt"></i>',
                     ['/user/login'],
                     [
                         'class' => 'nav-link',

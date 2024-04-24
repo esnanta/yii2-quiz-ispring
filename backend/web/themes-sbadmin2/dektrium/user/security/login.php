@@ -113,7 +113,7 @@ $forgotPassword = Html::a('Forgot password?', ['/user/recovery/request']);
                             <?php endif ?>
 
 
-                            <?=
+                            <?php
                             $form->field($model, 'rememberMe')
                                 ->checkbox([
                                     'tabindex' => '3',
@@ -122,6 +122,8 @@ $forgotPassword = Html::a('Forgot password?', ['/user/recovery/request']);
                                 ])->label('')
                             ?>
 
+                            <?= Html::checkbox('reveal-password', false, ['id' => 'reveal-password']) ?>
+                            <?= Html::label('Show password', 'reveal-password') ?>
 
                             <?=
                             Html::submitButton(
@@ -168,3 +170,10 @@ $forgotPassword = Html::a('Forgot password?', ['/user/recovery/request']);
     </div>
 </div>
 
+<?php
+$this->registerJs(
+    "jQuery('#reveal-password')
+            .change(function(){jQuery('#login-form-password')
+            .attr('type',this.checked?'text':'password');})"
+);
+?>

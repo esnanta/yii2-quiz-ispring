@@ -11,7 +11,6 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/6df8bd21/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
       <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/ecb9cc1c/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/backend/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/backend/web/assets" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/runtime" />
@@ -160,7 +159,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/browser-kit" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/config" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/console" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/css-selector" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dependency-injection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/deprecation-contracts" />
