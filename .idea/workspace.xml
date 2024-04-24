@@ -6,31 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/archive-category/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/archive-category/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/archive-category/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/archive-category/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/archive/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/archive/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment-detail/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment/report.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/report.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/employment/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/employment/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/group/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/office/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/office/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/period/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/room/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/room/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule-detail/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-detail/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule-detail/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-detail/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/site/create_user_owner.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/site/create_user_owner.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/site/create_user_reguler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/site/create_user_reguler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/subject/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/subject/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/theme/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/theme/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/config/main.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/rbac.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/rbac.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/user.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -380,7 +359,7 @@
       <workItem from="1713875267562" duration="839000" />
       <workItem from="1713882062014" duration="2150000" />
       <workItem from="1713965430668" duration="555000" />
-      <workItem from="1713966009043" duration="2619000" />
+      <workItem from="1713966009043" duration="3310000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,9 @@
 <?php
+
+use dektrium\user\controllers\RegistrationController;
 use \kartik\datecontrol\Module;
+use yii\db\Connection;
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -14,7 +18,7 @@ return [
 
     'components' => [
         'db' => [
-            'class' => \yii\db\Connection::class,
+            'class' => Connection::class,
             'dsn' => 'mysql:host=localhost;dbname=yii2_quiz_ispring',
             'username' => 'root',
             'password' => '',
@@ -130,18 +134,18 @@ return [
 
             'controllerMap' => [
                 'registration' => [
-                    'class' => \dektrium\user\controllers\RegistrationController::class,
-                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_REGISTER => function ($e) {
+                    'class' => RegistrationController::class,
+                    'on ' . RegistrationController::EVENT_AFTER_REGISTER => function ($e) {
                         Yii::$app->response->redirect(array('/user/security/login'))->send();
                         Yii::$app->end();
                     },
-                    'class' => \dektrium\user\controllers\RegistrationController::class,
-                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_CONFIRM => function ($e) {
+                    'class' => RegistrationController::class,
+                    'on ' . RegistrationController::EVENT_AFTER_CONFIRM => function ($e) {
                         Yii::$app->response->redirect(array('/user/security/login'))->send();
                         Yii::$app->end();
                     },
-                    'class' => \dektrium\user\controllers\RegistrationController::class,
-                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_RESEND => function ($e) {
+                    'class' => RegistrationController::class,
+                    'on ' . RegistrationController::EVENT_AFTER_RESEND => function ($e) {
                         Yii::$app->response->redirect(array('/user/security/login'))->send();
                         Yii::$app->end();
                     }

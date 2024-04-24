@@ -19,7 +19,6 @@
 return [
     'Assignments have been updated' => '',
     'Class' => '',
-    'Create' => '',
     'Create new permission' => '',
     'Create new role' => '',
     'Create rule' => '',
@@ -30,7 +29,6 @@ return [
     'Name' => '',
     'New permission' => '',
     'New role' => '',
-    'New rule' => '',
     'New user' => '',
     'Permissions' => '',
     'Roles' => '',
@@ -45,5 +43,7 @@ return [
     'Update role' => '',
     'Update rule' => '',
     'Updated at' => '',
-    'Users' => '',
+    'Create' => '@@@@',
+    'New rule' => '@@@@',
+    'Users' => '@@@@',
 ];
