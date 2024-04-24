@@ -37,7 +37,8 @@ class Participant extends BaseParticipant
         ]);
     }
 
-    public function beforeSave($insert) {
+    public function beforeSave($insert): bool
+    {
         if (!parent::beforeSave($insert)) {
             return false;
         }
@@ -51,7 +52,7 @@ class Participant extends BaseParticipant
         return true;
     }
 
-    public static function getArrayStatus()
+    public static function getArrayStatus(): array
     {
         return [
             //MASTER

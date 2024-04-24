@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <div class="panel-heading">
         <div class="panel-title">
             Please fill out the form below
-            <div class="pull-right">
+            <div class="float-right">
                 <?=Yii::t('app', 'Assessment');?>
             </div>
         </div>

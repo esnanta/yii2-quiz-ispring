@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="card border-default mb-3">
     <div class="card-header">Please fill out the form below 
-        <span class="pull-right">
+        <span class="float-right">
             <?= Html::encode($this->title) ?>
         </span>
     </div>
@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="participant-create">
             <?= $this->render('_form', [
                 'model' => $model,
-                'officeList'=>$officeList
+                'officeList'=>$officeList,
+                'groupList' => $groupList
             ]) 
             ?>
         </div>

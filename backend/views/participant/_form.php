@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
-use kartik\datecontrol\DateControl;
+use kartik\select2\Select2;
 
 /**
  * @var yii\web\View $this
@@ -21,25 +21,28 @@ use kartik\datecontrol\DateControl;
         'columns' => 1,
         'attributes' => [
 
-            'office_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Office ID...']],
-
-            'group_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Group ID...']],
-
-            'created_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter created_by...']],
-
-            'updated_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter updated_by...']],
-
-            'is_deleted' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Deleted...']],
-
-            'deleted_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter deleted_by...']],
-
-            'verlock' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Verlock...']],
-
-            'created_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'updated_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'deleted_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],
+            'office_id' => [
+                'type' => Form::INPUT_WIDGET,
+                'widgetClass' => Select2::class,
+                'options' => [
+                    'data' => $officeList,
+                    'options' => ['placeholder' => Yii::t('app', 'Choose Office'), 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ],
+            'group_id' => [
+                'type' => Form::INPUT_WIDGET,
+                'widgetClass' => Select2::class,
+                'options' => [
+                    'data' => $groupList,
+                    'options' => ['placeholder' => Yii::t('app', 'Choose Group')],
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ],
 
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
 
@@ -48,8 +51,6 @@ use kartik\datecontrol\DateControl;
             'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Username...', 'maxlength' => 50]],
 
             'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => 'Enter Password...', 'maxlength' => 10]],
-
-            'uuid' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Uuid...', 'maxlength' => 36]],
 
         ]
 

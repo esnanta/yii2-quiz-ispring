@@ -110,6 +110,7 @@ class ParticipantController extends Controller
 
             $officeId   = DataIdUseCase::getOfficeId();
             $officeList = DataListUseCase::getOffice();
+            $groupList  = DataListUseCase::getGroup();
 
             $model = new Participant;
             $model->office_id = $officeId;
@@ -122,7 +123,8 @@ class ParticipantController extends Controller
                 else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'groupList' => $groupList
                     ]);
                 }
             }

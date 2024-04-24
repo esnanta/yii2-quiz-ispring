@@ -131,6 +131,7 @@ return [
     'Passing Score' => '',
     'Passing Score Percent' => '',
     'Password' => '',
+    'Period' => 'Periode',
     'Phone Number' => 'No Telp',
     'Please upload files in zip' => '',
     'Private' => '',
