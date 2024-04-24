@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_formScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_formScheduleDetail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/config/main.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/rbac.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/rbac.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/user.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,7 +359,7 @@
       <workItem from="1713875267562" duration="839000" />
       <workItem from="1713882062014" duration="2150000" />
       <workItem from="1713965430668" duration="555000" />
-      <workItem from="1713966009043" duration="3310000" />
+      <workItem from="1713966009043" duration="5144000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,7 @@
 <?php
 
+use kartik\datecontrol\DateControl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -46,8 +48,8 @@ use yii\widgets\ActiveForm;
             ]); ?>
         </div>
         <div class="col-md-6 col-xs-12">
-            <?= $form->field($model, 'date_start')->widget(\kartik\datecontrol\DateControl::class, [
-                'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+            <?= $form->field($model, 'date_start')->widget(DateControl::class, [
+                'type' => DateControl::FORMAT_DATETIME,
                 'saveFormat' => 'php:Y-m-d H:i:s',
                 //'ajaxConversion' => true,
                 'options' => [
@@ -57,8 +59,8 @@ use yii\widgets\ActiveForm;
                     ]
                 ],
             ]); ?>
-            <?= $form->field($model, 'date_end')->widget(\kartik\datecontrol\DateControl::class, [
-                'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+            <?= $form->field($model, 'date_end')->widget(DateControl::class, [
+                'type' => DateControl::FORMAT_DATETIME,
                 'saveFormat' => 'php:Y-m-d H:i:s',
                 //'ajaxConversion' => true,
                 'options' => [
@@ -88,7 +90,7 @@ use yii\widgets\ActiveForm;
         [
             'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'ScheduleDetail')),
             'content' => $this->render('_formScheduleDetail', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->scheduleDetails),
+                'row' => ArrayHelper::toArray($model->scheduleDetails),
                 'subjectList' => $subjectList
             ]),
         ],
