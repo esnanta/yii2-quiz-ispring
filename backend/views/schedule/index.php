@@ -147,7 +147,7 @@ $this->registerJs($search);
 //                ]
 //            ]) ,
         ],
-        
+
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
@@ -156,8 +156,7 @@ $this->registerJs($search);
         'bordered' => true,
         'striped' => false,
         'responsiveWrap' => false,
-        
-        
+
     ]); ?>
 
 </div>

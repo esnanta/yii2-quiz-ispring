@@ -98,46 +98,6 @@ use yii\helpers\Html;
 
 <div class="row">
     <div class="col-md-6 col-xs-12">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                    User Info <span class="float-right"><i class="fas fa-user"></i></span>
-                </h6>
-            </div>
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="<?= $staff->getAssetUrl() ?>" class="img-fluid rounded-start"
-                         alt="<?= $staff->title; ?>">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <?= $staff->title; ?>
-                        </h5>
 
-                        <p class="card-text">
-                            <i class="fas fa-id-badge"></i>
-                            <?= (!empty($authItemName)) ? $authItemName : '-'; ?>
-                        </p>
-
-                        <p class="card-text">
-                            <i class="fas fa-briefcase"></i>
-                            <?= (!empty($office->title)) ? $office->title : '-' ?>
-                        </p>
-
-                        <p class="card-text">
-                            <i class="fas fa-phone"></i>
-                            <?= (!empty($office->phone_number)) ? $office->phone_number : '-'; ?>
-                        </p>
-
-                        <p class="card-text">
-                            <i class="fas fa-envelope"></i>
-                            <?= (!empty($office->email)) ? $office->email : '-'; ?>
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
+</div>

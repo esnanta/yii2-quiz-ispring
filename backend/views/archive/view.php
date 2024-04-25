@@ -28,7 +28,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title">Arsip</h3>
+                    <h3 class="box-title"><?=$this->title?></h3>
                     <span class="pull pull-right">
                         <i class="fa fa-eye"></i> <?=$model->view_counter;?> &nbsp;
                         <i class="fa fa-download"></i> <?=$model->download_counter;?>

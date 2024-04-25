@@ -24,7 +24,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title.$create,
-            'type' => DetailView::TYPE_DEFAULT,
+            'type' => DetailView::TYPE_PRIMARY,
         ],
         'attributes' => [
 

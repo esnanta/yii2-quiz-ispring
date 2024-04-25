@@ -25,7 +25,7 @@ use common\helper\MessageHelper;
 class StaffController extends Controller
 {
     
-    public static $pathTmpCrop='/uploads/tmp';
+    public static $pathTmpCrop= '/uploads/tmp';
     
     public function behaviors()
     {
@@ -166,25 +166,43 @@ class StaffController extends Controller
      */
     
     
-    public function actionUpdate($id)
+    public function actionUpdate($id,$title=null)
     {
     
         if (Yii::$app->user->can('update-staff')) {
             try {
 
-                $model = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $model          = $this->findModel($id);
+                $currentAsset   = $model->asset_name;
+                $officeList     = DataListUseCase::getOffice();
 
                 if ($model->load(Yii::$app->request->post())) {
-                    $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
-                    $model->asset_name = str_replace($urlTmpCrop, '', $model->asset_name);
-                    $model->asset_name = str_replace('/', '', $model->asset_name);
+                    $urlTmpCrop         = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
+                    $model->asset_name  = str_replace($urlTmpCrop, '', $model->asset_name);
+                    $model->asset_name  = str_replace('/', '', $model->asset_name);
+                    $temporaryAsset     = $model->asset_name;
+
+                    $isFileExisted = $model->getAssetFile(true);
+                    if(!file_exists($isFileExisted)):
+                        MessageHelper::getFlashCropImage();
+                        return $this->render('update', [
+                            'model' => $model,
+                            'officeList' => $officeList
+                        ]);
+                    endif;
 
                     if ($model->save()) {
-                        //DELETE FILE LAMA
-                        file_exists($urlTmpCrop.'/'.$model->asset_name) ? unlink($urlTmpCrop.'/'.$model->asset_name) : '' ;
-                        //PINDAHIN DATA DARI TMP KE DIREKTORI MODEL
-                        rename(str_replace('frontend', 'backend', Yii::getAlias('@webroot')).self::$pathTmpCrop.'/'.$model->asset_name, $model->getImageFile());
+                        //DELETE CURRENT ASSET
+                        $model->asset_name = $currentAsset;
+                        $model->deleteAsset(false);
+
+                        //SET ASSET TEMPORARY
+                        //MOVE FROM TMP DIR TO MODEL DIR
+                        //DELETE ASSET TEMPORARY
+                        $model->asset_name = $temporaryAsset;
+                        rename($model->getAssetFile(true), $model->getAssetFile(false));
+                        $model->deleteAsset(true);
+
                         MessageHelper::getFlashUpdateSuccess();
                         return $this->redirect(['view', 'id'=>$model->id, 'title'=>$model->title]);
                     } else {
@@ -210,11 +228,14 @@ class StaffController extends Controller
      * @param integer $id
      * @return mixed
      * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
     public function actionDelete($id)
     {
         if (Yii::$app->user->can('delete-staff')) {
-            $this->findModel($id)->delete();
+            $model = $this->findModel($id);
+            $model->delete();
+            $model->deleteAsset();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['index']);
         } else {

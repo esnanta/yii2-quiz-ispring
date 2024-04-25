@@ -110,7 +110,16 @@ class MessageHelper
             )]
         );
     }
-
+    public static function getFlashCropImage()
+    {
+        Yii::$app->getSession()->setFlash(
+            'danger',
+            ['message' => Yii::t(
+                'app',
+                'Crop your image before saving.'
+            )]
+        );
+    }
     public static function getFlashLoginInfo()
     {
         $username = '"Guest"';

@@ -23,7 +23,7 @@ class Staff extends BaseStaff
     const ACTIVE_STATUS_YES     = 1;
     const ACTIVE_STATUS_NO      = 2;
 
-    public $image;
+    //public $image;
 
     /**
      * @inheritdoc
@@ -155,26 +155,18 @@ class Staff extends BaseStaff
      * fetch stored image file name with complete path
      * @return string
      */
-    public function getImageFile()
+    public function getAssetFile($isTemporary=false): string
     {
         $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+        if ($isTemporary) :
+            $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getTmpPath();
+        endif;
+
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
         return (!empty($this->asset_name)) ? $directory.'/'. $this->asset_name : '';
     }
-
-    /**
-     * fetch stored image url
-     * @return string
-     */
-//    public function getImageUrl()
-//    {
-//        // return a default image placeholder if your source avatar is not found
-//        $defaultImage = '/images/if_skype2512x512_197582.png';
-//        $asset_name = isset($this->asset_name) ? $this->getPath().'/'.$this->asset_name : '/images/'.'if_skype2512x512_197582.png';
-//        return Yii::$app->urlManager->baseUrl . $asset_name;
-//    }
 
 
     public function getAssetUrl(): string
@@ -197,45 +189,14 @@ class Staff extends BaseStaff
         }
     }
 
-
-    /**
-    * Process upload of image
-    *
-    * @return mixed the uploaded image instance
-    */
-    public function uploadImage() {
-        // get the uploaded file instance. for multiple file uploads
-        // the following data will return an array (you may need to use
-        // getInstances method)
-        $image = UploadedFile::getInstance($this, 'image');
-
-        // if no image was uploaded abort the upload
-        if (empty($image)) {
-            return false;
-        }
-
-        // store the source file name
-        if($this->title==''){
-            $this->title = $image->name;
-        }
-
-        // generate a unique file name
-        //$ext = end((explode(".", $image->name)));
-        $tmp = explode('.', $image->name);
-        $ext = end($tmp);
-        $this->asset_name = Yii::$app->security->generateRandomString().".{$ext}";
-
-        // the uploaded image instance
-        return $image;
-    }
-
     /**
     * Process deletion of image
     *
     * @return boolean the status of deletion
     */
-    public function deleteImage() {
-        $file = $this->getImageFile();
+    public function deleteAsset($isTemporary=false): bool
+    {
+        $file = $this->getAssetFile($isTemporary);
 
         // check if file exists on server
         if (empty($file) || !file_exists($file)) {
@@ -247,9 +208,11 @@ class Staff extends BaseStaff
             return false;
         }
 
-        // if deletion successful, reset your file attributes
-        $this->asset_name = null;
-        $this->title = null;
+        if(!$isTemporary):
+            // if deletion successful, reset your file attributes
+            $this->asset_name = null;
+            $this->title = null;
+        endif;
 
         return true;
     }
@@ -267,5 +230,9 @@ class Staff extends BaseStaff
     public function getPath() : string {
         $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
         return '/uploads/staff/'.$officeUniqueId;
+    }
+
+    public function getTmpPath(): string{
+        return '/uploads/tmp';
     }
 }
