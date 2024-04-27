@@ -1,11 +1,9 @@
 <?php
 
+use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\LabelHelper;
-use yii\helpers\ArrayHelper;
+use common\models\Schedule;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\DetailView;
-use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
@@ -21,10 +19,64 @@ $create = Html::a(
 ?>
 
 
+<?php
+    $timeStart          = strtotime($model->date_start);
+    $timeOut            = strtotime($model->date_end);
+    $tokenTime          = strtotime($model->token_time);
+    $currentTime        = strtotime("now");
+    $countdownTime      = strtotime($model->date_start);
+    $interval           = (int)(abs(($currentTime-$timeStart) / 60));
+    $minutesTolerance   = 15; //minutes
+
+    //FIRST TOKEN START 2 MINUTES EARLY FROM DATE_START
+    if($currentTime <= $timeStart) {
+        // Decrease 2 minutes from current time
+        $countdownTime      = $timeStart - (2 * 60);
+        $interval           = (int)(abs(($timeStart - $countdownTime) / 60));
+        $model->token_time  = date(Yii::$app->params['datetimeSaveFormat']);
+        $model->token       = substr(uniqid('', true), -6);
+        $model->save();
+    } else {
+        //START NEW TOKEN
+        if($currentTime < $timeOut){
+            $interval = (int)(abs(($currentTime-$tokenTime) / 60));
+            if ($interval >= $minutesTolerance) :
+                $schedule = Schedule::findOne(['id' => $model->id,'office_id'=>$model->office_id]);
+                if($model->token_time < $schedule->token_time) {
+                    $model = $schedule;
+                } else {
+                    $model->token_time = date(Yii::$app->params['datetimeSaveFormat']);
+                    $model->token = substr(uniqid('', true), -6);
+                    $model->save();
+                }
+            endif;
+            $countdownTime = strtotime($model->token_time) + ($minutesTolerance * 60);
+        }
+    }
+
+    $labelAlertTimer = 'badge bg-warning text-white';
+    if ($interval < $minutesTolerance) :
+        $labelAlertTimer = 'badge bg-success text-white';
+    endif;
+
+?>
+
+<?php
+    Yii2TimerCountDown::widget([
+        'countDownIdSelector' => 'time-down-counter-token',
+        'countDownDate' => $countdownTime * 1000
+    ]);
+?>
+
 <div class="card">
     <div class="card-header">
 
-        <?= Yii::t('app', 'Schedule') ?><strong> #<?= $model->title; ?></strong>
+        <?= Yii::t('app', 'Schedule') ?>
+        <strong> #<?= $model->title;?></strong> /
+        Token : <strong><?=$model->token;?></strong> /
+        <div class="<?= $labelAlertTimer;?>">
+            <div id="time-down-counter-token"></div>
+        </div>
 
         <div class="float-right">
             <?=
@@ -170,3 +222,30 @@ $create = Html::a(
         </div>
     </div>
 </div>
+
+
+<p id="countdown"></p>
+
+<script>
+    var maxTime = 50000; // Time in milliseconds (50 seconds)
+    var timeLeft = maxTime;
+    var countdownElement = document.getElementById('countdown');
+
+    function updateCountdown() {
+        timeLeft -= 1000; // Decrement every second (1000 milliseconds)
+        var seconds = Math.floor(timeLeft / 1000); // Get remaining seconds
+
+        // Update paragraph content with formatted time
+        countdownElement.textContent = "Form will submit in " + seconds + " seconds";
+
+        if (timeLeft <= 0) {
+            clearTimeout(timeoutId); // Clear timeout when time runs out
+            postFormFunction();
+        } else {
+            // Call updateCountdown again after 1 second for continuous update
+            timeoutId = setTimeout(updateCountdown, 1000);
+        }
+    }
+
+    var timeoutId = setTimeout(updateCountdown, 1000); // Start countdown immediately
+</script>

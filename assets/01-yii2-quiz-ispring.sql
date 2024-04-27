@@ -542,7 +542,7 @@ CREATE TABLE `tx_counter` (
 /*Data for the table `tx_counter` */
 
 insert  into `tx_counter`(`id`,`office_id`,`title`,`counter`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'SCD',1,'2024-04-24 22:08:33','2024-04-24 22:08:33',1,1,NULL,NULL,NULL,0,'849fe0cb024c11ef93b3c858c0b7f92f');
+(1,1,'SCD',2,'2024-04-24 22:08:33','2024-04-26 00:40:54',1,1,NULL,NULL,NULL,1,'849fe0cb024c11ef93b3c858c0b7f92f');
 
 /*Table structure for table `tx_dashblock` */
 
@@ -885,8 +885,8 @@ CREATE TABLE `tx_schedule` (
   `room_id` int(11) DEFAULT NULL,
   `date_start` datetime DEFAULT NULL,
   `date_end` datetime DEFAULT NULL,
-  `token` varchar(5) DEFAULT NULL,
-  `token_lifespan` datetime DEFAULT NULL,
+  `token` varchar(6) DEFAULT NULL,
+  `token_time` datetime DEFAULT NULL,
   `description` tinytext DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -906,12 +906,12 @@ CREATE TABLE `tx_schedule` (
   CONSTRAINT `Fk_schedule_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_schedule_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule` */
 
-insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`date_start`,`date_end`,`token`,`token_lifespan`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'00001',2,1,2,'2024-04-24 22:00:00','2024-04-24 23:00:00',NULL,NULL,'','2024-04-24 22:08:33','2024-04-24 22:08:33',1,1,NULL,NULL,NULL,0,'849e35a5024c11ef93b3c858c0b7f92f');
+insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`date_start`,`date_end`,`token`,`token_time`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
+(2,1,'00002',2,1,2,'2024-04-27 10:30:00','2024-04-27 12:50:00','946932','2024-04-27 12:46:29','','2024-04-26 00:40:54','2024-04-27 12:46:25',1,1,NULL,NULL,NULL,68,'f77204c1032a11efa323c858c0b7f92f');
 
 /*Table structure for table `tx_schedule_detail` */
 
@@ -941,12 +941,12 @@ CREATE TABLE `tx_schedule_detail` (
   CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule_detail` */
 
 insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,1,1,'-','Everest-(Published).zip','/uploads/schedule/65a7fb0e28f7b/20240424-Metematika-1/Everest-(Published)/index.html','2024-04-24 22:08:33','2024-04-24 22:36:02',1,1,NULL,NULL,NULL,9,'84a083d8024c11ef93b3c858c0b7f92f');
+(2,1,2,1,'-',NULL,'/uploads/schedule/65a7fb0e28f7b/20240427-Metematika-2//index.html','2024-04-26 00:40:54','2024-04-27 11:12:59',1,1,NULL,NULL,NULL,3,'f776e0f7032a11efa323c858c0b7f92f');
 
 /*Table structure for table `tx_session` */
 
@@ -962,18 +962,10 @@ CREATE TABLE `tx_session` (
 /*Data for the table `tx_session` */
 
 insert  into `tx_session`(`id`,`expire`,`data`) values 
-('2s2heeqae8igdt8gebv3lgmita',1714025464,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('3splooev4kva5mdncs2gpv3ns8',1713973911,'__flash|a:0:{}'),
-('7t7njhvkhkcqjmqmcp5uf0nql6',1713979778,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('b8gcu00lev2c9klp4ig3r2apis',1713979539,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('brr1mnaeoojbbap0ekpk57jgbk',1714059865,'__flash|a:0:{}'),
-('m4eu0g112ki28n76dcmun4g9vu',1713974158,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('mo54k05ru0a6pscv81rddcmdea',1713981160,'__flash|a:0:{}'),
-('n0s9edc983l9lgtp69tmpbmffg',1713979488,'__flash|a:0:{}'),
-('nu3phv5u9gofmd4femi21b4tpu',1714066317,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('qb8dmi5sivujbcn368scq13tvl',1714016613,'__flash|a:0:{}'),
-('r2kbe99e24tsbuu5d2hm00l1qf',1713981306,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('roda562jlu7mb63jkpop0uvvil',1713979749,'__flash|a:0:{}');
+('8g4j7kg75mjkg6ki05gv75or98',1714198343,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('d9l5l4g3fuf8temrfn6bdjvsc4',1714197297,'__flash|a:0:{}'),
+('f9k0uph22smg8dpcomspk9rtti',1714195707,'__flash|a:0:{}'),
+('r61jl1gq7qijink650t8e4ss2n',1714195821,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
 
 /*Table structure for table `tx_site_link` */
 
@@ -1172,7 +1164,7 @@ CREATE TABLE `tx_user` (
 /*Data for the table `tx_user` */
 
 insert  into `tx_user`(`id`,`username`,`email`,`password_hash`,`auth_key`,`unconfirmed_email`,`registration_ip`,`flags`,`confirmed_at`,`blocked_at`,`updated_at`,`created_at`,`last_login_at`,`auth_tf_key`,`auth_tf_enabled`) values 
-(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1714064605,NULL,0);
+(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1714195036,NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

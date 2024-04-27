@@ -18,6 +18,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $room_id
  * @property string $date_start
  * @property string $date_end
+ * @property string $token
+ * @property string $token_time
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -78,9 +80,10 @@ class Schedule extends \yii\db\ActiveRecord
     {
         return [
             [['office_id', 'period_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
+            [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -120,6 +123,8 @@ class Schedule extends \yii\db\ActiveRecord
             'room_id' => Yii::t('app', 'Room ID'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
+            'token' => Yii::t('app', 'Token'),
+            'token_time' => Yii::t('app', 'Token Time'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),

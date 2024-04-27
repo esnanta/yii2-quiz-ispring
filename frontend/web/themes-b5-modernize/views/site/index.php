@@ -62,16 +62,14 @@ $this->title = Yii::$app->name;
                         <tbody>
                         <?php
                         foreach ($schedules as $i => $scheduleItem) {
-                        $timeReference = strtotime($scheduleItem->date_start);
-                        $currentTime = strtotime("now");
-                        $minutesDifference = round(abs(($timeReference - $currentTime) / 60));
-                        $minutesTolerance = 10; //minutes
+                            $timeReference = strtotime($scheduleItem->date_start);
+                            $currentTime = strtotime("now");
+                            $minutesDifference = round(abs(($timeReference - $currentTime) / 60));
 
-                        //10 MINUTES BEFORE START, CHANGE REFERENCE TO DATE_END
-                        if ($timeReference < $currentTime) :
-                            $timeReference = strtotime($scheduleItem->date_end);
-                        endif;
-
+                            //10 MINUTES BEFORE START, CHANGE REFERENCE TO DATE_END
+                            if ($timeReference < $currentTime) :
+                                $timeReference = strtotime($scheduleItem->date_end);
+                            endif;
                         ?>
                         <tr>
                             <td class="center"><?= ($i + 1); ?></td>
@@ -85,6 +83,7 @@ $this->title = Yii::$app->name;
                                 <br>
 
                                 <?php
+                                $minutesTolerance = 10; //minutes
                                 $labelAlertTimer = 'badge bg-warning text-white';
                                 if ($minutesDifference < $minutesTolerance) :
                                     $labelAlertTimer = 'badge bg-success text-white';

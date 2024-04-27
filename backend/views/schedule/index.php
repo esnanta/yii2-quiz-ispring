@@ -85,7 +85,7 @@ $this->registerJs($search);
             'buttons' => [
                 'update' => function ($url, $model) {
                     return Html::a('<i class="fas fa-pencil-alt"></i>',
-                        Yii::$app->urlManager->createUrl(['schedule/update', 'id' => $model->id]),
+                        Yii::$app->urlManager->createUrl(['schedule/update', 'id' => $model->id,'title'=>$model->title]),
                         [
                             'title' => Yii::t('yii', 'Edit'),
                             'class'=>'btn btn-sm btn-info',
@@ -94,7 +94,7 @@ $this->registerJs($search);
                 },
                 'view' => function ($url, $model) {
                     return Html::a('<i class="fas fa-eye"></i>',
-                        Yii::$app->urlManager->createUrl(['schedule/view', 'id' => $model->id]),
+                        Yii::$app->urlManager->createUrl(['schedule/view', 'id' => $model->id,'title'=>$model->title]),
                         [
                             'title' => Yii::t('yii', 'View'),
                             'class'=>'btn btn-sm btn-info',
