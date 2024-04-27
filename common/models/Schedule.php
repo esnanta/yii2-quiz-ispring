@@ -47,7 +47,4 @@ class Schedule extends BaseSchedule
         return true;
     }
 
-    public function getToken(){
-
-    }
 }

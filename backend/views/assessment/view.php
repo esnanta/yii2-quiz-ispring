@@ -11,11 +11,6 @@ use kartik\grid\GridView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a(
-    '<i class="fas fa-plus"></i>',
-    ['create'],
-    ['class' => 'button float-right', 'style' => 'color:#333333;padding:0 5px']
-);
 ?>
 
 
@@ -26,12 +21,12 @@ $create = Html::a(
         <strong> #<?= $model->title; ?></strong>
 
         <div class="float-right">
-            <?=
-            Html::a(
-                '<i class="fas fa-plus"></i> New',
-                ['create'],
-                ['class' => LabelHelper::getButtonCssPlus()]
-            );
+            <?php
+//            Html::a(
+//                '<i class="fas fa-plus"></i> New',
+//                ['create'],
+//                ['class' => LabelHelper::getButtonCssPlus()]
+//            );
             ?>
             <?=
             Html::a(

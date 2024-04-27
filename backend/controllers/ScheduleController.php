@@ -70,9 +70,48 @@ class ScheduleController extends Controller
             $providerScheduleDetail = new \yii\data\ArrayDataProvider([
                 'allModels' => $model->scheduleDetails,
             ]);
+
+            $timeStart          = strtotime($model->date_start);
+            $timeOut            = strtotime($model->date_end);
+            $tokenTime          = strtotime($model->token_time);
+            $countdownTime      = strtotime($model->date_start);
+            $currentTime        = strtotime("now");
+            $interval           = (int)(abs(($currentTime-$timeStart) / 60));
+            $minutesTolerance   = 15; //minutes
+
+            //FIRST TOKEN START 2 MINUTES EARLY FROM DATE_START
+            if($currentTime <= $timeStart) {
+                // Decrease 2 minutes from current time
+                $countdownTime      = $timeStart - (2 * 60);
+                $interval           = (int)(abs(($timeStart - $countdownTime) / 60));
+                $model->token_time  = date(Yii::$app->params['datetimeSaveFormat']);
+                $model->token       = substr(uniqid('', true), -6);
+                $model->save();
+            } else {
+                //START NEW TOKEN
+                if($currentTime < $timeOut){
+                    $interval = (int)(abs(($currentTime-$tokenTime) / 60));
+                    if ($interval >= $minutesTolerance) :
+                        $schedule = Schedule::findOne(['id' => $model->id,'office_id'=>$model->office_id]);
+                        if($model->token_time < $schedule->token_time) {
+                            $model = $schedule;
+                        } else {
+                            $model->token_time = date(Yii::$app->params['datetimeSaveFormat']);
+                            $model->token = substr(uniqid('', true), -6);
+                            $model->save();
+                        }
+                    endif;
+                    $countdownTime = strtotime($model->token_time) + ($minutesTolerance * 60);
+                }
+            }
+
+
             return $this->render('view', [
                 'model' => $this->findModel($id),
                 'providerScheduleDetail' => $providerScheduleDetail,
+                'countdownTime' => $countdownTime,
+                'interval' => $interval,
+                'minutesTolerance' => $minutesTolerance
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

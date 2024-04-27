@@ -6,20 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/staff/64e6275a82541.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/staff/64e627769ab9b.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/staff/64fbd92c9eb94.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/tmp/64e4f7405cb4f.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/tmp/64e4f760a09ae.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/tmp/64e4fbb2d816a.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/uploads/tmp/64e4fdcfe07e1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -404,6 +393,7 @@
       <workItem from="1714183076928" duration="10665000" />
       <workItem from="1714194086410" duration="317000" />
       <workItem from="1714194979283" duration="1954000" />
+      <workItem from="1714230471190" duration="856000" />
     </task>
     <servers />
   </component>
