@@ -61,7 +61,7 @@
     <strong>ISPRING Configuration</strong>
 </h3>
 <p>
-    You must add custom variable that will be used for to collect data schedule.
+    You must add custom variable that will be used to collect data schedule.
 </p>
 
 <div>
