@@ -34,7 +34,7 @@
     </li>
     <li>
         <a href="https://www.apachefriends.org/">XAMMP</a>
-        8.0 or higher
+        8.0.x or higher
     </li>
     <li>
         <strong><a href="https://getcomposer.org/">Composer</a>&nbsp;v2.x.x</strong>
