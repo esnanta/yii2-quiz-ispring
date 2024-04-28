@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use TypeError;
 use Yii;
 use yii\base\Model;
 use yii\base\NotSupportedException;
@@ -13,6 +14,7 @@ class LoginParticipantForm extends Model
 {
     public $username;
     public $password;
+    public $token;
     public $rememberMe = true;
 
     private $_user;
@@ -30,6 +32,7 @@ class LoginParticipantForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['token', 'validateToken'],
         ];
     }
 
@@ -39,18 +42,19 @@ class LoginParticipantForm extends Model
      *
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
+     * @throws NotSupportedException
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword($attribute, $params): void
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user) {
-                $this->addError($attribute, 'Check if user is online.');
-            }
-            elseif (!$user->validatePassword($this->password)){
-                $this->addError($attribute, 'Incorrect username or password.');
-            }
-            else{
+            if(!$user){
+                $this->addError($attribute, Yii::t('app', 'Unregistered user'));
+            } elseif ($user->status==Participant::STATUS_ACTIVE) {
+                $this->addError($attribute, Yii::t('app', 'User is active'));
+            } elseif (!$user->validatePassword($this->password)) {
+                $this->addError($attribute, Yii::t('app', 'Incorrect username or password'));
+            } else {
 
                 $user->status = Participant::STATUS_ACTIVE;
                 $user->last_login_at = date(Yii::$app->params['datetimeSaveFormat']);
@@ -61,16 +65,55 @@ class LoginParticipantForm extends Model
     }
 
     /**
+     * @throws NotSupportedException
+     */
+    public function validateToken($attribute, $params): void
+    {
+        if (!$this->hasErrors()) {
+            // Check if token is present
+            if (empty($this->token)) {
+                $this->addError($attribute, Yii::t('app', 'Token is required'));
+                return;
+            }
+
+            // Replace with your actual validation logic
+            if (!$this->verifyToken($this->token)) {
+                $this->addError($attribute, Yii::t('app', 'Invalid token'));
+            }
+        }
+    }
+
+    /**
+     * @throws NotSupportedException
+     */
+    private function verifyToken($token): bool
+    {
+        if ($this->_user === null) {
+            $this->_user = $this->getUser();
+        }
+
+        $schedule = Schedule::findOne(['office_id' => $this->_user->office_id, 'token' => $token]);
+        if ($schedule === null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * Logs in a user using the provided username and password.
      *
      * @return bool whether the user is logged in successfully
+     * @throws NotSupportedException
      */
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            // Check if token validation passed before login
+            if (!$this->hasErrors()) {
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            }
         }
-
         return false;
     }
 
@@ -83,8 +126,9 @@ class LoginParticipantForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = UserParticipant::findByUsername($this->username, Participant::STATUS_INACTIVE);
+            $this->_user = UserParticipant::findByUsername($this->username);
         }
         return $this->_user;
     }
+
 }

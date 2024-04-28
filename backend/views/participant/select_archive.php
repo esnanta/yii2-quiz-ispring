@@ -74,6 +74,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         // your toolbar can include the additional full export menu
         'toolbar' => [
+            [
+                'content'=>
+                    Html::a('<i class="fas fa-plus"></i> Add Import', ['archive/create'], ['class' => 'btn btn-success']),
+                   //. ' '.
+                    //Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                'options' => ['class' => 'btn-group-md']
+            ],
         ],
         
         'responsive' => true,

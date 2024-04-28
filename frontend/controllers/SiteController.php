@@ -78,11 +78,11 @@ class SiteController extends Controller
     /**
      * @throws BadRequestHttpException
      */
-//    public function beforeAction($action): bool
-//    {
-//        $this->enableCsrfValidation = false;
-//        return parent::beforeAction($action);
-//    }
+    public function beforeAction($action): bool
+    {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
     
     /**
      * Displays homepage.

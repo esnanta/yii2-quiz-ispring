@@ -16,6 +16,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $period_id
  * @property integer $group_id
  * @property integer $room_id
+ * @property integer $staff_id
  * @property string $date_start
  * @property string $date_end
  * @property string $token
@@ -36,6 +37,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \common\models\Office $office
  * @property \common\models\Period $period
  * @property \common\models\Room $room
+ * @property \common\models\Staff $staff
  * @property \common\models\ScheduleDetail[] $scheduleDetails
  */
 class Schedule extends \yii\db\ActiveRecord
@@ -69,6 +71,7 @@ class Schedule extends \yii\db\ActiveRecord
             'office',
             'period',
             'room',
+            'staff',
             'scheduleDetails'
         ];
     }
@@ -79,7 +82,7 @@ class Schedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'period_id', 'group_id', 'room_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
@@ -121,6 +124,7 @@ class Schedule extends \yii\db\ActiveRecord
             'period_id' => Yii::t('app', 'Period ID'),
             'group_id' => Yii::t('app', 'Group ID'),
             'room_id' => Yii::t('app', 'Room ID'),
+            'staff_id' => Yii::t('app', 'Staff ID'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
             'token' => Yii::t('app', 'Token'),
@@ -170,6 +174,14 @@ class Schedule extends \yii\db\ActiveRecord
     public function getRoom()
     {
         return $this->hasOne(\common\models\Room::className(), ['id' => 'room_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaff()
+    {
+        return $this->hasOne(\common\models\Staff::className(), ['id' => 'staff_id']);
     }
         
     /**

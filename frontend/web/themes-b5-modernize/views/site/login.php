@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::checkbox('reveal-password', false, ['id' => 'reveal-password']) ?>
 
         <?= Html::label('Show password', 'reveal-password') ?>
-
         <br>
         <br>
+        <?= $form->field($model, 'token')->textInput() ?>
 
         <?=
         Html::submitButton(

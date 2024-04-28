@@ -137,6 +137,7 @@ class ScheduleController extends Controller
             $roomList = DataListUseCase::getRoom();
             $groupList = DataListUseCase::getGroup();
             $subjectList = DataListUseCase::getSubject();
+            $staffList = DataListUseCase::getStaff();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 MessageHelper::getFlashSaveSuccess();
@@ -147,7 +148,8 @@ class ScheduleController extends Controller
                     'periodList' => $periodList,
                     'roomList' => $roomList,
                     'groupList' => $groupList,
-                    'subjectList' => $subjectList
+                    'subjectList' => $subjectList,
+                    'staffList' => $staffList
                 ]);
             }
         } else {
@@ -171,10 +173,11 @@ class ScheduleController extends Controller
             $roomList = DataListUseCase::getRoom();
             $groupList = DataListUseCase::getGroup();
             $subjectList = DataListUseCase::getSubject();
+            $staffList = DataListUseCase::getStaff();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 MessageHelper::getFlashUpdateSuccess();
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id,'title'=>$model->title]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -182,7 +185,8 @@ class ScheduleController extends Controller
                     'periodList' => $periodList,
                     'roomList' => $roomList,
                     'groupList' => $groupList,
-                    'subjectList' => $subjectList
+                    'subjectList' => $subjectList,
+                    'staffList' => $staffList
                 ]);
             }
         } else {

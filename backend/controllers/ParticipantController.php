@@ -344,8 +344,9 @@ class ParticipantController extends Controller
 
     public function actionDownload()
     {
-        $path  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
-            '/template/template_participant.xlsx';
+        $fileName = 'template_participant.xlsx';
+        $path = str_replace('frontend', 'backend', Yii::getAlias('@webroot'))
+                    . '/template/' . $fileName;
 
         if (!empty($path)) {
 

@@ -49,9 +49,9 @@ class UserParticipant extends Participant implements IdentityInterface
      * @return static|null
      * @throws NotSupportedException
      */
-    public static function findByUsername(string $username, $status): static
+    public static function findByUsername(string $username)
     {
-        return static::findOne(['username' => $username, 'status' => $status]);
+        return static::findOne(['username' => $username]);
     }
 
     /**

@@ -84,7 +84,6 @@ $refresh = Html::a(
         <div class="row mb-4">
 
             <div class="col-sm-4">
-                <h6 class="mb-3"><?= Yii::t('app', 'Office'); ?>:</h6>
                 <div><strong><?= $model->office->title; ?></strong></div>
                 <div><?= $model->office->address; ?></div>
                 <div>Email: <?= $model->office->email; ?></div>
@@ -93,17 +92,17 @@ $refresh = Html::a(
 
 
             <div class="col-sm-4">
-                <h6 class="mb-3"><?= Yii::t('app', 'Details') ?>:</h6>
                 <div>
-                    <strong><?= $model->period->title; ?></strong>
+                    <strong><?= $model->title; ?></strong>
                 </div>
-                <div></div>
+                <div><?= $model->period->title; ?></div>
                 <div><?= $model->group->title; ?></div>
-                <div><?= $model->room->title; ?></div>
             </div>
 
             <div class="col-sm-4">
-                <h6 class="mb-3"><?= Yii::t('app', 'Time') ?>:</h6>
+                <div>
+                    <strong><?= $model->room->title; ?></strong>
+                </div>
                 <div><?= Yii::t('app', 'Date Start'); ?> : <?= $model->date_start; ?></div>
                 <div><?= Yii::t('app', 'Date End'); ?> : <?= $model->date_end; ?></div>
             </div>
@@ -186,6 +185,7 @@ $refresh = Html::a(
                 <?= \common\models\User::getName($model->created_by); ?>
             </div>
             <div class="col-lg-4 col-sm-5 ml-auto">
+                <?= $model->staff->title; ?><br>
                 <?= Yii::t('app', 'Description'); ?>:
                 <br><?= ($model->description == null) ? '-' : $model->description; ?>
 

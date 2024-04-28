@@ -13,24 +13,24 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'i
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
-            Please fill out the form below
-            <div class="float-right">
-                <?=Yii::t('app', 'Schedule');?>
-            </div>
-        </div>
+
+<div class="card border-default mb-3">
+    <div class="card-header">Please fill out the form below
+        <span class="float-right">
+            <?=Yii::t('app', 'Schedule');?>
+        </span>
     </div>
-    <div class="panel-body">
-        <div class="schedule-update">
+    <div class="card-body text-default">
+        <div class="schedule-create">
             <?= $this->render('_form', [
                 'model' => $model,
                 'subjectList' => $subjectList,
                 'roomList' => $roomList,
                 'groupList' => $groupList,
-                'periodList' => $periodList
-            ]) ?>
+                'periodList' => $periodList,
+                'staffList' => $staffList
+            ])
+            ?>
         </div>
     </div>
 </div>

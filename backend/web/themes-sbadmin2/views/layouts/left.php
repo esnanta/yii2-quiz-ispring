@@ -93,8 +93,7 @@ use common\helper\CacheCloud;
 
                 ]],
 
-                ['label' => Yii::t('app', 'Quiz Master') .' '.$scheduleDetailBadgeHeader, 'icon' => 'clipboard-list', 'items' => [
-                    ['label' => Yii::t('app', 'Import Participant'), 'url' => ['/participant/select']],
+                ['label' => Yii::t('app', 'Quiz') .' '.$scheduleDetailBadgeHeader, 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
                     ['label' => Yii::t('app', 'Schedule') .' '.$scheduleDetailBadgeDetail, 'url' => ['/schedule/index']],
 

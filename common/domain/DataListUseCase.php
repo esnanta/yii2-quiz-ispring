@@ -12,6 +12,7 @@ use common\models\Participant;
 use common\models\Period;
 use common\models\Room;
 use common\models\Schedule;
+use common\models\Staff;
 use common\models\Subject;
 use yii\helpers\ArrayHelper;
 
@@ -90,6 +91,13 @@ class DataListUseCase
     public static function getArchiveCategory(): array
     {
         return ArrayHelper::map(ArchiveCategory::find()
+            ->where(['office_id' => DataIdUseCase::getOfficeId()])
+            ->asArray()->all(), 'id', 'title');
+    }
+
+    public static function getStaff(): array
+    {
+        return ArrayHelper::map(Staff::find()
             ->where(['office_id' => DataIdUseCase::getOfficeId()])
             ->asArray()->all(), 'id', 'title');
     }
