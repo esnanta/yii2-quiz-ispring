@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/select_archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/select_archive.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/domain/DataListUseCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/domain/DataListUseCase.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/LoginParticipantForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/UserParticipant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/UserParticipant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/login.php" afterDir="false" />
-    </list>
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -409,7 +390,7 @@
       <workItem from="1714194979283" duration="1954000" />
       <workItem from="1714230471190" duration="1238000" />
       <workItem from="1714267321931" duration="7561000" />
-      <workItem from="1714314481148" duration="5358000" />
+      <workItem from="1714314481148" duration="5723000" />
     </task>
     <servers />
   </component>
