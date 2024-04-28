@@ -34,7 +34,7 @@
     </li>
     <li>
         <a href="https://www.apachefriends.org/">XAMMP</a>
-        7.4.3 or higher
+        8.0.x or higher
     </li>
     <li>
         <strong><a href="https://getcomposer.org/">Composer</a>&nbsp;v2.x.x</strong>
@@ -61,7 +61,7 @@
     <strong>ISPRING Configuration</strong>
 </h3>
 <p>
-    You must add custom variable that will be used for to collect data schedule.
+    You must add custom variable that will be used to collect data schedule.
 </p>
 
 <div>
