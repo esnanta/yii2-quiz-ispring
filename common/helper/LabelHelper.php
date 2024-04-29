@@ -52,5 +52,4 @@ class LabelHelper {
     {
         return '<span class="badge bg-secondary text-white">'.$text.'</span>';
     }
-
 }

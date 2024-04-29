@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
+use common\models\Archive;
 use Yii;
 use common\models\Schedule;
 use common\models\ScheduleSearch;
@@ -44,13 +45,15 @@ class ScheduleController extends Controller
             $periodList = DataListUseCase::getPeriod();
             $roomList = DataListUseCase::getRoom();
             $groupList = DataListUseCase::getGroup();
+            $isAssetList = Schedule::getArrayIsAsset();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'periodList' => $periodList,
                 'roomList' => $roomList,
-                'groupList' => $groupList
+                'groupList' => $groupList,
+                'isAssetList' => $isAssetList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -140,6 +143,7 @@ class ScheduleController extends Controller
             $staffList = DataListUseCase::getStaff();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                $model->updateIsAsset();
                 MessageHelper::getFlashSaveSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -176,6 +180,7 @@ class ScheduleController extends Controller
             $staffList = DataListUseCase::getStaff();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                $model->updateIsAsset();
                 MessageHelper::getFlashUpdateSuccess();
                 return $this->redirect(['view', 'id' => $model->id,'title'=>$model->title]);
             } else {

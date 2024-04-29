@@ -29,11 +29,11 @@ class ScheduleDetail extends BaseScheduleDetail
     {
         return [
             //TAMBAHAN
-            [['subject_id', 'remark'], 'required'],
-            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 3),
+            [['subject_id'], 'required'],
+            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 5),
                 'skipOnEmpty' => true,
                 'extensions' => 'zip, rar, gz',
-                'tooBig' => 'Limit is 3MB'],
+                'tooBig' => 'Limit is 5MB'],
 
             [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],

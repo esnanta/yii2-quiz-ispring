@@ -2,6 +2,7 @@
 <?php
 use kartik\grid\GridView;
 use kartik\builder\TabularForm;
+use kartik\widgets\Select2;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -25,7 +26,7 @@ echo TabularForm::widget([
         'subject_id' => [
             'label' => Yii::t('app', 'Subject'),
             'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::class,
+            'widgetClass' => Select2::class,
             'options' => [
                 'data' => $subjectList,
                 'options' => ['placeholder' => Yii::t('app', 'Choose Subject')],
@@ -50,7 +51,7 @@ echo TabularForm::widget([
             'type' => GridView::TYPE_DEFAULT,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Detail'), ['type' => 'button', 'class' => 'btn btn-primary kv-batch-create', 'onClick' => 'addRowScheduleDetail()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Detail'), ['type' => 'button', 'class' => 'btn btn-info kv-batch-create', 'onClick' => 'addRowScheduleDetail()']),
         ]
     ]
 ]);

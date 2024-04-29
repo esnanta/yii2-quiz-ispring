@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Schedule as BaseSchedule;
 
@@ -10,6 +11,9 @@ use \common\models\base\Schedule as BaseSchedule;
  */
 class Schedule extends BaseSchedule
 {
+    const IS_ASSET_AVAILABLE        = 1;
+    const IS_ASSET_NOT_AVAILABLE    = 2;
+
     /**
      * @inheritdoc
      */
@@ -20,7 +24,7 @@ class Schedule extends BaseSchedule
             [['group_id', 'room_id','staff_id','date_start','date_end'], 'required'],
 
             [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['date_start', 'date_end', 'token_time','is_asset', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
             [['token'], 'string', 'max' => 6],
@@ -45,6 +49,59 @@ class Schedule extends BaseSchedule
         endif;
 
         return true;
+    }
+
+    public static function getArrayIsAsset()
+    {
+        return [
+            //MASTER
+            self::IS_ASSET_AVAILABLE => Yii::t('app', 'OK'),
+            self::IS_ASSET_NOT_AVAILABLE  => Yii::t('app', 'NA'),
+        ];
+    }
+
+    public static function getOneIsAsset($_module = null)
+    {
+        if($_module)
+        {
+            $arrayModule = self::getArrayIsAsset();
+
+            switch ($_module) {
+                case ($_module == self::IS_ASSET_AVAILABLE):
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
+                    break;
+                case ($_module == self::IS_ASSET_NOT_AVAILABLE):
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
+                    break;
+                default:
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+            }
+
+            return $returnValue;
+
+        }
+        else
+            return;
+    }
+
+
+    public function updateIsAsset(): int
+    {
+        $isAsset = self::IS_ASSET_AVAILABLE;
+        $nullAsset = ScheduleDetail::find('asset_name')
+            ->where([
+                'schedule_id' => $this->id,
+                'office_id'=>$this->office,
+                'asset_name'=>null])
+            ->count();
+
+        if($nullAsset > 0):
+            $isAsset = self::IS_ASSET_NOT_AVAILABLE;
+        endif;
+
+        $this->is_asset = $isAsset;
+        $this->save();
+        return $isAsset;
     }
 
 }

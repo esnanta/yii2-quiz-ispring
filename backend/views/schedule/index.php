@@ -79,6 +79,21 @@ $this->registerJs($search);
         'date_start',
         'date_end',
         [
+            'attribute'=>'is_asset',
+            'vAlign'=>'middle',
+            'width'=>'120px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return ($model->is_asset!=null) ? $model->getOneIsAsset($model->is_asset):'';
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+            'filter'=>$isAssetList,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>''],
+            'format'=>'html'
+        ],
+        [
             'class' => 'common\widgets\ActionColumn',
             'contentOptions' => ['style' => 'white-space:nowrap;'],
             'template'=>'{update} {view}',

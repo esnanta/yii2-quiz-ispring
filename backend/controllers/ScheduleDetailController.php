@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 
+use common\models\Schedule;
 use Yii;
 use common\models\ScheduleDetail;
 use common\models\ScheduleDetailSearch;
@@ -160,6 +161,8 @@ class ScheduleDetailController extends Controller
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
 
+                    $model->schedule->updateIsAsset();
+
                     return $this->redirect(['schedule/view', 'id' => $model->schedule_id]);
                 } else {
                     return $this->render('update', [
@@ -207,6 +210,9 @@ class ScheduleDetailController extends Controller
             $model->deleteAsset();
             $model->removeExtractFolder($model->getExtractDir());
             $model->save();
+
+            $model->schedule->updateIsAsset();
+
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect([
                 'schedule/view',

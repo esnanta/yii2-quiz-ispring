@@ -21,6 +21,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $date_end
  * @property string $token
  * @property string $token_time
+ * @property integer $is_asset
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -87,6 +88,7 @@ class Schedule extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
             [['token'], 'string', 'max' => 6],
+            [['is_asset'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -129,6 +131,7 @@ class Schedule extends \yii\db\ActiveRecord
             'date_end' => Yii::t('app', 'Date End'),
             'token' => Yii::t('app', 'Token'),
             'token_time' => Yii::t('app', 'Token Time'),
+            'is_asset' => Yii::t('app', 'Is Asset'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),

@@ -48,6 +48,13 @@ use yii\widgets\ActiveForm;
                     'allowClear' => true
                 ],
             ]); ?>
+            <?= $form->field($model, 'staff_id')->widget(Select2::class, [
+                'data' => $staffList,
+                'options' => ['placeholder' => Yii::t('app', '')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
         </div>
         <div class="col-md-6 col-xs-12">
             <?= $form->field($model, 'date_start')->widget(DateControl::class, [
@@ -79,6 +86,7 @@ use yii\widgets\ActiveForm;
                     'allowClear' => true
                 ],
             ]); ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
         </div>
 
     </div>
@@ -104,20 +112,6 @@ use yii\widgets\ActiveForm;
         ],
     ]);
     ?>
-
-    <div class="row">
-        <div class="col-md-6 col-xs-12">
-            <?= $form->field($model, 'staff_id')->widget(Select2::class, [
-                'data' => $staffList,
-                'options' => ['placeholder' => Yii::t('app', '')],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]); ?>
-            <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
-        </div>
-        <div class="col-md-6 col-xs-12"></div>
-    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
