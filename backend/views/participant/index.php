@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     . ' '.
                     Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info'])
                     . ' '.
-                    Html::a('<i class="fas fa-upload"></i> Upload', ['select'], ['class' => 'btn btn-primary']),
+                    Html::a('<i class="fas fa-upload"></i> Import', ['select'], ['class' => 'btn btn-primary']),
                 'options' => ['class' => 'btn-group-md']
             ],
             //'{export}',

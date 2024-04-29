@@ -5,6 +5,7 @@ namespace common\models;
 use common\helper\CacheCloud;
 use common\helper\LabelHelper;
 use Yii;
+use yii\bootstrap5\Html;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 
@@ -262,5 +263,23 @@ class Archive extends BaseArchive
     public function getPath() : string {
         $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
         return '/uploads/archive/'.$officeUniqueId;
+    }
+
+    public function getButton(): string
+    {
+        $button = Html::a(
+            '<i class="fas fa-plus"></i> '.Yii::t('app', 'Proceed'),
+            ['import','id'=>$this->id],
+            ['class' => 'btn btn-sm btn-info pull-right']
+        );
+        $asset = $this->getAssetFile();
+        if(!file_exists($asset)){
+            $button = Html::a(
+                '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
+                ['archive/update','id'=>$this->id],
+                ['class' => 'btn btn-sm btn-danger pull-right']
+            );
+        }
+        return $button;
     }
 }

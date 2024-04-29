@@ -48,12 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => Yii::t('app', 'Select'),
             'value' => function ($model) {
                 if ($model->id) {
-                    $button = Html::a(
-                        '<i class="fas fa-plus"></i> '.Yii::t('app', 'Proceed'),
-                        ['import','id'=>$model->id],
-                        ['class' => 'btn btn-sm btn-info pull-right']
-                    );
-                    return $button;
+                    return $model->getButton();
                 } else {
                     return null;
                 }

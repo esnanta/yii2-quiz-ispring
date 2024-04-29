@@ -190,7 +190,21 @@ class ArchiveController extends Controller
             $archiveTypeList = Archive::getArrayArchiveType();
             $isVisibleList = Archive::getArrayIsVisible();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+
+                // process uploaded asset file instance
+                $asset = $model->uploadAsset();
+                $model->asset_url = $model->getPath() . '/' . $asset->name;
+
+                if ($model->save()) :
+                    // upload only if valid uploaded file instance found
+                    if ($asset !== false) {
+                        $path = $model->getAssetFile();
+                        $asset->saveAs($path);
+                    }
+                    MessageHelper::getFlashUpdateSuccess();
+                endif;
+
                 MessageHelper::getFlashUpdateSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {

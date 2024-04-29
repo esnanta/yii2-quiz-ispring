@@ -88,9 +88,9 @@ use common\helper\CacheCloud;
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
 
-                ['label' => Yii::t('app', 'Download'), 'icon' => 'download', 'items' => [
-                    ['label' => Yii::t('app', 'Participant Template'), 'url' => ['/participant/download']],
-
+                ['label' => Yii::t('app', 'Data'), 'icon' => 'download', 'items' => [
+                    ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']],
+                    ['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
                 ]],
 
                 ['label' => Yii::t('app', 'Quiz') .' '.$scheduleDetailBadgeHeader, 'icon' => 'clipboard-list', 'items' => [
