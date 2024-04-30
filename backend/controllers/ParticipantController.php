@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
+use common\domain\DataSpreadsheetUseCase;
 use common\models\Archive;
 use common\models\ArchiveSearch;
 use common\models\ParticipantImport;
@@ -153,7 +154,7 @@ class ParticipantController extends Controller
     }
 
     //$id = archive id
-    public function actionImport($id)
+    public function actionImport($id,$title=null)
     {
         if(Yii::$app->user->can('create-participant')){
             $officeId       = DataIdUseCase::getOfficeId();
@@ -165,29 +166,18 @@ class ParticipantController extends Controller
             $model->office_id = $officeId;
             $model->archive_id = $id;
 
-            $filterSubset = new ReadFilter();
-            $helper = new Sample();
-
             $archive = Archive::find()->where(['id'=>$model->archive_id])->one();
-            $path = Yii::getAlias('@backend').'/web/'.$archive->getPath();
-            $inputFileName  = $path.'/'.$archive->asset_name;
-            $sheetName = 'Participant';
+            $inputFileName = $archive->getAssetFile();
 
-            $inputFileType = IOFactory::identify($inputFileName);
-            $reader = IOFactory::createReader($inputFileType);
-            $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
-            $reader->setLoadSheetsOnly($sheetName);
-            $reader->setReadFilter($filterSubset);
+            $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
+            $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
+            $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
             $spreadsheet = $reader->load($inputFileName);
-
             $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
             $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
                 $activeRange, null, true, true, true
             );
             $data = $spreadsheet->getActiveSheet();
-
-            //$helper->displayGrid($sheetData);
-            //throw new NotFoundHttpException('The object being updated is outdated.');
 
             try {
                 if ($model->load(Yii::$app->request->post())) {

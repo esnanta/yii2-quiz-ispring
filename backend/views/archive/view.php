@@ -26,25 +26,33 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
 <div class="archive-view">
     <div class="row">
         <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?=$this->title?></h3>
-                    <span class="pull pull-right">
-                        <i class="fa fa-eye"></i> <?=$model->view_counter;?> &nbsp;
-                        <i class="fa fa-download"></i> <?=$model->download_counter;?>
-                    </span>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <?php 
-                        echo Html::a('DOWNLOAD FILE', 
-                                ['archive/download','id'=>$model->id,'title'=>$model->title],
-                                ['title'=>'Download']);
-                    ?>
 
-                    <?php
-                        if(!empty($model->asset_name)){
-                            echo $deleteAsset;
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <i class="fa fa-eye"></i> <?=$model->view_counter;?>
+                        <?php
+                            echo Html::a('<i class="fas fa-download"></i> '.$model->download_counter,
+                                ['archive/download','id'=>$model->id,'title'=>$model->title],
+                                ['class'=>'card-link','title'=>'Download']);
+
+                            if($isSpreadsheet == 'Xlsx') {
+                                echo Html::a('<i class="fas fa-file-import"></i> Import',
+                                    ['participant/import', 'id' => $model->id, 'title' => $model->title],
+                                    ['class' => 'card-link', 'title' => 'Import']);
+                            }
+
+                            if(!empty($model->asset_name)) {
+                                echo Html::a('<i class="fas fa-trash"></i>', ['archive/delete-file', 'id' => $model->id],
+                                    ['class' => 'card-link float-right', 'data-confirm' => "Delete Asset?",
+                                        'data-method' => 'POST', 'title' => 'Delete Asset?']);
+                            }
+                        ?>
+                    </h6>
+
+                    <p class="card-text">
+
+                        <?php
 
                             $assetUrl   = $model->getAssetUrl();
                             $tmp        = explode('.', $model->asset);
@@ -52,9 +60,8 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
 
                             if($ext=='jpg'||$ext=='jpeg'||$ext=='png'||$ext=='gif'){
                                 echo Html::img(str_replace('frontend', 'backend', $assetUrl), ['class' => 'img-fluid']);
-                    ?>
-
-                    <?php
+                            } elseif ($isSpreadsheet == 'Xlsx'){
+                                echo $helper->displayGrid($sheetData);
                             } else {
                                 echo \lesha724\documentviewer\ViewerJsDocumentViewer::widget([
                                     'url'=> $assetUrl,//url на ваш документ
@@ -64,10 +71,13 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                                     //https://geektimes.ru/post/111647/
                                 ]);
                             }
-                        }
-                    ?>
+
+                        ?>
+                    </p>
+
                 </div>
             </div>
+
         </div>
         <div class="col-md-8">
             <?= DetailView::widget([

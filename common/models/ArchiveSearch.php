@@ -32,7 +32,7 @@ class ArchiveSearch extends Archive
     public function rules()
     {
         return [
-            [['id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'date_issued', 'asset_name', 'asset_url', 'mime_type', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             //TAMBAHAN
             [['date_range'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
@@ -60,6 +60,7 @@ class ArchiveSearch extends Archive
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'office_id' => $this->office_id,
             'is_visible' => $this->is_visible,
             'archive_type' => $this->archive_type,
             'archive_category_id' => $this->archive_category_id,

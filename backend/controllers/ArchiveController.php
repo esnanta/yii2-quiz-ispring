@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
+use common\domain\DataSpreadsheetUseCase;
 use common\models\Office;
 use common\helper\CacheCloud;
 use Yii;
@@ -68,7 +69,7 @@ class ArchiveController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$title=null)
     {
         if (Yii::$app->user->can('view-archive')) {
             $model = $this->findModel($id);
@@ -81,6 +82,22 @@ class ArchiveController extends Controller
 
             $oldFile = $model->getAssetFile();
             $oldAvatar = $model->asset_name;
+
+            $helper = null;
+            $sheetData = null;
+            $inputFileName = $oldFile;
+            $isSpreadsheet = DataSpreadsheetUseCase::getInstance()->getIdentify($inputFileName);
+            if($isSpreadsheet == 'Xlsx'){
+                $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
+                $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
+                $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
+                $spreadsheet = $reader->load($inputFileName);
+                $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+                $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                    $activeRange, null, true, true, true
+                );
+            }
+
 
             if ($model->load(Yii::$app->request->post())) {
                 // process uploaded asset file instance
@@ -110,7 +127,10 @@ class ArchiveController extends Controller
                     'officeList' => $officeList,
                     'archiveCategoryList' => $archiveCategoryList,
                     'isVisibleList' => $isVisibleList,
-                    'archiveTypeList' => $archiveTypeList
+                    'archiveTypeList' => $archiveTypeList,
+                    'isSpreadsheet' => $isSpreadsheet,
+                    'helper' => $helper,
+                    'sheetData' => $sheetData
                 ]);
             }
         } else {
@@ -179,7 +199,7 @@ class ArchiveController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$title=null)
     {
         if (Yii::$app->user->can('update-archive')) {
             $model = $this->findModel($id);

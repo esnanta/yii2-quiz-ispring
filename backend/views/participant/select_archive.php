@@ -48,13 +48,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => Yii::t('app', 'Select'),
             'value' => function ($model) {
                 if ($model->id) {
-                    return $model->getButton();
+                    return $model->getProceedButton().' '.$model->getUpdateButton();
                 } else {
                     return null;
                 }
             },
         ],
-        
     ];
     ?>
     <?= GridView::widget([
