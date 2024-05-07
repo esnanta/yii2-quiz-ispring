@@ -3,12 +3,14 @@
 namespace common\models;
 
 use common\helper\CacheCloud;
+use common\helper\LabelHelper;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Yii;
 use \common\models\base\ScheduleDetail as BaseScheduleDetail;
 use yii\base\Exception;
+use yii\bootstrap5\Html;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
@@ -216,10 +218,6 @@ class ScheduleDetail extends BaseScheduleDetail
         rmdir($dir);
     }
 
-
-
-
-
     public function getUrl(): string
     {
         return Yii::$app->getUrlManager()->createUrl(['archive/view', 'id' => $this->id, 'title' => $this->title]);
@@ -228,5 +226,31 @@ class ScheduleDetail extends BaseScheduleDetail
     public function getPath() : string {
         $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
         return '/uploads/schedule/'.$officeUniqueId;
+    }
+
+    public function getAssetButton(): string
+    {
+        $value = '<i>Asset not available</i>';
+        if (!empty($this->asset_name)) {
+            $currentTime = strtotime("now");
+            $timer = $this->schedule->getTimer();
+
+            $textLink = '';
+            $linkLabel = Yii::t('app', 'Closed');
+            $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
+
+            if ($timer > $currentTime) :
+                //http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
+                $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
+                    '&SCD=' . $this->id;
+                $textLink = Yii::$app->urlManager->baseUrl .
+                    $this->asset_url . $userinfo;
+                $linkLabel = Yii::t('app', 'Open');
+                $labelClass = LabelHelper::getButtonCssPrint();
+            endif;
+            $value = Html::a($linkLabel, $textLink, ['class' => $labelClass]);
+        }
+
+        return $value;
     }
 }

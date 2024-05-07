@@ -62,14 +62,8 @@ $this->title = Yii::$app->name;
                         <tbody>
                         <?php
                         foreach ($schedules as $i => $scheduleItem) {
-                            $timeReference = strtotime($scheduleItem->date_start);
-                            $currentTime = strtotime("now");
-                            $minutesDifference = round(abs(($timeReference - $currentTime) / 60));
-
-                            //10 MINUTES BEFORE START, CHANGE REFERENCE TO DATE_END
-                            if ($timeReference < $currentTime) :
-                                $timeReference = strtotime($scheduleItem->date_end);
-                            endif;
+                            $minutesDifference = $scheduleItem->getMinutesDifference();
+                            $timer = $scheduleItem->getTimer();
                         ?>
                         <tr>
                             <td class="center"><?= ($i + 1); ?></td>
@@ -82,22 +76,14 @@ $this->title = Yii::$app->name;
 
                                 <br>
 
-                                <?php
-                                $minutesTolerance = 10; //minutes
-                                $labelAlertTimer = 'badge bg-warning text-white';
-                                if ($minutesDifference < $minutesTolerance) :
-                                    $labelAlertTimer = 'badge bg-success text-white';
-                                endif;
-                                ?>
-
-                                <div class="<?= $labelAlertTimer; ?>">
+                                <div class="<?= $scheduleItem->getLabelAlertTimer(); ?>">
                                     <div id="time-down-counter-<?= $i; ?>"></div>
                                 </div>
 
                                 <?=
                                 Yii2TimerCountDown::widget([
                                     'countDownIdSelector' => 'time-down-counter-' . $i,
-                                    'countDownDate' => strtotime(date("Y-m-d H:i:s", $timeReference)) * 1000
+                                    'countDownDate' => strtotime(date("Y-m-d H:i:s", $timer)) * 1000
                                 ]);
                                 ?>
 
@@ -113,32 +99,7 @@ $this->title = Yii::$app->name;
                             </td>
                             <td class="left">
                                 <?php foreach ($scheduleItem->scheduleDetails as $scheduleDetailItem) {
-
-                                    if (empty($scheduleDetailItem->asset_name)) {
-                                        echo '<i>Asset not available</i>';
-                                    } else {
-
-                                        $textLink = '';
-                                        $linkLabel = Yii::t('app', 'Closed');
-                                        $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
-
-                                        if ($timeReference > $currentTime) :
-                                            //http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
-                                            $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
-                                                '&SCD=' . $scheduleDetailItem->id;
-                                            $textLink = Yii::$app->urlManager->baseUrl .
-                                                $scheduleDetailItem->asset_url . $userinfo;
-                                            $linkLabel = Yii::t('app', 'Open');
-                                            $labelClass = LabelHelper::getButtonCssPrint();
-                                        endif;
-
-                                        echo Html::a(
-                                            $linkLabel,
-                                            $textLink,
-                                            ['class' => $labelClass]
-                                        );
-                                    }
-
+                                    echo $scheduleDetailItem->getAssetButton();
                                 } ?>
                             </td>
                         </tr>

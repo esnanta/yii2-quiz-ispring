@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md.bak" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/domain/DataSpreadsheetUseCase.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ArchiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ArchiveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/archive/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/archive/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/select_archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/select_archive.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Archive.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/ArchiveSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ArchiveSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetailSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentDetailSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,12 +273,12 @@
     "PHP Script.StaffController.php.executor": "Debug",
     "PHP Script.yii-quiz-ispring.executor": "Run",
     "PHP Web Page.Unnamed.executor": "Run",
-    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
+    "PHP Web Page.yii2-quiz-ispring.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/frontend/web/themes-b5-modernize/views/site",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -405,7 +403,9 @@
       <workItem from="1714314481148" duration="5771000" />
       <workItem from="1714359171468" duration="5925000" />
       <workItem from="1714389899361" duration="5484000" />
-      <workItem from="1714486429690" duration="7621000" />
+      <workItem from="1714486429690" duration="8492000" />
+      <workItem from="1714531544940" duration="120000" />
+      <workItem from="1715048811367" duration="7134000" />
     </task>
     <servers />
   </component>

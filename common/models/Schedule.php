@@ -5,6 +5,7 @@ namespace common\models;
 use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Schedule as BaseSchedule;
+use yii\bootstrap5\Html;
 
 /**
  * This is the model class for table "tx_schedule".
@@ -102,6 +103,33 @@ class Schedule extends BaseSchedule
         $this->is_asset = $isAsset;
         $this->save();
         return $isAsset;
+    }
+
+    public function getMinutesDifference(): float
+    {
+        $timeReference = strtotime($this->date_start);
+        $currentTime = strtotime("now");
+        return round(abs(($timeReference - $currentTime) / 60));
+    }
+
+    public function getTimer(): float{
+        $timeReference = strtotime($this->date_start);
+        $currentTime = strtotime("now");
+        if ($timeReference < $currentTime) :
+            $timeReference = strtotime($this->date_end);
+        endif;
+        return $timeReference;
+    }
+
+    public function getLabelAlertTimer(): string
+    {
+        $minutesTolerance = 10; //minutes
+        $minutesDifference = $this->getMinutesDifference();
+        $labelAlertTimer = 'badge bg-warning text-white';
+        if ($minutesDifference < $minutesTolerance) :
+            $labelAlertTimer = 'badge bg-success text-white';
+        endif;
+        return $labelAlertTimer;
     }
 
 }

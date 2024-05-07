@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helper\LabelHelper;
 use common\models\Assessment;
 use common\models\AssessmentDetail;
 
@@ -96,7 +97,8 @@ class SiteController extends Controller
         } else {
             $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
             $schedules = Schedule::find()
-                ->where(['group_id'=>$participant->group_id])
+                ->where(['office_id'=>$participant->office_id])
+                ->andWhere(['group_id'=>$participant->group_id])
                 ->all();
             return $this->render('index',[
                 'participant'=>$participant,
@@ -142,6 +144,27 @@ class SiteController extends Controller
             return $this->goHome();
         }
     }
+
+    /**
+     * Logs out the current user.
+     * $id = Schedule Detail Id
+     *
+     */
+//    public function actionOpen($id){
+//        $textLink = '';
+//        $linkLabel = Yii::t('app', 'Closed');
+//        $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
+//
+//        if ($timeReference > $currentTime) :
+//            //http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
+//            $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
+//                '&SCD=' . $scheduleDetailItem->id;
+//            $textLink = Yii::$app->urlManager->baseUrl .
+//                $scheduleDetailItem->asset_url . $userinfo;
+//            $linkLabel = Yii::t('app', 'Open');
+//            $labelClass = LabelHelper::getButtonCssPrint();
+//        endif;
+//    }
 
     public function actionRead()
     {
