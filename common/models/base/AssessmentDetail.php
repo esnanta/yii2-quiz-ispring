@@ -28,6 +28,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $time_limit
  * @property string $used_time
  * @property string $time_spent
+ * @property integer $is_completed
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -90,6 +91,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
+            [['is_completed'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -139,6 +141,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
             'time_limit' => Yii::t('app', 'Time Limit'),
             'used_time' => Yii::t('app', 'Used Time'),
             'time_spent' => Yii::t('app', 'Time Spent'),
+            'is_completed' => Yii::t('app', 'Is Completed'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),

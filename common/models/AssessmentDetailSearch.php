@@ -17,7 +17,7 @@ class AssessmentDetailSearch extends AssessmentDetail
     public function rules()
     {
         return [
-            [['id', 'office_id', 'assessment_id', 'participant_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'assessment_id', 'participant_id', 'subject_id', 'is_completed','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
         ];
@@ -48,6 +48,7 @@ class AssessmentDetailSearch extends AssessmentDetail
             'assessment_id' => $this->assessment_id,
             'subject_id' => $this->subject_id,
             'participant_id' => $this->participant_id,
+            'is_completed' => $this->is_completed,
             'earned_points' => $this->earned_points,
             'passing_score' => $this->passing_score,
             'passing_score_percent' => $this->passing_score_percent,

@@ -54,7 +54,7 @@ CREATE TABLE `tx_archive` (
 /*Data for the table `tx_archive` */
 
 insert  into `tx_archive`(`id`,`office_id`,`is_visible`,`archive_type`,`archive_category_id`,`title`,`date_issued`,`asset_name`,`asset_url`,`size`,`mime_type`,`view_counter`,`download_counter`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(3,1,1,2,5,'Data siswa XII 1 - 24','2024-01-17','_662f204617eb1.xlsx',NULL,NULL,NULL,0,1,'','2024-01-17 23:29:35','2024-04-29 11:21:26',1,1,NULL,NULL,NULL,9,'99d2cde2b55511ee9384c858c0b7f92f');
+(3,1,1,2,5,'Data siswa XII 1 - 24','2024-01-17','_6631038b76832.xlsx',NULL,NULL,NULL,0,1,'','2024-01-17 23:29:35','2024-04-30 21:43:23',1,1,NULL,NULL,NULL,11,'99d2cde2b55511ee9384c858c0b7f92f');
 
 /*Table structure for table `tx_archive_category` */
 
@@ -141,6 +141,7 @@ CREATE TABLE `tx_assessment_detail` (
   `time_limit` varchar(50) DEFAULT NULL,
   `used_time` varchar(50) DEFAULT NULL,
   `time_spent` varchar(50) DEFAULT NULL,
+  `is_completed` tinyint(4) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -542,7 +543,7 @@ CREATE TABLE `tx_counter` (
 /*Data for the table `tx_counter` */
 
 insert  into `tx_counter`(`id`,`office_id`,`title`,`counter`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'SCD',1,'2024-04-29 18:37:54','2024-04-29 18:37:54',1,1,NULL,NULL,NULL,0,'eb4f70cd061c11ef9de6c858c0b7f92f');
+(1,1,'SCD',5,'2024-04-29 18:37:54','2024-04-29 19:54:43',1,1,NULL,NULL,NULL,4,'eb4f70cd061c11ef9de6c858c0b7f92f');
 
 /*Table structure for table `tx_dashblock` */
 
@@ -726,7 +727,7 @@ CREATE TABLE `tx_participant` (
   KEY `Fk_participant_group` (`group_id`),
   CONSTRAINT `Fk_participant_group` FOREIGN KEY (`group_id`) REFERENCES `tx_group` (`id`),
   CONSTRAINT `Fk_participant_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_participant` */
 
@@ -855,7 +856,7 @@ CREATE TABLE `tx_schedule` (
   `date_end` datetime DEFAULT NULL,
   `token` varchar(6) DEFAULT NULL,
   `token_time` datetime DEFAULT NULL,
-  `isAsset` tinyint(4) DEFAULT NULL COMMENT 'Available or not',
+  `is_asset` tinyint(4) DEFAULT NULL COMMENT 'Available or not',
   `description` tinytext DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -877,12 +878,12 @@ CREATE TABLE `tx_schedule` (
   CONSTRAINT `Fk_schedule_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`),
   CONSTRAINT `Fk_schedule_staff` FOREIGN KEY (`staff_id`) REFERENCES `tx_staff` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule` */
 
-insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`staff_id`,`date_start`,`date_end`,`token`,`token_time`,`isAsset`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'00001-Kimia',2,1,2,1,'2024-04-29 18:36:59','2024-04-29 19:00:00','738293','2024-04-29 18:36:59',NULL,'','2024-04-29 18:37:54','2024-04-29 18:38:28',1,1,NULL,NULL,NULL,1,'eb4d6d22061c11ef9de6c858c0b7f92f');
+insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`staff_id`,`date_start`,`date_end`,`token`,`token_time`,`is_asset`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
+(7,1,'00005-Kimia',2,1,2,1,'2024-04-29 19:53:51','2024-04-29 19:53:51','242654','2024-04-29 19:53:51',1,'','2024-04-29 19:54:43','2024-04-29 19:55:04',1,1,NULL,NULL,NULL,2,'a67c3275062711ef9de6c858c0b7f92f');
 
 /*Table structure for table `tx_schedule_detail` */
 
@@ -912,12 +913,12 @@ CREATE TABLE `tx_schedule_detail` (
   CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule_detail` */
 
 insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,1,1,'-',NULL,'/uploads/schedule/65a7fb0e28f7b/20240429-Metematika-1//index.html','2024-04-29 18:37:54','2024-04-29 18:38:28',1,1,NULL,NULL,NULL,1,'eb50e4f0061c11ef9de6c858c0b7f92f');
+(5,1,7,1,'-','Everest-(Published).zip','/uploads/schedule/65a7fb0e28f7b/20240429-Metematika-5/Everest-(Published)/index.html','2024-04-29 19:54:43','2024-04-29 19:55:04',1,1,NULL,NULL,NULL,1,'a67eb3d0062711ef9de6c858c0b7f92f');
 
 /*Table structure for table `tx_session` */
 
@@ -933,8 +934,12 @@ CREATE TABLE `tx_session` (
 /*Data for the table `tx_session` */
 
 insert  into `tx_session`(`id`,`expire`,`data`) values 
+('7kmq9g40r7fodm4ahigo26i89g',1714493108,'__flash|a:0:{}'),
 ('aatbq1opa6k3tcdj102gntgtet',1714391471,'__flash|a:0:{}'),
-('fvsrmo64afjr8uc5etrd6h0l83',1714392592,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
+('fvsrmo64afjr8uc5etrd6h0l83',1714396808,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('guhqbupjbrq62qujt3qjgqc8pm',1715073636,'__flash|a:0:{}'),
+('iaqg7dnu00fpmhbodtt12kvl2l',1715073848,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('kk9u8064kborv0juu2f8eah0ii',1714497007,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
 
 /*Table structure for table `tx_site_link` */
 
@@ -1133,7 +1138,7 @@ CREATE TABLE `tx_user` (
 /*Data for the table `tx_user` */
 
 insert  into `tx_user`(`id`,`username`,`email`,`password_hash`,`auth_key`,`unconfirmed_email`,`registration_ip`,`flags`,`confirmed_at`,`blocked_at`,`updated_at`,`created_at`,`last_login_at`,`auth_tf_key`,`auth_tf_enabled`) values 
-(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1714390036,NULL,0);
+(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715072202,NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
