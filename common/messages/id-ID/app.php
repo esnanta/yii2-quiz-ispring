@@ -180,7 +180,7 @@ return [
     'Staff ID' => '',
     'Start' => '',
     'Status' => '',
-    'Subject Type' => '',
+    'Subject Type' => 'Jenis',
     'Template' => '',
     'The requested page does not exist.' => '',
     'Theme Type' => '',
