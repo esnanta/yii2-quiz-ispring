@@ -52,4 +52,17 @@ class LabelHelper {
     {
         return '<span class="badge bg-secondary text-white">'.$text.'</span>';
     }
+
+    public static function getPrimary($text): string
+    {
+        return '<span class="badge bg-primary text-white">'.$text.'</span>';
+    }
+    public static function getSuccess($text): string
+    {
+        return '<span class="badge bg-success text-white">'.$text.'</span>';
+    }
+    public static function getDanger($text): string
+    {
+        return '<span class="badge bg-danger text-white">'.$text.'</span>';
+    }
 }

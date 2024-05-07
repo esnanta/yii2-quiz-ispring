@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Archive;
 use Yii;
 use common\models\Subject;
 use common\models\SubjectSearch;
@@ -41,11 +42,13 @@ class SubjectController extends Controller
             $searchModel    = new SubjectSearch;
             $dataProvider   = $searchModel->search(Yii::$app->request->getQueryParams());
             $officeList     = DataListUseCase::getOffice();
+            $subjectTypeList = Subject::getArraySubjectTypes();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' => $officeList
+                'officeList' => $officeList,
+                'subjectTypeList' => $subjectTypeList
             ]);
         }
         else{
@@ -64,13 +67,15 @@ class SubjectController extends Controller
         if(Yii::$app->user->can('view-subject')){
             $model      = $this->findModel($id);
             $officeList = DataListUseCase::getOffice();
+            $subjectTypeList = Subject::getArraySubjectTypes();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList' => $officeList
+                    'officeList' => $officeList,
+                    'subjectTypeList' => $subjectTypeList
                 ]);
             }
         }
@@ -91,6 +96,7 @@ class SubjectController extends Controller
             $model = new Subject;
             $model->office_id = DataIdUseCase::getOfficeId();
             $officeList = DataListUseCase::getOffice();
+            $subjectTypeList = Subject::getArraySubjectTypes();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -99,7 +105,8 @@ class SubjectController extends Controller
                 else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'subjectTypeList' => $subjectTypeList
                     ]);
                 }
             }
@@ -125,13 +132,15 @@ class SubjectController extends Controller
             try {
                 $model = $this->findModel($id);
                 $officeList = DataListUseCase::getOffice();
+                $subjectTypeList = Subject::getArraySubjectTypes();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('update', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'subjectTypeList' => $subjectTypeList
                     ]);
                 }
             }

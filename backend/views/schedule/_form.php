@@ -2,6 +2,7 @@
 
 use kartik\datecontrol\DateControl;
 use kartik\widgets\Select2;
+use mootensai\components\JsBlock;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -10,7 +11,7 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Schedule */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'ScheduleDetail', 
         'relID' => 'schedule-detail', 

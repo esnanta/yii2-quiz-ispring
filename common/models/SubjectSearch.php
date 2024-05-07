@@ -17,7 +17,7 @@ class SubjectSearch extends Subject
     public function rules()
     {
         return [
-            [['id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'subject_type','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'sequence', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -45,6 +45,7 @@ class SubjectSearch extends Subject
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
+            'subject_type' => $this->subject_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

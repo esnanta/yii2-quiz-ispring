@@ -5,6 +5,7 @@ use kartik\builder\TabularForm;
 use kartik\widgets\Select2;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 $dataProvider = new ArrayDataProvider([
@@ -29,10 +30,14 @@ echo TabularForm::widget([
             'widgetClass' => Select2::class,
             'options' => [
                 'data' => $subjectList,
-                'options' => ['placeholder' => Yii::t('app', 'Choose Subject')],
+                'options' => [
+                        'placeholder' => Yii::t('app', ''),
+                        'onchange' => 'updateRemarkField(this)',
+                ],
             ],
             'columnOptions' => ['width' => '200px']
         ],
+
         'remark' => ['type' => TabularForm::INPUT_TEXT],
         //'asset' => ['type' => TabularForm::INPUT_FILE],
         'del' => [
@@ -57,4 +62,28 @@ echo TabularForm::widget([
 ]);
 echo  "    </div>\n\n";
 ?>
+<?php
+$this->registerJs("
+    function updateRemarkField(dropdown) {
+        var rowIndex = dropdown.id
+        var selectedValue = $(dropdown).val();
+        
+        $.ajax({
+            url: '" . Url::to(['schedule/update-remark-field']) . "',
+            type: 'GET',
+            data: {subjectId: selectedValue},
+            success: function(data) {
 
+                var obj = JSON.parse(data)
+                //console.log('#obj ' + obj.remark)
+                
+                //scheduledetail-0-subject_id
+                rowRemark = rowIndex.replace('subject_id','remark')
+             
+                //console.log('#' + rowRemark)
+                $('#' + rowRemark).val(obj.remark);
+            }
+        });
+    }
+", yii\web\View::POS_END);
+?>

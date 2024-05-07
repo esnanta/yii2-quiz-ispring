@@ -40,6 +40,19 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
                 ],
             ],
             'title',
+            [
+                'attribute'=>'subject_type',
+                'format'=>'html',
+                'value'=>($model->subject_type!=null) ? $model->getOneSubjectType($model->subject_type):'',
+                'type'=>DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'subject_type', 'prompt' => '', 'disabled'=>false],
+                'items' => $subjectTypeList,
+                'widgetOptions'=>[
+                    'class'=> Select2::class,
+                    'data'=>$subjectTypeList,
+                ],
+                //'valueColOptions'=>['style'=>'width:30%']
+            ],
             'sequence',
             'description:ntext',
             [

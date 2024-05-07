@@ -20,14 +20,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="panel-title">
             Please fill out the form below
             <div class="float-right">
-                Subject            </div>
+                <?= Html::encode($this->title) ?>
+            </div>
         </div>
     </div>
     <div class="panel-body">
         <div class="subject-update">
             <?= $this->render('_form', [
                 'model' => $model,
-                'officeList' => $officeList
+                'officeList' => $officeList,
+                'subjectTypeList' => $subjectTypeList
             ]) ?>
         </div>
     </div>

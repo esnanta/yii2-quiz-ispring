@@ -4,13 +4,15 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
-use common\models\Archive;
+use common\models\Subject;
 use Yii;
 use common\models\Schedule;
 use common\models\ScheduleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
+use yii\helpers\Json;
 use yii\filters\VerbFilter;
 
 use common\helper\MessageHelper;
@@ -277,6 +279,33 @@ class ScheduleController extends Controller
             ]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+
+    /*
+ * ITEM POPULATE ALREADY FILTERED BY OFFICE AND WAREHOUSE
+ * 1. actionSelectWarehouse -> filter office and warehouse
+ * 2. actionCreate($warehouseId) -> filter item by office and warehouse
+ */
+
+    public function actionUpdateRemarkField($subjectId)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        // Assuming you have a model named YourModel and a database table corresponding to it.
+        $model = Subject::find()
+            ->where([
+                'id' => $subjectId,
+            ])
+            ->one();
+
+        if ($model) {
+            return Json::encode([
+                'success' => true,
+                'remark' => $model->description,
+            ]);
+        } else {
+            return Json::encode(['success' => false, 'message' => 'Record not found']);
         }
     }
 }
