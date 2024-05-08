@@ -4,7 +4,7 @@ $config = [
     'components' => [
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=rajahati_pertashop',
+            'dsn' => 'mysql:host=localhost;dbname=yii2_quiz_ispring',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

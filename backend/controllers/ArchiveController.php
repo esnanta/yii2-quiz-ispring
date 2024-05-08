@@ -83,21 +83,24 @@ class ArchiveController extends Controller
             $oldFile = $model->getAssetFile();
             $oldAvatar = $model->asset_name;
 
+            $isSpreadsheet = null;
             $helper = null;
             $sheetData = null;
-            $inputFileName = $oldFile;
-            $isSpreadsheet = DataSpreadsheetUseCase::getInstance()->getIdentify($inputFileName);
-            if($isSpreadsheet == 'Xlsx'){
-                $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
-                $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
-                $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
-                $spreadsheet = $reader->load($inputFileName);
-                $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-                $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
-                    $activeRange, null, true, true, true
-                );
-            }
 
+            if(!empty($oldFile)):
+                $inputFileName = $oldFile;
+                $isSpreadsheet = DataSpreadsheetUseCase::getInstance()->getIdentify($inputFileName);
+                if($isSpreadsheet == 'Xlsx'){
+                    $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
+                    $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
+                    $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
+                    $spreadsheet = $reader->load($inputFileName);
+                    $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+                    $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                        $activeRange, null, true, true, true
+                    );
+                }
+            endif;
 
             if ($model->load(Yii::$app->request->post())) {
                 // process uploaded asset file instance
