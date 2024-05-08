@@ -69,6 +69,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions'=>['placeholder'=>''],
                 'format'=>'raw'
             ],
+            [
+                'attribute'=>'period_id',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->period_id!=null) ? $model->period->title:'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter' => $periodList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
             'earned_points',
             'passing_score',
             'gained_score',

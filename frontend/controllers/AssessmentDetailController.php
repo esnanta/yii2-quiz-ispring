@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Assessment;
 use common\models\Participant;
 
+use common\models\Period;
 use Yii;
 use common\models\AssessmentDetail;
 use frontend\models\AssessmentDetailSearch;
@@ -49,6 +50,10 @@ class AssessmentDetailController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
                 ->where(['office_id' => $officeId])
@@ -59,6 +64,7 @@ class AssessmentDetailController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'assessmentList' => $assessmentList,
+                'periodList' => $periodList,
                 'participantList' => $participantList
             ]);
         } catch (\Exception $e){

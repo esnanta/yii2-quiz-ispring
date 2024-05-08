@@ -121,18 +121,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php } ?>
 
 
-        <div class="row">
-            <div class="col-lg-4 col-sm-5">
-                <?= Yii::t('app', 'Created At'); ?>:
-                <?= date(Yii::$app->params['dateDisplayFormat'], strtotime($model->created_at)); ?>
-                <br><?= Yii::t('app', 'Created By'); ?> :
-                <?= \common\models\User::getName($model->created_by); ?>
-            </div>
-            <div class="col-lg-4 col-sm-5 ml-auto">
-                <?= Yii::t('app', 'Description'); ?>:
-                <br><?= ($model->description == null) ? '-' : $model->description; ?>
 
-            </div>
-        </div>
     </div>
 </div>

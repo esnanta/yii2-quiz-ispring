@@ -93,6 +93,7 @@ $this->registerJs($search);
             'filterInputOptions'=>['placeholder'=>''],
             'format'=>'html'
         ],
+        'token',
         [
             'class' => 'common\widgets\ActionColumn',
             'contentOptions' => ['style' => 'white-space:nowrap;'],
