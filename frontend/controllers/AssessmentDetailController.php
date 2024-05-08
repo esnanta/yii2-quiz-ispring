@@ -75,9 +75,8 @@ class AssessmentDetailController extends Controller
     public function actionView($id)
     {
         try {
-            $participant = Participant::findone(['username' => Yii::$app->user->identity->username]);
             $model = AssessmentDetail::find()
-            ->where(['id'=>$id,'participant_id'=>$participant->id])
+            ->where(['id'=>$id])
             ->one();
 
             $assessmentList = ArrayHelper::map(Assessment::find()

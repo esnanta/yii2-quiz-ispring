@@ -227,7 +227,6 @@ class SiteController extends Controller
                 $assessment                 = new Assessment();
                 $assessment->office_id      = $officeId;
                 $assessment->schedule_id    = $scheduleId;
-                $assessment->title          = $assessment->schedule->title;
                 $assessment->save();
             }
 

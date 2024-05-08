@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ArchiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ArchiveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/console/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/environments/dev/common/config/main-local.php" beforeDir="false" afterPath="$PROJECT_DIR$/environments/dev/common/config/main-local.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentDetailController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -407,7 +405,7 @@
       <workItem from="1715048811367" duration="9265000" />
       <workItem from="1715079007743" duration="407000" />
       <workItem from="1715084405569" duration="6756000" />
-      <workItem from="1715174979897" duration="3018000" />
+      <workItem from="1715174979897" duration="6125000" />
     </task>
     <servers />
   </component>
@@ -427,16 +425,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/backend/controllers/ArchiveController.php</url>
-          <line>83</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
