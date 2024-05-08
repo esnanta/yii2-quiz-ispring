@@ -48,7 +48,7 @@ $this->registerJs($search);
             'attribute' => 'schedule_id',
             'label' => Yii::t('app', 'Schedule'),
             'value' => function ($model) {
-                if ($model->schedule) {
+                if ($model->schedule_id) {
                     return $model->schedule->title;
                 } else {
                     return NULL;

@@ -89,22 +89,6 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
                     ],
                 ],
             ],
-            [
-                'columns' => [
-                    [
-                        'attribute'=>'created_by',
-                        'value'=>($model->created_by!=null) ? \common\models\User::getName($model->created_by):'',
-                        'type'=>DetailView::INPUT_HIDDEN,
-                        'valueColOptions'=>['style'=>'width:30%']
-                    ],
-                    [
-                        'attribute'=>'updated_by',
-                        'value'=>($model->updated_by!=null) ? \common\models\User::getName($model->updated_by):'',
-                        'type'=>DetailView::INPUT_HIDDEN,
-                        'valueColOptions'=>['style'=>'width:30%']
-                    ],
-                ],
-            ],
         ],
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],

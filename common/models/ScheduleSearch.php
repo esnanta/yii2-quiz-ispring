@@ -25,7 +25,7 @@ use common\models\Schedule;
     {
         return [
             [['id', 'office_id', 'period_id', 'group_id', 'room_id', 'is_asset','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'date_start', 'date_end', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['title', 'date_start', 'date_end', 'token','description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -84,6 +84,7 @@ use common\models\Schedule;
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;
