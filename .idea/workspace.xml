@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment-detail/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Archive.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentDetail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetailSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentDetailSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/ScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleDetail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +401,7 @@
       <workItem from="1715079007743" duration="407000" />
       <workItem from="1715084405569" duration="6756000" />
       <workItem from="1715174979897" duration="8721000" />
-      <workItem from="1715237937850" duration="5934000" />
+      <workItem from="1715237937850" duration="6178000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

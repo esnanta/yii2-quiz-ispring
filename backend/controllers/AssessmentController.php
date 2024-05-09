@@ -282,6 +282,10 @@ class AssessmentController extends Controller
                             'header' => Yii::t('app', 'Gained Score'),
                         ],
                         [
+                            'attribute' => 'evaluate_score',
+                            'header' => Yii::t('app', 'Evaluate Score'),
+                        ],
+                        [
                             'attribute' => 'quiz_title',
                             'header' => Yii::t('app', 'Quiz Title'),
                         ],
