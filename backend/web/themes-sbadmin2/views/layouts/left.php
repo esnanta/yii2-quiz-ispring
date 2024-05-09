@@ -63,7 +63,15 @@ use common\helper\CacheCloud;
                     //['label' => Yii::t('app', 'Theme'), 'url' => ['/theme/index']],
                 ],'visible' => $officeMenuVisibility],
 
-
+                ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
+                    ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
+                    ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
+                    ['label' => Yii::t('app', 'Assessment'), 'icon' => 'book-reader', 'items' => [
+                        ['label' => Yii::t('app', 'Index'), 'url' => ['/assessment/index']],
+                        ['label' => Yii::t('app', 'Detail'), 'url' => ['/assessment-detail/index']],
+                        ['label' => Yii::t('app', 'Export'), 'url' => ['/assessment/report']],
+                    ]],
+                ]],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
                     ['label' => Yii::t('app', 'Archive Category'), 'url' => ['/archive-category/index']],
                     ['label' => Yii::t('app', 'Archive'), 'url' => ['/archive/index']],
@@ -72,20 +80,9 @@ use common\helper\CacheCloud;
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
-
                 ['label' => Yii::t('app', 'Data'), 'icon' => 'folder', 'items' => [
                     ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']],
                     ['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
-                ]],
-
-                ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
-                    ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
-                    ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
-                ]],
-                ['label' => Yii::t('app', 'Assessment'), 'icon' => 'book-reader', 'items' => [
-                    ['label' => Yii::t('app', 'Index'), 'url' => ['/assessment/index']],
-                    ['label' => Yii::t('app', 'Detail'), 'url' => ['/assessment-detail/index']],
-                    ['label' => Yii::t('app', 'Export'), 'url' => ['/assessment/report']],
                 ]],
                 ['label' => Yii::t('app', 'Admin'), 'icon' => 'user-secret', 'items' => [
                     ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create-owner']],
