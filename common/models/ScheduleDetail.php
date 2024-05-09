@@ -65,14 +65,23 @@ class ScheduleDetail extends BaseScheduleDetail
         return true;
     }
 
+    private function getWebRoot() : String
+    {
+        return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
+    }
+
+    private function getWebRootExtract() : String
+    {
+        return str_replace('backend', 'frontend', Yii::getAlias('@webroot'));
+    }
+
     /**
      * fetch stored asset file name with complete path
      * @return string
      */
     public function getAssetFile(): ?string
     {
-        $directory  = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) .
-            $this->getPath();
+        $directory  = $this->getWebRoot().$this->getPath();
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
@@ -88,7 +97,7 @@ class ScheduleDetail extends BaseScheduleDetail
         // return a default image placeholder if your source avatar is not found
         $defaultImage = '/images/no-picture-available-icon-1.jpg';
         $asset_name = (!empty($this->asset_name)) ? $this->asset_name : $defaultImage;
-        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+        $directory = $this->getWebRoot().$this->getPath();
 
         if (file_exists($directory.'/'.$asset_name)) {
             $file_parts = pathinfo($directory.'/'.$asset_name);
@@ -188,8 +197,7 @@ class ScheduleDetail extends BaseScheduleDetail
      */
     public function getExtractUrl(): string
     {
-        $assetNameWithoutExtension = substr($this->asset_name, 0, strpos($this->asset_name, "."));
-        $indexFile = $assetNameWithoutExtension.'/index.html';
+        $indexFile = '/index.html';
         return $this->getPath() . '/' .$this->getExtractFolderName().'/'.$indexFile;
     }
 
