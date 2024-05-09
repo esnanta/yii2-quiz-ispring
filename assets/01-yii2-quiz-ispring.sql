@@ -118,9 +118,6 @@ CREATE TABLE `tx_assessment` (
 
 /*Data for the table `tx_assessment` */
 
-insert  into `tx_assessment`(`id`,`office_id`,`title`,`schedule_id`,`period_id`,`date_start`,`date_end`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(2,1,'00001-Kimia - Sabtu',1,2,'2024-05-08 22:27:59','2024-05-09 10:25:00',NULL,'2024-05-08 22:43:31','2024-05-08 22:43:31',63,63,NULL,NULL,NULL,0,'b8e2bd610d5111efa055c858c0b7f92f');
-
 /*Table structure for table `tx_assessment_detail` */
 
 DROP TABLE IF EXISTS `tx_assessment_detail`;
@@ -138,6 +135,7 @@ CREATE TABLE `tx_assessment_detail` (
   `passing_score` decimal(18,2) DEFAULT NULL,
   `passing_score_percent` decimal(18,2) DEFAULT NULL,
   `gained_score` decimal(18,2) DEFAULT NULL,
+  `evaluate_score` decimal(18,2) DEFAULT NULL COMMENT '(earn/gain)*100',
   `quiz_title` varchar(50) DEFAULT NULL,
   `quiz_type` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
@@ -170,9 +168,6 @@ CREATE TABLE `tx_assessment_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_assessment_detail` */
-
-insert  into `tx_assessment_detail`(`id`,`office_id`,`assessment_id`,`schedule_detail_id`,`participant_id`,`subject_id`,`period_id`,`app_version`,`earned_points`,`passing_score`,`passing_score_percent`,`gained_score`,`quiz_title`,`quiz_type`,`username`,`time_limit`,`used_time`,`time_spent`,`is_completed`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(5,1,2,1,63,2,2,'9.0',5.00,25.00,100.00,25.00,'KIMIA  XII (P)','graded','U0078294733','7200','8','8 sec',NULL,'2024-05-08 22:43:31','2024-05-08 22:43:31',63,63,NULL,NULL,NULL,0,'b8e3ebf40d5111efa055c858c0b7f92f');
 
 /*Table structure for table `tx_auth_assignment` */
 
@@ -738,7 +733,7 @@ CREATE TABLE `tx_participant` (
 /*Data for the table `tx_participant` */
 
 insert  into `tx_participant`(`id`,`office_id`,`group_id`,`title`,`identity_number`,`username`,`password`,`email`,`status`,`last_login_at`,`auth_key`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(63,1,1,'Achmad Maula Fata','0078294733','U0078294733','6e20b','oke@test.com',3,'2024-05-08 22:32:54','JehFX3tPyAcd6nwlGutYhSpaOotoQlwa','2024-05-07 16:15:11','2024-05-08 22:32:54',1,NULL,NULL,NULL,NULL,5,'50cd992f0c5211efb129c858c0b7f92f'),
+(63,1,1,'Achmad Maula Fata','0078294733','U0078294733','6e20b','oke@test.com',3,'2024-05-09 14:52:01','-mhQKxAoFgUsfhChkjdUpmEygT0rN5r1','2024-05-07 16:15:11','2024-05-09 14:52:01',1,NULL,NULL,NULL,NULL,9,'50cd992f0c5211efb129c858c0b7f92f'),
 (64,1,1,'Adila Khalisah','0063509763','U0063509763','20d02','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50ce4f120c5211efb129c858c0b7f92f'),
 (65,1,1,'Amira Jufri','0053756117','U0053756117','182c5','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50ce91eb0c5211efb129c858c0b7f92f'),
 (66,1,1,'Anbar Salsabilla','0065125737','U0065125737','1cab8','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50cf1d9e0c5211efb129c858c0b7f92f'),
@@ -922,7 +917,7 @@ CREATE TABLE `tx_schedule` (
 /*Data for the table `tx_schedule` */
 
 insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`staff_id`,`date_start`,`date_end`,`token`,`token_time`,`is_asset`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'00001-Kimia - Sabtu',2,1,2,1,'2024-05-08 22:27:59','2024-05-09 10:25:00','765898','2024-05-08 22:27:59',1,'-','2024-05-08 22:28:20','2024-05-08 22:32:10',1,1,NULL,NULL,NULL,3,'99e528630d4f11efa055c858c0b7f92f');
+(1,1,'00001-Kimia - Sabtu',2,1,2,1,'2024-05-08 22:27:59','2024-05-10 10:25:00','441369','2024-05-09 15:12:48',1,'-','2024-05-08 22:28:20','2024-05-09 15:12:48',1,1,NULL,NULL,NULL,18,'99e528630d4f11efa055c858c0b7f92f');
 
 /*Table structure for table `tx_schedule_detail` */
 
@@ -952,12 +947,12 @@ CREATE TABLE `tx_schedule_detail` (
   CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule_detail` */
 
 insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,1,2,'d','KIMIA_XII_(P).zip','/uploads/schedule/65a7fb0e28f7b/20240508-Kimia-1/KIMIA_XII_(P)/index.html','2024-05-08 22:28:20','2024-05-08 22:32:10',1,1,NULL,NULL,NULL,3,'99e791960d4f11efa055c858c0b7f92f');
+(2,1,1,2,'Kimia Umum','SOAL_TEST_Server.zip','/uploads/schedule/65a7fb0e28f7b/20240508-Kimia-2//index.html','2024-05-09 15:03:13','2024-05-09 15:12:47',1,1,NULL,NULL,NULL,3,'95bea5e50dda11ef82bec858c0b7f92f');
 
 /*Table structure for table `tx_session` */
 
@@ -973,10 +968,14 @@ CREATE TABLE `tx_session` (
 /*Data for the table `tx_session` */
 
 insert  into `tx_session`(`id`,`expire`,`data`) values 
+('0p0h2tlerub8aklnlajms40p9v',1715187882,'__flash|a:0:{}__id|i:63;__authKey|s:32:\"P46PoX5vMYPwT7H2co901oupAAO8W40Y\";'),
+('a81ubbv40rge79bdk94o8phsuu',1715187716,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('aqr8ajo8s17bucisjg4rf582vg',1715243260,'__flash|a:0:{}'),
+('g032roeaomlbvljj9dvkod28fq',1715244382,'__flash|a:0:{}__id|i:63;__authKey|s:32:\"-mhQKxAoFgUsfhChkjdUpmEygT0rN5r1\";'),
 ('ln1uia9sl6r8altk4legtt4tni',1715183587,'__flash|a:0:{}__returnUrl|s:45:\"http://localhost/app/yii2-quiz-ispring/admin/\";'),
-('mrsluccjvmj6tu8bffn909phj4',1715184708,'__flash|a:0:{}__id|i:63;__authKey|s:32:\"JehFX3tPyAcd6nwlGutYhSpaOotoQlwa\";'),
 ('od47b9lvq2g434icg3bd9mc9qn',1715183640,'__flash|a:0:{}'),
-('vtsqfftbmgd4vdln0n71cdvug7',1715183781,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
+('u6ua6ghrh85moltkv2j75t469m',1715242573,'__flash|a:0:{}'),
+('vltkia6q466on7iiis45q3a9mj',1715244222,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
 
 /*Table structure for table `tx_site_link` */
 
@@ -1176,7 +1175,7 @@ CREATE TABLE `tx_user` (
 /*Data for the table `tx_user` */
 
 insert  into `tx_user`(`id`,`username`,`email`,`password_hash`,`auth_key`,`unconfirmed_email`,`registration_ip`,`flags`,`confirmed_at`,`blocked_at`,`updated_at`,`created_at`,`last_login_at`,`auth_tf_key`,`auth_tf_enabled`) values 
-(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715182207,NULL,0);
+(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715240785,NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
