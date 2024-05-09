@@ -98,6 +98,13 @@
         </tbody>
     </table>
 </div>
+<br>
+        Set "Finish Action Url" to : http://{YOUR_HOST}/{YOUR_APP_NAME}/assessment-detail/index
+        <br>Ex : http://localhost/yii2-quiz-ispring/assessment-detail/index
+<br>
+<br>
+        Set "Send quiz results to server" : http://{YOUR_HOST}/{YOUR_APP_NAME}/site/read.
+        <br>Ex : http://localhost/yii2-quiz-ispring/site/read
 
 <hr>
 
