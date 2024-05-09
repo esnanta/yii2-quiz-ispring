@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use \common\models\base\Assessment as BaseAssessment;
+use yii\bootstrap5\Html;
 
 /**
  * This is the model class for table "tx_assessment".
@@ -39,5 +40,10 @@ class Assessment extends BaseAssessment
         }
 
         return true;
+    }
+
+    public function getUrl(): string
+    {
+        return Html::a($this->title, ['assessment/view', 'id' => $this->id, 'title' => $this->title]);
     }
 }

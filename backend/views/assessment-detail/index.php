@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->assessment_id!=null) ? $model->assessment->title:'';
+                    return ($model->assessment_id!=null) ? $model->assessment->getUrl():'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
                 'filter'=>$assessmentList,
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pluginOptions'=>['allowClear'=>true],
                 ],
                 'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
+                'format'=>'html',
             ],
             [
                 'attribute'=>'participant_id',
@@ -71,10 +71,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions'=>['placeholder'=>''],
                 'format'=>'raw'
             ],
-            'earned_points',
-            'passing_score',
-            'gained_score',
-            'evaluate_score',
+            [
+                    'attribute'=>'earned_points',
+                    'vAlign'=>'middle',
+            ],
+            [
+                'attribute'=>'passing_score',
+                'vAlign'=>'middle',
+            ],
+            [
+                'attribute'=>'gained_score',
+                'vAlign'=>'middle',
+            ],
+            [
+                'attribute'=>'evaluate_score',
+                'vAlign'=>'middle',
+            ],
             [
                 'attribute'=>'time_limit',
                 'vAlign'=>'middle',

@@ -68,7 +68,7 @@ class AssessmentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$title=null)
     {
         if (Yii::$app->user->can('view-assessment')) {
             $model = $this->findModel($id);

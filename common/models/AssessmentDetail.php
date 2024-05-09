@@ -10,6 +10,7 @@ use \common\models\base\AssessmentDetail as BaseAssessmentDetail;
  */
 class AssessmentDetail extends BaseAssessmentDetail
 {
+
     /**
      * @inheritdoc
      */

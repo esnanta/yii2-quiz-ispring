@@ -49,7 +49,7 @@ use common\models\Schedule;
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
         $query = Schedule::find()->where(['office_id'=>$officeId])
-            ->orderBy('id DESC');
+            ->orderBy('date_start DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
