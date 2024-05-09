@@ -22,6 +22,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $passing_score
  * @property string $passing_score_percent
  * @property string $gained_score
+ * @property string $evaluate_score
  * @property string $quiz_title
  * @property string $quiz_type
  * @property string $username
@@ -88,7 +89,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
     {
         return [
             [['office_id', 'assessment_id', 'schedule_detail_id', 'participant_id', 'subject_id', 'period_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
+            [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
             [['is_completed'], 'string', 'max' => 4],
@@ -135,6 +136,7 @@ class AssessmentDetail extends \yii\db\ActiveRecord
             'passing_score' => Yii::t('app', 'Passing Score'),
             'passing_score_percent' => Yii::t('app', 'Passing Score Percent'),
             'gained_score' => Yii::t('app', 'Gained Score'),
+            'evaluate_score' => Yii::t('app', 'Evaluate Score'),
             'quiz_title' => Yii::t('app', 'Quiz Title'),
             'quiz_type' => Yii::t('app', 'Quiz Type'),
             'username' => Yii::t('app', 'Username'),

@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'earned_points',
             'passing_score',
             'gained_score',
+            'evaluate_score',
             [
                 'attribute'=>'time_limit',
                 'vAlign'=>'middle',

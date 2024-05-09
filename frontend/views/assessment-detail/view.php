@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'passing_score',
             'passing_score_percent',
             'gained_score',
+            'evaluate_score',
             'quiz_title',
             'quiz_type',
             'username',

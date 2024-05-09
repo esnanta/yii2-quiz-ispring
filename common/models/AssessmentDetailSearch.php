@@ -19,7 +19,7 @@ class AssessmentDetailSearch extends AssessmentDetail
         return [
             [['id', 'office_id', 'assessment_id', 'participant_id', 'period_id','subject_id', 'is_completed','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
-            [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
+            [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
         ];
     }
 
@@ -54,6 +54,7 @@ class AssessmentDetailSearch extends AssessmentDetail
             'passing_score' => $this->passing_score,
             'passing_score_percent' => $this->passing_score_percent,
             'gained_score' => $this->gained_score,
+            'evaluate_score' => $this->evaluate_score,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
