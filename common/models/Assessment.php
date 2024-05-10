@@ -7,7 +7,7 @@ use Yii;
 use \common\models\base\Assessment as BaseAssessment;
 
 /**
- * This is the model class for table "tx_assessment_detail".
+ * This is the model class for table "tx_assessment".
  */
 class Assessment extends BaseAssessment
 {

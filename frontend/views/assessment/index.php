@@ -40,14 +40,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute'=>'assessment_id',
+                'attribute'=>'schedule_id',
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->assessment_id!=null) ? $model->assessment->title:'';
+                    return ($model->schedule_id!=null) ? $model->schedule->getUrl():'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$assessmentList,
+                'filter'=>$scheduleList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'html',
+            ],
+            [
+                'attribute'=>'participant_id',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->participant_id!=null) ? $model->participant->getUrl():'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter' => $participantList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],
@@ -55,14 +70,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw'
             ],
             [
-                'attribute'=>'participant_id',
+                'attribute'=>'subject_id',
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->participant_id!=null) ? $model->participant->title:'';
+                    return ($model->subject_id!=null) ? $model->subject->title:'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter' => $participantList,
+                'filter' => $subjectList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
+            [
+                'attribute'=>'subject_type',
+                'vAlign'=>'middle',
+                'width'=>'120px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->subject_type!=null) ? $model->getOneSubjectType($model->subject_type):'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$subjectTypeList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],

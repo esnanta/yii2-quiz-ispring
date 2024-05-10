@@ -10,7 +10,7 @@ use kartik\datecontrol\DateControl;
  * @var common\models\Assessment $model
  */
 
-$this->title = $model->quiz_title . '-'.$model->assessment->title;
+$this->title = $model->quiz_title . '-'.$model->quiz_title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
@@ -29,8 +29,9 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         ],
         'attributes' => [
             [
-                'attribute'=>'assessment_id',
-                'value'=>($model->schedule_id!=null) ? $model->schedule->title:'',
+                'attribute'=>'schedule_id',
+                'format'=>'html',
+                'value'=>($model->schedule_id!=null) ? $model->schedule->getUrl():'',
                 'type'=>DetailView::INPUT_SELECT2,
                 'options' => ['id' => 'schedule_id', 'prompt' => '', 'disabled'=>false],
                 'items' => $scheduleList,
@@ -41,7 +42,8 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
             ],
             [
                 'attribute' => 'participant_id',
-                'value'=> ($model->participant_id!=null) ? $model->participant->title:'',
+                'format'=>'html',
+                'value'=> ($model->participant_id!=null) ? $model->participant->getUrl():'',
                 'type' => DetailView::INPUT_SELECT2,
                 'options' => ['id' => 'participant_id', 'prompt' => '', 'disabled'=>false],
                 'items' => $participantList,

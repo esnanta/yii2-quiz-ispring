@@ -10,7 +10,7 @@ use kartik\datecontrol\DateControl;
  * @var common\models\Assessment $model
  */
 
-$this->title = $model->quiz_title . '-'.$model->assessment->title;
+$this->title = $model->quiz_title . '-'.$model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -28,19 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'attributes' => [
             [
-                'attribute'=>'assessment_id',
-                'value'=>($model->assessment_id!=null) ? $model->assessment->title:'',
+                'attribute'=>'schedule_id',
+                'format'=>'html',
+                'value'=>($model->schedule_id!=null) ? $model->schedule->getUrl():'',
                 'type'=>DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'assessment_id', 'prompt' => '', 'disabled'=>false],
-                'items' => $assessmentList,
+                'options' => ['id' => 'schedule_id', 'prompt' => '', 'disabled'=>false],
+                'items' => $scheduleList,
                 'widgetOptions'=>[
                     'class'=> Select2::class,
-                    'data'=>$assessmentList,
+                    'data'=>$scheduleList,
                 ],
             ],
             [
                 'attribute' => 'participant_id',
-                'value'=> ($model->participant_id!=null) ? $model->participant->title:'',
+                'format'=>'html',
+                'value'=> ($model->participant_id!=null) ? $model->participant->getUrl():'',
                 'type' => DetailView::INPUT_SELECT2,
                 'options' => ['id' => 'participant_id', 'prompt' => '', 'disabled'=>false],
                 'items' => $participantList,
@@ -49,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'data' => $participantList,
                 ],
             ],
-
             'app_version',
             'earned_points',
             'passing_score',

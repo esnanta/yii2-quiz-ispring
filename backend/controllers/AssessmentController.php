@@ -43,6 +43,7 @@ class AssessmentController extends Controller
 
             $scheduleList = DataListUseCase::getSchedule();
             $participantList  = DataListUseCase::getParticipant();
+            $periodList = DataListUseCase::getPeriod();
             $subjectList = DataListUseCase::getSubject();
             $subjectTypeList = Assessment::getArraySubjectTypes();
 
@@ -51,6 +52,7 @@ class AssessmentController extends Controller
                 'searchModel' => $searchModel,
                 'scheduleList' => $scheduleList,
                 'participantList' => $participantList,
+                'periodList' => $periodList,
                 'subjectList' => $subjectList,
                 'subjectTypeList' => $subjectTypeList
             ]);
