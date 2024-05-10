@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
 
 ?>
-<div class="assessment-detail-view">
+<div class="assessment-view">
 
     <?= DetailView::widget([
         'model' => $model,

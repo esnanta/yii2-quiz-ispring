@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['assessment-detail/view', 'id' => $model->id]),
+                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
                             [
                                 'title' => Yii::t('yii', 'View'),
                                 'class'=>'btn btn-sm btn-info',

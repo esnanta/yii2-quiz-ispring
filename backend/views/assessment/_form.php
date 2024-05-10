@@ -12,7 +12,7 @@ use kartik\datecontrol\DateControl;
  */
 ?>
 
-<div class="assessment-detail-form">
+<div class="assessment-form">
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); echo Form::widget([
 

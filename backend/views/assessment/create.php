@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </span>
     </div>
     <div class="card-body text-default">
-        <div class="assessment-detail-create">
+        <div class="assessment-create">
             <?= $this->render('_form', [
                 'model' => $model,
                 'scheduleList' => $scheduleList,

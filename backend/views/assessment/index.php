@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Assessment');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="assessment-detail-index">
+<div class="assessment-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -138,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['assessment-detail/view', 'id' => $model->id, 'edit' => 't']),
+                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
@@ -147,7 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['assessment-detail/view', 'id' => $model->id]),
+                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
                             [
                                 'title' => Yii::t('yii', 'View'),
                                 'class'=>'btn btn-sm btn-info',

@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details')
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="assessment-detail-view">
+<div class="assessment-view">
 
     <?= DetailView::widget([
         'model' => $model,
