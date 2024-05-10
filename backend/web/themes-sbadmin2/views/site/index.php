@@ -3,6 +3,7 @@
 $this->title = Yii::$app->name;
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
@@ -24,9 +25,10 @@ use yii\helpers\Html;
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        <i class="fas fa-user fa-2x text-gray-300"></i>
                     </div>
                 </div>
+                <a href="<?=Url::to(['participant/index'])?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>
@@ -45,9 +47,10 @@ use yii\helpers\Html;
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <i class="fas fa-user fa-2x text-primary"></i>
                     </div>
                 </div>
+                <a href="<?=Url::to(['participant/index'])?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>
@@ -59,16 +62,17 @@ use yii\helpers\Html;
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            <?= Yii::t('app', 'Group'); ?>
+                            <?= Yii::t('app', 'Schedule'); ?>
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $countGroup ?>
+                            <?= $countSchedule ?>
                         </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                     </div>
                 </div>
+                <a href="<?=Url::to(['schedule/index'])?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>
@@ -79,16 +83,17 @@ use yii\helpers\Html;
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            <?= Yii::t('app', 'Subject'); ?>
+                            <?= Yii::t('app', 'Assessment'); ?>
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $countSubject ?>
+                            <?= $countAssessment ?>
                         </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>
                     </div>
                 </div>
+                <a href="<?=Url::to(['assessment/index'])?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@ use yii\base\Model;
  */
 class ExportAssessment extends Model
 {
-    public $assessment_id;
+    public $schedule_id;
     public $subject_id;
 
     /**
@@ -19,7 +19,7 @@ class ExportAssessment extends Model
     {
         return [
             // username and password are both required
-            [['assessment_id'], 'required'],
+            [['schedule_id'], 'required'],
             [['subject_id'], 'safe'],
         ];
     }
@@ -27,7 +27,7 @@ class ExportAssessment extends Model
     public function attributeLabels()
     {
         return [
-            'assessment_id'       => Yii::t('app', 'Assessment'),
+            'schedule_id'       => Yii::t('app', 'Schedule'),
             'subject_id'        => Yii::t('app', 'Subject'),
         ];
     }

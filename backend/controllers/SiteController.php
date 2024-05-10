@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\Assessment;
 use common\models\Group;
 use common\models\Participant;
+use common\models\Schedule;
 use common\models\Subject;
 use Yii;
 use yii\web\Controller;
@@ -97,11 +99,11 @@ class SiteController extends Controller
                 ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_ACTIVE])
                 ->count();
 
-            $countGroup = Group::find('id')
+            $countSchedule = Schedule::find('id')
                 ->where(['office_id'=>$officeId])
                 ->count();
 
-            $countSubject = Subject::find('id')
+            $countAssessment = Assessment::find('id')
                 ->where(['office_id'=>$officeId])
                 ->count();
 
@@ -111,8 +113,8 @@ class SiteController extends Controller
                 'authItemName'=>$authItemName,
                 'countOfflineParticipant' => $countOfflineParticipant,
                 'countOnlineParticipant' => $countOnlineParticipant,
-                'countGroup' => $countGroup,
-                'countSubject' => $countSubject
+                'countSchedule' => $countSchedule,
+                'countAssessment' => $countAssessment
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

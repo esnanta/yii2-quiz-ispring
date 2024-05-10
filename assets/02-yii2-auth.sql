@@ -316,15 +316,6 @@ values
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
-    ('index-assessmentdetail',2,'Index Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('create-assessmentdetail',2,'Create Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('update-assessmentdetail',2,'Update Assessment  Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('view-assessmentdetail',2,'View Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('delete-assessmentdetail',2,'Delete Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('report-assessmentdetail',2,'Report Assessment Detail',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
-
-insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
-values
     ('index-ispring-master',2,'Index Ispring Master',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('create-ispring-master',2,'Create Ispring Master',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('update-ispring-master',2,'Update Ispring Master',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -441,15 +432,6 @@ values
     ('view-ispring-transaction','view-assessment'),
     ('delete-ispring-transaction','delete-assessment'),
     ('report-ispring-transaction','report-assessment');
-
-insert  into `tx_auth_item_child`(`parent`,`child`)
-values
-    ('index-ispring-transaction','index-assessmentdetail'),
-    ('create-ispring-transaction','create-assessmentdetail'),
-    ('update-ispring-transaction','update-assessmentdetail'),
-    ('view-ispring-transaction','view-assessmentdetail'),
-    ('delete-ispring-transaction','delete-assessmentdetail'),
-    ('report-ispring-transaction','report-assessmentdetail');
 
 /**
  * MENU FOR ADMIN
