@@ -8,7 +8,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Assessment Detail',
+    'modelClass' => 'Assessment',
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,12 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card border-default mb-3">
     <div class="card-header">Please fill out the form below 
         <span class="float-right">
-            AssessmentDetail        </span>
+            <?= Html::encode($this->title) ?>
+        </span>
     </div>
     <div class="card-body text-default">
         <div class="assessment-detail-create">
             <?= $this->render('_form', [
                 'model' => $model,
+                'scheduleList' => $scheduleList,
+                'participantList' => $participantList,
+                'subjectTypeList' => $subjectTypeList
             ]) 
             ?>
         </div>

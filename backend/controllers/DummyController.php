@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\models\Assessment;
-use common\models\Assessment;
 use common\models\Group;
 use common\models\Participant;
 use common\models\Period;
@@ -16,18 +15,9 @@ use Faker\Factory;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
-
-use common\models\Employment;
-use common\models\Office;
 use common\models\Staff;
-use common\models\Theme;
-
-use common\helper\CacheCloud;
 use common\helper\MessageHelper;
-use common\models\UserDektrium;
+
 use yii\web\Response;
 
 /**
@@ -70,9 +60,7 @@ class DummyController extends Controller
 
     public function actionView()
     {
-
         $officeId = DataIdUseCase::getOfficeId();
-        $assessmentDetails = Assessment::find()->where(['office_id' => $officeId])->count();
         $assessments = Assessment::find()->where(['office_id' => $officeId])->count();
         $scheduleDetails = ScheduleDetail::find()->where(['office_id' => $officeId])->count();
         $schedules = Schedule::find()->where(['office_id' => $officeId])->count();
@@ -81,7 +69,6 @@ class DummyController extends Controller
         $groups = Group::find()->where(['office_id' => $officeId])->count();
 
         return $this->render('view', [
-            'assessmentDetails' => $assessmentDetails,
             'assessments' => $assessments,
             'scheduleDetails' => $scheduleDetails,
             'schedules' => $schedules,
@@ -140,7 +127,6 @@ class DummyController extends Controller
         $subject = new Subject();
         $subject->office_id = $officeId;
         $subject->title = 'Matematika';
-        $subject->subject_type = '1';
         $subject->sequence = '1';
         $subject->description = 'Matematika';
         $subject->save();
@@ -148,7 +134,6 @@ class DummyController extends Controller
         $subject2 = new Subject();
         $subject2->office_id = $officeId;
         $subject2->title = 'Kimia Numerasi';
-        $subject2->subject_type = '1';
         $subject2->sequence = '2';
         $subject2->description = 'Kimia Numerasi';
         $subject2->save();
@@ -156,7 +141,6 @@ class DummyController extends Controller
         $subject3 = new Subject();
         $subject3->office_id = $officeId;
         $subject3->title = 'Kimia Literasi';
-        $subject3->subject_type = '2';
         $subject3->sequence = '2';
         $subject3->description = 'Kimia Literasi';
         $subject3->save();
@@ -164,7 +148,6 @@ class DummyController extends Controller
         $subject4 = new Subject();
         $subject4->office_id = $officeId;
         $subject4->title = 'Kimia Umum';
-        $subject4->subject_type = '1';
         $subject4->sequence = '3';
         $subject4->description = 'Kimia Umum';
         $subject4->save();
@@ -172,7 +155,6 @@ class DummyController extends Controller
         $subject5 = new Subject();
         $subject5->office_id = $officeId;
         $subject5->title = 'Sejarah';
-        $subject5->subject_type = '1';
         $subject5->sequence = '3';
         $subject5->description = 'Sejarah';
         $subject5->save();
@@ -293,6 +275,7 @@ class DummyController extends Controller
                     $scheduleDetail->office_id = $officeId;
                     $scheduleDetail->schedule_id = $schedule->id;
                     $scheduleDetail->subject_id = $subjectItem->id;
+                    $scheduleDetail->subject_type = '1';
                     $scheduleDetail->remark = $subjectItem->description;
                     $scheduleDetail->save();
                 }

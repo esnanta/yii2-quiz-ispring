@@ -41,14 +41,16 @@ class AssessmentController extends Controller
             $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $assessmentList = DataListUseCase::getAssessment();
+            $scheduleList = DataListUseCase::getAssessment();
             $participantList  = DataListUseCase::getParticipant();
+            $subjectTypeList = Assessment::getArraySubjectTypes();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'assessmentList' => $assessmentList,
-                'participantList' => $participantList
+                'scheduleList' => $scheduleList,
+                'participantList' => $participantList,
+                'subjectTypeList' => $subjectTypeList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -66,16 +68,18 @@ class AssessmentController extends Controller
         if (Yii::$app->user->can('view-assessment')) {
             $model = $this->findModel($id);
 
-            $assessmentList = DataListUseCase::getAssessment();
+            $scheduleList = DataListUseCase::getAssessment();
             $participantList  = DataListUseCase::getParticipant();
+            $subjectTypeList = Assessment::getArraySubjectTypes();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'assessmentList' => $assessmentList,
-                    'participantList' => $participantList
+                    'scheduleList' => $scheduleList,
+                    'participantList' => $participantList,
+                    'subjectTypeList' => $subjectTypeList
                 ]);
             }
         } else {
@@ -93,8 +97,9 @@ class AssessmentController extends Controller
     {
         if (Yii::$app->user->can('create-assessment')) {
             $model = new Assessment;
-            $assessmentList = DataListUseCase::getAssessment();
+            $scheduleList = DataListUseCase::getAssessment();
             $participantList  = DataListUseCase::getParticipant();
+            $subjectTypeList = Assessment::getArraySubjectTypes();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -102,8 +107,9 @@ class AssessmentController extends Controller
                 } else {
                     return $this->render('create', [
                         'model' => $model,
-                        'assessmentList' => $assessmentList,
-                        'participantList' => $participantList
+                        'scheduleList' => $scheduleList,
+                        'participantList' => $participantList,
+                        'subjectTypeList' => $subjectTypeList
                     ]);
                 }
             } catch (StaleObjectException $e) {
@@ -126,16 +132,18 @@ class AssessmentController extends Controller
         if (Yii::$app->user->can('update-assessment')) {
             try {
                 $model = $this->findModel($id);
-                $assessmentList = DataListUseCase::getAssessment();
+                $scheduleList = DataListUseCase::getAssessment();
                 $participantList  = DataListUseCase::getParticipant();
+                $subjectTypeList = Assessment::getArraySubjectTypes();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('update', [
                         'model' => $model,
-                        'assessmentList' => $assessmentList,
-                        'participantList' => $participantList
+                        'scheduleList' => $scheduleList,
+                        'participantList' => $participantList,
+                        'subjectTypeList' => $subjectTypeList
                     ]);
                 }
             } catch (StaleObjectException $e) {

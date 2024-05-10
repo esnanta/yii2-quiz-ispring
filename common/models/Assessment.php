@@ -11,9 +11,9 @@ use \common\models\base\Assessment as BaseAssessmentDetail;
  */
 class Assessment extends BaseAssessmentDetail
 {
-    const SUBJECT_TYPE_GENERAL      = 1;
-    const SUBJECT_TYPE_LITERACY     = 2;
-    const SUBJECT_TYPE_NUMERATION   = 3;
+    const SUBJECT_TYPE_GENERAL      = ScheduleDetail::SUBJECT_TYPE_GENERAL;
+    const SUBJECT_TYPE_LITERACY     = ScheduleDetail::SUBJECT_TYPE_LITERACY;
+    const SUBJECT_TYPE_NUMERATION   = ScheduleDetail::SUBJECT_TYPE_NUMERATION;
 
     /**
      * @inheritdoc
@@ -21,11 +21,11 @@ class Assessment extends BaseAssessmentDetail
     public function rules()
     {
         return [
-            [['office_id', 'assessment_id', 'schedule_detail_id', 'participant_id', 'subject_id', 'period_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['subject_type', 'is_completed'], 'string', 'max' => 4],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
-            [['is_completed'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']

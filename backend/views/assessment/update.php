@@ -8,7 +8,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Assessment Detail',
+    'modelClass' => 'Assessment',
 ]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
@@ -20,13 +20,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="panel-title">
             Please fill out the form below
             <div class="float-right">
-                AssessmentDetail            </div>
+                <?= Html::encode($this->title) ?>
+            </div>
         </div>
     </div>
     <div class="panel-body">
         <div class="assessment-detail-update">
             <?= $this->render('_form', [
                 'model' => $model,
+                'scheduleList' => $scheduleList,
+                'participantList' => $participantList,
+                'subjectTypeList' => $subjectTypeList
             ]) ?>
         </div>
     </div>

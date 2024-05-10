@@ -8,9 +8,6 @@ use common\domain\DataSpreadsheetUseCase;
 use common\models\Archive;
 use common\models\ArchiveSearch;
 use common\models\ParticipantImport;
-use common\helper\ReadFilter;
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
 use common\models\Participant;
 use common\models\ParticipantSearch;
@@ -71,7 +68,7 @@ class ParticipantController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$title=null)
     {
         if(Yii::$app->user->can('view-participant')){
             $model      = $this->findModel($id);

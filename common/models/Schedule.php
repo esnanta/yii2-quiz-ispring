@@ -132,4 +132,7 @@ class Schedule extends BaseSchedule
         return $labelAlertTimer;
     }
 
+    public function getUrl(){
+        return Html::a($this->title, ['schedule/view', 'id' => $this->id,'title'=>$this->title]);
+    }
 }

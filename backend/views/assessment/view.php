@@ -30,13 +30,13 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'attributes' => [
             [
                 'attribute'=>'assessment_id',
-                'value'=>($model->assessment_id!=null) ? $model->assessment->title:'',
+                'value'=>($model->schedule_id!=null) ? $model->schedule->title:'',
                 'type'=>DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'assessment_id', 'prompt' => '', 'disabled'=>false],
-                'items' => $assessmentList,
+                'options' => ['id' => 'schedule_id', 'prompt' => '', 'disabled'=>false],
+                'items' => $scheduleList,
                 'widgetOptions'=>[
                     'class'=> Select2::class,
-                    'data'=>$assessmentList,
+                    'data'=>$scheduleList,
                 ],
             ],
             [

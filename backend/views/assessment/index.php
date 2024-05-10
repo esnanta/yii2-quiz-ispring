@@ -42,14 +42,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute'=>'assessment_id',
+                'attribute'=>'schedule_id',
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->assessment_id!=null) ? $model->assessment->getUrl():'';
+                    return ($model->schedule_id!=null) ? $model->schedule->getUrl():'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$assessmentList,
+                'filter'=>$scheduleList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],

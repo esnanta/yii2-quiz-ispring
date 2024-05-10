@@ -5,6 +5,7 @@ namespace common\models;
 use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Participant as BaseParticipant;
+use yii\bootstrap5\Html;
 use yii\helpers\FileHelper;
 
 /**
@@ -92,5 +93,9 @@ class Participant extends BaseParticipant
     public function getGroupTitle(): string
     {
         return $this->group->title;
+    }
+
+    public function getUrl(){
+        return Html::a($this->title, ['participant/view', 'id' => $this->id,'title'=>$this->title]);
     }
 }

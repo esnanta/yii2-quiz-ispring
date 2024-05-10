@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,7 +30,8 @@ class ScheduleDetailSearch extends ScheduleDetail
 
     public function search($params)
     {
-        $query = ScheduleDetail::find();
+        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $query = ScheduleDetail::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

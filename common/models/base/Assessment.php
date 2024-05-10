@@ -8,15 +8,16 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "tx_assessment_detail".
+ * This is the base model class for table "tx_assessment".
  *
  * @property integer $id
  * @property integer $office_id
- * @property integer $assessment_id
+ * @property integer $schedule_id
  * @property integer $schedule_detail_id
  * @property integer $participant_id
- * @property integer $subject_id
  * @property integer $period_id
+ * @property integer $subject_id
+ * @property integer $subject_type
  * @property string $app_version
  * @property string $earned_points
  * @property string $passing_score
@@ -40,10 +41,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\Assessment $assessment
  * @property \common\models\Office $office
  * @property \common\models\Participant $participant
  * @property \common\models\Period $period
+ * @property \common\models\Schedule $schedule
  * @property \common\models\ScheduleDetail $scheduleDetail
  * @property \common\models\Subject $subject
  */
@@ -73,10 +74,10 @@ class Assessment extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'assessment',
             'office',
             'participant',
             'period',
+            'schedule',
             'scheduleDetail',
             'subject'
         ];
@@ -88,11 +89,11 @@ class Assessment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'assessment_id', 'schedule_detail_id', 'participant_id', 'subject_id', 'period_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['subject_type', 'is_completed'], 'string', 'max' => 4],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
-            [['is_completed'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -104,7 +105,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tx_assessment_detail';
+        return 'tx_assessment';
     }
 
     /**
@@ -126,11 +127,12 @@ class Assessment extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
-            'assessment_id' => Yii::t('app', 'Assessment ID'),
+            'schedule_id' => Yii::t('app', 'Schedule ID'),
             'schedule_detail_id' => Yii::t('app', 'Schedule Detail ID'),
             'participant_id' => Yii::t('app', 'Participant ID'),
-            'subject_id' => Yii::t('app', 'Subject ID'),
             'period_id' => Yii::t('app', 'Period ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
+            'subject_type' => Yii::t('app', 'Subject Type'),
             'app_version' => Yii::t('app', 'App Version'),
             'earned_points' => Yii::t('app', 'Earned Points'),
             'passing_score' => Yii::t('app', 'Passing Score'),
@@ -153,17 +155,9 @@ class Assessment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAssessment()
-    {
-        return $this->hasOne(\common\models\Assessment::class, ['id' => 'assessment_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
         
     /**
@@ -171,7 +165,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getParticipant()
     {
-        return $this->hasOne(\common\models\Participant::class, ['id' => 'participant_id']);
+        return $this->hasOne(\common\models\Participant::className(), ['id' => 'participant_id']);
     }
         
     /**
@@ -179,7 +173,15 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(\common\models\Period::class, ['id' => 'period_id']);
+        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSchedule()
+    {
+        return $this->hasOne(\common\models\Schedule::className(), ['id' => 'schedule_id']);
     }
         
     /**
@@ -187,7 +189,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getScheduleDetail()
     {
-        return $this->hasOne(\common\models\ScheduleDetail::class, ['id' => 'schedule_detail_id']);
+        return $this->hasOne(\common\models\ScheduleDetail::className(), ['id' => 'schedule_detail_id']);
     }
         
     /**
@@ -195,7 +197,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getSubject()
     {
-        return $this->hasOne(\common\models\Subject::class, ['id' => 'subject_id']);
+        return $this->hasOne(\common\models\Subject::className(), ['id' => 'subject_id']);
     }
     
     /**
@@ -206,18 +208,18 @@ class Assessment extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::class,
+                'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::class,
+                'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'uuid' => [
-                'class' => UUIDBehavior::class,
+                'class' => UUIDBehavior::className(),
                 'column' => 'uuid',
             ],
         ];
