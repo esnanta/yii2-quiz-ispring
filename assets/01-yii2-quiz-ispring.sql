@@ -92,44 +92,12 @@ DROP TABLE IF EXISTS `tx_assessment`;
 CREATE TABLE `tx_assessment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `office_id` int(11) DEFAULT NULL,
-  `title` varchar(100) DEFAULT NULL,
   `schedule_id` int(11) DEFAULT NULL,
-  `period_id` int(11) DEFAULT NULL,
-  `date_start` datetime DEFAULT NULL,
-  `date_end` datetime DEFAULT NULL,
-  `description` tinytext DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `is_deleted` int(11) DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL,
-  `verlock` int(11) DEFAULT NULL,
-  `uuid` varchar(36) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Fk_assessment_office` (`office_id`),
-  KEY `Fk_assessment_room` (`schedule_id`),
-  KEY `Fk_assessment_period` (`period_id`),
-  CONSTRAINT `Fk_assessment_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
-  CONSTRAINT `Fk_assessment_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
-  CONSTRAINT `Fk_assessment_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
-/*Data for the table `tx_assessment` */
-
-/*Table structure for table `tx_assessment_detail` */
-
-DROP TABLE IF EXISTS `tx_assessment_detail`;
-
-CREATE TABLE `tx_assessment_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `office_id` int(11) DEFAULT NULL,
-  `assessment_id` int(11) DEFAULT NULL,
   `schedule_detail_id` int(11) DEFAULT NULL,
   `participant_id` int(11) DEFAULT NULL,
-  `subject_id` int(11) DEFAULT NULL,
   `period_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `subject_type` tinyint(4) DEFAULT NULL,
   `app_version` varchar(50) DEFAULT NULL,
   `earned_points` decimal(18,2) DEFAULT NULL,
   `passing_score` decimal(18,2) DEFAULT NULL,
@@ -154,20 +122,20 @@ CREATE TABLE `tx_assessment_detail` (
   `uuid` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Fk_assessment_detail_office` (`office_id`),
-  KEY `Fk_assessment_detail_assessment` (`assessment_id`),
+  KEY `Fk_assessment_detail_assessment` (`schedule_id`),
   KEY `Fk_assessment_detail_participant` (`participant_id`),
   KEY `Fk_assessment_detail_schedule_detail` (`schedule_detail_id`),
   KEY `Fk_assessment_detail_subject` (`subject_id`),
   KEY `Fk_assessment_detail_period` (`period_id`),
-  CONSTRAINT `Fk_assessment_detail_assessment` FOREIGN KEY (`assessment_id`) REFERENCES `tx_assessment` (`id`),
-  CONSTRAINT `Fk_assessment_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
-  CONSTRAINT `Fk_assessment_detail_participant` FOREIGN KEY (`participant_id`) REFERENCES `tx_participant` (`id`),
-  CONSTRAINT `Fk_assessment_detail_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
-  CONSTRAINT `Fk_assessment_detail_schedule_detail` FOREIGN KEY (`schedule_detail_id`) REFERENCES `tx_schedule_detail` (`id`),
-  CONSTRAINT `Fk_assessment_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
+  CONSTRAINT `Fk_assessment_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
+  CONSTRAINT `Fk_assessment_participant` FOREIGN KEY (`participant_id`) REFERENCES `tx_participant` (`id`),
+  CONSTRAINT `Fk_assessment_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
+  CONSTRAINT `Fk_assessment_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
+  CONSTRAINT `Fk_assessment_schedule_detail` FOREIGN KEY (`schedule_detail_id`) REFERENCES `tx_schedule_detail` (`id`),
+  CONSTRAINT `Fk_assessment_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
-/*Data for the table `tx_assessment_detail` */
+/*Data for the table `tx_assessment` */
 
 /*Table structure for table `tx_auth_assignment` */
 
@@ -918,6 +886,7 @@ CREATE TABLE `tx_schedule_detail` (
   `office_id` int(11) DEFAULT NULL,
   `schedule_id` int(11) DEFAULT NULL,
   `subject_id` int(11) DEFAULT NULL,
+  `subject_type` tinyint(4) DEFAULT NULL,
   `remark` tinytext DEFAULT NULL,
   `asset_name` varchar(100) DEFAULT NULL,
   `asset_url` varchar(500) DEFAULT NULL,
@@ -941,32 +910,32 @@ CREATE TABLE `tx_schedule_detail` (
 
 /*Data for the table `tx_schedule_detail` */
 
-insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(378,1,77,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0549560e0f11ef8837c858c0b7f92f'),
-(379,1,77,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0606600e0f11ef8837c858c0b7f92f'),
-(380,1,77,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d06c8ef0e0f11ef8837c858c0b7f92f'),
-(381,1,77,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d07735f0e0f11ef8837c858c0b7f92f'),
-(382,1,77,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d07f93e0e0f11ef8837c858c0b7f92f'),
-(383,1,78,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d09d5cc0e0f11ef8837c858c0b7f92f'),
-(384,1,78,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0a4e0c0e0f11ef8837c858c0b7f92f'),
-(385,1,78,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0ac5310e0f11ef8837c858c0b7f92f'),
-(386,1,78,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0b9ea80e0f11ef8837c858c0b7f92f'),
-(387,1,78,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0c7cc00e0f11ef8837c858c0b7f92f'),
-(388,1,79,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0ed0700e0f11ef8837c858c0b7f92f'),
-(389,1,79,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0f4e070e0f11ef8837c858c0b7f92f'),
-(390,1,79,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0fc3200e0f11ef8837c858c0b7f92f'),
-(391,1,79,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d1041a30e0f11ef8837c858c0b7f92f'),
-(392,1,79,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d10c4e80e0f11ef8837c858c0b7f92f'),
-(393,1,80,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d12452c0e0f11ef8837c858c0b7f92f'),
-(394,1,80,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d12b36b0e0f11ef8837c858c0b7f92f'),
-(395,1,80,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d133b880e0f11ef8837c858c0b7f92f'),
-(396,1,80,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d13aad60e0f11ef8837c858c0b7f92f'),
-(397,1,80,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d1407f30e0f11ef8837c858c0b7f92f'),
-(398,1,81,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d158ce40e0f11ef8837c858c0b7f92f'),
-(399,1,81,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d16023d0e0f11ef8837c858c0b7f92f'),
-(400,1,81,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d166a5f0e0f11ef8837c858c0b7f92f'),
-(401,1,81,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d16f7cf0e0f11ef8837c858c0b7f92f'),
-(402,1,81,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d176d7f0e0f11ef8837c858c0b7f92f');
+insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`subject_type`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
+(378,1,77,4,NULL,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0549560e0f11ef8837c858c0b7f92f'),
+(379,1,77,5,NULL,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0606600e0f11ef8837c858c0b7f92f'),
+(380,1,77,6,NULL,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d06c8ef0e0f11ef8837c858c0b7f92f'),
+(381,1,77,7,NULL,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d07735f0e0f11ef8837c858c0b7f92f'),
+(382,1,77,8,NULL,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d07f93e0e0f11ef8837c858c0b7f92f'),
+(383,1,78,4,NULL,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d09d5cc0e0f11ef8837c858c0b7f92f'),
+(384,1,78,5,NULL,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0a4e0c0e0f11ef8837c858c0b7f92f'),
+(385,1,78,6,NULL,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0ac5310e0f11ef8837c858c0b7f92f'),
+(386,1,78,7,NULL,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0b9ea80e0f11ef8837c858c0b7f92f'),
+(387,1,78,8,NULL,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0c7cc00e0f11ef8837c858c0b7f92f'),
+(388,1,79,4,NULL,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0ed0700e0f11ef8837c858c0b7f92f'),
+(389,1,79,5,NULL,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0f4e070e0f11ef8837c858c0b7f92f'),
+(390,1,79,6,NULL,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0fc3200e0f11ef8837c858c0b7f92f'),
+(391,1,79,7,NULL,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d1041a30e0f11ef8837c858c0b7f92f'),
+(392,1,79,8,NULL,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d10c4e80e0f11ef8837c858c0b7f92f'),
+(393,1,80,4,NULL,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d12452c0e0f11ef8837c858c0b7f92f'),
+(394,1,80,5,NULL,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d12b36b0e0f11ef8837c858c0b7f92f'),
+(395,1,80,6,NULL,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d133b880e0f11ef8837c858c0b7f92f'),
+(396,1,80,7,NULL,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d13aad60e0f11ef8837c858c0b7f92f'),
+(397,1,80,8,NULL,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d1407f30e0f11ef8837c858c0b7f92f'),
+(398,1,81,4,NULL,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d158ce40e0f11ef8837c858c0b7f92f'),
+(399,1,81,5,NULL,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d16023d0e0f11ef8837c858c0b7f92f'),
+(400,1,81,6,NULL,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d166a5f0e0f11ef8837c858c0b7f92f'),
+(401,1,81,7,NULL,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d16f7cf0e0f11ef8837c858c0b7f92f'),
+(402,1,81,8,NULL,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d176d7f0e0f11ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_session` */
 
@@ -982,6 +951,8 @@ CREATE TABLE `tx_session` (
 /*Data for the table `tx_session` */
 
 insert  into `tx_session`(`id`,`expire`,`data`) values 
+('8uf0ag3c0prp44gtu0ckhfo6lr',1715310308,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('ff91gj3bstianlevuofja2bc05',1715309195,'__flash|a:0:{}'),
 ('qc9bopvcbcs24sig6lkmrf1ie6',1715266149,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
 
 /*Table structure for table `tx_site_link` */
@@ -1080,7 +1051,6 @@ CREATE TABLE `tx_subject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `office_id` int(11) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
-  `subject_type` tinyint(4) DEFAULT NULL,
   `sequence` tinyint(4) DEFAULT NULL,
   `description` tinytext DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -1099,12 +1069,12 @@ CREATE TABLE `tx_subject` (
 
 /*Data for the table `tx_subject` */
 
-insert  into `tx_subject`(`id`,`office_id`,`title`,`subject_type`,`sequence`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(4,1,'Matematika',1,1,'Matematika','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884dd3cf0df811ef8837c858c0b7f92f'),
-(5,1,'Kimia Numerasi',1,2,'Kimia Numerasi','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884e668a0df811ef8837c858c0b7f92f'),
-(6,1,'Kimia Literasi',2,2,'Kimia Literasi','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884ed6c90df811ef8837c858c0b7f92f'),
-(7,1,'Kimia Umum',1,3,'Kimia Umum','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884f61d30df811ef8837c858c0b7f92f'),
-(8,1,'Sejarah',1,3,'Sejarah','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884fe7380df811ef8837c858c0b7f92f');
+insert  into `tx_subject`(`id`,`office_id`,`title`,`sequence`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
+(4,1,'Matematika',1,'Matematika','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884dd3cf0df811ef8837c858c0b7f92f'),
+(5,1,'Kimia Numerasi',2,'Kimia Numerasi','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884e668a0df811ef8837c858c0b7f92f'),
+(6,1,'Kimia Literasi',2,'Kimia Literasi','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884ed6c90df811ef8837c858c0b7f92f'),
+(7,1,'Kimia Umum',3,'Kimia Umum','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884f61d30df811ef8837c858c0b7f92f'),
+(8,1,'Sejarah',3,'Sejarah','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884fe7380df811ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_tag` */
 
@@ -1186,7 +1156,7 @@ CREATE TABLE `tx_user` (
 /*Data for the table `tx_user` */
 
 insert  into `tx_user`(`id`,`username`,`email`,`password_hash`,`auth_key`,`unconfirmed_email`,`registration_ip`,`flags`,`confirmed_at`,`blocked_at`,`updated_at`,`created_at`,`last_login_at`,`auth_tf_key`,`auth_tf_enabled`) values 
-(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715262340,NULL,0);
+(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715307761,NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
