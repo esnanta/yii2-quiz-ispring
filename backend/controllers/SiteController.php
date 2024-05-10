@@ -99,13 +99,21 @@ class SiteController extends Controller
                 ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_ACTIVE])
                 ->count();
 
-            $countSchedule = Schedule::find('id')
+
+            $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('today midnight'));
+            $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('today 23:59:59'));
+            $now = date(Yii::$app->params['datetimeSaveFormat']);
+
+            $countAllSchedule = Schedule::find('id')
                 ->where(['office_id'=>$officeId])
+                ->andWhere(['between', 'date_start', $dateStart, $dateEnd])
                 ->count();
 
-            $countAssessment = Assessment::find('id')
+            $countNotStartSchedule = Schedule::find('id')
                 ->where(['office_id'=>$officeId])
+                ->andWhere(['>', 'date_start', $now])
                 ->count();
+
 
             return $this->render('index', [
                 'office'=>$office,
@@ -113,8 +121,8 @@ class SiteController extends Controller
                 'authItemName'=>$authItemName,
                 'countOfflineParticipant' => $countOfflineParticipant,
                 'countOnlineParticipant' => $countOnlineParticipant,
-                'countSchedule' => $countSchedule,
-                'countAssessment' => $countAssessment
+                'countAllSchedule' => $countAllSchedule,
+                'countNotStartSchedule' => $countNotStartSchedule
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

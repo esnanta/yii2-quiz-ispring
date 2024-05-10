@@ -62,10 +62,10 @@ use yii\helpers\Url;
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            <?= Yii::t('app', 'Schedule'); ?>
+                            <?= Yii::t('app', 'Schedule (Started)'); ?>
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $countSchedule ?>
+                            <?= $countAllSchedule ?>
                         </div>
                     </div>
                     <div class="col-auto">
@@ -83,17 +83,17 @@ use yii\helpers\Url;
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            <?= Yii::t('app', 'Assessment'); ?>
+                            <?= Yii::t('app', 'Schedule (Upcoming)') ; ?>
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $countAssessment ?>
+                            <?= $countNotStartSchedule ?>
                         </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>
                     </div>
                 </div>
-                <a href="<?=Url::to(['assessment/index'])?>" class="card-link stretched-link"></a>
+                <a href="<?=Url::to(['schedule/index'])?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>
