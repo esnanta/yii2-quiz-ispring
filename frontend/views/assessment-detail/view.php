@@ -7,7 +7,7 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var common\models\AssessmentDetail $model
+ * @var common\models\Assessment $model
  */
 
 $this->title = $model->quiz_title . '-'.$model->assessment->title;

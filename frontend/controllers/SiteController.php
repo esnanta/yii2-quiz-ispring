@@ -2,18 +2,11 @@
 
 namespace frontend\controllers;
 
-use common\helper\LabelHelper;
 use common\models\Assessment;
-use common\models\AssessmentDetail;
-
 use common\models\Participant;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
-use common\helper\ReadFilter;
 use common\models\LoginParticipantForm;
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Yii;
 
 use yii\web\BadRequestHttpException;
@@ -210,6 +203,7 @@ class SiteController extends Controller
             $scheduleId = $scheduleDetail->schedule->id;
             $subjectId  = $scheduleDetail->subject_id;
             $officeId   = $scheduleDetail->office_id;
+            $subjectType = $scheduleDetail->subject_type;
 
             $participant = Participant::find()
                 ->select('id')
@@ -222,32 +216,26 @@ class SiteController extends Controller
                     'schedule_id'   => $scheduleId,
                 ])
                 ->one();
-
-            if(empty($assessment)){
-                $assessment                 = new Assessment();
-                $assessment->office_id      = $officeId;
-                $assessment->schedule_id    = $scheduleId;
-                $assessment->save();
-            }
-
-            $assessmentDetail = new AssessmentDetail();
-            $assessmentDetail->assessment_id            = $assessment->id;
-            $assessmentDetail->schedule_detail_id       = $scheduleDetailId;
-            $assessmentDetail->subject_id               = $subjectId;
-            $assessmentDetail->office_id                = $officeId;
-            $assessmentDetail->participant_id           = $participant->id;
-            $assessmentDetail->username                 = $username;
-            $assessmentDetail->app_version              = $_POST['v'];
-            $assessmentDetail->earned_points            = $_POST['sp'];
-            $assessmentDetail->passing_score            = $_POST['ps'];
-            $assessmentDetail->passing_score_percent    = $_POST['psp'];
-            $assessmentDetail->gained_score             = $_POST['tp'];
-            $assessmentDetail->quiz_title               = $_POST['qt'];
-            $assessmentDetail->quiz_type                = $_POST['t'];
-            $assessmentDetail->time_limit               = $_POST['tl'];// read = gmdate("H:i:s", $timeLimit)
-            $assessmentDetail->used_time                = $_POST['ut'];
-            $assessmentDetail->time_spent               = $_POST['fut'];
-            $assessmentDetail->save();
+            
+            $assessment = new Assessment();
+            $assessment->schedu_id                = $scheduleId;
+            $assessment->schedule_detail_id       = $scheduleDetailId;
+            $assessment->subject_type             = $subjectType;
+            $assessment->subject_id               = $subjectId;
+            $assessment->office_id                = $officeId;
+            $assessment->participant_id           = $participant->id;
+            $assessment->username                 = $username;
+            $assessment->app_version              = $_POST['v'];
+            $assessment->earned_points            = $_POST['sp'];
+            $assessment->passing_score            = $_POST['ps'];
+            $assessment->passing_score_percent    = $_POST['psp'];
+            $assessment->gained_score             = $_POST['tp'];
+            $assessment->quiz_title               = $_POST['qt'];
+            $assessment->quiz_type                = $_POST['t'];
+            $assessment->time_limit               = $_POST['tl'];// read = gmdate("H:i:s", $timeLimit)
+            $assessment->used_time                = $_POST['ut'];
+            $assessment->time_spent               = $_POST['fut'];
+            $assessment->save();
 
 
 //            $dateTime = date('Y-m-d_H-i-s');

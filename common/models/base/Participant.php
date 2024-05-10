@@ -31,7 +31,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\AssessmentDetail[] $assessmentDetails
+ * @property \common\models\Assessment[] $assessmentDetails
  * @property \common\models\Group $group
  * @property \common\models\Office $office
  */
@@ -132,7 +132,7 @@ class Participant extends \yii\db\ActiveRecord
      */
     public function getAssessmentDetails()
     {
-        return $this->hasMany(\common\models\AssessmentDetail::className(), ['participant_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['participant_id' => 'id']);
     }
         
     /**

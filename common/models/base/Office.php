@@ -39,7 +39,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \common\models\Archive[] $archives
  * @property \common\models\ArchiveCategory[] $archiveCategories
  * @property \common\models\Assessment[] $assessments
- * @property \common\models\AssessmentDetail[] $assessmentDetails
+ * @property \common\models\Assessment[] $assessmentDetails
  * @property \common\models\Counter[] $counters
  * @property \common\models\Employment[] $employments
  * @property \common\models\Group[] $groups
@@ -185,7 +185,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getAssessmentDetails()
     {
-        return $this->hasMany(\common\models\AssessmentDetail::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['office_id' => 'id']);
     }
         
     /**

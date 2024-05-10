@@ -47,7 +47,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \common\models\ScheduleDetail $scheduleDetail
  * @property \common\models\Subject $subject
  */
-class AssessmentDetail extends \yii\db\ActiveRecord
+class Assessment extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 

@@ -4,8 +4,8 @@ namespace backend\controllers;
 
 use common\domain\DataListUseCase;
 use Yii;
-use common\models\AssessmentDetail;
-use common\models\AssessmentDetailSearch;
+use common\models\Assessment;
+use common\models\AssessmentSearch;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -17,7 +17,7 @@ use common\helper\MessageHelper;
 /**
  * AssessmentDetailController implements the CRUD actions for AssessmentDetail model.
  */
-class AssessmentDetailController extends Controller
+class AssessmentController extends Controller
 {
     public function behaviors()
     {
@@ -37,8 +37,8 @@ class AssessmentDetailController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('index-assessmentdetail')) {
-            $searchModel = new AssessmentDetailSearch;
+        if (Yii::$app->user->can('index-assessment')) {
+            $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
             $assessmentList = DataListUseCase::getAssessment();
@@ -63,7 +63,7 @@ class AssessmentDetailController extends Controller
      */
     public function actionView($id)
     {
-        if (Yii::$app->user->can('view-assessmentdetail')) {
+        if (Yii::$app->user->can('view-assessment')) {
             $model = $this->findModel($id);
 
             $assessmentList = DataListUseCase::getAssessment();
@@ -91,8 +91,8 @@ class AssessmentDetailController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('create-assessmentdetail')) {
-            $model = new AssessmentDetail;
+        if (Yii::$app->user->can('create-assessment')) {
+            $model = new Assessment;
             $assessmentList = DataListUseCase::getAssessment();
             $participantList  = DataListUseCase::getParticipant();
 
@@ -123,7 +123,7 @@ class AssessmentDetailController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('update-assessmentdetail')) {
+        if (Yii::$app->user->can('update-assessment')) {
             try {
                 $model = $this->findModel($id);
                 $assessmentList = DataListUseCase::getAssessment();
@@ -155,7 +155,7 @@ class AssessmentDetailController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-assessmentdetail')) {
+        if (Yii::$app->user->can('delete-assessment')) {
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
         } else {
@@ -168,12 +168,12 @@ class AssessmentDetailController extends Controller
      * Finds the AssessmentDetail model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return AssessmentDetail the loaded model
+     * @return Assessment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = AssessmentDetail::findOne($id)) !== null) {
+        if (($model = Assessment::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -4,11 +4,9 @@ namespace frontend\controllers;
 
 use common\models\Assessment;
 use common\models\Participant;
-
 use common\models\Period;
 use Yii;
-use common\models\AssessmentDetail;
-use frontend\models\AssessmentDetailSearch;
+use frontend\models\AssessmentSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,7 +16,7 @@ use yii\filters\VerbFilter;
 /**
  * AssessmentDetailController implements the CRUD actions for AssessmentDetail model.
  */
-class AssessmentDetailController extends Controller
+class AssessmentController extends Controller
 {
     public function behaviors()
     {
@@ -41,7 +39,7 @@ class AssessmentDetailController extends Controller
     {
         try {
             $participant = Participant::findone(['username' => Yii::$app->user->identity->username]);
-            $searchModel = new AssessmentDetailSearch;
+            $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
             $dataProvider->query->andWhere(['participant_id' => $participant->id]);
 
@@ -81,7 +79,7 @@ class AssessmentDetailController extends Controller
     public function actionView($id)
     {
         try {
-            $model = AssessmentDetail::find()
+            $model = Assessment::find()
             ->where(['id'=>$id])
             ->one();
 

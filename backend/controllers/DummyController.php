@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\models\Assessment;
-use common\models\AssessmentDetail;
+use common\models\Assessment;
 use common\models\Group;
 use common\models\Participant;
 use common\models\Period;
@@ -72,7 +72,7 @@ class DummyController extends Controller
     {
 
         $officeId = DataIdUseCase::getOfficeId();
-        $assessmentDetails = AssessmentDetail::find()->where(['office_id' => $officeId])->count();
+        $assessmentDetails = Assessment::find()->where(['office_id' => $officeId])->count();
         $assessments = Assessment::find()->where(['office_id' => $officeId])->count();
         $scheduleDetails = ScheduleDetail::find()->where(['office_id' => $officeId])->count();
         $schedules = Schedule::find()->where(['office_id' => $officeId])->count();
@@ -94,7 +94,7 @@ class DummyController extends Controller
     public function actionDeleteAssessment(): Response
     {
         $officeId = DataIdUseCase::getOfficeId();
-        AssessmentDetail::deleteAll(['office_id' => $officeId]);
+        Assessment::deleteAll(['office_id' => $officeId]);
         Assessment::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);

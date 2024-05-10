@@ -4,12 +4,12 @@ namespace common\models;
 
 use common\helper\LabelHelper;
 use Yii;
-use \common\models\base\AssessmentDetail as BaseAssessmentDetail;
+use \common\models\base\Assessment as BaseAssessmentDetail;
 
 /**
  * This is the model class for table "tx_assessment_detail".
  */
-class AssessmentDetail extends BaseAssessmentDetail
+class Assessment extends BaseAssessmentDetail
 {
     const SUBJECT_TYPE_GENERAL      = 1;
     const SUBJECT_TYPE_LITERACY     = 2;

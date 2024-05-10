@@ -26,7 +26,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \common\models\Assessment[] $assessments
- * @property \common\models\AssessmentDetail[] $assessmentDetails
+ * @property \common\models\Assessment[] $assessmentDetails
  * @property \common\models\Office $office
  * @property \common\models\Schedule[] $schedules
  */
@@ -129,7 +129,7 @@ class Period extends \yii\db\ActiveRecord
      */
     public function getAssessmentDetails()
     {
-        return $this->hasMany(\common\models\AssessmentDetail::className(), ['period_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['period_id' => 'id']);
     }
         
     /**
