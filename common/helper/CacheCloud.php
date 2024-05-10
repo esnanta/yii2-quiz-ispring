@@ -11,6 +11,7 @@ use common\models\Staff;
  * and open the template in the editor.
  */
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 //SINGLETON CLASS
 class CacheCloud {
@@ -26,8 +27,14 @@ class CacheCloud {
     
     private $userId;
 
+    /**
+     * @throws ForbiddenHttpException
+     */
     function __construct()
     {
+        if(empty(Yii::$app->user->identity->id)):
+            throw new ForbiddenHttpException;
+        endif;
         $this->userId               = Yii::$app->user->identity->id;
         $this->cacheOfficeId        = 'office_id';
         $this->cacheOfficeTitle     = 'office_title';

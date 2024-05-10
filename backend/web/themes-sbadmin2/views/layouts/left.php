@@ -66,7 +66,7 @@ use common\helper\CacheCloud;
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
-                    ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment-detail/index']],
+                    ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment/index']],
                     ['label' => Yii::t('app', 'Export'), 'url' => ['/assessment/report']],
                 ]],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [

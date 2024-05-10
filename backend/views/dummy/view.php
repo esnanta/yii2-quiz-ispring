@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <tbody>
             <tr>
                 <th scope="row">1</th>
-                <td><?=Html::a('Assessment', ['assessment-detail/index']);?></td>
+                <td><?=Html::a('Assessment', ['assessment/index']);?></td>
                 <td><?=$assessments;?></td>
                 <td>
                     <?= Html::a('<i class="fas fa-trash"></i>', ['delete-assessment']);?>

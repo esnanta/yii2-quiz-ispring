@@ -4,12 +4,12 @@ namespace common\models;
 
 use common\helper\LabelHelper;
 use Yii;
-use \common\models\base\Assessment as BaseAssessmentDetail;
+use \common\models\base\Assessment as BaseAssessment;
 
 /**
  * This is the model class for table "tx_assessment_detail".
  */
-class Assessment extends BaseAssessmentDetail
+class Assessment extends BaseAssessment
 {
     const SUBJECT_TYPE_GENERAL      = ScheduleDetail::SUBJECT_TYPE_GENERAL;
     const SUBJECT_TYPE_LITERACY     = ScheduleDetail::SUBJECT_TYPE_LITERACY;
@@ -21,10 +21,9 @@ class Assessment extends BaseAssessmentDetail
     public function rules()
     {
         return [
-            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'subject_id', 'subject_type', 'is_completed', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['subject_type', 'is_completed'], 'string', 'max' => 4],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
@@ -36,10 +35,10 @@ class Assessment extends BaseAssessmentDetail
             return false;
         }
 
-        if ($this->isNewRecord) {
-            $this->office_id   = $this->assessment->office_id;
-            $this->period_id   = $this->assessment->period_id;
-        }
+//        if ($this->isNewRecord) {
+//            $this->office_id   = $this->assessment->office_id;
+//            $this->period_id   = $this->assessment->period_id;
+//        }
 
         $this->evaluate_score = ceil(($this->earned_points/$this->gained_score)*100);
 

@@ -17,8 +17,8 @@ class ScheduleDetailSearch extends ScheduleDetail
     public function rules()
     {
         return [
-            [['id', 'office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['remark', 'subject_type', 'asset_name', 'asset_url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'schedule_id', 'subject_id', 'subject_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['remark', 'asset_name', 'asset_url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -46,6 +46,7 @@ class ScheduleDetailSearch extends ScheduleDetail
             'office_id' => $this->office_id,
             'schedule_id' => $this->schedule_id,
             'subject_id' => $this->subject_id,
+            'subject_type' => $this->subject_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -57,7 +58,6 @@ class ScheduleDetailSearch extends ScheduleDetail
         ]);
 
         $query->andFilterWhere(['like', 'remark', $this->remark])
-            ->andFilterWhere(['like', 'subject_type', $this->subject_type])
             ->andFilterWhere(['like', 'asset_name', $this->asset_name])
             ->andFilterWhere(['like', 'asset_url', $this->asset_url])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);

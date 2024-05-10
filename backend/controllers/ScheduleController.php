@@ -4,11 +4,13 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
+use common\models\AssessmentSearch;
 use common\models\ScheduleDetail;
 use common\models\Subject;
 use Yii;
 use common\models\Schedule;
 use common\models\ScheduleSearch;
+use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -73,8 +75,12 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->user->can('view-schedule')) {
             $model = $this->findModel($id);
-            $providerScheduleDetail = new \yii\data\ArrayDataProvider([
+            $providerScheduleDetail = new ArrayDataProvider([
                 'allModels' => $model->scheduleDetails,
+            ]);
+
+            $providerAssessment = new ArrayDataProvider([
+                'allModels' => $model->assessments,
             ]);
 
             $timeStart          = strtotime($model->date_start);
@@ -111,10 +117,10 @@ class ScheduleController extends Controller
                 }
             }
 
-
             return $this->render('view', [
                 'model' => $this->findModel($id),
                 'providerScheduleDetail' => $providerScheduleDetail,
+                'providerAssessment' => $providerAssessment,
                 'countdownTime' => $countdownTime,
                 'interval' => $interval,
                 'minutesTolerance' => $minutesTolerance

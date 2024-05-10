@@ -10,10 +10,10 @@ use yii\widgets\Pjax;
  * @var common\models\AssessmentSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Assessment Details');
+$this->title = Yii::t('app', 'Assessment');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="assessment-detail-index">
+<div class="assessment-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

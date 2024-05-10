@@ -17,8 +17,8 @@ class AssessmentSearch extends Assessment
     public function rules()
     {
         return [
-            [['id', 'office_id', 'assessment_id', 'participant_id', 'period_id','subject_id', 'is_completed','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['app_version', 'subject_type', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'schedule_id','schedule_detail_id','participant_id', 'period_id','subject_id', 'subject_type', 'is_completed','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
         ];
     }
@@ -46,8 +46,10 @@ class AssessmentSearch extends Assessment
             'id' => $this->id,
             'office_id' => $this->office_id,
             'period_id' => $this->period_id,
-            'assessment_id' => $this->assessment_id,
+            'schedule_id' => $this->schedule_id,
+            'schedule_detail_id' => $this->schedule_detail_id,
             'subject_id' => $this->subject_id,
+            'subject_type' => $this->subject_type,
             'participant_id' => $this->participant_id,
             'is_completed' => $this->is_completed,
             'earned_points' => $this->earned_points,
@@ -66,7 +68,6 @@ class AssessmentSearch extends Assessment
         ]);
 
         $query->andFilterWhere(['like', 'app_version', $this->app_version])
-            ->andFilterWhere(['like', 'subject_type', $this->subject_type])
             ->andFilterWhere(['like', 'quiz_title', $this->quiz_title])
             ->andFilterWhere(['like', 'quiz_type', $this->quiz_type])
             ->andFilterWhere(['like', 'username', $this->username])

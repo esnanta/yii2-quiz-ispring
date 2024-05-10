@@ -309,73 +309,39 @@ class DummyController extends Controller
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $officeId = 1;
-            $schedules = Schedule::find()->where(['office_id' => $officeId])->all();
-            foreach ($schedules as $scheduleItem) {
-                $assessment = new Assessment();
-                $assessment->office_id = $officeId;
-                $assessment->schedule_id = $scheduleItem->id;
-                $assessment->period_id = $scheduleItem->period_id;
-                $assessment->title = $scheduleItem->title;
-                $assessment->description = $scheduleItem->description;
-                $assessment->date_start = $scheduleItem->date_start;
-                $assessment->date_end = $scheduleItem->date_end;
-                $assessment->save();
+            $scheduleDetails = ScheduleDetail::find()
+                ->where(['office_id' => $officeId])->all();
 
+            foreach ($scheduleDetails as $scheduleDetailItem) {
+                $scheduleDetailId   = $scheduleDetailItem->id;
+                $subjectId          = $scheduleDetailItem->subject_id;
+                $subjectType        = $scheduleDetailItem->subject_type;
+                $scheduleId         = $scheduleDetailItem->schedule->id;
+                $groupId            = $scheduleDetailItem->schedule->group_id;
+                $periodId           = $scheduleDetailItem->schedule->period_id;
 
                 $participants = Participant::find()
-                    ->where(['office_id'=>$officeId,'group_id'=>$scheduleItem->group_id])
+                    ->where(['office_id'=>$officeId,'group_id'=>$groupId])
                     ->all();
 
                 foreach ($participants as $participantItem) {
-                    $scheduleDetails = ScheduleDetail::find()
-                        ->where(['office_id' => $officeId, 'schedule_id' => $scheduleItem->id])
-                        ->all();
-
-
-
-
+                    $assessment = new Assessment();
+                    $assessment->office_id = $officeId;
+                    $assessment->period_id = $periodId;
+                    $assessment->schedule_id = $scheduleId;
+                    $assessment->schedule_detail_id = $scheduleDetailId;
+                    $assessment->subject_id = $subjectId;
+                    $assessment->subject_type = $subjectType;
+                    $assessment->participant_id = $participantItem->id;
+                    $assessment->app_version = 'x.x.x';
+                    $assessment->earned_points = (rand(10,50));
+                    $assessment->passing_score = 25;
+                    $assessment->gained_score = (rand(10,50));
+                    $assessment->quiz_title = $assessment->subject->title;
+                    $assessment->quiz_type = 'graded';
+                    $assessment->username = $participantItem->username;
+                    $assessment->save();
                 }
-            }
-
-
-
-
-            $groups = Group::find()->where(['office_id' => $officeId])->all();
-
-            $dateStart = date(Yii::$app->params['datetimeSaveFormat']);
-            $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+2 hours', strtotime($dateStart)));
-
-            foreach ($groups as $groupItem) {
-
-                $period = Period::findOne(['office_id' => $officeId]);
-                $room = Room::findOne(['office_id' => $officeId]);
-                $staff = Staff::findOne(['office_id' => $officeId]);
-
-                $schedule = new Schedule();
-                $schedule->office_id = $officeId;
-                $schedule->group_id = $groupItem->id;
-                $schedule->period_id = $period->id;
-                $schedule->room_id = $room->id;
-                $schedule->staff_id = $staff->id;
-                $schedule->date_start = $dateStart;
-                $schedule->date_end = $dateEnd;
-                $schedule->save();
-
-                $subjects = Subject::find()->where(['office_id' => $officeId])->all();
-                foreach ($subjects as $subjectItem) {
-                    $scheduleDetail = new ScheduleDetail();
-                    $scheduleDetail->office_id = $officeId;
-                    $scheduleDetail->schedule_id = $schedule->id;
-                    $scheduleDetail->subject_id = $subjectItem->id;
-                    $scheduleDetail->remark = $subjectItem->description;
-                    $scheduleDetail->save();
-                }
-
-                $schedule->title = $schedule->title.$staff->title;
-                $schedule->save();
-
-                $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+3 hours', strtotime($dateStart)));
-                $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+2 hours', strtotime($dateStart)));
             }
 
             $transaction->commit();

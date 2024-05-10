@@ -41,8 +41,9 @@ class AssessmentController extends Controller
             $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $scheduleList = DataListUseCase::getAssessment();
+            $scheduleList = DataListUseCase::getSchedule();
             $participantList  = DataListUseCase::getParticipant();
+            $subjectList = DataListUseCase::getSubject();
             $subjectTypeList = Assessment::getArraySubjectTypes();
 
             return $this->render('index', [
@@ -50,6 +51,7 @@ class AssessmentController extends Controller
                 'searchModel' => $searchModel,
                 'scheduleList' => $scheduleList,
                 'participantList' => $participantList,
+                'subjectList' => $subjectList,
                 'subjectTypeList' => $subjectTypeList
             ]);
         } else {

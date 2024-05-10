@@ -178,6 +178,14 @@ $refresh = Html::a(
 
         <?php } ?>
 
+        <?php if ($providerAssessment->totalCount)
+        {
+            echo '<hr>';
+            echo $this->render('view_assessment', [
+                'providerAssessment' => $providerAssessment,
+            ]);
+        }
+        ?>
 
         <div class="row">
             <div class="col-lg-4 col-sm-5">

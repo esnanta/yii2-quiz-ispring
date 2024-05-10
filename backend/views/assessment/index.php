@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
  * @var common\models\AssessmentSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Assessment Details');
+$this->title = Yii::t('app', 'Assessment');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="assessment-detail-index">
@@ -61,10 +61,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->participant_id!=null) ? $model->participant->title:'';
+                    return ($model->participant_id!=null) ? $model->participant->getUrl():'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
                 'filter' => $participantList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
+            [
+                'attribute'=>'subject_id',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->subject_id!=null) ? $model->subject->title:'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter' => $subjectList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],

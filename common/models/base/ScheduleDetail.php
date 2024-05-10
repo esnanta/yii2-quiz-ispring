@@ -72,10 +72,9 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'subject_id', 'subject_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['subject_type'], 'string', 'max' => 4],
             [['asset_name'], 'string', 'max' => 100],
             [['asset_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
@@ -128,7 +127,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::class, ['schedule_detail_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['schedule_detail_id' => 'id']);
     }
         
     /**
@@ -136,7 +135,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
         
     /**
@@ -144,7 +143,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
      */
     public function getSchedule()
     {
-        return $this->hasOne(\common\models\Schedule::class, ['id' => 'schedule_id']);
+        return $this->hasOne(\common\models\Schedule::className(), ['id' => 'schedule_id']);
     }
         
     /**
@@ -152,7 +151,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
      */
     public function getSubject()
     {
-        return $this->hasOne(\common\models\Subject::class, ['id' => 'subject_id']);
+        return $this->hasOne(\common\models\Subject::className(), ['id' => 'subject_id']);
     }
     
     /**
