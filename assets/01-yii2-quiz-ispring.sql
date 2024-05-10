@@ -54,7 +54,7 @@ CREATE TABLE `tx_archive` (
 /*Data for the table `tx_archive` */
 
 insert  into `tx_archive`(`id`,`office_id`,`is_visible`,`archive_type`,`archive_category_id`,`title`,`date_issued`,`asset_name`,`asset_url`,`size`,`mime_type`,`view_counter`,`download_counter`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(3,1,1,2,5,'Data siswa XII 1 - 24','2024-01-17',NULL,NULL,NULL,NULL,0,1,'','2024-01-17 23:29:35','2024-05-08 21:31:12',1,1,NULL,NULL,NULL,12,'99d2cde2b55511ee9384c858c0b7f92f');
+(3,1,1,2,5,'Data siswa XII 1 - 24','2024-01-17','_663c88d4e212d.xlsx',NULL,NULL,NULL,0,1,'','2024-01-17 23:29:35','2024-05-09 15:27:00',1,1,NULL,NULL,NULL,14,'99d2cde2b55511ee9384c858c0b7f92f');
 
 /*Table structure for table `tx_archive_category` */
 
@@ -114,7 +114,7 @@ CREATE TABLE `tx_assessment` (
   CONSTRAINT `Fk_assessment_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_assessment_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_assessment_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_assessment` */
 
@@ -165,7 +165,7 @@ CREATE TABLE `tx_assessment_detail` (
   CONSTRAINT `Fk_assessment_detail_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_assessment_detail_schedule_detail` FOREIGN KEY (`schedule_detail_id`) REFERENCES `tx_schedule_detail` (`id`),
   CONSTRAINT `Fk_assessment_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_assessment_detail` */
 
@@ -544,7 +544,7 @@ CREATE TABLE `tx_counter` (
 /*Data for the table `tx_counter` */
 
 insert  into `tx_counter`(`id`,`office_id`,`title`,`counter`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'SCD',1,'2024-05-08 22:28:20','2024-05-08 22:28:20',1,1,NULL,NULL,NULL,0,'99e6a1230d4f11efa055c858c0b7f92f');
+(1,1,'SCD',81,'2024-05-08 22:28:20','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,80,'99e6a1230d4f11efa055c858c0b7f92f');
 
 /*Table structure for table `tx_dashblock` */
 
@@ -639,12 +639,16 @@ CREATE TABLE `tx_group` (
   PRIMARY KEY (`id`),
   KEY `Fk_group_office` (`office_id`),
   CONSTRAINT `Fk_group_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_group` */
 
 insert  into `tx_group`(`id`,`office_id`,`title`,`sequence`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'XII - IPA 1',1,'','2024-01-19 21:18:59','2024-04-24 23:49:13',1,1,NULL,NULL,NULL,1,'b020dab7b6d511eeb65dc858c0b7f92f');
+(2,1,'X1',1,'Kelas X1','2024-05-09 19:56:34','2024-05-09 19:56:34',1,1,NULL,NULL,NULL,0,'90dc73950e0311ef8837c858c0b7f92f'),
+(3,1,'X3',2,'Kelas X3','2024-05-09 19:56:34','2024-05-09 19:56:34',1,1,NULL,NULL,NULL,0,'90dd0a9c0e0311ef8837c858c0b7f92f'),
+(4,1,'XI 2',3,'Kelas XI 2','2024-05-09 19:56:34','2024-05-09 19:56:34',1,1,NULL,NULL,NULL,0,'90dd8cfe0e0311ef8837c858c0b7f92f'),
+(5,1,'XI 3',4,'Kelas XI 3','2024-05-09 19:56:34','2024-05-09 19:56:34',1,1,NULL,NULL,NULL,0,'90de14700e0311ef8837c858c0b7f92f'),
+(6,1,'XII-1',5,'Kelas XII-1','2024-05-09 19:56:34','2024-05-09 19:56:34',1,1,NULL,NULL,NULL,0,'90de7a230e0311ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_migration` */
 
@@ -728,42 +732,24 @@ CREATE TABLE `tx_participant` (
   KEY `Fk_participant_group` (`group_id`),
   CONSTRAINT `Fk_participant_group` FOREIGN KEY (`group_id`) REFERENCES `tx_group` (`id`),
   CONSTRAINT `Fk_participant_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_participant` */
 
 insert  into `tx_participant`(`id`,`office_id`,`group_id`,`title`,`identity_number`,`username`,`password`,`email`,`status`,`last_login_at`,`auth_key`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(63,1,1,'Achmad Maula Fata','0078294733','U0078294733','6e20b','oke@test.com',3,'2024-05-09 14:52:01','-mhQKxAoFgUsfhChkjdUpmEygT0rN5r1','2024-05-07 16:15:11','2024-05-09 14:52:01',1,NULL,NULL,NULL,NULL,9,'50cd992f0c5211efb129c858c0b7f92f'),
-(64,1,1,'Adila Khalisah','0063509763','U0063509763','20d02','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50ce4f120c5211efb129c858c0b7f92f'),
-(65,1,1,'Amira Jufri','0053756117','U0053756117','182c5','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50ce91eb0c5211efb129c858c0b7f92f'),
-(66,1,1,'Anbar Salsabilla','0065125737','U0065125737','1cab8','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50cf1d9e0c5211efb129c858c0b7f92f'),
-(67,1,1,'Aninda Belta Shakira','0065757046','U0065757046','0727d','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50cf59b40c5211efb129c858c0b7f92f'),
-(68,1,1,'Annisa Salsabila','0064848339','U0064848339','30c71','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50cf904d0c5211efb129c858c0b7f92f'),
-(69,1,1,'Ardian Saputra','0055531022','U0055531022','1b504','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50cfc6710c5211efb129c858c0b7f92f'),
-(70,1,1,'Cut Sahara Tantri','0050410064','U0050410064','c7e44','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50cffce20c5211efb129c858c0b7f92f'),
-(71,1,1,'Ersya Elysia','0076787140','U0076787140','ea479','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d03b3f0c5211efb129c858c0b7f92f'),
-(72,1,1,'Fachri Satria Tanjung','0066822084','U0066822084','e9f5a','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d088f50c5211efb129c858c0b7f92f'),
-(73,1,1,'Faiz Rusdy','0067053895','U0067053895','a9636','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d0c0750c5211efb129c858c0b7f92f'),
-(74,1,1,'Faturrahman','0064788352','U0064788352','2a1e1','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d0f7840c5211efb129c858c0b7f92f'),
-(75,1,1,'Gery Juan Devista','0056176047','U0056176047','b5188','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d12efe0c5211efb129c858c0b7f92f'),
-(76,1,1,'Ghaliza Anandistya Medina','0066765899','U0066765899','c21aa','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d1653b0c5211efb129c858c0b7f92f'),
-(77,1,1,'Hadisty Ananda','0064226685','U0064226685','7f089','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d199950c5211efb129c858c0b7f92f'),
-(78,1,1,'Haifa Azizah','0064115981','U0064115981','eb86f','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d1d0420c5211efb129c858c0b7f92f'),
-(79,1,1,'Izzah Rizqina','0067675678','U0067675678','a1cad','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d207ae0c5211efb129c858c0b7f92f'),
-(80,1,1,'Maqsal Mina','0062231412','U0062231412','64b15','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d23ebe0c5211efb129c858c0b7f92f'),
-(81,1,1,'Muhammad Rafiqul Abbrar','0068042913','U0068042913','e4bb7','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d274e50c5211efb129c858c0b7f92f'),
-(82,1,1,'Muhammad Rayyis Rasikh','0062475153','U0062475153','56392','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d2b1f90c5211efb129c858c0b7f92f'),
-(83,1,1,'Nabila Alya Zahra','0061728059','U0061728059','c8166','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d308c40c5211efb129c858c0b7f92f'),
-(84,1,1,'Nayla Putri Agustin','0063723566','U0063723566','53be9','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d3511f0c5211efb129c858c0b7f92f'),
-(85,1,1,'Naylatul Uhiya','0066038509','U0066038509','48a1a','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d388970c5211efb129c858c0b7f92f'),
-(86,1,1,'Nouval Temas Mico','0051515150','U0051515150','e86dc','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d3bede0c5211efb129c858c0b7f92f'),
-(87,1,1,'Raisya Nikmatul Maula','0069297662','U0069297662','5b09f','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d3f6d10c5211efb129c858c0b7f92f'),
-(88,1,1,'Reza Aulia','0063784793','U0063784793','633ac','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d42d7f0c5211efb129c858c0b7f92f'),
-(89,1,1,'Ridho Adha','0068307640','U0068307640','0dec9','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d463d50c5211efb129c858c0b7f92f'),
-(90,1,1,'Riva Afaiza','0062599709','U0062599709','23d1e','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d49ad30c5211efb129c858c0b7f92f'),
-(91,1,1,'Syauqi Amran','0067129512','U0067129512','1bcdd','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d4d1100c5211efb129c858c0b7f92f'),
-(92,1,1,'Syifaus Syauqina','0062471428','U0062471428','efbc7','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d5075a0c5211efb129c858c0b7f92f'),
-(93,1,1,'Zaqi Aulia','0067476158','U0067476158','1df67','oke@test.com',2,NULL,NULL,'2024-05-07 16:15:11','2024-05-07 16:15:11',1,1,NULL,NULL,NULL,0,'50d53e590c5211efb129c858c0b7f92f');
+(119,1,2,'Hailie Borer','mclaughlin.meredith@gmail.com','Umclaughlin.meredith@gmail.com','8b7af','zulauf.jeffery@gmail.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6a0a540e0311ef8837c858c0b7f92f'),
+(120,1,2,'Rae Gerlach','kirlin.stevie@yahoo.com','Ukirlin.stevie@yahoo.com','88eee','ehahn@yahoo.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6ad79f0e0311ef8837c858c0b7f92f'),
+(121,1,2,'Lenny Kerluke','xabernathy@blick.biz','Uxabernathy@blick.biz','3fe2b','mariah36@bednar.info',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6b573d0e0311ef8837c858c0b7f92f'),
+(122,1,4,'Ramon Brown','elmore.haley@yahoo.com','Uelmore.haley@yahoo.com','73ba4','maximillia.effertz@denesik.org',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6d82da0e0311ef8837c858c0b7f92f'),
+(123,1,4,'Tatum Stark','veda.lowe@yahoo.com','Uveda.lowe@yahoo.com','2d5b7','jordyn14@crist.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6dfcd50e0311ef8837c858c0b7f92f'),
+(124,1,4,'Darrin Crist','ewunsch@yost.com','Uewunsch@yost.com','ce9ae','xjones@gmail.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6e5cac0e0311ef8837c858c0b7f92f'),
+(125,1,5,'Norma Casper','rowland36@hotmail.com','Urowland36@hotmail.com','e0dc7','matt.howe@wintheiser.org',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd6ff2490e0311ef8837c858c0b7f92f'),
+(126,1,5,'Mortimer Ankunding','mbernier@yahoo.com','Umbernier@yahoo.com','c76da','zbeier@gmail.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd70b3a50e0311ef8837c858c0b7f92f'),
+(127,1,5,'Savannah Bosco','jacobi.nash@hyatt.info','Ujacobi.nash@hyatt.info','3d495','qfeest@hoeger.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd7112d80e0311ef8837c858c0b7f92f'),
+(128,1,6,'Garrick Simonis','julianne18@gmail.com','Ujulianne18@gmail.com','28d03','ldouglas@gmail.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd719e8a0e0311ef8837c858c0b7f92f'),
+(129,1,6,'Sebastian Schuster','anderson.rhoda@yahoo.com','Uanderson.rhoda@yahoo.com','6f3a2','kendall.satterfield@gmail.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd72ce7e0e0311ef8837c858c0b7f92f'),
+(130,1,6,'Anahi Hintz','opredovic@yahoo.com','Uopredovic@yahoo.com','7c95f','kevin.stanton@hotmail.com',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd7335ad0e0311ef8837c858c0b7f92f'),
+(131,1,6,'Immanuel Hickle','padberg.katherine@yahoo.com','Upadberg.katherine@yahoo.com','10bcf','toy01@hammes.org',2,NULL,NULL,'2024-05-09 19:59:37','2024-05-09 19:59:37',1,1,NULL,NULL,NULL,0,'fd73b0b60e0311ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_period` */
 
@@ -912,12 +898,16 @@ CREATE TABLE `tx_schedule` (
   CONSTRAINT `Fk_schedule_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`),
   CONSTRAINT `Fk_schedule_staff` FOREIGN KEY (`staff_id`) REFERENCES `tx_staff` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule` */
 
 insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`staff_id`,`date_start`,`date_end`,`token`,`token_time`,`is_asset`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'00001-Kimia - Sabtu',2,1,2,1,'2024-05-08 22:27:59','2024-05-10 10:25:00','441369','2024-05-09 15:12:48',1,'-','2024-05-08 22:28:20','2024-05-09 15:12:48',1,1,NULL,NULL,NULL,18,'99e528630d4f11efa055c858c0b7f92f');
+(77,1,'00077-Nanta Es',2,2,2,1,'2024-05-09 21:22:22','2024-05-09 23:22:22','200541','2024-05-09 21:22:22',NULL,NULL,'2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,1,'8d020d350e0f11ef8837c858c0b7f92f'),
+(78,1,'00078-Nanta Es',2,3,2,1,'2024-05-10 00:22:22','2024-05-10 02:22:22','904033','2024-05-10 00:22:22',NULL,NULL,'2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,1,'8d091dd40e0f11ef8837c858c0b7f92f'),
+(79,1,'00079-Nanta Es',2,4,2,1,'2024-05-10 03:22:22','2024-05-10 05:22:22','345987','2024-05-10 03:22:22',NULL,NULL,'2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,1,'8d0e085c0e0f11ef8837c858c0b7f92f'),
+(80,1,'00080-Nanta Es',2,5,2,1,'2024-05-10 06:22:22','2024-05-10 08:22:22','641619','2024-05-10 06:22:22',NULL,NULL,'2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,1,'8d1198ff0e0f11ef8837c858c0b7f92f'),
+(81,1,'00081-Nanta Es',2,6,2,1,'2024-05-10 09:22:22','2024-05-10 11:22:22','393402','2024-05-10 09:22:22',NULL,NULL,'2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,1,'8d14d35e0e0f11ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_schedule_detail` */
 
@@ -947,12 +937,36 @@ CREATE TABLE `tx_schedule_detail` (
   CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=403 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule_detail` */
 
 insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(2,1,1,2,'Kimia Umum','SOAL_TEST_Server.zip','/uploads/schedule/65a7fb0e28f7b/20240508-Kimia-2//index.html','2024-05-09 15:03:13','2024-05-09 15:12:47',1,1,NULL,NULL,NULL,3,'95bea5e50dda11ef82bec858c0b7f92f');
+(378,1,77,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0549560e0f11ef8837c858c0b7f92f'),
+(379,1,77,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0606600e0f11ef8837c858c0b7f92f'),
+(380,1,77,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d06c8ef0e0f11ef8837c858c0b7f92f'),
+(381,1,77,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d07735f0e0f11ef8837c858c0b7f92f'),
+(382,1,77,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240509-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d07f93e0e0f11ef8837c858c0b7f92f'),
+(383,1,78,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d09d5cc0e0f11ef8837c858c0b7f92f'),
+(384,1,78,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0a4e0c0e0f11ef8837c858c0b7f92f'),
+(385,1,78,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0ac5310e0f11ef8837c858c0b7f92f'),
+(386,1,78,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0b9ea80e0f11ef8837c858c0b7f92f'),
+(387,1,78,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0c7cc00e0f11ef8837c858c0b7f92f'),
+(388,1,79,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0ed0700e0f11ef8837c858c0b7f92f'),
+(389,1,79,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0f4e070e0f11ef8837c858c0b7f92f'),
+(390,1,79,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d0fc3200e0f11ef8837c858c0b7f92f'),
+(391,1,79,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d1041a30e0f11ef8837c858c0b7f92f'),
+(392,1,79,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d10c4e80e0f11ef8837c858c0b7f92f'),
+(393,1,80,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d12452c0e0f11ef8837c858c0b7f92f'),
+(394,1,80,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d12b36b0e0f11ef8837c858c0b7f92f'),
+(395,1,80,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d133b880e0f11ef8837c858c0b7f92f'),
+(396,1,80,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d13aad60e0f11ef8837c858c0b7f92f'),
+(397,1,80,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d1407f30e0f11ef8837c858c0b7f92f'),
+(398,1,81,4,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d158ce40e0f11ef8837c858c0b7f92f'),
+(399,1,81,5,'Kimia Numerasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Numerasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d16023d0e0f11ef8837c858c0b7f92f'),
+(400,1,81,6,'Kimia Literasi',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Literasi-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d166a5f0e0f11ef8837c858c0b7f92f'),
+(401,1,81,7,'Kimia Umum',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia Umum-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d16f7cf0e0f11ef8837c858c0b7f92f'),
+(402,1,81,8,'Sejarah',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Sejarah-//index.html','2024-05-09 21:22:22','2024-05-09 21:22:22',1,1,NULL,NULL,NULL,0,'8d176d7f0e0f11ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_session` */
 
@@ -968,14 +982,7 @@ CREATE TABLE `tx_session` (
 /*Data for the table `tx_session` */
 
 insert  into `tx_session`(`id`,`expire`,`data`) values 
-('0p0h2tlerub8aklnlajms40p9v',1715187882,'__flash|a:0:{}__id|i:63;__authKey|s:32:\"P46PoX5vMYPwT7H2co901oupAAO8W40Y\";'),
-('a81ubbv40rge79bdk94o8phsuu',1715187716,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
-('aqr8ajo8s17bucisjg4rf582vg',1715243260,'__flash|a:0:{}'),
-('g032roeaomlbvljj9dvkod28fq',1715244382,'__flash|a:0:{}__id|i:63;__authKey|s:32:\"-mhQKxAoFgUsfhChkjdUpmEygT0rN5r1\";'),
-('ln1uia9sl6r8altk4legtt4tni',1715183587,'__flash|a:0:{}__returnUrl|s:45:\"http://localhost/app/yii2-quiz-ispring/admin/\";'),
-('od47b9lvq2g434icg3bd9mc9qn',1715183640,'__flash|a:0:{}'),
-('u6ua6ghrh85moltkv2j75t469m',1715242573,'__flash|a:0:{}'),
-('vltkia6q466on7iiis45q3a9mj',1715244222,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
+('qc9bopvcbcs24sig6lkmrf1ie6',1715266149,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
 
 /*Table structure for table `tx_site_link` */
 
@@ -1073,7 +1080,7 @@ CREATE TABLE `tx_subject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `office_id` int(11) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
-  `subject_type` int(11) DEFAULT NULL,
+  `subject_type` tinyint(4) DEFAULT NULL,
   `sequence` tinyint(4) DEFAULT NULL,
   `description` tinytext DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -1088,12 +1095,16 @@ CREATE TABLE `tx_subject` (
   PRIMARY KEY (`id`),
   KEY `Fk_subject_office` (`office_id`),
   CONSTRAINT `Fk_subject_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_subject` */
 
 insert  into `tx_subject`(`id`,`office_id`,`title`,`subject_type`,`sequence`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(2,1,'Kimia',1,1,'Kimia Umum','2024-05-08 21:45:42','2024-05-08 22:28:40',1,1,NULL,NULL,NULL,1,'a53ee79b0d4911efa055c858c0b7f92f');
+(4,1,'Matematika',1,1,'Matematika','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884dd3cf0df811ef8837c858c0b7f92f'),
+(5,1,'Kimia Numerasi',1,2,'Kimia Numerasi','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884e668a0df811ef8837c858c0b7f92f'),
+(6,1,'Kimia Literasi',2,2,'Kimia Literasi','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884ed6c90df811ef8837c858c0b7f92f'),
+(7,1,'Kimia Umum',1,3,'Kimia Umum','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884f61d30df811ef8837c858c0b7f92f'),
+(8,1,'Sejarah',1,3,'Sejarah','2024-05-09 18:37:36','2024-05-09 18:37:36',1,1,NULL,NULL,NULL,0,'884fe7380df811ef8837c858c0b7f92f');
 
 /*Table structure for table `tx_tag` */
 
@@ -1175,7 +1186,7 @@ CREATE TABLE `tx_user` (
 /*Data for the table `tx_user` */
 
 insert  into `tx_user`(`id`,`username`,`email`,`password_hash`,`auth_key`,`unconfirmed_email`,`registration_ip`,`flags`,`confirmed_at`,`blocked_at`,`updated_at`,`created_at`,`last_login_at`,`auth_tf_key`,`auth_tf_enabled`) values 
-(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715240785,NULL,0);
+(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715262340,NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

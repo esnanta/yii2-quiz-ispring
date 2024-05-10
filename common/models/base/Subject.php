@@ -13,7 +13,6 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property integer $office_id
  * @property string $title
- * @property integer $subject_type
  * @property integer $sequence
  * @property string $description
  * @property string $created_at
@@ -26,7 +25,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\AssessmentDetail[] $assessmentDetails
+ * @property \common\models\Assessment[] $assessments
  * @property \common\models\ScheduleDetail[] $scheduleDetails
  * @property \common\models\Office $office
  */
@@ -56,7 +55,7 @@ class Subject extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'assessmentDetails',
+            'assessments',
             'scheduleDetails',
             'office'
         ];
@@ -72,7 +71,7 @@ class Subject extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['subject_type', 'sequence'], 'string', 'max' => 4],
+            [['sequence'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -107,7 +106,6 @@ class Subject extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
-            'subject_type' => Yii::t('app', 'Subject Type'),
             'sequence' => Yii::t('app', 'Sequence'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
@@ -119,9 +117,9 @@ class Subject extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAssessmentDetails()
+    public function getAssessments()
     {
-        return $this->hasMany(\common\models\AssessmentDetail::className(), ['subject_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['subject_id' => 'id']);
     }
         
     /**

@@ -18,7 +18,7 @@ class SubjectSearch extends Subject
     {
         return [
             [['id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'subject_type','sequence', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['title', 'sequence', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -56,7 +56,6 @@ class SubjectSearch extends Subject
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'subject_type', $this->subject_type])
             ->andFilterWhere(['like', 'sequence', $this->sequence])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);

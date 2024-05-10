@@ -22,17 +22,6 @@ use kartik\datecontrol\DateControl;
         'columns' => 1,
         'attributes' => [
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 200]],
-            'subject_type' => [
-                'type' => Form::INPUT_WIDGET,
-                'widgetClass' => Select2::class,
-                'options' => [
-                    'data' => $subjectTypeList,
-                    'options' => ['placeholder' => '', 'disabled' => false],
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ],
             'sequence' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '']],
             'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => '','rows' => 6]],
         ]

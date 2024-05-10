@@ -345,7 +345,7 @@ class DummyController extends Controller
                         ->where(['office_id' => $officeId, 'schedule_id' => $scheduleItem->id])
                         ->all();
 
-                    
+
 
 
                 }
