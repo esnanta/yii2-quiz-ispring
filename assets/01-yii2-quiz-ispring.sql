@@ -133,49 +133,9 @@ CREATE TABLE `tx_assessment` (
   CONSTRAINT `Fk_assessment_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_assessment_schedule_detail` FOREIGN KEY (`schedule_detail_id`) REFERENCES `tx_schedule_detail` (`id`),
   CONSTRAINT `Fk_assessment_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_assessment` */
-
-insert  into `tx_assessment`(`id`,`office_id`,`schedule_id`,`schedule_detail_id`,`participant_id`,`period_id`,`subject_id`,`subject_type`,`app_version`,`earned_points`,`passing_score`,`passing_score_percent`,`gained_score`,`evaluate_score`,`quiz_title`,`quiz_type`,`username`,`time_limit`,`used_time`,`time_spent`,`is_completed`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(45,1,98,454,147,2,14,3,'x.x.x',17.00,25.00,NULL,34.00,50.00,'Matematika','graded','Umolly.jerde@carter.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a8439ec90ea911efa644c858c0b7f92f'),
-(46,1,98,454,148,2,14,3,'x.x.x',31.00,25.00,NULL,25.00,124.00,'Matematika','graded','Umarcia30@hotmail.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a845bb730ea911efa644c858c0b7f92f'),
-(47,1,98,454,149,2,14,3,'x.x.x',28.00,25.00,NULL,35.00,80.00,'Matematika','graded','Upaucek.duncan@gerhold.info',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a847ea990ea911efa644c858c0b7f92f'),
-(48,1,98,454,150,2,14,3,'x.x.x',40.00,25.00,NULL,34.00,118.00,'Matematika','graded','Uoflatley@bauch.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a848fb980ea911efa644c858c0b7f92f'),
-(49,1,98,455,147,2,15,3,'x.x.x',13.00,25.00,NULL,20.00,65.00,'Kimia','graded','Umolly.jerde@carter.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a84ac9c80ea911efa644c858c0b7f92f'),
-(50,1,98,455,148,2,15,3,'x.x.x',39.00,25.00,NULL,17.00,230.00,'Kimia','graded','Umarcia30@hotmail.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a84c03ec0ea911efa644c858c0b7f92f'),
-(51,1,98,455,149,2,15,3,'x.x.x',41.00,25.00,NULL,27.00,152.00,'Kimia','graded','Upaucek.duncan@gerhold.info',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a84d018e0ea911efa644c858c0b7f92f'),
-(52,1,98,455,150,2,15,3,'x.x.x',18.00,25.00,NULL,15.00,120.00,'Kimia','graded','Uoflatley@bauch.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a84e4a140ea911efa644c858c0b7f92f'),
-(53,1,99,456,151,2,14,1,'x.x.x',28.00,25.00,NULL,15.00,187.00,'Matematika','graded','Upearl54@yahoo.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a8503dc40ea911efa644c858c0b7f92f'),
-(54,1,99,456,152,2,14,1,'x.x.x',27.00,25.00,NULL,48.00,57.00,'Matematika','graded','Ujohn86@stracke.info',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a851540c0ea911efa644c858c0b7f92f'),
-(55,1,99,457,151,2,15,1,'x.x.x',40.00,25.00,NULL,42.00,96.00,'Kimia','graded','Upearl54@yahoo.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a8530d8b0ea911efa644c858c0b7f92f'),
-(56,1,99,457,152,2,15,1,'x.x.x',47.00,25.00,NULL,48.00,98.00,'Kimia','graded','Ujohn86@stracke.info',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85405c10ea911efa644c858c0b7f92f'),
-(57,1,100,458,153,2,14,2,'x.x.x',48.00,25.00,NULL,28.00,172.00,'Matematika','graded','Uparis.buckridge@willms.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a8563cde0ea911efa644c858c0b7f92f'),
-(58,1,100,458,154,2,14,2,'x.x.x',36.00,25.00,NULL,50.00,72.00,'Matematika','graded','Uwyman.batz@yahoo.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85772fd0ea911efa644c858c0b7f92f'),
-(59,1,100,458,155,2,14,2,'x.x.x',39.00,25.00,NULL,36.00,109.00,'Matematika','graded','Ugulgowski.ryleigh@bauch.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a858e8b60ea911efa644c858c0b7f92f'),
-(60,1,100,458,156,2,14,2,'x.x.x',33.00,25.00,NULL,50.00,66.00,'Matematika','graded','Ukavon55@gmail.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a859fbd90ea911efa644c858c0b7f92f'),
-(61,1,100,458,157,2,14,2,'x.x.x',40.00,25.00,NULL,22.00,182.00,'Matematika','graded','Udcummings@schroeder.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85b29330ea911efa644c858c0b7f92f'),
-(62,1,100,459,153,2,15,3,'x.x.x',28.00,25.00,NULL,27.00,104.00,'Kimia','graded','Uparis.buckridge@willms.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85cb8b50ea911efa644c858c0b7f92f'),
-(63,1,100,459,154,2,15,3,'x.x.x',31.00,25.00,NULL,31.00,100.00,'Kimia','graded','Uwyman.batz@yahoo.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85d9ef10ea911efa644c858c0b7f92f'),
-(64,1,100,459,155,2,15,3,'x.x.x',21.00,25.00,NULL,31.00,68.00,'Kimia','graded','Ugulgowski.ryleigh@bauch.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85e8c590ea911efa644c858c0b7f92f'),
-(65,1,100,459,156,2,15,3,'x.x.x',15.00,25.00,NULL,21.00,72.00,'Kimia','graded','Ukavon55@gmail.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a85f70f40ea911efa644c858c0b7f92f'),
-(66,1,100,459,157,2,15,3,'x.x.x',19.00,25.00,NULL,43.00,45.00,'Kimia','graded','Udcummings@schroeder.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a860420c0ea911efa644c858c0b7f92f'),
-(67,1,101,460,158,2,14,2,'x.x.x',34.00,25.00,NULL,12.00,284.00,'Matematika','graded','Ugreenholt.juston@rutherford.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86187fb0ea911efa644c858c0b7f92f'),
-(68,1,101,460,159,2,14,2,'x.x.x',18.00,25.00,NULL,21.00,86.00,'Matematika','graded','Uregan.koss@reinger.org',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86254280ea911efa644c858c0b7f92f'),
-(69,1,101,460,160,2,14,2,'x.x.x',24.00,25.00,NULL,31.00,78.00,'Matematika','graded','Ujocelyn88@christiansen.net',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86303640ea911efa644c858c0b7f92f'),
-(70,1,101,461,158,2,15,2,'x.x.x',27.00,25.00,NULL,12.00,225.00,'Kimia','graded','Ugreenholt.juston@rutherford.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86404380ea911efa644c858c0b7f92f'),
-(71,1,101,461,159,2,15,2,'x.x.x',30.00,25.00,NULL,15.00,200.00,'Kimia','graded','Uregan.koss@reinger.org',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a864ba010ea911efa644c858c0b7f92f'),
-(72,1,101,461,160,2,15,2,'x.x.x',31.00,25.00,NULL,38.00,82.00,'Kimia','graded','Ujocelyn88@christiansen.net',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86542760ea911efa644c858c0b7f92f'),
-(73,1,102,462,161,2,14,2,'x.x.x',24.00,25.00,NULL,31.00,78.00,'Matematika','graded','Ulhilpert@kohler.org',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86678b70ea911efa644c858c0b7f92f'),
-(74,1,102,462,162,2,14,2,'x.x.x',45.00,25.00,NULL,21.00,215.00,'Matematika','graded','Ujoana.larson@bogan.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86718680ea911efa644c858c0b7f92f'),
-(75,1,102,462,163,2,14,2,'x.x.x',45.00,25.00,NULL,18.00,250.00,'Matematika','graded','Uorin83@skiles.biz',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a867a1520ea911efa644c858c0b7f92f'),
-(76,1,102,462,164,2,14,2,'x.x.x',36.00,25.00,NULL,40.00,90.00,'Matematika','graded','Ufidel.baumbach@kling.org',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86826970ea911efa644c858c0b7f92f'),
-(77,1,102,462,165,2,14,2,'x.x.x',31.00,25.00,NULL,14.00,222.00,'Matematika','graded','Uconnie.bergnaum@jaskolski.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a868ac300ea911efa644c858c0b7f92f'),
-(78,1,102,463,161,2,15,1,'x.x.x',22.00,25.00,NULL,39.00,57.00,'Kimia','graded','Ulhilpert@kohler.org',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86974250ea911efa644c858c0b7f92f'),
-(79,1,102,463,162,2,15,1,'x.x.x',11.00,25.00,NULL,28.00,40.00,'Kimia','graded','Ujoana.larson@bogan.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86a0d520ea911efa644c858c0b7f92f'),
-(80,1,102,463,163,2,15,1,'x.x.x',16.00,25.00,NULL,25.00,64.00,'Kimia','graded','Uorin83@skiles.biz',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86a7cf40ea911efa644c858c0b7f92f'),
-(81,1,102,463,164,2,15,1,'x.x.x',28.00,25.00,NULL,27.00,104.00,'Kimia','graded','Ufidel.baumbach@kling.org',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86afba70ea911efa644c858c0b7f92f'),
-(82,1,102,463,165,2,15,1,'x.x.x',38.00,25.00,NULL,27.00,141.00,'Kimia','graded','Uconnie.bergnaum@jaskolski.com',NULL,NULL,NULL,NULL,'2024-05-10 15:45:30','2024-05-10 15:45:30',1,1,NULL,NULL,NULL,0,'a86b62410ea911efa644c858c0b7f92f');
 
 /*Table structure for table `tx_auth_assignment` */
 
@@ -193,7 +153,7 @@ CREATE TABLE `tx_auth_assignment` (
 /*Data for the table `tx_auth_assignment` */
 
 insert  into `tx_auth_assignment`(`item_name`,`user_id`,`created_at`) values 
-('admin','1',1713865235);
+('admin','1',1715375892);
 
 /*Table structure for table `tx_auth_item` */
 
@@ -216,126 +176,120 @@ CREATE TABLE `tx_auth_item` (
 /*Data for the table `tx_auth_item` */
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values 
-('admin',1,'Admin',NULL,NULL,1713865235,1713865235),
-('create-archive',2,'Create Archive',NULL,NULL,1713865235,1713865235),
-('create-archivecategory',2,'Create Archive Category',NULL,NULL,1713865235,1713865235),
-('create-assessment',2,'Create Assessment',NULL,NULL,1713865235,1713865235),
-('create-assessmentdetail',2,'Create Assessment Detail',NULL,NULL,1713865235,1713865235),
-('create-employment',2,'Create Employment',NULL,NULL,1713865235,1713865235),
-('create-group',2,'Create Group',NULL,NULL,1713865235,1713865235),
-('create-ispring-master',2,'Create Ispring Master',NULL,NULL,1713865235,1713865235),
-('create-ispring-transaction',2,'Create Ispring Transaction',NULL,NULL,1713865235,1713865235),
-('create-master',2,'Create Master',NULL,NULL,1713865235,1713865235),
-('create-office',2,'Create Office',NULL,NULL,1713865235,1713865235),
-('create-participant',2,'Create Participant',NULL,NULL,1713865235,1713865235),
-('create-period',2,'Create Period',NULL,NULL,1713865235,1713865235),
-('create-profile',2,'Create Profile',NULL,NULL,1713865235,1713865235),
-('create-room',2,'Create Room',NULL,NULL,1713865235,1713865235),
-('create-schedule',2,'Create Schedule',NULL,NULL,1713865235,1713865235),
-('create-scheduledetail',2,'Create Schedule Detail',NULL,NULL,1713865235,1713865235),
-('create-staff',2,'Create Staff',NULL,NULL,1713865235,1713865235),
-('create-subject',2,'Create Subject',NULL,NULL,1713865235,1713865235),
-('create-theme',2,'Create Theme',NULL,NULL,1713865235,1713865235),
-('create-transaction',2,'Create Transaction',NULL,NULL,1713865235,1713865235),
-('delete-archive',2,'Delete Archive',NULL,NULL,1713865235,1713865235),
-('delete-archivecategory',2,'Delete Archive Category',NULL,NULL,1713865235,1713865235),
-('delete-assessment',2,'Delete Assessment',NULL,NULL,1713865235,1713865235),
-('delete-assessmentdetail',2,'Delete Assessment Detail',NULL,NULL,1713865235,1713865235),
-('delete-employment',2,'Delete Employment',NULL,NULL,1713865235,1713865235),
-('delete-group',2,'Delete Group',NULL,NULL,1713865235,1713865235),
-('delete-ispring-master',2,'Delete Ispring Master',NULL,NULL,1713865235,1713865235),
-('delete-ispring-transaction',2,'Delete Ispring Transaction',NULL,NULL,1713865235,1713865235),
-('delete-master',2,'Delete Master',NULL,NULL,1713865235,1713865235),
-('delete-office',2,'Delete Office',NULL,NULL,1713865235,1713865235),
-('delete-participant',2,'Delete Participant',NULL,NULL,1713865235,1713865235),
-('delete-period',2,'Delete Period',NULL,NULL,1713865235,1713865235),
-('delete-profile',2,'Delete Profile',NULL,NULL,1713865235,1713865235),
-('delete-room',2,'Delete Room',NULL,NULL,1713865235,1713865235),
-('delete-schedule',2,'Delete Schedule',NULL,NULL,1713865235,1713865235),
-('delete-scheduledetail',2,'Delete Schedule Detail',NULL,NULL,1713865235,1713865235),
-('delete-staff',2,'Delete Staff',NULL,NULL,1713865235,1713865235),
-('delete-subject',2,'Delete Subject',NULL,NULL,1713865235,1713865235),
-('delete-theme',2,'Delete Theme',NULL,NULL,1713865235,1713865235),
-('delete-transaction',2,'Delete Transaction',NULL,NULL,1713865235,1713865235),
-('guest',1,'Guest',NULL,NULL,1713865235,1713865235),
-('index-archive',2,'Index Archive',NULL,NULL,1713865235,1713865235),
-('index-archivecategory',2,'Index Archive Category',NULL,NULL,1713865235,1713865235),
-('index-assessment',2,'Index Assessment',NULL,NULL,1713865235,1713865235),
-('index-assessmentdetail',2,'Index Assessment Detail',NULL,NULL,1713865235,1713865235),
-('index-employment',2,'Index Employment',NULL,NULL,1713865235,1713865235),
-('index-group',2,'Index Group',NULL,NULL,1713865235,1713865235),
-('index-ispring-master',2,'Index Ispring Master',NULL,NULL,1713865235,1713865235),
-('index-ispring-transaction',2,'Index Ispring Transaction',NULL,NULL,1713865235,1713865235),
-('index-master',2,'Index Master',NULL,NULL,1713865235,1713865235),
-('index-office',2,'Index Office',NULL,NULL,1713865235,1713865235),
-('index-participant',2,'Index Participant',NULL,NULL,1713865235,1713865235),
-('index-period',2,'Index Period',NULL,NULL,1713865235,1713865235),
-('index-profile',2,'Index Profile',NULL,NULL,1713865235,1713865235),
-('index-room',2,'Index Room',NULL,NULL,1713865235,1713865235),
-('index-schedule',2,'Index Schedule',NULL,NULL,1713865235,1713865235),
-('index-scheduledetail',2,'Index Schedule Detail',NULL,NULL,1713865235,1713865235),
-('index-staff',2,'Index Staff',NULL,NULL,1713865235,1713865235),
-('index-subject',2,'Index Subject',NULL,NULL,1713865235,1713865235),
-('index-theme',2,'Index Theme',NULL,NULL,1713865235,1713865235),
-('index-transaction',2,'Index Transaction',NULL,NULL,1713865235,1713865235),
-('owner',1,'Company Owner',NULL,NULL,1713865235,1713865235),
-('participant',1,'Participant',NULL,NULL,1713865235,1713865235),
-('reguler',1,'Reguler',NULL,NULL,1713865235,1713865235),
-('report-archive',2,'Report Archive',NULL,NULL,1713865235,1713865235),
-('report-archivecategory',2,'Report Archive Category',NULL,NULL,1713865235,1713865235),
-('report-assessment',2,'Report Assessment',NULL,NULL,1713865235,1713865235),
-('report-assessmentdetail',2,'Report Assessment Detail',NULL,NULL,1713865235,1713865235),
-('report-group',2,'Report Group',NULL,NULL,1713865235,1713865235),
-('report-ispring-master',2,'Report Ispring Master',NULL,NULL,1713865235,1713865235),
-('report-ispring-transaction',2,'Report Ispring Transaction',NULL,NULL,1713865235,1713865235),
-('report-master',2,'Report Master',NULL,NULL,1713865235,1713865235),
-('report-participant',2,'Report Participant',NULL,NULL,1713865235,1713865235),
-('report-period',2,'Report Period',NULL,NULL,1713865235,1713865235),
-('report-room',2,'Report Room',NULL,NULL,1713865235,1713865235),
-('report-schedule',2,'Report Schedule',NULL,NULL,1713865235,1713865235),
-('report-scheduledetail',2,'Report Schedule Detail',NULL,NULL,1713865235,1713865235),
-('report-subject',2,'Report Subject',NULL,NULL,1713865235,1713865235),
-('report-transaction',2,'Report Transaction',NULL,NULL,1713865235,1713865235),
-('update-archive',2,'Update Archive',NULL,NULL,1713865235,1713865235),
-('update-archivecategory',2,'Update Archive Category',NULL,NULL,1713865235,1713865235),
-('update-assessment',2,'Update Assessment',NULL,NULL,1713865235,1713865235),
-('update-assessmentdetail',2,'Update Assessment  Detail',NULL,NULL,1713865235,1713865235),
-('update-employment',2,'Update Employment',NULL,NULL,1713865235,1713865235),
-('update-group',2,'Update Group',NULL,NULL,1713865235,1713865235),
-('update-ispring-master',2,'Update Ispring Master',NULL,NULL,1713865235,1713865235),
-('update-ispring-transaction',2,'Update Ispring Transaction',NULL,NULL,1713865235,1713865235),
-('update-master',2,'Update Master',NULL,NULL,1713865235,1713865235),
-('update-office',2,'Update Office',NULL,NULL,1713865235,1713865235),
-('update-participant',2,'Update Participant',NULL,NULL,1713865235,1713865235),
-('update-period',2,'Update Period',NULL,NULL,1713865235,1713865235),
-('update-profile',2,'Update Profile',NULL,NULL,1713865235,1713865235),
-('update-room',2,'Update Room',NULL,NULL,1713865235,1713865235),
-('update-schedule',2,'Update Schedule',NULL,NULL,1713865235,1713865235),
-('update-scheduledetail',2,'Update Schedule Detail',NULL,NULL,1713865235,1713865235),
-('update-staff',2,'Update Staff',NULL,NULL,1713865235,1713865235),
-('update-subject',2,'Update Subject',NULL,NULL,1713865235,1713865235),
-('update-theme',2,'Update Theme',NULL,NULL,1713865235,1713865235),
-('update-transaction',2,'Update Transaction',NULL,NULL,1713865235,1713865235),
-('view-archive',2,'View Archive',NULL,NULL,1713865235,1713865235),
-('view-archivecategory',2,'View Archive Category',NULL,NULL,1713865235,1713865235),
-('view-assessment',2,'View Assessment',NULL,NULL,1713865235,1713865235),
-('view-assessmentdetail',2,'View Assessment Detail',NULL,NULL,1713865235,1713865235),
-('view-employment',2,'View Employment',NULL,NULL,1713865235,1713865235),
-('view-group',2,'View Group',NULL,NULL,1713865235,1713865235),
-('view-ispring-master',2,'View Ispring Master',NULL,NULL,1713865235,1713865235),
-('view-ispring-transaction',2,'View Ispring Transaction',NULL,NULL,1713865235,1713865235),
-('view-master',2,'View Master',NULL,NULL,1713865235,1713865235),
-('view-office',2,'View Office',NULL,NULL,1713865235,1713865235),
-('view-participant',2,'View Participant',NULL,NULL,1713865235,1713865235),
-('view-period',2,'View Period',NULL,NULL,1713865235,1713865235),
-('view-profile',2,'View Profile',NULL,NULL,1713865235,1713865235),
-('view-room',2,'View Room',NULL,NULL,1713865235,1713865235),
-('view-schedule',2,'View Schedule',NULL,NULL,1713865235,1713865235),
-('view-scheduledetail',2,'View Schedule Detail',NULL,NULL,1713865235,1713865235),
-('view-staff',2,'View Staff',NULL,NULL,1713865235,1713865235),
-('view-subject',2,'View Subject',NULL,NULL,1713865235,1713865235),
-('view-theme',2,'View Theme',NULL,NULL,1713865235,1713865235),
-('view-transaction',2,'View Transaction',NULL,NULL,1713865235,1713865235);
+('admin',1,'Admin',NULL,NULL,1715375892,1715375892),
+('create-archive',2,'Create Archive',NULL,NULL,1715375892,1715375892),
+('create-archivecategory',2,'Create Archive Category',NULL,NULL,1715375892,1715375892),
+('create-assessment',2,'Create Assessment',NULL,NULL,1715375892,1715375892),
+('create-employment',2,'Create Employment',NULL,NULL,1715375892,1715375892),
+('create-group',2,'Create Group',NULL,NULL,1715375892,1715375892),
+('create-ispring-master',2,'Create Ispring Master',NULL,NULL,1715375892,1715375892),
+('create-ispring-transaction',2,'Create Ispring Transaction',NULL,NULL,1715375892,1715375892),
+('create-master',2,'Create Master',NULL,NULL,1715375892,1715375892),
+('create-office',2,'Create Office',NULL,NULL,1715375892,1715375892),
+('create-participant',2,'Create Participant',NULL,NULL,1715375892,1715375892),
+('create-period',2,'Create Period',NULL,NULL,1715375892,1715375892),
+('create-profile',2,'Create Profile',NULL,NULL,1715375892,1715375892),
+('create-room',2,'Create Room',NULL,NULL,1715375892,1715375892),
+('create-schedule',2,'Create Schedule',NULL,NULL,1715375892,1715375892),
+('create-scheduledetail',2,'Create Schedule Detail',NULL,NULL,1715375892,1715375892),
+('create-staff',2,'Create Staff',NULL,NULL,1715375892,1715375892),
+('create-subject',2,'Create Subject',NULL,NULL,1715375892,1715375892),
+('create-theme',2,'Create Theme',NULL,NULL,1715375892,1715375892),
+('create-transaction',2,'Create Transaction',NULL,NULL,1715375892,1715375892),
+('delete-archive',2,'Delete Archive',NULL,NULL,1715375892,1715375892),
+('delete-archivecategory',2,'Delete Archive Category',NULL,NULL,1715375892,1715375892),
+('delete-assessment',2,'Delete Assessment',NULL,NULL,1715375892,1715375892),
+('delete-employment',2,'Delete Employment',NULL,NULL,1715375892,1715375892),
+('delete-group',2,'Delete Group',NULL,NULL,1715375892,1715375892),
+('delete-ispring-master',2,'Delete Ispring Master',NULL,NULL,1715375892,1715375892),
+('delete-ispring-transaction',2,'Delete Ispring Transaction',NULL,NULL,1715375892,1715375892),
+('delete-master',2,'Delete Master',NULL,NULL,1715375892,1715375892),
+('delete-office',2,'Delete Office',NULL,NULL,1715375892,1715375892),
+('delete-participant',2,'Delete Participant',NULL,NULL,1715375892,1715375892),
+('delete-period',2,'Delete Period',NULL,NULL,1715375892,1715375892),
+('delete-profile',2,'Delete Profile',NULL,NULL,1715375892,1715375892),
+('delete-room',2,'Delete Room',NULL,NULL,1715375892,1715375892),
+('delete-schedule',2,'Delete Schedule',NULL,NULL,1715375892,1715375892),
+('delete-scheduledetail',2,'Delete Schedule Detail',NULL,NULL,1715375892,1715375892),
+('delete-staff',2,'Delete Staff',NULL,NULL,1715375892,1715375892),
+('delete-subject',2,'Delete Subject',NULL,NULL,1715375892,1715375892),
+('delete-theme',2,'Delete Theme',NULL,NULL,1715375892,1715375892),
+('delete-transaction',2,'Delete Transaction',NULL,NULL,1715375892,1715375892),
+('guest',1,'Guest',NULL,NULL,1715375892,1715375892),
+('index-archive',2,'Index Archive',NULL,NULL,1715375892,1715375892),
+('index-archivecategory',2,'Index Archive Category',NULL,NULL,1715375892,1715375892),
+('index-assessment',2,'Index Assessment',NULL,NULL,1715375892,1715375892),
+('index-employment',2,'Index Employment',NULL,NULL,1715375892,1715375892),
+('index-group',2,'Index Group',NULL,NULL,1715375892,1715375892),
+('index-ispring-master',2,'Index Ispring Master',NULL,NULL,1715375892,1715375892),
+('index-ispring-transaction',2,'Index Ispring Transaction',NULL,NULL,1715375892,1715375892),
+('index-master',2,'Index Master',NULL,NULL,1715375892,1715375892),
+('index-office',2,'Index Office',NULL,NULL,1715375892,1715375892),
+('index-participant',2,'Index Participant',NULL,NULL,1715375892,1715375892),
+('index-period',2,'Index Period',NULL,NULL,1715375892,1715375892),
+('index-profile',2,'Index Profile',NULL,NULL,1715375892,1715375892),
+('index-room',2,'Index Room',NULL,NULL,1715375892,1715375892),
+('index-schedule',2,'Index Schedule',NULL,NULL,1715375892,1715375892),
+('index-scheduledetail',2,'Index Schedule Detail',NULL,NULL,1715375892,1715375892),
+('index-staff',2,'Index Staff',NULL,NULL,1715375892,1715375892),
+('index-subject',2,'Index Subject',NULL,NULL,1715375892,1715375892),
+('index-theme',2,'Index Theme',NULL,NULL,1715375892,1715375892),
+('index-transaction',2,'Index Transaction',NULL,NULL,1715375892,1715375892),
+('owner',1,'Company Owner',NULL,NULL,1715375892,1715375892),
+('participant',1,'Participant',NULL,NULL,1715375892,1715375892),
+('reguler',1,'Reguler',NULL,NULL,1715375892,1715375892),
+('report-archive',2,'Report Archive',NULL,NULL,1715375892,1715375892),
+('report-archivecategory',2,'Report Archive Category',NULL,NULL,1715375892,1715375892),
+('report-assessment',2,'Report Assessment',NULL,NULL,1715375892,1715375892),
+('report-group',2,'Report Group',NULL,NULL,1715375892,1715375892),
+('report-ispring-master',2,'Report Ispring Master',NULL,NULL,1715375892,1715375892),
+('report-ispring-transaction',2,'Report Ispring Transaction',NULL,NULL,1715375892,1715375892),
+('report-master',2,'Report Master',NULL,NULL,1715375892,1715375892),
+('report-participant',2,'Report Participant',NULL,NULL,1715375892,1715375892),
+('report-period',2,'Report Period',NULL,NULL,1715375892,1715375892),
+('report-room',2,'Report Room',NULL,NULL,1715375892,1715375892),
+('report-schedule',2,'Report Schedule',NULL,NULL,1715375892,1715375892),
+('report-scheduledetail',2,'Report Schedule Detail',NULL,NULL,1715375892,1715375892),
+('report-subject',2,'Report Subject',NULL,NULL,1715375892,1715375892),
+('report-transaction',2,'Report Transaction',NULL,NULL,1715375892,1715375892),
+('update-archive',2,'Update Archive',NULL,NULL,1715375892,1715375892),
+('update-archivecategory',2,'Update Archive Category',NULL,NULL,1715375892,1715375892),
+('update-assessment',2,'Update Assessment',NULL,NULL,1715375892,1715375892),
+('update-employment',2,'Update Employment',NULL,NULL,1715375892,1715375892),
+('update-group',2,'Update Group',NULL,NULL,1715375892,1715375892),
+('update-ispring-master',2,'Update Ispring Master',NULL,NULL,1715375892,1715375892),
+('update-ispring-transaction',2,'Update Ispring Transaction',NULL,NULL,1715375892,1715375892),
+('update-master',2,'Update Master',NULL,NULL,1715375892,1715375892),
+('update-office',2,'Update Office',NULL,NULL,1715375892,1715375892),
+('update-participant',2,'Update Participant',NULL,NULL,1715375892,1715375892),
+('update-period',2,'Update Period',NULL,NULL,1715375892,1715375892),
+('update-profile',2,'Update Profile',NULL,NULL,1715375892,1715375892),
+('update-room',2,'Update Room',NULL,NULL,1715375892,1715375892),
+('update-schedule',2,'Update Schedule',NULL,NULL,1715375892,1715375892),
+('update-scheduledetail',2,'Update Schedule Detail',NULL,NULL,1715375892,1715375892),
+('update-staff',2,'Update Staff',NULL,NULL,1715375892,1715375892),
+('update-subject',2,'Update Subject',NULL,NULL,1715375892,1715375892),
+('update-theme',2,'Update Theme',NULL,NULL,1715375892,1715375892),
+('update-transaction',2,'Update Transaction',NULL,NULL,1715375892,1715375892),
+('view-archive',2,'View Archive',NULL,NULL,1715375892,1715375892),
+('view-archivecategory',2,'View Archive Category',NULL,NULL,1715375892,1715375892),
+('view-assessment',2,'View Assessment',NULL,NULL,1715375892,1715375892),
+('view-employment',2,'View Employment',NULL,NULL,1715375892,1715375892),
+('view-group',2,'View Group',NULL,NULL,1715375892,1715375892),
+('view-ispring-master',2,'View Ispring Master',NULL,NULL,1715375892,1715375892),
+('view-ispring-transaction',2,'View Ispring Transaction',NULL,NULL,1715375892,1715375892),
+('view-master',2,'View Master',NULL,NULL,1715375892,1715375892),
+('view-office',2,'View Office',NULL,NULL,1715375892,1715375892),
+('view-participant',2,'View Participant',NULL,NULL,1715375892,1715375892),
+('view-period',2,'View Period',NULL,NULL,1715375892,1715375892),
+('view-profile',2,'View Profile',NULL,NULL,1715375892,1715375892),
+('view-room',2,'View Room',NULL,NULL,1715375892,1715375892),
+('view-schedule',2,'View Schedule',NULL,NULL,1715375892,1715375892),
+('view-scheduledetail',2,'View Schedule Detail',NULL,NULL,1715375892,1715375892),
+('view-staff',2,'View Staff',NULL,NULL,1715375892,1715375892),
+('view-subject',2,'View Subject',NULL,NULL,1715375892,1715375892),
+('view-theme',2,'View Theme',NULL,NULL,1715375892,1715375892),
+('view-transaction',2,'View Transaction',NULL,NULL,1715375892,1715375892);
 
 /*Table structure for table `tx_auth_item_child` */
 
@@ -385,7 +339,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('create-ispring-master','create-scheduledetail'),
 ('create-ispring-master','create-subject'),
 ('create-ispring-transaction','create-assessment'),
-('create-ispring-transaction','create-assessmentdetail'),
 ('create-master','create-archivecategory'),
 ('create-master','create-employment'),
 ('create-master','create-office'),
@@ -401,7 +354,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('delete-ispring-master','delete-scheduledetail'),
 ('delete-ispring-master','delete-subject'),
 ('delete-ispring-transaction','delete-assessment'),
-('delete-ispring-transaction','delete-assessmentdetail'),
 ('delete-master','delete-archivecategory'),
 ('delete-master','delete-employment'),
 ('delete-master','delete-office'),
@@ -419,7 +371,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('index-ispring-master','index-scheduledetail'),
 ('index-ispring-master','index-subject'),
 ('index-ispring-transaction','index-assessment'),
-('index-ispring-transaction','index-assessmentdetail'),
 ('index-master','index-archivecategory'),
 ('index-master','index-employment'),
 ('index-master','index-office'),
@@ -476,7 +427,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('report-ispring-master','report-scheduledetail'),
 ('report-ispring-master','report-subject'),
 ('report-ispring-transaction','report-assessment'),
-('report-ispring-transaction','report-assessmentdetail'),
 ('report-master','report-archivecategory'),
 ('report-transaction','report-archive'),
 ('update-ispring-master','update-group'),
@@ -487,7 +437,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('update-ispring-master','update-scheduledetail'),
 ('update-ispring-master','update-subject'),
 ('update-ispring-transaction','update-assessment'),
-('update-ispring-transaction','update-assessmentdetail'),
 ('update-master','update-archivecategory'),
 ('update-master','update-employment'),
 ('update-master','update-office'),
@@ -503,7 +452,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('view-ispring-master','view-scheduledetail'),
 ('view-ispring-master','view-subject'),
 ('view-ispring-transaction','view-assessment'),
-('view-ispring-transaction','view-assessmentdetail'),
 ('view-master','view-archivecategory'),
 ('view-master','view-employment'),
 ('view-master','view-office'),
@@ -552,7 +500,7 @@ CREATE TABLE `tx_counter` (
 /*Data for the table `tx_counter` */
 
 insert  into `tx_counter`(`id`,`office_id`,`title`,`counter`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'SCD',102,'2024-05-08 22:28:20','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,101,'99e6a1230d4f11efa055c858c0b7f92f');
+(1,1,'SCD',1,'2024-05-11 04:20:52','2024-05-11 04:20:52',1,1,NULL,NULL,NULL,0,'2e19ca3d0f1311ef8849c858c0b7f92f');
 
 /*Table structure for table `tx_dashblock` */
 
@@ -912,16 +860,12 @@ CREATE TABLE `tx_schedule` (
   CONSTRAINT `Fk_schedule_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`),
   CONSTRAINT `Fk_schedule_staff` FOREIGN KEY (`staff_id`) REFERENCES `tx_staff` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule` */
 
 insert  into `tx_schedule`(`id`,`office_id`,`title`,`period_id`,`group_id`,`room_id`,`staff_id`,`date_start`,`date_end`,`token`,`token_time`,`is_asset`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(98,1,'00098-Nanta Es',2,12,2,1,'2024-05-10 13:18:27','2024-05-10 15:18:27','810045','2024-05-10 13:18:27',NULL,NULL,'2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,1,'1d627ffb0e9511ef9f9dc858c0b7f92f'),
-(99,1,'00099-Nanta Es',2,13,2,1,'2024-05-10 16:18:27','2024-05-10 18:18:27','458348','2024-05-10 16:18:27',NULL,NULL,'2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,1,'1d6651e40e9511ef9f9dc858c0b7f92f'),
-(100,1,'00100-Nanta Es',2,14,2,1,'2024-05-10 19:18:27','2024-05-10 21:18:27','636743','2024-05-10 13:18:43',NULL,NULL,'2024-05-10 13:18:27','2024-05-10 13:18:43',1,1,NULL,NULL,NULL,3,'1d68e8310e9511ef9f9dc858c0b7f92f'),
-(101,1,'00101-Nanta Es',2,15,2,1,'2024-05-10 22:18:27','2024-05-11 00:18:27','120969','2024-05-10 13:18:40',NULL,NULL,'2024-05-10 13:18:27','2024-05-10 13:18:40',1,1,NULL,NULL,NULL,5,'1d6b52510e9511ef9f9dc858c0b7f92f'),
-(102,1,'00102-Nanta Es',2,16,2,1,'2024-05-11 01:18:27','2024-05-11 03:18:27','622051','2024-05-10 16:17:05',NULL,NULL,'2024-05-10 13:18:27','2024-05-10 16:17:05',1,1,NULL,NULL,NULL,11,'1d6dbc1f0e9511ef9f9dc858c0b7f92f');
+(1,1,'00001-Bahasa Indonesia',2,12,2,1,'2024-05-11 04:20:32','2024-05-11 04:20:32','714041','2024-05-11 04:20:32',2,'','2024-05-11 04:20:52','2024-05-11 04:22:51',1,1,NULL,NULL,NULL,2,'2e16a6780f1311ef8849c858c0b7f92f');
 
 /*Table structure for table `tx_schedule_detail` */
 
@@ -935,7 +879,6 @@ CREATE TABLE `tx_schedule_detail` (
   `subject_type` int(11) DEFAULT NULL,
   `remark` tinytext DEFAULT NULL,
   `asset_name` varchar(100) DEFAULT NULL,
-  `asset_url` varchar(500) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -952,21 +895,12 @@ CREATE TABLE `tx_schedule_detail` (
   CONSTRAINT `Fk_schedule_detail_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`),
   CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=464 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tx_schedule_detail` */
 
-insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`subject_type`,`remark`,`asset_name`,`asset_url`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(454,1,98,14,3,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6471670e9511ef9f9dc858c0b7f92f'),
-(455,1,98,15,3,'Kimia',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d651c4f0e9511ef9f9dc858c0b7f92f'),
-(456,1,99,14,1,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d67080b0e9511ef9f9dc858c0b7f92f'),
-(457,1,99,15,1,'Kimia',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6798900e9511ef9f9dc858c0b7f92f'),
-(458,1,100,14,2,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d699c180e9511ef9f9dc858c0b7f92f'),
-(459,1,100,15,3,'Kimia',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6a2d660e9511ef9f9dc858c0b7f92f'),
-(460,1,101,14,2,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Matematika-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6c085b0e9511ef9f9dc858c0b7f92f'),
-(461,1,101,15,2,'Kimia',NULL,'/uploads/schedule/65a7fb0e28f7b/20240510-Kimia-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6c97720e9511ef9f9dc858c0b7f92f'),
-(462,1,102,14,2,'Matematika',NULL,'/uploads/schedule/65a7fb0e28f7b/20240511-Matematika-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6e722c0e9511ef9f9dc858c0b7f92f'),
-(463,1,102,15,1,'Kimia',NULL,'/uploads/schedule/65a7fb0e28f7b/20240511-Kimia-//index.html','2024-05-10 13:18:27','2024-05-10 13:18:27',1,1,NULL,NULL,NULL,0,'1d6f02c90e9511ef9f9dc858c0b7f92f');
+insert  into `tx_schedule_detail`(`id`,`office_id`,`schedule_id`,`subject_id`,`subject_type`,`remark`,`asset_name`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
+(1,1,1,15,2,'Kimia',NULL,'2024-05-11 04:20:52','2024-05-11 04:22:51',1,1,NULL,NULL,NULL,1,'2e1b034b0f1311ef8849c858c0b7f92f');
 
 /*Table structure for table `tx_session` */
 
@@ -984,11 +918,15 @@ CREATE TABLE `tx_session` (
 insert  into `tx_session`(`id`,`expire`,`data`) values 
 ('0ktffmjrmvuvaogsk0f2sruv2k',1715321312,'__flash|a:0:{}'),
 ('3mr835rk6rhlo2uckv8fihp101',1715334065,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('8fk7h7hqnsnkuhjr7288r3r1dg',1715378032,'__flash|a:0:{}'),
 ('8uf0ag3c0prp44gtu0ckhfo6lr',1715310928,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
 ('ff91gj3bstianlevuofja2bc05',1715309195,'__flash|a:0:{}'),
 ('ffbpvi0lo2nicemmpe45l2ns23',1715327727,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('gorjfjm9lj8pd4lighum2sk745',1715377922,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
 ('nepaijo35jnp2hud1eue9ar6a2',1715331377,'__flash|a:0:{}'),
-('qc9bopvcbcs24sig6lkmrf1ie6',1715266149,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
+('qc9bopvcbcs24sig6lkmrf1ie6',1715266149,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),
+('s7a005t823mfbejejnlq8f64uq',1715377427,'__flash|a:0:{}'),
+('uekimflc97ahlsesbpiam3fj8h',1715378047,'__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
 
 /*Table structure for table `tx_site_link` */
 
@@ -1154,14 +1092,14 @@ CREATE TABLE `tx_theme` (
 /*Data for the table `tx_theme` */
 
 insert  into `tx_theme`(`id`,`office_id`,`title`,`theme_type`,`content`,`asset_name`,`description`,`created_at`,`updated_at`,`created_by`,`updated_by`,`is_deleted`,`deleted_at`,`deleted_by`,`verlock`,`uuid`) values 
-(1,1,'Logo Frontend Header',1,NULL,NULL,'Logo Frontend Header','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da4765-0d47-11ef-a055-c858c0b7f92f'),
-(2,1,'Logo Frontend Footer',2,NULL,NULL,'Logo Frontend Footer','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da554a-0d47-11ef-a055-c858c0b7f92f'),
-(3,1,'Logo Backend Header',3,NULL,NULL,'Logo Backend Header','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da55c7-0d47-11ef-a055-c858c0b7f92f'),
-(4,1,'Logo Backend Footer',4,NULL,NULL,'Logo Backend Footer','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da55ff-0d47-11ef-a055-c858c0b7f92f'),
-(5,1,'Logo Report',5,NULL,NULL,'Logo Report','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da5637-0d47-11ef-a055-c858c0b7f92f'),
-(6,1,'Logo Invoice',6,NULL,NULL,'Logo Invoice','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da5674-0d47-11ef-a055-c858c0b7f92f'),
-(7,1,'Title',7,NULL,NULL,'Title','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da56ad-0d47-11ef-a055-c858c0b7f92f'),
-(8,1,'Content',8,NULL,NULL,'Content','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'d9da56e5-0d47-11ef-a055-c858c0b7f92f');
+(1,1,'Logo Frontend Header',1,NULL,NULL,'Logo Frontend Header','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe01c9-0f12-11ef-8849-c858c0b7f92f'),
+(2,1,'Logo Frontend Footer',2,NULL,NULL,'Logo Frontend Footer','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe04c4-0f12-11ef-8849-c858c0b7f92f'),
+(3,1,'Logo Backend Header',3,NULL,NULL,'Logo Backend Header','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe0520-0f12-11ef-8849-c858c0b7f92f'),
+(4,1,'Logo Backend Footer',4,NULL,NULL,'Logo Backend Footer','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe056d-0f12-11ef-8849-c858c0b7f92f'),
+(5,1,'Logo Report',5,NULL,NULL,'Logo Report','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe05b4-0f12-11ef-8849-c858c0b7f92f'),
+(6,1,'Logo Invoice',6,NULL,NULL,'Logo Invoice','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe0609-0f12-11ef-8849-c858c0b7f92f'),
+(7,1,'Title',7,NULL,NULL,'Title','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe064f-0f12-11ef-8849-c858c0b7f92f'),
+(8,1,'Content',8,NULL,NULL,'Content','2023-09-17 20:25:47','2023-09-17 20:25:47',1,1,NULL,NULL,NULL,0,'fffe0695-0f12-11ef-8849-c858c0b7f92f');
 
 /*Table structure for table `tx_user` */
 
@@ -1191,7 +1129,7 @@ CREATE TABLE `tx_user` (
 /*Data for the table `tx_user` */
 
 insert  into `tx_user`(`id`,`username`,`email`,`password_hash`,`auth_key`,`unconfirmed_email`,`registration_ip`,`flags`,`confirmed_at`,`blocked_at`,`updated_at`,`created_at`,`last_login_at`,`auth_tf_key`,`auth_tf_enabled`) values 
-(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715329315,NULL,0);
+(1,'admin','ombakrinai@gmail.com','$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1675777211,1675777211,1715376606,NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -17,7 +17,6 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $subject_type
  * @property string $remark
  * @property string $asset_name
- * @property string $asset_url
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -76,7 +75,6 @@ class ScheduleDetail extends \yii\db\ActiveRecord
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['asset_name'], 'string', 'max' => 100],
-            [['asset_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -115,7 +113,6 @@ class ScheduleDetail extends \yii\db\ActiveRecord
             'subject_type' => Yii::t('app', 'Subject Type'),
             'remark' => Yii::t('app', 'Remark'),
             'asset_name' => Yii::t('app', 'Asset Name'),
-            'asset_url' => Yii::t('app', 'Asset Url'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),

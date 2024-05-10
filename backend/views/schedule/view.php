@@ -140,7 +140,7 @@ $refresh = Html::a(
                                 if (empty($modelDetailItem->asset_name)) {
                                     echo Yii::t('app', 'Please upload files in zip');
                                 } else {
-                                    $textLink = Yii::$app->urlManager->baseUrl . $modelDetailItem->asset_url;
+                                    $textLink =  $modelDetailItem->getExtractUrl();
                                     echo Html::a(
                                         'Open',
                                         str_replace('admin', 'frontend/web', $textLink),

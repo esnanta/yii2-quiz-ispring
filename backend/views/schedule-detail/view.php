@@ -82,7 +82,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
             ],
 
             'asset_name',
-            'asset_url:url',
+
             [
                 'group'=>true,
                 'rowOptions'=>['class'=>'default']

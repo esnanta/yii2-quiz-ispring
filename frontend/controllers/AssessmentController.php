@@ -3,20 +3,18 @@
 namespace frontend\controllers;
 
 use common\domain\DataListUseCase;
-use common\helper\MessageHelper;
 use common\models\Assessment;
 use common\models\Participant;
 use common\models\Period;
-use common\models\reports\ExportAssessment;
+use common\models\Schedule;
+use common\models\Subject;
 use Yii;
 use frontend\models\AssessmentSearch;
-use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii2tech\spreadsheet\Spreadsheet;
+
 
 
 /**
@@ -50,7 +48,8 @@ class AssessmentController extends Controller
             $dataProvider->query->andWhere(['participant_id' => $participant->id]);
 
             $officeId = $participant->office_id;
-            $assessmentList = ArrayHelper::map(Assessment::find()
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
@@ -58,18 +57,26 @@ class AssessmentController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $subjectList = ArrayHelper::map(Subject::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $subjectTypeList = Assessment::getArraySubjectTypes();
+
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $officeId])
+                ->where(['office_id' => $participant->office_id])
                 ->andWhere(['id' => $participant->id])
                 ->asArray()->all(), 'id', 'title');
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'assessmentList' => $assessmentList,
+                'scheduleList' => $scheduleList,
+                'participantList' => $participantList,
                 'periodList' => $periodList,
-                'participantList' => $participantList
+                'subjectList' => $subjectList,
+                'subjectTypeList' => $subjectTypeList
             ]);
         } catch (\Exception $e){
             throw new NotFoundHttpException($e->getMessage());
@@ -89,12 +96,26 @@ class AssessmentController extends Controller
             ->where(['id'=>$id])
             ->one();
 
-            $assessmentList = ArrayHelper::map(Assessment::find()
-                ->where(['office_id' => $model->office_id])
+            $officeId = $model->office_id;
+
+            $scheduleList = ArrayHelper::map(Schedule::find()
+                ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
+            $periodList = ArrayHelper::map(Period::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $subjectList = ArrayHelper::map(Subject::find()
+                ->where(['office_id' => $officeId])
+                ->asArray()->all(), 'id', 'title');
+
+            $subjectTypeList = Assessment::getArraySubjectTypes();
+
+            //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
                 ->where(['office_id' => $model->office_id])
+                ->andWhere(['id' => $model->participant_id])
                 ->asArray()->all(), 'id', 'title');
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -102,7 +123,10 @@ class AssessmentController extends Controller
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'assessmentList' => $assessmentList,
+                    'scheduleList' => $scheduleList,
+                    'periodList' => $periodList,
+                    'subjectList' => $subjectList,
+                    'subjectTypeList' => $subjectTypeList,
                     'participantList' => $participantList
                 ]);
             }

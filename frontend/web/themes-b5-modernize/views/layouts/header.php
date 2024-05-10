@@ -29,9 +29,9 @@ if (!Yii::$app->user->isGuest) {
                 <?php
                 if (!Yii::$app->user->isGuest) :
                     ?>
-                    <a class="btn btn-md btn-primary" style="margin-right:2px"
-                       href="<?= str_replace('', '', Url::to(['assessment-detail/index'])) ?>">
-                        <?= Yii::t('app', 'Assessment') ?>
+                    <a class="btn btn-sm btn-primary" style="margin-right:2px"
+                       href="<?= str_replace('', '', Url::to(['site/index'])) ?>">
+                        <?= Yii::t('app', '<i class="fas fa-home"></i>') ?>
                     </a>
 
                 <?php endif; ?>

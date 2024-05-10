@@ -38,12 +38,10 @@ class ScheduleDetail extends BaseScheduleDetail
                 'extensions' => 'zip, rar, gz',
                 'tooBig' => 'Limit is 5MB'],
 
-            [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'subject_id', 'subject_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['subject_type'], 'string', 'max' => 4],
             [['asset_name'], 'string', 'max' => 100],
-            [['asset_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -61,8 +59,6 @@ class ScheduleDetail extends BaseScheduleDetail
         if ($this->isNewRecord) {
             $this->office_id    = $this->schedule->office_id;
         }
-
-        $this->asset_url = $this->getExtractUrl();
 
         return true;
     }
@@ -196,7 +192,6 @@ class ScheduleDetail extends BaseScheduleDetail
         } else {
             // if deletion successful, reset your file attributes
             $this->asset_name = null;
-            $this->asset_url = null;
         }
 
         return true;
@@ -236,8 +231,8 @@ class ScheduleDetail extends BaseScheduleDetail
      */
     public function getExtractUrl(): string
     {
-        $indexFile = '/index.html';
-        return $this->getPath() . '/' .$this->getExtractFolderName().'/'.$indexFile;
+        $indexFile = $this->getPath() . '/' .$this->getExtractFolderName().'/index.html';
+        return Yii::$app->urlManager->baseUrl . $indexFile;
     }
 
     private function getExtractFolderName(): string
@@ -271,7 +266,7 @@ class ScheduleDetail extends BaseScheduleDetail
     }
 
     public function getPath() : string {
-        $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
+        $officeUniqueId = $this->office->unique_id;
         return '/uploads/schedule/'.$officeUniqueId;
     }
 
@@ -290,8 +285,7 @@ class ScheduleDetail extends BaseScheduleDetail
                 //http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
                 $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
                     '&SCD=' . $this->id;
-                $textLink = Yii::$app->urlManager->baseUrl .
-                    $this->asset_url . $userinfo;
+                $textLink = $this->getExtractUrl() . $userinfo;
                 $linkLabel = Yii::t('app', 'Open');
                 $labelClass = LabelHelper::getButtonCssPrint();
             endif;

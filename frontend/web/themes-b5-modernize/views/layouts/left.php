@@ -51,12 +51,12 @@ function getMenu($_menuName, $_classIcon): string
                     </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Quiz Assessment</span>
+                        <span class="hide-menu">Quiz</span>
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
-                            getMenu('Detail', 'fa fa-angle-right'),
-                            ['/assessment-detail/index'],
+                            getMenu('Assessment', 'fa fa-angle-right'),
+                            ['/assessment/index'],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>

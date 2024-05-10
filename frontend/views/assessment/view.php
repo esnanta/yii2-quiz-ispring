@@ -10,7 +10,7 @@ use kartik\datecontrol\DateControl;
  * @var common\models\Assessment $model
  */
 
-$this->title = $model->quiz_title . '-'.$model->title;
+$this->title = $model->quiz_title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 

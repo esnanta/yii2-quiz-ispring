@@ -2,8 +2,6 @@
 
 namespace backend\controllers;
 
-
-use common\models\Schedule;
 use Yii;
 use common\models\ScheduleDetail;
 use common\models\ScheduleDetailSearch;

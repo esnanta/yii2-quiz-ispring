@@ -200,30 +200,34 @@ class SiteController extends Controller
                 ->where(['id'=>$scheduleDetailId])
                 ->one();
 
-            $scheduleId = $scheduleDetail->schedule->id;
-            $subjectId  = $scheduleDetail->subject_id;
-            $officeId   = $scheduleDetail->office_id;
-            $subjectType = $scheduleDetail->subject_type;
-
             $participant = Participant::find()
                 ->select('id')
                 ->where(['username' => $username])
                 ->one();
 
+            $scheduleId         = $scheduleDetail->schedule->id;
+            $periodId           = $scheduleDetail->schedule->period_id;
+            $subjectId          = $scheduleDetail->subject_id;
+            $officeId           = $scheduleDetail->office_id;
+            $subjectType        = $scheduleDetail->subject_type;
+            $participantId      = $participant->id;
+
             $assessment = Assessment::find()
-                ->where([
-                    'office_id'     => $officeId,
-                    'schedule_id'   => $scheduleId,
-                ])
-                ->one();
-            
-            $assessment = new Assessment();
-            $assessment->schedu_id                = $scheduleId;
+                ->where(['office_id' => $officeId,
+                        'schedule_detail_id'  => $scheduleDetailId,
+                        'participant_id' => $participantId
+                ])->one();
+
+            if(empty($assessment)):
+                $assessment = new Assessment();
+            endif;
+            $assessment->office_id                = $officeId;
+            $assessment->period_id                = $periodId;
+            $assessment->schedule_id              = $scheduleId;
             $assessment->schedule_detail_id       = $scheduleDetailId;
             $assessment->subject_type             = $subjectType;
             $assessment->subject_id               = $subjectId;
-            $assessment->office_id                = $officeId;
-            $assessment->participant_id           = $participant->id;
+            $assessment->participant_id           = $participantId;
             $assessment->username                 = $username;
             $assessment->app_version              = $_POST['v'];
             $assessment->earned_points            = $_POST['sp'];

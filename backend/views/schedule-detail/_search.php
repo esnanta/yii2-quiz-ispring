@@ -29,8 +29,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'asset_name') ?>
 
-    <?php // echo $form->field($model, 'asset_url') ?>
-
     <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>
