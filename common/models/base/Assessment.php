@@ -155,7 +155,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getAssessment()
     {
-        return $this->hasOne(\common\models\Assessment::className(), ['id' => 'assessment_id']);
+        return $this->hasOne(\common\models\Assessment::class, ['id' => 'assessment_id']);
     }
         
     /**
@@ -163,7 +163,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
     }
         
     /**
@@ -171,7 +171,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getParticipant()
     {
-        return $this->hasOne(\common\models\Participant::className(), ['id' => 'participant_id']);
+        return $this->hasOne(\common\models\Participant::class, ['id' => 'participant_id']);
     }
         
     /**
@@ -179,7 +179,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
+        return $this->hasOne(\common\models\Period::class, ['id' => 'period_id']);
     }
         
     /**
@@ -187,7 +187,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getScheduleDetail()
     {
-        return $this->hasOne(\common\models\ScheduleDetail::className(), ['id' => 'schedule_detail_id']);
+        return $this->hasOne(\common\models\ScheduleDetail::class, ['id' => 'schedule_detail_id']);
     }
         
     /**
@@ -195,7 +195,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getSubject()
     {
-        return $this->hasOne(\common\models\Subject::className(), ['id' => 'subject_id']);
+        return $this->hasOne(\common\models\Subject::class, ['id' => 'subject_id']);
     }
     
     /**
@@ -206,18 +206,18 @@ class Assessment extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'uuid' => [
-                'class' => UUIDBehavior::className(),
+                'class' => UUIDBehavior::class,
                 'column' => 'uuid',
             ],
         ];

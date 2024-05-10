@@ -5,30 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/AssessmentDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/DummyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DummyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/_search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment-detail/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/AssessmentDetailSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/AssessmentDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Office.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Office.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Participant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Period.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Period.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/models/AssessmentDetailSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/models/AssessmentSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/_search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment-detail/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/ScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/ScheduleDetail.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -426,7 +404,7 @@
       <workItem from="1715174979897" duration="8721000" />
       <workItem from="1715237937850" duration="6518000" />
       <workItem from="1715249590283" duration="14408000" />
-      <workItem from="1715307422641" duration="1202000" />
+      <workItem from="1715307422641" duration="1557000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

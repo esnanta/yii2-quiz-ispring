@@ -161,7 +161,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getArchives()
     {
-        return $this->hasMany(\common\models\Archive::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Archive::class, ['office_id' => 'id']);
     }
         
     /**
@@ -169,7 +169,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getArchiveCategories()
     {
-        return $this->hasMany(\common\models\ArchiveCategory::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\ArchiveCategory::class, ['office_id' => 'id']);
     }
         
     /**
@@ -177,7 +177,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::class, ['office_id' => 'id']);
     }
         
     /**
@@ -185,7 +185,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getAssessmentDetails()
     {
-        return $this->hasMany(\common\models\Assessment::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::class, ['office_id' => 'id']);
     }
         
     /**
@@ -193,7 +193,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getCounters()
     {
-        return $this->hasMany(\common\models\Counter::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Counter::class, ['office_id' => 'id']);
     }
         
     /**
@@ -201,7 +201,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getEmployments()
     {
-        return $this->hasMany(\common\models\Employment::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Employment::class, ['office_id' => 'id']);
     }
         
     /**
@@ -209,7 +209,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getGroups()
     {
-        return $this->hasMany(\common\models\Group::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Group::class, ['office_id' => 'id']);
     }
         
     /**
@@ -217,7 +217,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\common\models\User::class, ['id' => 'user_id']);
     }
         
     /**
@@ -225,7 +225,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getParticipants()
     {
-        return $this->hasMany(\common\models\Participant::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Participant::class, ['office_id' => 'id']);
     }
         
     /**
@@ -233,7 +233,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getRooms()
     {
-        return $this->hasMany(\common\models\Room::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Room::class, ['office_id' => 'id']);
     }
         
     /**
@@ -241,7 +241,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasMany(\common\models\Staff::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Staff::class, ['office_id' => 'id']);
     }
         
     /**
@@ -249,7 +249,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getSubjects()
     {
-        return $this->hasMany(\common\models\Subject::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Subject::class, ['office_id' => 'id']);
     }
         
     /**
@@ -257,7 +257,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getThemes()
     {
-        return $this->hasMany(\common\models\Theme::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Theme::class, ['office_id' => 'id']);
     }
     
     /**
@@ -268,18 +268,18 @@ class Office extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'uuid' => [
-                'class' => UUIDBehavior::className(),
+                'class' => UUIDBehavior::class,
                 'column' => 'uuid',
             ],
         ];

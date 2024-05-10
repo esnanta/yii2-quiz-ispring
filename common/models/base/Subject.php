@@ -119,7 +119,7 @@ class Subject extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::className(), ['subject_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::class, ['subject_id' => 'id']);
     }
         
     /**
@@ -127,7 +127,7 @@ class Subject extends \yii\db\ActiveRecord
      */
     public function getScheduleDetails()
     {
-        return $this->hasMany(\common\models\ScheduleDetail::className(), ['subject_id' => 'id']);
+        return $this->hasMany(\common\models\ScheduleDetail::class, ['subject_id' => 'id']);
     }
         
     /**
@@ -135,7 +135,7 @@ class Subject extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
     }
     
     /**
@@ -146,18 +146,18 @@ class Subject extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'uuid' => [
-                'class' => UUIDBehavior::className(),
+                'class' => UUIDBehavior::class,
                 'column' => 'uuid',
             ],
         ];

@@ -14,6 +14,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $office_id
  * @property integer $schedule_id
  * @property integer $subject_id
+ * @property integer $subject_type
  * @property string $remark
  * @property string $asset_name
  * @property string $asset_url
@@ -27,6 +28,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \common\models\Assessment[] $assessments
  * @property \common\models\Office $office
  * @property \common\models\Schedule $schedule
  * @property \common\models\Subject $subject
@@ -57,6 +59,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'assessments',
             'office',
             'schedule',
             'subject'
@@ -72,6 +75,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
             [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['subject_type'], 'string', 'max' => 4],
             [['asset_name'], 'string', 'max' => 100],
             [['asset_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
@@ -109,6 +113,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
             'office_id' => Yii::t('app', 'Office ID'),
             'schedule_id' => Yii::t('app', 'Schedule ID'),
             'subject_id' => Yii::t('app', 'Subject ID'),
+            'subject_type' => Yii::t('app', 'Subject Type'),
             'remark' => Yii::t('app', 'Remark'),
             'asset_name' => Yii::t('app', 'Asset Name'),
             'asset_url' => Yii::t('app', 'Asset Url'),
@@ -121,9 +126,17 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAssessments()
+    {
+        return $this->hasMany(\common\models\Assessment::class, ['schedule_detail_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
     }
         
     /**
@@ -131,7 +144,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
      */
     public function getSchedule()
     {
-        return $this->hasOne(\common\models\Schedule::className(), ['id' => 'schedule_id']);
+        return $this->hasOne(\common\models\Schedule::class, ['id' => 'schedule_id']);
     }
         
     /**
@@ -139,7 +152,7 @@ class ScheduleDetail extends \yii\db\ActiveRecord
      */
     public function getSubject()
     {
-        return $this->hasOne(\common\models\Subject::className(), ['id' => 'subject_id']);
+        return $this->hasOne(\common\models\Subject::class, ['id' => 'subject_id']);
     }
     
     /**
@@ -150,18 +163,18 @@ class ScheduleDetail extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'uuid' => [
-                'class' => UUIDBehavior::className(),
+                'class' => UUIDBehavior::class,
                 'column' => 'uuid',
             ],
         ];

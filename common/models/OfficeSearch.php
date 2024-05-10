@@ -23,7 +23,7 @@ class OfficeSearch extends Office
     {
         return [
             [
-                'class' => DateRangeBehavior::className(),
+                'class' => DateRangeBehavior::class,
                 'attribute' => 'created_at',
                 'dateStartAttribute' => 'date_first',
                 'dateEndAttribute' => 'date_last',

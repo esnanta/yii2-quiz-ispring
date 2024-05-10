@@ -144,7 +144,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::className(), ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::class, ['schedule_id' => 'id']);
     }
         
     /**
@@ -152,7 +152,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getGroup()
     {
-        return $this->hasOne(\common\models\Group::className(), ['id' => 'group_id']);
+        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
     }
         
     /**
@@ -160,7 +160,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
     }
         
     /**
@@ -168,7 +168,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
+        return $this->hasOne(\common\models\Period::class, ['id' => 'period_id']);
     }
         
     /**
@@ -176,7 +176,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getRoom()
     {
-        return $this->hasOne(\common\models\Room::className(), ['id' => 'room_id']);
+        return $this->hasOne(\common\models\Room::class, ['id' => 'room_id']);
     }
         
     /**
@@ -184,7 +184,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasOne(\common\models\Staff::className(), ['id' => 'staff_id']);
+        return $this->hasOne(\common\models\Staff::class, ['id' => 'staff_id']);
     }
         
     /**
@@ -192,7 +192,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getScheduleDetails()
     {
-        return $this->hasMany(\common\models\ScheduleDetail::className(), ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\ScheduleDetail::class, ['schedule_id' => 'id']);
     }
     
     /**
@@ -203,18 +203,18 @@ class Schedule extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'uuid' => [
-                'class' => UUIDBehavior::className(),
+                'class' => UUIDBehavior::class,
                 'column' => 'uuid',
             ],
         ];

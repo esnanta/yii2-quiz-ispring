@@ -115,7 +115,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getAuthors()
     {
-        return $this->hasMany(\common\models\Author::className(), ['user_id' => 'id']);
+        return $this->hasMany(\common\models\Author::class, ['user_id' => 'id']);
     }
         
     /**
@@ -123,7 +123,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getProfile()
     {
-        return $this->hasOne(\common\models\Profile::className(), ['user_id' => 'id']);
+        return $this->hasOne(\common\models\Profile::class, ['user_id' => 'id']);
     }
         
     /**
@@ -131,7 +131,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getSocialAccounts()
     {
-        return $this->hasMany(\common\models\SocialAccount::className(), ['user_id' => 'id']);
+        return $this->hasMany(\common\models\SocialAccount::class, ['user_id' => 'id']);
     }
     
     /**
@@ -142,13 +142,13 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => new \yii\db\Expression('NOW()'),
             ],
             'blameable' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],

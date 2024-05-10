@@ -74,7 +74,7 @@ class AuthAssignment extends \yii\db\ActiveRecord
      */
     public function getItemName()
     {
-        return $this->hasOne(\common\models\AuthItem::className(), ['name' => 'item_name']);
+        return $this->hasOne(\common\models\AuthItem::class, ['name' => 'item_name']);
     }
     
 }
