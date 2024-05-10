@@ -133,29 +133,29 @@ class DummyController extends Controller
 
         $subject2 = new Subject();
         $subject2->office_id = $officeId;
-        $subject2->title = 'Kimia Numerasi';
+        $subject2->title = 'Kimia';
         $subject2->sequence = '2';
-        $subject2->description = 'Kimia Numerasi';
+        $subject2->description = 'Kimia';
         $subject2->save();
 
         $subject3 = new Subject();
         $subject3->office_id = $officeId;
-        $subject3->title = 'Kimia Literasi';
-        $subject3->sequence = '2';
-        $subject3->description = 'Kimia Literasi';
+        $subject3->title = 'Fisika';
+        $subject3->sequence = '3';
+        $subject3->description = 'Fisika';
         $subject3->save();
 
         $subject4 = new Subject();
         $subject4->office_id = $officeId;
-        $subject4->title = 'Kimia Umum';
-        $subject4->sequence = '3';
-        $subject4->description = 'Kimia Umum';
+        $subject4->title = 'Bahasa Indonesia';
+        $subject4->sequence = '4';
+        $subject4->description = 'Bahasa Indonesia';
         $subject4->save();
 
         $subject5 = new Subject();
         $subject5->office_id = $officeId;
         $subject5->title = 'Sejarah';
-        $subject5->sequence = '3';
+        $subject5->sequence = '5';
         $subject5->description = 'Sejarah';
         $subject5->save();
 
@@ -269,13 +269,16 @@ class DummyController extends Controller
                 $schedule->date_end = $dateEnd;
                 $schedule->save();
 
-                $subjects = Subject::find()->where(['office_id' => $officeId])->all();
+                $subjects = Subject::find()
+                    ->where(['office_id' => $officeId])
+                    ->limit(2)
+                    ->all();
                 foreach ($subjects as $subjectItem) {
                     $scheduleDetail = new ScheduleDetail();
                     $scheduleDetail->office_id = $officeId;
                     $scheduleDetail->schedule_id = $schedule->id;
                     $scheduleDetail->subject_id = $subjectItem->id;
-                    $scheduleDetail->subject_type = '1';
+                    $scheduleDetail->subject_type = (string)(rand(1,3));
                     $scheduleDetail->remark = $subjectItem->description;
                     $scheduleDetail->save();
                 }

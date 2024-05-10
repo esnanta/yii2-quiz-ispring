@@ -26,7 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'roomList' => $roomList,
                 'groupList' => $groupList,
                 'periodList' => $periodList,
-                'staffList' => $staffList
+                'staffList' => $staffList,
+                'subjectTypeList' => $subjectTypeList
             ]) 
             ?>
         </div>

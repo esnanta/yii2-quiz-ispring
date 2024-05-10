@@ -118,6 +118,7 @@ $refresh = Html::a(
                         <th class="center">#</th>
                         <th><?= Yii::t('app', 'Subject'); ?></th>
                         <th><?= Yii::t('app', 'Remark'); ?></th>
+                        <th><?= Yii::t('app', 'Subject Type'); ?></th>
                         <th class="center"><?= Yii::t('app', 'Asset'); ?></th>
                         <th class="right"><?= Yii::t('app', ''); ?></th>
                     </tr>
@@ -133,6 +134,7 @@ $refresh = Html::a(
                             <td class="center"><?= ($i + 1); ?></td>
                             <td class="left"><?= $modelDetailItem->subject->title; ?></td>
                             <td class="left"><?= $modelDetailItem->remark; ?></td>
+                            <td class="left"><?= $modelDetailItem->getOneSubjectType($modelDetailItem->subject_type); ?></td>
                             <td class="center">
                                 <?php
                                 if (empty($modelDetailItem->asset_name)) {

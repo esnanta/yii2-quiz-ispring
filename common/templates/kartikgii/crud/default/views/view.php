@@ -61,7 +61,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 ],
                 'type' => DetailView::INPUT_WIDGET,
                 'widgetOptions' => [
-                    'class' => DateControl::classname(),
+                    'class' => DateControl::class,
                     'type' => DateControl::FORMAT_DATE
                 ]
             ],\n";
@@ -77,7 +77,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 ],
                 'type' => DetailView::INPUT_WIDGET,
                 'widgetOptions' => [
-                    'class' => DateControl::classname(),
+                    'class' => DateControl::class,
                     'type' => DateControl::FORMAT_TIME
                 ]
             ],\n";
@@ -92,7 +92,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 ],
                 'type' => DetailView::INPUT_WIDGET,
                 'widgetOptions' => [
-                    'class' => DateControl::classname(),
+                    'class' => DateControl::class,
                     'type' => DateControl::FORMAT_DATETIME
                 ]
             ],\n";

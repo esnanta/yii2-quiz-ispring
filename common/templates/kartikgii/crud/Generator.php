@@ -64,8 +64,8 @@ class Generator extends \yii\gii\generators\crud\Generator
             [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
             [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-            [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
-            [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
+            [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::class]],
+            [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::class]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
             [['controllerClass', 'searchModelClass'], 'validateNewClass'],
@@ -248,11 +248,11 @@ class Generator extends \yii\gii\generators\crud\Generator
             //return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
             return "'$attribute' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter ".(isset($attributeLabels[$attribute]) ? $attributeLabels[$attribute] : $attribute)."...','rows' => 6]],";
         } elseif ($column->type === 'date') {
-            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],";
+            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],";
         } elseif ($column->type === 'time') {
-            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_TIME]],";
+            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_TIME]],";
         } elseif ($column->type === 'datetime' || $column->type === 'timestamp') {
-            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],";
+            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::class,'options' => ['type' => DateControl::FORMAT_DATE]],";
         } else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
                 $input = 'INPUT_PASSWORD';

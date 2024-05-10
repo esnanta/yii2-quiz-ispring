@@ -49,7 +49,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -69,7 +69,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 ?>
             'access' => [
-                'class' => \yii\filters\AccessControl::className(),
+                'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,

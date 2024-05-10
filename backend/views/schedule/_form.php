@@ -98,7 +98,8 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
             'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'ScheduleDetail')),
             'content' => $this->render('_formScheduleDetail', [
                 'row' => ArrayHelper::toArray($model->scheduleDetails),
-                'subjectList' => $subjectList
+                'subjectList' => $subjectList,
+                'subjectTypeList' => $subjectTypeList
             ]),
         ],
     ];

@@ -42,21 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'title',
-            [
-                'attribute'=>'subject_type',
-                'vAlign'=>'middle',
-                'width'=>'120px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->subject_type!=null) ? $model->getOneSubjectType($model->subject_type):'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$subjectTypeList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
-                ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
             'description:ntext',
             'sequence',
             [

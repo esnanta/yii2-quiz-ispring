@@ -38,7 +38,22 @@ echo TabularForm::widget([
             'columnOptions' => ['width' => '200px']
         ],
 
-        'remark' => ['type' => TabularForm::INPUT_TEXT],
+        'remark' => [
+            'label' => Yii::t('app', 'Remark'),
+            'type' => TabularForm::INPUT_TEXT
+        ],
+        'subject_type' => [
+            'label' => Yii::t('app', 'Subject Type'),
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => Select2::class,
+            'options' => [
+                'data' => $subjectTypeList,
+                'options' => [
+                    'placeholder' => Yii::t('app', ''),
+                ],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
         //'asset' => ['type' => TabularForm::INPUT_FILE],
         'del' => [
             'type' => 'raw',

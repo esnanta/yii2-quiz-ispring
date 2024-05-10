@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
+use common\models\ScheduleDetail;
 use common\models\Subject;
 use Yii;
 use common\models\Schedule;
@@ -143,6 +144,7 @@ class ScheduleController extends Controller
             $groupList = DataListUseCase::getGroup();
             $subjectList = DataListUseCase::getSubject();
             $staffList = DataListUseCase::getStaff();
+            $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
@@ -155,7 +157,8 @@ class ScheduleController extends Controller
                     'roomList' => $roomList,
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
-                    'staffList' => $staffList
+                    'staffList' => $staffList,
+                    'subjectTypeList' => $subjectTypeList
                 ]);
             }
         } else {
@@ -180,6 +183,7 @@ class ScheduleController extends Controller
             $groupList = DataListUseCase::getGroup();
             $subjectList = DataListUseCase::getSubject();
             $staffList = DataListUseCase::getStaff();
+            $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
@@ -193,7 +197,8 @@ class ScheduleController extends Controller
                     'roomList' => $roomList,
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
-                    'staffList' => $staffList
+                    'staffList' => $staffList,
+                    'subjectTypeList' => $subjectTypeList
                 ]);
             }
         } else {
@@ -266,6 +271,7 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->request->isAjax) {
             $subjectList = DataListUseCase::getSubject();
+            $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             $row = Yii::$app->request->post('ScheduleDetail');
             if (!empty($row)) {
@@ -275,7 +281,8 @@ class ScheduleController extends Controller
                 $row[] = [];
             return $this->renderAjax('_formScheduleDetail', [
                 'row' => $row,
-                'subjectList' => $subjectList
+                'subjectList' => $subjectList,
+                'subjectTypeList'=>$subjectTypeList
             ]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

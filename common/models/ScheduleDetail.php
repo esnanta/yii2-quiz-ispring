@@ -41,6 +41,7 @@ class ScheduleDetail extends BaseScheduleDetail
             [['office_id', 'schedule_id', 'subject_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['subject_type'], 'string', 'max' => 4],
             [['asset_name'], 'string', 'max' => 100],
             [['asset_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],

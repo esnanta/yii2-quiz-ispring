@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 'roomList' => $roomList,
                 'groupList' => $groupList,
                 'periodList' => $periodList,
-                'staffList' => $staffList
+                'staffList' => $staffList,
+                'subjectTypeList' => $subjectTypeList
             ])
             ?>
         </div>
