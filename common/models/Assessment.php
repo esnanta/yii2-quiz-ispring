@@ -97,7 +97,7 @@ class Assessment extends BaseAssessment
         ];
     }
 
-    public static function getOneIsWork($_module = null)
+    public static function getOneWorkStatus($_module = null)
     {
         if($_module)
         {

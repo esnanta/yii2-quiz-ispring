@@ -76,25 +76,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->subject_id!=null) ? $model->subject->title:'';
+                    return ($model->subject_id!=null) ?
+                        $model->subject->title . $model->getOneSubjectType($model->subject_type) :'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
                 'filter' => $subjectList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
-                ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
-            [
-                'attribute'=>'subject_type',
-                'vAlign'=>'middle',
-                'width'=>'120px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->subject_type!=null) ? $model->getOneSubjectType($model->subject_type):'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$subjectTypeList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],
@@ -145,6 +131,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>function ($model, $key, $index, $widget) {
                     return gmdate("H:i:s", $model->used_time);
                 },
+            ],
+            [
+                'attribute'=>'work_status',
+                'vAlign'=>'middle',
+                'width'=>'120px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->work_status!=null) ? $model->getOneWorkStatus($model->work_status):'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$workStatusList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
             ],
             [
                 'class' => 'common\widgets\ActionColumn',

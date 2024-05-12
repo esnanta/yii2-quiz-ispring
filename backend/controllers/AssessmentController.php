@@ -50,6 +50,7 @@ class AssessmentController extends Controller
             $periodList = DataListUseCase::getPeriod();
             $subjectList = DataListUseCase::getSubject();
             $subjectTypeList = Assessment::getArraySubjectTypes();
+            $workStatusList = Assessment::getArrayWorkStatus();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -58,7 +59,8 @@ class AssessmentController extends Controller
                 'participantList' => $participantList,
                 'periodList' => $periodList,
                 'subjectList' => $subjectList,
-                'subjectTypeList' => $subjectTypeList
+                'subjectTypeList' => $subjectTypeList,
+                'workStatusList' => $workStatusList,
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

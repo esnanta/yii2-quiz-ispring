@@ -173,14 +173,32 @@ $refresh = Html::a(
 
         <?php } ?>
 
-        <?php if ($providerAssessment->totalCount)
-        {
-            echo '<hr>';
-            echo $this->render('view_assessment', [
-                'providerAssessment' => $providerAssessment,
-            ]);
-        }
-        ?>
+        <ul class="nav nav-tabs">
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>-->
+<!--            </li>-->
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#detail">Detail</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+<!--            <div class="tab-pane fade show active" id="summary">-->
+<!--                <p>This is the Home content.</p>-->
+<!--            </div>-->
+            <div class="tab-pane fade show active" id="detail">
+                <?php if ($providerAssessment->totalCount)
+                {
+                    echo $this->render('view_assessment', [
+                        'providerAssessment' => $providerAssessment,
+                    ]);
+                }
+                ?>
+            </div>
+        </div>
+
+
+        <br>
 
         <div class="row">
             <div class="col-lg-4 col-sm-5">

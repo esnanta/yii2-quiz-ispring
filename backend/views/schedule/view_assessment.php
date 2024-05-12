@@ -29,12 +29,16 @@ use yii\helpers\Html;
         $modelDetails = $providerAssessment->getModels();
         foreach ($modelDetails as $i => $modelDetailItem) {
             $subjectType = $modelDetailItem->getOneSubjectType($modelDetailItem->subject_type);
+            $wokStatus = $modelDetailItem->getOneWorkStatus($modelDetailItem->work_status);
             ?>
-
             <tr>
                 <td class="center"><?= ($i + 1); ?></td>
-                <td class="left"><?= $modelDetailItem->participant->title; ?></td>
-                <td class="left"><?= $modelDetailItem->subject->title.'<br>'.$subjectType; ?></td>
+                <td class="left">
+                    <?= $modelDetailItem->participant->title . '<br>' . $wokStatus; ?>
+                </td>
+                <td class="left">
+                    <?= $modelDetailItem->subject->title . '<br>' . $subjectType; ?>
+                </td>
                 <td class="left"><?= $modelDetailItem->earned_points; ?></td>
                 <td class="left"><?= $modelDetailItem->passing_score; ?></td>
                 <td class="left"><?= $modelDetailItem->gained_score; ?></td>
