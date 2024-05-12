@@ -321,4 +321,20 @@ class ScheduleController extends Controller
             return Json::encode(['success' => false, 'message' => 'Record not found']);
         }
     }
+
+    public function actionOpen($id, $title)
+    {
+        $scheduleDetail = ScheduleDetail::findOne($id);
+        $currentTime = strtotime("now");
+        $timer = $scheduleDetail->schedule->getTimer();
+        $textLink = '';
+
+        if ($timer > $currentTime) :
+            $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
+                '&SCD=' . $scheduleDetail->id;
+            $textLink = $scheduleDetail->getExtractUrl() . $userinfo;
+        endif;
+
+        $this->redirect(str_replace('admin/','',$textLink));
+    }
 }

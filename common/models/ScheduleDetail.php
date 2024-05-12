@@ -78,7 +78,6 @@ class ScheduleDetail extends BaseScheduleDetail
         if($_module)
         {
             $arrayModule = self::getArraySubjectTypes();
-
             switch ($_module) {
                 case ($_module == self::SUBJECT_TYPE_GENERAL):
                     $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
@@ -92,9 +91,7 @@ class ScheduleDetail extends BaseScheduleDetail
                 default:
                     $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
-
             return $returnValue;
-
         }
         else
             return;
@@ -270,26 +267,41 @@ class ScheduleDetail extends BaseScheduleDetail
         return '/uploads/schedule/'.$officeUniqueId;
     }
 
-    public function getAssetButton(): string
+    /**
+     * $participantId = 0 means admin level. will be accessed from backend
+     */
+    public function getAssetButton($participantId): string
     {
         $value = '<i>Asset not available</i>';
         if (!empty($this->asset_name)) {
             $currentTime = strtotime("now");
             $timer = $this->schedule->getTimer();
 
-            $textLink = '';
             $linkLabel = Yii::t('app', 'Closed');
             $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
+            $value = Html::a($linkLabel, ['schedule/open','id'=>$this->id,'title'=>$this->schedule->title], ['class' => $labelClass]);
 
             if ($timer > $currentTime) :
-                //http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
-                $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
-                    '&SCD=' . $this->id;
-                $textLink = $this->getExtractUrl() . $userinfo;
                 $linkLabel = Yii::t('app', 'Open');
                 $labelClass = LabelHelper::getButtonCssPrint();
+                $value = Html::a($linkLabel, ['schedule/open','id'=>$this->id,'title'=>$this->schedule->title], ['class' => $labelClass]);
             endif;
-            $value = Html::a($linkLabel, $textLink, ['class' => $labelClass]);
+        }
+
+        if($participantId == 0){
+            return $value;
+        } else {
+            $assessment = Assessment::find()
+                ->where(['schedule_detail_id' => $this->id])
+                ->andWhere(['office_id' => $this->office_id])
+                ->andWhere(['participant_id' => $participantId])
+                ->one();
+
+            if (!empty($assessment)):
+                if ($assessment->work_status == Assessment::WORK_STATUS_SUBMITTED):
+                    $value = Yii::t('app', 'Submitted');
+                endif;
+            endif;
         }
 
         return $value;

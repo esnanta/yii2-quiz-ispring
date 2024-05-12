@@ -99,7 +99,7 @@ $this->title = Yii::$app->name;
                             </td>
                             <td class="left">
                                 <?php foreach ($scheduleItem->scheduleDetails as $scheduleDetailItem) {
-                                    echo $scheduleDetailItem->getAssetButton();
+                                    echo $scheduleDetailItem->getAssetButton($participant->id);
                                 } ?>
                             </td>
                         </tr>

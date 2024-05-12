@@ -62,7 +62,7 @@ if (!Yii::$app->user->isGuest) {
                                 <?=
                                 Html::a(
                                     'Logout',
-                                    ['/user/logout'],
+                                    ['/site/logout'],
                                     [
                                         'data-method' => 'POST',
                                         'data-confirm' => "Logout?",

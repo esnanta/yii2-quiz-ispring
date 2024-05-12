@@ -5,21 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
+      <change afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/reset data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/reset data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleDetailController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule-detail/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-detail/_search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule-detail/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-detail/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssessmentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/models/ScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleDetail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/ScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/ScheduleDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Schedule.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +280,7 @@
     "PHP Script.StaffController.php.executor": "Debug",
     "PHP Script.yii-quiz-ispring.executor": "Run",
     "PHP Web Page.Unnamed.executor": "Run",
-    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
+    "PHP Web Page.yii2-quiz-ispring.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -422,7 +423,9 @@
       <workItem from="1715328309437" duration="6179000" />
       <workItem from="1715341962166" duration="812000" />
       <workItem from="1715352118002" duration="3207000" />
-      <workItem from="1715375930123" duration="3447000" />
+      <workItem from="1715375930123" duration="3687000" />
+      <workItem from="1715438459978" duration="213000" />
+      <workItem from="1715484235386" duration="9868000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -453,17 +456,5 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="reorder left menu" />
     <option name="LAST_COMMIT_MESSAGE" value="reorder left menu" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="NONE" type="php">
-          <url>file://$PROJECT_DIR$/frontend/controllers/AssessmentController.php</url>
-          <line>49</line>
-          <log-expression expression="            $scheduleList = ArrayHelper::map(Schedule::find()&#10;                -&gt;where(['office_id' =&gt; $officeId])&#10;                -&gt;asArray()-&gt;all(), 'id', 'title');&#10;&#10;            $periodList = ArrayHelper::map(Period::find()&#10;                -&gt;where(['office_id' =&gt; $officeId])&#10;                -&gt;asArray()-&gt;all(), 'id', 'title');&#10;&#10;            $subjectList = ArrayHelper::map(Subject::find()&#10;                -&gt;where(['office_id' =&gt; $officeId])&#10;                -&gt;asArray()-&gt;all(), 'id', 'title');&#10;&#10;            $subjectTypeList = Assessment::getArraySubjectTypes();" language="PHP" />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

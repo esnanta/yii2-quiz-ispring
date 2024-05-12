@@ -83,12 +83,11 @@ class Schedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
             [['token'], 'string', 'max' => 6],
-            [['is_asset'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']

@@ -140,12 +140,7 @@ $refresh = Html::a(
                                 if (empty($modelDetailItem->asset_name)) {
                                     echo Yii::t('app', 'Please upload files in zip');
                                 } else {
-                                    $textLink =  $modelDetailItem->getExtractUrl();
-                                    echo Html::a(
-                                        'Open',
-                                        str_replace('admin', 'frontend/web', $textLink),
-                                        ['class' => LabelHelper::getButtonCssPlus()]
-                                    );
+                                    echo $modelDetailItem->getAssetButton(0);
                                 }
                                 ?></td>
                             <td class="right">
