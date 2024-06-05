@@ -9,15 +9,12 @@
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/6df8bd21/" isTestSource="false" packagePrefix="kartik\plugins\tabs\" />
-      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/ecb9cc1c/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/backend/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/backend/web/assets" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/web/assets" />
       <excludeFolder url="file://$MODULE_DIR$/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/alchemy/zippy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bajadev/yii2-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
@@ -43,8 +40,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/verify" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/components/flag-icon-css" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/collections" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
@@ -118,7 +113,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/pdepend/pdepend" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/version" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/php-cs-fixer/diff" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpmd/phpmd" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpspec/php-diff" />
@@ -129,7 +123,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-client" />
@@ -185,8 +178,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/thtmorais/yii2-test" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/victor78/yii2-zipper" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/victor78/zippy-ext" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/warrence/yii2-kartikgii" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yii2tech/ar-softdelete" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yii2tech/spreadsheet" />

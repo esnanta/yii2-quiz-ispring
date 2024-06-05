@@ -2,17 +2,18 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
-use common\helper\LabelHelper;
-use FilesystemIterator;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use Yii;
-use \common\models\base\ScheduleDetail as BaseScheduleDetail;
 use yii\base\Exception;
 use yii\bootstrap5\Html;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ZipArchive;
+
+use common\helper\LabelHelper;
+use common\models\base\ScheduleDetail as BaseScheduleDetail;
 
 /**
  * This is the model class for table "tx_schedule_detail".
@@ -202,10 +203,12 @@ class ScheduleDetail extends BaseScheduleDetail
         //Get the file then extract
         //Source located at backend
         $fileSource = $this->getAssetFile();
-        $zipArchive = Yii::$app->zipper->open($fileSource, 'zip');
+        $extractDir = $this->getExtractDir();
 
-        //Extract to frontend
-        $zipArchive->extract($this->getExtractDir());
+        $zip = new ZipArchive;
+        $zip->open($fileSource);
+        $zip->extractTo($extractDir);
+        $zip->close();
     }
 
     /**

@@ -15,8 +15,9 @@ class Assessment extends BaseAssessment
     const SUBJECT_TYPE_LITERACY     = ScheduleDetail::SUBJECT_TYPE_LITERACY;
     const SUBJECT_TYPE_NUMERATION   = ScheduleDetail::SUBJECT_TYPE_NUMERATION;
 
-    const WORK_STATUS_ONGOING      = 1;
-    const WORK_STATUS_SUBMITTED    = 2;
+    const WORK_STATUS_OFFLINE      = 1;
+    const WORK_STATUS_ONGOING      = 2;
+    const WORK_STATUS_SUBMITTED    = 3;
 
     /**
      * @inheritdoc
@@ -92,6 +93,7 @@ class Assessment extends BaseAssessment
     {
         return [
             //MASTER
+            self::WORK_STATUS_OFFLINE => Yii::t('app', 'Offline'),
             self::WORK_STATUS_ONGOING => Yii::t('app', 'Ongoing'),
             self::WORK_STATUS_SUBMITTED  => Yii::t('app', 'Submitted'),
         ];
@@ -104,6 +106,9 @@ class Assessment extends BaseAssessment
             $arrayModule = self::getArrayWorkStatus();
 
             switch ($_module) {
+                case ($_module == self::WORK_STATUS_OFFLINE):
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    break;
                 case ($_module == self::WORK_STATUS_ONGOING):
                     $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;

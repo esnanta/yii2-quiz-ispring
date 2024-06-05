@@ -295,7 +295,7 @@ class ScheduleController extends Controller
         }
     }
 
-    /*
+/*
  * ITEM POPULATE ALREADY FILTERED BY OFFICE AND WAREHOUSE
  * 1. actionSelectWarehouse -> filter office and warehouse
  * 2. actionCreate($warehouseId) -> filter item by office and warehouse
