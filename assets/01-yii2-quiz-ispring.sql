@@ -81,7 +81,7 @@ CREATE TABLE `tx_archive_category` (
   `deleted_by` int DEFAULT NULL,
   `verlock` bigint DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_archive_category`
@@ -127,7 +127,7 @@ CREATE TABLE `tx_assessment` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_assessment`
@@ -594,7 +594,7 @@ CREATE TABLE `tx_group` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_group`
@@ -686,7 +686,7 @@ CREATE TABLE `tx_participant` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_participant`
@@ -734,7 +734,7 @@ CREATE TABLE `tx_period` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_period`
@@ -816,7 +816,7 @@ CREATE TABLE `tx_room` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_room`
@@ -854,7 +854,7 @@ CREATE TABLE `tx_schedule` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_schedule`
@@ -886,7 +886,7 @@ CREATE TABLE `tx_schedule_detail` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_schedule_detail`
@@ -951,7 +951,7 @@ CREATE TABLE `tx_site_link` (
   `deleted_by` int DEFAULT NULL,
   `verlock` bigint DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1031,7 +1031,7 @@ CREATE TABLE `tx_subject` (
   `deleted_by` int DEFAULT NULL,
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tx_subject`
