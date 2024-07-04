@@ -50,7 +50,8 @@ class ArchiveCategorySearch extends ArchiveCategory
     public function search($params)
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
-        $query = ArchiveCategory::find()->where(['office_id'=>$officeId]);
+        $query = ArchiveCategory::find()->where(['office_id'=>$officeId])
+            ->orderBy('sequence ASC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
