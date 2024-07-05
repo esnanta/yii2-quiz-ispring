@@ -47,8 +47,9 @@ class AssetController extends Controller
             $searchModel = new AssetSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeList             = DataListUseCase::getOffice();
-            $assetCategoryList    = DataListUseCase::getAssetCategory();
+            $officeList         = DataListUseCase::getOffice();
+            $assetCategoryList  = DataListUseCase::getAssetCategory();
+            $assetTypeList      = Asset::getArrayAssetType();
 
             $isVisibleList = Asset::getArrayIsVisible();
             return $this->render('index', [
@@ -56,6 +57,7 @@ class AssetController extends Controller
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
                 'assetCategoryList' => $assetCategoryList,
+                'assetTypeList' => $assetTypeList,
                 'isVisibleList' => $isVisibleList,
             ]);
         } else {

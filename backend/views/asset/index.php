@@ -45,6 +45,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'title',
             [
+                'attribute'=>'asset_type',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->asset_type!=null) ? $model->getOneAssetType($model->asset_type):'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$assetTypeList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
+            [
                 'attribute'=>'asset_category_id', 
                 'vAlign'=>'middle',
                 'width'=>'180px',

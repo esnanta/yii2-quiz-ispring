@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/asset/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -430,7 +432,7 @@
       <workItem from="1719906871032" duration="31000" />
       <workItem from="1720081861998" duration="678000" />
       <workItem from="1720186806804" duration="720000" />
-      <workItem from="1720188579215" duration="3319000" />
+      <workItem from="1720188579215" duration="3915000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
