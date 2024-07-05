@@ -1,10 +1,8 @@
 <?php
 
-use kartik\grid\GridView;
-use yii\helpers\Html;
+use common\helper\UIHelper;
+use common\models\User;
 use kartik\detail\DetailView;
-use kartik\datecontrol\DateControl;
-use yii\widgets\Pjax;
 
 /**
  * @var yii\web\View $this
@@ -14,8 +12,7 @@ use yii\widgets\Pjax;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
-
+$create = UIHelper::getCreateButton();
 ?>
 <div class="group-view">
 
@@ -73,13 +70,13 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
                 'columns' => [
                     [
                         'attribute'=>'created_by',
-                        'value'=>($model->created_by!=null) ? \common\models\User::getName($model->created_by):'',
+                        'value'=>($model->created_by!=null) ? User::getName($model->created_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
                         'attribute'=>'updated_by',
-                        'value'=>($model->updated_by!=null) ? \common\models\User::getName($model->updated_by):'',
+                        'value'=>($model->updated_by!=null) ? User::getName($model->updated_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],

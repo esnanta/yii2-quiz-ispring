@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\UIHelper;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\widgets\Select2;
@@ -11,7 +12,7 @@ use kartik\widgets\Select2;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['site/create-reguler'], ['class' => 'pull-right detail-button', 'style' => 'padding:0 5px']);
+$create = UIHelper::getCreateButton();
 ?>
 
 

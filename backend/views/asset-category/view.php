@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use common\helper\UIHelper;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
 
@@ -12,7 +12,7 @@ use kartik\datecontrol\DateControl;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Asset Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#ffffff;padding:0 5px']);
+$create = UIHelper::getCreateButton();
 
 ?>
 <div class="archive-category-view">
@@ -24,7 +24,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title.$create,
-            'type' => DetailView::TYPE_PRIMARY,
+            'type' => DetailView::TYPE_DEFAULT,
         ],
         'attributes' => [
 
@@ -87,7 +87,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => Yii::$app->user->can('update-archivecategory'),
+        'enableEditMode' => Yii::$app->user->can('update-assetcategory'),
     ]) ?>
 
 </div>

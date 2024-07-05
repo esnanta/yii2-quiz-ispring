@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\UIHelper;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
@@ -16,7 +17,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assets'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
+$create = UIHelper::getCreateButton();
 
 $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete-file','id' => $model->id],
                     ['class' => 'float-right', 'data-confirm' => "Delete Asset?", 
@@ -209,7 +210,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                 'deleteOptions' => [
                     'url' => ['delete', 'id' => $model->id],
                 ],
-                'enableEditMode' => Yii::$app->user->can('update-archive'),
+                'enableEditMode' => Yii::$app->user->can('update-asset'),
             ]) ?>
         </div>
     </div>

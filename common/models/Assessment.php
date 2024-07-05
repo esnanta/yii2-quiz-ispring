@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\helper\LabelHelper;
+use common\helper\UIHelper;
 use Yii;
 use \common\models\base\Assessment as BaseAssessment;
 
@@ -70,16 +70,16 @@ class Assessment extends BaseAssessment
 
             switch ($_module) {
                 case ($_module == self::SUBJECT_TYPE_GENERAL):
-                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::SUBJECT_TYPE_LITERACY):
-                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
                     break;
                 case ($_module == self::SUBJECT_TYPE_NUMERATION):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDanger($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;
@@ -107,16 +107,16 @@ class Assessment extends BaseAssessment
 
             switch ($_module) {
                 case ($_module == self::WORK_STATUS_OFFLINE):
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
                     break;
                 case ($_module == self::WORK_STATUS_ONGOING):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDanger($arrayModule[$_module]);
                     break;
                 case ($_module == self::WORK_STATUS_SUBMITTED):
-                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
             }
             return $returnValue;
         }

@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\helper\CacheCloud;
-use common\helper\LabelHelper;
+use common\helper\UIHelper;
 use Yii;
 use yii\bootstrap5\Html;
 use yii\web\UploadedFile;
@@ -82,13 +82,13 @@ class Asset extends BaseAsset
 
             switch ($_module) {
                 case ($_module == self::IS_VISIBLE_PRIVATE):
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
+                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
                     break;
                 case ($_module == self::IS_VISIBLE_PUBLIC):
-                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
+                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;
@@ -116,19 +116,19 @@ class Asset extends BaseAsset
 
             switch ($_module) {
                 case ($_module == self::ASSET_TYPE_DOCUMENT):
-                    $returnValue = LabelHelper::getAssetTypeDocument($arrayModule[$_module]);
+                    $returnValue = UIHelper::getAssetTypeDocument($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_SPREADSHEET):
-                    $returnValue = LabelHelper::getAssetTypeSpreadsheet($arrayModule[$_module]);
+                    $returnValue = UIHelper::getAssetTypeSpreadsheet($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_IMAGE):
-                    $returnValue = LabelHelper::getAssetTypeImage($arrayModule[$_module]);
+                    $returnValue = UIHelper::getAssetTypeImage($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_COMPRESSION):
-                    $returnValue = LabelHelper::getAssetTypeCompression($arrayModule[$_module]);
+                    $returnValue = UIHelper::getAssetTypeCompression($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;

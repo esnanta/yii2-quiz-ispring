@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
-use common\helper\LabelHelper;
+use common\helper\UIHelper;
 use common\models\Assessment;
 use common\models\Participant;
 use common\models\ScheduleDetail;

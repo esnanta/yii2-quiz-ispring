@@ -12,7 +12,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ZipArchive;
 
-use common\helper\LabelHelper;
+use common\helper\UIHelper;
 use common\models\base\ScheduleDetail as BaseScheduleDetail;
 
 /**
@@ -81,16 +81,16 @@ class ScheduleDetail extends BaseScheduleDetail
             $arrayModule = self::getArraySubjectTypes();
             switch ($_module) {
                 case ($_module == self::SUBJECT_TYPE_GENERAL):
-                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::SUBJECT_TYPE_LITERACY):
-                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
                     break;
                 case ($_module == self::SUBJECT_TYPE_NUMERATION):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDanger($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
             }
             return $returnValue;
         }
@@ -281,12 +281,12 @@ class ScheduleDetail extends BaseScheduleDetail
             $timer = $this->schedule->getTimer();
 
             $linkLabel = Yii::t('app', 'Closed');
-            $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
+            $labelClass = UIHelper::getButtonCssPlus() . ' btn-sm disabled';
             $value = Html::a($linkLabel, ['schedule/open','id'=>$this->id,'title'=>$this->schedule->title], ['class' => $labelClass]);
 
             if ($timer > $currentTime) :
                 $linkLabel = Yii::t('app', 'Open');
-                $labelClass = LabelHelper::getButtonCssPrint();
+                $labelClass = UIHelper::getButtonCssPrint();
                 $value = Html::a($linkLabel, ['schedule/open','id'=>$this->id,'title'=>$this->schedule->title], ['class' => $labelClass]);
             endif;
         }

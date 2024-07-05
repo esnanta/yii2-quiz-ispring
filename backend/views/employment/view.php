@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\UIHelper;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\select2\Select2;
@@ -12,8 +13,7 @@ use kartik\select2\Select2;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Employments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
-
+$create = UIHelper::getCreateButton();
 ?>
 <div class="employment-view">
 

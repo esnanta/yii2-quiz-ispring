@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\UIHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\detail\DetailView;
@@ -13,8 +14,7 @@ use kartik\datecontrol\DateControl;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Offices'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
-
+$create = UIHelper::getCreateButton();
 ?>
 <div class="office-view">
 

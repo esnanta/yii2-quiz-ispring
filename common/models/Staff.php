@@ -8,7 +8,7 @@ use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 use \common\models\base\Staff as BaseStaff;
 
-use common\helper\LabelHelper;
+use common\helper\UIHelper;
 /**
  * This is the model class for table "tx_staff".
  */
@@ -103,13 +103,13 @@ class Staff extends BaseStaff
 
             switch ($_module) {
                 case ($_module == self::GENDER_MALE):
-                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
+                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
                     break;
                 case ($_module == self::GENDER_FEMALE):
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
+                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($returnValue);
+                    $returnValue = UIHelper::getDefault($returnValue);
             }
 
             return $returnValue;
@@ -136,13 +136,13 @@ class Staff extends BaseStaff
 
             switch ($_module) {
                 case ($_module == self::ACTIVE_STATUS_YES):
-                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
+                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
                     break;
                 case ($_module == self::ACTIVE_STATUS_NO):
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
+                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($returnValue);
+                    $returnValue = UIHelper::getDefault($returnValue);
             }
 
             return $returnValue;

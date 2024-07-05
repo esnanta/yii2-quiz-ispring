@@ -2,9 +2,10 @@
 namespace common\helper;
 
 use Yii;
+use yii\helpers\Html;
 
 // TEMPLATE UNIFY V.2.6.3
-class LabelHelper {
+class UIHelper {
     public static function getButtonCssPlus(): string
     {
         return 'btn btn-sm btn-success';
@@ -64,5 +65,12 @@ class LabelHelper {
     public static function getDanger($text): string
     {
         return '<span class="badge bg-danger text-white">'.$text.'</span>';
+    }
+
+    public static function getCreateButton($route='create'): string
+    {
+        return Html::a('<i class="fas fa-plus"></i>',
+            [$route],
+            ['class' => 'button float-right','style'=>'color:#333;padding:0 5px']);
     }
 }

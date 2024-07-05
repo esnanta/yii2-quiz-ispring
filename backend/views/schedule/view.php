@@ -1,8 +1,7 @@
 <?php
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
-use common\helper\LabelHelper;
-use common\models\Schedule;
+use common\helper\UIHelper;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -11,11 +10,7 @@ use yii\helpers\Html;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Schedule'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a(
-    '<i class="fas fa-plus"></i>',
-    ['create'],
-    ['class' => 'button float-right', 'style' => 'color:#333333;padding:0 5px']
-);
+$create = UIHelper::getCreateButton();
 
 $refresh = Html::a(
     '<i class="fas fa-sync-alt"></i>',
@@ -54,26 +49,26 @@ $refresh = Html::a(
             Html::a(
                 '<i class="fas fa-plus"></i> New',
                 ['create'],
-                ['class' => LabelHelper::getButtonCssPlus()]
+                ['class' => UIHelper::getButtonCssPlus()]
             );
             ?>
             <?=
             Html::a(
                 '<i class="fas fa-pencil-alt"></i> Update',
                 ['update', 'id' => $model->id],
-                ['class' => LabelHelper::getButtonCssUpdate()]
+                ['class' => UIHelper::getButtonCssUpdate()]
             );
             ?>
             <?=
             Html::a('<i class="fas fa-minus"></i> Delete', ['delete', 'id' => $model->id], [
-                'class' => LabelHelper::getButtonCssMinus(),
+                'class' => UIHelper::getButtonCssMinus(),
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]);
             ?>
-            <button class="<?= LabelHelper::getButtonCssPrint() ?>" type="button" onclick="window.print();">
+            <button class="<?= UIHelper::getButtonCssPrint() ?>" type="button" onclick="window.print();">
                 <i class="fas fa-print"></i>
                 Print
             </button>
@@ -149,12 +144,12 @@ $refresh = Html::a(
                                     echo Html::a(
                                         '<i class="fas fa-upload"></i>',
                                         ['schedule-detail/update', 'id' => $modelDetailItem->id],
-                                        ['class' => LabelHelper::getButtonCssPlus()]
+                                        ['class' => UIHelper::getButtonCssPlus()]
                                     );
                                 } else {
                                     echo Html::a('<i class="fas fa-trash-alt"></i>',
                                         ['schedule-detail/delete-file', 'id' => $modelDetailItem->id], [
-                                            'class' => LabelHelper::getButtonCssMinus(),
+                                            'class' => UIHelper::getButtonCssMinus(),
                                             'data' => [
                                                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                                                 'method' => 'post',

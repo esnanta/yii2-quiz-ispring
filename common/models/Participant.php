@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\helper\LabelHelper;
+use common\helper\UIHelper;
 use Yii;
 use \common\models\base\Participant as BaseParticipant;
 use yii\bootstrap5\Html;
@@ -71,16 +71,16 @@ class Participant extends BaseParticipant
 
             switch ($_module) {
                 case ($_module == self::STATUS_DELETED):
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
+                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
                     break;
                 case ($_module == self::STATUS_ACTIVE):
-                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
+                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
                     break;
                 case ($_module == self::STATUS_INACTIVE):
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;
