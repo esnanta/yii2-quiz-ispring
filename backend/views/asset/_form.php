@@ -8,12 +8,12 @@ use kartik\select2\Select2;
 use kartik\widgets\FileInput;
 /**
  * @var yii\web\View $this
- * @var common\models\Archive $model
+ * @var common\models\Asset $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="archive-form">
+<div class="asset-form">
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]); ?>
     <div class="row">
@@ -36,22 +36,22 @@ use kartik\widgets\FileInput;
                             'widgetClass' => DateControl::class,
                             'options' => ['type' => DateControl::FORMAT_DATE]],
                         'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 200]],
-                        'archive_category_id' => [
+                        'asset_category_id' => [
                             'type' => Form::INPUT_WIDGET,
                             'widgetClass' => Select2::class,
                             'options' => [
-                                'data' => $archiveCategoryList,
+                                'data' => $assetCategoryList,
                                 'options' => ['placeholder' => '', 'disabled' => false],
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true
                             ],
                         ],
-                        'archive_type' => [
+                        'asset_type' => [
                             'type' => Form::INPUT_WIDGET,
                             'widgetClass' => Select2::class,
                             'options' => [
-                                'data' => $archiveTypeList,
+                                'data' => $assetTypeList,
                                 'options' => ['placeholder' => '', 'disabled' => false],
                             ],
                             'pluginOptions' => [

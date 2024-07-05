@@ -36,8 +36,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\Archive[] $archives
- * @property \common\models\ArchiveCategory[] $archiveCategories
+ * @property \common\models\Asset[] $archives
+ * @property \common\models\AssetCategory[] $archiveCategories
  * @property \common\models\Assessment[] $assessments
  * @property \common\models\Assessment[] $assessmentDetails
  * @property \common\models\Counter[] $counters
@@ -161,7 +161,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getArchives()
     {
-        return $this->hasMany(\common\models\Archive::class, ['office_id' => 'id']);
+        return $this->hasMany(\common\models\Asset::class, ['office_id' => 'id']);
     }
         
     /**
@@ -169,7 +169,7 @@ class Office extends \yii\db\ActiveRecord
      */
     public function getArchiveCategories()
     {
-        return $this->hasMany(\common\models\ArchiveCategory::class, ['office_id' => 'id']);
+        return $this->hasMany(\common\models\AssetCategory::class, ['office_id' => 'id']);
     }
         
     /**

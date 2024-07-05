@@ -8,7 +8,7 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "tx_archive_category".
+ * This is the base model class for table "tx_asset_category".
  *
  * @property integer $id
  * @property integer $office_id
@@ -25,10 +25,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\Archive[] $archives
+ * @property \common\models\Asset[] $assets
  * @property \common\models\Office $office
  */
-class ArchiveCategory extends \yii\db\ActiveRecord
+class AssetCategory extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -54,7 +54,7 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'archives',
+            'assets',
             'office'
         ];
     }
@@ -80,7 +80,7 @@ class ArchiveCategory extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tx_archive_category';
+        return 'tx_asset_category';
     }
 
     /**
@@ -114,9 +114,9 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getArchives()
+    public function getAssets()
     {
-        return $this->hasMany(\common\models\Archive::class, ['archive_category_id' => 'id']);
+        return $this->hasMany(\common\models\Asset::className(), ['asset_category_id' => 'id']);
     }
         
     /**
@@ -124,7 +124,7 @@ class ArchiveCategory extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
     
     /**

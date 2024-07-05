@@ -5,12 +5,12 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var common\models\ArchiveCategorySearch $model
+ * @var common\models\AssetSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="archive-category-search">
+<div class="asset-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -19,13 +19,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'is_visible') ?>
+
+    <?= $form->field($model, 'asset_type') ?>
+
+    <?= $form->field($model, 'asset_category_id') ?>
+
     <?= $form->field($model, 'title') ?>
 
-    <?= $form->field($model, 'sequence') ?>
+    <?php // echo $form->field($model, 'date_issued') ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?php // echo $form->field($model, 'asset_name') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?php // echo $form->field($model, 'asset_url') ?>
+
+    <?php // echo $form->field($model, 'size') ?>
+
+    <?php // echo $form->field($model, 'mime_type') ?>
+
+    <?php // echo $form->field($model, 'view_counter') ?>
+
+    <?php // echo $form->field($model, 'download_counter') ?>
+
+    <?php // echo $form->field($model, 'description') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>
 

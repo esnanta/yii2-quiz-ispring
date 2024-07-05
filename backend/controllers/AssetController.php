@@ -8,9 +8,9 @@ use common\domain\DataSpreadsheetUseCase;
 use common\models\Office;
 use common\helper\CacheCloud;
 use Yii;
-use common\models\Archive;
-use common\models\ArchiveCategory;
-use common\models\ArchiveSearch;
+use common\models\Asset;
+use common\models\AssetCategory;
+use common\models\AssetSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -21,9 +21,9 @@ use yii\db\StaleObjectException;
 use common\helper\MessageHelper;
 
 /**
- * ArchiveController implements the CRUD actions for Archive model.
+ * AssetController implements the CRUD actions for Asset model.
  */
-class ArchiveController extends Controller
+class AssetController extends Controller
 {
     public function behaviors()
     {
@@ -38,24 +38,24 @@ class ArchiveController extends Controller
     }
 
     /**
-     * Lists all Archive models.
+     * Lists all Asset models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('index-archive')) {
-            $searchModel = new ArchiveSearch;
+        if (Yii::$app->user->can('index-asset')) {
+            $searchModel = new AssetSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
             $officeList             = DataListUseCase::getOffice();
-            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
+            $assetCategoryList    = DataListUseCase::getAssetCategory();
 
-            $isVisibleList = Archive::getArrayIsVisible();
+            $isVisibleList = Asset::getArrayIsVisible();
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
-                'archiveCategoryList' => $archiveCategoryList,
+                'assetCategoryList' => $assetCategoryList,
                 'isVisibleList' => $isVisibleList,
             ]);
         } else {
@@ -65,20 +65,20 @@ class ArchiveController extends Controller
     }
 
     /**
-     * Displays a single Archive model.
+     * Displays a single Asset model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id,$title=null)
     {
-        if (Yii::$app->user->can('view-archive')) {
+        if (Yii::$app->user->can('view-asset')) {
             $model = $this->findModel($id);
 
             $officeList             = DataListUseCase::getOffice();
-            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
+            $assetCategoryList    = DataListUseCase::getAssetCategory();
 
-            $isVisibleList = Archive::getArrayIsVisible();
-            $archiveTypeList = Archive::getArrayArchiveType();
+            $isVisibleList = Asset::getArrayIsVisible();
+            $assetTypeList = Asset::getArrayAssetType();
 
             $oldFile = $model->getAssetFile();
             $oldAvatar = $model->asset_name;
@@ -128,9 +128,9 @@ class ArchiveController extends Controller
                 return $this->render('view', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'archiveCategoryList' => $archiveCategoryList,
+                    'assetCategoryList' => $assetCategoryList,
                     'isVisibleList' => $isVisibleList,
-                    'archiveTypeList' => $archiveTypeList,
+                    'assetTypeList' => $assetTypeList,
                     'isSpreadsheet' => $isSpreadsheet,
                     'helper' => $helper,
                     'sheetData' => $sheetData
@@ -143,25 +143,25 @@ class ArchiveController extends Controller
     }
 
     /**
-     * Creates a new Archive model.
+     * Creates a new Asset model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('create-archive')) {
+        if (Yii::$app->user->can('create-asset')) {
 
             $officeId               = DataIdUseCase::getOfficeId();
             $officeList             = DataListUseCase::getOffice();
-            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
+            $assetCategoryList    = DataListUseCase::getAssetCategory();
 
-            $model = new Archive;
+            $model = new Asset;
             $model->office_id = $officeId;
             $model->date_issued = date(Yii::$app->params['dateSaveFormat']);
-            $model->is_visible = Archive::IS_VISIBLE_PRIVATE;
+            $model->is_visible = Asset::IS_VISIBLE_PRIVATE;
 
-            $archiveTypeList = Archive::getArrayArchiveType();
-            $isVisibleList = Archive::getArrayIsVisible();
+            $assetTypeList = Asset::getArrayAssetType();
+            $isVisibleList = Asset::getArrayIsVisible();
 
             try {
                 if ($model->load(Yii::$app->request->post())) {
@@ -183,9 +183,9 @@ class ArchiveController extends Controller
                 return $this->render('create', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'archiveCategoryList' => $archiveCategoryList,
+                    'assetCategoryList' => $assetCategoryList,
                     'isVisibleList' => $isVisibleList,
-                    'archiveTypeList' => $archiveTypeList,
+                    'assetTypeList' => $assetTypeList,
                 ]);
             } catch (StaleObjectException $e) {
                 throw new StaleObjectException('The object being updated is outdated.');
@@ -197,21 +197,21 @@ class ArchiveController extends Controller
     }
 
     /**
-     * Updates an existing Archive model.
+     * Updates an existing Asset model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id,$title=null)
     {
-        if (Yii::$app->user->can('update-archive')) {
+        if (Yii::$app->user->can('update-asset')) {
             $model = $this->findModel($id);
 
             $officeList             = DataListUseCase::getOffice();
-            $archiveCategoryList    = DataListUseCase::getArchiveCategory();
+            $assetCategoryList    = DataListUseCase::getAssetCategory();
 
-            $archiveTypeList = Archive::getArrayArchiveType();
-            $isVisibleList = Archive::getArrayIsVisible();
+            $assetTypeList = Asset::getArrayAssetType();
+            $isVisibleList = Asset::getArrayIsVisible();
 
             if ($model->load(Yii::$app->request->post())) {
 
@@ -234,9 +234,9 @@ class ArchiveController extends Controller
                 return $this->render('update', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'archiveCategoryList' => $archiveCategoryList,
+                    'assetCategoryList' => $assetCategoryList,
                     'isVisibleList' => $isVisibleList,
-                    'archiveTypeList' => $archiveTypeList,
+                    'assetTypeList' => $assetTypeList,
                 ]);
             }
         } else {
@@ -246,14 +246,14 @@ class ArchiveController extends Controller
     }
 
     /**
-     * Deletes an existing Archive model.
+     * Deletes an existing Asset model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-archive')) {
+        if (Yii::$app->user->can('delete-asset')) {
             $model = $this->findModel($id);
             // validate deletion and on failure process any exception
             // e.g. display an error message
@@ -272,12 +272,12 @@ class ArchiveController extends Controller
 
     public function actionDeleteFile($id)
     {
-        if (Yii::$app->user->can('delete-archive')) {
-            $model = Archive::find()->where(['id' => $id])->one();
+        if (Yii::$app->user->can('delete-asset')) {
+            $model = Asset::find()->where(['id' => $id])->one();
             $model->deleteAsset();
             $model->save();
             MessageHelper::getFlashDeleteSuccess();
-            return $this->redirect(['archive/view', 'id' => $model->id, 'title' => $model->title]);
+            return $this->redirect(['asset/view', 'id' => $model->id, 'title' => $model->title]);
         } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;
@@ -285,15 +285,15 @@ class ArchiveController extends Controller
     }
 
     /**
-     * Finds the Archive model based on its primary key value.
+     * Finds the Asset model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Archive the loaded model
+     * @return Asset the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id): Archive
+    protected function findModel($id): Asset
     {
-        if (($model = Archive::findOne($id)) !== null) {
+        if (($model = Asset::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

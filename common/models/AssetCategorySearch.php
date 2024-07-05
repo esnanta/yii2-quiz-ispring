@@ -6,13 +6,13 @@ use common\helper\CacheCloud;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ArchiveCategory;
+use common\models\AssetCategory;
 use kartik\daterange\DateRangeBehavior;
 
 /**
  * ArchiveCategorySearch represents the model behind the search form about `common\models\ArchiveCategory`.
  */
-class ArchiveCategorySearch extends ArchiveCategory
+class AssetCategorySearch extends AssetCategory
 {
     public $date_range;
     public $date_first;
@@ -50,7 +50,7 @@ class ArchiveCategorySearch extends ArchiveCategory
     public function search($params)
     {
         $officeId = CacheCloud::getInstance()->getOfficeId();
-        $query = ArchiveCategory::find()->where(['office_id'=>$officeId])
+        $query = AssetCategory::find()->where(['office_id'=>$officeId])
             ->orderBy('sequence ASC');
 
         $dataProvider = new ActiveDataProvider([

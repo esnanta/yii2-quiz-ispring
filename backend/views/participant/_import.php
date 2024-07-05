@@ -34,11 +34,11 @@ use kartik\datecontrol\DateControl;
 //                ],
 //            ],
 
-            'archive_id' => [
+            'asset_id' => [
                 'type' => Form::INPUT_WIDGET,
                 'widgetClass' => Select2::class,
                 'options' => [
-                    'data' => $archiveList,
+                    'data' => $assetList,
                     'options' => ['placeholder' => '', 'disabled' => true],
                 ],
                 'pluginOptions' => [

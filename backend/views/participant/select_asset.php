@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 
-$this->title = Yii::t('app', 'Choose Data Archive');
+$this->title = Yii::t('app', 'Choose Data Asset');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'toolbar' => [
             [
                 'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add Import', ['archive/create'], ['class' => 'btn btn-success']),
+                    Html::a('<i class="fas fa-plus"></i> Add Import', ['asset/create'], ['class' => 'btn btn-success']),
                    //. ' '.
                     //Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
                 'options' => ['class' => 'btn-group-md']

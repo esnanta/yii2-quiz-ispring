@@ -9,12 +9,12 @@ use yii\bootstrap5\Html;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 
-use \common\models\base\Archive as BaseArchive;
+use \common\models\base\Asset as BaseAsset;
 
 /**
- * This is the model class for table "tx_archive".
+ * This is the model class for table "tx_asset".
  */
-class Archive extends BaseArchive
+class Asset extends BaseAsset
 {
     public $asset;
 
@@ -27,10 +27,10 @@ class Archive extends BaseArchive
     const IS_VISIBLE_PRIVATE            = 1;
     const IS_VISIBLE_PUBLIC             = 2;
 
-    const ARCHIVE_TYPE_DOCUMENT         = 1;
-    const ARCHIVE_TYPE_SPREADSHEET      = 2;
-    const ARCHIVE_TYPE_IMAGE            = 3;
-    const ARCHIVE_TYPE_COMPRESSION      = 4;
+    const ASSET_TYPE_DOCUMENT         = 1;
+    const ASSET_TYPE_SPREADSHEET      = 2;
+    const ASSET_TYPE_IMAGE            = 3;
+    const ASSET_TYPE_COMPRESSION      = 4;
 
     /**
      * @inheritdoc
@@ -39,10 +39,10 @@ class Archive extends BaseArchive
     {
         return [
             //TAMBAHAN
-            [['is_visible','archive_category_id'], 'required'],
+            [['is_visible','asset_category_id'], 'required'],
             [['asset'], 'file', 'maxSize' => (1024 * 1024 * 2), 'tooBig' => 'Limit is 2MB'],
 
-            [['office_id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'is_visible', 'asset_type', 'asset_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title', 'asset_name'], 'string', 'max' => 200],
@@ -98,34 +98,34 @@ class Archive extends BaseArchive
             return;
     }
 
-    public static function getArrayArchiveType(): array
+    public static function getArrayAssetType(): array
     {
         return [
             //MASTER
-            self::ARCHIVE_TYPE_DOCUMENT => Yii::t('app', 'Document'),
-            self::ARCHIVE_TYPE_SPREADSHEET  => Yii::t('app', 'Spreadsheet'),
-            self::ARCHIVE_TYPE_IMAGE  => Yii::t('app', 'Image'),
-            self::ARCHIVE_TYPE_COMPRESSION  => Yii::t('app', 'Compression'),
+            self::ASSET_TYPE_DOCUMENT => Yii::t('app', 'Document'),
+            self::ASSET_TYPE_SPREADSHEET  => Yii::t('app', 'Spreadsheet'),
+            self::ASSET_TYPE_IMAGE  => Yii::t('app', 'Image'),
+            self::ASSET_TYPE_COMPRESSION  => Yii::t('app', 'Compression'),
         ];
     }
-    public static function getOneArchiveType($_module = null)
+    public static function getOneAssetType($_module = null)
     {
         if($_module)
         {
-            $arrayModule = self::getArrayArchiveType();
+            $arrayModule = self::getArrayAssetType();
 
             switch ($_module) {
-                case ($_module == self::ARCHIVE_TYPE_DOCUMENT):
-                    $returnValue = LabelHelper::getArchiveTypeDocument($arrayModule[$_module]);
+                case ($_module == self::ASSET_TYPE_DOCUMENT):
+                    $returnValue = LabelHelper::getAssetTypeDocument($arrayModule[$_module]);
                     break;
-                case ($_module == self::ARCHIVE_TYPE_SPREADSHEET):
-                    $returnValue = LabelHelper::getArchiveTypeSpreadsheet($arrayModule[$_module]);
+                case ($_module == self::ASSET_TYPE_SPREADSHEET):
+                    $returnValue = LabelHelper::getAssetTypeSpreadsheet($arrayModule[$_module]);
                     break;
-                case ($_module == self::ARCHIVE_TYPE_IMAGE):
-                    $returnValue = LabelHelper::getArchiveTypeImage($arrayModule[$_module]);
+                case ($_module == self::ASSET_TYPE_IMAGE):
+                    $returnValue = LabelHelper::getAssetTypeImage($arrayModule[$_module]);
                     break;
-                case ($_module == self::ARCHIVE_TYPE_COMPRESSION):
-                    $returnValue = LabelHelper::getArchiveTypeCompression($arrayModule[$_module]);
+                case ($_module == self::ASSET_TYPE_COMPRESSION):
+                    $returnValue = LabelHelper::getAssetTypeCompression($arrayModule[$_module]);
                     break;
                 default:
                     $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
@@ -261,12 +261,12 @@ class Archive extends BaseArchive
 
     public function getUrl(): string
     {
-        return Yii::$app->getUrlManager()->createUrl(['archive/view', 'id' => $this->id, 'title' => $this->title]);
+        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id, 'title' => $this->title]);
     }
 
     public function getPath() : string {
         $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
-        return '/uploads/archive/'.$officeUniqueId;
+        return '/uploads/asset/'.$officeUniqueId;
     }
 
     public function getProceedButton(): string
@@ -280,7 +280,7 @@ class Archive extends BaseArchive
         if(!file_exists($asset)){
             $button = Html::a(
                 '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
-                ['archive/update','id'=>$this->id,'title'=>$this->title],
+                ['asset/update','id'=>$this->id,'title'=>$this->title],
                 ['class' => 'btn btn-sm btn-danger pull-right']
             );
         }
@@ -291,7 +291,7 @@ class Archive extends BaseArchive
     {
         return Html::a(
             '<i class="fas fa-eye"></i>',
-            ['archive/view','id'=>$this->id,'title'=>$this->title],
+            ['asset/view','id'=>$this->id,'title'=>$this->title],
             ['class' => 'btn btn-sm btn-primary pull-right']
         );
     }

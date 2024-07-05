@@ -2,8 +2,8 @@
 
 namespace common\domain;
 
-use common\models\Archive;
-use common\models\ArchiveCategory;
+use common\models\Asset;
+use common\models\AssetCategory;
 use common\models\Assessment;
 use common\models\Employment;
 use common\models\Group;
@@ -81,16 +81,16 @@ class DataListUseCase
             ->asArray()->all(), 'id', 'title');
     }
 
-    public static function getArchive(): array
+    public static function getAsset(): array
     {
-        return ArrayHelper::map(Archive::find()
+        return ArrayHelper::map(Asset::find()
             ->where(['office_id' => DataIdUseCase::getOfficeId()])
             ->asArray()->all(), 'id', 'title');
     }
 
-    public static function getArchiveCategory(): array
+    public static function getAssetCategory(): array
     {
-        return ArrayHelper::map(ArchiveCategory::find()
+        return ArrayHelper::map(AssetCategory::find()
             ->where(['office_id' => DataIdUseCase::getOfficeId()])
             ->asArray()->all(), 'id', 'title');
     }

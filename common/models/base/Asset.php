@@ -8,13 +8,13 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "tx_archive".
+ * This is the base model class for table "tx_asset".
  *
  * @property integer $id
  * @property integer $office_id
  * @property integer $is_visible
- * @property integer $archive_type
- * @property integer $archive_category_id
+ * @property integer $asset_type
+ * @property integer $asset_category_id
  * @property string $title
  * @property string $date_issued
  * @property string $asset_name
@@ -34,10 +34,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\ArchiveCategory $archiveCategory
+ * @property \common\models\AssetCategory $assetCategory
  * @property \common\models\Office $office
  */
-class Archive extends \yii\db\ActiveRecord
+class Asset extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -63,7 +63,7 @@ class Archive extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'archiveCategory',
+            'assetCategory',
             'office'
         ];
     }
@@ -74,7 +74,7 @@ class Archive extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'is_visible', 'asset_type', 'asset_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title', 'asset_name'], 'string', 'max' => 200],
@@ -91,7 +91,7 @@ class Archive extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tx_archive';
+        return 'tx_asset';
     }
 
     /**
@@ -114,8 +114,8 @@ class Archive extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'is_visible' => Yii::t('app', 'Is Visible'),
-            'archive_type' => Yii::t('app', 'Archive Type'),
-            'archive_category_id' => Yii::t('app', 'Archive Category ID'),
+            'asset_type' => Yii::t('app', 'Asset Type'),
+            'asset_category_id' => Yii::t('app', 'Asset Category ID'),
             'title' => Yii::t('app', 'Title'),
             'date_issued' => Yii::t('app', 'Date Issued'),
             'asset_name' => Yii::t('app', 'Asset Name'),
@@ -134,9 +134,9 @@ class Archive extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getArchiveCategory()
+    public function getAssetCategory()
     {
-        return $this->hasOne(\common\models\ArchiveCategory::class, ['id' => 'archive_category_id']);
+        return $this->hasOne(\common\models\AssetCategory::className(), ['id' => 'asset_category_id']);
     }
         
     /**
@@ -144,7 +144,7 @@ class Archive extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
     
     /**

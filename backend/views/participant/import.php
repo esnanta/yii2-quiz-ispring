@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'officeList'=>$officeList,
                 'groupList' => $groupList,
-                'archiveList' => $archiveList
+                'assetList' => $assetList
             ]) 
             ?>
             <br>

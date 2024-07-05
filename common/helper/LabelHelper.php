@@ -22,19 +22,19 @@ class LabelHelper {
         return 'btn btn-sm btn-info';
     }
     
-    public static function getArchiveTypeDocument($text): string
+    public static function getAssetTypeDocument($text): string
     {
         return '<span class="badge bg-primary text-white">'.$text.'</span>';
     }
-    public static function getArchiveTypeSpreadsheet($text): string
+    public static function getAssetTypeSpreadsheet($text): string
     {
         return '<span class="badge bg-success text-white">'.$text.'</span>';
     }
-    public static function getArchiveTypeImage($text): string
+    public static function getAssetTypeImage($text): string
     {
         return '<span class="badge bg-secondary text-white">'.$text.'</span>';
     }
-    public static function getArchiveTypeCompression($text): string
+    public static function getAssetTypeCompression($text): string
     {
         return '<span class="badge bg-danger text-white">'.$text.'</span>';
     }

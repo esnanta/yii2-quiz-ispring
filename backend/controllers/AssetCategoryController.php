@@ -5,8 +5,8 @@ namespace backend\controllers;
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
 use Yii;
-use common\models\ArchiveCategory;
-use common\models\ArchiveCategorySearch;
+use common\models\AssetCategory;
+use common\models\AssetCategorySearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
@@ -17,9 +17,9 @@ use yii\filters\VerbFilter;
 use common\helper\MessageHelper;
 
 /**
- * ArchiveCategoryController implements the CRUD actions for ArchiveCategory model.
+ * AssetCategoryController implements the CRUD actions for AssetCategory model.
  */
-class ArchiveCategoryController extends Controller
+class AssetCategoryController extends Controller
 {
     public function behaviors()
     {
@@ -34,13 +34,13 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Lists all ArchiveCategory models.
+     * Lists all AssetCategory models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('index-archivecategory')) {
-            $searchModel = new ArchiveCategorySearch;
+        if (Yii::$app->user->can('index-assetcategory')) {
+            $searchModel = new AssetCategorySearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
             $officeList = DataListUseCase::getOffice();
@@ -57,13 +57,13 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Displays a single ArchiveCategory model.
+     * Displays a single AssetCategory model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        if (Yii::$app->user->can('view-archivecategory')) {
+        if (Yii::$app->user->can('view-assetcategory')) {
             $model = $this->findModel($id);
             $officeList = DataListUseCase::getOffice();
 
@@ -82,18 +82,18 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Creates a new ArchiveCategory model.
+     * Creates a new AssetCategory model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('create-archivecategory')) {
+        if (Yii::$app->user->can('create-assetcategory')) {
 
             $officeId   = DataIdUseCase::getOfficeId();
             $officeList = DataListUseCase::getOffice();
 
-            $model = new ArchiveCategory;
+            $model = new AssetCategory;
             $model->office_id = $officeId;
 
             try {
@@ -116,14 +116,14 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Updates an existing ArchiveCategory model.
+     * Updates an existing AssetCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('update-archivecategory')) {
+        if (Yii::$app->user->can('update-assetcategory')) {
             try {
                 $model = $this->findModel($id);
                 $officeList = DataListUseCase::getOffice();
@@ -146,14 +146,14 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing ArchiveCategory model.
+     * Deletes an existing AssetCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-archivecategory')) {
+        if (Yii::$app->user->can('delete-assetcategory')) {
             $this->findModel($id)->delete();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['index']);
@@ -164,15 +164,15 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Finds the ArchiveCategory model based on its primary key value.
+     * Finds the AssetCategory model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return ArchiveCategory the loaded model
+     * @return AssetCategory the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ArchiveCategory::findOne($id)) !== null) {
+        if (($model = AssetCategory::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

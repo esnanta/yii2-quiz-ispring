@@ -3,12 +3,12 @@
 namespace common\models;
 
 use Yii;
-use \common\models\base\ArchiveCategory as BaseArchiveCategory;
+use \common\models\base\AssetCategory as BaseAssetCategory;
 
 /**
  * This is the model class for table "tx_archive_category".
  */
-class ArchiveCategory extends BaseArchiveCategory
+class AssetCategory extends BaseAssetCategory
 {
     /**
      * @inheritdoc

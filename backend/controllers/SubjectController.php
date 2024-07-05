@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\Archive;
+use common\models\Asset;
 use Yii;
 use common\models\Subject;
 use common\models\SubjectSearch;
@@ -132,8 +132,7 @@ class SubjectController extends Controller
                 } else {
                     return $this->render('update', [
                         'model' => $model,
-                        'officeList' => $officeList,
-                        'subjectTypeList' => $subjectTypeList
+                        'officeList' => $officeList
                     ]);
                 }
             }

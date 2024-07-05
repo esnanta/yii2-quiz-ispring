@@ -9,21 +9,21 @@ use bajadev\ckeditor\CKEditor;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Archive $model
+ * @var common\models\Asset $model
  */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Archives'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assets'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button float-right','style'=>'color:#333333;padding:0 5px']);
 
-$deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/delete-file','id' => $model->id],
+$deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete-file','id' => $model->id],
                     ['class' => 'float-right', 'data-confirm' => "Delete Asset?", 
                     'data-method' => 'POST', 'title' => 'Delete Asset?']);
 ?>
 
-<div class="archive-view">
+<div class="asset-view">
     <div class="row">
         <div class="col-md-4">
 
@@ -33,7 +33,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                         <i class="fa fa-eye"></i> <?=$model->view_counter;?>
                         <?php
                             echo Html::a('<i class="fas fa-download"></i> '.$model->download_counter,
-                                ['archive/download','id'=>$model->id,'title'=>$model->title],
+                                ['asset/download','id'=>$model->id,'title'=>$model->title],
                                 ['class'=>'card-link','title'=>'Download']);
 
                             if($isSpreadsheet == 'Xlsx') {
@@ -43,7 +43,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                             }
 
                             if(!empty($model->asset_name)) {
-                                echo Html::a('<i class="fas fa-trash"></i>', ['archive/delete-file', 'id' => $model->id],
+                                echo Html::a('<i class="fas fa-trash"></i>', ['asset/delete-file', 'id' => $model->id],
                                     ['class' => 'card-link float-right', 'data-confirm' => "Delete Asset?",
                                         'data-method' => 'POST', 'title' => 'Delete Asset?']);
                             }
@@ -105,26 +105,26 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                         'type'=>DetailView::INPUT_TEXT, 
                     ],
                     [
-                        'attribute'=>'archive_category_id',
-                        'value'=>($model->archive_category_id!=null) ? $model->archiveCategory->title:'',
+                        'attribute'=>'asset_category_id',
+                        'value'=>($model->asset_category_id!=null) ? $model->assetCategory->title:'',
                         'type'=>DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'archive_category_id', 'prompt' => '', 'disabled'=>false],
-                        'items' => $archiveCategoryList,
+                        'options' => ['id' => 'asset_category_id', 'prompt' => '', 'disabled'=>false],
+                        'items' => $assetCategoryList,
                         'widgetOptions'=>[
                             'class'=> Select2::class,
-                            'data'=>$archiveCategoryList,
+                            'data'=>$assetCategoryList,
                         ],
                     ],
                     [
-                        'attribute'=>'archive_type',
+                        'attribute'=>'asset_type',
                         'format'=>'html',
-                        'value'=>($model->archive_type!=null) ? $model->getOneArchiveType($model->archive_type):'',
+                        'value'=>($model->asset_type!=null) ? $model->getOneAssetType($model->asset_type):'',
                         'type'=>DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'archive_type', 'prompt' => '', 'disabled'=>false],
-                        'items' => $archiveTypeList,
+                        'options' => ['id' => 'asset_type', 'prompt' => '', 'disabled'=>false],
+                        'items' => $assetTypeList,
                         'widgetOptions'=>[
                             'class'=> Select2::class,
-                            'data'=>$archiveTypeList,
+                            'data'=>$assetTypeList,
                         ],
                         //'valueColOptions'=>['style'=>'width:30%']
                     ],

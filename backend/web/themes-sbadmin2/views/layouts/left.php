@@ -70,14 +70,14 @@ use common\helper\CacheCloud;
                     ['label' => Yii::t('app', 'Export'), 'url' => ['/assessment/report']],
                 ]],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
-                    ['label' => Yii::t('app', 'Archive Category'), 'url' => ['/archive-category/index']],
-                    ['label' => Yii::t('app', 'Archive'), 'url' => ['/archive/index']],
                     ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
                 ['label' => Yii::t('app', 'Data'), 'icon' => 'folder', 'items' => [
+                    ['label' => Yii::t('app', 'Asset Category'), 'url' => ['/asset-category/index']],
+                    ['label' => Yii::t('app', 'Asset'), 'url' => ['/asset/index']],
                     ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']],
                     ['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
                     ['label' => Yii::t('app', 'Dummy'), 'url' => ['/dummy/view'],

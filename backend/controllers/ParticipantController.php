@@ -5,8 +5,8 @@ namespace backend\controllers;
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
 use common\domain\DataSpreadsheetUseCase;
-use common\models\Archive;
-use common\models\ArchiveSearch;
+use common\models\Asset;
+use common\models\AssetSearch;
 use common\models\ParticipantImport;
 use Yii;
 use common\models\Participant;
@@ -132,13 +132,13 @@ class ParticipantController extends Controller
 
     public function actionSelect(){
         if(Yii::$app->user->can('create-participant')){
-            $searchModel    = new ArchiveSearch();
+            $searchModel    = new AssetSearch();
             $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andWhere(['archive_type' => Archive::ARCHIVE_TYPE_SPREADSHEET]);
+            $dataProvider->query->andWhere(['asset_type' => Asset::ARCHIVE_TYPE_SPREADSHEET]);
 
             $officeList = DataListUseCase::getOffice();
 
-            return $this->render('select_archive', [
+            return $this->render('select_asset', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'officeList' => $officeList,
@@ -150,21 +150,21 @@ class ParticipantController extends Controller
         }
     }
 
-    //$id = archive id
+    //$id = asset id
     public function actionImport($id,$title=null)
     {
         if(Yii::$app->user->can('create-participant')){
             $officeId       = DataIdUseCase::getOfficeId();
             $officeList     = DataListUseCase::getOffice();
-            $archiveList    = DataListUseCase::getArchive();
+            $assetList    = DataListUseCase::getAsset();
             $groupList      = DataListUseCase::getGroup();
 
             $model = new ParticipantImport();
             $model->office_id = $officeId;
-            $model->archive_id = $id;
+            $model->asset_id = $id;
 
-            $archive = Archive::find()->where(['id'=>$model->archive_id])->one();
-            $inputFileName = $archive->getAssetFile();
+            $asset = Asset::find()->where(['id'=>$model->asset_id])->one();
+            $inputFileName = $asset->getAssetFile();
 
             $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
             $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
@@ -238,7 +238,7 @@ class ParticipantController extends Controller
                         'model' => $model,
                         'officeList' => $officeList,
                         'groupList' => $groupList,
-                        'archiveList' => $archiveList,
+                        'assetList' => $assetList,
                         'helper' => $helper,
                         'sheetData' => $sheetData
                     ]);

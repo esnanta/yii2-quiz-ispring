@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\CacheCloud;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -7,19 +8,19 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var common\models\ArchiveSearch $searchModel
+ * @var common\models\AssetCategorySearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Archives');
+$this->title = Yii::t('app', 'Asset Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="archive-index">
+<div class="archive-category-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php /* echo Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Archive',
+    'modelClass' => 'Asset Category',
 ]), ['create'], ['class' => 'btn btn-success'])*/  ?>
     </p>
 
@@ -42,40 +43,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'title',
+            'sequence',
+            'description:ntext',
             [
-                'attribute'=>'archive_category_id', 
-                'vAlign'=>'middle',
-                'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) { 
-                    return ($model->archive_category_id!=null) ? $model->archiveCategory->title:'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$archiveCategoryList, 
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
+                'attribute' => 'created_at',
+                'value'=>'created_at',
+                'enableSorting' => true,
+                'format'=>'date',
+                'options' => [
+                    'format' => Yii::$app->params['dateDisplayFormat'],
                 ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => ([
+                    'attribute' => 'date_range',
+                    'presetDropdown' => false,
+                    'convertFormat' => true,
+                    'pluginOptions'=>[
+                        'locale'=>['format' => Yii::$app->params['dateDisplayFormat']],
+                    ]                
+                ])
             ], 
-            [
-                'attribute'=>'is_visible',
-                'vAlign'=>'middle',
-                'width'=>'120px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->is_visible!=null) ? $model->getOneIsVisible($model->is_visible):'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$isVisibleList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
-                ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
-            
-                        
+
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
@@ -83,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['archive/view', 'id' => $model->id, 'edit' => 't']),
+                            Yii::$app->urlManager->createUrl(['asset-category/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
@@ -92,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['archive/view', 'id' => $model->id]),
+                            Yii::$app->urlManager->createUrl(['asset-category/view', 'id' => $model->id]),
                             [
                                 'title' => Yii::t('yii', 'View'),
                                 'class'=>'btn btn-sm btn-info',
@@ -116,8 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'type' => 'default',
             //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
             //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-            'showFooter' => false,
-
+            'showFooter' => false
         ],
     ]); Pjax::end(); ?>
     

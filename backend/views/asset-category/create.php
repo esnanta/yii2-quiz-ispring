@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var common\models\ArchiveCategory $model
+ * @var common\models\AssetCategory $model
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Archive Category',
+    'modelClass' => 'Asset Category',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Archive Categories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Asset Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
