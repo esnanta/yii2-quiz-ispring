@@ -51,21 +51,21 @@ values
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
-    ('index-archive',2,'Index Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('create-archive',2,'Create Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('update-archive',2,'Update Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('view-archive',2,'View Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('delete-archive',2,'Delete Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('report-archive',2,'Report Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+    ('index-asset',2,'Index Asset',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-asset',2,'Create Asset',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-asset',2,'Update Asset',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-asset',2,'View Asset',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-asset',2,'Delete Asset',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-asset',2,'Report Asset',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
-    ('index-archivecategory',2,'Index Archive Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('create-archivecategory',2,'Create Archive Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('update-archivecategory',2,'Update Archive Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('view-archivecategory',2,'View Archive Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('delete-archivecategory',2,'Delete Archive Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('report-archivecategory',2,'Report Archive Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+    ('index-assetcategory',2,'Index Asset Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-assetcategory',2,'Create Asset Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-assetcategory',2,'Update Asset Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-assetcategory',2,'View Asset Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-assetcategory',2,'Delete Asset Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-assetcategory',2,'Report Asset Category',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
@@ -116,12 +116,12 @@ values
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('index-master','index-archivecategory'),
-    ('create-master','create-archivecategory'),
-    ('update-master','update-archivecategory'),
-    ('view-master','view-archivecategory'),
-    ('delete-master','delete-archivecategory'),
-    ('report-master','report-archivecategory');
+    ('index-master','index-assetcategory'),
+    ('create-master','create-assetcategory'),
+    ('update-master','update-assetcategory'),
+    ('view-master','view-assetcategory'),
+    ('delete-master','delete-assetcategory'),
+    ('report-master','report-assetcategory');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
@@ -165,12 +165,12 @@ values
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('index-transaction','index-archive'),
-    ('create-transaction','create-archive'),
-    ('update-transaction','update-archive'),
-    ('view-transaction','view-archive'),
-    ('delete-transaction','delete-archive'),
-    ('report-transaction','report-archive');
+    ('index-transaction','index-asset'),
+    ('create-transaction','create-asset'),
+    ('update-transaction','update-asset'),
+    ('view-transaction','view-asset'),
+    ('delete-transaction','delete-asset'),
+    ('report-transaction','report-asset');
 
 
 /**
@@ -213,8 +213,8 @@ values
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('guest','index-archive'),
-    ('guest','view-archive');
+    ('guest','index-asset'),
+    ('guest','view-asset');
 
 
 /**
