@@ -134,7 +134,7 @@ class ParticipantController extends Controller
         if(Yii::$app->user->can('create-participant')){
             $searchModel    = new AssetSearch();
             $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andWhere(['asset_type' => Asset::ARCHIVE_TYPE_SPREADSHEET]);
+            $dataProvider->query->andWhere(['asset_type' => Asset::ASSET_TYPE_SPREADSHEET]);
 
             $officeList = DataListUseCase::getOffice();
 
