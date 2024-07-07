@@ -3,21 +3,20 @@
 namespace common\models;
 
 use Yii;
-use \common\models\Participant;
 
 /**
  * This is the model class for table "tx_participant".
  */
 class ParticipantImport extends Participant
 {
-    public $archive_id;
+    public $asset_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['archive_id', 'group_id'], 'required'],
+            [['asset_id', 'group_id'], 'required'],
 
             [['office_id', 'group_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             //ADD ARCHIVE
@@ -35,7 +34,7 @@ class ParticipantImport extends Participant
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'archive_id' => Yii::t('app', 'Archive'),
+            'asset_id' => Yii::t('app', 'Archive'),
             'office_id' => Yii::t('app', 'Office ID'),
             'group_id' => Yii::t('app', 'Group ID'),
             'title' => Yii::t('app', 'Title'),

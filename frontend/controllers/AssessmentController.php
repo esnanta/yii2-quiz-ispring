@@ -2,13 +2,13 @@
 
 namespace frontend\controllers;
 
-use common\domain\DataListUseCase;
 use common\models\Assessment;
 use common\models\Participant;
 use common\models\Period;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
 use common\models\Subject;
+use RequestParametersParser;
 use Yii;
 use frontend\models\AssessmentSearch;
 use yii\helpers\ArrayHelper;
@@ -23,6 +23,8 @@ use yii\filters\VerbFilter;
  */
 class AssessmentController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     public function behaviors()
     {
         return [
