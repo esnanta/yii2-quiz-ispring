@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2024 at 05:34 AM
+-- Generation Time: Jul 07, 2024 at 05:37 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -524,7 +524,7 @@ CREATE TABLE `tx_employment` (
 --
 
 INSERT INTO `tx_employment` (`id`, `office_id`, `title`, `description`, `sequence`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-    (1, 1, 'Manajer', '-', 1, '2023-08-22 22:30:26', '2023-08-22 22:31:50', 1, 1, NULL, NULL, NULL, 1, NULL);
+    (1, 1, 'Programmer', '-', 1, '2023-08-22 22:30:26', '2024-07-07 10:37:04', 1, 1, NULL, NULL, NULL, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -859,7 +859,7 @@ INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
                                                       ('8uf0ag3c0prp44gtu0ckhfo6lr', 1715310928, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('973efkfmp4vqcuptfr71947tug', 1715495932, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('9qtonhj05n7e36bg2dmkhf50jq', 1720323732, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('aag4fkll4jgjm7btfbn48gv3sm', 1720324710, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('aag4fkll4jgjm7btfbn48gv3sm', 1720324888, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('d7j2ldq79ktuisqfoholkcb1bs', 1715485776, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a34353a22687474703a2f2f6c6f63616c686f73742f6170702f796969322d7175697a2d69737072696e672f61646d696e2f223b),
                                                       ('f8s64vm1cq3tufgc8cri3f3oap', 1715380845, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a3134373b5f5f617574684b65797c733a33323a22756862395f534e456145664e587a6774567132594757456b4c44486e63337243223b),
                                                       ('ff91gj3bstianlevuofja2bc05', 1715309195, 0x5f5f666c6173687c613a303a7b7d),
