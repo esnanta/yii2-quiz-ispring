@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2024 at 05:37 AM
+-- Generation Time: Jul 24, 2024 at 07:42 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -140,7 +140,7 @@ CREATE TABLE `tx_auth_assignment` (
 --
 
 INSERT INTO `tx_auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-    ('admin', '1', 1720191717);
+    ('admin', '1', 1721842247);
 
 -- --------------------------------------------------------
 
@@ -163,120 +163,125 @@ CREATE TABLE `tx_auth_item` (
 --
 
 INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-                                                                                                                ('admin', 1, 'Admin', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-assessment', 2, 'Create Assessment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-asset', 2, 'Create Asset', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-assetcategory', 2, 'Create Asset Category', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-employment', 2, 'Create Employment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-group', 2, 'Create Group', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-ispring-master', 2, 'Create Ispring Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-ispring-transaction', 2, 'Create Ispring Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-master', 2, 'Create Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-office', 2, 'Create Office', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-participant', 2, 'Create Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-period', 2, 'Create Period', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-profile', 2, 'Create Profile', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-room', 2, 'Create Room', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-schedule', 2, 'Create Schedule', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-scheduledetail', 2, 'Create Schedule Detail', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-staff', 2, 'Create Staff', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-subject', 2, 'Create Subject', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-theme', 2, 'Create Theme', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('create-transaction', 2, 'Create Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-assessment', 2, 'Delete Assessment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-asset', 2, 'Delete Asset', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-assetcategory', 2, 'Delete Asset Category', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-employment', 2, 'Delete Employment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-group', 2, 'Delete Group', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-ispring-master', 2, 'Delete Ispring Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-ispring-transaction', 2, 'Delete Ispring Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-master', 2, 'Delete Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-office', 2, 'Delete Office', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-participant', 2, 'Delete Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-period', 2, 'Delete Period', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-profile', 2, 'Delete Profile', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-room', 2, 'Delete Room', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-schedule', 2, 'Delete Schedule', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-scheduledetail', 2, 'Delete Schedule Detail', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-staff', 2, 'Delete Staff', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-subject', 2, 'Delete Subject', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-theme', 2, 'Delete Theme', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('delete-transaction', 2, 'Delete Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('guest', 1, 'Guest', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-assessment', 2, 'Index Assessment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-asset', 2, 'Index Asset', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-assetcategory', 2, 'Index Asset Category', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-employment', 2, 'Index Employment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-group', 2, 'Index Group', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-ispring-master', 2, 'Index Ispring Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-ispring-transaction', 2, 'Index Ispring Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-master', 2, 'Index Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-office', 2, 'Index Office', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-participant', 2, 'Index Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-period', 2, 'Index Period', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-profile', 2, 'Index Profile', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-room', 2, 'Index Room', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-schedule', 2, 'Index Schedule', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-scheduledetail', 2, 'Index Schedule Detail', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-staff', 2, 'Index Staff', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-subject', 2, 'Index Subject', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-theme', 2, 'Index Theme', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('index-transaction', 2, 'Index Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('owner', 1, 'Company Owner', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('participant', 1, 'Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('reguler', 1, 'Reguler', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-assessment', 2, 'Report Assessment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-asset', 2, 'Report Asset', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-assetcategory', 2, 'Report Asset Category', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-group', 2, 'Report Group', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-ispring-master', 2, 'Report Ispring Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-ispring-transaction', 2, 'Report Ispring Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-master', 2, 'Report Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-participant', 2, 'Report Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-period', 2, 'Report Period', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-room', 2, 'Report Room', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-schedule', 2, 'Report Schedule', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-scheduledetail', 2, 'Report Schedule Detail', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-subject', 2, 'Report Subject', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('report-transaction', 2, 'Report Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-assessment', 2, 'Update Assessment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-asset', 2, 'Update Asset', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-assetcategory', 2, 'Update Asset Category', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-employment', 2, 'Update Employment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-group', 2, 'Update Group', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-ispring-master', 2, 'Update Ispring Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-ispring-transaction', 2, 'Update Ispring Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-master', 2, 'Update Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-office', 2, 'Update Office', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-participant', 2, 'Update Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-period', 2, 'Update Period', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-profile', 2, 'Update Profile', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-room', 2, 'Update Room', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-schedule', 2, 'Update Schedule', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-scheduledetail', 2, 'Update Schedule Detail', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-staff', 2, 'Update Staff', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-subject', 2, 'Update Subject', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-theme', 2, 'Update Theme', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('update-transaction', 2, 'Update Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-assessment', 2, 'View Assessment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-asset', 2, 'View Asset', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-assetcategory', 2, 'View Asset Category', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-employment', 2, 'View Employment', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-group', 2, 'View Group', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-ispring-master', 2, 'View Ispring Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-ispring-transaction', 2, 'View Ispring Transaction', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-master', 2, 'View Master', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-office', 2, 'View Office', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-participant', 2, 'View Participant', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-period', 2, 'View Period', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-profile', 2, 'View Profile', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-room', 2, 'View Room', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-schedule', 2, 'View Schedule', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-scheduledetail', 2, 'View Schedule Detail', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-staff', 2, 'View Staff', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-subject', 2, 'View Subject', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-theme', 2, 'View Theme', NULL, NULL, 1720191717, 1720191717),
-                                                                                                                ('view-transaction', 2, 'View Transaction', NULL, NULL, 1720191717, 1720191717);
+                                                                                                                ('admin', 1, 'Admin', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-assessment', 2, 'Create Assessment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-asset', 2, 'Create Asset', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-assetcategory', 2, 'Create Asset Category', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-employment', 2, 'Create Employment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-group', 2, 'Create Group', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-ispring-master', 2, 'Create Ispring Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-ispring-transaction', 2, 'Create Ispring Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-master', 2, 'Create Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-office', 2, 'Create Office', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-officemedia', 2, 'Create Office Media', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-page', 2, 'Create Page', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-participant', 2, 'Create Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-period', 2, 'Create Period', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-profile', 2, 'Create Profile', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-room', 2, 'Create Room', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-schedule', 2, 'Create Schedule', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-scheduledetail', 2, 'Create Schedule Detail', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-staff', 2, 'Create Staff', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-subject', 2, 'Create Subject', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('create-transaction', 2, 'Create Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-assessment', 2, 'Delete Assessment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-asset', 2, 'Delete Asset', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-assetcategory', 2, 'Delete Asset Category', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-employment', 2, 'Delete Employment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-group', 2, 'Delete Group', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-ispring-master', 2, 'Delete Ispring Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-ispring-transaction', 2, 'Delete Ispring Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-master', 2, 'Delete Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-office', 2, 'Delete Office', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-officemedia', 2, 'Delete Office Media', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-page', 2, 'Delete Page', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-participant', 2, 'Delete Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-period', 2, 'Delete Period', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-profile', 2, 'Delete Profile', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-room', 2, 'Delete Room', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-schedule', 2, 'Delete Schedule', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-scheduledetail', 2, 'Delete Schedule Detail', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-staff', 2, 'Delete Staff', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-subject', 2, 'Delete Subject', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('delete-transaction', 2, 'Delete Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('guest', 1, 'Guest', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-assessment', 2, 'Index Assessment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-asset', 2, 'Index Asset', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-assetcategory', 2, 'Index Asset Category', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-employment', 2, 'Index Employment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-group', 2, 'Index Group', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-ispring-master', 2, 'Index Ispring Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-ispring-transaction', 2, 'Index Ispring Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-master', 2, 'Index Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-office', 2, 'Index Office', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-officemedia', 2, 'Index Office Media', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-page', 2, 'Index Page', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-participant', 2, 'Index Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-period', 2, 'Index Period', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-profile', 2, 'Index Profile', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-room', 2, 'Index Room', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-schedule', 2, 'Index Schedule', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-scheduledetail', 2, 'Index Schedule Detail', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-staff', 2, 'Index Staff', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-subject', 2, 'Index Subject', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('index-transaction', 2, 'Index Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('owner', 1, 'Company Owner', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('participant', 1, 'Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('reguler', 1, 'Reguler', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-assessment', 2, 'Report Assessment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-asset', 2, 'Report Asset', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-assetcategory', 2, 'Report Asset Category', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-group', 2, 'Report Group', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-ispring-master', 2, 'Report Ispring Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-ispring-transaction', 2, 'Report Ispring Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-master', 2, 'Report Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-participant', 2, 'Report Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-period', 2, 'Report Period', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-room', 2, 'Report Room', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-schedule', 2, 'Report Schedule', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-scheduledetail', 2, 'Report Schedule Detail', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-subject', 2, 'Report Subject', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('report-transaction', 2, 'Report Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-assessment', 2, 'Update Assessment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-asset', 2, 'Update Asset', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-assetcategory', 2, 'Update Asset Category', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-employment', 2, 'Update Employment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-group', 2, 'Update Group', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-ispring-master', 2, 'Update Ispring Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-ispring-transaction', 2, 'Update Ispring Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-master', 2, 'Update Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-office', 2, 'Update Office', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-officemedia', 2, 'Update Office Media', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-page', 2, 'Update Page', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-participant', 2, 'Update Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-period', 2, 'Update Period', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-profile', 2, 'Update Profile', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-room', 2, 'Update Room', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-schedule', 2, 'Update Schedule', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-scheduledetail', 2, 'Update Schedule Detail', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-staff', 2, 'Update Staff', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-subject', 2, 'Update Subject', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('update-transaction', 2, 'Update Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-assessment', 2, 'View Assessment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-asset', 2, 'View Asset', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-assetcategory', 2, 'View Asset Category', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-employment', 2, 'View Employment', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-group', 2, 'View Group', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-ispring-master', 2, 'View Ispring Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-ispring-transaction', 2, 'View Ispring Transaction', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-master', 2, 'View Master', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-office', 2, 'View Office', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-officemedia', 2, 'View Office Media', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-page', 2, 'View Page', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-participant', 2, 'View Participant', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-period', 2, 'View Period', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-profile', 2, 'View Profile', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-room', 2, 'View Room', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-schedule', 2, 'View Schedule', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-scheduledetail', 2, 'View Schedule Detail', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-staff', 2, 'View Staff', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-subject', 2, 'View Subject', NULL, NULL, 1721842247, 1721842247),
+                                                                                                                ('view-transaction', 2, 'View Transaction', NULL, NULL, 1721842247, 1721842247);
 
 -- --------------------------------------------------------
 
@@ -329,9 +334,10 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('create-master', 'create-assetcategory'),
                                                          ('create-master', 'create-employment'),
                                                          ('create-master', 'create-office'),
+                                                         ('create-master', 'create-officemedia'),
+                                                         ('create-master', 'create-page'),
                                                          ('create-master', 'create-profile'),
                                                          ('create-master', 'create-staff'),
-                                                         ('create-master', 'create-theme'),
                                                          ('create-transaction', 'create-asset'),
                                                          ('delete-ispring-master', 'delete-group'),
                                                          ('delete-ispring-master', 'delete-participant'),
@@ -344,9 +350,10 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('delete-master', 'delete-assetcategory'),
                                                          ('delete-master', 'delete-employment'),
                                                          ('delete-master', 'delete-office'),
+                                                         ('delete-master', 'delete-officemedia'),
+                                                         ('delete-master', 'delete-page'),
                                                          ('delete-master', 'delete-profile'),
                                                          ('delete-master', 'delete-staff'),
-                                                         ('delete-master', 'delete-theme'),
                                                          ('delete-transaction', 'delete-asset'),
                                                          ('guest', 'index-asset'),
                                                          ('guest', 'view-asset'),
@@ -361,9 +368,10 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('index-master', 'index-assetcategory'),
                                                          ('index-master', 'index-employment'),
                                                          ('index-master', 'index-office'),
+                                                         ('index-master', 'index-officemedia'),
+                                                         ('index-master', 'index-page'),
                                                          ('index-master', 'index-profile'),
                                                          ('index-master', 'index-staff'),
-                                                         ('index-master', 'index-theme'),
                                                          ('index-transaction', 'index-asset'),
                                                          ('owner', 'create-ispring-master'),
                                                          ('owner', 'create-ispring-transaction'),
@@ -427,9 +435,10 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('update-master', 'update-assetcategory'),
                                                          ('update-master', 'update-employment'),
                                                          ('update-master', 'update-office'),
+                                                         ('update-master', 'update-officemedia'),
+                                                         ('update-master', 'update-page'),
                                                          ('update-master', 'update-profile'),
                                                          ('update-master', 'update-staff'),
-                                                         ('update-master', 'update-theme'),
                                                          ('update-transaction', 'update-asset'),
                                                          ('view-ispring-master', 'view-group'),
                                                          ('view-ispring-master', 'view-participant'),
@@ -442,9 +451,10 @@ INSERT INTO `tx_auth_item_child` (`parent`, `child`) VALUES
                                                          ('view-master', 'view-assetcategory'),
                                                          ('view-master', 'view-employment'),
                                                          ('view-master', 'view-office'),
+                                                         ('view-master', 'view-officemedia'),
+                                                         ('view-master', 'view-page'),
                                                          ('view-master', 'view-profile'),
                                                          ('view-master', 'view-staff'),
-                                                         ('view-master', 'view-theme'),
                                                          ('view-transaction', 'view-asset');
 
 -- --------------------------------------------------------
@@ -615,10 +625,6 @@ CREATE TABLE `tx_office` (
                              `address` varchar(100) DEFAULT NULL,
                              `latitude` varchar(100) DEFAULT NULL,
                              `longitude` varchar(100) DEFAULT NULL,
-                             `facebook` varchar(100) DEFAULT NULL,
-                             `google_plus` varchar(100) DEFAULT NULL,
-                             `instagram` varchar(100) DEFAULT NULL,
-                             `twitter` varchar(100) DEFAULT NULL,
                              `description` tinytext DEFAULT NULL,
                              `created_at` datetime DEFAULT NULL,
                              `updated_at` datetime DEFAULT NULL,
@@ -635,8 +641,77 @@ CREATE TABLE `tx_office` (
 -- Dumping data for table `tx_office`
 --
 
-INSERT INTO `tx_office` (`id`, `user_id`, `unique_id`, `title`, `phone_number`, `fax_number`, `email`, `web`, `address`, `latitude`, `longitude`, `facebook`, `google_plus`, `instagram`, `twitter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-    (1, 1, '65a7fb0e28f7b', 'Daraspace', '-', NULL, 'ombakrinai@gmail.com', 'https://daraspace.com', '-', NULL, NULL, NULL, NULL, NULL, NULL, '-', '2023-08-18 22:25:10', '2024-07-07 10:34:30', 1, 1, NULL, NULL, NULL, 4, NULL);
+INSERT INTO `tx_office` (`id`, `user_id`, `unique_id`, `title`, `phone_number`, `fax_number`, `email`, `web`, `address`, `latitude`, `longitude`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (1, 1, '65a7fb0e28f7b', 'Daraspace', '-', NULL, 'ombakrinai@gmail.com', 'https://daraspace.com', '-', NULL, NULL, '-', '2023-08-18 22:25:10', '2024-07-07 10:34:30', 1, 1, NULL, NULL, NULL, 4, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tx_office_media`
+--
+
+CREATE TABLE `tx_office_media` (
+                                   `id` int(11) NOT NULL,
+                                   `office_id` int(11) DEFAULT NULL,
+                                   `media_type` int(11) DEFAULT NULL,
+                                   `title` varchar(100) DEFAULT NULL,
+                                   `description` longtext DEFAULT NULL,
+                                   `created_at` datetime DEFAULT NULL,
+                                   `updated_at` datetime DEFAULT NULL,
+                                   `created_by` int(11) DEFAULT NULL,
+                                   `updated_by` int(11) DEFAULT NULL,
+                                   `is_deleted` int(11) DEFAULT NULL,
+                                   `deleted_at` datetime DEFAULT NULL,
+                                   `deleted_by` int(11) DEFAULT NULL,
+                                   `verlock` bigint(20) DEFAULT NULL,
+                                   `uuid` varchar(36) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tx_office_media`
+--
+
+INSERT INTO `tx_office_media` (`id`, `office_id`, `media_type`, `title`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (1, 1, 11, 'fa-brands fa-twitter', '', '2024-07-25 00:04:27', '2024-07-25 00:04:27', 1, 1, NULL, NULL, NULL, 0, 'c92e8b7749de11ef9de9c858c0b7f92f');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tx_page`
+--
+
+CREATE TABLE `tx_page` (
+                           `id` int(11) NOT NULL,
+                           `page_type` int(11) DEFAULT NULL,
+                           `office_id` int(11) DEFAULT NULL,
+                           `title` varchar(100) DEFAULT NULL,
+                           `content` text DEFAULT NULL,
+                           `asset_name` varchar(200) DEFAULT NULL,
+                           `description` tinytext DEFAULT NULL,
+                           `created_at` datetime DEFAULT NULL,
+                           `updated_at` datetime DEFAULT NULL,
+                           `created_by` int(11) DEFAULT NULL,
+                           `updated_by` int(11) DEFAULT NULL,
+                           `is_deleted` int(11) DEFAULT NULL,
+                           `deleted_at` datetime DEFAULT NULL,
+                           `deleted_by` int(11) DEFAULT NULL,
+                           `verlock` bigint(20) DEFAULT NULL,
+                           `uuid` varchar(36) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tx_page`
+--
+
+INSERT INTO `tx_page` (`id`, `page_type`, `office_id`, `title`, `content`, `asset_name`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                 (1, 1, 1, 'Logo Frontend Header', NULL, NULL, 'Logo Frontend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de76b6-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (2, 1, 1, 'Logo Frontend Footer', NULL, NULL, 'Logo Frontend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de92a2-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (3, 1, 1, 'Logo Backend Header', NULL, NULL, 'Logo Backend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de9351-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (4, 1, 1, 'Logo Backend Footer', NULL, NULL, 'Logo Backend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de93b0-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (5, 1, 1, 'Logo Report', NULL, NULL, 'Logo Report', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de942d-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (6, 1, 1, 'Logo Invoice', NULL, NULL, 'Logo Invoice', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de948e-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (7, 1, 1, 'Title', NULL, NULL, 'Title', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de94c6-3c11-11ef-9f1b-c858c0b7f92f'),
+                                                                                                                                                                                                                                 (8, 1, 1, 'Content', NULL, NULL, 'Content', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de94fd-3c11-11ef-9f1b-c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -852,52 +927,8 @@ CREATE TABLE `tx_session` (
 --
 
 INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
-                                                      ('0ktffmjrmvuvaogsk0f2sruv2k', 1715321312, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('3mr835rk6rhlo2uckv8fihp101', 1715334065, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('8fk7h7hqnsnkuhjr7288r3r1dg', 1715378283, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('8m3e5e3ago76akkksd1958vrt1', 1720191142, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('8uf0ag3c0prp44gtu0ckhfo6lr', 1715310928, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('973efkfmp4vqcuptfr71947tug', 1715495932, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('9qtonhj05n7e36bg2dmkhf50jq', 1720323732, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('aag4fkll4jgjm7btfbn48gv3sm', 1720324888, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('d7j2ldq79ktuisqfoholkcb1bs', 1715485776, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a34353a22687474703a2f2f6c6f63616c686f73742f6170702f796969322d7175697a2d69737072696e672f61646d696e2f223b),
-                                                      ('f8s64vm1cq3tufgc8cri3f3oap', 1715380845, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a3134373b5f5f617574684b65797c733a33323a22756862395f534e456145664e587a6774567132594757456b4c44486e63337243223b),
-                                                      ('ff91gj3bstianlevuofja2bc05', 1715309195, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('ffbpvi0lo2nicemmpe45l2ns23', 1715327727, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('gorjfjm9lj8pd4lighum2sk745', 1715377922, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('grv5bcnbtkh2bel5algdtojrpf', 1715488427, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('h2h3rbf7o8217ma6r08k8m20o0', 1715495918, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a3134383b5f5f617574684b65797c733a33323a224439472d42523546736c4462506f2d304a6b3746444a46454355504a50743031223b),
-                                                      ('kouv05j5ajufcfhbr87cjf5b06', 1720191859, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('ndlcg2v8pavt9867j3nbqu8gp7', 1720194131, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('nepaijo35jnp2hud1eue9ar6a2', 1715331377, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('nvck76tdj3m0qqra4aq61va5ba', 1715485864, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('pdvu30mkkcf5rnj2j86qaetuob', 1720193000, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('qc9bopvcbcs24sig6lkmrf1ie6', 1715266149, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('s7a005t823mfbejejnlq8f64uq', 1715377427, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('uekimflc97ahlsesbpiam3fj8h', 1715381053, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tx_site_link`
---
-
-CREATE TABLE `tx_site_link` (
-                                `id` int(11) NOT NULL,
-                                `title` varchar(100) DEFAULT NULL,
-                                `url` varchar(200) DEFAULT NULL,
-                                `sequence` int(11) DEFAULT NULL,
-                                `description` tinytext DEFAULT NULL,
-                                `created_at` int(11) DEFAULT NULL,
-                                `created_by` int(11) DEFAULT NULL,
-                                `updated_at` int(11) DEFAULT NULL,
-                                `updated_by` int(11) DEFAULT NULL,
-                                `is_deleted` int(11) DEFAULT NULL,
-                                `deleted_at` int(11) DEFAULT NULL,
-                                `deleted_by` int(11) DEFAULT NULL,
-                                `verlock` bigint(20) DEFAULT NULL,
-                                `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                                                      ('6v14br8pj3sihijvnhs036jtf0', 1721844196, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('99bm5e8rng35av0od4r2a1m4js', 1721844333, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
 
 -- --------------------------------------------------------
 
@@ -1006,45 +1037,6 @@ CREATE TABLE `tx_tag` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tx_theme`
---
-
-CREATE TABLE `tx_theme` (
-                            `id` int(11) NOT NULL,
-                            `office_id` int(11) DEFAULT NULL,
-                            `title` varchar(100) DEFAULT NULL,
-                            `theme_type` int(11) DEFAULT NULL,
-                            `content` text DEFAULT NULL,
-                            `asset_name` varchar(200) DEFAULT NULL,
-                            `description` tinytext DEFAULT NULL,
-                            `created_at` datetime DEFAULT NULL,
-                            `updated_at` datetime DEFAULT NULL,
-                            `created_by` int(11) DEFAULT NULL,
-                            `updated_by` int(11) DEFAULT NULL,
-                            `is_deleted` int(11) DEFAULT NULL,
-                            `deleted_at` datetime DEFAULT NULL,
-                            `deleted_by` int(11) DEFAULT NULL,
-                            `verlock` bigint(20) DEFAULT NULL,
-                            `uuid` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tx_theme`
---
-
-INSERT INTO `tx_theme` (`id`, `office_id`, `title`, `theme_type`, `content`, `asset_name`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-                                                                                                                                                                                                                                   (1, 1, 'Logo Frontend Header', 1, NULL, NULL, 'Logo Frontend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de76b6-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (2, 1, 'Logo Frontend Footer', 2, NULL, NULL, 'Logo Frontend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de92a2-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (3, 1, 'Logo Backend Header', 3, NULL, NULL, 'Logo Backend Header', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de9351-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (4, 1, 'Logo Backend Footer', 4, NULL, NULL, 'Logo Backend Footer', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de93b0-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (5, 1, 'Logo Report', 5, NULL, NULL, 'Logo Report', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de942d-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (6, 1, 'Logo Invoice', 6, NULL, NULL, 'Logo Invoice', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de948e-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (7, 1, 'Title', 7, NULL, NULL, 'Title', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de94c6-3c11-11ef-9f1b-c858c0b7f92f'),
-                                                                                                                                                                                                                                   (8, 1, 'Content', 8, NULL, NULL, 'Content', '2023-09-17 20:25:47', '2023-09-17 20:25:47', 1, 1, NULL, NULL, NULL, 0, '60de94fd-3c11-11ef-9f1b-c858c0b7f92f');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tx_user`
 --
 
@@ -1071,7 +1063,7 @@ CREATE TABLE `tx_user` (
 --
 
 INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `unconfirmed_email`, `registration_ip`, `flags`, `confirmed_at`, `blocked_at`, `updated_at`, `created_at`, `last_login_at`, `auth_tf_key`, `auth_tf_enabled`) VALUES
-    (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1720322298, NULL, 0);
+    (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1721840937, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -1179,6 +1171,20 @@ ALTER TABLE `tx_office`
     ADD KEY `Fk_tx_office_user` (`user_id`);
 
 --
+-- Indexes for table `tx_office_media`
+--
+ALTER TABLE `tx_office_media`
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `FK_tx_office_media_office` (`office_id`);
+
+--
+-- Indexes for table `tx_page`
+--
+ALTER TABLE `tx_page`
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `FK_tx_content_theme` (`office_id`);
+
+--
 -- Indexes for table `tx_participant`
 --
 ALTER TABLE `tx_participant`
@@ -1239,12 +1245,6 @@ ALTER TABLE `tx_session`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tx_site_link`
---
-ALTER TABLE `tx_site_link`
-    ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tx_social_account`
 --
 ALTER TABLE `tx_social_account`
@@ -1274,13 +1274,6 @@ ALTER TABLE `tx_subject`
 --
 ALTER TABLE `tx_tag`
     ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tx_theme`
---
-ALTER TABLE `tx_theme`
-    ADD PRIMARY KEY (`id`),
-    ADD KEY `FK_tx_content_theme` (`office_id`);
 
 --
 -- Indexes for table `tx_user`
@@ -1349,6 +1342,18 @@ ALTER TABLE `tx_office`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `tx_office_media`
+--
+ALTER TABLE `tx_office_media`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tx_page`
+--
+ALTER TABLE `tx_page`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `tx_participant`
 --
 ALTER TABLE `tx_participant`
@@ -1391,12 +1396,6 @@ ALTER TABLE `tx_schedule_detail`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tx_site_link`
---
-ALTER TABLE `tx_site_link`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `tx_social_account`
 --
 ALTER TABLE `tx_social_account`
@@ -1419,12 +1418,6 @@ ALTER TABLE `tx_subject`
 --
 ALTER TABLE `tx_tag`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tx_theme`
---
-ALTER TABLE `tx_theme`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tx_user`
@@ -1504,6 +1497,18 @@ ALTER TABLE `tx_office`
     ADD CONSTRAINT `Fk_tx_office_user` FOREIGN KEY (`user_id`) REFERENCES `tx_user` (`id`);
 
 --
+-- Constraints for table `tx_office_media`
+--
+ALTER TABLE `tx_office_media`
+    ADD CONSTRAINT `FK_tx_office_media_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
+
+--
+-- Constraints for table `tx_page`
+--
+ALTER TABLE `tx_page`
+    ADD CONSTRAINT `Fx_tx_theme_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
+
+--
 -- Constraints for table `tx_participant`
 --
 ALTER TABLE `tx_participant`
@@ -1564,12 +1569,6 @@ ALTER TABLE `tx_staff`
 --
 ALTER TABLE `tx_subject`
     ADD CONSTRAINT `Fk_subject_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
-
---
--- Constraints for table `tx_theme`
---
-ALTER TABLE `tx_theme`
-    ADD CONSTRAINT `Fx_tx_theme_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -8,6 +8,7 @@ use common\models\Assessment;
 use common\models\Employment;
 use common\models\Group;
 use common\models\Office;
+use common\models\Page;
 use common\models\Participant;
 use common\models\Period;
 use common\models\Room;
@@ -99,6 +100,12 @@ class DataListUseCase
     {
         return ArrayHelper::map(Staff::find()
             ->where(['office_id' => DataIdUseCase::getOfficeId()])
+            ->asArray()->all(), 'id', 'title');
+    }
+
+    public static function getPage(): array
+    {
+        return ArrayHelper::map(Page::find()
             ->asArray()->all(), 'id', 'title');
     }
 }

@@ -23,7 +23,7 @@ $create = UIHelper::getCreateButton();
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title.$create,
-            'type' => DetailView::TYPE_DEFAULT,
+            'type' => UIHelper::getDetailViewType(),
         ],
         'attributes' => [
             [

@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\UIHelper;
 use common\models\OfficeMedia;
 use kartik\detail\DetailView;
 
@@ -45,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
                 'panel' => [
                     'heading' => $this->title,
-                    'type' => DetailView::TYPE_DEFAULT,
+                    'type' => UIHelper::getDetailViewType(),
                 ],
                 'attributes' => [
                     [

@@ -2,9 +2,8 @@
 
 use common\helper\UIHelper;
 use kartik\select2\Select2;
-use yii\helpers\Html;
 use kartik\detail\DetailView;
-use kartik\datecontrol\DateControl;
+
 
 /**
  * @var yii\web\View $this
@@ -25,7 +24,7 @@ $create = UIHelper::getCreateButton();
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title.$create,
-            'type' => DetailView::TYPE_DEFAULT,
+            'type' => UIHelper::getDetailViewType(),
         ],
         'attributes' => [
             [

@@ -109,11 +109,11 @@ values
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
-    ('index-theme',2,'Index Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('create-theme',2,'Create Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('update-theme',2,'Update Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('view-theme',2,'View Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('delete-theme',2,'Delete Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+    ('index-page',2,'Index Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-page',2,'Create Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-page',2,'Update Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-page',2,'View Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-page',2,'Delete Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 
 
@@ -173,11 +173,11 @@ values
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('index-master','index-theme'),
-    ('create-master','create-theme'),
-    ('update-master','update-theme'),
-    ('view-master','view-theme'),
-    ('delete-master','delete-theme');
+    ('index-master','index-page'),
+    ('create-master','create-page'),
+    ('update-master','update-page'),
+    ('view-master','view-page'),
+    ('delete-master','delete-page');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values

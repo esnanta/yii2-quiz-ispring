@@ -1,6 +1,7 @@
 <?php
 namespace common\helper;
 
+use kartik\detail\DetailView;
 use Yii;
 use yii\helpers\Html;
 
@@ -74,6 +75,18 @@ class UIHelper {
     {
         return Html::a('<i class="fas fa-plus"></i>',
             [$route],
-            ['class' => 'button float-right','style'=>'color:#333;padding:0 5px']);
+            ['class' => 'button float-right','style'=>'color:#ffffff;padding:0 5px']);
+    }
+
+    public static function getUpdateButton($route='create'): string
+    {
+        return Html::a('<i class="fa fa-pencil"></i>',
+            [$route],
+            ['class' => 'button float-right','style'=>'color:#ffffff;padding:0 5px']);
+    }
+
+    public static function getDetailViewType(): string
+    {
+        return DetailView::TYPE_DARK;
     }
 }

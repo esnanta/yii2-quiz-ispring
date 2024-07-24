@@ -1,9 +1,9 @@
 <?php
 
 use common\helper\IconHelper;
+use common\helper\UIHelper;
 use kartik\detail\DetailView;
 use kartik\select2\Select2;
-use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -14,8 +14,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Office Media'),
     'url' => ['office/view', 'id' => $model->office_id]];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button pull-right', 'style' => 'color:#333333;padding:0 5px']);
-
+$create = UIHelper::getCreateButton();
 ?>
 <div class="office-media-view">
 
@@ -28,7 +27,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
             'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
             'panel' => [
                 'heading' => $this->title . $create,
-                'type' => DetailView::TYPE_DEFAULT,
+                'type' => UIHelper::getDetailViewType(),
             ],
             'attributes' => [
                 [
@@ -106,7 +105,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title . $create,
-            'type' => DetailView::TYPE_DEFAULT,
+            'type' => UIHelper::getDetailViewType(),
         ],
         'attributes' => [
             [
