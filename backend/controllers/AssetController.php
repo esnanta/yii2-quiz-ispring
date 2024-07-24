@@ -4,21 +4,16 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
-use common\domain\DataSpreadsheetUseCase;
-use common\models\Office;
-use common\helper\CacheCloud;
-use Yii;
-use common\models\Asset;
-use common\models\AssetCategory;
-use common\models\AssetSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
-use yii\db\StaleObjectException;
-
 use common\helper\MessageHelper;
+use common\helper\SpreadsheetHelper;
+use common\models\Asset;
+use common\models\AssetSearch;
+use Yii;
+use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * AssetController implements the CRUD actions for Asset model.
@@ -92,11 +87,11 @@ class AssetController extends Controller
             if(!empty($oldFile)):
                 try{
                     $inputFileName = $oldFile;
-                    $isSpreadsheet = DataSpreadsheetUseCase::getInstance()->getIdentify($inputFileName);
+                    $isSpreadsheet = SpreadsheetHelper::getInstance()->getIdentify($inputFileName);
                     if($isSpreadsheet == 'Xlsx'){
-                        $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
-                        $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
-                        $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
+                        $helper = SpreadsheetHelper::getInstance()->getHelper();
+                        $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
+                        $reader = SpreadsheetHelper::getInstance()->getReader($inputFileName,$sheetName);
                         $spreadsheet = $reader->load($inputFileName);
                         $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
                         $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(

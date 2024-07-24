@@ -66,7 +66,10 @@ class UIHelper {
     {
         return '<span class="badge bg-danger text-white">'.$text.'</span>';
     }
-
+    public static function getWarning($text): string
+    {
+        return '<span class="badge bg-warning text-white">'.$text.'</span>';
+    }
     public static function getCreateButton($route='create'): string
     {
         return Html::a('<i class="fas fa-plus"></i>',

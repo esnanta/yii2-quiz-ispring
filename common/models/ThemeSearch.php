@@ -2,12 +2,9 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
-use Yii;
+use common\domain\CacheUseCase;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use kartik\daterange\DateRangeBehavior;
-use common\models\Theme;
 
 /**
  * ThemeSearch represents the model behind the search form about `common\models\Theme`.
@@ -31,7 +28,7 @@ class ThemeSearch extends Theme
     public function search($params)
     {
 
-        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $officeId = CacheUseCase::getInstance()->getOfficeId();
         $query = Theme::find()->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([

@@ -19,13 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'token') ?>
+
     <?= $form->field($model, 'title') ?>
 
     <?= $form->field($model, 'phone_number') ?>
 
     <?= $form->field($model, 'fax_number') ?>
 
-    <?= $form->field($model, 'email') ?>
+    <?php // echo $form->field($model, 'email') ?>
 
     <?php // echo $form->field($model, 'web') ?>
 
@@ -34,14 +36,6 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'latitude') ?>
 
     <?php // echo $form->field($model, 'longitude') ?>
-
-    <?php // echo $form->field($model, 'facebook') ?>
-
-    <?php // echo $form->field($model, 'google_plus') ?>
-
-    <?php // echo $form->field($model, 'instagram') ?>
-
-    <?php // echo $form->field($model, 'twitter') ?>
 
     <?php // echo $form->field($model, 'description') ?>
 
@@ -53,17 +47,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'updated_by') ?>
 
-    <?php // echo $form->field($model, 'is_deleted') ?>
-
-    <?php // echo $form->field($model, 'deleted_at') ?>
-
-    <?php // echo $form->field($model, 'deleted_by') ?>
-
-    <?php // echo $form->field($model, 'verlock') ?>
-
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

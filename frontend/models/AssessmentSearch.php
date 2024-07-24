@@ -2,10 +2,9 @@
 
 namespace frontend\models;
 
-use common\helper\CacheCloud;
 use common\models\Assessment;
-use yii\data\ActiveDataProvider;
 use common\models\AssessmentSearch as BaseAssessmentDetailSearch;
+use yii\data\ActiveDataProvider;
 
 /**
  * AssessmentDetailSearch represents the model behind the search form about `common\models\AssessmentDetail`.

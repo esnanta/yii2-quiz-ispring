@@ -2,12 +2,11 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
+use common\domain\CacheUseCase;
+use kartik\daterange\DateRangeBehavior;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\AssetCategory;
-use kartik\daterange\DateRangeBehavior;
 
 /**
  * ArchiveCategorySearch represents the model behind the search form about `common\models\ArchiveCategory`.
@@ -49,7 +48,7 @@ class AssetCategorySearch extends AssetCategory
 
     public function search($params)
     {
-        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $officeId = CacheUseCase::getInstance()->getOfficeId();
         $query = AssetCategory::find()->where(['office_id'=>$officeId])
             ->orderBy('sequence ASC');
 

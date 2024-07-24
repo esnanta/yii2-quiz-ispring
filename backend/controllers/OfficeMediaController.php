@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
+use common\domain\CacheUseCase;
 use common\domain\DataListUseCase;
+use common\helper\IconHelper;
 use common\helper\MessageHelper;
-use common\models\Room;
-use common\models\RoomSearch;
+use common\models\OfficeMedia;
+use common\models\OfficeMediaSearch;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -15,9 +16,9 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * RoomController implements the CRUD actions for Room model.
+ * OfficeMediaController implements the CRUD actions for OfficeMedia model.
  */
-class RoomController extends Controller
+class OfficeMediaController extends Controller
 {
     public function behaviors()
     {
@@ -32,21 +33,24 @@ class RoomController extends Controller
     }
 
     /**
-     * Lists all Room models.
+     * Lists all OfficeMedia models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('index-room')){
-            $searchModel = new RoomSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
-            $officeList = DataListUseCase::getOffice();
+        if(Yii::$app->user->can('index-officemedia')){
+            $searchModel    = new OfficeMediaSearch;
+            $dataProvider   = $searchModel->search(Yii::$app->request->getQueryParams());
+            $officeList     = DataListUseCase::getOffice();
+            $mediaTypeList  = OfficeMedia::getArrayMediaType();
+            $iconList       = IconHelper::getFontAwesomeBrands();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' => $officeList
+                'officeList' => $officeList,
+                'mediaTypeList' => $mediaTypeList,
+                'iconList' => $iconList
             ]);
         }
         else{
@@ -56,22 +60,27 @@ class RoomController extends Controller
     }
 
     /**
-     * Displays a single Room model.
+     * Displays a single OfficeMedia model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('view-room')){
-            $model = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
+        if(Yii::$app->user->can('view-officemedia')){
+            $model          = $this->findModel($id);
+            $officeList     = DataListUseCase::getOffice();
+            $mediaTypeList  = OfficeMedia::getArrayMediaType();
+            $iconList       = IconHelper::getFontAwesomeBrands();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                MessageHelper::getFlashSaveSuccess();
+                return $this->redirect(['office/view', 'id' => $model->office_id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList' => $officeList
+                    'officeList' => $officeList,
+                    'mediaTypeList' => $mediaTypeList,
+                    'iconList' => $iconList
                 ]);
             }
         }
@@ -82,28 +91,31 @@ class RoomController extends Controller
     }
 
     /**
-     * Creates a new Room model.
+     * Creates a new OfficeMedia model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type)
     {
-        if(Yii::$app->user->can('create-room')){
-
-            $officeId   = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
-
-            $model = new Room;
-            $model->office_id = $officeId;
+        if(Yii::$app->user->can('create-officemedia')){
+            $model              = new OfficeMedia;
+            $model->office_id   = CacheUseCase::getInstance()->getOfficeId();
+            $model->media_type  = $type;
+            $officeList         = DataListUseCase::getOffice();
+            $mediaTypeList      = OfficeMedia::getArrayMediaType();
+            $iconList           = IconHelper::getFontAwesomeBrands();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    MessageHelper::getFlashSaveSuccess();
+                    return $this->redirect(['office/view', 'id' => $model->office_id]);
                 } 
                 else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'mediaTypeList' => $mediaTypeList,
+                        'iconList' => $iconList
                     ]);
                 }
             }
@@ -118,24 +130,29 @@ class RoomController extends Controller
     }
 
     /**
-     * Updates an existing Room model.
+     * Updates an existing OfficeMedia model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('update-room')){
+        if(Yii::$app->user->can('update-officemedia')){
             try {
-                $model = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $model          = $this->findModel($id);
+                $officeList     = DataListUseCase::getOffice();
+                $mediaTypeList  = OfficeMedia::getArrayMediaType();
+                $iconList       = IconHelper::getFontAwesomeBrands();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    MessageHelper::getFlashUpdateSuccess();
+                    return $this->redirect(['office/view', 'id' => $model->office_id]);
                 } else {
                     return $this->render('update', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'mediaTypeList' => $mediaTypeList,
+                        'iconList' => $iconList
                     ]);
                 }
             }
@@ -150,17 +167,18 @@ class RoomController extends Controller
     }
 
     /**
-     * Deletes an existing Room model.
+     * Deletes an existing OfficeMedia model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('delete-room')){
-            $this->findModel($id)->delete();
-
-            return $this->redirect(['index']);
+        if(Yii::$app->user->can('delete-officemedia')){
+            $model = $this->findModel($id);
+            $model->delete();
+            MessageHelper::getFlashDeleteSuccess();
+            return $this->redirect(['office/view', 'id' => $model->office_id]);
         }
         else{
             MessageHelper::getFlashLoginInfo();
@@ -169,15 +187,15 @@ class RoomController extends Controller
     }
 
     /**
-     * Finds the Room model based on its primary key value.
+     * Finds the OfficeMedia model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Room the loaded model
+     * @return OfficeMedia the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Room::findOne($id)) !== null) {
+        if (($model = OfficeMedia::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

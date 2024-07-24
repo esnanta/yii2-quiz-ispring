@@ -1,18 +1,17 @@
 <?php
 
-namespace common\domain;
+namespace common\helper;
 
-use common\helper\ReadFilter;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class DataSpreadsheetUseCase
+class SpreadsheetHelper
 {
-    private static ?DataSpreadsheetUseCase $instance = null;
+    private static ?SpreadsheetHelper $instance = null;
 
-    public static function getInstance(): DataSpreadsheetUseCase{
+    public static function getInstance(): SpreadsheetHelper{
         if (self::$instance === null) {
-            self::$instance = new DataSpreadsheetUseCase();
+            self::$instance = new SpreadsheetHelper();
         }
         return self::$instance;
     }

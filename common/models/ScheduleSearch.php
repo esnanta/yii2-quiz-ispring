@@ -2,11 +2,9 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
-use Yii;
+use common\domain\CacheUseCase;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Schedule;
 
 /**
  * common\models\ScheduleSearch represents the model behind the search form about `common\models\Schedule`.
@@ -47,7 +45,7 @@ use common\models\Schedule;
      */
     public function search($params)
     {
-        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $officeId = CacheUseCase::getInstance()->getOfficeId();
         $query = Schedule::find()->where(['office_id'=>$officeId])
             ->orderBy('date_start DESC');
 

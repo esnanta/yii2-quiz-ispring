@@ -2,13 +2,12 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
-use Yii;
-use yii\web\UploadedFile;
-use yii\helpers\FileHelper;
-use \common\models\base\Staff as BaseStaff;
-
+use common\domain\CacheUseCase;
 use common\helper\UIHelper;
+use common\models\base\Staff as BaseStaff;
+use Yii;
+use yii\helpers\FileHelper;
+
 /**
  * This is the model class for table "tx_staff".
  */
@@ -228,7 +227,7 @@ class Staff extends BaseStaff
     }
 
     public function getPath() : string {
-        $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
+        $officeUniqueId = CacheUseCase::getInstance()->getOfficeUniqueId();
         return '/uploads/staff/'.$officeUniqueId;
     }
 

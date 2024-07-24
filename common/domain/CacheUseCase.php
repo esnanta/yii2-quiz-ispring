@@ -1,8 +1,10 @@
 <?php
-namespace common\helper;
+namespace common\domain;
 
 use common\models\AuthAssignment;
 use common\models\Staff;
+use Yii;
+use yii\web\ForbiddenHttpException;
 
 
 /*
@@ -10,13 +12,11 @@ use common\models\Staff;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-use Yii;
-use yii\web\ForbiddenHttpException;
 
 //SINGLETON CLASS
-class CacheCloud {
+class CacheUseCase {
 
-    private static ?CacheCloud $instance = null;
+    private static ?CacheUseCase $instance = null;
     private string $cacheOfficeId;
     private string $cacheOfficeTitle;
     private string $cacheOfficeUniqueId;
@@ -45,10 +45,10 @@ class CacheCloud {
         $this->combineCache         = Yii::$app->user->identity->id.Yii::$app->user->identity->username;
     }
 
-    public static function getInstance(): ?CacheCloud
+    public static function getInstance(): ?CacheUseCase
     {
         if (self::$instance === null) {
-            self::$instance = new CacheCloud();
+            self::$instance = new CacheUseCase();
         }
         return self::$instance;
     }

@@ -1,11 +1,12 @@
 <?php
 namespace common\helper;
 
+use common\models\AuthAssignment;
 use Yii;
 
 class MessageHelper
 {
-    public static function getFlashAccessDenied()
+    public static function getFlashAccessDenied(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -16,7 +17,7 @@ class MessageHelper
         );
     }
 
-    public static function getFlashDeleteSuccess()
+    public static function getFlashDeleteSuccess(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -27,7 +28,7 @@ class MessageHelper
         );
     }
 
-    public static function getFlashDeleteFailed()
+    public static function getFlashDeleteFailed(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -37,7 +38,7 @@ class MessageHelper
             )]
         );
     }
-    public static function getFlashDeleteForbidden()
+    public static function getFlashDeleteForbidden(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -48,7 +49,7 @@ class MessageHelper
         );
     }
 
-    public static function getFlashSaveSuccess()
+    public static function getFlashSaveSuccess(): void
     {
         Yii::$app->getSession()->setFlash(
             'success',
@@ -58,7 +59,7 @@ class MessageHelper
             )]
         );
     }
-    public static function getFlashSaveFailed()
+    public static function getFlashSaveFailed(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -69,7 +70,7 @@ class MessageHelper
         );
     }
 
-    public static function getFlashUpdateSuccess()
+    public static function getFlashUpdateSuccess(): void
     {
         Yii::$app->getSession()->setFlash(
             'success',
@@ -79,7 +80,7 @@ class MessageHelper
             )]
         );
     }
-    public static function getFlashUpdateFailed()
+    public static function getFlashUpdateFailed(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -100,7 +101,7 @@ class MessageHelper
         );
     }
 
-    public static function getFlashFeatureDisabled()
+    public static function getFlashFeatureDisabled(): void
     {
         Yii::$app->getSession()->setFlash(
             'warning',
@@ -110,7 +111,7 @@ class MessageHelper
             )]
         );
     }
-    public static function getFlashCropImage()
+    public static function getFlashCropImage(): void
     {
         Yii::$app->getSession()->setFlash(
             'danger',
@@ -120,7 +121,7 @@ class MessageHelper
             )]
         );
     }
-    public static function getFlashLoginInfo()
+    public static function getFlashLoginInfo(): void
     {
         $username = '"Guest"';
         if (Yii::$app->user->getIsGuest()==false) {

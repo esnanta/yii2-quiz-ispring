@@ -2,12 +2,9 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
-use Yii;
+use common\domain\CacheUseCase;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use kartik\daterange\DateRangeBehavior;
-use common\models\Period;
 
 /**
  * PeriodSearch represents the model behind the search form about `common\models\Period`.
@@ -30,7 +27,7 @@ class PeriodSearch extends Period
 
     public function search($params)
     {
-        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $officeId = CacheUseCase::getInstance()->getOfficeId();
         $query = Period::find()->where(['office_id'=>$officeId])
             ->orderBy('sequence ASC');
 

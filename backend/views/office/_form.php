@@ -1,9 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
-use kartik\datecontrol\DateControl;
+use kartik\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -21,19 +20,23 @@ use kartik\datecontrol\DateControl;
         'columns' => 1,
         'attributes' => [
 
-
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
 
             'phone_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Phone Number...', 'maxlength' => 100]],
+
+            'fax_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Fax Number...', 'maxlength' => 100]],
 
             'email' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Email...', 'maxlength' => 100]],
 
             'web' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Web...', 'maxlength' => 100]],
 
-            'address' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Address...', 'rows' => 2]],
+            'address' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Address...', 'maxlength' => 100]],
 
-            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Description...','rows' => 2]],
+            'latitude' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Latitude...', 'maxlength' => 100]],
 
+            'longitude' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Longitude...', 'maxlength' => 100]],
+
+            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Description...','rows' => 6]],
         ]
 
     ]);

@@ -1,6 +1,8 @@
 <?php
+
+use common\domain\CacheUseCase;
 use kartik\widgets\SideNav;
-use common\helper\CacheCloud;
+
 ?>
 
 <?php $this->registerCsrfMetaTags() ?>
@@ -17,8 +19,8 @@ use common\helper\CacheCloud;
 <?php
     if (!Yii::$app->user->isGuest) {
 
-        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
-        $officeId       = CacheCloud::getInstance()->getOfficeId();
+        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
+        $officeId       = CacheUseCase::getInstance()->getOfficeId();
         
         $officeMenuVisibility = false;
         if($authItemName == Yii::$app->params['userRoleAdmin'] ||

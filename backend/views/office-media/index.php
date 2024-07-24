@@ -1,100 +1,117 @@
 <?php
 
-use kartik\grid\GridView;
 use yii\helpers\Html;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
-
+use common\models\OfficeMedia;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var common\models\AssetCategorySearch $searchModel
+ * @var common\models\OfficeMediaSearch $searchModel
+ * @value $mediaType is from office/view
  */
 
-$this->title = Yii::t('app', 'Asset Categories');
-$this->params['breadcrumbs'][] = $this->title;
+if (isset($mediaType)) {
+    $mediaTypeText = strip_tags(OfficeMedia::getOneMediaType($mediaType));
+    $this->title = Yii::t('app', 'Office Media').' | '.$mediaTypeText;
+}
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="archive-category-index">
+<div class="office-media-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php /* echo Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Asset Category',
+    'modelClass' => 'Office Media',
 ]), ['create'], ['class' => 'btn btn-success'])*/  ?>
     </p>
 
     <?php Pjax::begin(); echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'pageSummaryPosition' => GridView::POS_BOTTOM,
-        'showPageSummary' => true,
+        
         'toolbar' => [
             [
                 'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                     . ' '.
-                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                    Html::a('<i class="fas fa-plus"></i> Add New',
+                        ['office-media/create','type'=>$mediaType],
+                        ['class' => 'btn btn-success']
+                    ),
                 'options' => ['class' => 'btn-group-md']
             ],
             //'{export}',
             //'{toggleData}'
         ],
         
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'title',
-            'sequence',
-            'description:ntext',
-            [
-                'attribute' => 'created_at',
-                'value'=>'created_at',
-                'enableSorting' => true,
-                'format'=>'date',
-                'options' => [
-                    'format' => Yii::$app->params['dateDisplayFormat'],
-                ],
-                'filterType' => GridView::FILTER_DATE_RANGE,
-                'filterWidgetOptions' => ([
-                    'attribute' => 'date_range',
-                    'presetDropdown' => false,
-                    'convertFormat' => true,
-                    'pluginOptions'=>[
-                        'locale'=>['format' => Yii::$app->params['dateDisplayFormat']],
-                    ]                
-                ])
-            ], 
+//            [
+//                'attribute'=>'office_id',
+//                'vAlign'=>'middle',
+//                'width'=>'120px',
+//                'value'=>function ($model, $key, $index, $widget) {
+//                    return ($model->office_id!=null) ? $model->office->title:'';
+//                },
+//                'filterType'=>GridView::FILTER_SELECT2,
+//                'filter' => $officeList,
+//                'filterWidgetOptions'=>[
+//                    'pluginOptions'=>['allowClear'=>true],
+//                ],
+//                'filterInputOptions'=>['placeholder'=>''],
+//                'format'=>'raw'
+//            ],
+//            [
+//                'attribute'=>'media_type',
+//                'vAlign'=>'middle',
+//                'width'=>'120px',
+//                'value'=>function ($model, $key, $index, $widget) {
+//                    return ($model->media_type!=null) ? $model->getOneMediaType($model->media_type) : '';
+//                },
+//                'filterType'=>GridView::FILTER_SELECT2,
+//                'filter' => $mediaTypeList,
+//                'filterWidgetOptions'=>[
+//                    'pluginOptions'=>['allowClear'=>true],
+//                ],
+//                'filterInputOptions'=>['placeholder'=>''],
+//                'format'=>'raw'
+//            ],
 
+            'title',
+            'description:ntext',
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',                
+                'template'=>'{update} {view}',
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['asset-category/view', 'id' => $model->id, 'edit' => 't']),
+                            Yii::$app->urlManager->createUrl(['office-media/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
                             ]
                         );
                     },
+
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['asset-category/view', 'id' => $model->id]),
+                            Yii::$app->urlManager->createUrl(['office-media/view', 'id' => $model->id]),
                             [
-                                'title' => Yii::t('yii', 'View'),
+                                'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
                             ]
                         );
-                    },        
+                    },
                 ],
             ],
         ],
+
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
         'floatHeader' => false,
-                        
+
         'bordered' => true,
         'striped' => false,
         'responsiveWrap' => false,

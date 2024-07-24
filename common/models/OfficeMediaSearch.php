@@ -3,19 +3,38 @@
 namespace common\models;
 
 use common\domain\CacheUseCase;
+use kartik\daterange\DateRangeBehavior;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ParticipantSearch represents the model behind the search form about `common\models\Participant`.
+ * OfficeMediaSearch represents the model behind the search form about `common\models\OfficeMedia`.
  */
-class ParticipantSearch extends Participant
+class OfficeMediaSearch extends OfficeMedia
 {
-    public function rules()
+
+    public $date_range;
+    public $date_first;
+    public $date_last;
+
+    public function behaviors()  : array
     {
         return [
-            [['id', 'office_id', 'group_id', 'status','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'identity_number', 'username', 'password', 'email','created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [
+                'class' => DateRangeBehavior::class,
+                'attribute' => 'created_at',
+                'dateStartAttribute' => 'date_first',
+                'dateEndAttribute' => 'date_last',
+            ],
+        ];
+    }
+
+    public function rules() : array
+    {
+        return [
+            [['id', 'office_id', 'media_type','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['date_range'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
     }
 
@@ -28,7 +47,8 @@ class ParticipantSearch extends Participant
     public function search($params)
     {
         $officeId = CacheUseCase::getInstance()->getOfficeId();
-        $query = Participant::find()->where(['office_id'=>$officeId]);
+        $query = OfficeMedia::find()
+                    ->where(['office_id'=>$officeId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -41,8 +61,7 @@ class ParticipantSearch extends Participant
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'group_id' => $this->group_id,
-            'status' => $this->status,
+            'media_type' => $this->media_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -54,10 +73,7 @@ class ParticipantSearch extends Participant
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'identity_number', $this->identity_number])
-            ->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;

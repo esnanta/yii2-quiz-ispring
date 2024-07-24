@@ -2,14 +2,13 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
+use common\domain\CacheUseCase;
 use common\helper\UIHelper;
+use common\models\base\Asset as BaseAsset;
 use Yii;
 use yii\bootstrap5\Html;
-use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
-
-use \common\models\base\Asset as BaseAsset;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tx_asset".
@@ -265,7 +264,7 @@ class Asset extends BaseAsset
     }
 
     public function getPath() : string {
-        $officeUniqueId = CacheCloud::getInstance()->getOfficeUniqueId();
+        $officeUniqueId = CacheUseCase::getInstance()->getOfficeUniqueId();
         return '/uploads/asset/'.$officeUniqueId;
     }
 

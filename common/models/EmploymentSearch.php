@@ -2,12 +2,9 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
-use Yii;
+use common\domain\CacheUseCase;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use kartik\daterange\DateRangeBehavior;
-use common\models\Employment;
 
 /**
  * EmploymentSearch represents the model behind the search form about `common\models\Employment`.
@@ -30,7 +27,7 @@ class EmploymentSearch extends Employment
 
     public function search($params)
     {
-        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $officeId = CacheUseCase::getInstance()->getOfficeId();
         $query = Employment::find()->where(['office_id'=>$officeId]);
         
         $dataProvider = new ActiveDataProvider([

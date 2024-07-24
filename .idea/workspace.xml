@@ -5,10 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
+      <change afterPath="$PROJECT_DIR$/backend/controllers/OfficeMediaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/_form_social.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/_search.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/office-media/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/helper/IconHelper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/OfficeMedia.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/OfficeMediaSearch.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/base/OfficeMedia.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/02-yii2-auth.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/02-yii2-auth.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/update.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/update.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssetCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetCategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/OfficeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/OfficeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/PeriodController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PeriodController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/RoomController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/RoomController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/StaffController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/StaffController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ThemeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ThemeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/asset-category/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset-category/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/office/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/office/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/_search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/office/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/office/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/office/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/office/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/office/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/domain/DataIdUseCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/domain/DataIdUseCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/domain/DataSpreadsheetUseCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/SpreadsheetHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/CacheCloud.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/domain/CacheUseCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/MessageHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/MessageHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/UIHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/UIHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssessmentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssessmentSearch.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/models/Asset.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Asset.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/ParticipantImport.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ParticipantImport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssetCategorySearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssetCategorySearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/AssetSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssetSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Counter.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Counter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/EmploymentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/EmploymentSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/GroupSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/GroupSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/OfficeSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/OfficeSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ParticipantSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ParticipantSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/PeriodSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/PeriodSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/RoomSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/RoomSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ScheduleDetailSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleDetailSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ScheduleSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Staff.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Staff.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/StaffSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/StaffSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/SubjectSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/SubjectSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ThemeSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ThemeSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/models/AssessmentSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/models/AssessmentSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/layouts/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/layouts/main.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +99,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpDebugGeneral" listening_started="true" notify_if_session_was_finished_without_being_paused="false">
+  <component name="PhpDebugGeneral" notify_if_session_was_finished_without_being_paused="false">
     <xdebug_debug_ports port="9003" />
     <xdebug_debug_ports port="9000" />
     <xdebug_debug_ports port="9004" />
@@ -278,7 +332,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/assets",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/controllers",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -291,11 +345,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\assets" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\schedule" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\dummy" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views\site" />
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\views\assessment" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\controllers" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\common\domain" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\common\helper" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\common\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\uploads\asset\65a7fb0e28f7b" />
@@ -435,7 +489,9 @@
       <workItem from="1720186806804" duration="720000" />
       <workItem from="1720188579215" duration="4397000" />
       <workItem from="1720202937029" duration="10000" />
-      <workItem from="1720321580876" duration="4264000" />
+      <workItem from="1720321580876" duration="4670000" />
+      <workItem from="1720533761186" duration="928000" />
+      <workItem from="1721838760040" duration="1664000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

@@ -2,26 +2,21 @@
 
 namespace backend\controllers;
 
-use common\models\Assessment;
-use common\models\Group;
-use common\models\Participant;
-use common\models\Schedule;
-use common\models\Subject;
-use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
-
+use common\domain\CacheUseCase;
+use common\helper\MessageHelper;
 use common\models\Employment;
 use common\models\Office;
+use common\models\Participant;
+use common\models\Schedule;
 use common\models\Staff;
 use common\models\Theme;
-
-use common\helper\CacheCloud;
-use common\helper\MessageHelper;
 use common\models\UserDektrium;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller
@@ -77,16 +72,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
+        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
 
         if ($authItemName == Yii::$app->params['userRoleReguler']) :
             $this->redirect(str_replace('admin/site', '', 'site/index'));
         endif;
         
         if (!Yii::$app->user->isGuest) {
-            $officeId       = CacheCloud::getInstance()->getOfficeId();
-            $staffId        = CacheCloud::getInstance()->getStaffId();
-            $authItemName   = CacheCloud::getInstance()->getAuthItemName();
+            $officeId       = CacheUseCase::getInstance()->getOfficeId();
+            $staffId        = CacheUseCase::getInstance()->getStaffId();
+            $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
 
             $office     = Office::find()->where(['id' => $officeId])->one();
             $staff      = Staff::find()->where(['id' => $staffId])->one();
@@ -133,7 +128,7 @@ class SiteController extends Controller
     public function actionFlush()
     {
         if (Yii::$app->user->identity->isAdmin) {
-            CacheCloud::getInstance()->Flush();
+            CacheUseCase::getInstance()->Flush();
             $this->redirect('index');
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -211,8 +206,8 @@ class SiteController extends Controller
     
     public function actionCreateReguler()
     {
-        $officeId   = CacheCloud::getInstance()->getOfficeId();
-        $authItemName   = CacheCloud::getInstance()->getAuthItemName();
+        $officeId   = CacheUseCase::getInstance()->getOfficeId();
+        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
         
         $canCreateReguler = false;
         if ($authItemName == Yii::$app->params['userRoleAdmin'] ||

@@ -2,16 +2,15 @@
 
 namespace backend\controllers;
 
+use common\models\OfficeMedia;
+use common\models\OfficeMediaSearch;
 use Yii;
 use common\models\Office;
-use common\models\OfficeSearch;
+use common\helper\MessageHelper;
 use yii\web\Controller;
-use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
 
 /**
  * OfficeController implements the CRUD actions for Office model.
@@ -36,18 +35,14 @@ class OfficeController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('index-office')) {
-            $searchModel = new OfficeSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
-            return $this->render('index', [
-                'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
-            ]);
-        } else {
+        if(Yii::$app->user->can('index-office')){
+            return $this->redirect(['view','id'=>1]);  
+        }
+        else{
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }
+        }           
+        
     }
 
     /**
@@ -57,19 +52,32 @@ class OfficeController extends Controller
      */
     public function actionView($id)
     {
-        if (Yii::$app->user->can('view-office')) {
+        if(Yii::$app->user->can('view-office')){
             $model = $this->findModel($id);
 
+            $searchModel        = new OfficeMediaSearch;
+            $dataProviderSocial = $searchModel->search(Yii::$app->request->getQueryParams());
+            $dataProviderSocial->query->andWhere(['media_type' => OfficeMedia::MEDIA_TYPE_SOCIAL]);
+
+            $dataProviderLinks  = $searchModel->search(Yii::$app->request->getQueryParams());
+            $dataProviderLinks->query->andWhere(['media_type' => OfficeMedia::MEDIA_TYPE_LINK]);
+
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                MessageHelper::getFlashSaveSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('view', ['model' => $model]);
-            }
-        } else {
+                return $this->render('view', [
+                    'model' => $model,
+                    'dataProviderSocial' => $dataProviderSocial,
+                    'dataProviderLinks' => $dataProviderLinks,
+                ]);
+            }            
+        }
+        else{
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
+
     }
 
     /**
@@ -79,30 +87,25 @@ class OfficeController extends Controller
      */
     public function actionCreate()
     {
-        if (!Yii::$app->user->identity->isAdmin) :
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        endif;
-        
-        if (Yii::$app->user->can('create-office')) {
-            $model = new Office;
-
-            try {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    MessageHelper::getFlashSaveSuccess();
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('create', [
-                        'model' => $model,
-                    ]);
-                }
-            } catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+        if(Yii::$app->user->can('create-office')){
+            $model = $this->findModel(1);
+            if($model==null){
+                $model = new Office();
             }
-        } else {
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }            
+        }
+        else{
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }
+        }    
+        
     }
 
     /**
@@ -113,25 +116,22 @@ class OfficeController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('update-office')) {
-            try {
-                $model = $this->findModel($id);
+        if(Yii::$app->user->can('update-office')){
+            $model = $this->findModel($id);
 
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    MessageHelper::getFlashSaveSuccess();
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('update', [
-                        'model' => $model,
-                    ]);
-                }
-            } catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
-            }
-        } else {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }            
+        }
+        else{
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }
+        }  
+        
     }
 
     /**
@@ -142,14 +142,15 @@ class OfficeController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-office')) {
+        if(Yii::$app->user->can('delete-office')){
             $this->findModel($id)->delete();
 
-            return $this->redirect(['index']);
-        } else {
-            MessageHelper::getFlashLoginInfo();
-            throw new ForbiddenHttpException;
+            return $this->redirect(['index']);            
         }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }        
     }
 
     /**

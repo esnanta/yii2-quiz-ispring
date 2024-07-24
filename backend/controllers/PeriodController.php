@@ -4,19 +4,15 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
-use common\helper\CacheCloud;
-use common\models\Office;
-use Yii;
+use common\helper\MessageHelper;
 use common\models\Period;
 use common\models\PeriodSearch;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
+use Yii;
 use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * PeriodController implements the CRUD actions for Period model.

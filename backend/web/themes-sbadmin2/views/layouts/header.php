@@ -1,21 +1,20 @@
 <?php
 
-use yii\bootstrap4\Breadcrumbs;
-use yii\helpers\Url;
-use yii\bootstrap4\Html;
-
+use common\domain\CacheUseCase;
 use common\models\Staff;
-use common\helper\CacheCloud;
+use yii\bootstrap4\Breadcrumbs;
+use yii\bootstrap4\Html;
+use yii\helpers\Url;
 
 $flushMenuEnabled       = false;
 $activityMenuEnabled    = false;
 
 if (!Yii::$app->user->isGuest) {
 
-    $officeId       = CacheCloud::getInstance()->getOfficeId();
-    $staffId        = CacheCloud::getInstance()->getStaffId();
+    $officeId       = CacheUseCase::getInstance()->getOfficeId();
+    $staffId        = CacheUseCase::getInstance()->getStaffId();
     $staff          = Staff::find()->where(['id'=>$staffId])->one();
-    $authItemName   = CacheCloud::getInstance()->getAuthItemName();
+    $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
     
     $flushMenuEnabled = ($authItemName == Yii::$app->params['userRoleAdmin']) ? true:false;
     

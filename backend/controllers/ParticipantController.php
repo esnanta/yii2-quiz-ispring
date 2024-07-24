@@ -4,20 +4,20 @@ namespace backend\controllers;
 
 use common\domain\DataIdUseCase;
 use common\domain\DataListUseCase;
-use common\domain\DataSpreadsheetUseCase;
+use common\helper\MessageHelper;
+use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
-use common\models\ParticipantImport;
-use Yii;
 use common\models\Participant;
+use common\models\ParticipantImport;
 use common\models\ParticipantSearch;
-use yii\web\Controller;
+use Yii;
 use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
-use common\helper\MessageHelper;
 /**
  * ParticipantController implements the CRUD actions for Participant model.
  */
@@ -166,9 +166,9 @@ class ParticipantController extends Controller
             $asset = Asset::find()->where(['id'=>$model->asset_id])->one();
             $inputFileName = $asset->getAssetFile();
 
-            $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
-            $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
-            $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
+            $helper = SpreadsheetHelper::getInstance()->getHelper();
+            $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
+            $reader = SpreadsheetHelper::getInstance()->getReader($inputFileName,$sheetName);
             $spreadsheet = $reader->load($inputFileName);
             $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
             $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(

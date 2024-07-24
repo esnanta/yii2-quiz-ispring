@@ -85,6 +85,14 @@ values
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
+    ('index-officemedia',2,'Index Office Media',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-officemedia',2,'Create Office Media',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-officemedia',2,'Update Office Media',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-officemedia',2,'View Office Media',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-officemedia',2,'Delete Office Media',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
     ('index-profile',2,'Index Profile',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('create-profile',2,'Create Profile',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('update-profile',2,'Update Profile',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -138,6 +146,14 @@ values
     ('update-master','update-office'),
     ('view-master','view-office'),
     ('delete-master','delete-office');
+
+insert  into `tx_auth_item_child`(`parent`,`child`)
+values
+    ('index-master','index-officemedia'),
+    ('create-master','create-officemedia'),
+    ('update-master','update-officemedia'),
+    ('view-master','view-officemedia'),
+    ('delete-master','delete-officemedia');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values

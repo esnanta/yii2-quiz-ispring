@@ -7,29 +7,30 @@ use yii\helpers\Html;
  * @var common\models\Office $model
  */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Office',
-]) . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Offices'), 'url' => ['index']];
+$this->title = 'Update Office: ' . ' ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Offices', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = 'Update';
 ?>
 
-<div class="card border-default mb-3">
-    <div class="card-header"><?=Yii::t('app', 'Please fill out the form below')?>
-        <span class="float-right">
-            <?= Html::encode($this->title) ?>
-        </span>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="panel-title">
+            Please fill out the form below
+            <div class="pull-right">
+                <?= Html::encode($this->title) ?>              </div>            
+        </div>
     </div>
-    <div class="card-body text-default">
-        <div class="group-create">
+    <div class="panel-body">
+
+        <div class="office-update">
+
             <?= $this->render('_form', [
                 'model' => $model,
             ]) ?>
+
         </div>
+        
     </div>
 </div>
-
-
-
 

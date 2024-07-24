@@ -2,12 +2,11 @@
 
 namespace common\models;
 
-use common\helper\CacheCloud;
+use common\domain\CacheUseCase;
+use kartik\daterange\DateRangeBehavior;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Office;
-use kartik\daterange\DateRangeBehavior;
 
 /**
  * OfficeSearch represents the model behind the search form about `common\models\Office`.
@@ -49,7 +48,7 @@ class OfficeSearch extends Office
 
     public function search($params)
     {
-        $officeId = CacheCloud::getInstance()->getOfficeId();
+        $officeId = CacheUseCase::getInstance()->getOfficeId();
         $query = Office::find()->where(['id'=>$officeId]);
         
         if(Yii::$app->user->identity->isAdmin):
