@@ -90,17 +90,21 @@ class AssetController extends Controller
             $sheetData = null;
 
             if(!empty($oldFile)):
-                $inputFileName = $oldFile;
-                $isSpreadsheet = DataSpreadsheetUseCase::getInstance()->getIdentify($inputFileName);
-                if($isSpreadsheet == 'Xlsx'){
-                    $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
-                    $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
-                    $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
-                    $spreadsheet = $reader->load($inputFileName);
-                    $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-                    $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
-                        $activeRange, null, true, true, true
-                    );
+                try{
+                    $inputFileName = $oldFile;
+                    $isSpreadsheet = DataSpreadsheetUseCase::getInstance()->getIdentify($inputFileName);
+                    if($isSpreadsheet == 'Xlsx'){
+                        $helper = DataSpreadsheetUseCase::getInstance()->getHelper();
+                        $sheetName = DataSpreadsheetUseCase::getInstance()->getSheetName();
+                        $reader = DataSpreadsheetUseCase::getInstance()->getReader($inputFileName,$sheetName);
+                        $spreadsheet = $reader->load($inputFileName);
+                        $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+                        $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                            $activeRange, null, true, true, true
+                        );
+                    }
+                } catch(\Exception $e) {
+                    MessageHelper::getFlashAssetNotFound();
                 }
             endif;
 

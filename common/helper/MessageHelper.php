@@ -89,13 +89,13 @@ class MessageHelper
             )]
         );
     }
-    public static function getFlashInventoryEmpty()
+    public static function getFlashAssetNotFound(): void
     {
         Yii::$app->getSession()->setFlash(
-            'warning',
+            'danger',
             ['message' => Yii::t(
                 'app',
-                'Inventory is empty. Please make Purchase and Purchase Receive.'
+                'Asset not found.'
             )]
         );
     }
