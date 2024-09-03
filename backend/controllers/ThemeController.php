@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\models\Theme;
 use common\models\ThemeSearch;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -66,8 +66,8 @@ class ThemeController extends Controller
             $searchModel = new ThemeSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeId       = DataIdUseCase::getOfficeId();
-            $officeList     = DataListUseCase::getOffice();
+            $officeId       = DataIdService::getOfficeId();
+            $officeList     = DataListService::getOffice();
             $themTypeList   = Theme::getArrayThemeType();
 
             if ($dataProvider->getTotalCount() == 0) {
@@ -103,7 +103,7 @@ class ThemeController extends Controller
     {
         if (Yii::$app->user->can('view-theme')) {
             $model      = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();;
+            $officeList = DataListService::getOffice();;
 
             $oldFile = $model->getImageFile();
             $oldAvatar = $model->asset_name;
@@ -158,8 +158,8 @@ class ThemeController extends Controller
         
         
         if (Yii::$app->user->can('create-theme')) {
-            $officeId       = DataIdUseCase::getOfficeId();
-            $officeList     = DataListUseCase::getOffice();;
+            $officeId       = DataIdService::getOfficeId();
+            $officeList     = DataListService::getOffice();;
             $themTypeList   = Theme::getArrayThemeType();
 
             $model = new Theme;
@@ -196,7 +196,7 @@ class ThemeController extends Controller
         if (Yii::$app->user->can('update-theme')) {
             try {
                 $model          = $this->findModel($id);
-                $officeList     = DataListUseCase::getOffice();;
+                $officeList     = DataListService::getOffice();;
                 $themTypeList   = Theme::getArrayThemeType();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {

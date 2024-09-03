@@ -3,7 +3,7 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use common\domain\CacheUseCase;
+use common\service\CacheService;
 use common\widgets\AlertBootstrap4;
 use frontend\assets\AppBootstrap4Asset;
 use yii\bootstrap4\Breadcrumbs;
@@ -76,8 +76,8 @@ AppBootstrap4Asset::register($this);
         echo Html::tag('div',Html::a('Login',['user/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
     } else {
 
-        $officeId   = CacheUseCase::getInstance()->getOfficeId();
-        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
+        $officeId   = CacheService::getInstance()->getOfficeId();
+        $authItemName   = CacheService::getInstance()->getAuthItemName();
 
         $dashboardMenuVisibility = false;
         if($authItemName == Yii::$app->params['userRoleAdmin'] ||

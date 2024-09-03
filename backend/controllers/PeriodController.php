@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\models\Period;
 use common\models\PeriodSearch;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -40,7 +40,7 @@ class PeriodController extends Controller
         if (Yii::$app->user->can('index-period')) {
             $searchModel = new PeriodSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -62,7 +62,7 @@ class PeriodController extends Controller
     {
         if (Yii::$app->user->can('view-period')) {
             $model = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -88,8 +88,8 @@ class PeriodController extends Controller
         if (Yii::$app->user->can('create-period')) {
 
             $model              = new Period;
-            $model->office_id   = DataIdUseCase::getOfficeId();
-            $officeList         = DataListUseCase::getOffice();
+            $model->office_id   = DataIdService::getOfficeId();
+            $officeList         = DataListService::getOffice();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -120,7 +120,7 @@ class PeriodController extends Controller
         if (Yii::$app->user->can('update-period')) {
             try {
                 $model      = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $officeList = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

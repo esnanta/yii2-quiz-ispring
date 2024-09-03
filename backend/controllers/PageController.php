@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\filters\VerbFilter;
-
+use common\helper\MessageHelper;
 use common\models\Page;
 use common\models\PageSearch;
-use common\helper\MessageHelper;
-use common\domain\DataListUseCase;
+use common\service\DataListService;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
+
 /**
  * ThemeDetailController implements the CRUD actions for Page model.
  */
@@ -66,7 +66,7 @@ class PageController extends Controller
             $dataProvider   = $searchModel->search(Yii::$app->request->getQueryParams());
             $dataProvider->query->andWhere(['page_type' => $type]);
 
-            $dataList       = DataListUseCase::getPage();
+            $dataList       = DataListService::getPage();
             $pageTypeList   = Page::getArrayPageType();
 
             return $this->render('index', [
@@ -91,7 +91,7 @@ class PageController extends Controller
     {
         if(Yii::$app->user->can('view-page')){
             $model          = $this->findModel($id);
-            $dataList       = DataListUseCase::getPage();
+            $dataList       = DataListService::getPage();
             $pageTypeList   = Page::getArrayPageType();
 
             $oldFile = $model->getImageFile();
@@ -144,7 +144,7 @@ class PageController extends Controller
     {
         if(Yii::$app->user->can('create-page')){
             $model          = new Page;
-            $dataList       = DataListUseCase::getPage();
+            $dataList       = DataListService::getPage();
             $pageTypeList   = Page::getArrayPageType();
             
             if ($model->load(Yii::$app->request->post())) {
@@ -185,7 +185,7 @@ class PageController extends Controller
     {
         if(Yii::$app->user->can('update-page')){
             $model          = $this->findModel($id);
-            $dataList       = DataListUseCase::getPage();
+            $dataList       = DataListService::getPage();
             $pageTypeList   = Page::getArrayPageType();
 
             $oldFile = $model->getImageFile();

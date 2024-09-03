@@ -1,7 +1,7 @@
 <?php
 
-use common\domain\CacheUseCase;
 use common\models\Staff;
+use common\service\CacheService;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
@@ -11,10 +11,10 @@ $activityMenuEnabled    = false;
 
 if (!Yii::$app->user->isGuest) {
 
-    $officeId       = CacheUseCase::getInstance()->getOfficeId();
-    $staffId        = CacheUseCase::getInstance()->getStaffId();
+    $officeId       = CacheService::getInstance()->getOfficeId();
+    $staffId        = CacheService::getInstance()->getStaffId();
     $staff          = Staff::find()->where(['id'=>$staffId])->one();
-    $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
+    $authItemName   = CacheService::getInstance()->getAuthItemName();
     
     $flushMenuEnabled = ($authItemName == Yii::$app->params['userRoleAdmin']) ? true:false;
     

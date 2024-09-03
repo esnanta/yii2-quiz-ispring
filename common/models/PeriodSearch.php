@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
+use common\service\CacheService;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -27,7 +27,7 @@ class PeriodSearch extends Period
 
     public function search($params)
     {
-        $officeId = CacheUseCase::getInstance()->getOfficeId();
+        $officeId = CacheService::getInstance()->getOfficeId();
         $query = Period::find()->where(['office_id'=>$officeId])
             ->orderBy('sequence ASC');
 

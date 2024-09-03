@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\models\Staff;
 use common\models\StaffSearch;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -63,8 +63,8 @@ class StaffController extends Controller
         if (Yii::$app->user->can('index-staff')) {
             $searchModel = new StaffSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            $officeList         = DataListUseCase::getOffice();
-            $employmentList     = DataListUseCase::getEmployment();
+            $officeList         = DataListService::getOffice();
+            $employmentList     = DataListService::getEmployment();
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
             
@@ -95,8 +95,8 @@ class StaffController extends Controller
             $model              = $this->findModel($id);
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
-            $officeList         = DataListUseCase::getOffice();
-            $employmentList     = DataListUseCase::getEmployment();
+            $officeList         = DataListService::getOffice();
+            $employmentList     = DataListService::getEmployment();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -128,8 +128,8 @@ class StaffController extends Controller
             $model              = new Staff;
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
-            $officeList         = DataListUseCase::getOffice();
-            $employmentList     = DataListUseCase::getEmployment();
+            $officeList         = DataListService::getOffice();
+            $employmentList     = DataListService::getEmployment();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -169,7 +169,7 @@ class StaffController extends Controller
 
                 $model          = $this->findModel($id);
                 $currentAsset   = $model->asset_name;
-                $officeList     = DataListUseCase::getOffice();
+                $officeList     = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post())) {
                     $urlTmpCrop         = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;

@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\models\Room;
 use common\models\RoomSearch;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -41,7 +41,7 @@ class RoomController extends Controller
             $searchModel = new RoomSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -64,7 +64,7 @@ class RoomController extends Controller
     {
         if(Yii::$app->user->can('view-room')){
             $model = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -90,8 +90,8 @@ class RoomController extends Controller
     {
         if(Yii::$app->user->can('create-room')){
 
-            $officeId   = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
+            $officeId   = DataIdService::getOfficeId();
+            $officeList = DataListService::getOffice();
 
             $model = new Room;
             $model->office_id = $officeId;
@@ -128,7 +128,7 @@ class RoomController extends Controller
         if(Yii::$app->user->can('update-room')){
             try {
                 $model = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $officeList = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

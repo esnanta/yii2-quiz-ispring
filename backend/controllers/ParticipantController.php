@@ -2,8 +2,6 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
@@ -11,6 +9,8 @@ use common\models\AssetSearch;
 use common\models\Participant;
 use common\models\ParticipantImport;
 use common\models\ParticipantSearch;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -45,8 +45,8 @@ class ParticipantController extends Controller
             $searchModel = new ParticipantSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeList = DataListUseCase::getOffice();
-            $groupList  = DataListUseCase::getGroup();
+            $officeList = DataListService::getOffice();
+            $groupList  = DataListService::getGroup();
             $statusList = Participant::getArrayStatus();
 
             return $this->render('index', [
@@ -72,8 +72,8 @@ class ParticipantController extends Controller
     {
         if(Yii::$app->user->can('view-participant')){
             $model      = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
-            $groupList  = DataListUseCase::getGroup();
+            $officeList = DataListService::getOffice();
+            $groupList  = DataListService::getGroup();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -100,9 +100,9 @@ class ParticipantController extends Controller
     {
         if(Yii::$app->user->can('create-participant')){
 
-            $officeId   = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
-            $groupList  = DataListUseCase::getGroup();
+            $officeId   = DataIdService::getOfficeId();
+            $officeList = DataListService::getOffice();
+            $groupList  = DataListService::getGroup();
 
             $model = new Participant;
             $model->office_id = $officeId;
@@ -136,7 +136,7 @@ class ParticipantController extends Controller
             $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->query->andWhere(['asset_type' => Asset::ASSET_TYPE_SPREADSHEET]);
 
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             return $this->render('select_asset', [
                 'searchModel' => $searchModel,
@@ -154,10 +154,10 @@ class ParticipantController extends Controller
     public function actionImport($id,$title=null)
     {
         if(Yii::$app->user->can('create-participant')){
-            $officeId       = DataIdUseCase::getOfficeId();
-            $officeList     = DataListUseCase::getOffice();
-            $assetList    = DataListUseCase::getAsset();
-            $groupList      = DataListUseCase::getGroup();
+            $officeId       = DataIdService::getOfficeId();
+            $officeList     = DataListService::getOffice();
+            $assetList    = DataListService::getAsset();
+            $groupList      = DataListService::getGroup();
 
             $model = new ParticipantImport();
             $model->office_id = $officeId;
@@ -266,7 +266,7 @@ class ParticipantController extends Controller
         if(Yii::$app->user->can('update-participant')){
             try {
                 $model      = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();;
+                $officeList = DataListService::getOffice();;
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashSaveSuccess();

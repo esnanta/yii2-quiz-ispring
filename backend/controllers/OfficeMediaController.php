@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\domain\CacheUseCase;
-use common\domain\DataListUseCase;
 use common\helper\IconHelper;
 use common\helper\MessageHelper;
 use common\models\OfficeMedia;
 use common\models\OfficeMediaSearch;
+use common\service\CacheService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -41,7 +41,7 @@ class OfficeMediaController extends Controller
         if(Yii::$app->user->can('index-officemedia')){
             $searchModel    = new OfficeMediaSearch;
             $dataProvider   = $searchModel->search(Yii::$app->request->getQueryParams());
-            $officeList     = DataListUseCase::getOffice();
+            $officeList     = DataListService::getOffice();
             $mediaTypeList  = OfficeMedia::getArrayMediaType();
             $iconList       = IconHelper::getFontAwesomeBrands();
 
@@ -68,7 +68,7 @@ class OfficeMediaController extends Controller
     {
         if(Yii::$app->user->can('view-officemedia')){
             $model          = $this->findModel($id);
-            $officeList     = DataListUseCase::getOffice();
+            $officeList     = DataListService::getOffice();
             $mediaTypeList  = OfficeMedia::getArrayMediaType();
             $iconList       = IconHelper::getFontAwesomeBrands();
 
@@ -99,9 +99,9 @@ class OfficeMediaController extends Controller
     {
         if(Yii::$app->user->can('create-officemedia')){
             $model              = new OfficeMedia;
-            $model->office_id   = CacheUseCase::getInstance()->getOfficeId();
+            $model->office_id   = CacheService::getInstance()->getOfficeId();
             $model->media_type  = $type;
-            $officeList         = DataListUseCase::getOffice();
+            $officeList         = DataListService::getOffice();
             $mediaTypeList      = OfficeMedia::getArrayMediaType();
             $iconList           = IconHelper::getFontAwesomeBrands();
 
@@ -140,7 +140,7 @@ class OfficeMediaController extends Controller
         if(Yii::$app->user->can('update-officemedia')){
             try {
                 $model          = $this->findModel($id);
-                $officeList     = DataListUseCase::getOffice();
+                $officeList     = DataListService::getOffice();
                 $mediaTypeList  = OfficeMedia::getArrayMediaType();
                 $iconList       = IconHelper::getFontAwesomeBrands();
 

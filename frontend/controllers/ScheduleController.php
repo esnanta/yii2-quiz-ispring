@@ -2,26 +2,13 @@
 
 namespace frontend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
-use common\helper\UIHelper;
 use common\models\Assessment;
 use common\models\Participant;
 use common\models\ScheduleDetail;
-use common\models\Subject;
 use Yii;
-use common\models\Schedule;
-use common\models\ScheduleSearch;
 use yii\base\Exception;
-use yii\data\ArrayDataProvider;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\web\Response;
-use yii\helpers\Json;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
+use yii\web\Controller;
 
 /**
  * ScheduleController implements the CRUD actions for Schedule model.

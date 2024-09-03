@@ -33,6 +33,11 @@ values
 /* TYPE 2 = ITEM */
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
+    ('create-user-owner',2,'Create User Owner',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-user-regular',2,'Create User Regular',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+	
+insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
+values
     ('index-master',2,'Index Master',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('create-master',2,'Create Master',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('update-master',2,'Update Master',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -448,6 +453,11 @@ values
     ('view-ispring-transaction','view-assessment'),
     ('delete-ispring-transaction','delete-assessment'),
     ('report-ispring-transaction','report-assessment');
+	
+insert  into `tx_auth_item_child`(`parent`,`child`)
+values
+    ('index-transaction','create-user-regular');
+	
 
 /**
  * MENU FOR ADMIN

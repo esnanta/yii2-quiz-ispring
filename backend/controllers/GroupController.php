@@ -2,18 +2,18 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
-use Yii;
+use common\helper\MessageHelper;
 use common\models\Group;
 use common\models\GroupSearch;
-use yii\web\Controller;
+use common\service\DataIdService;
+use common\service\DataListService;
+use Yii;
 use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
-use common\helper\MessageHelper;
 /**
  * GroupController implements the CRUD actions for Group model.
  */
@@ -41,7 +41,7 @@ class GroupController extends Controller
             $searchModel = new GroupSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -64,7 +64,7 @@ class GroupController extends Controller
     {
         if(Yii::$app->user->can('view-group')){
             $model = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -90,8 +90,8 @@ class GroupController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-group')){
-            $officeId   = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
+            $officeId   = DataIdService::getOfficeId();
+            $officeList = DataListService::getOffice();
 
             $model = new Group;
             $model->office_id = $officeId;
@@ -128,7 +128,7 @@ class GroupController extends Controller
         if(Yii::$app->user->can('update-group')){
             try {
                 $model = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $officeList = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashUpdateSuccess();

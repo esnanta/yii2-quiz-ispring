@@ -7,7 +7,7 @@ use kartik\select2\Select2;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Fuel $model
+ * @var common\models\UserDektrium $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -31,12 +31,12 @@ use kartik\select2\Select2;
                     'allowClear' => true
                 ],                            
             ],  
-            'office_title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Office Name...', 'maxlength' => 100]],
-            'staff_title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Staff Name...', 'maxlength' => 100]],
+            'office_title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'staff_title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
             
-            'email' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
-            'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Username...', 'maxlength' => 100]],
-            'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => 'Enter Password...', 'maxlength' => 100]],
+            'email' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => '', 'maxlength' => 100]],
         ]
 
     ]);

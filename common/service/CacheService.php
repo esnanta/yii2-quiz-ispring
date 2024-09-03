@@ -1,5 +1,5 @@
 <?php
-namespace common\domain;
+namespace common\service;
 
 use common\models\AuthAssignment;
 use common\models\Staff;
@@ -14,9 +14,9 @@ use yii\web\ForbiddenHttpException;
  */
 
 //SINGLETON CLASS
-class CacheUseCase {
+class CacheService {
 
-    private static ?CacheUseCase $instance = null;
+    private static ?CacheService $instance = null;
     private string $cacheOfficeId;
     private string $cacheOfficeTitle;
     private string $cacheOfficeUniqueId;
@@ -45,10 +45,10 @@ class CacheUseCase {
         $this->combineCache         = Yii::$app->user->identity->id.Yii::$app->user->identity->username;
     }
 
-    public static function getInstance(): ?CacheUseCase
+    public static function getInstance(): ?CacheService
     {
         if (self::$instance === null) {
-            self::$instance = new CacheUseCase();
+            self::$instance = new CacheService();
         }
         return self::$instance;
     }

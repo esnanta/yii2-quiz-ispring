@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\models\AssetCategory;
 use common\models\AssetCategorySearch;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -41,7 +41,7 @@ class AssetCategoryController extends Controller
             $searchModel = new AssetCategorySearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -63,7 +63,7 @@ class AssetCategoryController extends Controller
     {
         if (Yii::$app->user->can('view-assetcategory')) {
             $model = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -88,8 +88,8 @@ class AssetCategoryController extends Controller
     {
         if (Yii::$app->user->can('create-assetcategory')) {
 
-            $officeId   = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
+            $officeId   = DataIdService::getOfficeId();
+            $officeList = DataListService::getOffice();
 
             $model = new AssetCategory;
             $model->office_id = $officeId;
@@ -124,7 +124,7 @@ class AssetCategoryController extends Controller
         if (Yii::$app->user->can('update-assetcategory')) {
             try {
                 $model = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $officeList = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

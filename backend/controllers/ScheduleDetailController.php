@@ -2,19 +2,18 @@
 
 namespace backend\controllers;
 
-use Yii;
+use common\helper\MessageHelper;
 use common\models\ScheduleDetail;
 use common\models\ScheduleDetailSearch;
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
+use common\service\DataIdService;
+use common\service\DataListService;
+use Yii;
 use yii\base\Exception;
-use yii\web\Controller;
 use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 
 /**
@@ -65,9 +64,9 @@ class ScheduleDetailController extends Controller
         if (Yii::$app->user->can('view-scheduledetail')) {
             $model = $this->findModel($id);
 
-            $officeList = DataListUseCase::getOffice();
-            $scheduleList = DataListUseCase::getSchedule();
-            $subjectList = DataListUseCase::getSubject();
+            $officeList = DataListService::getOffice();
+            $scheduleList = DataListService::getSchedule();
+            $subjectList = DataListService::getSubject();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -94,10 +93,10 @@ class ScheduleDetailController extends Controller
     {
         if (Yii::$app->user->can('create-scheduledetail')) {
             $model = new ScheduleDetail;
-            $model->office_id = DataIdUseCase::getOfficeId();
+            $model->office_id = DataIdService::getOfficeId();
 
-            $scheduleList = DataListUseCase::getSchedule();
-            $subjectList = DataListUseCase::getSubject();
+            $scheduleList = DataListService::getSchedule();
+            $subjectList = DataListService::getSubject();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -130,8 +129,8 @@ class ScheduleDetailController extends Controller
             try {
 
                 $model = $this->findModel($id);
-                $scheduleList = DataListUseCase::getSchedule();
-                $subjectList = DataListUseCase::getSubject();
+                $scheduleList = DataListService::getSchedule();
+                $subjectList = DataListService::getSubject();
 
                 $oldFile = $model->getAssetFile();
                 $oldAvatar = $model->asset_name;

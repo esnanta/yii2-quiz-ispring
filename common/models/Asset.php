@@ -2,9 +2,9 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
 use common\helper\UIHelper;
 use common\models\base\Asset as BaseAsset;
+use common\service\CacheService;
 use Yii;
 use yii\bootstrap5\Html;
 use yii\helpers\FileHelper;
@@ -264,7 +264,7 @@ class Asset extends BaseAsset
     }
 
     public function getPath() : string {
-        $officeUniqueId = CacheUseCase::getInstance()->getOfficeUniqueId();
+        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
         return '/uploads/asset/'.$officeUniqueId;
     }
 

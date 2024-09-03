@@ -2,9 +2,9 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
 use common\helper\UIHelper;
 use common\models\base\Staff as BaseStaff;
+use common\service\CacheService;
 use Yii;
 use yii\helpers\FileHelper;
 
@@ -227,7 +227,7 @@ class Staff extends BaseStaff
     }
 
     public function getPath() : string {
-        $officeUniqueId = CacheUseCase::getInstance()->getOfficeUniqueId();
+        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
         return '/uploads/staff/'.$officeUniqueId;
     }
 

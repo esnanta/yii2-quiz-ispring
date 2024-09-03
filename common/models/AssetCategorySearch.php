@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
+use common\service\CacheService;
 use kartik\daterange\DateRangeBehavior;
 use Yii;
 use yii\base\Model;
@@ -48,7 +48,7 @@ class AssetCategorySearch extends AssetCategory
 
     public function search($params)
     {
-        $officeId = CacheUseCase::getInstance()->getOfficeId();
+        $officeId = CacheService::getInstance()->getOfficeId();
         $query = AssetCategory::find()->where(['office_id'=>$officeId])
             ->orderBy('sequence ASC');
 

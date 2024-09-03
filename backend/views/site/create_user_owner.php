@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Fuel $model
+ * @var common\models\UserDektrium $model
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [

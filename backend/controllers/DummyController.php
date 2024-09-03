@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
+use common\helper\MessageHelper;
 use common\models\Assessment;
 use common\models\Group;
 use common\models\Participant;
@@ -10,14 +10,13 @@ use common\models\Period;
 use common\models\Room;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
+use common\models\Staff;
 use common\models\Subject;
+use common\service\DataIdService;
 use Faker\Factory;
 use Yii;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
-use common\models\Staff;
-use common\helper\MessageHelper;
-
+use yii\web\Controller;
 use yii\web\Response;
 
 /**
@@ -60,7 +59,7 @@ class DummyController extends Controller
 
     public function actionView()
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
         $assessments = Assessment::find()->where(['office_id' => $officeId])->count();
         $scheduleDetails = ScheduleDetail::find()->where(['office_id' => $officeId])->count();
         $schedules = Schedule::find()->where(['office_id' => $officeId])->count();
@@ -80,7 +79,7 @@ class DummyController extends Controller
 
     public function actionDeleteAssessment(): Response
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
         Assessment::deleteAll(['office_id' => $officeId]);
         Assessment::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
@@ -89,7 +88,7 @@ class DummyController extends Controller
 
     public function actionDeleteSchedule(): Response
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
         ScheduleDetail::deleteAll(['office_id' => $officeId]);
         Schedule::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
@@ -98,7 +97,7 @@ class DummyController extends Controller
 
     public function actionDeleteParticipant(): Response
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
         Participant::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);
@@ -106,7 +105,7 @@ class DummyController extends Controller
 
     public function actionDeleteSubject(): Response
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
         Subject::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);
@@ -114,7 +113,7 @@ class DummyController extends Controller
 
     public function actionDeleteGroup(): Response
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
         Group::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);
@@ -122,7 +121,7 @@ class DummyController extends Controller
 
     public function actionCreateSubject()
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
 
         $subject = new Subject();
         $subject->office_id = $officeId;
@@ -166,7 +165,7 @@ class DummyController extends Controller
 
     public function actionCreateGroup()
     {
-        $officeId = DataIdUseCase::getOfficeId();
+        $officeId = DataIdService::getOfficeId();
 
         $group = new Group();
         $group->office_id = $officeId;

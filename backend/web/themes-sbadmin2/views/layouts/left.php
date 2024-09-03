@@ -1,7 +1,7 @@
 <?php
 
-use common\domain\CacheUseCase;
 use common\models\Page;
+use common\service\CacheService;
 use kartik\widgets\SideNav;
 
 ?>
@@ -20,8 +20,8 @@ use kartik\widgets\SideNav;
 <?php
     if (!Yii::$app->user->isGuest) {
 
-        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
-        $officeId       = CacheUseCase::getInstance()->getOfficeId();
+        $authItemName   = CacheService::getInstance()->getAuthItemName();
+        $officeId       = CacheService::getInstance()->getOfficeId();
         
         $officeMenuVisibility = false;
         if($authItemName == Yii::$app->params['userRoleAdmin'] ||

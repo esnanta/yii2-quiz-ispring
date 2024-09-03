@@ -2,8 +2,8 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
 use common\models\base\Counter as BaseCounter;
+use common\service\CacheService;
 
 /**
  * This is the model class for table "tx_counter".
@@ -31,7 +31,7 @@ class Counter extends BaseCounter
     
     public static function getDataNumber($_code){
         $code       = $_code;
-        $officeId   = CacheUseCase::getInstance()->getOfficeId();
+        $officeId   = CacheService::getInstance()->getOfficeId();
         $model      = Counter::find()->where(['title' => $code,'office_id'=>$officeId])->one();
 
         if($model==null){

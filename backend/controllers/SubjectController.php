@@ -2,19 +2,18 @@
 
 namespace backend\controllers;
 
-use common\models\Asset;
-use Yii;
+use common\helper\MessageHelper;
 use common\models\Subject;
 use common\models\SubjectSearch;
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
-use yii\web\Controller;
+use common\service\DataIdService;
+use common\service\DataListService;
+use Yii;
 use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
-use common\helper\MessageHelper;
 /**
  * SubjectController implements the CRUD actions for Subject model.
  */
@@ -41,7 +40,7 @@ class SubjectController extends Controller
         if(Yii::$app->user->can('index-subject')){
             $searchModel    = new SubjectSearch;
             $dataProvider   = $searchModel->search(Yii::$app->request->getQueryParams());
-            $officeList     = DataListUseCase::getOffice();
+            $officeList     = DataListService::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -64,7 +63,7 @@ class SubjectController extends Controller
     {
         if(Yii::$app->user->can('view-subject')){
             $model      = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -90,8 +89,8 @@ class SubjectController extends Controller
     {
         if(Yii::$app->user->can('create-subject')){
             $model = new Subject;
-            $model->office_id = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
+            $model->office_id = DataIdService::getOfficeId();
+            $officeList = DataListService::getOffice();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -125,7 +124,7 @@ class SubjectController extends Controller
         if(Yii::$app->user->can('update-subject')){
             try {
                 $model = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $officeList = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

@@ -3,18 +3,17 @@
 namespace backend\controllers;
 
 
-use Yii;
+use common\helper\MessageHelper;
 use common\models\Employment;
 use common\models\EmploymentSearch;
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
-use yii\web\Controller;
+use common\service\DataIdService;
+use common\service\DataListService;
+use Yii;
 use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * EmploymentController implements the CRUD actions for Employment model.
@@ -42,7 +41,7 @@ class EmploymentController extends Controller
         if (Yii::$app->user->can('index-employment')) {
             $searchModel = new EmploymentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            $officeList   = DataListUseCase::getOffice();
+            $officeList   = DataListService::getOffice();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -65,7 +64,7 @@ class EmploymentController extends Controller
         if (Yii::$app->user->can('view-employment')) {
             $model = $this->findModel($id);
 
-            $officeList = DataListUseCase::getOffice();
+            $officeList = DataListService::getOffice();
             
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -90,8 +89,8 @@ class EmploymentController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-employment')) {
-            $officeId   = DataIdUseCase::getOfficeId();
-            $officeList = DataListUseCase::getOffice();
+            $officeId   = DataIdService::getOfficeId();
+            $officeList = DataListService::getOffice();
             
             $model = new Employment;
             $model->office_id = $officeId;
@@ -127,7 +126,7 @@ class EmploymentController extends Controller
             try {
                 
                 $model      = $this->findModel($id);
-                $officeList = DataListUseCase::getOffice();
+                $officeList = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     MessageHelper::getFlashUpdateSuccess();

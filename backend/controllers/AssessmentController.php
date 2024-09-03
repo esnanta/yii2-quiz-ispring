@@ -2,20 +2,20 @@
 
 namespace backend\controllers;
 
-use common\domain\DataListUseCase;
-use common\models\reports\ExportAssessment;
-use common\models\Schedule;
-use Yii;
-use common\models\Assessment;
-use common\models\AssessmentSearch;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
-use yii\db\StaleObjectException;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\filters\VerbFilter;
 
 use common\helper\MessageHelper;
+use common\models\Assessment;
+use common\models\AssessmentSearch;
+use common\models\reports\ExportAssessment;
+use common\models\Schedule;
+use common\service\DataListService;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii2tech\spreadsheet\Spreadsheet;
 
 /**
@@ -45,10 +45,10 @@ class AssessmentController extends Controller
             $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $scheduleList = DataListUseCase::getSchedule();
-            $participantList  = DataListUseCase::getParticipant();
-            $periodList = DataListUseCase::getPeriod();
-            $subjectList = DataListUseCase::getSubject();
+            $scheduleList = DataListService::getSchedule();
+            $participantList  = DataListService::getParticipant();
+            $periodList = DataListService::getPeriod();
+            $subjectList = DataListService::getSubject();
             $subjectTypeList = Assessment::getArraySubjectTypes();
             $workStatusList = Assessment::getArrayWorkStatus();
 
@@ -78,8 +78,8 @@ class AssessmentController extends Controller
         if (Yii::$app->user->can('view-assessment')) {
             $model = $this->findModel($id);
 
-            $scheduleList = DataListUseCase::getAssessment();
-            $participantList  = DataListUseCase::getParticipant();
+            $scheduleList = DataListService::getAssessment();
+            $participantList  = DataListService::getParticipant();
             $subjectTypeList = Assessment::getArraySubjectTypes();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -107,8 +107,8 @@ class AssessmentController extends Controller
     {
         if (Yii::$app->user->can('create-assessment')) {
             $model = new Assessment;
-            $scheduleList = DataListUseCase::getAssessment();
-            $participantList  = DataListUseCase::getParticipant();
+            $scheduleList = DataListService::getAssessment();
+            $participantList  = DataListService::getParticipant();
             $subjectTypeList = Assessment::getArraySubjectTypes();
 
             try {
@@ -142,8 +142,8 @@ class AssessmentController extends Controller
         if (Yii::$app->user->can('update-assessment')) {
             try {
                 $model = $this->findModel($id);
-                $scheduleList = DataListUseCase::getAssessment();
-                $participantList  = DataListUseCase::getParticipant();
+                $scheduleList = DataListService::getAssessment();
+                $participantList  = DataListService::getParticipant();
                 $subjectTypeList = Assessment::getArraySubjectTypes();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -206,8 +206,8 @@ class AssessmentController extends Controller
         $model      = new ExportAssessment();
         $file_name  = 'assessment.xls';
 
-        $scheduleList = DataListUseCase::getSchedule();
-        $subjectList = DataListUseCase::getSubject();
+        $scheduleList = DataListService::getSchedule();
+        $subjectList = DataListService::getSubject();
 
         if (Yii::$app->user->can('report-assessment')) {
             if ($model->load(Yii::$app->request->post())) {

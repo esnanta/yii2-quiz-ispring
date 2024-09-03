@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -42,8 +42,8 @@ class AssetController extends Controller
             $searchModel = new AssetSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-            $officeList         = DataListUseCase::getOffice();
-            $assetCategoryList  = DataListUseCase::getAssetCategory();
+            $officeList         = DataListService::getOffice();
+            $assetCategoryList  = DataListService::getAssetCategory();
             $assetTypeList      = Asset::getArrayAssetType();
 
             $isVisibleList = Asset::getArrayIsVisible();
@@ -71,8 +71,8 @@ class AssetController extends Controller
         if (Yii::$app->user->can('view-asset')) {
             $model = $this->findModel($id);
 
-            $officeList             = DataListUseCase::getOffice();
-            $assetCategoryList    = DataListUseCase::getAssetCategory();
+            $officeList             = DataListService::getOffice();
+            $assetCategoryList    = DataListService::getAssetCategory();
 
             $isVisibleList = Asset::getArrayIsVisible();
             $assetTypeList = Asset::getArrayAssetType();
@@ -152,9 +152,9 @@ class AssetController extends Controller
     {
         if (Yii::$app->user->can('create-asset')) {
 
-            $officeId               = DataIdUseCase::getOfficeId();
-            $officeList             = DataListUseCase::getOffice();
-            $assetCategoryList    = DataListUseCase::getAssetCategory();
+            $officeId               = DataIdService::getOfficeId();
+            $officeList             = DataListService::getOffice();
+            $assetCategoryList    = DataListService::getAssetCategory();
 
             $model = new Asset;
             $model->office_id = $officeId;
@@ -208,8 +208,8 @@ class AssetController extends Controller
         if (Yii::$app->user->can('update-asset')) {
             $model = $this->findModel($id);
 
-            $officeList             = DataListUseCase::getOffice();
-            $assetCategoryList    = DataListUseCase::getAssetCategory();
+            $officeList             = DataListService::getOffice();
+            $assetCategoryList    = DataListService::getAssetCategory();
 
             $assetTypeList = Asset::getArrayAssetType();
             $isVisibleList = Asset::getArrayIsVisible();

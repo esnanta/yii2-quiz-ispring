@@ -2,23 +2,21 @@
 
 namespace backend\controllers;
 
-use common\domain\DataIdUseCase;
-use common\domain\DataListUseCase;
-use common\models\AssessmentSearch;
-use common\models\ScheduleDetail;
-use common\models\Subject;
-use Yii;
-use common\models\Schedule;
-use common\models\ScheduleSearch;
-use yii\data\ArrayDataProvider;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\web\Response;
-use yii\helpers\Json;
-use yii\filters\VerbFilter;
-
 use common\helper\MessageHelper;
+use common\models\Schedule;
+use common\models\ScheduleDetail;
+use common\models\ScheduleSearch;
+use common\models\Subject;
+use common\service\DataIdService;
+use common\service\DataListService;
+use Yii;
+use yii\data\ArrayDataProvider;
+use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * ScheduleController implements the CRUD actions for Schedule model.
@@ -47,9 +45,9 @@ class ScheduleController extends Controller
             $searchModel = new ScheduleSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            $periodList = DataListUseCase::getPeriod();
-            $roomList = DataListUseCase::getRoom();
-            $groupList = DataListUseCase::getGroup();
+            $periodList = DataListService::getPeriod();
+            $roomList = DataListService::getRoom();
+            $groupList = DataListService::getGroup();
             $isAssetList = Schedule::getArrayIsAsset();
 
             return $this->render('index', [
@@ -141,15 +139,15 @@ class ScheduleController extends Controller
         if (Yii::$app->user->can('create-schedule')) {
 
             $model = new Schedule();
-            $model->office_id = DataIdUseCase::getOfficeId();
+            $model->office_id = DataIdService::getOfficeId();
             $model->date_start = date(Yii::$app->params['datetimeSaveFormat']);
             $model->date_end = date(Yii::$app->params['datetimeSaveFormat']);
 
-            $periodList = DataListUseCase::getPeriod();
-            $roomList = DataListUseCase::getRoom();
-            $groupList = DataListUseCase::getGroup();
-            $subjectList = DataListUseCase::getSubject();
-            $staffList = DataListUseCase::getStaff();
+            $periodList = DataListService::getPeriod();
+            $roomList = DataListService::getRoom();
+            $groupList = DataListService::getGroup();
+            $subjectList = DataListService::getSubject();
+            $staffList = DataListService::getStaff();
             $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
@@ -183,12 +181,12 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->user->can('update-schedule')) {
             $model = $this->findModel($id);
-            $officeList = DataListUseCase::getOffice();
-            $periodList = DataListUseCase::getPeriod();
-            $roomList = DataListUseCase::getRoom();
-            $groupList = DataListUseCase::getGroup();
-            $subjectList = DataListUseCase::getSubject();
-            $staffList = DataListUseCase::getStaff();
+            $officeList = DataListService::getOffice();
+            $periodList = DataListService::getPeriod();
+            $roomList = DataListService::getRoom();
+            $groupList = DataListService::getGroup();
+            $subjectList = DataListService::getSubject();
+            $staffList = DataListService::getStaff();
             $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
@@ -276,7 +274,7 @@ class ScheduleController extends Controller
     public function actionAddScheduleDetail()
     {
         if (Yii::$app->request->isAjax) {
-            $subjectList = DataListUseCase::getSubject();
+            $subjectList = DataListService::getSubject();
             $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             $row = Yii::$app->request->post('ScheduleDetail');

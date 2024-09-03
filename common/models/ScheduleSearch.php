@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
+use common\service\CacheService;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -45,7 +45,7 @@ use yii\data\ActiveDataProvider;
      */
     public function search($params)
     {
-        $officeId = CacheUseCase::getInstance()->getOfficeId();
+        $officeId = CacheService::getInstance()->getOfficeId();
         $query = Schedule::find()->where(['office_id'=>$officeId])
             ->orderBy('date_start DESC');
 

@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\domain\CacheUseCase;
+use common\service\CacheService;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -27,7 +27,7 @@ class EmploymentSearch extends Employment
 
     public function search($params)
     {
-        $officeId = CacheUseCase::getInstance()->getOfficeId();
+        $officeId = CacheService::getInstance()->getOfficeId();
         $query = Employment::find()->where(['office_id'=>$officeId]);
         
         $dataProvider = new ActiveDataProvider([

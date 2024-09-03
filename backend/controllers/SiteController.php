@@ -2,15 +2,14 @@
 
 namespace backend\controllers;
 
-use common\domain\CacheUseCase;
 use common\helper\MessageHelper;
 use common\models\Employment;
 use common\models\Office;
 use common\models\Participant;
 use common\models\Schedule;
 use common\models\Staff;
-use common\models\Theme;
 use common\models\UserDektrium;
+use common\service\CacheService;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -33,11 +32,12 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','create-owner','create-reguler'],
+                        'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','chart','message','flush','summary'],
+                        'actions' => ['logout', 'index','chart','message','flush','summary',
+										'create-owner','create-regular'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,16 +72,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
+        $authItemName   = CacheService::getInstance()->getAuthItemName();
 
         if ($authItemName == Yii::$app->params['userRoleReguler']) :
             $this->redirect(str_replace('admin/site', '', 'site/index'));
         endif;
         
         if (!Yii::$app->user->isGuest) {
-            $officeId       = CacheUseCase::getInstance()->getOfficeId();
-            $staffId        = CacheUseCase::getInstance()->getStaffId();
-            $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
+            $officeId       = CacheService::getInstance()->getOfficeId();
+            $staffId        = CacheService::getInstance()->getStaffId();
+            $authItemName   = CacheService::getInstance()->getAuthItemName();
 
             $office     = Office::find()->where(['id' => $officeId])->one();
             $staff      = Staff::find()->where(['id' => $staffId])->one();
@@ -128,7 +128,7 @@ class SiteController extends Controller
     public function actionFlush()
     {
         if (Yii::$app->user->identity->isAdmin) {
-            CacheUseCase::getInstance()->Flush();
+            CacheService::getInstance()->Flush();
             $this->redirect('index');
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -137,10 +137,10 @@ class SiteController extends Controller
     }
     
     
-    public function actionCreateOwner()
+    public function actionCreateOwner(): Response|string
     {
-        if (Yii::$app->user->identity->isAdmin) {
-            $model          = new UserDektrium;
+        if (Yii::$app->user->can('create-user-owner')) {
+            $model          = new UserDektrium();
             $userTypeList[] = [Yii::$app->params['userRoleOwner'] => 'Owner'];
 
             $transaction    = Yii::$app->db->beginTransaction();
@@ -171,16 +171,6 @@ class SiteController extends Controller
                     $staff->title           = $model->staff_title;
                     $staff->save();
 
-                    $themTypeList   = Theme::getArrayThemeType();
-                    foreach ($themTypeList as $i => $themeType) {
-                        $theme = new Theme();
-                        $theme->office_id = $office->id;
-                        $theme->theme_type = $i;
-                        $theme->title = $themeType;
-                        $theme->description = $themeType;
-                        $theme->save();
-                    }
-
                     $transaction->commit();
 
                     return $this->redirect(['/user/admin/index']);
@@ -202,63 +192,72 @@ class SiteController extends Controller
             throw new ForbiddenHttpException;
         }
     }
-    
-    
-    public function actionCreateReguler()
+
+
+    /**
+     * @throws Exception
+     * @throws \Throwable
+     * @throws ForbiddenHttpException
+     */
+    public function actionCreateRegular()
     {
-        $officeId   = CacheUseCase::getInstance()->getOfficeId();
-        $authItemName   = CacheUseCase::getInstance()->getAuthItemName();
-        
-        $canCreateReguler = false;
-        if ($authItemName == Yii::$app->params['userRoleAdmin'] ||
-            $authItemName == Yii::$app->params['userRoleOwner']) {
-            $canCreateReguler = true;
-        }
+        if (Yii::$app->user->can('create-user-regular')) {
+            $officeId   = CacheService::getInstance()->getOfficeId();
+            $authItemName   = CacheService::getInstance()->getAuthItemName();
 
-        if ($canCreateReguler==true) {
-            $model          = new UserDektrium;
-            $userTypeList[] = [Yii::$app->params['userRoleReguler'] => 'Staff'];
+            $canCreateRegular = false;
+            if ($authItemName == Yii::$app->params['userRoleAdmin'] ||
+                $authItemName == Yii::$app->params['userRoleOwner']) {
+                $canCreateRegular = true;
+            }
 
-            $employmentList = ArrayHelper::map(Employment::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-            
-            $transaction    = Yii::$app->db->beginTransaction();
-            try {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
-                        'item_name'         => $model->user_type,
-                        'user_id'           => $model->id,
-                        'created_at'        => time(),
-                    ])->execute();
+            if ($canCreateRegular) {
+                $model          = new UserDektrium;
+                $userTypeList[] = [Yii::$app->params['userRoleRegular'] => 'Staff'];
 
-                    $staff = new Staff;
-                    $staff->office_id       = $officeId; //OFFICE
-                    $staff->user_id         = $model->id; //USER
-                    $staff->employment_id   = $model->employment_id; //EMPLOYMENT
-                    $staff->title           = $model->staff_title;
-                    $staff->save();
+                $employmentList = ArrayHelper::map(Employment::find()
+                    ->where(['office_id' => $officeId])
+                    ->asArray()->all(), 'id', 'title');
 
-                    $transaction->commit();
+                $transaction    = Yii::$app->db->beginTransaction();
+                try {
+                    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                        Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
+                            'item_name'         => $model->user_type,
+                            'user_id'           => $model->id,
+                            'created_at'        => time(),
+                        ])->execute();
 
-                    return $this->redirect(['/staff/index']);
-                } else {
-                    return $this->render('create_user_reguler', [
-                        'model' => $model,
-                        'employmentList' => $employmentList,
-                        'userTypeList' => $userTypeList,
-                    ]);
+                        $staff = new Staff;
+                        $staff->office_id       = $officeId; //OFFICE
+                        $staff->user_id         = $model->id; //USER
+                        $staff->employment_id   = $model->employment_id; //EMPLOYMENT
+                        $staff->title           = $model->staff_title;
+                        $staff->save();
+
+                        $transaction->commit();
+
+                        return $this->redirect(['/staff/index']);
+                    } else {
+                        return $this->render('create_user_regular', [
+                            'model' => $model,
+                            'employmentList' => $employmentList,
+                            'userTypeList' => $userTypeList,
+                        ]);
+                    }
+                } catch (\Exception|\Throwable $e) {
+                    $transaction->rollBack();
+                    throw $e;
                 }
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-                throw $e;
-            } catch (\Throwable $e) {
-                $transaction->rollBack();
-                throw $e;
+            } else {
+                MessageHelper::getFlashAccessDenied();
+                throw new ForbiddenHttpException;
             }
         } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
+
+
     }
 }
