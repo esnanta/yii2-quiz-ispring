@@ -1,10 +1,11 @@
 <?php
 
+use common\helper\LabelHelper;
+use common\service\ParticipantService;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
-use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
@@ -61,9 +62,14 @@ use kartik\datecontrol\DateControl;
 
     ]);
 
-    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Import') : Yii::t('app', 'Import'),
-        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-    );
+    if(!ParticipantService::getIsAllDataExisted()) {
+        echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Import') : Yii::t('app', 'Import'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        );
+    } else {
+        echo LabelHelper::getYes(Yii::t('app', 'Completed'));
+    }
+
     ActiveForm::end(); ?>
 
 </div>

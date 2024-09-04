@@ -8,6 +8,9 @@ use Yii;
 
 class ParticipantService
 {
+    // Declare the is_duplicate property
+    protected static bool $is_all_data_existed = true;
+
     public static function checkDuplicate($dataList): array
     {
         $officeId = CacheService::getInstance()->getOfficeId();
@@ -23,19 +26,20 @@ class ParticipantService
                     ->one();
 
                 if ($model !== null) {
-                    // Data exists
+                    (new ParticipantService)->setIsAllDataExisted(true);
                     $resultList[] = [
                         'name' => $participantName,
                         'identity_number' => $identityNumber,
-                        'status' => LabelHelper::getNo('<i class="fas fa-times"></i>')
+                        'status' => LabelHelper::getYes('<i class="fas fa-check"></i>')
                     ];
+
                 } else {
-                    // Data does not exist
+                    (new ParticipantService)->setIsAllDataExisted(false);
                     $resultList[] = [
                         'name' => $participantName,
                         'identity_number' => $identityNumber,
-                        'status' => LabelHelper::getYes('<i class="fas fa-check"></i>'). ' '.
-                            LabelHelper::getYes(Yii::t('app', 'New'))
+                        'status' => LabelHelper::getNo('<i class="fas fa-times"></i>'). ' '.
+                            LabelHelper::getSuccess(Yii::t('app', 'New'))
                     ];
                 }
             }
@@ -79,5 +83,20 @@ class ParticipantService
         } else {
             echo '<div class="alert alert-info">No data found.</div>';
         }
+    }
+
+    private function setIsAllDataExisted($isDuplicate): void
+    {
+        //DEFAULT IS FALSE
+        //RETURN ONLY TRUE VALUE
+        if (!$isDuplicate) :
+            self::$is_all_data_existed = $isDuplicate;
+        endif;
+    }
+
+    // Method to get the value of is_duplicate
+    public static function getIsAllDataExisted(): bool
+    {
+        return self::$is_all_data_existed;
     }
 }
