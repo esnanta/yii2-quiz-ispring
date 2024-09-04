@@ -8,9 +8,9 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('app', 'Report {modelClass}', [
-    'modelClass' => 'Assessment',
+    'modelClass' => 'Participant',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -23,10 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="card-body text-default">
         <div class="assessment-create">
-            <?= $this->render('_form_report', [
+            <?= $this->render('_form_report_participant', [
                 'model' => $model,
-                'scheduleList' => $scheduleList,
-                'subjectList' => $subjectList,
+                'groupList' => $groupList,
             ])
             ?>
         </div>

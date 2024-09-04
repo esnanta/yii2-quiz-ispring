@@ -78,6 +78,9 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']],
                     ['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
                 ]],
+                ['label' => Yii::t('app', 'Report'), 'icon' => 'file', 'items' => [
+                    ['label' => Yii::t('app', 'Participant Card'), 'url' => ['/report/participant-card']],
+                ]],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
                     ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],

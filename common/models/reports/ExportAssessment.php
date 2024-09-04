@@ -18,7 +18,6 @@ class ExportAssessment extends Model
     public function rules()
     {
         return [
-            // username and password are both required
             [['schedule_id'], 'required'],
             [['subject_id'], 'safe'],
         ];
