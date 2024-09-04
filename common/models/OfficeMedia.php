@@ -4,7 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\base\OfficeMedia as BaseOfficeMedia;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 
 /**
  * This is the model class for table "tx_office_media".
@@ -52,19 +52,19 @@ class OfficeMedia extends BaseOfficeMedia
 
             switch ($_module) {
                 case ($_module == self::MEDIA_TYPE_LOGO_LEFT):
-                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::MEDIA_TYPE_LOGO_RIGHT):
-                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
                 case ($_module == self::MEDIA_TYPE_SOCIAL):
-                    $returnValue = UIHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
                 case ($_module == self::MEDIA_TYPE_LINK):
-                    $returnValue = UIHelper::getWarning($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getWarning($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;

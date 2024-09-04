@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Schedule as BaseSchedule;
 use yii\bootstrap5\Html;
@@ -69,13 +69,13 @@ class Schedule extends BaseSchedule
 
             switch ($_module) {
                 case ($_module == self::IS_ASSET_AVAILABLE):
-                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
                 case ($_module == self::IS_ASSET_NOT_AVAILABLE):
-                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;

@@ -1,7 +1,7 @@
 <?php
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\Schedule;
 use yii\helpers\Html;
 

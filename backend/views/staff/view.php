@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\widgets\Select2;
@@ -12,7 +12,7 @@ use kartik\widgets\Select2;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 ?>
 
 
@@ -50,7 +50,7 @@ $create = UIHelper::getCreateButton();
             'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
             'panel' => [
                 'heading' => $this->title . $create,
-                'type' => UIHelper::getDetailViewType(),
+                'type' => LabelHelper::getDetailViewType(),
             ],
             'attributes' => [
                 [

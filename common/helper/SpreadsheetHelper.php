@@ -41,4 +41,31 @@ class SpreadsheetHelper
     {
         return IOFactory::identify($inputFileName);
     }
+
+    public function getDataList($data): array
+    {
+        $dataList = [];
+        //$data->getRowIterator(1) = START FROM ROW 1
+        foreach ($data->getRowIterator(1) as $row) {
+            $cellIterator = $row->getCellIterator();
+
+            /*
+             * setIterateOnlyExistingCells
+             * Default value is 'false'
+             * FALSE = This loops through all cells, even if a cell value is not set.
+             * TRUE = Loop through cells only when their value is set.
+             */
+            $cellIterator->setIterateOnlyExistingCells(FALSE);
+
+            //$counter = 0;
+            $rowList = [];
+            foreach ($cellIterator as $i=>$cell) {
+                if($i !=  'A' && $cell->getValue() != null){
+                    $rowList[] = $cell->getFormattedValue();
+                }
+                $dataList[] = $rowList;
+            }
+        }
+        return $dataList;
+    }
 }

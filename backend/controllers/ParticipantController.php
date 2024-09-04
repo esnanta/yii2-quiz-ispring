@@ -11,6 +11,7 @@ use common\models\ParticipantImport;
 use common\models\ParticipantSearch;
 use common\service\DataIdService;
 use common\service\DataListService;
+use common\service\ParticipantService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -156,7 +157,7 @@ class ParticipantController extends Controller
         if(Yii::$app->user->can('create-participant')){
             $officeId       = DataIdService::getOfficeId();
             $officeList     = DataListService::getOffice();
-            $assetList    = DataListService::getAsset();
+            $assetList      = DataListService::getAsset();
             $groupList      = DataListService::getGroup();
 
             $model = new ParticipantImport();
@@ -175,46 +176,34 @@ class ParticipantController extends Controller
                 $activeRange, null, true, true, true
             );
             $data = $spreadsheet->getActiveSheet();
+            $dataList = SpreadsheetHelper::getInstance()->getDataList($data);
 
             try {
                 if ($model->load(Yii::$app->request->post())) {
 
                     $transaction = \Yii::$app->db->beginTransaction();
-                    $dataList = [];
                     try {
-                        //$data->getRowIterator(1) = START FROM ROW 1
-                        foreach ($data->getRowIterator(1) as $row) {
-                            $cellIterator = $row->getCellIterator();
-
-                            /*
-                             * setIterateOnlyExistingCells
-                             * Default value is 'false'
-                             * FALSE = This loops through all cells, even if a cell value is not set.
-                             * TRUE = Loop through cells only when their value is set.
-                             */
-                            $cellIterator->setIterateOnlyExistingCells(FALSE);
-
-                            //$counter = 0;
-                            $rowList = [];
-                            foreach ($cellIterator as $i=>$cell) {
-                                if($i !=  'A' && $cell->getValue() != null){
-                                    $rowList[] = $cell->getFormattedValue();
-                                }
-                                $dataList[] = $rowList;
-                            }
-                        }
-
                         $counter = 0;
                         foreach (array_filter($dataList) as $i=>$data){
                             if(sizeof($data) > 2){
-                                $participant = new Participant();
-                                $participant->office_id         = $model->office_id;
-                                $participant->group_id          = $model->group_id;
-                                $participant->identity_number   = $data[0]; //identity_number
-                                $participant->title             = $data[1]; //title
-                                $participant->email             = $data[2]; //email
-                                $participant->save();
-                                $counter = $counter+1;
+                                $identityNumber = $data[0];
+                                $title = $data[1];
+                                $email = $data[2];
+
+                                $participant = Participant::find()
+                                    ->where(['office_id' => $officeId, 'identity_number' => $identityNumber])
+                                    ->one();
+
+                                if(empty($participant)):
+                                    $participant = new Participant();
+                                    $participant->office_id         = $model->office_id;
+                                    $participant->group_id          = $model->group_id;
+                                    $participant->identity_number   = $identityNumber;
+                                    $participant->title             = $title;
+                                    $participant->email             = $email;
+                                    $participant->save();
+                                    $counter++;
+                                endif;
                             }
                         }
 
@@ -234,13 +223,15 @@ class ParticipantController extends Controller
                     }
                 }
                 else {
+                    $duplicateData = ParticipantService::checkDuplicate($dataList);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,
                         'groupList' => $groupList,
                         'assetList' => $assetList,
                         'helper' => $helper,
-                        'sheetData' => $sheetData
+                        'sheetData' => $sheetData,
+                        'duplicateData' => $duplicateData
                     ]);
                 }
             }

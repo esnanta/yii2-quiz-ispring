@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use yii\helpers\Html;
 use bajadev\ckeditor\CKEditor;
 use kartik\detail\DetailView;
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Pages (text)', 'url' => ['index','
 $this->params['breadcrumbs'][] = ['label' => 'Pages (image)', 'url' => ['index','type'=>Page::PAGE_TYPE_IMAGE]];
 $this->params['breadcrumbs'][] = $this->title;
 
-$update = UIHelper::getUpdateButton();
+$update = LabelHelper::getUpdateButton();
 $stripTagsButton = Html::a('Remove Tags', ['strip-tags', 'id' => $model->id], ['class' => 'pull-right detail-button label-warning', 'style' => 'padding:0 5px']);
 ?>
 <div class="page-view">
@@ -32,7 +32,7 @@ $stripTagsButton = Html::a('Remove Tags', ['strip-tags', 'id' => $model->id], ['
             'mode' => DetailView::MODE_VIEW,
             'panel' => [
                 'heading' => $this->title . $update,
-                'type' => UIHelper::getDetailViewType(),
+                'type' => LabelHelper::getDetailViewType(),
             ],
             'attributes' => [
                 [
@@ -93,7 +93,7 @@ $stripTagsButton = Html::a('Remove Tags', ['strip-tags', 'id' => $model->id], ['
             'mode' => DetailView::MODE_VIEW,
             'panel' => [
                 'heading' => $this->title . $update,
-                'type' => UIHelper::getDetailViewType(),
+                'type' => LabelHelper::getDetailViewType(),
             ],
             'attributes' => [
                 [

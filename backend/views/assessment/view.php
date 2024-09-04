@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use kartik\select2\Select2;
 use kartik\detail\DetailView;
 
@@ -13,7 +13,7 @@ use kartik\detail\DetailView;
 $this->title = $model->quiz_title . '-'.$model->quiz_title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 ?>
 <div class="assessment-view">
 
@@ -24,7 +24,7 @@ $create = UIHelper::getCreateButton();
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title.$create,
-            'type' => UIHelper::getDetailViewType(),
+            'type' => LabelHelper::getDetailViewType(),
         ],
         'attributes' => [
             [

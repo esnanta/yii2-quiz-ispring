@@ -7,7 +7,7 @@ use yii\base\Exception;
 use yii\web\UploadedFile;
 
 use common\models\base\Page as BaseThemeDetail;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\domain\AssetUseCase;
 
 class Page extends BaseThemeDetail
@@ -55,13 +55,13 @@ class Page extends BaseThemeDetail
             $arrayModule = self::getArrayPageType();
             switch ($_module) {
                 case ($_module == self::PAGE_TYPE_TEXT):
-                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::PAGE_TYPE_IMAGE):
-                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
             return $returnValue;
         }

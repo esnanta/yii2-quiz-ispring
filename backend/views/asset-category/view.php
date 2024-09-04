@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
 
@@ -12,7 +12,7 @@ use kartik\datecontrol\DateControl;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Asset Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 
 ?>
 <div class="archive-category-view">
@@ -24,7 +24,7 @@ $create = UIHelper::getCreateButton();
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title.$create,
-            'type' => UIHelper::getDetailViewType(),
+            'type' => LabelHelper::getDetailViewType(),
         ],
         'attributes' => [
 
