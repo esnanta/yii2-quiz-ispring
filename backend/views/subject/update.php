@@ -15,17 +15,15 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'i
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
-            Please fill out the form below
-            <div class="float-right">
-                <?= Html::encode($this->title) ?>
-            </div>
-        </div>
+<div class="card border-default mb-3">
+    <div class="card-header">
+        <?=Yii::t('app', 'Please fill out the form below');?>
+        <span class="float-right">
+            <?= Html::encode($this->title) ?>
+        </span>
     </div>
-    <div class="panel-body">
-        <div class="subject-update">
+    <div class="card-body text-default">
+        <div class="subject-create">
             <?= $this->render('_form', [
                 'model' => $model,
                 'officeList' => $officeList,
@@ -33,6 +31,3 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         </div>
     </div>
 </div>
-
-
-

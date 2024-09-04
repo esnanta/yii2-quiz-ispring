@@ -16,7 +16,8 @@ $view = Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view','id'=>$m
 ?>
 
 <div class="card border-default mb-3">
-    <div class="card-header">Please fill out the form below
+    <div class="card-header">
+        <?=Yii::t('app', 'Please fill out the form below');?>
         <span class="pull-right">
             <?=$view;?>
         </span>

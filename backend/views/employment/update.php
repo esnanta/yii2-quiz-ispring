@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <header class="card-header g-brd-bottom-none g-px-15 g-px-30--sm g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
         <div class="media">
             <h3 class="d-flex align-self-center text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0">
-                Please fill out the form below
+                <?=Yii::t('app', 'Please fill out the form below');?>
             </h3>
 
             <div class="media-body d-flex justify-content-end">

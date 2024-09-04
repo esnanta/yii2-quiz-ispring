@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 
 <div class="card border-default mb-3">
-    <div class="card-header"> <?=Yii::t('app', 'Please fill out the form below');?>
+    <div class="card-header">
+        <?=Yii::t('app', 'Please fill out the form below');?>
         <span class="float-right">
             <?= Html::encode($this->title) ?>
         </span>

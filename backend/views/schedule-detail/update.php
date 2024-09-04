@@ -17,9 +17,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 
 <div class="card border-default mb-3">
-    <div class="card-header">Please fill out the form below
+    <div class="card-header">
+        <?=Yii::t('app', 'Please fill out the form below');?>
         <span class="float-right">
-            ScheduleDetail
+            <?=Yii::t('app', 'Schedule Detail');?>
         </span>
     </div>
     <div class="card-body text-default">
