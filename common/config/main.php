@@ -2,6 +2,7 @@
 
 use dektrium\user\controllers\RegistrationController;
 use \kartik\datecontrol\Module;
+use yii\caching\FileCache;
 use yii\db\Connection;
 
 return [
@@ -24,12 +25,9 @@ return [
             'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => 'tx_',
-            //'enableSchemaCache' => false,
-            //'schemaCacheDuration' => 3600, // Duration of schema cache.
-            //'schemaCache' => 'cache', // Name of the cache component used to store schema information
 
             'enableSchemaCache' => true,
-            'schemaCacheDuration' => 600,
+            'schemaCacheDuration' => 3600,
             'schemaCache' => 'cache',
             'enableQueryCache'=> true,
             'queryCacheDuration' => 3600,
@@ -41,7 +39,7 @@ return [
         ],
 
         'cache' => [
-            'class' => \yii\caching\FileCache::class,
+            'class' => FileCache::class,
 
 //            'class' => 'yii\caching\MemCache',
 //            'servers' => [

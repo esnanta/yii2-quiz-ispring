@@ -7,6 +7,7 @@ $params = array_merge(
 );
 
 //https://www.yiiframework.com/wiki/755/how-to-hide-frontendweb-in-url-addresses-on-apache
+use yii\log\FileTarget;
 use \yii\web\Request;
 $baseUrl = str_replace('/frontend/web', '', (new Request)->getBaseUrl());
 
@@ -52,7 +53,7 @@ return [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => \yii\log\FileTarget::class,
+                    'class' => FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
