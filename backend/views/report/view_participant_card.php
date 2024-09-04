@@ -9,7 +9,7 @@
 $this->title = Yii::t('app', 'Report {modelClass}', [
     'modelClass' => 'Participant',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['participant/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
