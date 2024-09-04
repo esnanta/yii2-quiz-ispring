@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/report/report_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/report_participant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -452,7 +450,7 @@
       <workItem from="1721919758370" duration="157000" />
       <workItem from="1725383041208" duration="5295000" />
       <workItem from="1725441582160" duration="7552000" />
-      <workItem from="1725452432792" duration="5050000" />
+      <workItem from="1725452432792" duration="5173000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
