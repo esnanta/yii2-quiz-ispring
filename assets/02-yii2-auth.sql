@@ -18,7 +18,7 @@ delete from tx_auth_item;
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
     ('admin',1,'Admin',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('reguler',1,'Reguler',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('regular',1,'Regular',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('participant',1,'Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('guest',1,'Guest',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
@@ -220,17 +220,17 @@ values
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('reguler','index-transaction'),
-    ('reguler','create-transaction'),
-    ('reguler','update-transaction'),
-    ('reguler','view-transaction'),
-    ('reguler','delete-transaction'),
-    ('reguler','report-transaction');
+    ('regular','index-transaction'),
+    ('regular','create-transaction'),
+    ('regular','update-transaction'),
+    ('regular','view-transaction'),
+    ('regular','delete-transaction'),
+    ('regular','report-transaction');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('reguler','update-profile'),
-    ('reguler','view-profile');
+    ('regular','update-profile'),
+    ('regular','view-profile');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
@@ -525,15 +525,15 @@ values
  */
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('reguler','index-ispring-transaction'),
-    ('reguler','create-ispring-transaction'),
-    ('reguler','view-ispring-transaction'),
-    ('reguler','report-ispring-transaction');
+    ('regular','index-ispring-transaction'),
+    ('regular','create-ispring-transaction'),
+    ('regular','view-ispring-transaction'),
+    ('regular','report-ispring-transaction');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('reguler','index-master'),
-    ('reguler','view-master'),
-    ('reguler','index-ispring-master'),
-    ('reguler','view-ispring-master'),
-    ('reguler','report-ispring-master');
+    ('regular','index-master'),
+    ('regular','view-master'),
+    ('regular','index-ispring-master'),
+    ('regular','view-ispring-master'),
+    ('regular','report-ispring-master');

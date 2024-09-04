@@ -74,7 +74,7 @@ class SiteController extends Controller
     {
         $authItemName   = CacheService::getInstance()->getAuthItemName();
 
-        if ($authItemName == Yii::$app->params['userRoleReguler']) :
+        if ($authItemName == Yii::$app->params['userRoleRegular']) :
             $this->redirect(str_replace('admin/site', '', 'site/index'));
         endif;
         

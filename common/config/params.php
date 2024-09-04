@@ -42,7 +42,7 @@ return [
     
     'userRoleAdmin'             => 'admin',
     'userRoleOwner'             => 'owner',
-    'userRoleReguler'           => 'reguler'
+    'userRoleRegular'           => 'regular'
     
 ];
 
