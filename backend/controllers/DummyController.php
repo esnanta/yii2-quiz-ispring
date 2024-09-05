@@ -30,15 +30,6 @@ class DummyController extends Controller
     public function behaviors()
     {
         return [
-//            'access' => [
-//                'class' => AccessControl::class,
-//                'rules' => [
-//                    [
-//                        'actions' => ['view'],
-//                        'allow' => true,
-//                    ],
-//                ],
-//            ],
             'verbs' => [
                 'class' => VerbFilter::class,
             ],

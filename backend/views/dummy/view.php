@@ -31,22 +31,24 @@ $this->params['breadcrumbs'][] = $this->title;
             <tbody>
             <tr>
                 <th scope="row">1</th>
-                <td><?=Html::a('Assessment', ['assessment/index']);?></td>
-                <td><?=$assessments;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-assessment']);?>
+                    <?=Html::a('Subject', ['subject/index']);?>
+                </td>
+                <td><?=$subjects;?></td>
+                <td>
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-subject']);?>
                     &nbsp;
-                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-assessment']);?>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-subject']);?>
                 </td>
             </tr>
             <tr>
                 <th scope="row">2</th>
-                <td><?=Html::a('Schedule', ['schedule/index']);?></td>
-                <td><?=$schedules.' master / '.$scheduleDetails . ' detail';?></td>
+                <td><?=Html::a('Group', ['group/index']);?></td>
+                <td><?=$groups;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-schedule']);?>
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-group']);?>
                     &nbsp;
-                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-schedule']);?>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-group']);?>
                 </td>
             </tr>
             <tr>
@@ -61,24 +63,22 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr>
                 <th scope="row">4</th>
+                <td><?=Html::a('Schedule', ['schedule/index']);?></td>
+                <td><?=$schedules.' master / '.$scheduleDetails . ' detail';?></td>
                 <td>
-                    <?=Html::a('Subject', ['subject/index']);?>
-                </td>
-                <td><?=$subjects;?></td>
-                <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-subject']);?>
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-schedule']);?>
                     &nbsp;
-                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-subject']);?>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-schedule']);?>
                 </td>
             </tr>
             <tr>
                 <th scope="row">5</th>
-                <td><?=Html::a('Group', ['group/index']);?></td>
-                <td><?=$groups;?></td>
+                <td><?=Html::a('Assessment', ['assessment/index']);?></td>
+                <td><?=$assessments;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-group']);?>
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-assessment']);?>
                     &nbsp;
-                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-group']);?>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-assessment']);?>
                 </td>
             </tr>
             </tbody>
