@@ -4,7 +4,12 @@ use yii\bootstrap5\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Assessment */
+/* @var $subjects common\models\Subject */
+/* @var $groups common\models\Group */
+/* @var $participants common\models\Participant */
+/* @var $schedules common\models\Schedule */
+/* @var $scheduleDetails common\models\ScheduleDetail */
+/* @var $assessments common\models\Assessment */
 
 $this->title = 'Dummy';
 $this->params['breadcrumbs'][] = ['label' => 'Dummy', 'url' => ['view']];
