@@ -7,9 +7,7 @@ use yii\helpers\Html;
  * @var common\models\Assessment $model
  */
 
-$this->title = Yii::t('app', 'Report {modelClass}', [
-    'modelClass' => 'Participant',
-]);
+$this->title = Yii::t('app', 'Report');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['participant/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

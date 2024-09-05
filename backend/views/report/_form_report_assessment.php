@@ -3,14 +3,13 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
-use kartik\datecontrol\DateControl;
 use kartik\widgets\Select2;
 
 /**
  * @var yii\web\View $this
  * @var common\models\Assessment $model
  */
-$this->title = 'Export Data';
+$this->title = Yii::t('app',  'Score');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

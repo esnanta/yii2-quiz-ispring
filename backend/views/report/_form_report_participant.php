@@ -9,7 +9,7 @@ use kartik\widgets\Select2;
  * @var yii\web\View $this
  * @var common\models\Assessment $model
  */
-$this->title = 'View';
+$this->title = Yii::t('app', 'Card');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

@@ -7,10 +7,8 @@ use yii\helpers\Html;
  * @var common\models\Assessment $model
  */
 
-$this->title = Yii::t('app', 'Report {modelClass}', [
-    'modelClass' => 'Assessment',
-]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Report');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['assessment/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -23,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="card-body text-default">
         <div class="assessment-create">
-            <?= $this->render('_form_report', [
+            <?= $this->render('_form_report_assessment', [
                 'model' => $model,
                 'scheduleList' => $scheduleList,
                 'subjectList' => $subjectList,
