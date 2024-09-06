@@ -14,7 +14,6 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/web/assets" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/web/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bajadev/yii2-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
@@ -193,6 +192,20 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-imagine" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-jui" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-symfonymailer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/clue/ndjson-react" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/evenement/evenement" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/fidry/cpu-core-counter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/strength-meter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/kartik-v/yii2-password" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/child-process" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/dns" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/event-loop" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/promise" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/socket" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/react/stream" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/string" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
