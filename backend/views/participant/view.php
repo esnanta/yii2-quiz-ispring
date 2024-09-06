@@ -16,6 +16,45 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participants'), 'url
 $this->params['breadcrumbs'][] = $this->title;
 $create = LabelHelper::getCreateButton();
 ?>
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                data-bs-target="#profile" type="button" role="tab" aria-controls="home"
+                aria-selected="true"><?=Yii::t('app', 'Profile');?></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                data-bs-target="#media-social" type="button" role="tab" aria-controls="profile"
+                aria-selected="false"><?=Yii::t('app', 'Social Media');?></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                data-bs-target="#media-link" type="button" role="tab" aria-controls="contact"
+                aria-selected="false"><?=Yii::t('app', 'Links');?></button>
+    </li>
+</ul>
+
+<div class="tab-content mt-3" id="myTabContent">
+    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
+        <?php
+        echo 'test1'
+        ?>
+    </div>
+    <div class="tab-pane fade" id="media-social" role="tabpanel" aria-labelledby="profile-tab">
+        <?php
+        echo 'test2'
+        ?>
+    </div>
+    <div class="tab-pane fade" id="media-link" role="tabpanel" aria-labelledby="contact-tab">
+        <?php
+        echo 'test3'
+        ?>
+    </div>
+</div>
+
+
 <div class="participant-view">
 
     <?= DetailView::widget([

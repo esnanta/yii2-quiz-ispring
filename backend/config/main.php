@@ -47,21 +47,21 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' =>
-//                [
-//                    '@dektrium/user/views' => '@app/web/themes-admin/dektrium/user',
-//                    '@dektrium/rbac/views' => '@app/web/themes-admin/dektrium/rbac',
-//                    '@backend/views' => '@backend/web/themes-admin/views',
-//                ],
-//                'basePath' => '@backend/web/themes-admin',
-//                'baseUrl' => '@web/web/themes-admin',
+                [
+                    '@dektrium/user/views' => '@app/web/themes-admin/dektrium/user',
+                    '@dektrium/rbac/views' => '@app/web/themes-admin/dektrium/rbac',
+                    '@backend/views' => '@backend/web/themes-niceadmin/views',
+                ],
+                'basePath' => '@backend/web/themes-niceadmin',
+                'baseUrl' => '@web/web/themes-niceadmin',
 
-                    [
-                        '@dektrium/user/views' => '@app/web/themes-sbadmin2/dektrium/user',
-                        '@dektrium/rbac/views' => '@app/web/themes-sbadmin2/dektrium/rbac',
-                        '@backend/views' => '@backend/web/themes-sbadmin2/views',
-                    ],
-                'basePath' => '@backend/web/themes-sbadmin2',
-                'baseUrl' => '@web/web/themes-sbadmin2',
+//                    [
+//                        '@dektrium/user/views' => '@app/web/themes-sbadmin2/dektrium/user',
+//                        '@dektrium/rbac/views' => '@app/web/themes-sbadmin2/dektrium/rbac',
+//                        '@backend/views' => '@backend/web/themes-sbadmin2/views',
+//                    ],
+//                'basePath' => '@backend/web/themes-sbadmin2',
+//                'baseUrl' => '@web/web/themes-sbadmin2',
 
 
             ],

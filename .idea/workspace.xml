@@ -5,7 +5,355 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change beforePath="$PROJECT_DIR$/backend/views/dummy/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/dummy/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/apple-touch-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/not-found.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/animations.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/boxicons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/boxicons.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/transformations.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.bubble.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.bubble.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.js.LICENSE.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.js.LICENSE.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.snow.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.snow.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.glyph.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.symbol.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/simple-datatables/simple-datatables.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/simple-datatables/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/bower.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/icons/default/icons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/icons/default/icons.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/icons/default/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/license.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/models/dom/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/models/dom/model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/models/dom/model.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/accordion/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/accordion/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/accordion/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/advlist/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/advlist/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/advlist/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/anchor/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/anchor/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/anchor/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autolink/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autolink/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autolink/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autoresize/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autoresize/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autoresize/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autosave/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autosave/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autosave/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/charmap/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/charmap/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/charmap/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/code/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/code/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/code/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/codesample/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/codesample/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/codesample/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/directionality/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/directionality/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/directionality/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojiimages.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojiimages.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojis.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojis.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/fullscreen/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/fullscreen/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/fullscreen/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/bg_BG.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ca.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/cs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/da.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/de.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/el.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/en.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/es.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/eu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/fa.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/fi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/fr_FR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/he_IL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/hi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/hr.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/hu_HU.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/id.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/it.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ja.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/kk.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ko_KR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ms.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/nb_NO.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/nl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/pl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/pt_BR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/pt_PT.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ro.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ru.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/sk.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/sl_SI.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/sv_SE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/th_TH.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/tr.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/uk.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/vi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/zh_CN.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/zh_TW.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/image/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/image/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/image/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/importcss/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/importcss/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/importcss/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/insertdatetime/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/insertdatetime/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/insertdatetime/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/link/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/link/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/link/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/lists/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/lists/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/lists/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/media/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/media/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/media/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/nonbreaking/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/nonbreaking/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/nonbreaking/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/pagebreak/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/pagebreak/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/pagebreak/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/preview/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/preview/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/preview/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/quickbars/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/quickbars/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/quickbars/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/save/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/save/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/save/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/searchreplace/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/searchreplace/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/searchreplace/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/table/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/table/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/table/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualblocks/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualblocks/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualblocks/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualchars/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualchars/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualchars/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/wordcount/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/wordcount/plugin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/wordcount/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/dark/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/dark/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/dark/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/default/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/default/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/default/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/document/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/document/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/document/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5-dark/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5-dark/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5-dark/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/writer/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/writer/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/writer/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.inline.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.inline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.inline.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.shadowdom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.shadowdom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.shadowdom.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.inline.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.inline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.inline.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.shadowdom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.shadowdom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.shadowdom.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.inline.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.inline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.inline.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.inline.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.inline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.inline.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.shadowdom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.shadowdom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.shadowdom.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/themes/silver/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/themes/silver/theme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/themes/silver/theme.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/tinymce.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/tinymce.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/tinymce.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/layout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/migration.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_account.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_assignments.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_info.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_menu.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_profile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_user.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/registration/connect.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/registration/register.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/registration/resend.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/security/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/footer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/header.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/left.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/main.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/error.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/_form_avatar.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/_search.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/create.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/index_media.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/update.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/users-profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/main.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,39 +620,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Codeception.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.PHP.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Script.ScheduleDetailController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.StaffController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.yii-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Web Page.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Web Page.yii2-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/web/htdocs/app/yii2-quiz-ispring/backend/views/report&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Codeception.Main.executor": "Debug",
+    "PHP Script.PHP.executor": "Run",
+    "PHP Script.ScheduleDetailController.php.executor": "Debug",
+    "PHP Script.StaffController.php.executor": "Debug",
+    "PHP Script.yii-quiz-ispring.executor": "Debug",
+    "PHP Web Page.Unnamed.executor": "Run",
+    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/web",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\report" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\controllers" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\common\domain" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\common\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\report" />
@@ -452,7 +800,9 @@
       <workItem from="1725383041208" duration="5295000" />
       <workItem from="1725441582160" duration="7552000" />
       <workItem from="1725452432792" duration="7624000" />
-      <workItem from="1725523398261" duration="2497000" />
+      <workItem from="1725523398261" duration="3385000" />
+      <workItem from="1725537612930" duration="18000" />
+      <workItem from="1725620899879" duration="817000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
