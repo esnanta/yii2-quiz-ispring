@@ -7,7 +7,12 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var common\models\Assessment $workStatusList
  * @var common\models\AssessmentSearch $searchModel
+ * @var common\models\Schedule $scheduleList
+ * @var common\models\Participant $participantList
+ * @var common\models\Subject $subjectList
+ * @var common\models\Period $periodList
  */
 
 $this->title = Yii::t('app', 'Assessment');
@@ -163,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'view' => function ($url, $model) {
                         return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
+                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id,'title'=>$model->participant->title]),
                             [
                                 'title' => Yii::t('yii', 'View'),
                                 'class'=>'btn btn-sm btn-info',

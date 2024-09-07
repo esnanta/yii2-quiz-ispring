@@ -11,7 +11,7 @@ use kartik\detail\DetailView;
  */
 
 $this->title = $model->quiz_title . '-'.$model->quiz_title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $create = LabelHelper::getCreateButton();
 ?>

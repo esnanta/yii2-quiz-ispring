@@ -44,6 +44,7 @@ class AssessmentController extends Controller
             $scheduleList = DataListService::getSchedule();
             $participantList  = DataListService::getParticipant();
             $periodList = DataListService::getPeriod();
+            $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
             $subjectTypeList = Assessment::getArraySubjectTypes();
             $workStatusList = Assessment::getArrayWorkStatus();
@@ -54,6 +55,7 @@ class AssessmentController extends Controller
                 'scheduleList' => $scheduleList,
                 'participantList' => $participantList,
                 'periodList' => $periodList,
+                'groupList' => $groupList,
                 'subjectList' => $subjectList,
                 'subjectTypeList' => $subjectTypeList,
                 'workStatusList' => $workStatusList,
@@ -69,13 +71,14 @@ class AssessmentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$title=null)
     {
         if (Yii::$app->user->can('view-assessment')) {
             $model = $this->findModel($id);
 
             $scheduleList = DataListService::getAssessment();
             $participantList  = DataListService::getParticipant();
+            $groupList = DataListService::getGroup();
             $subjectTypeList = Assessment::getArraySubjectTypes();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -85,6 +88,7 @@ class AssessmentController extends Controller
                     'model' => $model,
                     'scheduleList' => $scheduleList,
                     'participantList' => $participantList,
+                    'groupList' => $groupList,
                     'subjectTypeList' => $subjectTypeList
                 ]);
             }
