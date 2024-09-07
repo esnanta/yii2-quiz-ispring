@@ -1,8 +1,10 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 
-use TypeError;
+use common\models\Participant;
+use common\models\Schedule;
+use common\models\UserParticipant;
 use Yii;
 use yii\base\Model;
 use yii\base\NotSupportedException;
