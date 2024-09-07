@@ -203,7 +203,7 @@ class DummyController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $officeId = 1;
+            $officeId = DataIdService::getOfficeId();
             $groups = Group::find()->where(['office_id' => $officeId])->all();
             foreach ($groups as $group) {
                 for ($i = 0; $i < 10; $i++) {
@@ -233,11 +233,9 @@ class DummyController extends Controller
 
     public function actionCreateSchedule(): Response
     {
-        $faker = Factory::create();
-
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $officeId = 1;
+            $officeId = DataIdService::getOfficeId();
             $groups = Group::find()->where(['office_id' => $officeId])->all();
 
             $dateStart = date(Yii::$app->params['datetimeSaveFormat']);
@@ -263,12 +261,13 @@ class DummyController extends Controller
                     ->where(['office_id' => $officeId])
                     ->limit(2)
                     ->all();
+
                 foreach ($subjects as $subjectItem) {
                     $scheduleDetail = new ScheduleDetail();
                     $scheduleDetail->office_id = $officeId;
                     $scheduleDetail->schedule_id = $schedule->id;
                     $scheduleDetail->subject_id = $subjectItem->id;
-                    $scheduleDetail->subject_type = (string)(rand(1,3));
+                    $scheduleDetail->subject_type = (rand(1,3));
                     $scheduleDetail->remark = $subjectItem->description;
                     $scheduleDetail->save();
                 }
@@ -294,11 +293,9 @@ class DummyController extends Controller
 
     public function actionCreateAssessment(): Response
     {
-        $faker = Factory::create();
-
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $officeId = 1;
+            $officeId = DataIdService::getOfficeId();
             $scheduleDetails = ScheduleDetail::find()
                 ->where(['office_id' => $officeId])->all();
 
@@ -318,6 +315,7 @@ class DummyController extends Controller
                     $assessment = new Assessment();
                     $assessment->office_id = $officeId;
                     $assessment->period_id = $periodId;
+                    $assessment->group_id = $groupId;
                     $assessment->schedule_id = $scheduleId;
                     $assessment->schedule_detail_id = $scheduleDetailId;
                     $assessment->subject_id = $subjectId;

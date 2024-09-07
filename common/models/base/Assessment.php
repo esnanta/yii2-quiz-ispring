@@ -16,6 +16,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $schedule_detail_id
  * @property integer $participant_id
  * @property integer $period_id
+ * @property integer $group_id
  * @property integer $subject_id
  * @property integer $subject_type
  * @property string $app_version
@@ -41,6 +42,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \common\models\Group $group
  * @property \common\models\Office $office
  * @property \common\models\Participant $participant
  * @property \common\models\Period $period
@@ -74,6 +76,7 @@ class Assessment extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'group',
             'office',
             'participant',
             'period',
@@ -89,7 +92,7 @@ class Assessment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'subject_id', 'subject_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'subject_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
@@ -130,6 +133,7 @@ class Assessment extends \yii\db\ActiveRecord
             'schedule_detail_id' => Yii::t('app', 'Schedule Detail ID'),
             'participant_id' => Yii::t('app', 'Participant ID'),
             'period_id' => Yii::t('app', 'Period ID'),
+            'group_id' => Yii::t('app', 'Group ID'),
             'subject_id' => Yii::t('app', 'Subject ID'),
             'subject_type' => Yii::t('app', 'Subject Type'),
             'app_version' => Yii::t('app', 'App Version'),
@@ -151,6 +155,14 @@ class Assessment extends \yii\db\ActiveRecord
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroup()
+    {
+        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */

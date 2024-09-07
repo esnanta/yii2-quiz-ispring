@@ -136,7 +136,7 @@ $stripTagsButton = Html::a('Remove Tags', ['strip-tags', 'id' => $model->id], ['
             'deleteOptions' => [
                 'url' => ['delete', 'id' => $model->id],
             ],
-            'enableEditMode' => false,
+            'enableEditMode' => Yii::$app->user->can('update-page'),
         ]);
     }
 

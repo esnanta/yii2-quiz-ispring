@@ -25,8 +25,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \common\models\Assessment[] $assessments
  * @property \common\models\Office $office
  * @property \common\models\Participant[] $participants
+ * @property \common\models\Schedule[] $schedules
  */
 class Group extends \yii\db\ActiveRecord
 {
@@ -54,8 +56,10 @@ class Group extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'assessments',
             'office',
-            'participants'
+            'participants',
+            'schedules'
         ];
     }
 
@@ -115,6 +119,14 @@ class Group extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAssessments()
+    {
+        return $this->hasMany(\common\models\Assessment::class, ['group_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOffice()
     {
         return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
@@ -126,6 +138,14 @@ class Group extends \yii\db\ActiveRecord
     public function getParticipants()
     {
         return $this->hasMany(\common\models\Participant::class, ['group_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSchedules()
+    {
+        return $this->hasMany(\common\models\Schedule::class, ['group_id' => 'id']);
     }
     
     /**

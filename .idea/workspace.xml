@@ -5,355 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/apple-touch-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/img/not-found.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-grid.rtl.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-reboot.rtl.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap-utilities.rtl.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/css/bootstrap.rtl.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.esm.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/animations.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/boxicons.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/boxicons.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/css/transformations.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/boxicons/fonts/boxicons.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.bubble.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.bubble.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.js.LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.core.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.js.LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.snow.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/quill/quill.snow.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.glyph.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.symbol.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/remixicon/remixicon.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/simple-datatables/simple-datatables.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/simple-datatables/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/bower.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/icons/default/icons.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/icons/default/icons.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/icons/default/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/license.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/models/dom/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/models/dom/model.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/models/dom/model.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/accordion/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/accordion/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/accordion/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/advlist/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/advlist/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/advlist/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/anchor/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/anchor/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/anchor/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autolink/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autolink/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autolink/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autoresize/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autoresize/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autoresize/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autosave/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autosave/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/autosave/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/charmap/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/charmap/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/charmap/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/code/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/code/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/code/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/codesample/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/codesample/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/codesample/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/directionality/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/directionality/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/directionality/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojiimages.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojiimages.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojis.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/js/emojis.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/emoticons/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/fullscreen/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/fullscreen/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/fullscreen/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/bg_BG.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ca.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/cs.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/da.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/de.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/el.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/en.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/es.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/eu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/fa.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/fi.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/fr_FR.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/he_IL.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/hi.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/hr.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/hu_HU.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/id.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/it.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ja.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/kk.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ko_KR.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ms.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/nb_NO.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/nl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/pl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/pt_BR.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/pt_PT.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ro.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/ru.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/sk.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/sl_SI.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/sv_SE.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/th_TH.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/tr.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/uk.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/vi.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/zh_CN.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/js/i18n/keynav/zh_TW.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/help/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/image/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/image/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/image/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/importcss/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/importcss/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/importcss/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/insertdatetime/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/insertdatetime/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/insertdatetime/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/link/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/link/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/link/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/lists/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/lists/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/lists/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/media/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/media/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/media/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/nonbreaking/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/nonbreaking/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/nonbreaking/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/pagebreak/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/pagebreak/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/pagebreak/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/preview/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/preview/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/preview/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/quickbars/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/quickbars/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/quickbars/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/save/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/save/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/save/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/searchreplace/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/searchreplace/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/searchreplace/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/table/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/table/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/table/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualblocks/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualblocks/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualblocks/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualchars/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualchars/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/visualchars/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/wordcount/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/wordcount/plugin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/plugins/wordcount/plugin.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/dark/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/dark/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/dark/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/default/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/default/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/default/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/document/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/document/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/document/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5-dark/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5-dark/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5-dark/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/tinymce-5/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/writer/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/writer/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/content/writer/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.inline.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.inline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.inline.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.shadowdom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.shadowdom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide-dark/skin.shadowdom.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.inline.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.inline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.inline.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.shadowdom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.shadowdom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/oxide/skin.shadowdom.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.inline.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.inline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.inline.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.inline.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.inline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.inline.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/content.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.shadowdom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.shadowdom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/skins/ui/tinymce-5/skin.shadowdom.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/themes/silver/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/themes/silver/theme.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/themes/silver/theme.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/tinymce.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/tinymce.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/assets/vendor/tinymce/tinymce.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/layout.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/migration.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/_form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/permission/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/_form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/role/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/_form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/rbac/rule/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_account.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_assignments.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_info.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_menu.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_profile.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/_user.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/admin/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/registration/connect.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/registration/register.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/registration/resend.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/dektrium/user/security/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/footer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/header.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/left.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/main.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/error.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/_form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/_form_avatar.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/_search.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/create.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/index_media.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/update.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/staff/view.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/users-profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/DummyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DummyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/page/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/page/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Group.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Group.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -414,198 +74,198 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/vendor/cebe/markdown" />
-      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
-      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
-      <path value="$PROJECT_DIR$/vendor/budyaga/yii2-cropper" />
-      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
-      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dynagrid" />
-      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-rbac" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-krajee-base" />
-      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-user" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-tabs-x" />
-      <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-sidenav" />
-      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-sortable" />
-      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rangeinput" />
-      <path value="$PROJECT_DIR$/vendor/pdepend/pdepend" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap4-dropdown" />
-      <path value="$PROJECT_DIR$/vendor/mpdf/psr-log-aware-trait" />
-      <path value="$PROJECT_DIR$/vendor/mpdf/psr-http-message-shim" />
-      <path value="$PROJECT_DIR$/vendor/behat/gherkin" />
-      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/vendor/phpmd/phpmd" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
-      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
-      <path value="$PROJECT_DIR$/vendor/bajadev/yii2-ckeditor" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/php-date-formatter" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-date-range" />
-      <path value="$PROJECT_DIR$/vendor/select2/select2" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-colorinput" />
-      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datetimepicker" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rating" />
-      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-datecontrol" />
-      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-spinner" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-activeform" />
-      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dialog" />
-      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-typeahead" />
-      <path value="$PROJECT_DIR$/vendor/phpspec/php-diff" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-select2" />
-      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-fileinput" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-mpdf" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-affix" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-depdrop" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-growl" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
-      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-fileinput" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-export" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-builder" />
-      <path value="$PROJECT_DIR$/vendor/symfony/console" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widgets" />
-      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-touchspin" />
-      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-icons" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-tabs-x" />
-      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/dependent-dropdown" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-switchinput" />
-      <path value="$PROJECT_DIR$/vendor/symfony/config" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-alert" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-number" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datepicker" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-timepicker" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-detail-view" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-composer" />
-      <path value="$PROJECT_DIR$/vendor/yii2tech/ar-softdelete" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap5" />
-      <path value="$PROJECT_DIR$/vendor/yii2tech/spreadsheet" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2" />
-      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-authclient" />
-      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-gii" />
-      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-httpclient" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-enhanced-gii" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-imagine" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-uuid-behavior" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-jui" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-optimistic-lock-validator" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-star-rating" />
-      <path value="$PROJECT_DIR$/vendor/symfony/browser-kit" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-grid" />
-      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
-      <path value="$PROJECT_DIR$/vendor/lesha724/yii2-document-viewer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/vendor/onmotion/yii2-widget-apexcharts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
-      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
-      <path value="$PROJECT_DIR$/vendor/symfony/process" />
-      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap4" />
-      <path value="$PROJECT_DIR$/vendor/warrence/yii2-kartikgii" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-symfonymailer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-imagine" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-jui" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-fileinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-star-rating" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/php-date-formatter" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/strength-meter" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-tabs-x" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/dependent-dropdown" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-builder" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-date-range" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap4-dropdown" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dialog" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dynagrid" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-datecontrol" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-detail-view" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-icons" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-export" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-grid" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-number" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-password" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-krajee-base" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-mpdf" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-activeform" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-affix" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-sortable" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-tabs-x" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datepicker" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datetimepicker" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-alert" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-colorinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-growl" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rangeinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-depdrop" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-fileinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-sidenav" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-spinner" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rating" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-select2" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-touchspin" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-typeahead" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-switchinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-timepicker" />
+      <path value="$PROJECT_DIR$/vendor/onmotion/yii2-widget-apexcharts" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widgets" />
+      <path value="$PROJECT_DIR$/vendor/lesha724/yii2-document-viewer" />
+      <path value="$PROJECT_DIR$/vendor/yii2tech/spreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/evenement/evenement" />
+      <path value="$PROJECT_DIR$/vendor/warrence/yii2-kartikgii" />
+      <path value="$PROJECT_DIR$/vendor/yii2tech/ar-softdelete" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-enhanced-gii" />
+      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
       <path value="$PROJECT_DIR$/vendor/mootensai/yii2-relation-trait" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-faker" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-uuid-behavior" />
       <path value="$PROJECT_DIR$/vendor/mootensai/yii2-jsblock" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-debug" />
-      <path value="$PROJECT_DIR$/vendor/npm-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-optimistic-lock-validator" />
       <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
       <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
-      <path value="$PROJECT_DIR$/vendor/components/flag-icon-css" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
-      <path value="$PROJECT_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery-ui" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/viewerjs" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/yii2-pjax" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/inputmask" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/components/flag-icon-css" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/squizlabs/php_codesniffer" />
       <path value="$PROJECT_DIR$/vendor/thtmorais/yii2-test" />
-      <path value="$PROJECT_DIR$/vendor/codeception/stub" />
-      <path value="$PROJECT_DIR$/vendor/codeception/lib-innerbrowser" />
-      <path value="$PROJECT_DIR$/vendor/codeception/verify" />
-      <path value="$PROJECT_DIR$/vendor/codeception/module-asserts" />
-      <path value="$PROJECT_DIR$/vendor/codeception/module-yii2" />
-      <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/simple-ajax-uploader" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/inputmask" />
       <path value="$PROJECT_DIR$/vendor/bower-asset/jcrop" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery" />
+      <path value="$PROJECT_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
       <path value="$PROJECT_DIR$/vendor/bower-asset/punycode" />
-      <path value="$PROJECT_DIR$/vendor/codeception/lib-asserts" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/simple-ajax-uploader" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery-ui" />
       <path value="$PROJECT_DIR$/vendor/codeception/codeception" />
+      <path value="$PROJECT_DIR$/vendor/codeception/lib-asserts" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/viewerjs" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/yii2-pjax" />
       <path value="$PROJECT_DIR$/vendor/codeception/module-filesystem" />
+      <path value="$PROJECT_DIR$/vendor/codeception/module-yii2" />
+      <path value="$PROJECT_DIR$/vendor/codeception/lib-innerbrowser" />
+      <path value="$PROJECT_DIR$/vendor/codeception/module-asserts" />
+      <path value="$PROJECT_DIR$/vendor/codeception/verify" />
+      <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/vendor/codeception/phpunit-wrapper" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/strength-meter" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-password" />
+      <path value="$PROJECT_DIR$/vendor/codeception/stub" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/psr-http-message-shim" />
+      <path value="$PROJECT_DIR$/vendor/cebe/markdown" />
+      <path value="$PROJECT_DIR$/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/psr-log-aware-trait" />
+      <path value="$PROJECT_DIR$/vendor/behat/gherkin" />
       <path value="$PROJECT_DIR$/vendor/react/child-process" />
       <path value="$PROJECT_DIR$/vendor/react/dns" />
+      <path value="$PROJECT_DIR$/vendor/phpmd/phpmd" />
       <path value="$PROJECT_DIR$/vendor/react/cache" />
       <path value="$PROJECT_DIR$/vendor/react/socket" />
       <path value="$PROJECT_DIR$/vendor/react/stream" />
       <path value="$PROJECT_DIR$/vendor/react/event-loop" />
       <path value="$PROJECT_DIR$/vendor/react/promise" />
-      <path value="$PROJECT_DIR$/vendor/clue/ndjson-react" />
-      <path value="$PROJECT_DIR$/vendor/fidry/cpu-core-counter" />
-      <path value="$PROJECT_DIR$/vendor/evenement/evenement" />
-      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/budyaga/yii2-cropper" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/bajadev/yii2-ckeditor" />
+      <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-rbac" />
+      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-user" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/pdepend/pdepend" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/php-diff" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/select2/select2" />
+      <path value="$PROJECT_DIR$/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap5" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-composer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-authclient" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap4" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-gii" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-httpclient" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-debug" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-faker" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -803,6 +463,8 @@
       <workItem from="1725523398261" duration="3385000" />
       <workItem from="1725537612930" duration="18000" />
       <workItem from="1725620899879" duration="817000" />
+      <workItem from="1725634899662" duration="423000" />
+      <workItem from="1725677493477" duration="1124000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
