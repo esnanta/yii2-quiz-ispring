@@ -8,6 +8,7 @@ use common\models\Period;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
 use common\models\Subject;
+use common\service\CacheService;
 use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
@@ -96,7 +97,7 @@ class AssessmentController extends Controller
     public function actionView($id)
     {
         try {
-            $officeId = DataIdService::getOfficeId();
+            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
             $model = Assessment::find()
                 ->where(['id'=>$id,'office_id' => $officeId])
                 ->one();
@@ -166,7 +167,7 @@ class AssessmentController extends Controller
 
             $scheduleDetailId       = $_POST['SCD']; //SCHEDULE DETAIL ID
 
-            $officeId = DataIdService::getOfficeId();
+            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
             $scheduleDetail = ScheduleDetail::find()
                 ->where(['id'=>$scheduleDetailId,'office_id' => $officeId])
                 ->one();

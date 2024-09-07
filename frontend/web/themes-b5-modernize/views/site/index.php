@@ -2,6 +2,8 @@
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\LabelHelper;
+use common\service\CacheService;
+use common\service\DataIdService;
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 
@@ -34,6 +36,8 @@ $this->title = Yii::$app->name;
                     <?= $participant->title; ?> <br>
                     <?= $participant->group->title; ?> <br>
                     <?= $participant->office->title; ?>
+
+                    <?= CacheService::getInstance()->getOfficeIdByParticipant();?>
                 </div>
 
             </div>
@@ -47,6 +51,9 @@ $this->title = Yii::$app->name;
                     <h5 class="card-title fw-semibold">
                         <?= Yii::t('app', 'Schedule'); ?>
                     </h5>
+                    <span class="float-end float-right">
+
+                    </span>
                 </div>
 
                 <div class="table-responsive-sm">

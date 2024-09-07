@@ -2,12 +2,11 @@
 
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
-/** @var LoginParticipantForm $model */
+/** @var \frontend\models\LoginParticipantForm $model */
 
-use common\models\LoginParticipantForm;
+use frontend\models\LoginParticipantForm;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
-use kartik\password\PasswordInput;
 
 $this->title = Yii::t('app', 'Authentication');
 $this->params['breadcrumbs'][] = $this->title;

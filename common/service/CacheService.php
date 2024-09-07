@@ -2,6 +2,7 @@
 namespace common\service;
 
 use common\models\AuthAssignment;
+use common\models\Participant;
 use common\models\Staff;
 use Yii;
 use yii\web\ForbiddenHttpException;
@@ -99,6 +100,13 @@ class CacheService {
         return Yii::$app->cache->getOrSet($this->cacheAuthItemName.$this->combineCache, function () {
             $model = AuthAssignment::find()->where(['user_id' => $this->userId])->one();
             return $model->item_name;
+        });
+    }
+
+    public function getOfficeIdByParticipant(){
+        return Yii::$app->cache->getOrSet($this->cacheOfficeId.$this->combineCache, function () {
+            $model = Participant::find()->where(['id' => $this->userId])->one();
+            return $model->office_id;
         });
     }
 }
