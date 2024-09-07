@@ -41,9 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </td>
                 <td><?=$subjects;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-subject']);?>
-                    &nbsp;
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-subject']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-subject']);?>
                 </td>
             </tr>
             <tr>
@@ -51,9 +51,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?=Html::a('Group', ['group/index']);?></td>
                 <td><?=$groups;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-group']);?>
-                    &nbsp;
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-group']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-group']);?>
                 </td>
             </tr>
             <tr>
@@ -61,9 +61,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?=Html::a('Participant', ['participant/index']);?></td>
                 <td><?=$participants;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-participant']);?>
-                    &nbsp;
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-participant']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-participant']);?>
                 </td>
             </tr>
             <tr>
@@ -71,9 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?=Html::a('Schedule', ['schedule/index']);?></td>
                 <td><?=$schedules.' master / '.$scheduleDetails . ' detail';?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-schedule']);?>
-                    &nbsp;
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-schedule']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-schedule']);?>
                 </td>
             </tr>
             <tr>
@@ -81,9 +81,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?=Html::a('Assessment', ['assessment/index']);?></td>
                 <td><?=$assessments;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-assessment']);?>
-                    &nbsp;
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-assessment']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-assessment']);?>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>Delete All</td>
+                <td></td>
+                <td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= Html::a('<i class="fas fa-trash"></i>', ['delete-all']);?>
                 </td>
             </tr>
             </tbody>

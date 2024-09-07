@@ -343,4 +343,30 @@ class DummyController extends Controller
         MessageHelper::getFlashSaveSuccess();
         return $this->redirect(['view']);
     }
+
+    public function actionDeleteAll(): Response
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $officeId = DataIdService::getOfficeId();
+            Assessment::deleteAll(['office_id'=>$officeId]);
+            ScheduleDetail::deleteAll(['office_id'=>$officeId]);
+            Schedule::deleteAll(['office_id'=>$officeId]);
+            Participant::deleteAll(['office_id'=>$officeId]);
+            Group::deleteAll(['office_id'=>$officeId]);
+            Subject::deleteAll(['office_id'=>$officeId]);
+            $transaction->commit();
+            MessageHelper::getFlashDeleteSuccess();
+        } catch (\Exception $e) {
+            MessageHelper::getFlashDeleteFailed();
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            MessageHelper::getFlashDeleteFailed();
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return $this->redirect(['view']);
+    }
 }

@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/main.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/DummyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DummyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/group/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/page/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/page/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/base/Group.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/dummy/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/dummy/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -464,7 +458,7 @@
       <workItem from="1725537612930" duration="18000" />
       <workItem from="1725620899879" duration="817000" />
       <workItem from="1725634899662" duration="423000" />
-      <workItem from="1725677493477" duration="1124000" />
+      <workItem from="1725677493477" duration="1938000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
