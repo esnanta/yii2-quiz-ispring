@@ -41,7 +41,7 @@ class Schedule extends BaseSchedule
         }
 
         if ($this->isNewRecord) :
-            $this->title = Counter::getDataNumber(Counter::CODE_OF_SCHEDULE).'-'.$this->title;
+            $this->title = Counter::getDataNumber(Counter::CODE_OF_SCHEDULE);
             $this->token = substr(uniqid('', true), -6);
         endif;
 
