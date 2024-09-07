@@ -272,7 +272,6 @@ class DummyController extends Controller
                     $scheduleDetail->save();
                 }
 
-                $schedule->title = $schedule->title.$staff->title;
                 $schedule->save();
 
                 $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+3 hours', strtotime($dateStart)));
