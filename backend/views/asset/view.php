@@ -187,7 +187,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     echo Html::a('<i class="fas fa-download"></i> Download ('.$model->download_counter.')',
                         ['asset/download','id'=>$model->id,'title'=>$model->title],
                         ['class'=>'card-link float-right', 'title'=>'Download']);
-                    
+
                     echo '<span class ="float-right">&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
 
                     if($isSpreadsheet == 'Xlsx') {

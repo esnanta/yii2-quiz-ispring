@@ -8,7 +8,8 @@ use common\models\Period;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
 use common\models\Subject;
-use RequestParametersParser;
+use common\service\DataIdService;
+use common\service\DataListService;
 use Yii;
 use frontend\models\AssessmentSearch;
 use yii\helpers\ArrayHelper;
@@ -25,7 +26,7 @@ class AssessmentController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -95,25 +96,15 @@ class AssessmentController extends Controller
     public function actionView($id)
     {
         try {
+            $officeId = DataIdService::getOfficeId();
             $model = Assessment::find()
-            ->where(['id'=>$id])
-            ->one();
+                ->where(['id'=>$id,'office_id' => $officeId])
+                ->one();
 
-            $officeId = $model->office_id;
-
-            $scheduleList = ArrayHelper::map(Schedule::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $periodList = ArrayHelper::map(Period::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $subjectList = ArrayHelper::map(Subject::find()
-                ->where(['office_id' => $officeId])
-                ->asArray()->all(), 'id', 'title');
-
-            $subjectTypeList = Assessment::getArraySubjectTypes();
+            $scheduleList       = DataListService::getSchedule();
+            $periodList         = DataListService::getPeriod();
+            $subjectList        = DataListService::getSubject();
+            $subjectTypeList    = Assessment::getArraySubjectTypes();
 
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
@@ -175,19 +166,20 @@ class AssessmentController extends Controller
 
             $scheduleDetailId       = $_POST['SCD']; //SCHEDULE DETAIL ID
 
+            $officeId = DataIdService::getOfficeId();
             $scheduleDetail = ScheduleDetail::find()
-                ->where(['id'=>$scheduleDetailId])
+                ->where(['id'=>$scheduleDetailId,'office_id' => $officeId])
                 ->one();
 
             $participant = Participant::find()
                 ->select('id')
-                ->where(['username' => $username])
+                ->where(['username' => $username,'office_id' => $officeId])
                 ->one();
 
             $scheduleId         = $scheduleDetail->schedule->id;
             $periodId           = $scheduleDetail->schedule->period_id;
+            $groupId            = $scheduleDetail->schedule->group_id;
             $subjectId          = $scheduleDetail->subject_id;
-            $officeId           = $scheduleDetail->office_id;
             $subjectType        = $scheduleDetail->subject_type;
             $participantId      = $participant->id;
 
@@ -203,6 +195,7 @@ class AssessmentController extends Controller
 
             $assessment->office_id                = $officeId;
             $assessment->period_id                = $periodId;
+            $assessment->group_id                 = $groupId;
             $assessment->schedule_id              = $scheduleId;
             $assessment->schedule_detail_id       = $scheduleDetailId;
             $assessment->subject_type             = $subjectType;

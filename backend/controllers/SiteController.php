@@ -137,7 +137,7 @@ class SiteController extends Controller
     }
     
     
-    public function actionCreateOwner(): Response|string
+    public function actionCreateOwner()
     {
         if (Yii::$app->user->can('create-user-owner')) {
             $model          = new UserDektrium();

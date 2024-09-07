@@ -32,7 +32,8 @@ $this->title = Yii::$app->name;
 
                 <div class="timeline-desc fs-3 text-dark mt-n1">
                     <?= $participant->title; ?> <br>
-                    <?= $participant->group->title; ?>
+                    <?= $participant->group->title; ?> <br>
+                    <?= $participant->office->title; ?>
                 </div>
 
             </div>

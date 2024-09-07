@@ -30,11 +30,18 @@ use yii\helpers\Html;
         foreach ($modelDetails as $i => $modelDetailItem) {
             $subjectType = $modelDetailItem->getOneSubjectType($modelDetailItem->subject_type);
             $wokStatus = $modelDetailItem->getOneWorkStatus($modelDetailItem->work_status);
-            ?>
+        ?>
             <tr>
                 <td class="center"><?= ($i + 1); ?></td>
                 <td class="left">
-                    <?= $modelDetailItem->participant->title . '<br>' . $wokStatus; ?>
+                    <?php
+                    $participant =
+                        Html::a($modelDetailItem->participant->title,['participant/view',
+                            'id' => $modelDetailItem->participant->id,
+                            'title' => $modelDetailItem->participant->title
+                    ]);
+                    echo $participant . '<br>' . $wokStatus;
+                    ?>
                 </td>
                 <td class="left">
                     <?= $modelDetailItem->subject->title . '<br>' . $subjectType; ?>
