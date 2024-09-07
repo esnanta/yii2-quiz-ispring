@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssessmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/assessment/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/assessment/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/asset/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -461,7 +457,7 @@
       <workItem from="1725537612930" duration="18000" />
       <workItem from="1725620899879" duration="817000" />
       <workItem from="1725634899662" duration="423000" />
-      <workItem from="1725677493477" duration="2812000" />
+      <workItem from="1725677493477" duration="3552000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
