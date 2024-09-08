@@ -83,47 +83,41 @@ class ParticipantController extends Controller
             $groupList  = DataListService::getGroup();
             $periodList = DataListService::getPeriod();
 
-            $subjects = Subject::find()
-                ->where(['office_id' => $model->office_id])
+            $participantId = 100; // Replace with the actual participant ID
+            $officeId = 1; // Replace with the actual office ID
+
+            $assessments = (new \yii\db\Query())
+                ->select([
+                    'subject_id',
+                    'evaluate_score',
+                    'average_score' => 'AVG(evaluate_score) OVER (PARTITION BY subject_id, office_id)'
+                ])
+                ->from('tx_assessment')
+                ->where(['participant_id' => $participantId])
                 ->all();
 
+            $categories = [];
+            $evaluateScores = [];
+            $averageScores = [];
 
-            $series = [];
-            $averageIsTrue = true;
-
-            // REGULAR DATA
-            foreach ($subjects as $subjectModel) {
-                $series[] = [
-                    'name' => $subjectModel->title,
-                    'data' => AssessmentService::getEvaluateScoreAsArray(
-                        $model->id,
-                        $model->office_id,
-                        $subjectModel->id,
-                    )
-                ];
+            foreach ($assessments as $assessment) {
+                $categories[] = "Subject " . $assessment['subject_id']; // Modify as needed to get subject name
+                $evaluateScores[] = $assessment['evaluate_score'];
+                $averageScores[] = $assessment['average_score'];
             }
 
-            //AVERAGE DATA
-            foreach ($subjects as $subjectModel) {
-                $series[] = [
-                    'name' => $subjectModel->title,
-                    'data' => AssessmentService::getEvaluateScoreAsArray(
-                        $model->id,
-                        $model->office_id,
-                        $subjectModel->id,
-                        $averageIsTrue
-                    )
-                ];
-            }
+            $series = [
+                [
+                    'name' => 'Evaluate Score',
+                    'data' => $evaluateScores,
+                ],
+                [
+                    'name' => 'Average Score',
+                    'data' => $averageScores,
+                ],
+            ];
 
-            $categories=[];
-            foreach ($subjects as $subjectModel) {
-                $categories = AssessmentService::getSubjectAsArray(
-                    $model->id,
-                    $model->office_id,
-                    $subjectModel->id
-                );
-            }
+
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);

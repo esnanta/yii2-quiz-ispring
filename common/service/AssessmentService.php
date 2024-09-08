@@ -57,16 +57,15 @@ class AssessmentService
         return $mainArray;
     }
 
-    public static function getAssessments(
-        $officeId, $participantId, $subjectId): array|\yii\db\ActiveRecord|null
+    public static function getAssessmentsByParticipant(
+        $officeId, $participantId): array|\yii\db\ActiveRecord|null
     {
         return Assessment::find()
             ->where([
                 'office_id' => $officeId,
                 'participant_id' => $participantId,
-                'subject_id' => $subjectId
             ])
             //->distinct('subject_id')
-            ->one();
+            ->all();
     }
 }
