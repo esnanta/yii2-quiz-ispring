@@ -32,11 +32,23 @@ $create = LabelHelper::getCreateButton();
                 'format'=>'html',
                 'value'=>($model->schedule_id!=null) ? $model->schedule->getUrl():'',
                 'type'=>DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'schedule_id', 'prompt' => '', 'disabled'=>false],
+                'options' => ['id' => 'schedule_id', 'prompt' => '', 'disabled'=>true],
                 'items' => $scheduleList,
                 'widgetOptions'=>[
                     'class'=> Select2::class,
                     'data'=>$scheduleList,
+                ],
+            ],
+            [
+                'attribute'=>'exam_type',
+                'format'=>'html',
+                'value'=>($model->exam_type!=null) ? $model->getOneExamType($model->exam_type) : '',
+                'type'=>DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'exam_type', 'prompt' => '', 'disabled'=>false],
+                'items' => $examTypeList,
+                'widgetOptions'=>[
+                    'class'=> Select2::class,
+                    'data'=>$examTypeList,
                 ],
             ],
             [
@@ -94,7 +106,7 @@ $create = LabelHelper::getCreateButton();
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => Yii::$app->user->can('update-assessment'),
+        'enableEditMode' => false,
     ]) ?>
 
 </div>

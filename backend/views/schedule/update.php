@@ -4,6 +4,13 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
+/* @var $examTypeList common\models\Schedule */
+/* @var $subjectList common\models\Subject */
+/* @var $roomList common\models\Room */
+/* @var $groupList common\models\Group */
+/* @var $periodList common\models\Period */
+/* @var $staffList common\models\Staff */
+/* @var $subjectTypeList common\models\ScheduleDetail */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Schedule',
@@ -29,6 +36,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 'groupList' => $groupList,
                 'periodList' => $periodList,
                 'staffList' => $staffList,
+                'examTypeList' => $examTypeList,
                 'subjectTypeList' => $subjectTypeList
             ])
             ?>

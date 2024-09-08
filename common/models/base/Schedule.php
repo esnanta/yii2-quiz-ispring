@@ -17,6 +17,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $group_id
  * @property integer $room_id
  * @property integer $staff_id
+ * @property integer $exam_type
  * @property string $date_start
  * @property string $date_end
  * @property string $token
@@ -83,7 +84,7 @@ class Schedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
@@ -126,6 +127,7 @@ class Schedule extends \yii\db\ActiveRecord
             'group_id' => Yii::t('app', 'Group ID'),
             'room_id' => Yii::t('app', 'Room ID'),
             'staff_id' => Yii::t('app', 'Staff ID'),
+            'exam_type' => Yii::t('app', 'Exam Type'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
             'token' => Yii::t('app', 'Token'),
@@ -143,7 +145,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::class, ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['schedule_id' => 'id']);
     }
         
     /**
@@ -151,7 +153,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getGroup()
     {
-        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
+        return $this->hasOne(\common\models\Group::className(), ['id' => 'group_id']);
     }
         
     /**
@@ -159,7 +161,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
         
     /**
@@ -167,7 +169,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(\common\models\Period::class, ['id' => 'period_id']);
+        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
     }
         
     /**
@@ -175,7 +177,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getRoom()
     {
-        return $this->hasOne(\common\models\Room::class, ['id' => 'room_id']);
+        return $this->hasOne(\common\models\Room::className(), ['id' => 'room_id']);
     }
         
     /**
@@ -183,7 +185,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasOne(\common\models\Staff::class, ['id' => 'staff_id']);
+        return $this->hasOne(\common\models\Staff::className(), ['id' => 'staff_id']);
     }
         
     /**
@@ -191,7 +193,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getScheduleDetails()
     {
-        return $this->hasMany(\common\models\ScheduleDetail::class, ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\ScheduleDetail::className(), ['schedule_id' => 'id']);
     }
     
     /**

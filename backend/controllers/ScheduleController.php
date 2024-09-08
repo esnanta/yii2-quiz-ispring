@@ -48,6 +48,7 @@ class ScheduleController extends Controller
             $periodList = DataListService::getPeriod();
             $roomList = DataListService::getRoom();
             $groupList = DataListService::getGroup();
+            $examTypeList = Schedule::getArrayExamType();
             $isAssetList = Schedule::getArrayIsAsset();
 
             return $this->render('index', [
@@ -56,6 +57,7 @@ class ScheduleController extends Controller
                 'periodList' => $periodList,
                 'roomList' => $roomList,
                 'groupList' => $groupList,
+                'examTypeList' => $examTypeList,
                 'isAssetList' => $isAssetList
             ]);
         } else {
@@ -148,12 +150,13 @@ class ScheduleController extends Controller
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
+            $examTypeList = Schedule::getArrayExamType();
             $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
                 MessageHelper::getFlashSaveSuccess();
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id, 'title'=>$model->title]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -162,6 +165,7 @@ class ScheduleController extends Controller
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
                     'staffList' => $staffList,
+                    'examTypeList' => $examTypeList,
                     'subjectTypeList' => $subjectTypeList
                 ]);
             }
@@ -187,6 +191,7 @@ class ScheduleController extends Controller
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
+            $examTypeList = Schedule::getArrayExamType();
             $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
@@ -202,6 +207,7 @@ class ScheduleController extends Controller
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
                     'staffList' => $staffList,
+                    'examTypeList' => $examTypeList,
                     'subjectTypeList' => $subjectTypeList
                 ]);
             }

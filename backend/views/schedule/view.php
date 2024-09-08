@@ -2,6 +2,7 @@
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\LabelHelper;
+use common\models\User;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -79,21 +80,16 @@ $refresh = Html::a(
         <div class="row mb-4">
 
             <div class="col-sm-4">
-                <div><strong><?= $model->office->title; ?></strong></div>
-                <div><?= $model->office->address; ?></div>
-                <div>Email: <?= $model->office->email; ?></div>
-                <div>Phone: <?= $model->office->phone_number; ?></div>
-            </div>
-
-
-            <div class="col-sm-4">
                 <div>
-                    <strong><?= $model->title; ?></strong>
+                    <strong><?= $model->title; ?> - <?= $model->getOneExamType($model->exam_type);?> </strong>
                 </div>
                 <div><?= $model->period->title; ?></div>
                 <div><?= $model->group->title; ?></div>
             </div>
-
+            <div class="col-sm-4">
+                <div><strong><?= Yii::t('app', 'Description'); ?></strong></div>
+                <div><?= ($model->description == null) ? '-' : $model->description; ?></div>
+            </div>
             <div class="col-sm-4">
                 <div>
                     <strong><?= $model->room->title; ?></strong>
@@ -200,13 +196,10 @@ $refresh = Html::a(
                 <?= Yii::t('app', 'Created At'); ?>:
                 <?= date(Yii::$app->params['dateDisplayFormat'], strtotime($model->created_at)); ?>
                 <br><?= Yii::t('app', 'Created By'); ?> :
-                <?= \common\models\User::getName($model->created_by); ?>
+                <?= User::getName($model->created_by); ?>
             </div>
             <div class="col-lg-4 col-sm-5 ml-auto">
-                <?= $model->staff->title; ?><br>
-                <?= Yii::t('app', 'Description'); ?>:
-                <br><?= ($model->description == null) ? '-' : $model->description; ?>
-
+                <?= '( '.$model->staff->title.' )'; ?>
             </div>
         </div>
     </div>

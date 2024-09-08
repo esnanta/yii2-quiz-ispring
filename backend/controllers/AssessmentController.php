@@ -80,6 +80,7 @@ class AssessmentController extends Controller
             $participantList  = DataListService::getParticipant();
             $groupList = DataListService::getGroup();
             $subjectTypeList = Assessment::getArraySubjectTypes();
+            $examTypeList = Assessment::getArrayExamType();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -89,7 +90,8 @@ class AssessmentController extends Controller
                     'scheduleList' => $scheduleList,
                     'participantList' => $participantList,
                     'groupList' => $groupList,
-                    'subjectTypeList' => $subjectTypeList
+                    'subjectTypeList' => $subjectTypeList,
+                    'examTypeList' => $examTypeList
                 ]);
             }
         } else {

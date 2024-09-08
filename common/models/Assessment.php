@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\ExamTypeHelper;
 use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Assessment as BaseAssessment;
@@ -27,7 +28,7 @@ class Assessment extends BaseAssessment
         return [
             [['evaluate_score'], 'safe'],
 
-            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'subject_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'subject_type', 'exam_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
@@ -52,6 +53,21 @@ class Assessment extends BaseAssessment
         }
 
         return true;
+    }
+
+    public static function getArrayExamType(): array
+    {
+        return ExamTypeHelper::getArrayExamType();
+    }
+
+    public static function getOneExamType($_module = null): string
+    {
+        if($_module)
+        {
+            return ExamTypeHelper::getOneExamType($_module);
+        }
+        else
+            return '-';
     }
 
     public static function getArraySubjectTypes()

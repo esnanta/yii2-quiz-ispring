@@ -253,6 +253,7 @@ class DummyController extends Controller
                 $schedule->period_id = $period->id;
                 $schedule->room_id = $room->id;
                 $schedule->staff_id = $staff->id;
+                $schedule->exam_type = 1;
                 $schedule->date_start = $dateStart;
                 $schedule->date_end = $dateEnd;
                 $schedule->save();
@@ -305,6 +306,7 @@ class DummyController extends Controller
                 $scheduleId         = $scheduleDetailItem->schedule->id;
                 $groupId            = $scheduleDetailItem->schedule->group_id;
                 $periodId           = $scheduleDetailItem->schedule->period_id;
+                $examType           = $scheduleDetailItem->schedule->exam_type;
 
                 $participants = Participant::find()
                     ->where(['office_id'=>$officeId,'group_id'=>$groupId])
@@ -317,9 +319,10 @@ class DummyController extends Controller
                     $assessment->group_id = $groupId;
                     $assessment->schedule_id = $scheduleId;
                     $assessment->schedule_detail_id = $scheduleDetailId;
+                    $assessment->participant_id = $participantItem->id;
                     $assessment->subject_id = $subjectId;
                     $assessment->subject_type = $subjectType;
-                    $assessment->participant_id = $participantItem->id;
+                    $assessment->exam_type = $examType;
                     $assessment->app_version = 'x.x.x';
                     $assessment->earned_points = (rand(10,50));
                     $assessment->passing_score = 25;

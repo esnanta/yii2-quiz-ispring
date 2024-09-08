@@ -177,12 +177,13 @@ class AssessmentController extends Controller
                 ->where(['username' => $username,'office_id' => $officeId])
                 ->one();
 
+            $participantId      = $participant->id;
             $scheduleId         = $scheduleDetail->schedule->id;
             $periodId           = $scheduleDetail->schedule->period_id;
             $groupId            = $scheduleDetail->schedule->group_id;
             $subjectId          = $scheduleDetail->subject_id;
             $subjectType        = $scheduleDetail->subject_type;
-            $participantId      = $participant->id;
+            $examType           = $scheduleDetail->schedule->exam_type;
 
             $assessment = Assessment::find()
                 ->where(['office_id' => $officeId,
@@ -199,9 +200,10 @@ class AssessmentController extends Controller
             $assessment->group_id                 = $groupId;
             $assessment->schedule_id              = $scheduleId;
             $assessment->schedule_detail_id       = $scheduleDetailId;
-            $assessment->subject_type             = $subjectType;
-            $assessment->subject_id               = $subjectId;
             $assessment->participant_id           = $participantId;
+            $assessment->subject_id               = $subjectId;
+            $assessment->subject_type             = $subjectType;
+            $assessment->exam_type                = $examType;
             $assessment->username                 = $username;
             $assessment->app_version              = $_POST['v'];
             $assessment->earned_points            = $_POST['sp'];

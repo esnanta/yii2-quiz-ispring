@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\ExamTypeHelper;
 use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Schedule as BaseSchedule;
@@ -24,7 +25,7 @@ class Schedule extends BaseSchedule
             //TAMBAHAN
             [['group_id', 'room_id','staff_id','date_start','date_end'], 'required'],
 
-            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
@@ -50,6 +51,21 @@ class Schedule extends BaseSchedule
         endif;
 
         return true;
+    }
+
+    public static function getArrayExamType(): array
+    {
+        return ExamTypeHelper::getArrayExamType();
+    }
+
+    public static function getOneExamType($_module = null): string
+    {
+        if($_module)
+        {
+            return ExamTypeHelper::getOneExamType($_module);
+        }
+        else
+            return '-';
     }
 
     public static function getArrayIsAsset()
@@ -82,7 +98,7 @@ class Schedule extends BaseSchedule
 
         }
         else
-            return;
+            return '-';
     }
 
 

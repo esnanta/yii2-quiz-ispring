@@ -8,8 +8,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Schedule */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $model common\models\Schedule */
+/* @var $examTypeList common\models\Schedule */
+/* @var $subjectList common\models\Subject */
+/* @var $roomList common\models\Room */
+/* @var $groupList common\models\Group */
+/* @var $periodList common\models\Period */
+/* @var $staffList common\models\Staff */
+/* @var $subjectTypeList common\models\ScheduleDetail */
 
 JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
     'viewParams' => [
@@ -34,7 +41,8 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
 
     <div class="row">
         <div class="col-md-6 col-xs-12">
-            <?= $form->field($model, 'title')->textInput() ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+
             <?= $form->field($model, 'period_id')->widget(Select2::class, [
                 'data' => $periodList,
                 'options' => ['placeholder' => Yii::t('app', '')],
@@ -87,7 +95,13 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
                     'allowClear' => true
                 ],
             ]); ?>
-            <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+            <?= $form->field($model, 'exam_type')->widget(Select2::class, [
+                'data' => $examTypeList,
+                'options' => ['placeholder' => Yii::t('app', '')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
         </div>
 
     </div>
