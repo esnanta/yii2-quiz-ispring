@@ -2,6 +2,7 @@
 
 namespace common\service;
 
+use common\helper\ApexChartHelper;
 use common\models\Assessment;
 
 class AssessmentService
@@ -22,10 +23,10 @@ class AssessmentService
         // Loop through each assessment and gather the required data
         foreach ($assessments as $assessment) {
             $examType = strip_tags($assessment->getOneExamType($assessment->exam_type));
-           // $subjectTitle = $assessment->subject->title.' ('.$examType.')';
+            $subjectTitle = $examType.'-'.$assessment->subject->title;
 
             $subjectId = $assessment->subject_id;
-            $categories[] = $assessment->subject->title;
+            $categories[] = $subjectTitle;
             $evaluateScores[] = $assessment->evaluate_score;
 
             // Calculate the average score for this subject in the same office
@@ -50,6 +51,72 @@ class AssessmentService
         return [
             'categories' => $categories,
             'series' => $series,
+            'chartType' => ApexChartHelper::getTypeLine()
+        ];
+    }
+
+    public static function getAssessmentRadar($officeId, $participantId): array
+    {
+        $assessments = Assessment::find()
+            ->where(['office_id' => $officeId, 'participant_id' => $participantId])
+            ->orderBy(['id' => SORT_ASC])
+            ->limit(12)
+            ->all();
+
+        $categories = [];
+        $evaluateScores = [];
+        $averageScores = [];
+
+        $subjectScores = []; // To store scores by subject
+
+        // Loop through each assessment and gather the required data
+        foreach ($assessments as $assessment) {
+            $subjectId = $assessment->subject_id;
+            $subjectTitle = $assessment->subject->title;
+
+            // If the subject hasn't been added yet, initialize it
+            if (!isset($subjectScores[$subjectId])) {
+                $subjectScores[$subjectId] = [
+                    'title' => $subjectTitle,
+                    'total_score' => 0,
+                    'count' => 0,
+                    'evaluate_score' => $assessment->evaluate_score,
+                ];
+            }
+
+            // Aggregate scores for the same subject
+            $subjectScores[$subjectId]['total_score'] += $assessment->evaluate_score;
+            $subjectScores[$subjectId]['count']++;
+        }
+
+        // Prepare data for the chart
+        foreach ($subjectScores as $subjectId => $subjectData) {
+            $categories[] = $subjectData['title']; // Use subject title as category
+            $evaluateScores[] = round($subjectData['evaluate_score'], 2); // Evaluated score for the participant
+
+            // Calculate the average score for the subject across all participants in the same office
+            $averageScore = Assessment::find()
+                ->where(['subject_id' => $subjectId, 'office_id' => $officeId])
+                ->average('evaluate_score');
+
+            $averageScores[] = round($averageScore, 2); // Add average score to the array
+        }
+
+        $series = [
+            [
+                'name' => 'Evaluate Score',
+                'data' => $evaluateScores,
+            ],
+            [
+                'name' => 'Average Score',
+                'data' => $averageScores,
+            ],
+        ];
+
+        return [
+            'categories' => $categories,
+            'series' => $series,
+            'chartType' => ApexChartHelper::getTypeRadar()
         ];
     }
 }

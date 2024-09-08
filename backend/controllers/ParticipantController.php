@@ -84,6 +84,7 @@ class ParticipantController extends Controller
             $assessmentData = AssessmentService::getAssessmentProgress($model->office_id, $model->id);
             $categories = $assessmentData['categories'];
             $series = $assessmentData['series'];
+            $chartType = $assessmentData['chartType'];
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -93,7 +94,8 @@ class ParticipantController extends Controller
                     'officeList' => $officeList,
                     'groupList' => $groupList,
                     'series'=>$series,
-                    'categories'=>$categories
+                    'categories'=>$categories,
+                    'chartType' => $chartType
                 ]);
             }
         }
