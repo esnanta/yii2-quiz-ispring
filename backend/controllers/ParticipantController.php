@@ -77,49 +77,13 @@ class ParticipantController extends Controller
     {
         if(Yii::$app->user->can('view-participant')){
             $model      = $this->findModel($id);
-
             $officeList = DataListService::getOffice();
-
             $groupList  = DataListService::getGroup();
-            $periodList = DataListService::getPeriod();
 
-            $officeId = $model->office_id; // Replace with the actual office ID
-
-            // Retrieve the evaluations for the participant
-            $assessments = Assessment::find()
-                ->where(['office_id' => $model->office_id, 'participant_id' => $model->id])
-                ->all();
-
-            $categories = [];
-            $evaluateScores = [];
-            $averageScores = [];
-
-            // Loop through each assessment and gather the required data
-            foreach ($assessments as $assessment) {
-                $subjectId = $assessment->subject_id;
-                $categories[] = $assessment->subject->title; // Modify to fetch the actual subject name if needed
-                $evaluateScores[] = $assessment->evaluate_score;
-
-                // Calculate the average score for this subject in the same office
-                $averageScore = Assessment::find()
-                    ->where(['subject_id' => $subjectId, 'office_id' => $officeId])
-                    ->average('evaluate_score');
-
-                $averageScores[] = round($averageScore, 2); // Rounding for better readability
-            }
-
-            $series = [
-                [
-                    'name' => 'Evaluate Score',
-                    'data' => $evaluateScores,
-                ],
-                [
-                    'name' => 'Average Score',
-                    'data' => $averageScores,
-                ],
-            ];
-
-
+            // Call the function to get assessment data
+            $assessmentData = AssessmentService::getAssessmentProgress($model->office_id, $model->id);
+            $categories = $assessmentData['categories'];
+            $series = $assessmentData['series'];
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);

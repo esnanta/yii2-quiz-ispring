@@ -6,66 +6,50 @@ use common\models\Assessment;
 
 class AssessmentService
 {
-    public static function getEvaluateScoreAsArray(
-        $participantId, $officeId, $subjectId, $isAvg = false): array
+    public static function getAssessmentProgress($officeId, $participantId): array
     {
-        $mainArray = [];
+        // Retrieve the evaluations for the participant
         $assessments = Assessment::find()
-            ->where([
-                'office_id' => $officeId,
-                'participant_id' => $participantId,
-                'subject_id' => $subjectId
-            ])
-            ->distinct('subject_id')
+            ->where(['office_id' => $officeId, 'participant_id' => $participantId])
+            ->orderBy(['id' => SORT_ASC])
+            ->limit(12)
             ->all();
 
-        foreach ($assessments as $assessmentModel) {
-            if (!$isAvg) {
-                $mainArray[] = $assessmentModel->evaluate_score;
-            } else {
-                $avgAge = Assessment::find()
-                    ->select(['AVG(evaluate_score) AS es'])
-                    ->where([
-                        'group_id' => $assessmentModel->group_id,
-                        'office_id' => $assessmentModel->office_id,
-                        'subject_id' => $subjectId
-                    ])
-                    ->scalar();
+        $categories = [];
+        $evaluateScores = [];
+        $averageScores = [];
 
-                $mainArray[] = $avgAge;
-            }
+        // Loop through each assessment and gather the required data
+        foreach ($assessments as $assessment) {
+            $examType = strip_tags($assessment->getOneExamType($assessment->exam_type));
+           // $subjectTitle = $assessment->subject->title.' ('.$examType.')';
+
+            $subjectId = $assessment->subject_id;
+            $categories[] = $assessment->subject->title;
+            $evaluateScores[] = $assessment->evaluate_score;
+
+            // Calculate the average score for this subject in the same office
+            $averageScore = Assessment::find()
+                ->where(['subject_id' => $subjectId, 'office_id' => $officeId])
+                ->average('evaluate_score');
+
+            $averageScores[] = round($averageScore, 2); // Rounding for better readability
         }
-        return $mainArray;
-    }
 
-    public static function getSubjectAsArray(
-        $participantId, $officeId, $subjectId): array
-    {
-        $mainArray = [];
-//        $assessments = Assessment::find()
-//            ->where([
-//                'office_id' => $officeId,
-//                'participant_id' => $participantId,
-//                'subject_id' => $subjectId
-//            ])
-//            ->distinct('subject_id')
-//            ->all();
-//
-//        foreach ($assessments as $assessmentModel) {
-//            $mainArray[] = $assessmentModel->subject->title;
-//        }
-        return $mainArray;
-    }
+        $series = [
+            [
+                'name' => 'Evaluate Score',
+                'data' => $evaluateScores,
+            ],
+            [
+                'name' => 'Average Score',
+                'data' => $averageScores,
+            ],
+        ];
 
-    public static function getAssessmentsByParticipant(
-        $officeId, $participantId): array|\yii\db\ActiveRecord|null
-    {
-        return Assessment::find()
-            ->where([
-                'office_id' => $officeId,
-                'participant_id' => $participantId,
-            ])
-            //->distinct('subject_id')
-            ->all();
+        return [
+            'categories' => $categories,
+            'series' => $series,
+        ];
     }
 }
