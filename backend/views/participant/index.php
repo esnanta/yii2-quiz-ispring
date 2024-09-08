@@ -65,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('app', 'No Id'),
             ],
             'title',
-            'username',
-            'password',
+            //'username',
+            //'password',
             [
                 'attribute'=>'status',
                 'vAlign'=>'middle',

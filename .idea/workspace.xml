@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
+      <change afterPath="$PROJECT_DIR$/common/service/AssessmentService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/DummyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DummyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,7 +321,7 @@
       <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\template" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Script.yii-quiz-ispring">
+  <component name="RunManager" selected="PHP Web Page.yii2-quiz-ispring">
     <configuration name="Main" type="CodeceptionConfigurationType" factoryName="Codeception">
       <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/codeception.yml" method="" scope="ConfigurationFile" use_alternative_configuration_file="true" />
       <method v="2" />
@@ -333,7 +337,7 @@
     <configuration default="true" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="localhost">
       <method v="2" />
     </configuration>
-    <configuration name="yii2-quiz-ispring" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" server_name="localhost" start_url="/yii2-quiz-ispring">
+    <configuration name="yii2-quiz-ispring" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" server_name="localhost" start_url="/app/yii2-quiz-ispring">
       <method v="2" />
     </configuration>
     <list>
@@ -461,7 +465,10 @@
       <workItem from="1725634899662" duration="423000" />
       <workItem from="1725677493477" duration="7784000" />
       <workItem from="1725691916235" duration="3690000" />
-      <workItem from="1725709964297" duration="2075000" />
+      <workItem from="1725709964297" duration="6858000" />
+      <workItem from="1725728997130" duration="1410000" />
+      <workItem from="1725730565956" duration="3692000" />
+      <workItem from="1725761998644" duration="6107000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

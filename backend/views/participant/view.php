@@ -2,6 +2,7 @@
 
 use common\helper\LabelHelper;
 use kartik\select2\Select2;
+use onmotion\apexcharts\ApexchartsWidget;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
@@ -123,72 +124,79 @@ $create = LabelHelper::getCreateButton();
         ]) ?>
     </div>
     <div class="tab-pane fade" id="assessment" role="tabpanel" aria-labelledby="profile-tab">
-        <?php
-
-//        echo \onmotion\apexcharts\ApexchartsWidget::widget([
-//            'type' => 'line', // default area
-//            'height' => '400', // default 350
-//            'width' => '100%', // default 100%
-//            'chartOptions' => [
-//                'chart' => [
-//                    'dropShadow' => [
-//                        'enabled' => true,
-//                        'color' => '#000',
-//                        'top' => 18,
-//                        'left' => 7,
-//                        'blur' => 10,
-//                        'opacity' => 0.2
-//                    ],
-//                    'toolbar' => [
-//                        'show' => true,
-//                        'autoSelected' => 'zoom'
-//                    ],
-//                ],
-//                'colors' => ['#77B6EA', '#545454'],
-//                'dataLabels' => [
-//                    'enabled' => true,
-//                ],
-//                'stroke' => [
-//                    'curve' => 'smooth'
-//                ],
-//                'title' => [
-//                    'text' => 'Jumlah Liter Terjual',
-//                    'align' => 'left'
-//                ],
-//                'grid' => [
-//                    'borderColor' => '#e7e7e7',
-//                    'row' => [
-//                        'colors' => ['#f3f3f3', 'transparent'],
-//                        'opacity' => 0.5
-//                    ]
-//                ],
-//                'markers' => [
-//                    'size' => '1'
-//                ],
-//                'xaxis' => [
-//                    'title' => [
-//                        'text' => 'Hari'
-//                    ],
-//                    'categories' => array_values($categories),
-//                ],
-//                'yaxis' => [
-//                    'title' => [
-//                        'text' => 'Liter'
-//                    ],
-//                    'min' => 0,
-//                    //'max' => 120
-//                ],
-//                'legend' => [
-//                    'position' => 'top',
-//                    'verticalAlign' => 'bottom',
-//                    'horizontalAlign' => 'right',
-//                    'floating' => true,
-//                    'offsetY' => -25,
-//                    'offsetX' => -5,
-//                ],
-//            ],
-//            'series' => array_values($series)
-//        ]);
+        <div class="row">
+            <div class="col-md-4">
+                <?= '<pre>' . var_export($categories, true) . '</pre>';?>
+            </div>
+            <div class="col-md-4">
+                <?= '<pre>' . var_export($series, true) . '</pre>';?>
+            </div>
+        </div>
+     <?php
+        echo ApexchartsWidget::widget([
+            'type' => 'line', // default area
+            'height' => '400', // default 350
+            'width' => '100%', // default 100%
+            'chartOptions' => [
+                'chart' => [
+                    'dropShadow' => [
+                        'enabled' => true,
+                        'color' => '#000',
+                        'top' => 18,
+                        'left' => 7,
+                        'blur' => 10,
+                        'opacity' => 0.2
+                    ],
+                    'toolbar' => [
+                        'show' => true,
+                        'autoSelected' => 'zoom'
+                    ],
+                ],
+                //'colors' => ['#77B6EA', '#545454'],
+                'dataLabels' => [
+                    'enabled' => true,
+                ],
+                'stroke' => [
+                    'curve' => 'smooth'
+                ],
+                'title' => [
+                    'text' => Yii::t('app', 'Participant'),
+                    'align' => 'left'
+                ],
+                'grid' => [
+                    'borderColor' => '#e7e7e7',
+                    'row' => [
+                        'colors' => ['#f3f3f3', 'transparent'],
+                        'opacity' => 0.5
+                    ]
+                ],
+                'markers' => [
+                    'size' => '1'
+                ],
+                'xaxis' => [
+                    'title' => [
+                        'text' => Yii::t('app', 'Subject')
+                    ],
+                    'categories' => array_values($categories),
+                ],
+                'yaxis' => [
+                    'title' => [
+                        'text' => Yii::t('app', 'Score')
+                    ],
+                    'min' => 0,
+                    //'max' => 120
+                ],
+                'legend' => [
+                    'position' => 'top',
+                    'verticalAlign' => 'bottom',
+                    'horizontalAlign' => 'right',
+                    'floating' => true,
+                    'offsetY' => -25,
+                    'offsetX' => -5,
+                ],
+            ],
+            'series' => array_values($series)
+        ]);
         ?>
     </div>
 </div>

@@ -4,11 +4,14 @@ namespace backend\controllers;
 
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
+use common\models\Assessment;
 use common\models\Asset;
 use common\models\AssetSearch;
 use common\models\Participant;
 use common\models\ParticipantImport;
 use common\models\ParticipantSearch;
+use common\models\Subject;
+use common\service\AssessmentService;
 use common\service\DataIdService;
 use common\service\DataListService;
 use common\service\ParticipantService;
@@ -68,13 +71,59 @@ class ParticipantController extends Controller
      * Displays a single Participant model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id,$title=null)
     {
         if(Yii::$app->user->can('view-participant')){
             $model      = $this->findModel($id);
+
             $officeList = DataListService::getOffice();
+
             $groupList  = DataListService::getGroup();
+            $periodList = DataListService::getPeriod();
+
+            $subjects = Subject::find()
+                ->where(['office_id' => $model->office_id])
+                ->all();
+
+
+            $series = [];
+            $averageIsTrue = true;
+
+            // REGULAR DATA
+            foreach ($subjects as $subjectModel) {
+                $series[] = [
+                    'name' => $subjectModel->title,
+                    'data' => AssessmentService::getEvaluateScoreAsArray(
+                        $model->id,
+                        $model->office_id,
+                        $subjectModel->id,
+                    )
+                ];
+            }
+
+            //AVERAGE DATA
+            foreach ($subjects as $subjectModel) {
+                $series[] = [
+                    'name' => $subjectModel->title,
+                    'data' => AssessmentService::getEvaluateScoreAsArray(
+                        $model->id,
+                        $model->office_id,
+                        $subjectModel->id,
+                        $averageIsTrue
+                    )
+                ];
+            }
+
+            $categories=[];
+            foreach ($subjects as $subjectModel) {
+                $categories = AssessmentService::getSubjectAsArray(
+                    $model->id,
+                    $model->office_id,
+                    $subjectModel->id
+                );
+            }
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -82,7 +131,9 @@ class ParticipantController extends Controller
                 return $this->render('view', [
                     'model' => $model,
                     'officeList' => $officeList,
-                    'groupList' => $groupList
+                    'groupList' => $groupList,
+                    'series'=>$series,
+                    'categories'=>$categories
                 ]);
             }
         }
@@ -91,6 +142,40 @@ class ParticipantController extends Controller
             throw new ForbiddenHttpException;
         }
     }
+
+//    function generateLineData($value): array
+//    {
+//        $mainArray[] = $value;
+//        return $mainArray;
+//    }
+//
+//
+//    function generateLineData($assessments,$isAvg=false): array
+//    {
+//        $mainArray=[];
+//
+//        foreach ($assessments as $assessmentModel){
+//            if($isAvg){
+//                $mainArray[] = $assessmentModel->evaluate_score;
+//            }
+//            else{
+//                $avgAge = Assessment::find()
+//                    ->select(['AVG(evaluate_score) AS es'])
+//                    ->where([
+//                        'group_id' => $assessmentModel->group_id,
+//                        'office_id' => $assessmentModel->office_id
+//                    ]) // Example WHERE clause: only active participants
+//                    ->scalar();
+//
+//                $mainArray[] = $avgAge;
+//            }
+//
+//        }
+//
+//        return $mainArray;
+//    }
+
+
 
     /**
      * Creates a new Participant model.
