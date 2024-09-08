@@ -83,27 +83,29 @@ class ParticipantController extends Controller
             $groupList  = DataListService::getGroup();
             $periodList = DataListService::getPeriod();
 
-            $participantId = 100; // Replace with the actual participant ID
-            $officeId = 1; // Replace with the actual office ID
+            $officeId = $model->office_id; // Replace with the actual office ID
 
-            $assessments = (new \yii\db\Query())
-                ->select([
-                    'subject_id',
-                    'evaluate_score',
-                    'average_score' => 'AVG(evaluate_score) OVER (PARTITION BY subject_id, office_id)'
-                ])
-                ->from('tx_assessment')
-                ->where(['participant_id' => $participantId])
+            // Retrieve the evaluations for the participant
+            $assessments = Assessment::find()
+                ->where(['office_id' => $model->office_id, 'participant_id' => $model->id])
                 ->all();
 
             $categories = [];
             $evaluateScores = [];
             $averageScores = [];
 
+            // Loop through each assessment and gather the required data
             foreach ($assessments as $assessment) {
-                $categories[] = "Subject " . $assessment['subject_id']; // Modify as needed to get subject name
-                $evaluateScores[] = $assessment['evaluate_score'];
-                $averageScores[] = $assessment['average_score'];
+                $subjectId = $assessment->subject_id;
+                $categories[] = $assessment->subject->title; // Modify to fetch the actual subject name if needed
+                $evaluateScores[] = $assessment->evaluate_score;
+
+                // Calculate the average score for this subject in the same office
+                $averageScore = Assessment::find()
+                    ->where(['subject_id' => $subjectId, 'office_id' => $officeId])
+                    ->average('evaluate_score');
+
+                $averageScores[] = round($averageScore, 2); // Rounding for better readability
             }
 
             $series = [
