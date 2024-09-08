@@ -151,7 +151,7 @@ class ScheduleController extends Controller
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
             $examTypeList = Schedule::getArrayExamType();
-            $subjectTypeList = ScheduleDetail::getArrayQuestionTypes();
+            $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
@@ -166,7 +166,7 @@ class ScheduleController extends Controller
                     'subjectList' => $subjectList,
                     'staffList' => $staffList,
                     'examTypeList' => $examTypeList,
-                    'subjectTypeList' => $subjectTypeList
+                    'questionTypeList' => $questionTypeList
                 ]);
             }
         } else {
@@ -192,7 +192,7 @@ class ScheduleController extends Controller
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
             $examTypeList = Schedule::getArrayExamType();
-            $subjectTypeList = ScheduleDetail::getArrayQuestionTypes();
+            $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
@@ -208,7 +208,7 @@ class ScheduleController extends Controller
                     'subjectList' => $subjectList,
                     'staffList' => $staffList,
                     'examTypeList' => $examTypeList,
-                    'subjectTypeList' => $subjectTypeList
+                    'questionTypeList' => $questionTypeList
                 ]);
             }
         } else {
@@ -281,7 +281,7 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->request->isAjax) {
             $subjectList = DataListService::getSubject();
-            $subjectTypeList = ScheduleDetail::getArrayQuestionTypes();
+            $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             $row = Yii::$app->request->post('ScheduleDetail');
             if (!empty($row)) {
@@ -292,7 +292,7 @@ class ScheduleController extends Controller
             return $this->renderAjax('_formScheduleDetail', [
                 'row' => $row,
                 'subjectList' => $subjectList,
-                'subjectTypeList'=>$subjectTypeList
+                'questionTypeList'=>$questionTypeList
             ]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

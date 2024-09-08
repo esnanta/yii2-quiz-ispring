@@ -14,7 +14,7 @@ class ScheduleDetailSearch extends ScheduleDetail
     public function rules()
     {
         return [
-            [['id', 'office_id', 'schedule_id', 'subject_id', 'subject_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'schedule_id', 'subject_id', 'question_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark', 'asset_name', 'asset_url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -43,7 +43,7 @@ class ScheduleDetailSearch extends ScheduleDetail
             'office_id' => $this->office_id,
             'schedule_id' => $this->schedule_id,
             'subject_id' => $this->subject_id,
-            'subject_type' => $this->subject_type,
+            'question_type' => $this->question_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

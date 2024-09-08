@@ -66,7 +66,7 @@ class AssessmentController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            $subjectTypeList = Assessment::getArrayQuestionTypes();
+            $questionTypeList = Assessment::getArrayQuestionTypes();
 
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
@@ -81,7 +81,7 @@ class AssessmentController extends Controller
                 'participantList' => $participantList,
                 'periodList' => $periodList,
                 'subjectList' => $subjectList,
-                'subjectTypeList' => $subjectTypeList
+                'questionTypeList' => $questionTypeList
             ]);
         } catch (\Exception $e){
             throw new NotFoundHttpException($e->getMessage());
@@ -105,7 +105,7 @@ class AssessmentController extends Controller
             $scheduleList       = DataListService::getSchedule();
             $periodList         = DataListService::getPeriod();
             $subjectList        = DataListService::getSubject();
-            $subjectTypeList    = Assessment::getArrayQuestionTypes();
+            $questionTypeList    = Assessment::getArrayQuestionTypes();
 
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
@@ -121,7 +121,7 @@ class AssessmentController extends Controller
                     'scheduleList' => $scheduleList,
                     'periodList' => $periodList,
                     'subjectList' => $subjectList,
-                    'subjectTypeList' => $subjectTypeList,
+                    'questionTypeList' => $questionTypeList,
                     'participantList' => $participantList
                 ]);
             }
@@ -182,7 +182,7 @@ class AssessmentController extends Controller
             $periodId           = $scheduleDetail->schedule->period_id;
             $groupId            = $scheduleDetail->schedule->group_id;
             $subjectId          = $scheduleDetail->subject_id;
-            $subjectType        = $scheduleDetail->subject_type;
+            $questionType       = $scheduleDetail->question_type;
             $examType           = $scheduleDetail->schedule->exam_type;
 
             $assessment = Assessment::find()
@@ -202,7 +202,7 @@ class AssessmentController extends Controller
             $assessment->schedule_detail_id       = $scheduleDetailId;
             $assessment->participant_id           = $participantId;
             $assessment->subject_id               = $subjectId;
-            $assessment->subject_type             = $subjectType;
+            $assessment->question_type            = $questionType;
             $assessment->exam_type                = $examType;
             $assessment->username                 = $username;
             $assessment->app_version              = $_POST['v'];

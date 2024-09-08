@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return ($model->question_type!=null) ? $model->getOneQuestionType($model->question_type):'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$subjectTypeList,
+                'filter'=>$questionTypeList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],

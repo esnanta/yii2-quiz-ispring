@@ -39,7 +39,7 @@ class ScheduleDetail extends BaseScheduleDetail
                 'extensions' => 'zip, rar, gz',
                 'tooBig' => 'Limit is 5MB'],
 
-            [['office_id', 'schedule_id', 'subject_id', 'subject_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'subject_id', 'question_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['asset_name'], 'string', 'max' => 100],

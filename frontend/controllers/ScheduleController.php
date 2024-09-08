@@ -47,7 +47,7 @@ class ScheduleController extends Controller
         $assessment->participant_id = $participant->id;
         $assessment->period_id = $scheduleDetail->schedule->period_id;
         $assessment->subject_id = $scheduleDetail->subject_id;
-        $assessment->subject_type = $scheduleDetail->subject_type;
+        $assessment->question_type = $scheduleDetail->question_type;
         $assessment->save();
 
         $currentTime = strtotime("now");

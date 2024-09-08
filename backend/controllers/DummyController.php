@@ -268,7 +268,7 @@ class DummyController extends Controller
                     $scheduleDetail->office_id = $officeId;
                     $scheduleDetail->schedule_id = $schedule->id;
                     $scheduleDetail->subject_id = $subjectItem->id;
-                    $scheduleDetail->subject_type = (rand(1,3));
+                    $scheduleDetail->question_type = (rand(1,3));
                     $scheduleDetail->remark = $subjectItem->description;
                     $scheduleDetail->save();
                 }
@@ -302,7 +302,7 @@ class DummyController extends Controller
             foreach ($scheduleDetails as $scheduleDetailItem) {
                 $scheduleDetailId   = $scheduleDetailItem->id;
                 $subjectId          = $scheduleDetailItem->subject_id;
-                $subjectType        = $scheduleDetailItem->subject_type;
+                $questionType       = $scheduleDetailItem->question_type;
                 $scheduleId         = $scheduleDetailItem->schedule->id;
                 $groupId            = $scheduleDetailItem->schedule->group_id;
                 $periodId           = $scheduleDetailItem->schedule->period_id;
@@ -321,7 +321,7 @@ class DummyController extends Controller
                     $assessment->schedule_detail_id = $scheduleDetailId;
                     $assessment->participant_id = $participantItem->id;
                     $assessment->subject_id = $subjectId;
-                    $assessment->subject_type = $subjectType;
+                    $assessment->question_type = $questionType;
                     $assessment->exam_type = $examType;
                     $assessment->app_version = 'x.x.x';
                     $assessment->earned_points = (rand(10,50));

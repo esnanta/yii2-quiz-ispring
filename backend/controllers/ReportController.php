@@ -90,9 +90,9 @@ class ReportController extends Controller
                             'header' => Yii::t('app', 'Subject'),
                         ],
                         [
-                            'attribute' => 'subject_type',
+                            'attribute' => 'question_type',
                             'value' => function ($model, $key, $index, $widget) {
-                                return strip_tags($model->getOneSubjectType($model->subject_type));
+                                return strip_tags($model->getOneSubjectType($model->question_type));
                             },
                             'header' => Yii::t('app', 'Subject Type'),
                         ],
