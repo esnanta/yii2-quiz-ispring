@@ -66,7 +66,7 @@ class AssessmentController extends Controller
                 ->where(['office_id' => $officeId])
                 ->asArray()->all(), 'id', 'title');
 
-            $subjectTypeList = Assessment::getArraySubjectTypes();
+            $subjectTypeList = Assessment::getArrayQuestionTypes();
 
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
@@ -105,7 +105,7 @@ class AssessmentController extends Controller
             $scheduleList       = DataListService::getSchedule();
             $periodList         = DataListService::getPeriod();
             $subjectList        = DataListService::getSubject();
-            $subjectTypeList    = Assessment::getArraySubjectTypes();
+            $subjectTypeList    = Assessment::getArrayQuestionTypes();
 
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()

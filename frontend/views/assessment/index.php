@@ -85,11 +85,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw'
             ],
             [
-                'attribute'=>'subject_type',
+                'attribute'=>'question_type',
                 'vAlign'=>'middle',
                 'width'=>'120px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->subject_type!=null) ? $model->getOneSubjectType($model->subject_type):'';
+                    return ($model->question_type!=null) ? $model->getOneQuestionType($model->question_type):'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
                 'filter'=>$subjectTypeList,

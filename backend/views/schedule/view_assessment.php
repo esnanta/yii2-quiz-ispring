@@ -28,7 +28,7 @@ use yii\helpers\Html;
         <?php
         $modelDetails = $providerAssessment->getModels();
         foreach ($modelDetails as $i => $modelDetailItem) {
-            $subjectType = $modelDetailItem->getOneSubjectType($modelDetailItem->subject_type);
+            $questionType = $modelDetailItem->getOneQuestionType($modelDetailItem->question_type);
             $wokStatus = $modelDetailItem->getOneWorkStatus($modelDetailItem->work_status);
         ?>
             <tr>
@@ -44,7 +44,7 @@ use yii\helpers\Html;
                     ?>
                 </td>
                 <td class="left">
-                    <?= $modelDetailItem->subject->title . '<br>' . $subjectType; ?>
+                    <?= $modelDetailItem->subject->title . '<br>' . $questionType; ?>
                 </td>
                 <td class="left"><?= $modelDetailItem->earned_points; ?></td>
                 <td class="left"><?= $modelDetailItem->passing_score; ?></td>

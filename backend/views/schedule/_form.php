@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 /* @var $groupList common\models\Group */
 /* @var $periodList common\models\Period */
 /* @var $staffList common\models\Staff */
-/* @var $subjectTypeList common\models\ScheduleDetail */
+/* @var $questionTypeList common\models\ScheduleDetail */
 
 JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
     'viewParams' => [
@@ -113,7 +113,7 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
             'content' => $this->render('_formScheduleDetail', [
                 'row' => ArrayHelper::toArray($model->scheduleDetails),
                 'subjectList' => $subjectList,
-                'subjectTypeList' => $subjectTypeList
+                'questionTypeList' => $questionTypeList
             ]),
         ],
     ];

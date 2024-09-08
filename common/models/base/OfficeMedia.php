@@ -115,7 +115,7 @@ class OfficeMedia extends \yii\db\ActiveRecord
      */
     public function getOffice(): ActiveQuery
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
     }
     
     /**

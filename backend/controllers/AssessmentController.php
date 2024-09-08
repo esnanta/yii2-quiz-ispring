@@ -46,7 +46,7 @@ class AssessmentController extends Controller
             $periodList = DataListService::getPeriod();
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
-            $subjectTypeList = Assessment::getArraySubjectTypes();
+            $questionTypeList = Assessment::getArrayQuestionTypes();
             $workStatusList = Assessment::getArrayWorkStatus();
 
             return $this->render('index', [
@@ -57,7 +57,7 @@ class AssessmentController extends Controller
                 'periodList' => $periodList,
                 'groupList' => $groupList,
                 'subjectList' => $subjectList,
-                'subjectTypeList' => $subjectTypeList,
+                'questionTypeList' => $questionTypeList,
                 'workStatusList' => $workStatusList,
             ]);
         } else {
@@ -79,7 +79,7 @@ class AssessmentController extends Controller
             $scheduleList = DataListService::getAssessment();
             $participantList  = DataListService::getParticipant();
             $groupList = DataListService::getGroup();
-            $subjectTypeList = Assessment::getArraySubjectTypes();
+            $questionTypeList = Assessment::getArrayQuestionTypes();
             $examTypeList = Assessment::getArrayExamType();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -90,7 +90,7 @@ class AssessmentController extends Controller
                     'scheduleList' => $scheduleList,
                     'participantList' => $participantList,
                     'groupList' => $groupList,
-                    'subjectTypeList' => $subjectTypeList,
+                    'questionTypeList' => $questionTypeList,
                     'examTypeList' => $examTypeList
                 ]);
             }
@@ -113,7 +113,7 @@ class AssessmentController extends Controller
 //            $model = new Assessment;
 //            $scheduleList = DataListService::getAssessment();
 //            $participantList  = DataListService::getParticipant();
-//            $subjectTypeList = Assessment::getArraySubjectTypes();
+//            $questionTypeList = Assessment::getArrayQuestionTypes();
 //
 //            try {
 //                if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -123,7 +123,7 @@ class AssessmentController extends Controller
 //                        'model' => $model,
 //                        'scheduleList' => $scheduleList,
 //                        'participantList' => $participantList,
-//                        'subjectTypeList' => $subjectTypeList
+//                        'questionTypeList' => $questionTypeList
 //                    ]);
 //                }
 //            } catch (StaleObjectException $e) {
@@ -148,7 +148,7 @@ class AssessmentController extends Controller
                 $model = $this->findModel($id);
                 $scheduleList = DataListService::getAssessment();
                 $participantList  = DataListService::getParticipant();
-                $subjectTypeList = Assessment::getArraySubjectTypes();
+                $questionTypeList = Assessment::getArrayQuestionTypes();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -157,7 +157,7 @@ class AssessmentController extends Controller
                         'model' => $model,
                         'scheduleList' => $scheduleList,
                         'participantList' => $participantList,
-                        'subjectTypeList' => $subjectTypeList
+                        'questionTypeList' => $questionTypeList
                     ]);
                 }
             } catch (StaleObjectException $e) {

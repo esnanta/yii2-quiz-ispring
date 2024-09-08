@@ -22,9 +22,9 @@ class ScheduleDetail extends BaseScheduleDetail
 {
     public $asset;
 
-    const SUBJECT_TYPE_GENERAL      = 1;
-    const SUBJECT_TYPE_LITERACY     = 2;
-    const SUBJECT_TYPE_NUMERATION   = 3;
+    const QUESTION_TYPE_GENERAL      = 1;
+    const QUESTION_TYPE_LITERACY     = 2;
+    const QUESTION_TYPE_NUMERATION   = 3;
 
     /**
      * @inheritdoc
@@ -68,9 +68,9 @@ class ScheduleDetail extends BaseScheduleDetail
     {
         return [
             //MASTER
-            self::SUBJECT_TYPE_GENERAL => Yii::t('app', 'General'),
-            self::SUBJECT_TYPE_LITERACY  => Yii::t('app', 'Literacy'),
-            self::SUBJECT_TYPE_NUMERATION  => Yii::t('app', 'Numeration'),
+            self::QUESTION_TYPE_GENERAL => Yii::t('app', 'General'),
+            self::QUESTION_TYPE_LITERACY  => Yii::t('app', 'Literacy'),
+            self::QUESTION_TYPE_NUMERATION  => Yii::t('app', 'Numeration'),
         ];
     }
 
@@ -80,13 +80,13 @@ class ScheduleDetail extends BaseScheduleDetail
         {
             $arrayModule = self::getArraySubjectTypes();
             switch ($_module) {
-                case ($_module == self::SUBJECT_TYPE_GENERAL):
+                case ($_module == self::QUESTION_TYPE_GENERAL):
                     $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
-                case ($_module == self::SUBJECT_TYPE_LITERACY):
+                case ($_module == self::QUESTION_TYPE_LITERACY):
                     $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
-                case ($_module == self::SUBJECT_TYPE_NUMERATION):
+                case ($_module == self::QUESTION_TYPE_NUMERATION):
                     $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
                 default:

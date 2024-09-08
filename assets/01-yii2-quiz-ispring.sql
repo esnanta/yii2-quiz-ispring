@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2024 at 08:08 AM
+-- Generation Time: Sep 08, 2024 at 04:02 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -36,7 +36,7 @@ CREATE TABLE `tx_assessment` (
                                  `period_id` int(11) DEFAULT NULL,
                                  `group_id` int(11) DEFAULT NULL,
                                  `subject_id` int(11) DEFAULT NULL,
-                                 `subject_type` int(11) DEFAULT NULL,
+                                 `question_type` int(11) DEFAULT NULL,
                                  `exam_type` int(11) DEFAULT NULL,
                                  `app_version` varchar(50) DEFAULT NULL,
                                  `earned_points` decimal(18,2) DEFAULT NULL,
@@ -965,7 +965,7 @@ CREATE TABLE `tx_schedule_detail` (
                                       `office_id` int(11) DEFAULT NULL,
                                       `schedule_id` int(11) DEFAULT NULL,
                                       `subject_id` int(11) DEFAULT NULL,
-                                      `subject_type` int(11) DEFAULT NULL,
+                                      `question_type` int(11) DEFAULT NULL,
                                       `remark` tinytext DEFAULT NULL,
                                       `asset_name` varchar(100) DEFAULT NULL,
                                       `created_at` datetime DEFAULT NULL,
@@ -996,8 +996,10 @@ CREATE TABLE `tx_session` (
 --
 
 INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
+                                                      ('2c6gqdv3jrjc7of888mliv8nej', 1725804811, 0x5f5f666c6173687c613a303a7b7d),
                                                       ('e6dpbs5uf837egi8ik1u64qm17', 1725769863, 0x5f5f666c6173687c613a303a7b7d),
-                                                      ('pa209mgo352ele2plrk9h65eao', 1725777031, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
+                                                      ('pa209mgo352ele2plrk9h65eao', 1725777031, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('s48kaml19jnu32jdpvve4eskdh', 1725804960, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b);
 
 -- --------------------------------------------------------
 
@@ -1137,7 +1139,7 @@ CREATE TABLE `tx_user` (
 --
 
 INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `unconfirmed_email`, `registration_ip`, `flags`, `confirmed_at`, `blocked_at`, `updated_at`, `created_at`, `last_login_at`, `auth_tf_key`, `auth_tf_enabled`) VALUES
-    (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1725766323, NULL, 0);
+    (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, NULL, 0, NULL, NULL, 1675777211, 1675777211, 1725803377, NULL, 0);
 
 --
 -- Indexes for dumped tables

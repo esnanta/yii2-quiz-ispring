@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 'model' => $model,
                 'scheduleList' => $scheduleList,
                 'participantList' => $participantList,
-                'subjectTypeList' => $subjectTypeList
+                'questionTypeList' => $questionTypeList
             ]) ?>
         </div>
     </div>

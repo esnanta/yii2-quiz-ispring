@@ -12,9 +12,9 @@ use \common\models\base\Assessment as BaseAssessment;
  */
 class Assessment extends BaseAssessment
 {
-    const SUBJECT_TYPE_GENERAL      = ScheduleDetail::SUBJECT_TYPE_GENERAL;
-    const SUBJECT_TYPE_LITERACY     = ScheduleDetail::SUBJECT_TYPE_LITERACY;
-    const SUBJECT_TYPE_NUMERATION   = ScheduleDetail::SUBJECT_TYPE_NUMERATION;
+    const QUESTION_TYPE_GENERAL      = ScheduleDetail::QUESTION_TYPE_GENERAL;
+    const QUESTION_TYPE_LITERACY     = ScheduleDetail::QUESTION_TYPE_LITERACY;
+    const QUESTION_TYPE_NUMERATION   = ScheduleDetail::QUESTION_TYPE_NUMERATION;
 
     const WORK_STATUS_OFFLINE      = 1;
     const WORK_STATUS_ONGOING      = 2;
@@ -28,7 +28,7 @@ class Assessment extends BaseAssessment
         return [
             [['evaluate_score'], 'safe'],
 
-            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'subject_type', 'exam_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'question_type', 'exam_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
@@ -70,30 +70,30 @@ class Assessment extends BaseAssessment
             return '-';
     }
 
-    public static function getArraySubjectTypes()
+    public static function getArrayQuestionTypes(): array
     {
         return [
             //MASTER
-            self::SUBJECT_TYPE_GENERAL => Yii::t('app', 'General'),
-            self::SUBJECT_TYPE_LITERACY  => Yii::t('app', 'Literacy'),
-            self::SUBJECT_TYPE_NUMERATION  => Yii::t('app', 'Numeration'),
+            self::QUESTION_TYPE_GENERAL => Yii::t('app', 'General'),
+            self::QUESTION_TYPE_LITERACY  => Yii::t('app', 'Literacy'),
+            self::QUESTION_TYPE_NUMERATION  => Yii::t('app', 'Numeration'),
         ];
     }
 
-    public static function getOneSubjectType($_module = null)
+    public static function getOneQuestionType($_module = null)
     {
         if($_module)
         {
-            $arrayModule = self::getArraySubjectTypes();
+            $arrayModule = self::getArrayQuestionTypes();
 
             switch ($_module) {
-                case ($_module == self::SUBJECT_TYPE_GENERAL):
+                case ($_module == self::QUESTION_TYPE_GENERAL):
                     $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
-                case ($_module == self::SUBJECT_TYPE_LITERACY):
+                case ($_module == self::QUESTION_TYPE_LITERACY):
                     $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
-                case ($_module == self::SUBJECT_TYPE_NUMERATION):
+                case ($_module == self::QUESTION_TYPE_NUMERATION):
                     $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
                 default:

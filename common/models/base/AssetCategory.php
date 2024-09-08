@@ -116,7 +116,7 @@ class AssetCategory extends \yii\db\ActiveRecord
      */
     public function getAssets()
     {
-        return $this->hasMany(\common\models\Asset::className(), ['asset_category_id' => 'id']);
+        return $this->hasMany(\common\models\Asset::class, ['asset_category_id' => 'id']);
     }
         
     /**
@@ -124,7 +124,7 @@ class AssetCategory extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
     }
     
     /**

@@ -7,6 +7,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
+/* @var $providerAssessment yii\data\ActiveDataProvider */
+/* @var $providerScheduleDetail yii\data\ActiveDataProvider */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Schedule'), 'url' => ['index']];
@@ -125,7 +127,7 @@ $refresh = Html::a(
                             <td class="center"><?= ($i + 1); ?></td>
                             <td class="left"><?= $modelDetailItem->subject->title; ?></td>
                             <td class="left"><?= $modelDetailItem->remark; ?></td>
-                            <td class="left"><?= $modelDetailItem->getOneSubjectType($modelDetailItem->subject_type); ?></td>
+                            <td class="left"><?= $modelDetailItem->getOneQuestionType($modelDetailItem->question_type); ?></td>
                             <td class="center">
                                 <?php
                                 if (empty($modelDetailItem->asset_name)) {

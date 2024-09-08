@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
                     return ($model->subject_id!=null) ?
-                        $model->subject->title . $model->getOneSubjectType($model->subject_type) :'';
+                        $model->subject->title . $model->getOneQuestionType($model->question_type) :'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
                 'filter' => $subjectList,

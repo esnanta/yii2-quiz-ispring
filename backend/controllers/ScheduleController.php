@@ -151,7 +151,7 @@ class ScheduleController extends Controller
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
             $examTypeList = Schedule::getArrayExamType();
-            $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
+            $subjectTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
@@ -192,7 +192,7 @@ class ScheduleController extends Controller
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
             $examTypeList = Schedule::getArrayExamType();
-            $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
+            $subjectTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
                 $model->updateIsAsset();
@@ -281,7 +281,7 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->request->isAjax) {
             $subjectList = DataListService::getSubject();
-            $subjectTypeList = ScheduleDetail::getArraySubjectTypes();
+            $subjectTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             $row = Yii::$app->request->post('ScheduleDetail');
             if (!empty($row)) {

@@ -42,12 +42,12 @@ echo TabularForm::widget([
             'label' => Yii::t('app', 'Remark'),
             'type' => TabularForm::INPUT_TEXT
         ],
-        'subject_type' => [
+        'question_type' => [
             'label' => Yii::t('app', 'Subject Type'),
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => Select2::class,
             'options' => [
-                'data' => $subjectTypeList,
+                'data' => $questionTypeList,
                 'options' => [
                     'placeholder' => Yii::t('app', ''),
                 ],
