@@ -1,5 +1,7 @@
 <?php
 
+use common\helper\ApexChartHelper;
+use onmotion\apexcharts\ApexchartsWidget;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -8,164 +10,193 @@ use yii\widgets\Pjax;
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var common\models\AssessmentSearch $searchModel
+ * @var array $participantList Array of participants
+ * @var array $scheduleList Array of schedules
+ * @var array $subjectList Array of subject
+ * @var array $questionTypeList Array of question type
+ * @var array $periodList Array of period
+ * @var array $categories Array of categories
+ * @var array $series Array of series data for charts
  */
 
 $this->title = Yii::t('app', 'Assessment');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="assessment-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                data-bs-target="#profile" type="button" role="tab" aria-controls="home"
+                aria-selected="true"><?=Yii::t('app', 'Assessment');?></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                data-bs-target="#progress" type="button" role="tab" aria-controls="profile"
+                aria-selected="false"><?=Yii::t('app', 'Progress');?></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                data-bs-target="#radar" type="button" role="tab" aria-controls="contact"
+                aria-selected="false"><?=Yii::t('app', 'Radar');?></button>
+    </li>
+</ul>
 
-    <p>
-        <?php /* echo Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Assessment Detail',
-]), ['create'], ['class' => 'btn btn-success'])*/  ?>
-    </p>
+<div class="tab-content mt-3" id="myTabContent">
+    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
+        <?php Pjax::begin(); echo GridView::widget([
+            'dataProvider' => $dataProvider,
 
-    <?php Pjax::begin(); echo GridView::widget([
-        'dataProvider' => $dataProvider,
-        
-        'toolbar' => [
-            [
-                'content'=>
-                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-                'options' => ['class' => 'btn-group-md']
-            ],
-            //'{export}',
-            //'{toggleData}'
-        ],
-        
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute'=>'schedule_id',
-                'vAlign'=>'middle',
-                'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->schedule_id!=null) ? $model->schedule->getUrl():'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$scheduleList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
+            'toolbar' => [
+                [
+                    'content'=>
+                        Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                    'options' => ['class' => 'btn-group-md']
                 ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'html',
+                //'{export}',
+                //'{toggleData}'
             ],
-            [
-                'attribute'=>'participant_id',
-                'vAlign'=>'middle',
-                'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->participant_id!=null) ? $model->participant->getUrl():'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter' => $participantList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
+
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'attribute'=>'schedule_id',
+                    'vAlign'=>'middle',
+                    'width'=>'180px',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return ($model->schedule_id!=null) ? $model->schedule->getUrl():'';
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>$scheduleList,
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>''],
+                    'format'=>'html',
                 ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
-            [
-                'attribute'=>'subject_id',
-                'vAlign'=>'middle',
-                'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->subject_id!=null) ? $model->subject->title:'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter' => $subjectList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
+                [
+                    'attribute'=>'participant_id',
+                    'vAlign'=>'middle',
+                    'width'=>'180px',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return ($model->participant_id!=null) ? $model->participant->getUrl():'';
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter' => $participantList,
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>''],
+                    'format'=>'raw'
                 ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
-            [
-                'attribute'=>'question_type',
-                'vAlign'=>'middle',
-                'width'=>'120px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->question_type!=null) ? $model->getOneQuestionType($model->question_type):'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$questionTypeList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
+                [
+                    'attribute'=>'subject_id',
+                    'vAlign'=>'middle',
+                    'width'=>'180px',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return ($model->subject_id!=null) ? $model->subject->title:'';
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter' => $subjectList,
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>''],
+                    'format'=>'raw'
                 ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
-            [
-                'attribute'=>'period_id',
-                'vAlign'=>'middle',
-                'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->period_id!=null) ? $model->period->title:'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter' => $periodList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
+                [
+                    'attribute'=>'question_type',
+                    'vAlign'=>'middle',
+                    'width'=>'120px',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return ($model->question_type!=null) ? $model->getOneQuestionType($model->question_type):'';
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>$questionTypeList,
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>''],
+                    'format'=>'raw'
                 ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
-            'earned_points',
-            'passing_score',
-            'gained_score',
-            'evaluate_score',
-            [
-                'attribute'=>'time_limit',
-                'vAlign'=>'middle',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return gmdate("H:i:s", $model->time_limit);
-                },
-            ],
-            [
-                'attribute'=>'used_time',
-                'vAlign'=>'middle',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return gmdate("H:i:s", $model->used_time);
-                },
-            ],
-            [
-                'class' => 'common\widgets\ActionColumn',
-                'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{view}',
-                'buttons' => [
-                    'view' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
-                            [
-                                'title' => Yii::t('yii', 'View'),
-                                'class'=>'btn btn-sm btn-info',
-                            ]
-                        );
+                [
+                    'attribute'=>'period_id',
+                    'vAlign'=>'middle',
+                    'width'=>'180px',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return ($model->period_id!=null) ? $model->period->title:'';
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter' => $periodList,
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>''],
+                    'format'=>'raw'
+                ],
+                'earned_points',
+                'passing_score',
+                'gained_score',
+                'evaluate_score',
+                [
+                    'attribute'=>'time_limit',
+                    'vAlign'=>'middle',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return gmdate("H:i:s", $model->time_limit);
                     },
                 ],
+                [
+                    'attribute'=>'used_time',
+                    'vAlign'=>'middle',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return gmdate("H:i:s", $model->used_time);
+                    },
+                ],
+                [
+                    'class' => 'common\widgets\ActionColumn',
+                    'contentOptions' => ['style' => 'white-space:nowrap;'],
+                    'template'=>'{view}',
+                    'buttons' => [
+                        'view' => function ($url, $model) {
+                            return Html::a('<i class="fas fa-eye"></i>',
+                                Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
+                                [
+                                    'title' => Yii::t('yii', 'View'),
+                                    'class'=>'btn btn-sm btn-info',
+                                ]
+                            );
+                        },
+                    ],
+                ],
             ],
-        ],
-        'responsive' => true,
-        'hover' => true,
-        'condensed' => true,
-        'floatHeader' => false,
-                        
-        'bordered' => true,
-        'striped' => false,
-        'responsiveWrap' => false,
+            'responsive' => true,
+            'hover' => true,
+            'condensed' => true,
+            'floatHeader' => false,
 
-        'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
-            'type' => 'default',
-            //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
-            //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-            'showFooter' => false
-        ],
-    ]); Pjax::end(); ?>
-    
+            'bordered' => true,
+            'striped' => false,
+            'responsiveWrap' => false,
 
+            'panel' => [
+                'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
+                'type' => 'default',
+                //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
+                //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                'showFooter' => false
+            ],
+        ]); Pjax::end(); ?>
+    </div>
+    <div class="tab-pane fade" id="progress" role="tabpanel" aria-labelledby="profile-tab">
+        <?= ApexChartHelper::renderParticipantScoreChart(
+            $categories, $series, Yii::t('app', 'Participant')
+        ); ?>
+    </div>
+    <div class="tab-pane fade" id="radar" role="tabpanel" aria-labelledby="contact-tab">
+        <?= ApexChartHelper::renderRadarChart(
+            $categories, $series, Yii::t('app', 'Participant Evaluation vs Average')
+        ); ?>
+    </div>
 </div>
+
+

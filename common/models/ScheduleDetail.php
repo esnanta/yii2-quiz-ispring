@@ -64,7 +64,7 @@ class ScheduleDetail extends BaseScheduleDetail
         return true;
     }
 
-    public static function getArraySubjectTypes()
+    public static function getArrayQuestionTypes()
     {
         return [
             //MASTER
@@ -74,11 +74,11 @@ class ScheduleDetail extends BaseScheduleDetail
         ];
     }
 
-    public static function getOneSubjectType($_module = null)
+    public static function getOneQuestionType($_module = null)
     {
         if($_module)
         {
-            $arrayModule = self::getArraySubjectTypes();
+            $arrayModule = self::getArrayQuestionTypes();
             switch ($_module) {
                 case ($_module == self::QUESTION_TYPE_GENERAL):
                     $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
