@@ -139,6 +139,48 @@ class MessageHelper
         );
     }
 
+    public static function getFlashTokenIsActive(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'primary',
+            ['message' => Yii::t(
+                'app',
+                'Token is Active.'
+            )]
+        );
+    }
+    public static function getFlashNotYetStarted(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'warning',
+            ['message' => Yii::t(
+                'app',
+                'Not yet started.'
+            )]
+        );
+    }
+
+    public static function getFlashNewTokenGenerated(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'success',
+            ['message' => Yii::t(
+                'app',
+                'New token generated.'
+            )]
+        );
+    }
+    public static function getFlashTokenInvalid(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'danger',
+            ['message' => Yii::t(
+                'app',
+                'Token invalid.'
+            )]
+        );
+    }
+
 
     public static function getTimeElapsedString($_ptime)
     {

@@ -9,6 +9,7 @@ use common\models\ScheduleSearch;
 use common\models\Subject;
 use common\service\DataIdService;
 use common\service\DataListService;
+use http\Message;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
@@ -70,66 +71,88 @@ class ScheduleController extends Controller
      * Displays a single Schedule model.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException|NotFoundHttpException
      */
     public function actionView($id, $title = null)
     {
-        if (Yii::$app->user->can('view-schedule')) {
-            $model = $this->findModel($id);
-            $providerScheduleDetail = new ArrayDataProvider([
-                'allModels' => $model->scheduleDetails,
-            ]);
-
-            $providerAssessment = new ArrayDataProvider([
-                'allModels' => $model->assessments,
-            ]);
-
-            $timeStart          = strtotime($model->date_start);
-            $timeOut            = strtotime($model->date_end);
-            $tokenTime          = strtotime($model->token_time);
-            $countdownTime      = strtotime($model->date_start);
-            $currentTime        = strtotime("now");
-            $interval           = (int)(abs(($currentTime-$timeStart) / 60));
-            $minutesTolerance   = 15; //minutes
-
-            //FIRST TOKEN START 2 MINUTES EARLY FROM DATE_START
-            if($currentTime <= $timeStart) {
-                // Decrease 2 minutes from current time
-                $countdownTime      = $timeStart - (2 * 60);
-                $interval           = (int)(abs(($timeStart - $countdownTime) / 60));
-                $model->token_time  = date(Yii::$app->params['datetimeSaveFormat']);
-                $model->token       = substr(uniqid('', true), -6);
-                $model->save();
-            } else {
-                //START NEW TOKEN
-                if($currentTime < $timeOut){
-                    $interval = (int)(abs(($currentTime-$tokenTime) / 60));
-                    if ($interval >= $minutesTolerance) :
-                        $schedule = Schedule::findOne(['id' => $model->id,'office_id'=>$model->office_id]);
-                        if($model->token_time < $schedule->token_time) {
-                            $model = $schedule;
-                        } else {
-                            $model->token_time = date(Yii::$app->params['datetimeSaveFormat']);
-                            $model->token = substr(uniqid('', true), -6);
-                            $model->save();
-                        }
-                    endif;
-                    $countdownTime = strtotime($model->token_time) + ($minutesTolerance * 60);
-                }
-            }
-
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-                'providerScheduleDetail' => $providerScheduleDetail,
-                'providerAssessment' => $providerAssessment,
-                'countdownTime' => $countdownTime,
-                'interval' => $interval,
-                'minutesTolerance' => $minutesTolerance
-            ]);
-        } else {
+        if (!Yii::$app->user->can('view-schedule')) {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
+
+        $model = $this->findModel($id);
+
+        $providerScheduleDetail = new ArrayDataProvider([
+            'allModels' => $model->scheduleDetails,
+        ]);
+        $providerAssessment = new ArrayDataProvider([
+            'allModels' => $model->assessments,
+        ]);
+
+        $timeStart = strtotime($model->date_start);
+        $timeOut = strtotime($model->date_end);
+        $currentTime = strtotime("now");
+        $tokenStartTime = $timeStart - (2 * 60);
+
+        // Handle token and countdown logic
+        list($countdownTime, $interval, $tokenMessage) =
+            $this->handleTokenAndCountdown($model, $tokenStartTime, $timeStart, $timeOut, $currentTime);
+
+        return $this->render('view', [
+            'model' => $model,
+            'providerScheduleDetail' => $providerScheduleDetail,
+            'providerAssessment' => $providerAssessment,
+            'countdownTime' => $countdownTime,
+            'interval' => $interval,
+            'tokenMessage' => $tokenMessage,  // Pass token status message
+            'minutesTolerance' => 15
+        ]);
     }
+
+    private function handleTokenAndCountdown($model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array
+    {
+        $minutesTolerance = 15 * 60; // 15 minutes in seconds
+        $tokenTime = strtotime($model->token_time);
+        $countdownTime = $timeStart;
+        $interval = (int)(abs(($currentTime - $timeStart) / 60));
+
+        // Token has not started yet (before tokenStartTime)
+        if ($currentTime < $tokenStartTime) {
+            $tokenMessage = "Not yet started";
+            MessageHelper::getFlashNotYetStarted();
+            return [$countdownTime, $interval, $tokenMessage];
+        }
+
+        // Token is valid and within the schedule period
+        if ($currentTime <= $timeOut) {
+            if ($currentTime < $tokenTime + $minutesTolerance) {
+                // Token is still valid within its 15-minute lifetime
+                $countdownTime = $tokenTime + $minutesTolerance;
+                $tokenMessage = "Token is active";
+                MessageHelper::getFlashTokenIsActive();
+            } else {
+                // Token expired, generate a new token
+                $this->generateNewToken($model);
+                $countdownTime = strtotime($model->token_time) + $minutesTolerance;
+                $tokenMessage = "New token generated";
+                MessageHelper::getFlashNewTokenGenerated();
+            }
+        } else {
+            // Token is no longer valid as the time has passed `date_end`
+            $tokenMessage = "Invalid";
+            MessageHelper::getFlashTokenInvalid();
+        }
+
+        return [$countdownTime, $interval, $tokenMessage];
+    }
+
+    private function generateNewToken($model): void
+    {
+        $model->token_time = date(Yii::$app->params['datetimeSaveFormat']);
+        $model->token = substr(uniqid('', true), -6);
+        $model->save();
+    }
+
 
     /**
      * Creates a new Schedule model.
