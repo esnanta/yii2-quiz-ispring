@@ -173,7 +173,7 @@ Yii2TimerCountDown::widget([
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#participant">
-                            <?= Yii::t('app', 'Reset Participant'); ?></a>
+                            <?= Yii::t('app', 'Participant'); ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#assessment">
@@ -184,7 +184,13 @@ Yii2TimerCountDown::widget([
 
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="participant">
-                        <p>This is the Home content.</p>
+                        <?php if (!empty($participantList)) {
+                            echo $this->render('view_participant', [
+                                    'model'=>$model,
+                                    'participantList' => $participantList,
+                            ]);
+                        }
+                        ?>
                     </div>
                     <div class="tab-pane fade show" id="assessment">
                         <?php if ($providerAssessment->totalCount) {

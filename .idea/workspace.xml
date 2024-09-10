@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="reorder left menu">
-      <change afterPath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/schedule/view_assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view_assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/messages/id-ID/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/messages/id-ID/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/models/LoginParticipantForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/models/LoginParticipantForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Participant.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -473,7 +471,7 @@
       <workItem from="1725792074520" duration="2163000" />
       <workItem from="1725802612797" duration="5392000" />
       <workItem from="1725896069034" duration="4616000" />
-      <workItem from="1725953773496" duration="4914000" />
+      <workItem from="1725953773496" duration="8499000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

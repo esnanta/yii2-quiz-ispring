@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\helper\MessageHelper;
+use common\models\Participant;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
 use common\models\ScheduleSearch;
@@ -89,6 +90,10 @@ class ScheduleController extends Controller
             'allModels' => $model->assessments,
         ]);
 
+        $participantList = Participant::find()
+            ->where(['office_id'=>$model->office_id, 'group_id'=>$model->group_id])
+            ->all();
+
         $timeStart = strtotime($model->date_start);
         $timeOut = strtotime($model->date_end);
         $currentTime = strtotime("now");
@@ -105,7 +110,8 @@ class ScheduleController extends Controller
             'countdownTime' => $countdownTime,
             'interval' => $interval,
             'tokenMessage' => $tokenMessage,  // Pass token status message
-            'minutesTolerance' => 15
+            'minutesTolerance' => 15,
+            'participantList' => $participantList
         ]);
     }
 

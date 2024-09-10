@@ -15,14 +15,13 @@ class Participant extends BaseParticipant
 {
 
 
-    const STATUS_DELETED = 1;
-    const STATUS_INACTIVE = 2;
-    const STATUS_ACTIVE = 3;
+    const STATUS_INACTIVE = 1;
+    const STATUS_ACTIVE = 2;
 
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return array_replace_recursive(parent::rules(),
 	    [
@@ -57,22 +56,18 @@ class Participant extends BaseParticipant
     {
         return [
             //MASTER
-            self::STATUS_DELETED => Yii::t('app', 'Deleted'),
             self::STATUS_INACTIVE  => Yii::t('app', 'Offline'),
             self::STATUS_ACTIVE  => Yii::t('app', 'Online'),
         ];
     }
 
-    public static function getOneStatus($_module = null)
+    public static function getOneStatus($_module = null): string
     {
         if($_module)
         {
             $arrayModule = self::getArrayStatus();
 
             switch ($_module) {
-                case ($_module == self::STATUS_DELETED):
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
-                    break;
                 case ($_module == self::STATUS_ACTIVE):
                     $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
@@ -87,7 +82,7 @@ class Participant extends BaseParticipant
 
         }
         else
-            return;
+            return '-';
     }
 
     public function getGroupTitle(): string
@@ -95,7 +90,18 @@ class Participant extends BaseParticipant
         return $this->group->title;
     }
 
-    public function getUrl(){
+    public function getUrl(): string
+    {
         return Html::a($this->title, ['participant/view', 'id' => $this->id,'title'=>$this->title]);
+    }
+
+    public function getStatusForButton(): string
+    {
+        if($this->status == self::STATUS_ACTIVE){
+            return '';
+        }
+        else {
+            return 'disabled';
+        }
     }
 }

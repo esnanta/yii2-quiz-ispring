@@ -50,21 +50,7 @@ use yii\helpers\Html;
                 <td class="left"><?= $modelDetailItem->evaluate_score; ?></td>
                 <td class="left"><?= $modelDetailItem->time_spent; ?></td>
                 <td class="left"><?= $modelDetailItem->time_limit; ?></td>
-                <td class="left">
-                    <?=$wokStatus
-//                    Html::a('<i class="fas fa-sync"></i>',
-//                        Yii::$app->urlManager->createUrl([
-//                            'participant/reset',
-//                            'id' => $modelDetailItem->participant->id,
-//                            'title'=>$modelDetailItem->participant->title
-//                        ]),
-//                        [
-//                            'title' => Yii::t('yii', 'Reset'),
-//                            'class'=>'btn btn-sm btn-primary',
-//                        ]
-//                    ) ;
-                    ?>
-                </td>
+                <td class="left"><?= $wokStatus ?></td>
             </tr>
 
         <?php } ?>

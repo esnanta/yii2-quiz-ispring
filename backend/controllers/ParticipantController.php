@@ -383,14 +383,14 @@ class ParticipantController extends Controller
     }
 
 
-    public function actionReset($id, $title=null)
+    public function actionReset($id, $schId, $title=null)
     {
         if(Yii::$app->user->can('update-participant')){
             $model = Participant::findOne($id);
             $model->status = Participant::STATUS_INACTIVE;
             $model->save();
             MessageHelper::getFlashUpdateSuccess();
-            return $this->redirect(['index']);
+            return $this->redirect(['schedule/view', 'id' => $schId]);
         }
         else{
             MessageHelper::getFlashAccessDenied();

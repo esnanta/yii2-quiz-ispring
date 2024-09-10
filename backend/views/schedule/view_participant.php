@@ -11,58 +11,56 @@ use yii\helpers\Html;
         <tr>
             <th class="center">#</th>
             <th><?= Yii::t('app', 'Participant'); ?></th>
-            <th><?= Yii::t('app', 'Subject'); ?></th>
-            <th><?= Yii::t('app', 'Earned Points'); ?></th>
-            <th><?= Yii::t('app', 'Passing Score'); ?></th>
-            <th><?= Yii::t('app', 'Gained Score'); ?></th>
-            <th><?= Yii::t('app', 'Evaluate Score'); ?></th>
-            <th><?= Yii::t('app', 'Time Spent'); ?></th>
-            <th><?= Yii::t('app', 'Time Limit'); ?></th>
-            <th><?= Yii::t('app', 'Work Status'); ?></th>
+            <th><?= Yii::t('app', 'Group'); ?></th>
+            <th><?= Yii::t('app', 'Username'); ?></th>
+            <th><?= Yii::t('app', 'Last Login'); ?></th>
+            <th><?= Yii::t('app', 'Status'); ?></th>
+            <th><?= Yii::t('app', 'Reset'); ?></th>
         </tr>
         </thead>
         <tbody>
 
         <?php
-        $modelDetails = $providerAssessment->getModels();
-        foreach ($modelDetails as $i => $modelDetailItem) {
-            $questionType = $modelDetailItem->getOneQuestionType($modelDetailItem->question_type);
-            $wokStatus = $modelDetailItem->getOneWorkStatus($modelDetailItem->work_status);
-        ?>
+        foreach ($participantList as $i => $modelDetailItem) {
+            ?>
             <tr>
                 <td class="center"><?= ($i + 1); ?></td>
                 <td class="left">
                     <?php
                     $participant =
-                        Html::a($modelDetailItem->participant->title,['participant/view',
-                            'id' => $modelDetailItem->participant->id,
-                            'title' => $modelDetailItem->participant->title
-                    ]);
+                        Html::a($modelDetailItem->title, ['participant/view',
+                            'id' => $modelDetailItem->id,
+                            'title' => $modelDetailItem->title
+                        ]);
                     echo $participant;
                     ?>
                 </td>
                 <td class="left">
-                    <?= $modelDetailItem->subject->title . '<br>' . $questionType; ?>
+                    <?= $modelDetailItem->group->title; ?>
                 </td>
-                <td class="left"><?= $modelDetailItem->earned_points; ?></td>
-                <td class="left"><?= $modelDetailItem->passing_score; ?></td>
-                <td class="left"><?= $modelDetailItem->gained_score; ?></td>
-                <td class="left"><?= $modelDetailItem->evaluate_score; ?></td>
-                <td class="left"><?= $modelDetailItem->time_spent; ?></td>
-                <td class="left"><?= $modelDetailItem->time_limit; ?></td>
                 <td class="left">
-                    <?=$wokStatus
-//                    Html::a('<i class="fas fa-sync"></i>',
-//                        Yii::$app->urlManager->createUrl([
-//                            'participant/reset',
-//                            'id' => $modelDetailItem->participant->id,
-//                            'title'=>$modelDetailItem->participant->title
-//                        ]),
-//                        [
-//                            'title' => Yii::t('yii', 'Reset'),
-//                            'class'=>'btn btn-sm btn-primary',
-//                        ]
-//                    ) ;
+                    <?= $modelDetailItem->username; ?>
+                </td>
+                <td class="left">
+                    <?= $modelDetailItem->last_login_at; ?>
+                </td>
+                <td class="left">
+                    <?= $modelDetailItem->getOneStatus($modelDetailItem->status); ?>
+                </td>
+                <td class="left"><?=
+                    Html::a(
+                        '<i class="fas fa-sync"></i>',
+                        Yii::$app->urlManager->createUrl([
+                            'participant/reset',
+                            'id' => $modelDetailItem->id,
+                            'schId' => $model->id,
+                            'title' => $modelDetailItem->title
+                        ]),
+                        [
+                            'title' => Yii::t('yii', 'Reset'),
+                            'class' => 'btn btn-sm btn-primary '.$modelDetailItem->getStatusForButton(),
+                        ]
+                    );
                     ?>
                 </td>
             </tr>
