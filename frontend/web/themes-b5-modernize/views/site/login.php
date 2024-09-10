@@ -13,7 +13,7 @@ $this->title = Yii::t('app', 'Authentication');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="container d-flex justify-content-center align-items-center min-vh-50">
         <div class="card" style="max-width: 400px; width: 100%;">
             <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
                 <?= Yii::t('app', 'Sign in as Participant') ?>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::label('Show password', 'reveal-password', ['class' => 'form-check-label']) ?>
                 </div>
 
-                <?= $form->field($model, 'token')->textInput() ?>
+                <?php //$form->field($model, 'token')->textInput() ?>
 
                 <?= Html::submitButton(
                     'Login',

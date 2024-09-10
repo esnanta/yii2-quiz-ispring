@@ -94,19 +94,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
                 'template'=>'{reset} {update} {view}',
                 'buttons' => [
-                    'reset' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-sync"></i>',
-                            Yii::$app->urlManager->createUrl([
-                                    'participant/reset',
-                                    'id' => $model->id,
-                                    'title'=>$model->title
-                            ]),
-                            [
-                                'title' => Yii::t('yii', 'Reset'),
-                                'class'=>'btn btn-sm btn-danger',
-                            ]
-                        );
-                    },
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
                             Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'edit' => 't']),

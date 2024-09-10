@@ -44,6 +44,7 @@ Yii2TimerCountDown::widget([
 </ul>
 
 <div class="tab-content mt-3" id="myTabContent">
+
     <div class="tab-pane fade show active" id="schedule" role="tabpanel" aria-labelledby="home-tab">
         <div class="card">
             <div class="card-header">
@@ -170,19 +171,22 @@ Yii2TimerCountDown::widget([
                 <?php } ?>
 
                 <ul class="nav nav-tabs">
-                    <!--            <li class="nav-item">-->
-                    <!--                <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>-->
-                    <!--            </li>-->
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#detail">Detail</a>
+                        <a class="nav-link active" data-toggle="tab" href="#participant">
+                            <?= Yii::t('app', 'Reset Participant'); ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#assessment">
+                            <?= Yii::t('app', 'Assessment'); ?>
+                        </a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <!--            <div class="tab-pane fade show active" id="summary">-->
-                    <!--                <p>This is the Home content.</p>-->
-                    <!--            </div>-->
-                    <div class="tab-pane fade show active" id="detail">
+                    <div class="tab-pane fade show active" id="participant">
+                        <p>This is the Home content.</p>
+                    </div>
+                    <div class="tab-pane fade show" id="assessment">
                         <?php if ($providerAssessment->totalCount) {
                             echo $this->render('view_assessment', [
                                 'providerAssessment' => $providerAssessment,
@@ -208,6 +212,7 @@ Yii2TimerCountDown::widget([
             </div>
         </div>
     </div>
+
     <div class="tab-pane fade" id="token" role="tabpanel" aria-labelledby="profile-tab">
         <div class="card mb-3">
             <div class="card-body">

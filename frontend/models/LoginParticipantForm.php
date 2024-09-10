@@ -34,7 +34,7 @@ class LoginParticipantForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-            ['token', 'validateToken'],
+            //['token', 'validateToken'],
         ];
     }
 
@@ -69,38 +69,38 @@ class LoginParticipantForm extends Model
     /**
      * @throws NotSupportedException
      */
-    public function validateToken($attribute, $params): void
-    {
-        if (!$this->hasErrors()) {
-            // Check if token is present
-            if (empty($this->token)) {
-                $this->addError($attribute, Yii::t('app', 'Token is required'));
-                return;
-            }
-
-            // Replace with your actual validation logic
-            if (!$this->verifyToken($this->token)) {
-                $this->addError($attribute, Yii::t('app', 'Invalid token'));
-            }
-        }
-    }
+//    public function validateToken($attribute, $params): void
+//    {
+//        if (!$this->hasErrors()) {
+//            // Check if token is present
+//            if (empty($this->token)) {
+//                $this->addError($attribute, Yii::t('app', 'Token is required'));
+//                return;
+//            }
+//
+//            // Replace with your actual validation logic
+//            if (!$this->verifyToken($this->token)) {
+//                $this->addError($attribute, Yii::t('app', 'Invalid token'));
+//            }
+//        }
+//    }
 
     /**
      * @throws NotSupportedException
      */
-    private function verifyToken($token): bool
-    {
-        if ($this->_user === null) {
-            $this->_user = $this->getUser();
-        }
-
-        $schedule = Schedule::findOne(['office_id' => $this->_user->office_id, 'token' => $token]);
-        if ($schedule === null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+//    private function verifyToken($token): bool
+//    {
+//        if ($this->_user === null) {
+//            $this->_user = $this->getUser();
+//        }
+//
+//        $schedule = Schedule::findOne(['office_id' => $this->_user->office_id, 'token' => $token]);
+//        if ($schedule === null) {
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
 
     /**
      * Logs in a user using the provided username and password.

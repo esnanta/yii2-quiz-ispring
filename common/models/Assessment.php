@@ -128,7 +128,7 @@ class Assessment extends BaseAssessment
                     $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
                     break;
                 case ($_module == self::WORK_STATUS_ONGOING):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getWarning($arrayModule[$_module]);
                     break;
                 case ($_module == self::WORK_STATUS_SUBMITTED):
                     $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
@@ -139,6 +139,6 @@ class Assessment extends BaseAssessment
             return $returnValue;
         }
         else
-            return;
+            return '-';
     }
 }
