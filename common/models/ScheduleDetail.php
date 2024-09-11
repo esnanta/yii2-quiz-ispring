@@ -275,38 +275,41 @@ class ScheduleDetail extends BaseScheduleDetail
      */
     public function getAssetButton($participantId): string
     {
+        // Default message for no asset
         $value = '<i>Asset not available</i>';
-        if (!empty($this->asset_name)) {
-            $currentTime = strtotime("now");
-            $timer = $this->schedule->getTimer();
 
-            $linkLabel = Yii::t('app', 'Closed');
-            $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
-            $value = Html::a($linkLabel, ['schedule/open','id'=>$this->id,'title'=>$this->schedule->title], ['class' => $labelClass]);
-
-            if ($timer > $currentTime) :
-                $linkLabel = Yii::t('app', 'Open');
-                $labelClass = LabelHelper::getButtonCssPrint();
-                $value = Html::a($linkLabel, ['schedule/open','id'=>$this->id,'title'=>$this->schedule->title], ['class' => $labelClass]);
-            endif;
-        }
-
-        if($participantId == 0){
-            return $value;
-        } else {
+        // Step 1: Check if the participant has submitted
+        if ($participantId != 0) {
             $assessment = Assessment::find()
                 ->where(['schedule_detail_id' => $this->id])
                 ->andWhere(['office_id' => $this->office_id])
                 ->andWhere(['participant_id' => $participantId])
                 ->one();
 
-            if (!empty($assessment)):
-                if ($assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED):
-                    $value = Yii::t('app', 'Submitted');
-                endif;
-            endif;
+            if (!empty($assessment) && $assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED) {
+                return Yii::t('app', 'Submitted').'<br>';
+            }
         }
 
+        // Step 2: Check if the asset file exists
+        if (!empty($this->asset_name)) {
+            $currentTime = strtotime("now");
+            $timer = $this->schedule->getTimer();
+
+            // Step 3: Display button based on timer
+            $linkLabel = Yii::t('app', 'Closed');
+            $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
+            $value = Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
+
+            // If the timer is still valid (before current time), show the "Open" button
+            if ($timer > $currentTime) {
+                $linkLabel = Yii::t('app', 'Open');
+                $labelClass = LabelHelper::getButtonCssPrint();
+                $value = Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
+            }
+        }
+
+        // Return the result (either button or asset not available message)
         return $value;
     }
 }
