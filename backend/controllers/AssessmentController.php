@@ -47,7 +47,7 @@ class AssessmentController extends Controller
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
             $questionTypeList = Assessment::getArrayQuestionTypes();
-            $workStatusList = Assessment::getArrayWorkStatus();
+            $submissionStatusList = Assessment::getArraySubmissionStatus();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
@@ -58,7 +58,7 @@ class AssessmentController extends Controller
                 'groupList' => $groupList,
                 'subjectList' => $subjectList,
                 'questionTypeList' => $questionTypeList,
-                'workStatusList' => $workStatusList,
+                'submissionStatusList' => $submissionStatusList,
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

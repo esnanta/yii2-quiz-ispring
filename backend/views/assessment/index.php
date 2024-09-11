@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var common\models\Assessment $workStatusList
+ * @var common\models\Assessment $submissionStatusList
  * @var common\models\AssessmentSearch $searchModel
  * @var common\models\Schedule $scheduleList
  * @var common\models\Participant $participantList
@@ -138,14 +138,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute'=>'work_status',
+                'attribute'=>'submission_status',
                 'vAlign'=>'middle',
                 'width'=>'120px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->work_status!=null) ? $model->getOneWorkStatus($model->work_status):'';
+                    return ($model->submission_status!=null) ? $model->getOneSubmissionStatus($model->submission_status):'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$workStatusList,
+                'filter'=>$submissionStatusList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],

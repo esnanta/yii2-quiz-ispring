@@ -225,7 +225,7 @@ class AssessmentController extends Controller
             $assessment->time_limit               = $_POST['tl'];// read = gmdate("H:i:s", $timeLimit)
             $assessment->used_time                = $_POST['ut'];
             $assessment->time_spent               = $_POST['fut'];
-            $assessment->work_status              = Assessment::WORK_STATUS_ONGOING;
+            $assessment->submission_status        = Assessment::SUBMISSION_STATUS_ONGOING;
             $assessment->save();
 
 

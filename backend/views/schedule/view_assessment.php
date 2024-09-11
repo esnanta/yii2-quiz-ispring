@@ -27,7 +27,7 @@ use yii\helpers\Html;
         $modelDetails = $providerAssessment->getModels();
         foreach ($modelDetails as $i => $modelDetailItem) {
             $questionType = $modelDetailItem->getOneQuestionType($modelDetailItem->question_type);
-            $wokStatus = $modelDetailItem->getOneWorkStatus($modelDetailItem->work_status);
+            $wokStatus = $modelDetailItem->getOneSubmissionStatus($modelDetailItem->submission_status);
         ?>
             <tr>
                 <td class="center"><?= ($i + 1); ?></td>
