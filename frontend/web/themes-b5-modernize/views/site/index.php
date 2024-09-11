@@ -79,6 +79,8 @@ $this->title = Yii::$app->name;
                             <td class="center"><?= ($i + 1); ?></td>
                             <!-- SCHEDULE-->
                             <td class="left">
+                                <?= $scheduleItem->title.' / '.$scheduleItem->room->title;?>
+                                <br>
                                 <?= Yii::$app->formatter->format($scheduleItem->date_start, 'date'); ?>
                                 <br>
                                 <?= Yii::t('app', 'Start'); ?> :
@@ -101,9 +103,8 @@ $this->title = Yii::$app->name;
                             <!-- ROOM -->
                             <td class="left">
                                 <?php
-                                    echo $scheduleItem->room->title.'<br>';
                                     foreach ($scheduleItem->scheduleDetails as $scheduleDetailItem) {
-                                        echo $scheduleDetailItem->subject->title.'-'.$scheduleDetailItem->remark.'<br>';
+                                        echo $scheduleDetailItem->remark.'<br>';
                                     }
                                 ?>
                             </td>
