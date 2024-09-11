@@ -2,11 +2,10 @@
 
 namespace common\models;
 
-use common\helper\LabelHelper;
 use Yii;
-use \common\models\base\Participant as BaseParticipant;
 use yii\bootstrap5\Html;
-use yii\helpers\FileHelper;
+use common\helper\LabelHelper;
+use common\models\base\Participant as BaseParticipant;
 
 /**
  * This is the model class for table "tx_participant".
@@ -95,7 +94,7 @@ class Participant extends BaseParticipant
         return Html::a($this->title, ['participant/view', 'id' => $this->id,'title'=>$this->title]);
     }
 
-    public function getStatusForButton(): string
+    public function getIsButtonDisabled(): string
     {
         if($this->status == self::STATUS_ACTIVE){
             return '';

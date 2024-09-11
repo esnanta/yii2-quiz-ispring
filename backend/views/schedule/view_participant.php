@@ -58,7 +58,7 @@ use yii\helpers\Html;
                         ]),
                         [
                             'title' => Yii::t('yii', 'Reset'),
-                            'class' => 'btn btn-sm btn-primary '.$modelDetailItem->getStatusForButton(),
+                            'class' => 'btn btn-sm btn-primary '.$modelDetailItem->getIsButtonDisabled(),
                         ]
                     );
                     ?>
