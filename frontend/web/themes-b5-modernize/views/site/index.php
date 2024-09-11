@@ -8,6 +8,8 @@ use yii\bootstrap5\Html;
 use yii\helpers\Url;
 
 /** @var yii\web\View $this */
+/** @var common\models\Schedule $schedules */
+/** @var common\models\Participant $participant */
 
 $this->title = Yii::$app->name;
 ?>
