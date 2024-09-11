@@ -32,7 +32,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $time_limit
  * @property string $used_time
  * @property string $time_spent
- * @property integer $work_status
+ * @property integer $submission_status
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -93,7 +93,7 @@ class Assessment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'question_type', 'exam_type', 'work_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'schedule_detail_id', 'participant_id', 'period_id', 'group_id', 'subject_id', 'question_type', 'exam_type', 'submission_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
@@ -150,7 +150,7 @@ class Assessment extends \yii\db\ActiveRecord
             'time_limit' => Yii::t('app', 'Time Limit'),
             'used_time' => Yii::t('app', 'Used Time'),
             'time_spent' => Yii::t('app', 'Time Spent'),
-            'work_status' => Yii::t('app', 'Work Status'),
+            'submission_status' => Yii::t('app', 'Submission Status'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),
@@ -162,7 +162,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getGroup()
     {
-        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
+        return $this->hasOne(\common\models\Group::className(), ['id' => 'group_id']);
     }
         
     /**
@@ -170,7 +170,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
         
     /**
@@ -178,7 +178,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getParticipant()
     {
-        return $this->hasOne(\common\models\Participant::class, ['id' => 'participant_id']);
+        return $this->hasOne(\common\models\Participant::className(), ['id' => 'participant_id']);
     }
         
     /**
@@ -186,7 +186,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(\common\models\Period::class, ['id' => 'period_id']);
+        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
     }
         
     /**
@@ -194,7 +194,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getSchedule()
     {
-        return $this->hasOne(\common\models\Schedule::class, ['id' => 'schedule_id']);
+        return $this->hasOne(\common\models\Schedule::className(), ['id' => 'schedule_id']);
     }
         
     /**
@@ -202,7 +202,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getScheduleDetail()
     {
-        return $this->hasOne(\common\models\ScheduleDetail::class, ['id' => 'schedule_detail_id']);
+        return $this->hasOne(\common\models\ScheduleDetail::className(), ['id' => 'schedule_detail_id']);
     }
         
     /**
@@ -210,7 +210,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getSubject()
     {
-        return $this->hasOne(\common\models\Subject::class, ['id' => 'subject_id']);
+        return $this->hasOne(\common\models\Subject::className(), ['id' => 'subject_id']);
     }
     
     /**

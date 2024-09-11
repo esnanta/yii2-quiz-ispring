@@ -29,7 +29,7 @@ class ScheduleDetail extends BaseScheduleDetail
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             //TAMBAHAN
@@ -64,7 +64,7 @@ class ScheduleDetail extends BaseScheduleDetail
         return true;
     }
 
-    public static function getArrayQuestionTypes()
+    public static function getArrayQuestionTypes(): array
     {
         return [
             //MASTER
@@ -301,7 +301,7 @@ class ScheduleDetail extends BaseScheduleDetail
                 ->one();
 
             if (!empty($assessment)):
-                if ($assessment->work_status == Assessment::WORK_STATUS_SUBMITTED):
+                if ($assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED):
                     $value = Yii::t('app', 'Submitted');
                 endif;
             endif;
