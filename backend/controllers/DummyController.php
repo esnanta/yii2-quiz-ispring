@@ -331,6 +331,9 @@ class DummyController extends Controller
                     $assessment->quiz_type = 'graded';
                     $assessment->username = $participantItem->username;
                     $assessment->save();
+
+                    $assessment->submission_status = Assessment::SUBMISSION_STATUS_SUBMITTED;
+                    $assessment->save();
                 }
             }
 
