@@ -232,6 +232,5 @@ return [
     'View Counter' => '',
     'Web' => '',
     'Word' => '',
-    'Work Status' => 'Status',
     'Yes' => '',
 ];

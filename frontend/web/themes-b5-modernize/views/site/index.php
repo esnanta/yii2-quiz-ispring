@@ -15,7 +15,6 @@ $this->title = Yii::$app->name;
 ?>
 
 
-
 <div class="row">
     <div class="col-xs-6 col-sm-3 col-xl-3">
         <div class="card overflow-hidden rounded-2">
@@ -39,7 +38,7 @@ $this->title = Yii::$app->name;
                     <?= $participant->group->title; ?> <br>
                     <?= $participant->office->title; ?>
 
-                    <?= CacheService::getInstance()->getOfficeIdByParticipant();?>
+                    <?= CacheService::getInstance()->getOfficeIdByParticipant(); ?>
                 </div>
 
             </div>
@@ -58,68 +57,58 @@ $this->title = Yii::$app->name;
                     </span>
                 </div>
 
-                <div class="table-responsive-sm">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th class="center">#</th>
-                            <th><?= Yii::t('app', 'Schedule'); ?></th>
-                            <th><?= Yii::t('app', 'Room'); ?></th>
-                            <th><?= Yii::t('app', 'Asset'); ?></th>
-                        </tr>
-                        </thead>
+                <?php
+                foreach ($schedules as $i => $scheduleItem) {
+                    $timer = $scheduleItem->getTimeStart();
+                    ?>
 
-                        <tbody>
-                        <?php
-                        foreach ($schedules as $i => $scheduleItem) {
-                            $minutesDifference = $scheduleItem->getMinutesDifference();
-                            $timer = $scheduleItem->getTimer();
-                        ?>
-                        <tr>
-                            <td class="center"><?= ($i + 1); ?></td>
-                            <!-- SCHEDULE-->
-                            <td class="left">
-                                <?= $scheduleItem->title.' / '.$scheduleItem->room->title;?>
-                                <br>
-                                <?= Yii::$app->formatter->format($scheduleItem->date_start, 'date'); ?>
-                                <br>
-                                <?= Yii::t('app', 'Start'); ?> :
-                                <?= date('H:i:s', strtotime($scheduleItem->date_start)); ?>
+                    <h5>
+                        <?= $scheduleItem->title . ' / '; ?>
+                        <small class="text-muted">
+                            <?= $scheduleItem->room->title .' / ';?>
+                            <?= $scheduleItem->date_start; ?>
+                            <div class="<?= $scheduleItem->getLabelAlertTimer(); ?> float-end float-right">
+                                <div id="time-down-counter-<?= $i; ?>"></div>
+                            </div>
+                            <?=
+                            Yii2TimerCountDown::widget([
+                                'countDownIdSelector' => 'time-down-counter-' . $i,
+                                'countDownDate' => strtotime(date("Y-m-d H:i:s", $timer)) * 1000
+                            ]);
+                            ?>
+                        </small>
+                    </h5>
 
-                                <br>
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="center">#</th>
+                                <th><?= Yii::t('app', 'Subject'); ?></th>
+                                <th><?= Yii::t('app', 'Asset'); ?></th>
+                            </tr>
+                            </thead>
 
-                                <div class="<?= $scheduleItem->getLabelAlertTimer(); ?>">
-                                    <div id="time-down-counter-<?= $i; ?>"></div>
-                                </div>
+                            <tbody>
+                            <?php foreach ($scheduleItem->scheduleDetails as $j=>$scheduleDetailItem) { ?>
+                                <tr>
+                                    <td class="center"><?= ($j + 1); ?></td>
+                                    <td class="left">
+                                        <?= $scheduleDetailItem->remark; ?>
+                                    </td>
+                                    <td class="left">
+                                        <?= $scheduleDetailItem->getAssetButton($participant->id); ?>
+                                    </td>
+                                </tr>
 
-                                <?=
-                                Yii2TimerCountDown::widget([
-                                    'countDownIdSelector' => 'time-down-counter-' . $i,
-                                    'countDownDate' => strtotime(date("Y-m-d H:i:s", $timer)) * 1000
-                                ]);
-                                ?>
+                            <?php } ?>
 
-                            </td>
-                            <!-- ROOM -->
-                            <td class="left">
-                                <?php
-                                    foreach ($scheduleItem->scheduleDetails as $scheduleDetailItem) {
-                                        echo $scheduleDetailItem->remark.'<br>';
-                                    }
-                                ?>
-                            </td>
-                            <td class="left">
-                                <?php foreach ($scheduleItem->scheduleDetails as $scheduleDetailItem) {
-                                    echo $scheduleDetailItem->getAssetButton($participant->id);
-                                } ?>
-                            </td>
-                        </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <?php } ?>
+                <?php } ?>
 
-                        </tbody>
-                    </table>
-                </div>
 
             </div>
         </div>

@@ -50,16 +50,7 @@ class ScheduleController extends Controller
         $assessment->question_type = $scheduleDetail->question_type;
         $assessment->save();
 
-        $currentTime = strtotime("now");
-        $timer = $scheduleDetail->schedule->getTimer();
-        $textLink = '';
-
-        if ($timer > $currentTime) :
-            $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
-                '&SCD=' . $scheduleDetail->id;
-            $textLink = $scheduleDetail->getExtractUrl() . $userinfo;
-        endif;
-
+        $textLink = $scheduleDetail->generateTextLink();
         $this->redirect($textLink);
     }
 }

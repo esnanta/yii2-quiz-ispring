@@ -121,28 +121,33 @@ class Schedule extends BaseSchedule
         return $isAsset;
     }
 
-    public function getMinutesDifference(): float
+    private function getMinutesBuffer(): int
     {
-        $timeReference = strtotime($this->date_start);
-        $currentTime = strtotime("now");
-        return round(abs(($timeReference - $currentTime) / 60));
+        //2 minutes
+        return 120;
     }
 
-    public function getTimer(): float{
-        $timeReference = strtotime($this->date_start);
+    public function getTimeStart(): float{
+        // Apply 2-minute buffer directly to date_start
+        $timeStart = strtotime($this->date_start) - $this->getMinutesBuffer();
         $currentTime = strtotime("now");
-        if ($timeReference < $currentTime) :
-            $timeReference = strtotime($this->date_end);
-        endif;
-        return $timeReference;
+
+        // If current time is greater than or equal to date_start, return date_end
+        if ($currentTime >= strtotime($this->date_start)) {
+            $timeStart = strtotime($this->date_end);
+        }
+
+        return $timeStart;
     }
 
     public function getLabelAlertTimer(): string
     {
-        $minutesTolerance = 10; //minutes
-        $minutesDifference = $this->getMinutesDifference();
-        $labelAlertTimer = 'badge bg-warning text-white';
-        if ($minutesDifference < $minutesTolerance) :
+        $timeStart      = strtotime($this->date_start);
+        $timeEnd        = strtotime($this->date_end);
+        $currentTime    = strtotime("now");
+
+        $labelAlertTimer = 'badge bg-danger text-white';
+        if($currentTime >= $timeStart && $currentTime <= $timeEnd):
             $labelAlertTimer = 'badge bg-success text-white';
         endif;
         return $labelAlertTimer;

@@ -74,7 +74,7 @@ class ScheduleDetail extends BaseScheduleDetail
         ];
     }
 
-    public static function getOneQuestionType($_module = null)
+    public static function getOneQuestionType($_module = null): string
     {
         if($_module)
         {
@@ -95,7 +95,7 @@ class ScheduleDetail extends BaseScheduleDetail
             return $returnValue;
         }
         else
-            return;
+            return '-';
     }
 
     private function getWebRoot() : String
@@ -287,22 +287,22 @@ class ScheduleDetail extends BaseScheduleDetail
                 ->one();
 
             if (!empty($assessment) && $assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED) {
-                return Yii::t('app', 'Submitted').'<br>';
+                return $assessment->getOneSubmissionStatus($assessment->submission_status);
             }
         }
 
         // Step 2: Check if the asset file exists
         if (!empty($this->asset_name)) {
             $currentTime = strtotime("now");
-            $timer = $this->schedule->getTimer();
+            $timeStart = $this->schedule->getTimeStart();
 
             // Step 3: Display button based on timer
             $linkLabel = Yii::t('app', 'Closed');
             $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
             $value = Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
 
-            // If the timer is still valid (before current time), show the "Open" button
-            if ($timer > $currentTime) {
+            // If the current time is valid (after time start), show the "Open" button
+            if ($currentTime > $timeStart) {
                 $linkLabel = Yii::t('app', 'Open');
                 $labelClass = LabelHelper::getButtonCssPrint();
                 $value = Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
@@ -311,5 +311,30 @@ class ScheduleDetail extends BaseScheduleDetail
 
         // Return the result (either button or asset not available message)
         return $value;
+    }
+
+    /**
+     * Generates the text link for a schedule detail based on the current time and schedule timer.
+     *
+     * @return string The generated text link or an empty string if conditions are not met.
+     * @throws Exception
+     */
+    public function generateTextLink(): string
+    {
+        // Get the current time and the schedule timer
+        $currentTime = strtotime("now");
+        $timer = $this->schedule->getTimeStart();
+
+        // Initialize the text link as an empty string
+        $textLink = '';
+
+        // If the timer is greater than the current time, generate the user info and the link
+        if ($timer > $currentTime) {
+            $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
+                '&SCD=' . $this->id;
+            $textLink = $this->getExtractUrl() . $userinfo;
+        }
+
+        return $textLink;
     }
 }

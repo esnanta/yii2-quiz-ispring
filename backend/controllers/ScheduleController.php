@@ -12,6 +12,7 @@ use common\service\DataIdService;
 use common\service\DataListService;
 use http\Message;
 use Yii;
+use yii\base\Exception;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
@@ -355,19 +356,13 @@ class ScheduleController extends Controller
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function actionOpen($id, $title)
     {
         $scheduleDetail = ScheduleDetail::findOne($id);
-        $currentTime = strtotime("now");
-        $timer = $scheduleDetail->schedule->getTimer();
-        $textLink = '';
-
-        if ($timer > $currentTime) :
-            $userinfo = '?USER_NAME=' . Yii::$app->user->identity->username .
-                '&SCD=' . $scheduleDetail->id;
-            $textLink = $scheduleDetail->getExtractUrl() . $userinfo;
-        endif;
-
+        $textLink = $scheduleDetail->generateTextLink();
         $this->redirect(str_replace('admin/','',$textLink));
     }
 }

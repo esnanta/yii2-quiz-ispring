@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class ParticipantSearch extends Participant
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'office_id', 'group_id', 'status','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
