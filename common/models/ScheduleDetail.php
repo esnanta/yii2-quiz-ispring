@@ -166,7 +166,7 @@ class ScheduleDetail extends BaseScheduleDetail
         $title          = preg_replace($pattern, '_', substr($asset->name, 0, strpos($asset->name, ".")));
         $tmp            = explode('.', $asset->name);
         $ext            = end($tmp);
-        $asset->name    = $title.".{$ext}";
+        $asset->name    = $this->id.'_'.$title.'_'.".{$ext}";
 
         return $asset;
     }
