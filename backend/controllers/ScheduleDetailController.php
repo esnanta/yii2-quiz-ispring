@@ -138,7 +138,12 @@ class ScheduleDetailController extends Controller
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
                     $asset = $model->uploadAsset();
-                    $model->asset_name  = $asset->name;
+                    if(empty($asset)){
+                        MessageHelper::getFlashUpdateFailed();
+                        return $this->redirect(['schedule/view', 'id' => $model->schedule_id]);
+                    } else {
+                        $model->asset_name  = $asset->name;
+                    }
 
                     // revert back if no valid file instance uploaded
                     if ($asset === false) {
@@ -204,8 +209,8 @@ class ScheduleDetailController extends Controller
     {
         if (Yii::$app->user->can('delete-scheduledetail')) {
             $model  = $this->findModel($id);
-            $model->deleteAsset();
             $model->removeExtractFolder($model->getExtractDir());
+            $model->deleteAsset();
             $model->save();
 
             $model->schedule->updateIsAsset();

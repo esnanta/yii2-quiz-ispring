@@ -46,6 +46,7 @@ class ScheduleController extends Controller
         $assessment->schedule_id = $scheduleDetail->schedule_id;
         $assessment->participant_id = $participant->id;
         $assessment->period_id = $scheduleDetail->schedule->period_id;
+        $assessment->group_id = $scheduleDetail->schedule->group_id;
         $assessment->subject_id = $scheduleDetail->subject_id;
         $assessment->question_type = $scheduleDetail->question_type;
         $assessment->save();

@@ -59,7 +59,7 @@ $this->title = Yii::$app->name;
 
                 <?php
                 foreach ($schedules as $i => $scheduleItem) {
-                    $timer = $scheduleItem->getTimeStart();
+                    $timer = $scheduleItem->getTimeReference();
                     ?>
 
                     <h5>

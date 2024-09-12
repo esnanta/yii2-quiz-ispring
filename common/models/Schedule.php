@@ -127,13 +127,23 @@ class Schedule extends BaseSchedule
         return 120;
     }
 
-    public function getTimeStart(): float{
+    public function getTimeStart(): int
+    {
+        return strtotime($this->date_start) - $this->getMinutesBuffer();
+    }
+    public function getTimeEnd(): int
+    {
+        return strtotime($this->date_end);
+    }
+
+
+    public function getTimeReference(): float{
         // Apply 2-minute buffer directly to date_start
-        $timeStart = strtotime($this->date_start) - $this->getMinutesBuffer();
+        $timeStart = $this->getTimeStart();
         $currentTime = strtotime("now");
 
         // If current time is greater than or equal to date_start, return date_end
-        if ($currentTime >= strtotime($this->date_start)) {
+        if ($currentTime >= $timeStart) {
             $timeStart = strtotime($this->date_end);
         }
 
@@ -142,8 +152,8 @@ class Schedule extends BaseSchedule
 
     public function getLabelAlertTimer(): string
     {
-        $timeStart      = strtotime($this->date_start);
-        $timeEnd        = strtotime($this->date_end);
+        $timeStart      = $this->getTimeStart();
+        $timeEnd        = $this->getTimeEnd();
         $currentTime    = strtotime("now");
 
         $labelAlertTimer = 'badge bg-danger text-white';
@@ -153,7 +163,8 @@ class Schedule extends BaseSchedule
         return $labelAlertTimer;
     }
 
-    public function getUrl(){
+    public function getUrl(): string
+    {
         return Html::a($this->title, ['schedule/view', 'id' => $this->id,'title'=>$this->title]);
     }
 }

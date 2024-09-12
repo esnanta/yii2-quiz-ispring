@@ -237,13 +237,9 @@ class ScheduleDetail extends BaseScheduleDetail
 
     private function getExtractFolderName(): string
     {
-        //Rename date to Ymd
-        $tmpDate = substr($this->schedule->date_start,0,10);
-        $date = str_replace('-','',$tmpDate);
-        //Remove space in title
+        $scheduleTitle = $this->schedule->title;
         $subjectTitle = str_replace('','-',$this->subject->title);
-
-        return $date.'-'.$subjectTitle.'-'.$this->id;
+        return $scheduleTitle.'_'.$subjectTitle.'_'.$this->id;
     }
 
     public function removeExtractFolder(string $dir): void {
@@ -270,47 +266,78 @@ class ScheduleDetail extends BaseScheduleDetail
         return '/uploads/schedule/'.$officeUniqueId;
     }
 
-    /**
-     * $participantId = 0 means admin level. will be accessed from backend
-     */
     public function getAssetButton($participantId): string
     {
         // Default message for no asset
         $value = '<i>Asset not available</i>';
 
         // Step 1: Check if the participant has submitted
-        if ($participantId != 0) {
-            $assessment = Assessment::find()
-                ->where(['schedule_detail_id' => $this->id])
-                ->andWhere(['office_id' => $this->office_id])
-                ->andWhere(['participant_id' => $participantId])
-                ->one();
-
-            if (!empty($assessment) && $assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED) {
-                return $assessment->getOneSubmissionStatus($assessment->submission_status);
-            }
+        if ($this->isParticipantSubmitted($participantId)) {
+            return $this->getSubmissionStatus($participantId);
         }
 
-        // Step 2: Check if the asset file exists
+        // Step 2 & 3: Check if the asset file exists and show button based on timer
         if (!empty($this->asset_name)) {
-            $currentTime = strtotime("now");
-            $timeStart = $this->schedule->getTimeStart();
-
-            // Step 3: Display button based on timer
-            $linkLabel = Yii::t('app', 'Closed');
-            $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
-            $value = Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
-
-            // If the current time is valid (after time start), show the "Open" button
-            if ($currentTime > $timeStart) {
-                $linkLabel = Yii::t('app', 'Open');
-                $labelClass = LabelHelper::getButtonCssPrint();
-                $value = Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
-            }
+            return $this->getButtonBasedOnTime();
         }
 
-        // Return the result (either button or asset not available message)
+        // Return the default message if no conditions are met
         return $value;
+    }
+
+    /**
+     * $participantId = 0 means admin level. will be accessed from backend
+     * Check if the participant has submitted the assessment
+     */
+    private function isParticipantSubmitted($participantId): bool
+    {
+        if ($participantId == 0) {
+            return false;
+        }
+
+        $assessment = Assessment::find()
+            ->where(['schedule_detail_id' => $this->id])
+            ->andWhere(['office_id' => $this->office_id])
+            ->andWhere(['participant_id' => $participantId])
+            ->one();
+
+        return !empty($assessment) && $assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED;
+    }
+
+    /**
+     * Get submission status message
+     */
+    private function getSubmissionStatus($participantId): string
+    {
+        $assessment = Assessment::find()
+            ->where(['schedule_detail_id' => $this->id])
+            ->andWhere(['office_id' => $this->office_id])
+            ->andWhere(['participant_id' => $participantId])
+            ->one();
+
+        return $assessment->getOneSubmissionStatus($assessment->submission_status);
+    }
+
+    /**
+     * Generate the button based on the current time
+     */
+    private function getButtonBasedOnTime(): string
+    {
+        $currentTime = strtotime("now");
+        $timeStart = $this->schedule->getTimeStart();
+        $timeEnd = $this->schedule->getTimeEnd();
+
+        // Default: "Closed" button
+        $linkLabel = Yii::t('app', 'Closed');
+        $labelClass = LabelHelper::getButtonCssPlus() . ' btn-sm disabled';
+
+        // Show "Open" button if the current time is between start and end
+        if ($currentTime > $timeStart && $currentTime < $timeEnd) {
+            $linkLabel = Yii::t('app', 'Open');
+            $labelClass = LabelHelper::getButtonCssPrint();
+        }
+
+        return Html::a($linkLabel, ['schedule/open', 'id' => $this->id, 'title' => $this->schedule->title], ['class' => $labelClass]);
     }
 
     /**
@@ -323,7 +350,7 @@ class ScheduleDetail extends BaseScheduleDetail
     {
         // Get the current time and the schedule timer
         $currentTime = strtotime("now");
-        $timer = $this->schedule->getTimeStart();
+        $timer = $this->schedule->getTimeReference();
 
         // Initialize the text link as an empty string
         $textLink = '';
