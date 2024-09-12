@@ -10,6 +10,7 @@ use common\models\ScheduleSearch;
 use common\models\Subject;
 use common\service\DataIdService;
 use common\service\DataListService;
+use common\service\ScheduleService;
 use http\Message;
 use Yii;
 use yii\base\Exception;
@@ -26,6 +27,15 @@ use yii\web\Response;
  */
 class ScheduleController extends Controller
 {
+
+    private $scheduleService;
+
+    public function __construct($id, $module, ScheduleService $scheduleService, $config = [])
+    {
+        $this->scheduleService = $scheduleService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -100,9 +110,11 @@ class ScheduleController extends Controller
         $currentTime = strtotime("now");
         $tokenStartTime = $timeStart - (2 * 60);
 
-        // Handle token and countdown logic
+        // Use ScheduleService for token and countdown logic
         list($countdownTime, $interval, $tokenMessage) =
-            $this->handleTokenAndCountdown($model, $tokenStartTime, $timeStart, $timeOut, $currentTime);
+            $this->scheduleService->handleTokenAndCountdown(
+                $model, $tokenStartTime, $timeStart, $timeOut, $currentTime);
+
 
         return $this->render('view', [
             'model' => $model,
@@ -115,51 +127,6 @@ class ScheduleController extends Controller
             'participantList' => $participantList
         ]);
     }
-
-    private function handleTokenAndCountdown($model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array
-    {
-        $minutesTolerance = 15 * 60; // 15 minutes in seconds
-        $tokenTime = strtotime($model->token_time);
-        $countdownTime = $timeStart;
-        $interval = (int)(abs(($currentTime - $timeStart) / 60));
-
-        // Token has not started yet (before tokenStartTime)
-        if ($currentTime < $tokenStartTime) {
-            $tokenMessage = "Not yet started";
-            MessageHelper::getFlashNotYetStarted();
-            return [$countdownTime, $interval, $tokenMessage];
-        }
-
-        // Token is valid and within the schedule period
-        if ($currentTime <= $timeOut) {
-            if ($currentTime < $tokenTime + $minutesTolerance) {
-                // Token is still valid within its 15-minute lifetime
-                $countdownTime = $tokenTime + $minutesTolerance;
-                $tokenMessage = "Token is active";
-                MessageHelper::getFlashTokenIsActive();
-            } else {
-                // Token expired, generate a new token
-                $this->generateNewToken($model);
-                $countdownTime = strtotime($model->token_time) + $minutesTolerance;
-                $tokenMessage = "New token generated";
-                MessageHelper::getFlashNewTokenGenerated();
-            }
-        } else {
-            // Token is no longer valid as the time has passed `date_end`
-            $tokenMessage = "Invalid";
-            MessageHelper::getFlashTokenInvalid();
-        }
-
-        return [$countdownTime, $interval, $tokenMessage];
-    }
-
-    private function generateNewToken($model): void
-    {
-        $model->token_time = date(Yii::$app->params['datetimeSaveFormat']);
-        $model->token = substr(uniqid('', true), -6);
-        $model->save();
-    }
-
 
     /**
      * Creates a new Schedule model.
