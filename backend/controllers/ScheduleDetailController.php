@@ -234,7 +234,7 @@ class ScheduleDetailController extends Controller
      * @return ScheduleDetail the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id): ScheduleDetail
     {
         if (($model = ScheduleDetail::findOne($id)) !== null) {
             return $model;
