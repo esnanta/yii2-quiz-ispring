@@ -10,6 +10,7 @@ use common\models\ScheduleSearch;
 use common\models\Subject;
 use common\service\DataIdService;
 use common\service\DataListService;
+use common\service\ScheduleDetailService;
 use common\service\ScheduleService;
 use http\Message;
 use Yii;
@@ -93,6 +94,7 @@ class ScheduleController extends Controller
         }
 
         $model = $this->findModel($id);
+        $scheduleDetailService = new ScheduleDetailService();
 
         $providerScheduleDetail = new ArrayDataProvider([
             'allModels' => $model->scheduleDetails,
@@ -120,11 +122,12 @@ class ScheduleController extends Controller
             'model' => $model,
             'providerScheduleDetail' => $providerScheduleDetail,
             'providerAssessment' => $providerAssessment,
+            'participantList' => $participantList,
             'countdownTime' => $countdownTime,
             'interval' => $interval,
             'tokenMessage' => $tokenMessage,  // Pass token status message
-            'minutesTolerance' => 15,
-            'participantList' => $participantList
+            'minutesTolerance' => $this->scheduleService->getMinutesTolerance(),
+            'scheduleDetailService' => $scheduleDetailService
         ]);
     }
 
@@ -230,9 +233,13 @@ class ScheduleController extends Controller
 
             $transaction = \Yii::$app->db->beginTransaction();
             try {
+                $scheduleDetailService = new ScheduleDetailService();
                 foreach ($modelDetails as $modelDetailItem) {
-                    $modelDetailItem->deleteAsset();
-                    $modelDetailItem->removeExtractFolder($modelDetailItem->getExtractDir());
+
+                    $scheduleDetailService->deleteAsset($modelDetailItem);
+                    $extractDir = $scheduleDetailService->getExtractDir($modelDetailItem);
+                    $scheduleDetailService->removeExtractFolder($extractDir);
+
                     $modelDetailItem->delete();
                 }
                 $model->delete();
@@ -328,8 +335,9 @@ class ScheduleController extends Controller
      */
     public function actionOpen($id, $title)
     {
+        $scheduleDetailService = new ScheduleDetailService();
         $scheduleDetail = ScheduleDetail::findOne($id);
-        $textLink = $scheduleDetail->generateTextLink();
+        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail);
         $this->redirect(str_replace('admin/','',$textLink));
     }
 }

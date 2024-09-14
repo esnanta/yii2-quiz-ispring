@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Participant;
 use common\models\Schedule;
+use common\service\ScheduleDetailService;
 use frontend\models\ContactForm;
 use frontend\models\LoginParticipantForm;
 use Yii;
@@ -21,6 +22,17 @@ class SiteController extends Controller
 {
     public $enableCsrfValidation = false;
     private $username = null;
+
+
+    private ScheduleDetailService $scheduleDetailService;
+
+    public function __construct($id, $module,
+                                ScheduleDetailService $scheduleDetailService, $config = [])
+    {
+        $this->scheduleDetailService = $scheduleDetailService;
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -92,9 +104,11 @@ class SiteController extends Controller
                 ->where(['office_id'=>$participant->office_id])
                 ->andWhere(['group_id'=>$participant->group_id])
                 ->all();
+
             return $this->render('index',[
                 'participant'=>$participant,
-                'schedules' => $schedules
+                'schedules' => $schedules,
+                'scheduleDetailService' => $this->scheduleDetailService
             ]);
         }
     }

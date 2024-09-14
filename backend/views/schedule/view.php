@@ -7,8 +7,14 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
+/* @var $scheduleDetailService common\service\ScheduleDetailService */
+/* @var $minutesTolerance int The value returned from ScheduleService::getMinutesTolerance() */
+/* @var $interval int The value returned from ScheduleService::handleTokenAndCountdown(Schedule $model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array() */
+/* @var $countdownTime int The value returned from ScheduleService::handleTokenAndCountdown(Schedule $model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array() */
 /* @var $providerAssessment yii\data\ActiveDataProvider */
 /* @var $providerScheduleDetail yii\data\ActiveDataProvider */
+/* @var $tokenMessage String */
+
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Schedule'), 'url' => ['index']];
@@ -137,7 +143,7 @@ Yii2TimerCountDown::widget([
                                         if (empty($modelDetailItem->asset_name)) {
                                             echo Yii::t('app', 'Please upload files in zip');
                                         } else {
-                                            echo $modelDetailItem->getAssetButton(0);
+                                            echo $scheduleDetailService->getAssetButton($modelDetailItem,0);
                                         }
                                         ?></td>
                                     <td class="right">
@@ -234,7 +240,7 @@ Yii2TimerCountDown::widget([
                                 </div>
                             </strong>
                         </td>
-                        <td> <?= $tokenMessage?> </td>
+                        <td> <?= $tokenMessage ?> </td>
                         <td> <?= $refresh; ?> </td>
                     </tr>
                     </tbody>

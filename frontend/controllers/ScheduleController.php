@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Assessment;
 use common\models\Participant;
 use common\models\ScheduleDetail;
+use common\service\ScheduleDetailService;
 use Yii;
 use yii\base\Exception;
 use yii\filters\VerbFilter;
@@ -38,6 +39,7 @@ class ScheduleController extends Controller
     public function actionOpen($id, $title=null)
     {
         $scheduleDetail = ScheduleDetail::findOne($id);
+        $scheduleDetailService = new ScheduleDetailService();
         $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
 
         $assessment = new Assessment();
@@ -51,7 +53,7 @@ class ScheduleController extends Controller
         $assessment->question_type = $scheduleDetail->question_type;
         $assessment->save();
 
-        $textLink = $scheduleDetail->generateTextLink();
+        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail);
         $this->redirect($textLink);
     }
 }

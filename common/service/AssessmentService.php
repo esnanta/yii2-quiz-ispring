@@ -4,6 +4,7 @@ namespace common\service;
 
 use common\helper\ApexChartHelper;
 use common\models\Assessment;
+use Yii;
 
 class AssessmentService
 {
@@ -39,11 +40,11 @@ class AssessmentService
 
         $series = [
             [
-                'name' => 'Evaluate Score',
+                'name' => Yii::t('app', 'Evaluate Score'),
                 'data' => $evaluateScores,
             ],
             [
-                'name' => 'Average Score',
+                'name' => Yii::t('app', 'Average Score'),
                 'data' => $averageScores,
             ],
         ];
@@ -104,11 +105,11 @@ class AssessmentService
 
         $series = [
             [
-                'name' => 'Evaluate Score',
+                'name' => Yii::t('app', 'Evaluate Score'),
                 'data' => $evaluateScores,
             ],
             [
-                'name' => 'Average Score',
+                'name' => Yii::t('app', 'Average Score'),
                 'data' => $averageScores,
             ],
         ];

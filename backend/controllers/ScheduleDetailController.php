@@ -7,6 +7,7 @@ use common\models\ScheduleDetail;
 use common\models\ScheduleDetailSearch;
 use common\service\DataIdService;
 use common\service\DataListService;
+use common\service\ScheduleDetailService;
 use Yii;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
@@ -21,7 +22,17 @@ use yii\web\NotFoundHttpException;
  */
 class ScheduleDetailController extends Controller
 {
-    public function behaviors()
+
+    private ScheduleDetailService $scheduleDetailService;
+
+    public function __construct($id, $module,
+                                ScheduleDetailService $scheduleDetailService, $config = [])
+    {
+        $this->scheduleDetailService = $scheduleDetailService;
+        parent::__construct($id, $module, $config);
+    }
+
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -132,12 +143,12 @@ class ScheduleDetailController extends Controller
                 $scheduleList = DataListService::getSchedule();
                 $subjectList = DataListService::getSubject();
 
-                $oldFile = $model->getAssetFile();
+                $oldFile = $this->scheduleDetailService->getAssetFile($model);
                 $oldAvatar = $model->asset_name;
 
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
-                    $asset = $model->uploadAsset();
+                    $asset = $this->scheduleDetailService->uploadAsset($model);
                     if(empty($asset)){
                         MessageHelper::getFlashUpdateFailed();
                         return $this->redirect(['schedule/view', 'id' => $model->schedule_id]);
@@ -156,9 +167,9 @@ class ScheduleDetailController extends Controller
                             if(file_exists($oldFile)):
                                 unlink($oldFile);
                             endif;
-                            $path = $model->getAssetFile();
+                            $path = $this->scheduleDetailService->getAssetFile($model);
                             $asset->saveAs($path);
-                            $model->extract();
+                            $this->scheduleDetailService->extract($model);
                         }
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
@@ -209,8 +220,11 @@ class ScheduleDetailController extends Controller
     {
         if (Yii::$app->user->can('delete-scheduledetail')) {
             $model  = $this->findModel($id);
-            $model->removeExtractFolder($model->getExtractDir());
-            $model->deleteAsset();
+
+            $extractDir = $this->scheduleDetailService->getExtractDir($model);
+            $this->scheduleDetailService->removeExtractFolder($extractDir);
+            $this->scheduleDetailService->deleteAsset($model);
+
             $model->save();
 
             $model->schedule->updateIsAsset();

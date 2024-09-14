@@ -10,6 +10,7 @@ use yii\helpers\Url;
 /** @var yii\web\View $this */
 /** @var common\models\Schedule $schedules */
 /** @var common\models\Participant $participant */
+/** @var common\service\ScheduleDetailService $scheduleDetailService */
 
 $this->title = Yii::$app->name;
 ?>
@@ -85,6 +86,7 @@ $this->title = Yii::$app->name;
                             <tr>
                                 <th class="center">#</th>
                                 <th><?= Yii::t('app', 'Subject'); ?></th>
+                                <th><?= Yii::t('app', 'Question Type'); ?></th>
                                 <th><?= Yii::t('app', 'Asset'); ?></th>
                             </tr>
                             </thead>
@@ -94,10 +96,13 @@ $this->title = Yii::$app->name;
                                 <tr>
                                     <td class="center"><?= ($j + 1); ?></td>
                                     <td class="left">
-                                        <?= $scheduleDetailItem->remark; ?>
+                                        <?= $scheduleDetailItem->subject->title; ?>
                                     </td>
                                     <td class="left">
-                                        <?= $scheduleDetailItem->getAssetButton($participant->id); ?>
+                                        <?= $scheduleDetailItem->getOneQuestionType($scheduleDetailItem->question_type); ?>
+                                    </td>
+                                    <td class="left">
+                                        <?= $scheduleDetailService->getAssetButton($scheduleDetailItem,$participant->id); ?>
                                     </td>
                                 </tr>
 

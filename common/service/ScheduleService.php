@@ -3,10 +3,11 @@
 namespace common\service;
 
 use common\models\Schedule;
+use Yii;
 
 class ScheduleService
 {
-    private $minutesTolerance = 15 * 60; // 15 minutes in seconds
+    private int $minutesTolerance = 15 * 60; // 15 minutes in seconds
 
     public function handleTokenAndCountdown(Schedule $model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array
     {
@@ -16,7 +17,7 @@ class ScheduleService
 
         // Token has not started yet (before tokenStartTime)
         if ($currentTime < $tokenStartTime) {
-            $tokenMessage = "Not yet started";
+            $tokenMessage = Yii::t('app', 'Not yet started');
             return [$countdownTime, $interval, $tokenMessage];
         }
 
@@ -25,16 +26,16 @@ class ScheduleService
             if ($currentTime < $tokenTime + $this->minutesTolerance) {
                 // Token is still valid within its 15-minute lifetime
                 $countdownTime = $tokenTime + $this->minutesTolerance;
-                $tokenMessage = "Token is active";
+                $tokenMessage = Yii::t('app', 'Token is active');
             } else {
                 // Token expired, generate a new token
                 $this->generateNewToken($model);
                 $countdownTime = strtotime($model->token_time) + $this->minutesTolerance;
-                $tokenMessage = "New token generated";
+                $tokenMessage = Yii::t('app', 'New token generated');
             }
         } else {
             // Token is no longer valid as the time has passed `date_end`
-            $tokenMessage = "Invalid";
+            $tokenMessage = Yii::t('app', 'Time has passed');
         }
 
         return [$countdownTime, $interval, $tokenMessage];
@@ -45,5 +46,10 @@ class ScheduleService
         $model->token_time = date(\Yii::$app->params['datetimeSaveFormat']);
         $model->token = substr(uniqid('', true), -6);
         $model->save();
+    }
+
+    public function getMinutesTolerance(): int
+    {
+        return $this->minutesTolerance;
     }
 }
