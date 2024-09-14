@@ -33,8 +33,8 @@ return [
     'googleplus_image'          => ['itemprop' => 'image', 'content' => 'image'],
 
     'dateDisplayFormat'         => 'd-m-Y',
-    'timeDisplayFormat'         => 'hh:mm:ss a',
-    'datetimeDisplayFormat'     => 'dd-MM-yyyy hh:mm:ss a',
+    'timeDisplayFormat'         => 'H:i:s',
+    'datetimeDisplayFormat'     => 'd-m-Y H:i:s',  // Correct format
     
     'dateSaveFormat'            => 'Y-m-d',
     'timeSaveFormat'            => 'H:i:s',

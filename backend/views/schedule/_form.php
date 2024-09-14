@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\DateHelper;
 use kartik\datecontrol\DateControl;
 use kartik\widgets\Select2;
 use mootensai\components\JsBlock;
@@ -68,7 +69,8 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
         <div class="col-md-6 col-xs-12">
             <?= $form->field($model, 'date_start')->widget(DateControl::class, [
                 'type' => DateControl::FORMAT_DATETIME,
-                'saveFormat' => 'php:Y-m-d H:i:s',
+                'displayFormat' => DateHelper::getDisplayFormat(),
+                'saveFormat' => DateHelper::getSaveFormat(),
                 //'ajaxConversion' => true,
                 'options' => [
                     'pluginOptions' => [
@@ -79,7 +81,8 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
             ]); ?>
             <?= $form->field($model, 'date_end')->widget(DateControl::class, [
                 'type' => DateControl::FORMAT_DATETIME,
-                'saveFormat' => 'php:Y-m-d H:i:s',
+                'displayFormat' => DateHelper::getDisplayFormat(),
+                'saveFormat' => DateHelper::getSaveFormat(),
                 //'ajaxConversion' => true,
                 'options' => [
                     'pluginOptions' => [

@@ -1,6 +1,7 @@
 <?php
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
+use common\helper\DateHelper;
 use common\helper\LabelHelper;
 use common\models\User;
 use yii\helpers\Html;
@@ -106,8 +107,14 @@ Yii2TimerCountDown::widget([
                         <div>
                             <strong><?= $model->room->title; ?></strong>
                         </div>
-                        <div><?= Yii::t('app', 'Date Start'); ?> : <?= $model->date_start; ?></div>
-                        <div><?= Yii::t('app', 'Date End'); ?> : <?= $model->date_end; ?></div>
+                        <div>
+                            <?= Yii::t('app', 'Date Start'); ?> :
+                            <?= DateHelper::formatDateTime($model->date_start); ?>
+                        </div>
+                        <div>
+                            <?= Yii::t('app', 'Date End'); ?> :
+                            <?= DateHelper::formatDateTime($model->date_end); ?>
+                        </div>
                     </div>
 
                 </div>
