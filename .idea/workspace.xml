@@ -4,19 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update ScheduleDetailController.php">
-      <change afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="remove unnecessary script">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleDetailController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/ScheduleDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleDetail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/AssessmentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/AssessmentService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -483,7 +474,7 @@
       <workItem from="1726119461882" duration="3420000" />
       <workItem from="1726123644921" duration="6067000" />
       <workItem from="1726236393423" duration="1549000" />
-      <workItem from="1726287426769" duration="6398000" />
+      <workItem from="1726287426769" duration="9509000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -549,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726130165663</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="remove unnecessary script">
+      <option name="closed" value="true" />
+      <created>1726295057327</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1726295057327</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +575,8 @@
     <MESSAGE value="fix file name" />
     <MESSAGE value="refactoring ScheduleController.php&#10;add ScheduleService.php" />
     <MESSAGE value="update ScheduleDetailController.php" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ScheduleDetailController.php" />
+    <MESSAGE value="remove unnecessary script" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove unnecessary script" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

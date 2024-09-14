@@ -40,7 +40,9 @@ class ScheduleController extends Controller
     {
         $scheduleDetail = ScheduleDetail::findOne($id);
         $scheduleDetailService = new ScheduleDetailService();
-        $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
+        $participant = Participant::findone([
+            'office_id' => $scheduleDetail->office_id,
+            'username'=>Yii::$app->user->identity->username]);
 
         $assessment = new Assessment();
         $assessment->schedule_detail_id = $scheduleDetail->id;
