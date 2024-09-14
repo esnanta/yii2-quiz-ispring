@@ -85,6 +85,7 @@ class ScheduleController extends Controller
      * @param integer $id
      * @return mixed
      * @throws ForbiddenHttpException|NotFoundHttpException
+     * @throws \yii\db\Exception
      */
     public function actionView($id, $title = null)
     {
@@ -107,16 +108,9 @@ class ScheduleController extends Controller
             ->where(['office_id'=>$model->office_id, 'group_id'=>$model->group_id])
             ->all();
 
-        $timeStart = strtotime($model->date_start);
-        $timeOut = strtotime($model->date_end);
-        $currentTime = strtotime("now");
-        $tokenStartTime = $timeStart - (2 * 60);
-
         // Use ScheduleService for token and countdown logic
         list($countdownTime, $interval, $tokenMessage) =
-            $this->scheduleService->handleTokenAndCountdown(
-                $model, $tokenStartTime, $timeStart, $timeOut, $currentTime);
-
+            $this->scheduleService->handleTokenAndCountdown($model);
 
         return $this->render('view', [
             'model' => $model,

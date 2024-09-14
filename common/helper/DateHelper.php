@@ -9,11 +9,11 @@ use Yii;
 class DateHelper
 {
 
-    public static function getDisplayFormat(): string
+    public static function getDateTimeDisplayFormat(): string
     {
         return 'php:d-M-Y H:i:s';
     }
-    public static function getSaveFormat(): string
+    public static function getDateTimeSaveFormat(): string
     {
         return 'php:Y-m-d H:i:s';
     }

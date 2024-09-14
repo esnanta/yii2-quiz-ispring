@@ -2,16 +2,26 @@
 
 namespace common\service;
 
+use common\helper\DateHelper;
 use common\models\Schedule;
 use Yii;
+use yii\db\Exception;
 
 class ScheduleService
 {
     private int $minutesTolerance = 15 * 60; // 15 minutes in seconds
 
-    public function handleTokenAndCountdown(Schedule $model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array
+    /**
+     * @throws Exception
+     */
+    public function handleTokenAndCountdown(Schedule $model): array
     {
+        $timeStart = strtotime($model->date_start);
+        $timeOut = strtotime($model->date_end);
         $tokenTime = strtotime($model->token_time);
+        $currentTime = strtotime("now");
+        $tokenStartTime = $timeStart - (2 * 60);
+
         $countdownTime = $timeStart;
         $interval = (int)(abs(($currentTime - $timeStart) / 60));
 
@@ -41,9 +51,12 @@ class ScheduleService
         return [$countdownTime, $interval, $tokenMessage];
     }
 
+    /**
+     * @throws Exception
+     */
     public function generateNewToken(Schedule $model): void
     {
-        $model->token_time = date(\Yii::$app->params['datetimeSaveFormat']);
+        $model->token_time = date(DateHelper::getDateTimeSaveFormat());
         $model->token = substr(uniqid('', true), -6);
         $model->save();
     }
