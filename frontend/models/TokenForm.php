@@ -12,10 +12,9 @@ use yii\base\Model;
  */
 class TokenForm extends Model
 {
-    public string $token = 'Unset';
+    public string $token = '';
     public bool $is_token_equals = false;
 
-    private string $tokenMessage = '';
 
     /**
      * {@inheritdoc}
@@ -32,13 +31,9 @@ class TokenForm extends Model
     public function checkTokenToSchedule(Schedule $schedule): bool {
         if($this->token == $schedule->token) {
             $this->is_token_equals = true;
-            $this->tokenMessage = LabelHelper::getYes($this->token);
             return true;
         } else {
             $this->is_token_equals = false;
-            $invalidMessage = LabelHelper::getNo(Yii::t('app', 'Token Invalid'));
-            $token = LabelHelper::getWarning($this->token);
-            $this->tokenMessage = $token.' '.$invalidMessage;
             return false;
         }
     }
@@ -51,9 +46,7 @@ class TokenForm extends Model
         if($this->is_token_equals) {
             return LabelHelper::getYes($this->token);
         } else {
-            $invalidMessage = LabelHelper::getNo(Yii::t('app', 'Token Invalid'));
-            $token = LabelHelper::getWarning($this->token);
-            return $token.' '.$invalidMessage;
+            return LabelHelper::getNo(Yii::t('app', 'Token Invalid'));
         }
     }
 }
