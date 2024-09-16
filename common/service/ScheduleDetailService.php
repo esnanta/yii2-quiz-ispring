@@ -160,7 +160,7 @@ class ScheduleDetailService
      * @param int $participantId
      * @return bool
      */
-    private function isParticipantSubmitted(ScheduleDetail $scheduleDetail, int $participantId): bool
+    public function isParticipantSubmitted(ScheduleDetail $scheduleDetail, int $participantId): bool
     {
         if ($participantId == 0) {
             return false;

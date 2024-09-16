@@ -42,7 +42,11 @@ class TokenForm extends Model
         return LabelHelper::getYes($this->token);
     }
 
-    public function getStatus(): string {
+    public function getStatus(bool $isParticipantSubmitted): string {
+        if($isParticipantSubmitted){
+            return LabelHelper::getDefault('<i class="fas fa-check-circle"></i>');
+        }
+
         if($this->is_token_equals) {
             return LabelHelper::getYes($this->token);
         } else {

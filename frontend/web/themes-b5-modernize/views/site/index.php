@@ -117,7 +117,7 @@ $this->title = Yii::$app->name;
                                             if($tokenForm->checkTokenToSchedule($scheduleItem)){
                                                 echo $scheduleDetailService->getAssetButton($scheduleDetailItem, $participant->id);
                                             } else {
-                                                echo $tokenForm->getStatus();
+                                                echo $tokenForm->getStatus($scheduleDetailService->isParticipantSubmitted($scheduleDetailItem, $participant->id));
                                             }
                                         ?>
                                     </td>
