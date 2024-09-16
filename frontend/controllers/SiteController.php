@@ -2,11 +2,13 @@
 
 namespace frontend\controllers;
 
+use common\models\Assessment;
 use common\models\Participant;
 use common\models\Schedule;
 use common\service\ScheduleDetailService;
 use frontend\models\ContactForm;
 use frontend\models\LoginParticipantForm;
+use frontend\models\TokenForm;
 use Yii;
 use yii\captcha\CaptchaAction;
 use yii\filters\AccessControl;
@@ -21,8 +23,7 @@ use yii\web\ErrorAction;
 class SiteController extends Controller
 {
     public $enableCsrfValidation = false;
-    private $username = null;
-
+    private string $token = '';
 
     private ScheduleDetailService $scheduleDetailService;
 
@@ -99,14 +100,21 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         } else {
+            $tokenForm = new TokenForm();
             $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
             $schedules = Schedule::find()
                 ->where(['office_id'=>$participant->office_id])
                 ->andWhere(['group_id'=>$participant->group_id])
                 ->all();
 
+            if ($tokenForm->load(Yii::$app->request->post())) {
+                $this->token = $tokenForm->token;
+            }
+
             return $this->render('index',[
-                'participant'=>$participant,
+                'token' => $this->token,
+                'tokenForm' => $tokenForm,
+                'participant' => $participant,
                 'schedules' => $schedules,
                 'scheduleDetailService' => $this->scheduleDetailService
             ]);

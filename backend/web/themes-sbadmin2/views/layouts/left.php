@@ -73,7 +73,7 @@ use kartik\widgets\SideNav;
                 ]],
                 ['label' => Yii::t('app', 'Asset'), 'icon' => 'shopping-basket', 'items' => [
                     ['label' => Yii::t('app', 'Index'), 'url' => ['/asset/index']],
-                    ['label' => Yii::t('app', 'Asset Category'), 'url' => ['/asset-category/index']],
+                    ['label' => Yii::t('app', 'Category'), 'url' => ['/asset-category/index']],
                     ['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
                 ]],
                 ['label' => Yii::t('app', 'Report'), 'icon' => 'file', 'items' => [
