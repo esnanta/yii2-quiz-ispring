@@ -28,6 +28,7 @@ class Assessment extends BaseAssessment
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent'], 'string', 'max' => 50],
+            [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
