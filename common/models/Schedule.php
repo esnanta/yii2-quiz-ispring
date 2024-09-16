@@ -137,17 +137,32 @@ class Schedule extends BaseSchedule
     }
 
 
-    public function getTimeReference(): float{
-        // Apply 2-minute buffer directly to date_start
-        $timeStart = $this->getTimeStart();
-        $currentTime = strtotime("now");
+    public function getTimeReference(): float {
+        // Get the current time
+        $currentTime = time();
 
-        // If current time is greater than or equal to date_start, return date_end
-        if ($currentTime >= $timeStart) {
-            $timeStart = strtotime($this->date_end);
+        // Get the date_start and date_end timestamps
+        $timeStart = strtotime($this->date_start);
+        $timeEnd = strtotime($this->date_end);
+
+        // Check if the current time is within the valid token lifetime
+        if ($currentTime >= $timeStart && $currentTime < $timeEnd) {
+            // Calculate the remaining time until the token expires
+            $remainingTime = $timeEnd - $currentTime;
+
+            // If the remaining time is less than 15 minutes, return the current time
+            if ($remainingTime <= 15 * 60) {
+                return $currentTime;
+            }
+
+            // Otherwise, return the timeStart plus 15-minute intervals until the end
+            $interval = 15 * 60;
+            $adjustedTime = $timeStart + ceil(($currentTime - $timeStart) / $interval) * $interval;
+            return min($adjustedTime, $timeEnd);
         }
 
-        return $timeStart;
+        // If the token has expired, return the date_end
+        return $timeEnd;
     }
 
     public function getLabelAlertTimer(): string

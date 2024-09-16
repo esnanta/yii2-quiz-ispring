@@ -9,14 +9,20 @@ use Yii;
 class DateHelper
 {
 
-    public static function getDateTimeDisplayFormat(): string
+    public static function getPHPDateTimeDisplayFormat(): string
     {
         return 'php:d-M-Y H:i:s';
     }
-    public static function getDateTimeSaveFormat(): string
+    public static function getPHPDateTimeSaveFormat(): string
     {
         return 'php:Y-m-d H:i:s';
     }
+
+    public static function getDateTimeSaveFormat(): string
+    {
+        return 'Y-m-d H:i:s';
+    }
+
     /**
      * Formats the given datetime string based on application parameters.
      *

@@ -19,32 +19,33 @@ class ScheduleService
         $timeStart = strtotime($model->date_start);
         $timeOut = strtotime($model->date_end);
         $tokenTime = strtotime($model->token_time);
-        $currentTime = strtotime("now");
-        $tokenStartTime = $timeStart - (2 * 60);
+        $currentTime = time(); // More accurate than "strtotime('now')"
+        $tokenStartTime = $timeStart - (2 * 60); // Token available 2 minutes before start
 
         $countdownTime = $timeStart;
-        $interval = (int)(abs(($currentTime - $timeStart) / 60));
+        $interval = (int)(($currentTime - $timeStart) / 60);
 
-        // Token has not started yet (before tokenStartTime)
+        // Case 1: Token has not started yet (before tokenStartTime)
         if ($currentTime < $tokenStartTime) {
             $tokenMessage = Yii::t('app', 'Not yet started');
             return [$countdownTime, $interval, $tokenMessage];
         }
 
-        // Token is valid and within the schedule period
+        // Case 2: Token is valid and within the schedule period
         if ($currentTime <= $timeOut) {
-            if ($currentTime < $tokenTime + $this->minutesTolerance) {
+            if (!empty($model->token_time) && $currentTime < ($tokenTime + $this->minutesTolerance)) {
                 // Token is still valid within its 15-minute lifetime
                 $countdownTime = $tokenTime + $this->minutesTolerance;
                 $tokenMessage = Yii::t('app', 'Token is active');
             } else {
-                // Token expired, generate a new token
+                // Token expired or missing, generate a new token
                 $this->generateNewToken($model);
-                $countdownTime = strtotime($model->token_time) + $this->minutesTolerance;
+                $tokenTime = strtotime($model->token_time); // Update after token generation
+                $countdownTime = $tokenTime + $this->minutesTolerance;
                 $tokenMessage = Yii::t('app', 'New token generated');
             }
         } else {
-            // Token is no longer valid as the time has passed `date_end`
+            // Case 3: Time has passed `date_end`
             $tokenMessage = Yii::t('app', 'Time has passed');
         }
 
@@ -57,7 +58,7 @@ class ScheduleService
     public function generateNewToken(Schedule $model): void
     {
         $model->token_time = date(DateHelper::getDateTimeSaveFormat());
-        $model->token = substr(uniqid('', true), -6);
+        $model->token = substr(uniqid('', true), -6); // Generate 6-character token
         $model->save();
     }
 

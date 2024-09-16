@@ -28,15 +28,14 @@ $refresh = Html::a(
     ['class' => 'btn btn-sm btn-primary float-right float-end']
 );
 
-$labelAlertTimer = 'badge bg-warning text-white';
-if ($interval < $minutesTolerance) :
-    $labelAlertTimer = 'badge bg-success text-white';
-endif;
+$timer = $model->getTimeReference();
+$labelAlertTimer = $model->getLabelAlertTimer();
 
 Yii2TimerCountDown::widget([
     'countDownIdSelector' => 'time-down-counter-token',
-    'countDownDate' => $countdownTime * 1000
+    'countDownDate' => strtotime(date("Y-m-d H:i:s", $timer)) * 1000
 ]);
+
 ?>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -128,7 +127,7 @@ Yii2TimerCountDown::widget([
                                 <th class="center">#</th>
                                 <th><?= Yii::t('app', 'Subject'); ?></th>
                                 <th><?= Yii::t('app', 'Remark'); ?></th>
-                                <th><?= Yii::t('app', 'Subject Type'); ?></th>
+                                <th><?= Yii::t('app', 'Question Type'); ?></th>
                                 <th class="center"><?= Yii::t('app', 'Asset'); ?></th>
                                 <th class="right"><?= Yii::t('app', ''); ?></th>
                             </tr>
