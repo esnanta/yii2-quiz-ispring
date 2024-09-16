@@ -16,7 +16,7 @@ use kartik\widgets\ActiveForm;
     <div class="col-md-4">
         <span class="align-middle">
             <?=Yii::t('app', 'Current Token');?> : <br>
-            <?=$tokenForm->getCurrentTokenStatus();?>
+            <?=$tokenForm->getCurrentToken();?>
         </span>
     </div>
     <div class="col-md-6">

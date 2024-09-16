@@ -94,6 +94,7 @@ $this->title = Yii::$app->name;
                                 <th class="center">#</th>
                                 <th><?= Yii::t('app', 'Subject'); ?></th>
                                 <th><?= Yii::t('app', 'Question Type'); ?></th>
+                                <th><?= Yii::t('app', 'Submission'); ?></th>
                                 <th><?= Yii::t('app', 'Asset'); ?></th>
                             </tr>
                             </thead>
@@ -109,11 +110,14 @@ $this->title = Yii::$app->name;
                                         <?= $scheduleDetailItem->getOneQuestionType($scheduleDetailItem->question_type); ?>
                                     </td>
                                     <td class="left">
+                                        <?= $scheduleDetailService->getSubmissionStatus($scheduleDetailItem, $participant->id);?>
+                                    </td>
+                                    <td class="left">
                                         <?php
                                             if($tokenForm->checkTokenToSchedule($scheduleItem)){
                                                 echo $scheduleDetailService->getAssetButton($scheduleDetailItem, $participant->id);
                                             } else {
-                                                echo $tokenForm->getCurrentTokenStatus();
+                                                echo $tokenForm->getStatus();
                                             }
                                         ?>
                                     </td>

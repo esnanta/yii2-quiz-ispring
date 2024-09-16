@@ -4,6 +4,7 @@ namespace common\service;
 
 use common\helper\LabelHelper;
 use common\models\Assessment;
+use PhpParser\Node\Stmt\Label;
 use Yii;
 use yii\base\Exception;
 use yii\bootstrap5\Html;
@@ -139,7 +140,7 @@ class ScheduleDetailService
     {
         $value = Yii::t('app', 'Asset not available');
         if ($this->isParticipantSubmitted($scheduleDetail, $participantId)) {
-            return $this->getSubmissionStatus($scheduleDetail, $participantId);
+            return LabelHelper::getDefault('<i class="fas fa-check-circle"></i>');
         }
 
         if (!empty($scheduleDetail->asset_name)) {
@@ -180,15 +181,20 @@ class ScheduleDetailService
      * @param int $participantId
      * @return string
      */
-    private function getSubmissionStatus(ScheduleDetail $scheduleDetail, int $participantId): string
+    public function getSubmissionStatus(ScheduleDetail $scheduleDetail, int $participantId): string
     {
+
         $assessment = Assessment::find()
             ->where(['schedule_detail_id' => $scheduleDetail->id])
             ->andWhere(['office_id' => $scheduleDetail->office_id])
             ->andWhere(['participant_id' => $participantId])
             ->one();
 
-        return $assessment->getOneSubmissionStatus($assessment->submission_status);
+        if(empty($assessment)){
+            return LabelHelper::getWarning('<i class="fas fa-exclamation-triangle"></i>');
+        } else {
+            return $assessment->getOneSubmissionStatus($assessment->submission_status);
+        }
     }
 
     /**

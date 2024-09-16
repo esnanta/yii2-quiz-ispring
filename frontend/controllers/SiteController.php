@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\Assessment;
 use common\models\Participant;
 use common\models\Schedule;
 use common\service\ScheduleDetailService;
@@ -24,13 +23,15 @@ class SiteController extends Controller
 {
     public $enableCsrfValidation = false;
     private string $token = '';
-
     private ScheduleDetailService $scheduleDetailService;
-
+    private TokenForm $tokenForm;
     public function __construct($id, $module,
-                                ScheduleDetailService $scheduleDetailService, $config = [])
+                                ScheduleDetailService $scheduleDetailService,
+                                TokenForm $tokenForm,
+                                $config = [])
     {
         $this->scheduleDetailService = $scheduleDetailService;
+        $this->tokenForm = $tokenForm;
         parent::__construct($id, $module, $config);
     }
 
@@ -100,20 +101,20 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         } else {
-            $tokenForm = new TokenForm();
+
             $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
             $schedules = Schedule::find()
                 ->where(['office_id'=>$participant->office_id])
                 ->andWhere(['group_id'=>$participant->group_id])
                 ->all();
 
-            if ($tokenForm->load(Yii::$app->request->post())) {
-                $this->token = $tokenForm->token;
+            if ($this->tokenForm->load(Yii::$app->request->post())) {
+                $this->token = $this->tokenForm->token;
             }
 
             return $this->render('index',[
                 'token' => $this->token,
-                'tokenForm' => $tokenForm,
+                'tokenForm' => $this->tokenForm,
                 'participant' => $participant,
                 'schedules' => $schedules,
                 'scheduleDetailService' => $this->scheduleDetailService
