@@ -22,7 +22,7 @@ class TokenForm extends Model
     public function rules(): array
     {
         return [
-            [['token'], 'required'],
+            //[['token'], 'required'],
             [['token'], 'string', 'max' => 6],
             [['is_token_equals'], 'safe'],
         ];

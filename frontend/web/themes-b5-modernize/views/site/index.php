@@ -100,7 +100,10 @@ $this->title = Yii::$app->name;
                             </thead>
 
                             <tbody>
-                            <?php foreach ($scheduleItem->scheduleDetails as $j => $scheduleDetailItem) { ?>
+                            <?php foreach ($scheduleItem->scheduleDetails as $j => $scheduleDetailItem) {
+                                $assessment = $scheduleDetailService->getAssessment($scheduleDetailItem, $participant->id);
+                                $isSubmitted = $scheduleDetailService->isParticipantSubmitted($assessment, $participant->id)
+                                ?>
                                 <tr>
                                     <td class="center"><?= ($j + 1); ?></td>
                                     <td class="left">
@@ -110,14 +113,14 @@ $this->title = Yii::$app->name;
                                         <?= $scheduleDetailItem->getOneQuestionType($scheduleDetailItem->question_type); ?>
                                     </td>
                                     <td class="left">
-                                        <?= $scheduleDetailService->getSubmissionStatus($scheduleDetailItem, $participant->id);?>
+                                        <?= $scheduleDetailService->getSubmissionStatus($assessment);?>
                                     </td>
                                     <td class="left">
                                         <?php
                                             if($tokenForm->checkTokenToSchedule($scheduleItem)){
-                                                echo $scheduleDetailService->getAssetButton($scheduleDetailItem, $participant->id);
+                                                echo $scheduleDetailService->getAssetButton($scheduleDetailItem, $isSubmitted, $participant->id);
                                             } else {
-                                                echo $tokenForm->getStatus($scheduleDetailService->isParticipantSubmitted($scheduleDetailItem, $participant->id));
+                                                echo $tokenForm->getStatus($isSubmitted);
                                             }
                                         ?>
                                     </td>

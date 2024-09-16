@@ -4,10 +4,10 @@ namespace common\service;
 
 use common\helper\LabelHelper;
 use common\models\Assessment;
-use PhpParser\Node\Stmt\Label;
 use Yii;
 use yii\base\Exception;
 use yii\bootstrap5\Html;
+use yii\db\ActiveRecord;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use FilesystemIterator;
@@ -136,12 +136,16 @@ class ScheduleDetailService
      * @param int $participantId
      * @return string
      */
-    public function getAssetButton(ScheduleDetail $scheduleDetail, int $participantId): string
+    public function getAssetButton(ScheduleDetail $scheduleDetail,
+                                   bool $isSubmitted,
+                                   int $participantId): string
     {
-        $value = Yii::t('app', 'Asset not available');
-        if ($this->isParticipantSubmitted($scheduleDetail, $participantId)) {
+        //ADMIN FROM BACKEND WILL ALWAYS $isSubmitted = FALSE
+        if ($isSubmitted) {
             return LabelHelper::getDefault('<i class="fas fa-check-circle"></i>');
         }
+
+        $value = Yii::t('app', 'Asset not available');
 
         if (!empty($scheduleDetail->asset_name)) {
             $isAdmin = self::ADMIN_IS_FALSE;
@@ -156,45 +160,40 @@ class ScheduleDetailService
 
     /**
      * Check if participant has submitted assessment
-     * @param ScheduleDetail $scheduleDetail
+     * @param ?Assessment $assessment
      * @param int $participantId
      * @return bool
      */
-    public function isParticipantSubmitted(ScheduleDetail $scheduleDetail, int $participantId): bool
+    public function isParticipantSubmitted(?Assessment $assessment, int $participantId): bool
     {
         if ($participantId == 0) {
             return false;
         }
-
-        $assessment = Assessment::find()
-            ->where(['schedule_detail_id' => $scheduleDetail->id])
-            ->andWhere(['office_id' => $scheduleDetail->office_id])
-            ->andWhere(['participant_id' => $participantId])
-            ->one();
 
         return !empty($assessment) && $assessment->submission_status == Assessment::SUBMISSION_STATUS_SUBMITTED;
     }
 
     /**
      * Get submission status message
-     * @param ScheduleDetail $scheduleDetail
-     * @param int $participantId
+     * @param ?Assessment $assessment
      * @return string
      */
-    public function getSubmissionStatus(ScheduleDetail $scheduleDetail, int $participantId): string
+    public function getSubmissionStatus(?Assessment $assessment): string
     {
-
-        $assessment = Assessment::find()
-            ->where(['schedule_detail_id' => $scheduleDetail->id])
-            ->andWhere(['office_id' => $scheduleDetail->office_id])
-            ->andWhere(['participant_id' => $participantId])
-            ->one();
-
         if(empty($assessment)){
             return LabelHelper::getWarning('<i class="fas fa-exclamation-triangle"></i>');
         } else {
             return $assessment->getOneSubmissionStatus($assessment->submission_status);
         }
+    }
+
+    public function getAssessment(ScheduleDetail $scheduleDetail, int $participantId): array|ActiveRecord|null
+    {
+        return Assessment::find()
+            ->where(['schedule_detail_id' => $scheduleDetail->id])
+            ->andWhere(['office_id' => $scheduleDetail->office_id])
+            ->andWhere(['participant_id' => $participantId])
+            ->one();
     }
 
     /**

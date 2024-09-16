@@ -138,6 +138,7 @@ Yii2TimerCountDown::widget([
                             <?php
                             $modelDetails = $providerScheduleDetail->getModels();
                             foreach ($modelDetails as $i => $modelDetailItem) {
+                                $submissionIsFalse = false;
                                 ?>
 
                                 <tr>
@@ -150,7 +151,7 @@ Yii2TimerCountDown::widget([
                                         if (empty($modelDetailItem->asset_name)) {
                                             echo Yii::t('app', 'Please upload files in zip');
                                         } else {
-                                            echo $scheduleDetailService->getAssetButton($modelDetailItem,0);
+                                            echo $scheduleDetailService->getAssetButton($modelDetailItem,$submissionIsFalse,0);
                                         }
                                         ?></td>
                                     <td class="right">
