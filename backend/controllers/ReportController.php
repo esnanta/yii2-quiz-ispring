@@ -5,16 +5,21 @@ namespace backend\controllers;
 use common\helper\MessageHelper;
 use common\models\Assessment;
 use common\models\Participant;
+use common\models\Period;
 use common\models\reports\ExportAssessment;
 use common\models\reports\ExportParticipant;
 use common\models\Schedule;
+use common\models\Subject;
 use common\service\CacheService;
+use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 use yii2tech\spreadsheet\Spreadsheet;
 
 /**
@@ -42,6 +47,7 @@ class ReportController extends Controller
         $model      = new ExportAssessment();
         $file_name  = 'assessment.xls';
 
+        $periodList = DataListService::getPeriod();
         $scheduleList = DataListService::getSchedule();
         $subjectList = DataListService::getSubject();
 
@@ -54,13 +60,31 @@ class ReportController extends Controller
 
                 if (!empty($model->subject_id)) {
                     $query->andWhere(['subject_id' => $model->subject_id]);
+
+                    $subject = Subject::find('title')
+                        ->where(['id' => $model->subject_id])
+                        ->one();
+
+                    $file_name = $subject->title.'-'.$file_name;
                 }
 
-                $schedule = Schedule::find('title')
-                    ->where(['id' => $model->schedule_id])
-                    ->one();
+                if (!empty($model->schedule_id)) {
+                    $query->andWhere(['schedule_id' => $model->schedule_id]);
 
-                $file_name = $schedule->title.'-'.$file_name;
+                    $schedule = Schedule::find('title')
+                        ->where(['id' => $model->schedule_id])
+                        ->one();
+
+                    $file_name = $schedule->title.'-'.$file_name;
+                }
+
+                if (!empty($model->period_id)) {
+                    $query->andWhere(['period_id' => $model->period_id]);
+                    $period = Period::find('title')
+                        ->where(['id' => $model->period_id])
+                        ->one();
+                    $file_name = $period->title.'-'.$file_name;
+                }
 
                 $exporter = (new Spreadsheet([
                     'title' => 'Sheet1',
@@ -143,6 +167,7 @@ class ReportController extends Controller
             } else {
                 return $this->render('report_assessment', [
                     'model' => $model,
+                    'periodList' => $periodList,
                     'scheduleList' => $scheduleList,
                     'subjectList' => $subjectList,
                 ]);
@@ -153,6 +178,32 @@ class ReportController extends Controller
         }
     }
 
+    public function actionGetSchedules()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            $period_id = $parents[0];
+
+            if ($period_id != '') {
+                $officeId = DataIdService::getOfficeId();
+                $list = Schedule::find()
+                    ->where(['office_id' => $officeId, 'period_id' => $period_id])
+                    ->asArray()
+                    ->all();
+
+                if ($period_id != null && count($list) > 0) {
+                    foreach ($list as $i => $model) {
+                        $out[] = ['id' => $model['id'], 'name' => $model['title']];
+                    }
+                    // Optionally, preselect a value
+                    return ['output' => $out, 'selected' => null];
+                }
+            }
+        }
+        return ['output' => '', 'selected' => ''];
+    }
 
     /**
      * Lists all Group models.

@@ -9,6 +9,7 @@ use yii\base\Model;
  */
 class ExportAssessment extends Model
 {
+    public $period_id;
     public $schedule_id;
     public $subject_id;
 
@@ -18,7 +19,7 @@ class ExportAssessment extends Model
     public function rules()
     {
         return [
-            [['schedule_id'], 'required'],
+            [['period_id','schedule_id'], 'required'],
             [['subject_id'], 'safe'],
         ];
     }
@@ -26,6 +27,7 @@ class ExportAssessment extends Model
     public function attributeLabels()
     {
         return [
+            'period_id'       => Yii::t('app', 'Period'),
             'schedule_id'       => Yii::t('app', 'Schedule'),
             'subject_id'        => Yii::t('app', 'Subject'),
         ];
