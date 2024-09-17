@@ -38,8 +38,7 @@ class ParticipantService
                     $resultList[] = [
                         'name' => $participantName,
                         'identity_number' => $identityNumber,
-                        'status' => LabelHelper::getNo('<i class="fas fa-times"></i>'). ' '.
-                            LabelHelper::getSuccess(Yii::t('app', 'New'))
+                        'status' => LabelHelper::getSuccess(Yii::t('app', 'New'))
                     ];
                 }
             }
