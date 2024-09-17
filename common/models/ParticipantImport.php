@@ -13,7 +13,7 @@ class ParticipantImport extends Participant
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['asset_id', 'group_id'], 'required'],
