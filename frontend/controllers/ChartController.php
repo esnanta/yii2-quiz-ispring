@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use common\helper\MessageHelper;
 use common\models\Assessment;
@@ -65,48 +65,42 @@ class ChartController extends Controller
     /*
      * $id is participant id
      */
-    public function actionParticipantChart($id,$title=null){
-        if(Yii::$app->user->can('view-participant')){
+    public function actionParticipantChart($id, $title = null)
+    {
+        $model = new ChartParticipant();
+        $participant = Participant::findOne($id);
+        $officeId = DataIdService::getOfficeId();
 
-            $model = new ChartParticipant();
-            $participant = Participant::findOne($id);
-            $officeId = DataIdService::getOfficeId();
+        $periodList = DataListService::getPeriod();
+        $groupList = DataListService::getGroup();
+        $subjectList = DataListService::getSubject();
 
-            $periodList = DataListService::getPeriod();
-            $groupList  = DataListService::getGroup();
-            $subjectList = DataListService::getSubject();
+        if ($model->load(Yii::$app->request->post())) {
+            $assessmentData = AssessmentService::getChartByPeriod(
+                $officeId, $participant->id, $model->period_id, $model->subject_id);
 
-            if ($model->load(Yii::$app->request->post())) {
-                $assessmentData = AssessmentService::getChartByPeriod(
-                    $officeId, $participant->id, $model->period_id, $model->subject_id);
+            $categories = $assessmentData['categories'];
+            $series = $assessmentData['series'];
 
-                $categories = $assessmentData['categories'];
-                $series = $assessmentData['series'];
-
-                return $this->render('participant/chart', [
-                    'model' => $model,
-                    'participant' => $participant,
-                    'periodList' => $periodList,
-                    'groupList' => $groupList,
-                    'subjectList' => $subjectList,
-                    'series' => $series,
-                    'categories'=>$categories
-                ]);
-            } else {
-                return $this->render('participant/chart', [
-                    'model' => $model,
-                    'participant' => $participant,
-                    'periodList' => $periodList,
-                    'groupList' => $groupList,
-                    'subjectList' => $subjectList,
-                    'series' => null,
-                    'categories'=> null,
-                ]);
-            }
-        }
-        else{
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
+            return $this->render('participant/chart', [
+                'model' => $model,
+                'participant' => $participant,
+                'periodList' => $periodList,
+                'groupList' => $groupList,
+                'subjectList' => $subjectList,
+                'series' => $series,
+                'categories' => $categories
+            ]);
+        } else {
+            return $this->render('participant/chart', [
+                'model' => $model,
+                'participant' => $participant,
+                'periodList' => $periodList,
+                'groupList' => $groupList,
+                'subjectList' => $subjectList,
+                'series' => null,
+                'categories' => null,
+            ]);
         }
     }
 

@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Assessment;
+use common\models\charts\ChartParticipant;
 use common\models\Participant;
 use common\models\Period;
 use common\models\Schedule;
@@ -115,7 +116,15 @@ class AssessmentController extends Controller
             $scheduleList       = DataListService::getSchedule();
             $periodList         = DataListService::getPeriod();
             $subjectList        = DataListService::getSubject();
-            $questionTypeList    = Assessment::getArrayQuestionTypes();
+            $questionTypeList   = Assessment::getArrayQuestionTypes();
+            $examTypeList       = Assessment::getArrayExamType();
+
+            $assessmentData = AssessmentService::getChartByPeriod(
+                $model->office_id, $model->participant_id,
+                $model->period_id, $model->subject_id);
+
+            $categories = $assessmentData['categories'];
+            $series = $assessmentData['series'];
 
             //ONLY DISPLAY 1 PARTICIPANT
             $participantList = ArrayHelper::map(Participant::find()
@@ -132,7 +141,10 @@ class AssessmentController extends Controller
                     'periodList' => $periodList,
                     'subjectList' => $subjectList,
                     'questionTypeList' => $questionTypeList,
-                    'participantList' => $participantList
+                    'participantList' => $participantList,
+                    'examTypeList' => $examTypeList,
+                    'categories' => $categories,
+                    'series' => $series,
                 ]);
             }
         } catch (\Exception $e){

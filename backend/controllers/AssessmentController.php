@@ -6,6 +6,7 @@ namespace backend\controllers;
 use common\helper\MessageHelper;
 use common\models\Assessment;
 use common\models\AssessmentSearch;
+use common\service\AssessmentService;
 use common\service\DataListService;
 use Yii;
 use yii\db\StaleObjectException;
@@ -82,6 +83,13 @@ class AssessmentController extends Controller
             $questionTypeList = Assessment::getArrayQuestionTypes();
             $examTypeList = Assessment::getArrayExamType();
 
+            $assessmentData = AssessmentService::getChartByPeriod(
+                $model->office_id, $model->participant_id,
+                $model->period_id, $model->subject_id);
+
+            $categories = $assessmentData['categories'];
+            $series = $assessmentData['series'];
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -91,7 +99,9 @@ class AssessmentController extends Controller
                     'participantList' => $participantList,
                     'groupList' => $groupList,
                     'questionTypeList' => $questionTypeList,
-                    'examTypeList' => $examTypeList
+                    'examTypeList' => $examTypeList,
+                    'categories' => $categories,
+                    'series' => $series,
                 ]);
             }
         } else {

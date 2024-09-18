@@ -49,37 +49,36 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-group-search-group_id']
             ],
             [
-                'attribute' => 'username',
-                'label' => Yii::t('app', 'username'),
+                'attribute' => 'identity_number',
+                'label' => Yii::t('app', 'No Id'),
             ],
             'title',
             //'username',
             //'password',
-//            [
-//                'attribute'=>'status',
-//                'vAlign'=>'middle',
-//                //'width'=>'120px',
-//                'value'=>function ($model, $key, $index, $widget) {
-//                    return ($model->status!=null) ? $model->getOneStatus($model->status):'';
-//                },
-//                'filterType'=>GridView::FILTER_SELECT2,
-//                'filter'=>$statusList,
-//                'filterWidgetOptions'=>[
-//                    'pluginOptions'=>['allowClear'=>true],
-//                ],
-//                'filterInputOptions'=>['placeholder'=>''],
-//                'format'=>'html'
-//            ],
-//            [
-//                'attribute' => 'last_login_at',
-//                'label' => Yii::t('app', 'Last Login'),
-//                'value'=>function ($model, $key, $index, $widget) {
-//                    return ($model->last_login_at!=null) ? date('h:i:s a', strtotime($model->last_login_at)):'';
-//                },
-//            ],
+            [
+                'attribute'=>'status',
+                'vAlign'=>'middle',
+                //'width'=>'120px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->status!=null) ? $model->getOneStatus($model->status):'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$statusList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'html'
+            ],
+            [
+                'attribute' => 'last_login_at',
+                'label' => Yii::t('app', 'Last Login'),
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->last_login_at!=null) ? date('h:i:s a', strtotime($model->last_login_at)):'';
+                },
+            ],
             [
                 'class' => 'common\widgets\ActionColumn',
-                'header'=> 'Chart',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
                 'template'=>'{chart}',
                 'buttons' => [

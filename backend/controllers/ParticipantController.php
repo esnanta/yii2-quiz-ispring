@@ -80,12 +80,6 @@ class ParticipantController extends Controller
             $officeList = DataListService::getOffice();
             $groupList  = DataListService::getGroup();
 
-            // Call the function to get assessment data
-            $assessmentData = AssessmentService::getAssessmentProgress($model->office_id, $model->id);
-            $categories = $assessmentData['categories'];
-            $series = $assessmentData['series'];
-            $chartType = $assessmentData['chartType'];
-
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -93,9 +87,6 @@ class ParticipantController extends Controller
                     'model' => $model,
                     'officeList' => $officeList,
                     'groupList' => $groupList,
-                    'series'=>$series,
-                    'categories'=>$categories,
-                    'chartType' => $chartType
                 ]);
             }
         }

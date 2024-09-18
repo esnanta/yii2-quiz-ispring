@@ -66,7 +66,6 @@ class AssessmentService
         return [
             'categories' => $categories,
             'series' => $series,
-            'chartType' => ApexChartHelper::getTypeLine()
         ];
     }
 

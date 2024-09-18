@@ -1,12 +1,11 @@
 <?php
-
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\widgets\SideNav;
 ?>
 
 <?php
 $module = Yii::$app->getModule('user');
+$participantId = Yii::$app->user->identity->id;
 
 function getMenu($_menuName, $_classIcon): string
 {
@@ -57,6 +56,13 @@ function getMenu($_menuName, $_classIcon): string
                         <?= Html::a(
                             getMenu('Assessment', 'fa fa-angle-right'),
                             ['/assessment/index'],
+                            ['class' => 'sidebar-link']
+                        ) ?>
+                    </li>
+                    <li class="sidebar-item">
+                        <?= Html::a(
+                            getMenu('Chart', 'fa fa-angle-right'),
+                            ['/chart/participant-chart','id'=>$participantId],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>

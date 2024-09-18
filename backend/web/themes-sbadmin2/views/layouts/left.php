@@ -65,6 +65,12 @@ use kartik\widgets\SideNav;
                     ]],
                     ['label' => Yii::t('app', 'Office'), 'url' => ['/office/index']],
                 ],'visible' => $officeMenuVisibility],
+                ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
+                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
+                    ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
+                    ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
+                    ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
+                ]],
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
@@ -79,12 +85,6 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['/chart/participant']],
                     ['label' => Yii::t('app', 'Participant Card'), 'url' => ['/report/participant-card']],
                     ['label' => Yii::t('app', 'Assessment Score'), 'url' => ['/report/assessment-score']],
-                ]],
-                ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
-                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
-                    ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
-                    ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
-                    ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                 ]],
                 ['label' => Yii::t('app', 'Download'), 'icon' => 'download', 'items' => [
                     ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']]
