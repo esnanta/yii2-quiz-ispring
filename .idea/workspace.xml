@@ -4,13 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="use only new label for new record">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
+      <change afterPath="$PROJECT_DIR$/backend/controllers/ChartController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/chart/participant/_form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/chart/participant/chart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/chart/participant/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/models/charts/ChartParticipant.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/report/_form_report_assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/_form_report_assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/report/report_assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/report_assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/select_asset.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/select_asset.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/models/reports/ExportAssessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/reports/ExportAssessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/AssessmentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/AssessmentService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,46 +287,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Codeception.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.PHP.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Script.ScheduleDetailController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.StaffController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.yii-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Web Page.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Web Page.yii2-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/web/htdocs/app/yii2-quiz-ispring/frontend/web/themes-b5-modernize/views/site&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Codeception.Main.executor": "Debug",
+    "PHP Script.PHP.executor": "Run",
+    "PHP Script.ScheduleDetailController.php.executor": "Debug",
+    "PHP Script.StaffController.php.executor": "Debug",
+    "PHP Script.yii-quiz-ispring.executor": "Debug",
+    "PHP Web Page.Unnamed.executor": "Run",
+    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/views/chart",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\chart" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\participant" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\views\site" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\schedule" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\common\helper" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\report" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\chart\participant" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\chart" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\report" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\uploads\asset\65a7fb0e28f7b" />
       <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\themes-material-dashboard\assets\css" />
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\common\models" />
-      <recent name="D:\htdocs\application\yii2-quiz-ispring\backend\web\template" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Web Page.yii2-quiz-ispring">
@@ -483,7 +493,8 @@
       <workItem from="1726461261297" duration="10856000" />
       <workItem from="1726474942621" duration="6133000" />
       <workItem from="1726490951192" duration="4663000" />
-      <workItem from="1726577609420" duration="6178000" />
+      <workItem from="1726577609420" duration="7029000" />
+      <workItem from="1726644489662" duration="9944000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -589,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726579687258</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add more filter and dependent dropdown to AssessmentReport">
+      <option name="closed" value="true" />
+      <created>1726583957034</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1726583957034</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,6 +640,7 @@
     <MESSAGE value="fix ReportController.php" />
     <MESSAGE value="update ParticipantImport" />
     <MESSAGE value="use only new label for new record" />
-    <option name="LAST_COMMIT_MESSAGE" value="use only new label for new record" />
+    <MESSAGE value="add more filter and dependent dropdown to AssessmentReport" />
+    <option name="LAST_COMMIT_MESSAGE" value="add more filter and dependent dropdown to AssessmentReport" />
   </component>
 </project>

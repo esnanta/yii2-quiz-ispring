@@ -1,16 +1,14 @@
 <?php
-namespace common\models\reports;
+
+namespace common\models\charts;
 
 use Yii;
 use yii\base\Model;
 
-/**
- * Login form
- */
-class ExportAssessment extends Model
+class ChartParticipant extends Model
 {
     public $period_id;
-    public $schedule_id;
+    public $group_id;
     public $subject_id;
 
     /**
@@ -19,7 +17,7 @@ class ExportAssessment extends Model
     public function rules(): array
     {
         return [
-            [['period_id','schedule_id'], 'required'],
+            [['period_id','group_id'], 'required'],
             [['subject_id'], 'safe'],
         ];
     }

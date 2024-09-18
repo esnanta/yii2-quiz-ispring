@@ -53,6 +53,7 @@ class ScheduleController extends Controller
         $assessment->group_id = $scheduleDetail->schedule->group_id;
         $assessment->subject_id = $scheduleDetail->subject_id;
         $assessment->question_type = $scheduleDetail->question_type;
+        $assessment->exam_type = $scheduleDetail->schedule->exam_type;
         $assessment->save();
 
         $textLink = $scheduleDetailService->generateTextLink($scheduleDetail);

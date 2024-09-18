@@ -105,40 +105,6 @@ class ParticipantController extends Controller
         }
     }
 
-//    function generateLineData($value): array
-//    {
-//        $mainArray[] = $value;
-//        return $mainArray;
-//    }
-//
-//
-//    function generateLineData($assessments,$isAvg=false): array
-//    {
-//        $mainArray=[];
-//
-//        foreach ($assessments as $assessmentModel){
-//            if($isAvg){
-//                $mainArray[] = $assessmentModel->evaluate_score;
-//            }
-//            else{
-//                $avgAge = Assessment::find()
-//                    ->select(['AVG(evaluate_score) AS es'])
-//                    ->where([
-//                        'group_id' => $assessmentModel->group_id,
-//                        'office_id' => $assessmentModel->office_id
-//                    ]) // Example WHERE clause: only active participants
-//                    ->scalar();
-//
-//                $mainArray[] = $avgAge;
-//            }
-//
-//        }
-//
-//        return $mainArray;
-//    }
-
-
-
     /**
      * Creates a new Participant model.
      * If creation is successful, the browser will be redirected to the 'view' page.

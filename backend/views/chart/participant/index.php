@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
  * @var common\models\ParticipantSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Participants');
+$this->title = Yii::t('app', 'Chart Participants');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="participant-index">
@@ -27,19 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'pageSummaryPosition' => GridView::POS_BOTTOM,
         'showPageSummary' => true,
-        'toolbar' => [
-            [
-                'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                    . ' '.
-                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info'])
-                    . ' '.
-                    Html::a('<i class="fas fa-upload"></i> Import', ['select'], ['class' => 'btn btn-primary']),
-                'options' => ['class' => 'btn-group-md']
-            ],
-            //'{export}',
-            //'{toggleData}'
-        ],
+        'toolbar' => [],
         
         'filterModel' => $searchModel,
         'columns' => [
@@ -92,22 +80,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',
+                'template'=>'{chart}',
                 'buttons' => [
-                    'update' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'edit' => 't']),
+                    'chart' => function ($url, $model) {
+                        return Html::a('<i class="fas fa-chart-line"></i>',
+                            Yii::$app->urlManager->createUrl(['chart/participant-chart', 'id' => $model->id, 'title'=>$model->title,]),
                             [
-                                'title' => Yii::t('yii', 'Edit'),
-                                'class'=>'btn btn-sm btn-info',
-                            ]
-                        );
-                    },
-                    'view' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'title'=>$model->title,]),
-                            [
-                                'title' => Yii::t('yii', 'View'),
+                                'title' => Yii::t('yii', 'Participant Chart'),
                                 'class'=>'btn btn-sm btn-info',
                             ]
                         );
