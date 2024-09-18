@@ -65,10 +65,11 @@ class ChartController extends Controller
     /*
      * $id is participant id
      */
-    public function actionParticipantChart($id, $title = null)
+    public function actionParticipantChart()
     {
+        $participant = Participant::findOne(Yii::$app->user->identity->id);
+
         $model = new ChartParticipant();
-        $participant = Participant::findOne($id);
         $officeId = DataIdService::getOfficeId();
 
         $periodList = DataListService::getPeriod();

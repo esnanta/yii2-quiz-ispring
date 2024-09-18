@@ -1,6 +1,7 @@
 <?php
 
 use common\helper\ApexChartHelper;
+use common\helper\IconHelper;
 use yii\helpers\Html;
 
 /**
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?= '<i class="fas fa-user"></i> '. $participant->title ;?>
+        <?= IconHelper::getUser().' '. $participant->title ;?>
         <span class="float-right float-end">
             <?= $participant->identity_number ;?>
         </span>

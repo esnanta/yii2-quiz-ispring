@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template'=>'{update} {view}',
                 'buttons' => [
                     'update' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>',
+                        return Html::a(IconHelper::getUpdate(),
                             Yii::$app->urlManager->createUrl(['room/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
@@ -59,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         );
                     },
                     'view' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-eye"></i>',
+                        return Html::a(IconHelper::getView(),
                             Yii::$app->urlManager->createUrl(['room/view', 'id' => $model->id]),
                             [
                                 'title' => Yii::t('yii', 'View'),

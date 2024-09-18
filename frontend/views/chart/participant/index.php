@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -83,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template'=>'{chart}',
                 'buttons' => [
                     'chart' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-chart-line"></i>',
+                        return Html::a(IconHelper::getChartLine(),
                             Yii::$app->urlManager->createUrl(['chart/participant-chart', 'id' => $model->id, 'title'=>$model->title,]),
                             [
                                 'title' => Yii::t('yii', 'Participant Chart'),

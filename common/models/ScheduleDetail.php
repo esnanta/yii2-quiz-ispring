@@ -77,10 +77,10 @@ class ScheduleDetail extends BaseScheduleDetail
                     $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::QUESTION_TYPE_LITERACY):
-                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getWarning($arrayModule[$_module]);
                     break;
                 case ($_module == self::QUESTION_TYPE_NUMERATION):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDark($arrayModule[$_module]);
                     break;
                 default:
                     $returnValue = LabelHelper::getDefault($arrayModule[$_module]);

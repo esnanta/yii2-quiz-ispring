@@ -2,7 +2,6 @@
 
 namespace common\service;
 
-use common\helper\ApexChartHelper;
 use common\models\Assessment;
 use Yii;
 

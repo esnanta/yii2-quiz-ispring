@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use common\models\Participant;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -31,7 +32,7 @@ if (!Yii::$app->user->isGuest) {
                     ?>
                     <a class="btn btn-sm btn-primary" style="margin-right:2px"
                        href="<?= str_replace('', '', Url::to(['site/index'])) ?>">
-                        <?= Yii::t('app', '<i class="fas fa-home"></i>') ?>
+                        <?= IconHelper::getHome() ?>
                     </a>
 
                 <?php endif; ?>

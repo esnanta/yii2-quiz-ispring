@@ -1,6 +1,7 @@
 <?php
 
 use common\helper\ApexChartHelper;
+use common\helper\IconHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -138,7 +139,7 @@ echo GridView::widget([
             'template'=>'{view}',
             'buttons' => [
                 'view' => function ($url, $model) {
-                    return Html::a('<i class="fas fa-eye"></i>',
+                    return Html::a(IconHelper::getView(),
                         Yii::$app->urlManager->createUrl(['assessment/view', 'id' => $model->id]),
                         [
                             'title' => Yii::t('yii', 'View'),

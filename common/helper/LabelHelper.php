@@ -23,24 +23,6 @@ class LabelHelper {
     {
         return 'btn btn-sm btn-info';
     }
-    
-    public static function getAssetTypeDocument($text): string
-    {
-        return '<span class="badge bg-primary text-white">'.$text.'</span>';
-    }
-    public static function getAssetTypeSpreadsheet($text): string
-    {
-        return '<span class="badge bg-success text-white">'.$text.'</span>';
-    }
-    public static function getAssetTypeImage($text): string
-    {
-        return '<span class="badge bg-secondary text-white">'.$text.'</span>';
-    }
-    public static function getAssetTypeCompression($text): string
-    {
-        return '<span class="badge bg-danger text-white">'.$text.'</span>';
-    }
-
 
     public static function getYes($text): string
     {
@@ -52,7 +34,7 @@ class LabelHelper {
     }
     public static function getDefault($text): string
     {
-        return '<span class="badge bg-secondary text-white">'.$text.'</span>';
+        return self::getSecondary($text);
     }
 
     public static function getPrimary($text): string
@@ -70,6 +52,22 @@ class LabelHelper {
     public static function getWarning($text): string
     {
         return '<span class="badge bg-warning text-white">'.$text.'</span>';
+    }
+    public static function getSecondary($text): string
+    {
+        return '<span class="badge bg-secondary text-white">'.$text.'</span>';
+    }
+    public static function getLight($text): string
+    {
+        return '<span class="badge bg-light text-black">'.$text.'</span>';
+    }
+    public static function getDark($text): string
+    {
+        return '<span class="badge bg-dark text-white">'.$text.'</span>';
+    }
+    public static function getInfo($text): string
+    {
+        return '<span class="badge bg-info text-white">'.$text.'</span>';
     }
     public static function getCreateButton($route='create'): string
     {

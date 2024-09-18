@@ -5,6 +5,7 @@
 
 /** @var \frontend\models\LoginParticipantForm $model */
 
+use common\helper\IconHelper;
 use frontend\models\LoginParticipantForm;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card" style="max-width: 400px; width: 100%;">
             <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
                 <?= Yii::t('app', 'Sign in as Participant') ?>
-                <i class="fas fa-sign-in-alt"></i>
+                <?= IconHelper::getSignIn()?>
             </div>
             <div class="card-body">
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>

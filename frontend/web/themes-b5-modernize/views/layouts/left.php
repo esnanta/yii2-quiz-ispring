@@ -5,7 +5,6 @@ use yii\helpers\Url;
 
 <?php
 $module = Yii::$app->getModule('user');
-$participantId = Yii::$app->user->identity->id;
 
 function getMenu($_menuName, $_classIcon): string
 {
@@ -62,7 +61,7 @@ function getMenu($_menuName, $_classIcon): string
                     <li class="sidebar-item">
                         <?= Html::a(
                             getMenu('Chart', 'fa fa-angle-right'),
-                            ['/chart/participant-chart','id'=>$participantId],
+                            ['/chart/participant-chart'],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>

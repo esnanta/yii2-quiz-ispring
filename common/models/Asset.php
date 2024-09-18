@@ -115,16 +115,16 @@ class Asset extends BaseAsset
 
             switch ($_module) {
                 case ($_module == self::ASSET_TYPE_DOCUMENT):
-                    $returnValue = LabelHelper::getAssetTypeDocument($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_SPREADSHEET):
-                    $returnValue = LabelHelper::getAssetTypeSpreadsheet($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_IMAGE):
-                    $returnValue = LabelHelper::getAssetTypeImage($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getSecondary($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_COMPRESSION):
-                    $returnValue = LabelHelper::getAssetTypeCompression($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
                 default:
                     $returnValue = LabelHelper::getDefault($arrayModule[$_module]);

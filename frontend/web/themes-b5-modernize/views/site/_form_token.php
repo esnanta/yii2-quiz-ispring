@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 
@@ -10,16 +11,16 @@ use kartik\widgets\ActiveForm;
  */
 ?>
 
-<?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); ?>
+<?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]); ?>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <?= $form->field($tokenForm, 'token')->textInput([
                 'placeholder' => Yii::t('app', 'Enter your token')])
             ->label('') ?>
     </div>
-    <div class="col-md-4">
-        <?= Html::submitButton(Yii::t('app', '<i class="fas fa-save"></i>'), [
+    <div class="col-md-12">
+        <?= Html::submitButton(IconHelper::getSave(), [
             'class' => 'btn btn-primary',
             'style' => 'width: 100%;' // Ensure the button takes full column width
         ]) ?>
