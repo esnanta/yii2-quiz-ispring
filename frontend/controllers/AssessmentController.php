@@ -76,12 +76,6 @@ class AssessmentController extends Controller
                 ->andWhere(['id' => $participant->id])
                 ->asArray()->all(), 'id', 'title');
 
-            // Call the function to get assessment data
-            $assessmentData = AssessmentService::getAssessmentProgress($participant->office_id, $participant->id);
-            $categories = $assessmentData['categories'];
-            $series = $assessmentData['series'];
-            $chartType = $assessmentData['chartType'];
-
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
@@ -89,10 +83,7 @@ class AssessmentController extends Controller
                 'participantList' => $participantList,
                 'periodList' => $periodList,
                 'subjectList' => $subjectList,
-                'questionTypeList' => $questionTypeList,
-                'series'=>$series,
-                'categories'=>$categories,
-                'chartType' => $chartType
+                'questionTypeList' => $questionTypeList
             ]);
         } catch (\Exception $e){
             throw new NotFoundHttpException($e->getMessage());
