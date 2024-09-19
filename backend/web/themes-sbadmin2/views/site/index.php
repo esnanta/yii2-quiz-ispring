@@ -113,47 +113,6 @@ $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.
     </div>
     <div class="card-body text-default">
         <div class="row">
-            <div class="col-md-5 col-xs-12">
-
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th class="center">#</th>
-                            <th><?= Yii::t('app', 'Date'); ?></th>
-                            <th><?= Yii::t('app', 'Start'); ?></th>
-                            <th><?= Yii::t('app', 'Room'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    foreach ($schedules as $i => $schedule) {
-                        ?>
-                        <tr>
-                            <td class="center"><?= ($i + 1); ?></td>
-                            <td class="left">
-                                <?php
-                                $dateStart = DateHelper::formatDate($schedule->date_start);
-                                $title =
-                                    Html::a($dateStart, ['schedule/view',
-                                        'id' => $schedule->id,
-                                        'title' => $schedule->title
-                                    ]);
-                                echo $title;
-                                ?>
-                            </td>
-                            <td class="left">
-                                <?= DateHelper::formatTime($schedule->date_start); ?>
-                            </td>
-                            <td class="left">
-                                <?= $schedule->room->title; ?>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-
-
             <div class="col-md-7 col-xs-12">
 
                 <?php
@@ -180,6 +139,45 @@ $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.
                 ?>
 
                 <div id="calendar"></div>
+            </div>
+            <div class="col-md-5 col-xs-12">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="center">#</th>
+                            <th><?= Yii::t('app', 'Date'); ?></th>
+                            <th><?= Yii::t('app', 'Start'); ?></th>
+                            <th><?= Yii::t('app', 'Room'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($schedules as $i => $schedule) {
+                        ?>
+                        <tr>
+                            <td class="center"><?= $schedule->title; ?></td>
+                            <td class="left">
+                                <?php
+                                $dateStart = DateHelper::formatDate($schedule->date_start);
+                                $title =
+                                    Html::a($dateStart, ['schedule/view',
+                                        'id' => $schedule->id,
+                                        'title' => $schedule->title
+                                    ]);
+                                echo $title;
+                                ?>
+                            </td>
+                            <td class="left">
+                                <?= DateHelper::formatTime($schedule->date_start); ?>
+                            </td>
+                            <td class="left">
+                                <?= $schedule->room->title; ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 
