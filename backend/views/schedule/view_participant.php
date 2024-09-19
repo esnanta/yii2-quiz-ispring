@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use yii\helpers\Html;
 
 ?>
@@ -49,7 +50,7 @@ use yii\helpers\Html;
                 </td>
                 <td class="left"><?=
                     Html::a(
-                        '<i class="fas fa-sync"></i>',
+                        IconHelper::getReset(),
                         Yii::$app->urlManager->createUrl([
                             'participant/reset',
                             'id' => $modelDetailItem->id,
@@ -58,7 +59,7 @@ use yii\helpers\Html;
                         ]),
                         [
                             'title' => Yii::t('yii', 'Reset'),
-                            'class' => 'btn btn-sm btn-primary '.$modelDetailItem->getIsButtonDisabled(),
+                            'class' => 'btn btn-sm btn-danger '.$modelDetailItem->getIsButtonDisabled(),
                         ]
                     );
                     ?>

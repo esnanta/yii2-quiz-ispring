@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -92,10 +93,20 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',
+                'template'=>'{reset} {update} {view}',
                 'buttons' => [
+                    'reset' => function ($url, $model) {
+                        return Html::a(IconHelper::getReset(),
+                            Yii::$app->urlManager->createUrl(['participant/reset', 'id' => $model->id, 'schId','title'=>$model->title]),
+                            [
+                                'title' => Yii::t('yii', 'Reset'),
+                                'class'=>'btn btn-sm btn-danger '.$model->getIsButtonDisabled(),
+                            ]
+                        );
+                    },
+
                     'update' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>',
+                        return Html::a(IconHelper::getUpdate(),
                             Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
@@ -104,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         );
                     },
                     'view' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-eye"></i>',
+                        return Html::a(IconHelper::getView(),
                             Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'title'=>$model->title,]),
                             [
                                 'title' => Yii::t('yii', 'View'),

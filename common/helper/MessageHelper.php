@@ -180,7 +180,16 @@ class MessageHelper
             )]
         );
     }
-
+    public static function getFlashResetSuccess(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'success',
+            ['message' => Yii::t(
+                'app',
+                'Reset success.'
+            )]
+        );
+    }
 
     public static function getTimeElapsedString($_ptime)
     {

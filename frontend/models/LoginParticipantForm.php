@@ -113,11 +113,12 @@ class LoginParticipantForm extends Model
         if ($this->validate()) {
             // Check if token validation passed before login
             if (!$this->hasErrors()) {
-                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 10800);
             }
         }
         return false;
     }
+
 
     /**
      * Finds user by [[username]]

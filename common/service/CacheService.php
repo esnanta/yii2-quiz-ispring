@@ -14,7 +14,7 @@ use yii\web\ForbiddenHttpException;
  * and open the template in the editor.
  */
 
-//SINGLETON CLASS
+
 class CacheService {
 
     private static ?CacheService $instance = null;

@@ -51,10 +51,15 @@ class IconHelper
     }
     public static function getUpdate(): string
     {
-        return '<i class="fas fa-eye"></i>';
+        return '<i class="fas fa-pencil-alt"></i>';
     }
     public static function getUser(): string
     {
         return '<i class="fas fa-user"></i>';
+    }
+
+    public static function getReset(): string
+    {
+        return '<i class="fas fa-sync"></i>';
     }
 }
