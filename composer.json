@@ -40,7 +40,6 @@
         
         "lesha724/yii2-document-viewer": "*",
         "onmotion/yii2-widget-apexcharts": "*",
-
         "bajadev/yii2-ckeditor": "*",
         "budyaga/yii2-cropper": "*",
         "aneeshikmat/yii2-time-down-counter": "v1.1.0-stable",

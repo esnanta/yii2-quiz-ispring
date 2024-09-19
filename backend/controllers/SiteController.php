@@ -7,15 +7,19 @@ use common\models\Employment;
 use common\models\Office;
 use common\models\Participant;
 use common\models\Schedule;
+use common\models\ScheduleDetail;
 use common\models\Staff;
 use common\models\UserDektrium;
 use common\service\CacheService;
+use Exception;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -32,7 +36,7 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','get-schedules'],
                         'allow' => true,
                     ],
                     [
@@ -109,6 +113,15 @@ class SiteController extends Controller
                 ->andWhere(['>', 'date_start', $now])
                 ->count();
 
+            $schedules = Schedule::find()
+                ->where(['office_id' => $officeId])
+                ->andWhere(['between', 'date_start',
+                    date('Y-m-d H:i:s', strtotime('-14 days')), // 14 days ago
+                    date('Y-m-d H:i:s', strtotime('+14 days'))  // 14 days ahead
+                ])
+                ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
+                ->limit(12) // Limit to 6 records
+                ->all();
 
             return $this->render('index', [
                 'office'=>$office,
@@ -117,12 +130,41 @@ class SiteController extends Controller
                 'countOfflineParticipant' => $countOfflineParticipant,
                 'countOnlineParticipant' => $countOnlineParticipant,
                 'countAllSchedule' => $countAllSchedule,
-                'countNotStartSchedule' => $countNotStartSchedule
+                'countNotStartSchedule' => $countNotStartSchedule,
+                'schedules' => $schedules
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
+    }
+
+    public function actionGetSchedules()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $officeId       = CacheService::getInstance()->getOfficeId();
+        $schedules = Schedule::find()
+            ->where(['office_id' => $officeId])
+            ->andWhere(['between', 'date_start',
+                date('Y-m-d H:i:s', strtotime('-14 days')), // 14 days ago
+                date('Y-m-d H:i:s', strtotime('+14 days'))  // 14 days ahead
+            ])
+            ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
+            ->limit(12) // Limit to 6 records
+            ->all();
+
+        $events = [];
+        foreach ($schedules as $schedule) {
+            $events[] = [
+                'id' => $schedule->id,
+                'title' => $schedule->room->title, // The event title
+                'start' => $schedule->date_start, // The event start time
+                'end' => $schedule->date_end, // The event end time
+                'url' => Url::to(['schedule/view', 'id' => $schedule->id]), // URL for schedule view page
+            ];
+        }
+
+        return $events;
     }
 
     public function actionFlush()
@@ -196,7 +238,7 @@ class SiteController extends Controller
 
     /**
      * @throws Exception
-     * @throws \Throwable
+     * @throws Throwable
      * @throws ForbiddenHttpException
      */
     public function actionCreateRegular()
