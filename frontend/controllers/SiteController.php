@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Participant;
 use common\models\Schedule;
 use common\service\ScheduleDetailService;
+use common\service\ScheduleService;
 use frontend\models\ContactForm;
 use frontend\models\LoginParticipantForm;
 use frontend\models\TokenForm;
@@ -23,13 +24,16 @@ class SiteController extends Controller
 {
     public $enableCsrfValidation = false;
     private string $token = '';
+    private ScheduleService $scheduleService;
     private ScheduleDetailService $scheduleDetailService;
     private TokenForm $tokenForm;
     public function __construct($id, $module,
+                                ScheduleService $scheduleService,
                                 ScheduleDetailService $scheduleDetailService,
                                 TokenForm $tokenForm,
                                 $config = [])
     {
+        $this->scheduleService = $scheduleService;
         $this->scheduleDetailService = $scheduleDetailService;
         $this->tokenForm = $tokenForm;
         parent::__construct($id, $module, $config);
@@ -103,16 +107,8 @@ class SiteController extends Controller
         } else {
 
             $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
-            $schedules = Schedule::find()
-                ->where(['office_id' => $participant->office_id])
-                ->andWhere(['group_id' => $participant->group_id])
-                ->andWhere(['between', 'date_start',
-                    date('Y-m-d H:i:s', strtotime('-14 days')), // 14 days ago
-                    date('Y-m-d H:i:s', strtotime('+14 days'))  // 14 days ahead
-                ])
-                ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
-                ->limit(6) // Limit to 6 records
-                ->all();
+            $schedules = $this->scheduleService->getScheduleOneMonthByParticipant(
+                $participant->office_id,$participant->group_id);
 
             if ($this->tokenForm->load(Yii::$app->request->post())) {
                 $this->token = $this->tokenForm->token;

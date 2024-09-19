@@ -11,6 +11,7 @@ use common\models\ScheduleDetail;
 use common\models\Staff;
 use common\models\UserDektrium;
 use common\service\CacheService;
+use common\service\ScheduleService;
 use Exception;
 use Yii;
 use yii\filters\AccessControl;
@@ -26,6 +27,15 @@ use yii\web\Response;
  */
 class SiteController extends Controller
 {
+
+    private $scheduleService;
+
+    public function __construct($id, $module, ScheduleService $scheduleService, $config = [])
+    {
+        $this->scheduleService = $scheduleService;
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -98,7 +108,6 @@ class SiteController extends Controller
                 ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_ACTIVE])
                 ->count();
 
-
             $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('today midnight'));
             $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('today 23:59:59'));
             $now = date(Yii::$app->params['datetimeSaveFormat']);
@@ -113,15 +122,8 @@ class SiteController extends Controller
                 ->andWhere(['>', 'date_start', $now])
                 ->count();
 
-            $schedules = Schedule::find()
-                ->where(['office_id' => $officeId])
-                ->andWhere(['between', 'date_start',
-                    date('Y-m-d H:i:s', strtotime('-14 days')), // 14 days ago
-                    date('Y-m-d H:i:s', strtotime('+14 days'))  // 14 days ahead
-                ])
-                ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
-                ->limit(12) // Limit to 6 records
-                ->all();
+
+            $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
 
             return $this->render('index', [
                 'office'=>$office,
@@ -142,16 +144,8 @@ class SiteController extends Controller
     public function actionGetSchedules()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $officeId       = CacheService::getInstance()->getOfficeId();
-        $schedules = Schedule::find()
-            ->where(['office_id' => $officeId])
-            ->andWhere(['between', 'date_start',
-                date('Y-m-d H:i:s', strtotime('-14 days')), // 14 days ago
-                date('Y-m-d H:i:s', strtotime('+14 days'))  // 14 days ahead
-            ])
-            ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
-            ->limit(12) // Limit to 6 records
-            ->all();
+        $officeId = CacheService::getInstance()->getOfficeId();
+        $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
 
         $events = [];
         foreach ($schedules as $schedule) {
