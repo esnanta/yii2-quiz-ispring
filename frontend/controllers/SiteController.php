@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Participant;
-use common\models\Schedule;
+use common\service\CacheService;
 use common\service\ScheduleDetailService;
 use common\service\ScheduleService;
 use frontend\models\ContactForm;
@@ -55,7 +55,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','get-schedules'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -106,23 +106,21 @@ class SiteController extends Controller
             return $this->redirect(['site/login']);
         } else {
 
-            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
-            $schedules = $this->scheduleService->getScheduleOneMonthByParticipant(
-                $participant->office_id,$participant->group_id);
-
-            if ($this->tokenForm->load(Yii::$app->request->post())) {
-                $this->token = $this->tokenForm->token;
-            }
+            $officeId = CacheService::getInstance()->getOfficeId();
+            $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
 
             return $this->render('index',[
-                'token' => $this->token,
-                'tokenForm' => $this->tokenForm,
-                'participant' => $participant,
                 'schedules' => $schedules,
-                'scheduleDetailService' => $this->scheduleDetailService
             ]);
         }
     }
+
+    public function actionGetSchedules(): array
+    {
+        $officeId = CacheService::getInstance()->getOfficeId();
+        return $this->scheduleService->getScheduleAsJson($officeId);
+    }
+
     /**
      * Logs in a user.
      *

@@ -42,7 +42,7 @@ function getMenu($_menuName, $_classIcon): string
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
-                            getMenu('Dashboard', 'fa fa-dashboard'),
+                            getMenu(Yii::t('app', 'Dashboard'), 'fa fa-dashboard'),
                             ['/site/index'],
                             ['class' => 'sidebar-link']
                         ) ?>
@@ -53,26 +53,35 @@ function getMenu($_menuName, $_classIcon): string
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
-                            getMenu('Assessment', 'fa fa-angle-right'),
+                            getMenu(Yii::t('app', 'Schedule'), 'fa fa-angle-right'),
+                            ['/schedule/index'],
+                            ['class' => 'sidebar-link']
+                        ) ?>
+                    </li>
+                    <li class="sidebar-item">
+                        <?= Html::a(
+                            getMenu(Yii::t('app', 'Assessment'), 'fa fa-angle-right'),
                             ['/assessment/index'],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>
                     <li class="sidebar-item">
                         <?= Html::a(
-                            getMenu('Chart', 'fa fa-angle-right'),
+                            getMenu(Yii::t('app', 'Chart'), 'fa fa-angle-right'),
                             ['/chart/participant-chart'],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">AUTH</span>
+                        <span class="hide-menu">
+                            <?=Yii::t('app', 'Auth');?>
+                        </span>
                     </li>
                     <li class="sidebar-item">
                         <?=
                         Html::a(
-                            getMenu('Logout', 'fa fa-sign-out'),
+                            getMenu(Yii::t('app', 'Logout'), 'fa fa-sign-out'),
                             ['/site/logout'],
                             ['data-method' => 'POST', 'data-confirm' => "Logout?", 'class' => 'sidebar-link']
                         )
@@ -81,12 +90,12 @@ function getMenu($_menuName, $_classIcon): string
                 <?php } else { ?>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">AUTH</span>
+                        <span class="hide-menu"><?=Yii::t('app', 'Auth');?></span>
                     </li>
                     <li class="sidebar-item">
                     <?=
                     Html::a(
-                        getMenu('Login', 'fa fa-sign-in'),
+                        getMenu(Yii::t('app', 'Login'), 'fa fa-sign-in'),
                         ['/site/login'],
                         ['class' => 'sidebar-link']
                     )

@@ -5,11 +5,6 @@ $this->title = Yii::$app->name;
 use common\helper\DateHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\web\JqueryAsset;
-
-$this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css');
-$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js', ['depends' => [JqueryAsset::class]]);
-$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js', ['depends' => [JqueryAsset::class]]);
 ?>
 
 
@@ -142,7 +137,7 @@ $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.
             </div>
             <div class="col-md-5 col-xs-12">
 
-                <table class="table table-striped">
+                <table class="table table-striped table-sm">
                     <thead>
                         <tr>
                             <th class="center">#</th>

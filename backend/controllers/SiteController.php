@@ -141,24 +141,10 @@ class SiteController extends Controller
         }
     }
 
-    public function actionGetSchedules()
+    public function actionGetSchedules(): array
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
         $officeId = CacheService::getInstance()->getOfficeId();
-        $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
-
-        $events = [];
-        foreach ($schedules as $schedule) {
-            $events[] = [
-                'id' => $schedule->id,
-                'title' => $schedule->room->title, // The event title
-                'start' => $schedule->date_start, // The event start time
-                'end' => $schedule->date_end, // The event end time
-                'url' => Url::to(['schedule/view', 'id' => $schedule->id]), // URL for schedule view page
-            ];
-        }
-
-        return $events;
+        return $this->scheduleService->getScheduleAsJson($officeId);
     }
 
     public function actionFlush()

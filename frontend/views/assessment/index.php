@@ -60,7 +60,7 @@ echo GridView::widget([
             'vAlign'=>'middle',
             'width'=>'180px',
             'value'=>function ($model, $key, $index, $widget) {
-                return ($model->participant_id!=null) ? $model->participant->getUrl():'';
+                return ($model->participant_id!=null) ? $model->participant->title:'';
             },
             'filterType' => GridView::FILTER_SELECT2,
             'filter' => $participantList,

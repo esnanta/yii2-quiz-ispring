@@ -6,6 +6,8 @@ use common\helper\DateHelper;
 use common\models\Schedule;
 use Yii;
 use yii\db\Exception;
+use yii\helpers\Url;
+use yii\web\Response;
 
 class ScheduleService
 {
@@ -78,6 +80,25 @@ class ScheduleService
             ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
             ->limit(12) // Limit to 6 records
             ->all();
+    }
+
+    public function getScheduleAsJson(int $officeId): array
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $schedules = $this->getScheduleOneMonth($officeId);
+
+        $events = [];
+        foreach ($schedules as $schedule) {
+            $events[] = [
+                'id' => $schedule->id,
+                'title' => $schedule->room->title, // The event title
+                'start' => $schedule->date_start, // The event start time
+                'end' => $schedule->date_end, // The event end time
+                'url' => Url::to(['schedule/view', 'id' => $schedule->id]), // URL for schedule view page
+            ];
+        }
+
+        return $events;
     }
 
     public function getScheduleOneMonthByParticipant(int $officeId, int $participantId): array
