@@ -138,7 +138,7 @@ class ScheduleController extends Controller
             $model->date_start = date(Yii::$app->params['datetimeSaveFormat']);
             $model->date_end = date(Yii::$app->params['datetimeSaveFormat']);
 
-            $periodList = DataListService::getPeriod();
+            $periodList = DataListService::getPeriodActive();
             $roomList = DataListService::getRoom();
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
@@ -179,7 +179,7 @@ class ScheduleController extends Controller
         if (Yii::$app->user->can('update-schedule')) {
             $model = $this->findModel($id);
             $officeList = DataListService::getOffice();
-            $periodList = DataListService::getPeriod();
+            $periodList = DataListService::getPeriodActive();
             $roomList = DataListService::getRoom();
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();

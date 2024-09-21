@@ -21,7 +21,7 @@ class ScheduleService
         $timeStart = strtotime($model->date_start);
         $timeOut = strtotime($model->date_end);
         $tokenTime = strtotime($model->token_time);
-        $currentTime = time(); // More accurate than "strtotime('now')"
+        $currentTime = time();
         $tokenStartTime = $timeStart - (2 * 60); // Token available 2 minutes before start
 
         $countdownTime = $timeStart;

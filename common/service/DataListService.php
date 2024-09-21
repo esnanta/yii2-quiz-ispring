@@ -32,6 +32,12 @@ class DataListService
             ->where(['office_id' => DataIdService::getOfficeId()])
             ->asArray()->all(), 'id', 'title');
     }
+    public static function getPeriodActive(): array
+    {
+        return ArrayHelper::map(Period::find()
+            ->where(['office_id' => DataIdService::getOfficeId(),'is_active' => Period::IS_ACTIVE_YES])
+            ->asArray()->all(), 'id', 'title');
+    }
 
     public static function getSubject(): array
     {
