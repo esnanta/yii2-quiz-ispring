@@ -40,7 +40,19 @@ $create = LabelHelper::getCreateButton();
                 ],
             ],
             'title',
-            'sequence',
+            [
+                'attribute'=>'is_active',
+                'format'=>'html',
+                'value'=>($model->is_active!=null) ? $model->getOneIsActive($model->is_active):'',
+                'type'=>DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'asset_type', 'prompt' => '', 'disabled'=>false],
+                'items' => $isActiveList,
+                'widgetOptions'=>[
+                    'class'=> Select2::class,
+                    'data'=>$isActiveList,
+                ],
+                //'valueColOptions'=>['style'=>'width:30%']
+            ],
             'description:ntext',
             [
                 'columns' => [

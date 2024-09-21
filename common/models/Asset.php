@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\base\Asset as BaseAsset;
 use common\service\CacheService;
@@ -17,11 +18,8 @@ class Asset extends BaseAsset
 {
     public $asset;
 
-    //HANYA UNTUK INFO DI VIEW BACKEND
     public $file;
     public $url;
-    //END HANYA UNTUK INFO DI VIEW BACKEND
-
 
     const IS_VISIBLE_PRIVATE            = 1;
     const IS_VISIBLE_PUBLIC             = 2;
@@ -94,7 +92,7 @@ class Asset extends BaseAsset
 
         }
         else
-            return;
+            return '-';
     }
 
     public static function getArrayAssetType(): array
@@ -202,36 +200,28 @@ class Asset extends BaseAsset
     * @return mixed the uploaded asset instance
     */
     public function uploadAsset() {
-        // get the uploaded file instance. for multiple file uploads
-        // the following data will return an array (you may need to use
-        // getInstances method)
+        // Get the uploaded file instance
         $asset = UploadedFile::getInstance($this, 'asset');
 
-        // if no asset was uploaded abort the upload
-        if (empty($asset)) {
+        // Abort if no asset is uploaded
+        if (!$asset) {
             return false;
         }
 
-        // store the source file name
-        if($this->title==''){
+        // Store the source file name as title if it's empty
+        if (empty($this->title)) {
             $this->title = $asset->name;
         }
 
-        //generate a unique file name
-        //$ext = end((explode(".", $asset->name)));
-        $deleteExt          = substr($this->title, 0, strpos($this->title, "."));
-        $replaceSpace       = str_replace(' ','_', $deleteExt);
-        $replaceSlash       = str_replace('/','_', $replaceSpace);
-        $replaceComma       = str_replace(',','_', $replaceSlash);
-        $replaceDot         = str_replace('.','_', $replaceComma);
-        $title              = $replaceDot;
-        $tmp                = explode('.', $asset->name);
-        $ext                = end($tmp);          
-        $this->asset_name    = $title.'_'.uniqid().".{$ext}";
-        
-        // the uploaded asset instance
+        // Generate a unique file name
+        $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($this->title, PATHINFO_FILENAME));
+        $ext = pathinfo($asset->name, PATHINFO_EXTENSION);
+        $this->asset_name = "{$baseTitle}_" . uniqid() . ".{$ext}";
+
+        // Return the uploaded asset instance
         return $asset;
     }
+
 
     /**
     * Process deletion of asset
@@ -271,14 +261,14 @@ class Asset extends BaseAsset
     public function getProceedButton(): string
     {
         $button = Html::a(
-            '<i class="fas fa-file-import"></i> '.Yii::t('app', 'Import'),
+            IconHelper::getImport().' '.Yii::t('app', 'Import'),
             ['import','id'=>$this->id,'title'=>$this->title],
             ['class' => 'btn btn-sm btn-info pull-right']
         );
         $asset = $this->getAssetFile();
         if(!file_exists($asset)){
             $button = Html::a(
-                '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
+                IconHelper::getAdd().' '.Yii::t('app', 'Upload'),
                 ['asset/update','id'=>$this->id,'title'=>$this->title],
                 ['class' => 'btn btn-sm btn-danger pull-right']
             );
@@ -289,7 +279,7 @@ class Asset extends BaseAsset
     public function getUpdateButton(): string
     {
         return Html::a(
-            '<i class="fas fa-eye"></i>',
+            IconHelper::getView(),
             ['asset/view','id'=>$this->id,'title'=>$this->title],
             ['class' => 'btn btn-sm btn-primary pull-right']
         );

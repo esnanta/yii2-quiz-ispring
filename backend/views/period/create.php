@@ -25,6 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="period-create">
             <?= $this->render('_form', [
                 'model' => $model,
+                'officeList' => $officeList,
+                'isActiveList' => $isActiveList
             ]) 
             ?>
         </div>

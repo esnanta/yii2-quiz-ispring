@@ -62,4 +62,12 @@ class IconHelper
     {
         return '<i class="fas fa-sync"></i>';
     }
+    public static function getImport(): string
+    {
+        return '<i class="fas fa-file-import"></i>';
+    }
+    public static function getAdd(): string
+    {
+        return '<i class="fas fa-plus"></i>';
+    }
 }

@@ -5,22 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/_form_token.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/view.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/views/schedule/view_participant.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/assets/SbAdmin2.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/assets/SbAdmin2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/assets/B5AdminModernizeAsset.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/assets/B5AdminModernizeAsset.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/reset data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/reset data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/DummyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DummyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/PeriodController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PeriodController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/dummy/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/dummy/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/period/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/period/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/period/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/period/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/period/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/IconHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/IconHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Asset.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Asset.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Period.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Period.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/PeriodSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/PeriodSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Period.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Period.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,32 +294,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Codeception.Main.executor": "Debug",
-    "PHP Script.PHP.executor": "Run",
-    "PHP Script.ScheduleDetailController.php.executor": "Debug",
-    "PHP Script.StaffController.php.executor": "Debug",
-    "PHP Script.yii-quiz-ispring.executor": "Debug",
-    "PHP Web Page.Unnamed.executor": "Run",
-    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/frontend/views/schedule",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Codeception.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Script.PHP.executor&quot;: &quot;Run&quot;,
+    &quot;PHP Script.ScheduleDetailController.php.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Script.StaffController.php.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Script.yii-quiz-ispring.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Web Page.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;PHP Web Page.yii2-quiz-ispring.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/web/htdocs/app/yii2-quiz-ispring/frontend/views/schedule&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\views\schedule" />
@@ -504,7 +506,9 @@
       <workItem from="1726733867130" duration="4342000" />
       <workItem from="1726738488963" duration="4848000" />
       <workItem from="1726754054188" duration="5636000" />
-      <workItem from="1726811544645" duration="3559000" />
+      <workItem from="1726811544645" duration="3835000" />
+      <workItem from="1726820601529" duration="5215000" />
+      <workItem from="1726887263613" duration="337000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

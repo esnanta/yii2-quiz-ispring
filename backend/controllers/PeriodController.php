@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\helper\MessageHelper;
+use common\models\Asset;
 use common\models\Period;
 use common\models\PeriodSearch;
 use common\service\DataIdService;
@@ -41,11 +42,13 @@ class PeriodController extends Controller
             $searchModel = new PeriodSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
             $officeList = DataListService::getOffice();
+            $isActiveList = Period::getArrayIsActive();
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'officeList' => $officeList
+                'officeList' => $officeList,
+                'isActiveList' => $isActiveList
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -63,13 +66,15 @@ class PeriodController extends Controller
         if (Yii::$app->user->can('view-period')) {
             $model = $this->findModel($id);
             $officeList = DataListService::getOffice();
+            $isActiveList = Period::getArrayIsActive();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('view', [
                     'model' => $model,
-                    'officeList' => $officeList
+                    'officeList' => $officeList,
+                    'isActiveList' => $isActiveList
                 ]);
             }
         } else {
@@ -90,6 +95,7 @@ class PeriodController extends Controller
             $model              = new Period;
             $model->office_id   = DataIdService::getOfficeId();
             $officeList         = DataListService::getOffice();
+            $isActiveList       = Period::getArrayIsActive();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -97,7 +103,8 @@ class PeriodController extends Controller
                 } else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'isActiveList' => $isActiveList
                     ]);
                 }
             } catch (StaleObjectException $e) {
@@ -121,13 +128,15 @@ class PeriodController extends Controller
             try {
                 $model      = $this->findModel($id);
                 $officeList = DataListService::getOffice();
+                $isActiveList = Period::getArrayIsActive();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('update', [
                         'model' => $model,
-                        'officeList' => $officeList
+                        'officeList' => $officeList,
+                        'isActiveList' => $isActiveList
                     ]);
                 }
             } catch (StaleObjectException $e) {

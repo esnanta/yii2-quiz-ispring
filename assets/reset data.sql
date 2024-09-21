@@ -33,6 +33,18 @@ DELETE FROM tx_auth_assignment WHERE user_id <> 1;
 DELETE FROM tx_user WHERE id <> 1;
 ALTER TABLE tx_user AUTO_INCREMENT=1;
 
+DELETE FROM tx_participant;
+ALTER TABLE tx_participant AUTO_INCREMENT=0;
+
+DELETE FROM tx_group;
+ALTER TABLE tx_group AUTO_INCREMENT=0;
+
+DELETE FROM tx_subject;
+ALTER TABLE tx_subject AUTO_INCREMENT=0;
+
+DELETE FROM tx_period;
+ALTER TABLE tx_period AUTO_INCREMENT=0;
+
 DELETE FROM tx_page;
 ALTER TABLE tx_page AUTO_INCREMENT=0;
 

@@ -28,6 +28,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="period-update">
             <?= $this->render('_form', [
                 'model' => $model,
+                'officeList' => $officeList,
+                'isActiveList' => $isActiveList
             ]) ?>
         </div>
     </div>

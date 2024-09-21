@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr>
                 <th scope="row">1</th>
                 <td>
-                    <?=Html::a('Subject', ['subject/index']);?>
+                    <?=Html::a(Yii::t('app', 'Subject'), ['subject/index']);?>
                 </td>
                 <td><?=$subjects;?></td>
                 <td>
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr>
                 <th scope="row">2</th>
-                <td><?=Html::a('Group', ['group/index']);?></td>
+                <td><?=Html::a(Yii::t('app', 'Group'), ['group/index']);?></td>
                 <td><?=$groups;?></td>
                 <td>
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-group']);?>
@@ -58,7 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr>
                 <th scope="row">3</th>
-                <td><?=Html::a('Participant', ['participant/index']);?></td>
+                <td><?=Html::a(Yii::t('app', 'Room'), ['room/index']);?></td>
+                <td><?=$rooms;?></td>
+                <td>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-room']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-room']);?>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td><?=Html::a(Yii::t('app', 'Participant'), ['participant/index']);?></td>
                 <td><?=$participants;?></td>
                 <td>
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-participant']);?>
@@ -67,8 +77,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 </td>
             </tr>
             <tr>
-                <th scope="row">4</th>
-                <td><?=Html::a('Schedule', ['schedule/index']);?></td>
+                <th scope="row">5</th>
+                <td><?=Html::a(Yii::t('app', 'Period'), ['period/index']);?></td>
+                <td><?=$periods;?></td>
+                <td>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-period']);?>
+                    &nbsp;
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-period']);?>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td><?=Html::a(Yii::t('app', 'Schedule'), ['schedule/index']);?></td>
                 <td><?=$schedules.' master / '.$scheduleDetails . ' detail';?></td>
                 <td>
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-schedule']);?>
@@ -77,8 +97,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </td>
             </tr>
             <tr>
-                <th scope="row">5</th>
-                <td><?=Html::a('Assessment', ['assessment/index']);?></td>
+                <th scope="row">7</th>
+                <td><?=Html::a(Yii::t('app', 'Assessment'), ['assessment/index']);?></td>
                 <td><?=$assessments;?></td>
                 <td>
                     <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-assessment']);?>
@@ -87,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </td>
             </tr>
             <tr>
-                <th scope="row">6</th>
+                <th scope="row">8</th>
                 <td>Delete All</td>
                 <td></td>
                 <td>

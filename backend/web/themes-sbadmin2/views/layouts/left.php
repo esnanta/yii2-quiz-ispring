@@ -66,12 +66,12 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Office'), 'url' => ['/office/index']],
                 ],'visible' => $officeMenuVisibility],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
-                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                 ]],
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
+                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
                     ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment/index']],

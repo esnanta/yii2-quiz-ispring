@@ -15,6 +15,7 @@ use common\models\Subject;
 use common\service\DataIdService;
 use Faker\Factory;
 use Yii;
+use yii\db\Expression;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
@@ -57,6 +58,8 @@ class DummyController extends Controller
         $participants = Participant::find()->where(['office_id' => $officeId])->count();
         $subjects = Subject::find()->where(['office_id' => $officeId])->count();
         $groups = Group::find()->where(['office_id' => $officeId])->count();
+        $periods = Period::find()->where(['office_id' => $officeId])->count();
+        $rooms = Room::find()->where(['office_id' => $officeId])->count();
 
         return $this->render('view', [
             'assessments' => $assessments,
@@ -65,13 +68,14 @@ class DummyController extends Controller
             'participants' => $participants,
             'subjects' => $subjects,
             'groups' => $groups,
+            'periods' => $periods,
+            'rooms' => $rooms
         ]);
     }
 
     public function actionDeleteAssessment(): Response
     {
         $officeId = DataIdService::getOfficeId();
-        Assessment::deleteAll(['office_id' => $officeId]);
         Assessment::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);
@@ -85,7 +89,13 @@ class DummyController extends Controller
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);
     }
-
+    public function actionDeletePeriod(): Response
+    {
+        $officeId = DataIdService::getOfficeId();
+        Period::deleteAll(['office_id' => $officeId]);
+        MessageHelper::getFlashDeleteSuccess();
+        return $this->redirect(['view']);
+    }
     public function actionDeleteParticipant(): Response
     {
         $officeId = DataIdService::getOfficeId();
@@ -106,6 +116,14 @@ class DummyController extends Controller
     {
         $officeId = DataIdService::getOfficeId();
         Group::deleteAll(['office_id' => $officeId]);
+        MessageHelper::getFlashDeleteSuccess();
+        return $this->redirect(['view']);
+    }
+
+    public function actionDeleteRoom(): Response
+    {
+        $officeId = DataIdService::getOfficeId();
+        Room::deleteAll(['office_id' => $officeId]);
         MessageHelper::getFlashDeleteSuccess();
         return $this->redirect(['view']);
     }
@@ -153,6 +171,48 @@ class DummyController extends Controller
         return $this->redirect(['view']);
     }
 
+    public function actionCreateRoom()
+    {
+        $officeId = DataIdService::getOfficeId();
+
+        $subject = new Room();
+        $subject->office_id = $officeId;
+        $subject->title = 'Ruang 1';
+        $subject->sequence = '1';
+        $subject->description = 'Ruang 1';
+        $subject->save();
+
+        $subject2 = new Room();
+        $subject2->office_id = $officeId;
+        $subject2->title = 'Ruang 2';
+        $subject2->sequence = '2';
+        $subject2->description = 'Ruang 2';
+        $subject2->save();
+
+        $subject3 = new Room();
+        $subject3->office_id = $officeId;
+        $subject3->title = 'Ruang 3';
+        $subject3->sequence = '3';
+        $subject3->description = 'Ruang 3';
+        $subject3->save();
+
+        $subject4 = new Room();
+        $subject4->office_id = $officeId;
+        $subject4->title = 'Ruang 4';
+        $subject4->sequence = '4';
+        $subject4->description = 'Ruang 4';
+        $subject4->save();
+
+        $subject5 = new Room();
+        $subject5->office_id = $officeId;
+        $subject5->title = 'Ruang 5';
+        $subject5->sequence = '5';
+        $subject5->description = 'Ruang 5';
+        $subject5->save();
+
+        MessageHelper::getFlashSaveSuccess();
+        return $this->redirect(['view']);
+    }
 
     public function actionCreateGroup()
     {
@@ -167,23 +227,23 @@ class DummyController extends Controller
 
         $group2 = new Group();
         $group2->office_id = $officeId;
-        $group2->title = 'X3';
+        $group2->title = 'X2';
         $group2->sequence = '2';
-        $group2->description = 'Kelas X3';
+        $group2->description = 'Kelas X2';
         $group2->save();
 
         $group3 = new Group();
         $group3->office_id = $officeId;
-        $group3->title = 'XI 2';
+        $group3->title = 'XI 1';
         $group3->sequence = '3';
-        $group3->description = 'Kelas XI 2';
+        $group3->description = 'Kelas XI 1';
         $group3->save();
 
         $group4 = new Group();
         $group4->office_id = $officeId;
-        $group4->title = 'XI 3';
+        $group4->title = 'XI 2';
         $group4->sequence = '4';
-        $group4->description = 'Kelas XI 3';
+        $group4->description = 'Kelas XI 2';
         $group4->save();
 
         $group5 = new Group();
@@ -231,53 +291,93 @@ class DummyController extends Controller
         return $this->redirect(['view']);
     }
 
+    public function actionCreatePeriod()
+    {
+        $officeId = DataIdService::getOfficeId();
+
+        $group = new Period();
+        $group->office_id = $officeId;
+        $group->title = '2023-Ganjil';
+        $group->description = '2023-Ganjil';
+        $group->save();
+
+        $group2 = new Period();
+        $group2->office_id = $officeId;
+        $group2->title = '2023-Genap';
+        $group2->description = '2023-Genap';
+        $group2->save();
+
+        $group3 = new Period();
+        $group3->office_id = $officeId;
+        $group3->title = '2024-Ganjil';
+        $group3->description = '2024-Ganjil';
+        $group3->save();
+
+        $group4 = new Period();
+        $group4->office_id = $officeId;
+        $group4->title = '2024-Genap';
+        $group4->description = '2024-Genap';
+        $group4->save();
+
+        MessageHelper::getFlashSaveSuccess();
+        return $this->redirect(['view']);
+    }
+
     public function actionCreateSchedule(): Response
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $officeId = DataIdService::getOfficeId();
-            $groups = Group::find()->where(['office_id' => $officeId])->all();
+            $listPeriods = Period::find()->where(['office_id' => $officeId])->all();
+            $listGroups = Group::find()->where(['office_id' => $officeId])->all();
 
             $dateStart = date(Yii::$app->params['datetimeSaveFormat']);
             $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+2 hours', strtotime($dateStart)));
 
-            foreach ($groups as $groupItem) {
+            foreach ($listPeriods as $period) {
+                foreach ($listGroups as $group) {
 
-                $period = Period::findOne(['office_id' => $officeId]);
-                $room = Room::findOne(['office_id' => $officeId]);
-                $staff = Staff::findOne(['office_id' => $officeId]);
+                    $room = Room::find()
+                        ->where(['office_id' => $officeId])
+                        ->orderBy(new Expression('RAND()')) // Randomize the order
+                        ->one();
 
-                $schedule = new Schedule();
-                $schedule->office_id = $officeId;
-                $schedule->group_id = $groupItem->id;
-                $schedule->period_id = $period->id;
-                $schedule->room_id = $room->id;
-                $schedule->staff_id = $staff->id;
-                $schedule->exam_type = 1;
-                $schedule->date_start = $dateStart;
-                $schedule->date_end = $dateEnd;
-                $schedule->save();
+                    $staff = Staff::findOne(['office_id' => $officeId]);
 
-                $subjects = Subject::find()
-                    ->where(['office_id' => $officeId])
-                    ->limit(2)
-                    ->all();
+                    $schedule = new Schedule();
+                    $schedule->office_id = $officeId;
+                    $schedule->group_id = $group->id;
+                    $schedule->period_id = $period->id;
+                    $schedule->room_id = $room->id;
+                    $schedule->staff_id = $staff->id;
+                    $schedule->exam_type = 1;
+                    $schedule->date_start = $dateStart;
+                    $schedule->date_end = $dateEnd;
+                    $schedule->save();
 
-                foreach ($subjects as $subjectItem) {
-                    $scheduleDetail = new ScheduleDetail();
-                    $scheduleDetail->office_id = $officeId;
-                    $scheduleDetail->schedule_id = $schedule->id;
-                    $scheduleDetail->subject_id = $subjectItem->id;
-                    $scheduleDetail->question_type = (rand(1,3));
-                    $scheduleDetail->remark = $subjectItem->description;
-                    $scheduleDetail->save();
+                    $subjects = Subject::find()
+                        ->where(['office_id' => $officeId])
+                        ->orderBy(new Expression('RAND()')) // Randomize the order
+                        ->limit(2)
+                        ->all();
+
+                    foreach ($subjects as $subjectItem) {
+                        $scheduleDetail = new ScheduleDetail();
+                        $scheduleDetail->office_id = $officeId;
+                        $scheduleDetail->schedule_id = $schedule->id;
+                        $scheduleDetail->subject_id = $subjectItem->id;
+                        $scheduleDetail->question_type = (rand(1,3));
+                        $scheduleDetail->remark = $subjectItem->description;
+                        $scheduleDetail->save();
+                    }
+
+                    $schedule->save();
+
+                    $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+3 hours', strtotime($dateStart)));
+                    $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+2 hours', strtotime($dateStart)));
                 }
-
-                $schedule->save();
-
-                $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+3 hours', strtotime($dateStart)));
-                $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('+2 hours', strtotime($dateStart)));
             }
+
 
             $transaction->commit();
         } catch (\Exception $e) {
@@ -357,6 +457,7 @@ class DummyController extends Controller
             Assessment::deleteAll(['office_id'=>$officeId]);
             ScheduleDetail::deleteAll(['office_id'=>$officeId]);
             Schedule::deleteAll(['office_id'=>$officeId]);
+            Period::deleteAll(['office_id'=>$officeId]);
             Participant::deleteAll(['office_id'=>$officeId]);
             Group::deleteAll(['office_id'=>$officeId]);
             Subject::deleteAll(['office_id'=>$officeId]);

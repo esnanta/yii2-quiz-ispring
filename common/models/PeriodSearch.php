@@ -11,11 +11,11 @@ use yii\data\ActiveDataProvider;
  */
 class PeriodSearch extends Period
 {
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'sequence', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'is_active','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -29,7 +29,7 @@ class PeriodSearch extends Period
     {
         $officeId = CacheService::getInstance()->getOfficeId();
         $query = Period::find()->where(['office_id'=>$officeId])
-            ->orderBy('sequence ASC');
+            ->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,6 +42,7 @@ class PeriodSearch extends Period
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
+            'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -53,7 +54,6 @@ class PeriodSearch extends Period
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'sequence', $this->sequence])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 

@@ -13,7 +13,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property integer $office_id
  * @property string $title
- * @property integer $sequence
+ * @property integer $is_active
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -26,7 +26,6 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \common\models\Assessment[] $assessments
- * @property \common\models\Assessment[] $assessmentDetails
  * @property \common\models\Office $office
  * @property \common\models\Schedule[] $schedules
  */
@@ -57,7 +56,6 @@ class Period extends \yii\db\ActiveRecord
     {
         return [
             'assessments',
-            'assessmentDetails',
             'office',
             'schedules'
         ];
@@ -69,11 +67,10 @@ class Period extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'is_active', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['sequence'], 'string', 'max' => 4],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -108,7 +105,7 @@ class Period extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'title' => Yii::t('app', 'Title'),
-            'sequence' => Yii::t('app', 'Sequence'),
+            'is_active' => Yii::t('app', 'Is Active'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
@@ -121,15 +118,7 @@ class Period extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::class, ['period_id' => 'id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAssessmentDetails()
-    {
-        return $this->hasMany(\common\models\Assessment::class, ['period_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['period_id' => 'id']);
     }
         
     /**
@@ -137,7 +126,7 @@ class Period extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
         
     /**
@@ -145,7 +134,7 @@ class Period extends \yii\db\ActiveRecord
      */
     public function getSchedules()
     {
-        return $this->hasMany(\common\models\Schedule::class, ['period_id' => 'id']);
+        return $this->hasMany(\common\models\Schedule::className(), ['period_id' => 'id']);
     }
     
     /**
