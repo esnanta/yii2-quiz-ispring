@@ -205,7 +205,7 @@ class ScheduleDetailService
     {
         $currentTime = strtotime("now");
         $timeStart = $scheduleDetail->schedule->getTimeStart();
-        $timeEnd = $scheduleDetail->schedule->getTimeEnd();
+        $timeEnd = $scheduleDetail->schedule->getTimeOut();
 
         // Default: "Closed" button
         $linkLabel = Yii::t('app', 'Closed');
@@ -245,11 +245,17 @@ class ScheduleDetailService
         return $scheduleTitle . '_' . $subjectTitle . '_' . $scheduleDetail->id;
     }
 
-    public function generateTextLink(ScheduleDetail $scheduleDetail): string
+    public function generateTextLink(
+        ScheduleDetail $scheduleDetail,
+        ScheduleService $scheduleService): string
     {
         // Get the current time and the schedule timer
-        $currentTime = strtotime("now");
-        $timer = $scheduleDetail->schedule->getTimeReference();
+        $timeStart = $scheduleDetail->schedule->getTimeStart();
+        $timeOut = $scheduleDetail->schedule->getTimeOut();
+        $currentTime = time();
+
+        //$timer = $scheduleDetail->schedule->getTimeReference();
+        $timer = $scheduleService->getCountdownTime($timeStart,$timeOut,$currentTime);
 
         // Initialize the text link as an empty string
         $textLink = '';

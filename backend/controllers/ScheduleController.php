@@ -110,6 +110,7 @@ class ScheduleController extends Controller
         // Use ScheduleService for token and countdown logic
         list($countdownTime, $interval, $tokenMessage) =
             $this->scheduleService->handleTokenAndCountdown($model);
+        $labelAlertTimer = $this->scheduleService->getLabelAlertTimer($model);
 
         return $this->render('view', [
             'model' => $model,
@@ -118,6 +119,7 @@ class ScheduleController extends Controller
             'participantList' => $participantList,
             'countdownTime' => $countdownTime,
             'interval' => $interval,
+            'labelAlertTimer'=>$labelAlertTimer,
             'tokenMessage' => $tokenMessage,  // Pass token status message
             'minutesTolerance' => $this->scheduleService->getMinutesTolerance(),
             'scheduleDetailService' => $scheduleDetailService
@@ -330,7 +332,7 @@ class ScheduleController extends Controller
     {
         $scheduleDetailService = new ScheduleDetailService();
         $scheduleDetail = ScheduleDetail::findOne($id);
-        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail);
+        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail,$this->scheduleService);
         $this->redirect(str_replace('admin/','',$textLink));
     }
 }

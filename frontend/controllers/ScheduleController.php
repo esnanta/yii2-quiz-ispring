@@ -154,7 +154,7 @@ class ScheduleController extends Controller
         $assessment->exam_type = $scheduleDetail->schedule->exam_type;
         $assessment->save();
 
-        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail);
+        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail,$this->scheduleService);
         $this->redirect($textLink);
     }
 

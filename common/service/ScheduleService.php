@@ -18,13 +18,18 @@ class ScheduleService
      */
     public function handleTokenAndCountdown(Schedule $model): array
     {
-        $timeStart = strtotime($model->date_start);
-        $timeOut = strtotime($model->date_end);
-        $tokenTime = strtotime($model->token_time);
+        $timeStart = $model->getTimeStart();
+        $timeOut = $model->getTimeOut();
+        $tokenTime = $model->getTokenTime();
         $currentTime = time();
-        $tokenStartTime = $timeStart - (2 * 60); // Token available 2 minutes before start
 
-        $countdownTime = $timeStart;
+        // Token available in buffer minutes before start
+        $tokenStartTime = $model->getTimeStart() - $model->getMinutesBuffer();
+
+        // Calculate the reference time for the countdown
+        $countdownTime = $this->getCountdownTime($timeStart, $timeOut, $currentTime);
+
+        // Set interval to calculate how much time has passed since the start
         $interval = (int)(($currentTime - $timeStart) / 60);
 
         // Case 1: Token has not started yet (before tokenStartTime)
@@ -42,7 +47,7 @@ class ScheduleService
             } else {
                 // Token expired or missing, generate a new token
                 $this->generateNewToken($model);
-                $tokenTime = strtotime($model->token_time); // Update after token generation
+                $tokenTime = $model->getTokenTime(); // Update after token generation
                 $countdownTime = $tokenTime + $this->minutesTolerance;
                 $tokenMessage = Yii::t('app', 'New token generated');
             }
@@ -55,6 +60,41 @@ class ScheduleService
     }
 
     /**
+     * Helper function to get the countdown time reference.
+     */
+    public function getCountdownTime($timeStart, $timeOut, $currentTime): float
+    {
+        // Case: If the current time is before the start time
+        if ($currentTime < $timeStart) {
+            // Return the countdown time as the difference between the current time and start time
+            return $timeStart;  // The countdown should aim at the start time
+        }
+
+        // Case: If the current time is within the valid token lifetime
+        if ($currentTime >= $timeStart && $currentTime < $timeOut) {
+            // Calculate the remaining time until the token expires
+            $remainingTime = $timeOut - $currentTime;
+
+            // If the remaining time is less than the tolerance (15 minutes)
+            if ($remainingTime <= $this->minutesTolerance) {
+                return $currentTime;
+            }
+
+            // Otherwise, return the timeStart plus 15-minute intervals until the end
+            $interval = $this->minutesTolerance;
+            $adjustedTime = $timeStart + ceil(($currentTime - $timeStart) / $interval) * $interval;
+            return min($adjustedTime, $timeOut);
+        }
+
+        // Case: If the token has expired, return the timeOut
+        return $timeOut;
+    }
+
+
+
+    /**
+     * Generates a new token for the given schedule model.
+     *
      * @throws Exception
      */
     public function generateNewToken(Schedule $model): void
@@ -62,6 +102,22 @@ class ScheduleService
         $model->token_time = date(DateHelper::getDateTimeSaveFormat());
         $model->token = substr(uniqid('', true), -6); // Generate 6-character token
         $model->save();
+    }
+
+    /**
+     * Returns the label class for the alert timer based on the current time.
+     */
+    public function getLabelAlertTimer(Schedule $model): string
+    {
+        $timeStart = strtotime($model->date_start);
+        $timeEnd = strtotime($model->date_end);
+        $currentTime = time();
+
+        if ($currentTime >= $timeStart && $currentTime <= $timeEnd) {
+            return 'badge bg-success text-white';
+        }
+
+        return 'badge bg-danger text-white';
     }
 
     public function getMinutesTolerance(): int

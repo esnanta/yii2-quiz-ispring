@@ -101,7 +101,6 @@ class Schedule extends BaseSchedule
             return '-';
     }
 
-
     public function updateIsAsset(): int
     {
         $isAsset = self::IS_ASSET_AVAILABLE;
@@ -121,7 +120,7 @@ class Schedule extends BaseSchedule
         return $isAsset;
     }
 
-    private function getMinutesBuffer(): int
+    public function getMinutesBuffer(): int
     {
         //2 minutes
         return 120;
@@ -129,53 +128,16 @@ class Schedule extends BaseSchedule
 
     public function getTimeStart(): int
     {
-        return strtotime($this->date_start) - $this->getMinutesBuffer();
+        return strtotime($this->date_start);
     }
-    public function getTimeEnd(): int
+    public function getTimeOut(): int
     {
         return strtotime($this->date_end);
     }
 
-
-    public function getTimeReference(): float {
-        // Get the current time
-        $currentTime = time();
-
-        // Get the date_start and date_end timestamps
-        $timeStart = strtotime($this->date_start);
-        $timeEnd = strtotime($this->date_end);
-
-        // Check if the current time is within the valid token lifetime
-        if ($currentTime >= $timeStart && $currentTime < $timeEnd) {
-            // Calculate the remaining time until the token expires
-            $remainingTime = $timeEnd - $currentTime;
-
-            // If the remaining time is less than 15 minutes, return the current time
-            if ($remainingTime <= 15 * 60) {
-                return $currentTime;
-            }
-
-            // Otherwise, return the timeStart plus 15-minute intervals until the end
-            $interval = 15 * 60;
-            $adjustedTime = $timeStart + ceil(($currentTime - $timeStart) / $interval) * $interval;
-            return min($adjustedTime, $timeEnd);
-        }
-
-        // If the token has expired, return the date_end
-        return $timeEnd;
-    }
-
-    public function getLabelAlertTimer(): string
+    public function getTokenTime(): int
     {
-        $timeStart      = $this->getTimeStart();
-        $timeEnd        = $this->getTimeEnd();
-        $currentTime    = strtotime("now");
-
-        $labelAlertTimer = 'badge bg-danger text-white';
-        if($currentTime >= $timeStart && $currentTime <= $timeEnd):
-            $labelAlertTimer = 'badge bg-success text-white';
-        endif;
-        return $labelAlertTimer;
+        return strtotime($this->token_time);
     }
 
     public function getUrl(): string

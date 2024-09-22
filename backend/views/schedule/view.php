@@ -28,12 +28,9 @@ $refresh = Html::a(
     ['class' => 'btn btn-sm btn-primary float-right float-end']
 );
 
-$timer = $model->getTimeReference();
-$labelAlertTimer = $model->getLabelAlertTimer();
-
 Yii2TimerCountDown::widget([
     'countDownIdSelector' => 'time-down-counter-token',
-    'countDownDate' => strtotime(date("Y-m-d H:i:s", $timer)) * 1000
+    'countDownDate' => $countdownTime * 1000  // No need for strtotime again
 ]);
 
 ?>
