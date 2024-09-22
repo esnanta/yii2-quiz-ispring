@@ -23,7 +23,7 @@ class Schedule extends BaseSchedule
     {
         return [
             //TAMBAHAN
-            [['group_id', 'room_id','staff_id','date_start','date_end'], 'required'],
+            [['period_id','group_id', 'room_id','staff_id','date_start','date_end'], 'required'],
 
             [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
