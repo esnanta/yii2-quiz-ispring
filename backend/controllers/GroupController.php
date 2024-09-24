@@ -5,14 +5,17 @@ namespace backend\controllers;
 use common\helper\MessageHelper;
 use common\models\Group;
 use common\models\GroupSearch;
+use common\models\Participant;
 use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
+use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * GroupController implements the CRUD actions for Group model.
@@ -60,11 +63,14 @@ class GroupController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$title=null)
     {
         if(Yii::$app->user->can('view-group')){
             $model = $this->findModel($id);
             $officeList = DataListService::getOffice();
+            $listParticipant = Participant::find()
+                ->where(['office_id'=>$model->office_id, 'group_id'=>$id])
+                ->all();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
@@ -73,6 +79,7 @@ class GroupController extends Controller
                 return $this->render('view', [
                     'model' => $model,
                     'officeList'=>$officeList,
+                    'listParticipant' => $listParticipant
                 ]);
             }
         }
@@ -80,6 +87,52 @@ class GroupController extends Controller
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
+    }
+
+    /**
+     * @throws Exception
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdateParticipant($id, $title=null): Response|string
+    {
+        // Find the group
+        $model = $this->findModel($id);
+        $officeList = DataListService::getOffice();
+        $groupList = DataListService::getGroup();
+
+        // Find all participants in this group
+        $listParticipants = Participant::find()
+            ->where(['office_id' => $model->office_id, 'group_id' => $id])
+            ->all();
+
+        // If the form is submitted
+        if (Yii::$app->request->post()) {
+            $postData = Yii::$app->request->post('Participant', []);
+
+            // Loop through the participant data
+            foreach ($postData as $index => $participantData) {
+                // Find the participant model
+                $participant = Participant::findOne($participantData['id']);
+
+                // If participant found, load data and validate/save
+                if ($participant) {
+                    $participant->load(['Participant' => $participantData]);
+                    if (!$participant->save()) {
+                        Yii::$app->session->setFlash('error', "Failed to save participant: " . $participant->id);
+                    }
+                }
+            }
+
+            Yii::$app->session->setFlash('success', 'Participants updated successfully.');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        return $this->render('_form_participant', [
+            'group' => $model,
+            'officeList' => $officeList,
+            'groupList' => $groupList,
+            'listParticipants' => $listParticipants
+        ]);
     }
 
     /**
