@@ -27,7 +27,10 @@ $create = LabelHelper::getCreateButton('');
     </li>
     <li class="nav-item" role="presentation">
         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#participant" role="tab"
-           aria-controls="profile" aria-selected="false"><?= Yii::t('app', 'Participant'); ?></a>
+           aria-controls="profile" aria-selected="false">
+            <?= Yii::t('app', 'Participant'); ?>
+            <span class="badge badge-primary"><?=count($listParticipant);?></span>
+        </a>
     </li>
 </ul>
 
@@ -107,45 +110,10 @@ $create = LabelHelper::getCreateButton('');
         ]) ?>
     </div>
     <div class="tab-pane fade" id="participant" role="tabpanel" aria-labelledby="profile-tab">
-        <div class="card border-default mb-3">
-            <div class="card-header">
-                <?=Yii::t('app', 'Participants');?>
-                <span class="float-right float-end">
-                    <?= Html::a(IconHelper::getUpdate(),
-                        ['update-participant', 'id'=>$model->id, 'title'=>$model->title],
-                        ['class' => 'btn btn-primary float-right float-end']); ?>
-                </span>
-            </div>
-            <div class="card-body text-default">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col"><?=Yii::t('app', 'Title');?></th>
-                        <th scope="col"><?=Yii::t('app', 'Identity Number');?></th>
-                        <th scope="col"><?=Yii::t('app', 'Username');?></th>
-                        <th scope="col"><?=Yii::t('app', 'Group');?></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <?php
-                        foreach ($listParticipant as $i=>$participant) {
-                    ?>
-                            <tr>
-                                <th scope="row"><?=($i+1)?></th>
-                                <td><?= $participant->title ?></td>
-                                <td><?= $participant->identity_number ;?></td>
-                                <td><?= $participant->username ;?></td>
-                                <td><?= $participant->group->title ;?></td>
-                            </tr>
-                    <?php } ?>
-
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <?= $this->render('view_participant',[
+                'model'=>$model,
+                'listParticipant' => $listParticipant
+        ]);?>
     </div>
 </div>
 

@@ -57,7 +57,7 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Staff'), 'icon' => 'chevron-circle-right', 'items' => [
                         ['label' => Yii::t('app', 'Employment'), 'url' => ['/employment/index']],
                         ['label' => Yii::t('app', 'Staff'), 'url' => ['/staff/index'] ],
-                        ['label' => Yii::t('app', 'Add Staff'), 'url' => ['/site/create-reguler']]
+                        //['label' => Yii::t('app', 'Add Staff'), 'url' => ['/site/create-reguler']]
                     ]],
                     ['label' => Yii::t('app', 'Page'), 'icon' => 'chevron-circle-right', 'items' => [
                         ['label' => Yii::t('app', 'Text'), 'url' => ['/page/index','type'=> Page::PAGE_TYPE_TEXT]],

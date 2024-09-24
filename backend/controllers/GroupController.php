@@ -93,46 +93,67 @@ class GroupController extends Controller
      * @throws Exception
      * @throws NotFoundHttpException
      */
-    public function actionUpdateParticipant($id, $title=null): Response|string
+    public function actionUpdateParticipant($id): Response|string
     {
-        // Find the group
-        $model = $this->findModel($id);
-        $officeList = DataListService::getOffice();
-        $groupList = DataListService::getGroup();
+        if(Yii::$app->user->can('update-group')){
+            // Find the group model
+            $group = $this->findModel($id);
+            $officeList = DataListService::getOffice();
+            $groupList = DataListService::getGroup();
 
-        // Find all participants in this group
-        $listParticipants = Participant::find()
-            ->where(['office_id' => $model->office_id, 'group_id' => $id])
-            ->all();
+            // Find all participants in this group
+            $participants = Participant::find()
+                ->where(['group_id' => $id, 'office_id' => $group->office_id])
+                ->all();
 
-        // If the form is submitted
-        if (Yii::$app->request->post()) {
-            $postData = Yii::$app->request->post('Participant', []);
+            // If the form is submitted
+            if (Yii::$app->request->post('Participant')) {
+                $postData = Yii::$app->request->post('Participant');
+                $isValid = true;
 
-            // Loop through the participant data
-            foreach ($postData as $index => $participantData) {
-                // Find the participant model
-                $participant = Participant::findOne($participantData['id']);
+                // Loop through each posted participant data
+                foreach ($postData as $key => $participantData) {
+                    $participant = Participant::findOne($participantData['id']);
 
-                // If participant found, load data and validate/save
-                if ($participant) {
-                    $participant->load(['Participant' => $participantData]);
-                    if (!$participant->save()) {
-                        Yii::$app->session->setFlash('error', "Failed to save participant: " . $participant->id);
+                    // If the participant exists
+                    if ($participant) {
+                        // Load the posted data into the model
+                        $participant->load(['Participant' => $participantData]);
+
+                        // Validate and save the participant
+                        if (!$participant->validate() || !$participant->save()) {
+                            $isValid = false;
+                            MessageHelper::getFlashUpdateFailed();
+                            Yii::$app->session->setFlash('error', "Failed to save participant: " . $participant->id);
+                        }
                     }
+                }
+
+                // If all participants are valid
+                if ($isValid) {
+                    MessageHelper::getFlashUpdateSuccess();
+                    return $this->redirect(['view', 'id' => $id]); // Redirect after saving
                 }
             }
 
-            Yii::$app->session->setFlash('success', 'Participants updated successfully.');
-            return $this->redirect(['view', 'id' => $id]);
+            // Prepare data provider for TabularForm
+            $listParticipants = [];
+            foreach ($participants as $participant) {
+                $listParticipants[] = $participant->toArray();
+            }
+
+            return $this->render('_form_participant', [
+                'group' => $group,
+                'officeList' => $officeList,
+                'groupList' => $groupList,
+                'listParticipants' => $listParticipants,
+            ]);
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
 
-        return $this->render('_form_participant', [
-            'group' => $model,
-            'officeList' => $officeList,
-            'groupList' => $groupList,
-            'listParticipants' => $listParticipants
-        ]);
     }
 
     /**

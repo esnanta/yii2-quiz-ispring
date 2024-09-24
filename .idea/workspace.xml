@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change afterPath="$PROJECT_DIR$/backend/views/group/_form_participant.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/group/view_participant.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/dektrium/user/views/_alert.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/GroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/GroupController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/group/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/_form_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/_form_participant.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/group/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/dektrium/user/admin/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/dektrium/user/admin/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +300,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/views/group",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/web/themes-sbadmin2/dektrium/user/views",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -310,11 +313,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\themes-sbadmin2\dektrium\user\views" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\group" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\views\schedule" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\views" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\chart" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\participant" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\views\assessment" />
@@ -499,7 +502,8 @@
       <workItem from="1726887263613" duration="4909000" />
       <workItem from="1726970506633" duration="300000" />
       <workItem from="1726970900301" duration="6631000" />
-      <workItem from="1727158319079" duration="4378000" />
+      <workItem from="1727158319079" duration="4659000" />
+      <workItem from="1727163031419" duration="3431000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
