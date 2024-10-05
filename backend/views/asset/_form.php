@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\DateHelper;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
@@ -9,7 +10,12 @@ use kartik\widgets\FileInput;
 /**
  * @var yii\web\View $this
  * @var common\models\Asset $model
+ * @var common\models\Asset $assetTypeList
+ * @var common\models\Asset $assetCategoryList
+ * @var common\models\Asset $isVisibleList
  * @var yii\widgets\ActiveForm $form
+ *
+ *
  */
 ?>
 
@@ -34,7 +40,8 @@ use kartik\widgets\FileInput;
                         'date_issued' => [
                             'type' => Form::INPUT_WIDGET,
                             'widgetClass' => DateControl::class,
-                            'options' => ['type' => DateControl::FORMAT_DATE]],
+                            'format' => DateHelper::getDateSaveFormat(),
+                        ],
                         'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 200]],
                         'asset_category_id' => [
                             'type' => Form::INPUT_WIDGET,

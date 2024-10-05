@@ -168,10 +168,10 @@ class AssetController extends Controller
             $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
 
-            $model = new Asset;
-            $model->office_id = $officeId;
-            $model->date_issued = date(DateHelper::getDateTimeSaveFormat());
-            $model->is_visible = Asset::IS_VISIBLE_PRIVATE;
+            $model              = new Asset;
+            $model->office_id   = $officeId;
+            $model->date_issued = date(DateHelper::getDateSaveFormat());
+            $model->is_visible  = Asset::IS_VISIBLE_PRIVATE;
 
             $assetTypeList = Asset::getArrayAssetType();
             $isVisibleList = Asset::getArrayIsVisible();
