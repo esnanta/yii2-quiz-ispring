@@ -2,13 +2,12 @@
 
 namespace common\models;
 
-use common\helper\IconHelper;
+use common\domain\AssetUseCase;
 use common\helper\LabelHelper;
 use common\models\base\Asset as BaseAsset;
 use common\service\CacheService;
 use Yii;
-use yii\bootstrap5\Html;
-use yii\helpers\FileHelper;
+use yii\base\Exception;
 use yii\web\UploadedFile;
 
 /**
@@ -37,7 +36,7 @@ class Asset extends BaseAsset
         return [
             //TAMBAHAN
             [['is_visible','asset_category_id'], 'required'],
-            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 2), 'tooBig' => 'Limit is 2MB'],
+            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 20), 'tooBig' => 'Limit is 20MB'],
 
             [['office_id', 'is_visible', 'asset_type', 'asset_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
@@ -53,7 +52,8 @@ class Asset extends BaseAsset
     
     
     
-    public function beforeSave($insert) {
+    public function beforeSave($insert): bool
+    {
         if ($this->isNewRecord) {
             $this->download_counter     = 0;
             $this->view_counter         = 0;
@@ -62,7 +62,7 @@ class Asset extends BaseAsset
         return parent::beforeSave($insert);
     }
 
-    public static function getArrayIsVisible()
+    public static function getArrayIsVisible(): array
     {
         return [
             //MASTER
@@ -71,7 +71,7 @@ class Asset extends BaseAsset
         ];
     }
 
-    public static function getOneIsVisible($_module = null)
+    public static function getOneIsVisible($_module = null): string
     {
         if($_module)
         {
@@ -152,46 +152,39 @@ class Asset extends BaseAsset
         }
     }
 
-    private function getWebRoot() : String
-    {
-        return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
+    public function getPath() : string {
+        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
+        return '/uploads/asset/'.$officeUniqueId;
     }
 
     /**
      * fetch stored asset file name with complete path
      * @return string
+     * @throws Exception
      */
     public function getAssetFile(): ?string
     {
-        $directory  = $this->getWebRoot() . $this->getPath();
-        if (!is_dir($directory)) {
-            FileHelper::createDirectory($directory, $mode = 0777);
-        }
-        return (!empty($this->asset_name)) ? $directory.'/'. $this->asset_name : null;
+        return AssetUseCase::getFile($this->getPath(),$this->asset_name);
     }
 
     /**
+     * Generates a URL pointing to a file on the server (image, PDF, etc.).
      * fetch stored asset url
      * @return string
      */
     public function getAssetUrl(): string
     {
-        // return a default image placeholder if your source avatar is not found
-        $defaultImage = '/images/no-picture-available-icon-1.jpg';
-        $asset_name = (!empty($this->asset_name)) ? $this->asset_name : $defaultImage;
-        $directory = $this->getWebRoot() . $this->getPath();
+        return AssetUseCase::getFileUrl($this->getPath(), $this->asset_name);
+    }
 
-        if (file_exists($directory.'/'.$asset_name)) {
-            $file_parts = pathinfo($directory.'/'.$asset_name);
-            if($file_parts['extension']=='pdf'){
-                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$asset_name;
-            }
-            
-            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$asset_name;
-        }
-        else{
-            return Yii::$app->urlManager->baseUrl . $defaultImage;
-        }
+    /**
+     * Generates a URL pointing to a Yii controller action for routing requests
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id,
+            'title' => $this->title]);
     }
 
     /**
@@ -248,40 +241,30 @@ class Asset extends BaseAsset
         return true;
     }
 
-    public function getUrl(): string
-    {
-        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id, 'title' => $this->title]);
-    }
-
-    public function getPath() : string {
-        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
-        return '/uploads/asset/'.$officeUniqueId;
-    }
-
-    public function getProceedButton(): string
-    {
-        $button = Html::a(
-            IconHelper::getImport().' '.Yii::t('app', 'Import'),
-            ['import','id'=>$this->id,'title'=>$this->title],
-            ['class' => 'btn btn-sm btn-info pull-right']
-        );
-        $asset = $this->getAssetFile();
-        if(!file_exists($asset)){
-            $button = Html::a(
-                IconHelper::getAdd().' '.Yii::t('app', 'Upload'),
-                ['asset/update','id'=>$this->id,'title'=>$this->title],
-                ['class' => 'btn btn-sm btn-danger pull-right']
-            );
-        }
-        return $button;
-    }
-
-    public function getUpdateButton(): string
-    {
-        return Html::a(
-            IconHelper::getView(),
-            ['asset/view','id'=>$this->id,'title'=>$this->title],
-            ['class' => 'btn btn-sm btn-primary pull-right']
-        );
-    }
+//    public function getProceedButton(): string
+//    {
+//        $button = Html::a(
+//            IconHelper::getImport().' '.Yii::t('app', 'Import'),
+//            ['import','id'=>$this->id,'title'=>$this->title],
+//            ['class' => 'btn btn-sm btn-info pull-right']
+//        );
+//        $asset = $this->getAssetFile();
+//        if(!file_exists($asset)){
+//            $button = Html::a(
+//                IconHelper::getAdd().' '.Yii::t('app', 'Upload'),
+//                ['asset/update','id'=>$this->id,'title'=>$this->title],
+//                ['class' => 'btn btn-sm btn-danger pull-right']
+//            );
+//        }
+//        return $button;
+//    }
+//
+//    public function getUpdateButton(): string
+//    {
+//        return Html::a(
+//            IconHelper::getView(),
+//            ['asset/view','id'=>$this->id,'title'=>$this->title],
+//            ['class' => 'btn btn-sm btn-primary pull-right']
+//        );
+//    }
 }

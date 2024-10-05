@@ -9,6 +9,7 @@ use common\models\AssetSearch;
 use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
+use yii\base\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -20,7 +21,7 @@ use yii\web\NotFoundHttpException;
  */
 class AssetController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -65,6 +66,7 @@ class AssetController extends Controller
      * Displays a single Asset model.
      * @param integer $id
      * @return mixed
+     * @throws Exception
      */
     public function actionView($id,$title=null)
     {
@@ -116,7 +118,9 @@ class AssetController extends Controller
                 if ($model->save()) {
                     // upload only if valid uploaded file instance found
                     if ($asset !== false) { // delete old and overwrite
-                        file_exists($oldFile) ? unlink($oldFile) : '';
+                        if(file_exists($oldFile)) {
+                            unlink($oldFile);
+                        }
                         $path = $model->getAssetFile();
                         $asset->saveAs($path);
                     }

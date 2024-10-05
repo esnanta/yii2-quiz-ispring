@@ -2,12 +2,19 @@
 
 namespace common\domain;
 
+use common\helper\ImageHelper;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
 
 class AssetUseCase
 {
+
+    public function getWebRoot() : String
+    {
+        return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
+    }
+
     /**
      * @throws Exception
      */
@@ -22,10 +29,17 @@ class AssetUseCase
 
     public static function getFileUrl($path,$fileName): string
     {
-        // return a default image placeholder if your source avatar is not found
-        return isset($fileName) ?
-            Yii::$app->urlManager->baseUrl .$path.'/'.$fileName :
-            Yii::$app->urlManager->baseUrl .'/images/no-picture-available-icon-1.jpg';
+        // Set default image if fileName is empty
+        $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
+        $filePath = (new AssetUseCase)->getWebRoot() . $path . '/' . $assetName;
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            return Yii::$app->urlManager->baseUrl . $path . '/' . $assetName;
+        }
+
+        // Return default image if file doesn't exist
+        return self::getDefaultImage();
     }
 
     /**
@@ -53,6 +67,10 @@ class AssetUseCase
                 return true;
             }
         }
+    }
 
+    public static function getDefaultImage(): string
+    {
+        return str_replace('frontend', 'backend', ImageHelper::getNotAvailable()) ;
     }
 }
