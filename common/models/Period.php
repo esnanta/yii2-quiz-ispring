@@ -32,19 +32,6 @@ class Period extends BasePeriod
         ]);
     }
 
-    public function beforeSave($insert): bool
-    {
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
-
-        if ($this->isNewRecord) {
-            $this->is_active = self::IS_ACTIVE_NO;
-        }
-
-        return true;
-    }
-
     public static function getArrayIsActive(): array
     {
         return [

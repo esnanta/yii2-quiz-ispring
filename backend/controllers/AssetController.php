@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
+use common\helper\DataIdHelper;
+use common\helper\DateHelper;
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
-use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
 use yii\base\Exception;
@@ -68,42 +69,53 @@ class AssetController extends Controller
      * @return mixed
      * @throws Exception
      */
-    public function actionView($id,$title=null)
+    public function actionView($id, $title = null)
     {
         if (Yii::$app->user->can('view-asset')) {
             $model = $this->findModel($id);
 
-            $officeList             = DataListService::getOffice();
+            $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
+            $isVisibleList        = Asset::getArrayIsVisible();
+            $assetTypeList        = Asset::getArrayAssetType();
 
-            $isVisibleList = Asset::getArrayIsVisible();
-            $assetTypeList = Asset::getArrayAssetType();
+            $currentFile    = $model->getAssetFile();
+            $currentName    = $model->asset_name;
+            $fileData       = null;
+            $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
+            $helper         = null;
 
-            $oldFile = $model->getAssetFile();
-            $oldAvatar = $model->asset_name;
+            if (!empty($currentFile)) {
+                try {
+                    $fileExtension = pathinfo($currentFile, PATHINFO_EXTENSION);
 
-            $isSpreadsheet = null;
-            $helper = null;
-            $sheetData = null;
-
-            if(!empty($oldFile)):
-                try{
-                    $inputFileName = $oldFile;
-                    $isSpreadsheet = SpreadsheetHelper::getInstance()->getIdentify($inputFileName);
-                    if($isSpreadsheet == 'Xlsx'){
-                        $helper = SpreadsheetHelper::getInstance()->getHelper();
-                        $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
-                        $reader = SpreadsheetHelper::getInstance()->getReader($inputFileName,$sheetName);
-                        $spreadsheet = $reader->load($inputFileName);
+                    // Identify file type based on extension
+                    if (in_array(strtolower($fileExtension), ['xlsx', 'xls'])) {
+                        // Spreadsheet handling
+                        $fileType = Asset::ASSET_TYPE_SPREADSHEET;
+                        $spreadsheetHelper = SpreadsheetHelper::getInstance();
+                        $helper = $spreadsheetHelper->getHelper();
+                        $sheetName = $spreadsheetHelper->getSheetName();
+                        $reader = $spreadsheetHelper->getReader($currentFile, $sheetName);
+                        $spreadsheet = $reader->load($currentFile);
                         $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-                        $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                        $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
                             $activeRange, null, true, true, true
                         );
+
+                    } elseif (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif'])) {
+                        // Image handling
+                        $fileType = Asset::ASSET_TYPE_IMAGE;
+                        $fileData = $currentFile; // Assuming this is the file path to display the image
+                    } elseif (in_array(strtolower($fileExtension), ['pdf', 'doc', 'docx'])) {
+                        // Document handling
+                        $fileType = Asset::ASSET_TYPE_DOCUMENT;
+                        $fileData = $currentFile; // Assuming this is the file path for download or preview
                     }
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
                     MessageHelper::getFlashAssetNotFound();
                 }
-            endif;
+            }
 
             if ($model->load(Yii::$app->request->post())) {
                 // process uploaded asset file instance
@@ -111,39 +123,35 @@ class AssetController extends Controller
 
                 // revert back if no valid file instance uploaded
                 if ($asset === false) {
-                    $model->asset_name = $oldAvatar;
-                    //$model->title = $oldFileName;
+                    $model->asset_name = $currentName;
                 }
 
                 if ($model->save()) {
-                    // upload only if valid uploaded file instance found
-                    if ($asset !== false) { // delete old and overwrite
-                        if(file_exists($oldFile)) {
-                            unlink($oldFile);
+                    if ($asset !== false) {
+                        if (file_exists($currentFile)) {
+                            unlink($currentFile);
                         }
                         $path = $model->getAssetFile();
                         $asset->saveAs($path);
                     }
                     MessageHelper::getFlashUpdateSuccess();
                     return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    // error in saving model
                 }
-            } else {
-                return $this->render('view', [
-                    'model' => $model,
-                    'officeList' => $officeList,
-                    'assetCategoryList' => $assetCategoryList,
-                    'isVisibleList' => $isVisibleList,
-                    'assetTypeList' => $assetTypeList,
-                    'isSpreadsheet' => $isSpreadsheet,
-                    'helper' => $helper,
-                    'sheetData' => $sheetData
-                ]);
             }
+
+            return $this->render('view', [
+                'model' => $model,
+                'officeList' => $officeList,
+                'assetCategoryList' => $assetCategoryList,
+                'isVisibleList' => $isVisibleList,
+                'assetTypeList' => $assetTypeList,
+                'fileType' => $fileType,
+                'helper' => $helper,
+                'fileData' => $fileData,
+            ]);
         } else {
             MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException();
         }
     }
 
@@ -156,13 +164,13 @@ class AssetController extends Controller
     {
         if (Yii::$app->user->can('create-asset')) {
 
-            $officeId               = DataIdService::getOfficeId();
-            $officeList             = DataListService::getOffice();
+            $officeId             = DataIdHelper::getOfficeId();
+            $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
 
             $model = new Asset;
             $model->office_id = $officeId;
-            $model->date_issued = date(Yii::$app->params['dateSaveFormat']);
+            $model->date_issued = date(DateHelper::getDateTimeSaveFormat());
             $model->is_visible = Asset::IS_VISIBLE_PRIVATE;
 
             $assetTypeList = Asset::getArrayAssetType();
@@ -172,7 +180,7 @@ class AssetController extends Controller
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
                     $asset = $model->uploadAsset();
-                    $model->asset_url = $model->getPath() . '/' . $asset->name;
+                    $model->asset_url = $model->getAssetUrl();
 
                     if ($model->save()) :
                         // upload only if valid uploaded file instance found
