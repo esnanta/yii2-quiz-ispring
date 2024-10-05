@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\helper\DataIdHelper;
 use common\helper\DateHelper;
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
+use common\service\CacheService;
 use common\service\DataListService;
 use Yii;
 use yii\base\Exception;
@@ -164,7 +164,7 @@ class AssetController extends Controller
     {
         if (Yii::$app->user->can('create-asset')) {
 
-            $officeId             = DataIdHelper::getOfficeId();
+            $officeId             = CacheService::getInstance()->getOfficeId();
             $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
 
