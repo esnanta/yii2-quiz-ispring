@@ -107,10 +107,8 @@ class AssetController extends Controller
                         $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
                             $activeRange, null, true, true, true
                         );
-                    } elseif ($fileType === Asset::ASSET_TYPE_IMAGE) {
-                        $fileData = $currentFile; // Path to display image
-                    } elseif (in_array($fileType, [Asset::ASSET_TYPE_WORD, Asset::ASSET_TYPE_COMPRESSION, Asset::ASSET_TYPE_PDF])) {
-                        $fileData = $currentFile; // Path for download or preview
+                    } else  {
+                        $fileData = $currentFile;
                     }
 
                 } catch (\Exception $e) {
