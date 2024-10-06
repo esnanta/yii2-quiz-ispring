@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
@@ -12,8 +13,12 @@ use kartik\select2\Select2;
 /**
  * @var yii\web\View $this
  * @var common\models\Asset $model
- * @var string $fileType
+ * @var common\models\Asset $assetCategoryList
+ * @var common\models\Asset $assetTypeList
+ * @var common\models\Asset $isVisibleList
  * @var common\helper\SpreadsheetHelper $helper
+ * @var common\helper\SpreadsheetHelper $fileData
+ * @var string $fileType
  */
 
 $this->title = $model->title;
@@ -36,18 +41,18 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     <h6 class="card-subtitle mb-2 text-muted">
                         <i class="fa fa-eye"></i> <?=$model->view_counter;?>
                         <?php
-                            echo Html::a('<i class="fas fa-download"></i> '.$model->download_counter,
+                            echo Html::a( IconHelper::getDownload().' '.$model->download_counter,
                                 ['asset/download','id'=>$model->id,'title'=>$model->title],
                                 ['class'=>'card-link','title'=>'Download']);
 
                             if ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
-                                echo Html::a('<i class="fas fa-file-import"></i> Import',
+                                echo Html::a(IconHelper::getImport().' Data',
                                     ['participant/import', 'id' => $model->id, 'title' => $model->title],
                                     ['class' => 'card-link', 'title' => 'Import']);
                             }
 
                             if(!empty($model->asset_name)) {
-                                echo Html::a('<i class="fas fa-trash"></i>', ['asset/delete-file', 'id' => $model->id],
+                                echo Html::a(IconHelper::getDelete(), ['asset/delete-file', 'id' => $model->id],
                                     ['class' => 'card-link float-right', 'data-confirm' => "Delete Asset?",
                                         'data-method' => 'POST', 'title' => 'Delete Asset?']);
                             }
@@ -65,7 +70,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                             if($fileType == Asset::ASSET_TYPE_IMAGE){
                                 echo Html::img($assetUrl, ['class' => 'img-fluid']);
                             } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
-                                echo $helper->displayGrid($sheetData);
+                                echo $helper->displayGrid($fileData);
                             } else {
                                 echo ViewerJsDocumentViewer::widget([
                                     'url'=> $assetUrl,//url на ваш документ

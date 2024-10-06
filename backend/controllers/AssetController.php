@@ -180,7 +180,7 @@ class AssetController extends Controller
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
                     $asset = $model->uploadAsset();
-                    $model->asset_url = $model->getAssetUrl();
+
 
                     if ($model->save()) :
                         // upload only if valid uploaded file instance found
@@ -188,6 +188,8 @@ class AssetController extends Controller
                             $path = $model->getAssetFile();
                             $asset->saveAs($path);
                         }
+                        $model->asset_url = $model->getAssetUrl();
+                        $model->save();
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
 

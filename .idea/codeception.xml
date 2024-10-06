@@ -274,13 +274,7 @@
           <option name="path" value="$PROJECT_DIR$/tests" />
         </Configuration>
         <Configuration>
-          <option name="namespace" value="common\tests" />
-          <option name="path" value="$PROJECT_DIR$/../yii2-news/common/tests" />
-          <option name="mySuiteNamespaces">
-            <map>
-              <entry key="unit" value="common\tests\unit" />
-            </map>
-          </option>
+          <option name="path" value="$PROJECT_DIR$/../yii2-news/tests" />
         </Configuration>
         <Configuration>
           <option name="namespace" value="common\tests" />

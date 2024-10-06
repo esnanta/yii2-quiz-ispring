@@ -66,8 +66,16 @@ class IconHelper
     {
         return '<i class="fas fa-file-import"></i>';
     }
+    public static function getDownload(): string
+    {
+        return '<i class="fas fa-download"></i>';
+    }
     public static function getAdd(): string
     {
         return '<i class="fas fa-plus"></i>';
+    }
+    public static function getDelete(): string
+    {
+        return '<i class="fas fa-trash"></i>';
     }
 }
