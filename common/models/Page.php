@@ -2,8 +2,10 @@
 
 namespace common\models;
 
+use common\helper\ImageHelper;
 use Yii;
 use yii\base\Exception;
+use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 use common\models\base\Page as BaseThemeDetail;
@@ -76,7 +78,17 @@ class Page extends BaseThemeDetail
      */
     public function getImageFile(): string
     {
-        return AssetUseCase::getFile(self::$path,$this->asset_name);
+        $directory = self::createBackendDirectory(self::$path);
+        return (!empty($this->asset_name)) ? $directory.'/'. $this->asset_name : '';
+    }
+
+    public static function createBackendDirectory($path): string
+    {
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $path;
+        if (!is_dir($directory)) {
+            FileHelper::createDirectory($directory, $mode = 0777);
+        }
+        return $directory;
     }
 
     /**
@@ -85,8 +97,28 @@ class Page extends BaseThemeDetail
      */
     public function getImageUrl(): string
     {
-        $test = AssetUseCase::getFileUrl(self::$path, $this->asset_name);
-        return AssetUseCase::getFileUrl(self::$path, $this->asset_name);
+
+        // Set default image if fileName is empty
+        $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
+        $filePath = $this->getWebRoot() . self::$path . '/' . $assetName;
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            return Yii::$app->urlManager->baseUrl . self::$path . '/' . $assetName;
+        }
+
+        // Return default image if file doesn't exist
+        return self::getDefaultImage();
+    }
+
+    public static function getDefaultImage(): string
+    {
+        return str_replace('frontend', 'backend', ImageHelper::getNotAvailable()) ;
+    }
+
+    public function getWebRoot() : String
+    {
+        return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
     }
 
     /**
@@ -123,12 +155,30 @@ class Page extends BaseThemeDetail
     public function deleteImage() {
         $file = $this->getImageFile();
 
-        if(AssetUseCase::deleteFile($file)){
+        if(self::deleteFile($file)){
             $this->asset_name = null;
             return true;
         }
         else{
             return false;
+        }
+    }
+
+    private function deleteFile($file): bool
+    {
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return false;
+        }
+        else{
+            // check if uploaded file can be deleted on server
+            if (!unlink($file)) {
+                return false;
+            }
+            // can delete
+            else{
+                return true;
+            }
         }
     }
 }

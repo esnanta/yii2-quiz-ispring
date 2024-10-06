@@ -2,13 +2,10 @@
 
 namespace common\models;
 
-use common\domain\AssetUseCase;
 use common\helper\LabelHelper;
 use common\models\base\Asset as BaseAsset;
-use common\service\CacheService;
 use Yii;
 use yii\base\Exception;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tx_asset".
@@ -167,30 +164,30 @@ class Asset extends BaseAsset
         }
     }
 
-    public function getPath() : string {
-        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
-        return '/uploads/asset/'.$officeUniqueId;
-    }
+//    public function getPath() : string {
+//        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
+//        return '/uploads/asset/'.$officeUniqueId;
+//    }
 
     /**
      * fetch stored asset file name with complete path
      * @return string
      * @throws Exception
      */
-    public function getAssetFile(): ?string
-    {
-        return AssetUseCase::getFile($this->getPath(),$this->asset_name);
-    }
+//    public function getAssetFile(): ?string
+//    {
+//        return AssetUseCase::getFile($this->getPath(),$this->asset_name);
+//    }
 
     /**
      * Generates a URL pointing to a file on the server (image, PDF, etc.).
      * fetch stored asset url
      * @return string
      */
-    public function getAssetUrl(): string
-    {
-        return AssetUseCase::getFileUrl($this->getPath(), $this->asset_name);
-    }
+//    public function getAssetUrl(): string
+//    {
+//        return AssetUseCase::getFileUrl($this->getPath(), $this->asset_name);
+//    }
 
     /**
      * Generates a URL pointing to a Yii controller action for routing requests
@@ -207,28 +204,28 @@ class Asset extends BaseAsset
     *
     * @return mixed the uploaded asset instance
     */
-    public function uploadAsset() {
-        // Get the uploaded file instance
-        $asset = UploadedFile::getInstance($this, 'asset');
-
-        // Abort if no asset is uploaded
-        if (!$asset) {
-            return false;
-        }
-
-        // Store the source file name as title if it's empty
-        if (empty($this->title)) {
-            $this->title = $asset->name;
-        }
-
-        // Generate a unique file name
-        $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($this->title, PATHINFO_FILENAME));
-        $ext = pathinfo($asset->name, PATHINFO_EXTENSION);
-        $this->asset_name = "{$baseTitle}_" . uniqid() . ".{$ext}";
-
-        // Return the uploaded asset instance
-        return $asset;
-    }
+//    public function uploadAsset() {
+//        // Get the uploaded file instance
+//        $asset = UploadedFile::getInstance($this, 'asset');
+//
+//        // Abort if no asset is uploaded
+//        if (!$asset) {
+//            return false;
+//        }
+//
+//        // Store the source file name as title if it's empty
+//        if (empty($this->title)) {
+//            $this->title = $asset->name;
+//        }
+//
+//        // Generate a unique file name
+//        $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($this->title, PATHINFO_FILENAME));
+//        $ext = pathinfo($asset->name, PATHINFO_EXTENSION);
+//        $this->asset_name = "{$baseTitle}_" . uniqid() . ".{$ext}";
+//
+//        // Return the uploaded asset instance
+//        return $asset;
+//    }
 
 
     /**
@@ -236,25 +233,25 @@ class Asset extends BaseAsset
     *
     * @return boolean the status of deletion
     */
-    public function deleteAsset() {
-        $file = $this->getAssetFile();
-
-        // check if file exists on server
-        if (empty($file) || !file_exists($file)) {
-            return false;
-        }
-
-        // check if uploaded file can be deleted on server
-        if (!unlink($file)) {
-            return false;
-        } else {
-            // if deletion successful, reset your file attributes
-            $this->asset_name = null;
-            $this->asset_url = null;
-        }
-
-        return true;
-    }
+//    public function deleteAsset() {
+//        $file = $this->getAssetFile();
+//
+//        // check if file exists on server
+//        if (empty($file) || !file_exists($file)) {
+//            return false;
+//        }
+//
+//        // check if uploaded file can be deleted on server
+//        if (!unlink($file)) {
+//            return false;
+//        } else {
+//            // if deletion successful, reset your file attributes
+//            $this->asset_name = null;
+//            $this->asset_url = null;
+//        }
+//
+//        return true;
+//    }
 
 //    public function getProceedButton(): string
 //    {

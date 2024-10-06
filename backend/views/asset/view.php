@@ -17,6 +17,7 @@ use kartik\select2\Select2;
  * @var common\models\Asset $assetCategoryList
  * @var common\models\Asset $assetTypeList
  * @var common\models\Asset $isVisibleList
+ * @var common\service\AssetService $assetUrl
  * @var common\helper\SpreadsheetHelper $helper
  * @var common\helper\SpreadsheetHelper $fileData
  * @var string $fileType
@@ -47,7 +48,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                                 ['class'=>'card-link','title'=>'Download']);
 
                             if ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
-                                echo Html::a(IconHelper::getImport().' Data',
+                                echo Html::a(IconHelper::getImport().' Import',
                                     ['participant/import', 'id' => $model->id, 'title' => $model->title],
                                     ['class' => 'card-link', 'title' => 'Import']);
                             }
@@ -63,8 +64,6 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     <p class="card-text">
 
                         <?php
-
-                            $assetUrl   = $model->getAssetUrl();
                             $tmp        = explode('.', $model->asset);
                             $ext        = end($tmp);
 
@@ -81,7 +80,10 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                                     //https://geektimes.ru/post/111647/
                                 ]);
                             } elseif ($fileType == Asset::ASSET_TYPE_COMPRESSION){
-                                echo '<i class="far fa-file-archive"></i>';
+                                echo '<p class="text-center">'.IconHelper::getArchive(). '</p>';
+                                echo Html::a( 'Extract',
+                                    ['asset/extract','id'=>$model->id,'title'=>$model->title],
+                                    ['class'=>'text-center','title'=>'Extract']);
                             }
                             echo '<p>File name'.'<br>';
                             echo $model->asset_name.'</p>';
@@ -164,7 +166,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     [
                         'attribute' => 'asset',
                         'label' => 'Asset Url',
-                        'value' => 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl(),
+                        'value' => 'https://'.Yii::$app->getRequest()->serverName.$assetUrl,
                         'format' => 'raw',
 
                         'type'=>DetailView::INPUT_WIDGET,

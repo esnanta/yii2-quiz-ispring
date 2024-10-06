@@ -86,4 +86,8 @@ class IconHelper
     {
         return '<i class="fas fa-arrow-circle-right"></i>';
     }
+    public static function getArchive(): string
+    {
+        return '<i class="far fa-file-archive"></i>';
+    }
 }

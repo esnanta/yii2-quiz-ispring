@@ -2,6 +2,7 @@
 
 namespace common\service;
 
+use common\helper\ImageHelper;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
@@ -12,7 +13,6 @@ use RecursiveIteratorIterator;
 use ZipArchive;
 
 use common\models\Asset;
-use common\models\ScheduleDetail;
 
 class AssetService
 {
@@ -21,27 +21,28 @@ class AssetService
      * @param Asset $asset
      * @return UploadedFile|false
      */
-    public function uploadAsset(Asset $asset)
+    public function uploadAsset(Asset $asset): UploadedFile|bool
     {
-        $asset = UploadedFile::getInstance($asset, 'asset');
+        $uploadedFile = UploadedFile::getInstance($asset, 'asset');
 
+        // Abort if no asset is uploaded
         if (empty($asset)) {
             return false;
         }
 
-        $pattern = '/[\s\/,.]/';
-        $title = preg_replace($pattern, '_', substr($asset->name, 0, strpos($asset->name, ".")));
-        $tmp = explode('.', $asset->name);
-        $ext = end($tmp);
-        $asset->name = $asset->id . '_' . $title . '_' . ".{$ext}";
 
-        return $asset;
+        $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($asset->title, PATHINFO_FILENAME));
+        $ext = pathinfo($uploadedFile->name, PATHINFO_EXTENSION);
+        $uploadedFile->name = "{$baseTitle}_" . uniqid() . ".{$ext}";
+
+        return $uploadedFile;
     }
 
     /**
      * Delete asset file from server
      * @param Asset $asset
      * @return bool
+     * @throws Exception
      */
     public function deleteAsset(Asset $asset): bool
     {
@@ -65,14 +66,42 @@ class AssetService
      * Get asset file path
      * @param Asset $asset
      * @return string|null
+     * @throws Exception
      */
     public function getAssetFile(Asset $asset): ?string
     {
-        $directory = $this->getWebRoot() . $this->getPath($asset);
+        $directory = self::createBackendDirectory(self::getPath($asset));
+        return (!empty($asset->asset_name)) ? $directory.'/'. $asset->asset_name : '';
+    }
+
+    public function getAssetUrl(Asset $asset): string
+    {
+        $path = self::getPath($asset);
+        $fileName = $asset->asset_name;
+
+        // Set default image if fileName is empty
+        $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
+        $filePath = (new AssetService())->getWebRoot() . $path . '/' . $assetName;
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            return Yii::$app->urlManager->baseUrl . $path . '/' . $assetName;
+        }
+
+        // Return default image if file doesn't exist
+        return self::getDefaultImage();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function createBackendDirectory($path): string
+    {
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $path;
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
-        return (!empty($asset->asset_id)) ? $directory . '/' . $asset->asset_id : null;
+        return $directory;
     }
 
     /**
@@ -131,7 +160,7 @@ class AssetService
         return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
     }
 
-    private function getPath(Asset $asset): string
+    public function getPath(Asset $asset): string
     {
         $officeUniqueId = $asset->office->unique_id;
         return '/uploads/asset/' . $officeUniqueId;
@@ -149,5 +178,10 @@ class AssetService
         $indexFile = $this->getPath($asset) . '/' .
             $this->getExtractFolderName($asset).'/index.html';
         return Yii::$app->urlManager->baseUrl . $indexFile;
+    }
+
+    public function getDefaultImage(): string
+    {
+        return str_replace('frontend', 'backend', ImageHelper::getNotAvailable()) ;
     }
 }

@@ -12,6 +12,7 @@ use common\models\ParticipantImport;
 use common\models\ParticipantSearch;
 use common\models\Subject;
 use common\service\AssessmentService;
+use common\service\AssetService;
 use common\service\DataIdService;
 use common\service\DataListService;
 use common\service\ParticipantService;
@@ -27,6 +28,16 @@ use yii\web\NotFoundHttpException;
  */
 class ParticipantController extends Controller
 {
+
+    private AssetService $assetService;
+
+    public function __construct($id, $module,
+                                AssetService $assetService, $config = [])
+    {
+        $this->assetService = $assetService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -169,7 +180,7 @@ class ParticipantController extends Controller
             $model->asset_id = $id;
 
             $asset = Asset::find()->where(['id'=>$model->asset_id])->one();
-            $inputFileName = $asset->getAssetFile();
+            $inputFileName = $this->assetService->getAssetFile($asset);
 
             $helper = SpreadsheetHelper::getInstance()->getHelper();
             $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
