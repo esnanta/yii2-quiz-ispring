@@ -54,7 +54,20 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        //'asset' => ['type' => TabularForm::INPUT_FILE],
+
+        'asset_id' => [
+            'label' => Yii::t('app', 'Asset'),
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => Select2::class,
+            'options' => [
+                'data' => $assetList,
+                'options' => [
+                    'placeholder' => Yii::t('app', ''),
+                ],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+
         'del' => [
             'type' => 'raw',
             'label' => '',

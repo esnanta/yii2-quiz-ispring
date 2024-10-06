@@ -8,6 +8,7 @@
 /* @var $groupList common\models\Group */
 /* @var $periodList common\models\Period */
 /* @var $staffList common\models\Staff */
+/* @var $assetList common\models\Asset */
 /* @var $questionTypeList common\models\ScheduleDetail */
 
 $this->title = Yii::t('app', 'Create Schedule');
@@ -32,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'groupList' => $groupList,
                 'periodList' => $periodList,
                 'staffList' => $staffList,
+                'assetList' => $assetList,
                 'examTypeList' => $examTypeList,
                 'questionTypeList' => $questionTypeList
             ]) 

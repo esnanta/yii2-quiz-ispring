@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\helper\DateHelper;
 use common\helper\MessageHelper;
 use common\models\Participant;
 use common\models\Schedule;
@@ -137,14 +138,15 @@ class ScheduleController extends Controller
 
             $model = new Schedule();
             $model->office_id = DataIdService::getOfficeId();
-            $model->date_start = date(Yii::$app->params['datetimeSaveFormat']);
-            $model->date_end = date(Yii::$app->params['datetimeSaveFormat']);
+            $model->date_start = date(DateHelper::getDateTimeSaveFormat());
+            $model->date_end = date(DateHelper::getDateTimeSaveFormat());
 
             $periodList = DataListService::getPeriodActive();
             $roomList = DataListService::getRoom();
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
+            $assetList = DataListService::getAssetCompression();
             $examTypeList = Schedule::getArrayExamType();
             $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
 
@@ -160,6 +162,7 @@ class ScheduleController extends Controller
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
                     'staffList' => $staffList,
+                    'assetList' => $assetList,
                     'examTypeList' => $examTypeList,
                     'questionTypeList' => $questionTypeList
                 ]);
@@ -186,6 +189,7 @@ class ScheduleController extends Controller
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
             $staffList = DataListService::getStaff();
+            $assetList = DataListService::getAssetCompression();
             $examTypeList = Schedule::getArrayExamType();
             $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
 
@@ -202,6 +206,7 @@ class ScheduleController extends Controller
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
                     'staffList' => $staffList,
+                    'assetList' => $assetList,
                     'examTypeList' => $examTypeList,
                     'questionTypeList' => $questionTypeList
                 ]);
@@ -280,6 +285,7 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->request->isAjax) {
             $subjectList = DataListService::getSubject();
+            $assetList = DataListService::getAssetCompression();
             $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
 
             $row = Yii::$app->request->post('ScheduleDetail');
@@ -291,6 +297,7 @@ class ScheduleController extends Controller
             return $this->renderAjax('_formScheduleDetail', [
                 'row' => $row,
                 'subjectList' => $subjectList,
+                'assetList' => $assetList,
                 'questionTypeList'=>$questionTypeList
             ]);
         } else {

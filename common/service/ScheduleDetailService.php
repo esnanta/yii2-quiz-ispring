@@ -60,7 +60,7 @@ class ScheduleDetailService
         if (!unlink($file)) {
             return false;
         } else {
-            $scheduleDetail->asset_name = null;
+            $scheduleDetail->asset_id = null;
         }
 
         return true;
@@ -77,7 +77,7 @@ class ScheduleDetailService
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }
-        return (!empty($scheduleDetail->asset_name)) ? $directory . '/' . $scheduleDetail->asset_name : null;
+        return (!empty($scheduleDetail->asset_id)) ? $directory . '/' . $scheduleDetail->asset_id : null;
     }
 
     /**
@@ -147,7 +147,7 @@ class ScheduleDetailService
 
         $value = Yii::t('app', 'Asset not available');
 
-        if (!empty($scheduleDetail->asset_name)) {
+        if (!empty($scheduleDetail->asset_id)) {
             $isAdmin = self::ADMIN_IS_FALSE;
             if($participantId == 0){
                 $isAdmin = self::ADMIN_IS_TRUE;

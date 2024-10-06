@@ -13,8 +13,6 @@ use common\models\base\ScheduleDetail as BaseScheduleDetail;
  */
 class ScheduleDetail extends BaseScheduleDetail
 {
-    public $asset;
-
     const QUESTION_TYPE_GENERAL      = 1;
     const QUESTION_TYPE_LITERACY     = 2;
     const QUESTION_TYPE_NUMERATION   = 3;
@@ -27,15 +25,10 @@ class ScheduleDetail extends BaseScheduleDetail
         return [
             //TAMBAHAN
             [['subject_id'], 'required'],
-            [['asset'], 'file', 'maxSize' => (1024 * 1024 * 5),
-                'skipOnEmpty' => true,
-                'extensions' => 'zip, rar, gz',
-                'tooBig' => 'Limit is 5MB'],
 
-            [['office_id', 'schedule_id', 'subject_id', 'question_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'schedule_id', 'subject_id', 'asset_id', 'question_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['asset_name'], 'string', 'max' => 100],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']

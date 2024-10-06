@@ -78,4 +78,12 @@ class IconHelper
     {
         return '<i class="fas fa-trash"></i>';
     }
+    public static function getUpload(): string
+    {
+        return '<i class="fas fa-upload"></i>';
+    }
+    public static function getArrowRight(): string
+    {
+        return '<i class="fas fa-arrow-circle-right"></i>';
+    }
 }

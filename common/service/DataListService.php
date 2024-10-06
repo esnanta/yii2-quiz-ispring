@@ -95,6 +95,15 @@ class DataListService
             ->asArray()->all(), 'id', 'title');
     }
 
+    public static function getAssetCompression($limit=50): array
+    {
+        return ArrayHelper::map(Asset::find()
+            ->where(['office_id' => DataIdService::getOfficeId(),'asset_type'=>Asset::ASSET_TYPE_COMPRESSION])
+            ->orderBy('id DESC')
+            ->limit($limit)
+            ->asArray()->all(), 'id', 'title');
+    }
+
     public static function getAssetCategory(): array
     {
         return ArrayHelper::map(AssetCategory::find()

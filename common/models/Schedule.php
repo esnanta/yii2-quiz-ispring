@@ -104,11 +104,11 @@ class Schedule extends BaseSchedule
     public function updateIsAsset(): int
     {
         $isAsset = self::IS_ASSET_AVAILABLE;
-        $nullAsset = ScheduleDetail::find('asset_name')
+        $nullAsset = ScheduleDetail::find('asset_id')
             ->where([
                 'schedule_id' => $this->id,
                 'office_id'=>$this->office,
-                'asset_name'=>null])
+                'asset_id'=>null])
             ->count();
 
         if($nullAsset > 0):

@@ -93,6 +93,7 @@ class PeriodController extends Controller
         if (Yii::$app->user->can('create-period')) {
 
             $model              = new Period;
+            $model->is_active   = Period::IS_ACTIVE_YES;
             $model->office_id   = DataIdService::getOfficeId();
             $officeList         = DataListService::getOffice();
             $isActiveList       = Period::getArrayIsActive();

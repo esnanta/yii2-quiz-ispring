@@ -2,6 +2,7 @@
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\DateHelper;
+use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\User;
 use yii\helpers\Html;
@@ -144,7 +145,7 @@ Yii2TimerCountDown::widget([
                                     <td class="left"><?= $modelDetailItem->getOneQuestionType($modelDetailItem->question_type); ?></td>
                                     <td class="center">
                                         <?php
-                                        if (empty($modelDetailItem->asset_name)) {
+                                        if (empty($modelDetailItem->asset_id)) {
                                             echo Yii::t('app', 'Please upload files in zip');
                                         } else {
                                             echo $scheduleDetailService->getAssetButton($modelDetailItem,$submissionIsFalse,0);
@@ -152,21 +153,22 @@ Yii2TimerCountDown::widget([
                                         ?></td>
                                     <td class="right">
                                         <?php
-                                        if ($modelDetailItem->asset_name == null) {
+                                        if ($modelDetailItem->asset_id == null) {
                                             echo Html::a(
-                                                '<i class="fas fa-upload"></i>',
-                                                ['schedule-detail/update', 'id' => $modelDetailItem->id],
+                                                IconHelper::getUpload(),
+                                                ['schedule/index-asset',
+                                                    'id'=>$modelDetailItem->id, 'remark'=>$modelDetailItem->remark],
                                                 ['class' => LabelHelper::getButtonCssPlus()]
                                             );
                                         } else {
-                                            echo Html::a('<i class="fas fa-trash-alt"></i>',
-                                                ['schedule-detail/delete-file', 'id' => $modelDetailItem->id], [
-                                                    'class' => LabelHelper::getButtonCssMinus(),
-                                                    'data' => [
-                                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                                                        'method' => 'post',
-                                                    ],
-                                                ]);
+//                                            echo Html::a(IconHelper::getDelete(),
+//                                                ['schedule-detail/delete-file', 'id' => $modelDetailItem->id], [
+//                                                    'class' => LabelHelper::getButtonCssMinus(),
+//                                                    'data' => [
+//                                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+//                                                        'method' => 'post',
+//                                                    ],
+//                                                ]);
                                         }
                                         ?>
                                     </td>
