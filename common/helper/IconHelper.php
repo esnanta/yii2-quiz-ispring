@@ -90,4 +90,20 @@ class IconHelper
     {
         return '<i class="far fa-file-archive"></i>';
     }
+    public static function getExclamation(): string
+    {
+        return '<i class="fas fa-exclamation-circle"></i>';
+    }
+    public static function getCheck(): string
+    {
+        return '<i class="fas fa-check"></i>';
+    }
+    public static function getFile(): string
+    {
+        return '<i class="fas fa-file"></i>';
+    }
+    public static function getPower(): string
+    {
+        return '<i class="fas fa-power-off"></i>';
+    }
 }

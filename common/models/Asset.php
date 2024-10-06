@@ -147,6 +147,16 @@ class Asset extends BaseAsset
         ];
     }
 
+    /**
+     * Generates a URL pointing to a Yii controller action for routing requests
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id,
+            'title' => $this->title]);
+    }
+
     public function downloadFile($path) {
         if (!empty($path)) {
             //header("Content-type:application/pdf"); //for pdf file
@@ -189,15 +199,7 @@ class Asset extends BaseAsset
 //        return AssetUseCase::getFileUrl($this->getPath(), $this->asset_name);
 //    }
 
-    /**
-     * Generates a URL pointing to a Yii controller action for routing requests
-     * @return string
-     */
-    public function getUrl(): string
-    {
-        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id,
-            'title' => $this->title]);
-    }
+
 
     /**
     * Process upload of asset

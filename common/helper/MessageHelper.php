@@ -191,6 +191,26 @@ class MessageHelper
         );
     }
 
+    public static function getFlashExtractFileSuccess(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'success',
+            ['message' => Yii::t(
+                'app',
+                'File extracted successfully.'
+            )]
+        );
+    }
+    public static function getFlashUploadFailed(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'danger',
+            ['message' => Yii::t(
+                'app',
+                'Upload failed.'
+            )]
+        );
+    }
     public static function getTimeElapsedString($_ptime)
     {
         $ptime = strtotime($_ptime);

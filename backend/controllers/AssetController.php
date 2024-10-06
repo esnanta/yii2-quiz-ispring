@@ -84,15 +84,17 @@ class AssetController extends Controller
         if (Yii::$app->user->can('view-asset')) {
             $model = $this->findModel($id);
 
+            $scheduleDetailList   = $model->scheduleDetails;
             $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
+
             $isVisibleList        = Asset::getArrayIsVisible();
             $assetTypeList        = Asset::getArrayAssetType();
             $fileExtensionList    = Asset::getArrayFileExtension();
 
+            $renderIndexFileStatus = $this->assetService->renderIndexFileStatus($model);
             $currentFile    = $this->assetService->getAssetFile($model);
             $assetUrl       = $this->assetService->getAssetUrl($model);
-            $currentName    = $model->asset_name;
             $fileData       = null;
             $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
             $helper         = null;
@@ -131,9 +133,11 @@ class AssetController extends Controller
                 // process uploaded asset file instance
                 $asset = $this->assetService->uploadAsset($model);
 
-                // revert back if no valid file instance uploaded
-                if ($asset === false) {
-                    $model->asset_name = $currentName;
+                if(empty($asset)){
+                    MessageHelper::getFlashUploadFailed();
+                } else {
+                    $model->asset_name  = $asset->name;
+                    $model->asset_url = $this->assetService->getAssetUrl($model);
                 }
 
                 if ($model->save()) {
@@ -151,6 +155,7 @@ class AssetController extends Controller
 
             return $this->render('view', [
                 'model' => $model,
+                'scheduleDetailList' => $scheduleDetailList,
                 'officeList' => $officeList,
                 'assetCategoryList' => $assetCategoryList,
                 'isVisibleList' => $isVisibleList,
@@ -159,6 +164,7 @@ class AssetController extends Controller
                 'fileType' => $fileType,
                 'helper' => $helper,
                 'fileData' => $fileData,
+                'renderIndexFileStatus' => $renderIndexFileStatus
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -193,9 +199,9 @@ class AssetController extends Controller
                     $asset = $this->assetService->uploadAsset($model);
 
                     if(empty($asset)){
-                        MessageHelper::getFlashAssetNotFound();
+                        MessageHelper::getFlashUploadFailed();
                     } else {
-                        $model->asset_name  = $asset->name;
+                        $model->asset_name = $asset->name;
                         $model->asset_url = $this->assetService->getAssetUrl($model);
                     }
 
@@ -205,8 +211,6 @@ class AssetController extends Controller
                             $path = $this->assetService->getAssetFile($model);
                             $asset->saveAs($path);
                         }
-                        //$model->asset_url = $this->assetService->getAssetUrl($model);
-                        //$model->save();
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
 
@@ -291,6 +295,7 @@ class AssetController extends Controller
      */
     public function actionDelete($id)
     {
+
         if (Yii::$app->user->can('delete-asset')) {
             $model = $this->findModel($id);
             // validate deletion and on failure process any exception
@@ -318,6 +323,8 @@ class AssetController extends Controller
         if (Yii::$app->user->can('delete-asset')) {
             $model = Asset::find()->where(['id' => $id])->one();
             $this->assetService->deleteAsset($model);
+            $extractDir = $this->assetService->getExtractDir($model);
+            $this->assetService->removeExtractFolder($extractDir);
             $model->save();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['asset/view', 'id' => $model->id, 'title' => $model->title]);
@@ -363,7 +370,7 @@ class AssetController extends Controller
         if (Yii::$app->user->can('create-asset')) {
             $model = $this->findModel($id);
             $this->assetService->extract($model);
-            MessageHelper::getFlashSaveSuccess();
+            MessageHelper::getFlashExtractFileSuccess();
             return $this->redirect(['asset/view', 'id' => $model->id, 'title' => $model->title]);
         } else {
             MessageHelper::getFlashLoginInfo();

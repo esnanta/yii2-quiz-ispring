@@ -2,7 +2,10 @@
 
 namespace common\service;
 
+use common\helper\IconHelper;
 use common\helper\ImageHelper;
+use common\helper\LabelHelper;
+use PhpParser\Node\Stmt\Label;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
@@ -29,7 +32,6 @@ class AssetService
         if (empty($asset)) {
             return false;
         }
-
 
         $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($asset->title, PATHINFO_FILENAME));
         $ext = pathinfo($uploadedFile->name, PATHINFO_EXTENSION);
@@ -168,16 +170,30 @@ class AssetService
 
     private function getExtractFolderName(Asset $asset): string
     {
-        $title = str_replace('', '-', $asset->title);
-        return $title . '_' . $asset->id;
+        $title = str_replace(' ', '_', $asset->title);
+        return $asset->id . '_' .$title;
     }
-
 
     public function getExtractUrl(Asset $asset): string
     {
         $indexFile = $this->getPath($asset) . '/' .
-            $this->getExtractFolderName($asset).'/index.html';
+            $this->getExtractFolderName($asset) . '/index.html';
         return Yii::$app->urlManager->baseUrl . $indexFile;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function renderIndexFileStatus(Asset $asset): string
+    {
+        $filePath = $this->getExtractDir($asset).'/index.html';
+
+        // Use check and cross icons
+        $checkIcon = LabelHelper::getInfo(IconHelper::getCheck()) ;
+        $exclamationIcon = LabelHelper::getWarning(IconHelper::getExclamation());
+
+        // Return check icon if file exists, otherwise cross icon
+        return file_exists($filePath) ? $checkIcon : $exclamationIcon;
     }
 
     public function getDefaultImage(): string

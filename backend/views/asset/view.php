@@ -3,7 +3,6 @@
 use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\Asset;
-use lesha724\documentviewer\MicrosoftDocumentViewer;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
@@ -29,72 +28,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $create = LabelHelper::getCreateButton();
 
-$deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete-file','id' => $model->id],
-                    ['class' => 'float-right', 'data-confirm' => "Delete Asset?", 
-                    'data-method' => 'POST', 'title' => 'Delete Asset?']);
+$deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete-file', 'id' => $model->id],
+    ['class' => 'float-right', 'data-confirm' => "Delete Asset?",
+        'data-method' => 'POST', 'title' => 'Delete Asset?']);
 ?>
 
 <div class="asset-view">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
 
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        <i class="fa fa-eye"></i> <?=$model->view_counter;?>
-                        <?php
-                            echo Html::a( IconHelper::getDownload().' '.$model->download_counter,
-                                ['asset/download','id'=>$model->id,'title'=>$model->title],
-                                ['class'=>'card-link','title'=>'Download']);
-
-                            if ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
-                                echo Html::a(IconHelper::getImport().' Import',
-                                    ['participant/import', 'id' => $model->id, 'title' => $model->title],
-                                    ['class' => 'card-link', 'title' => 'Import']);
-                            }
-
-                            if(!empty($model->asset_name)) {
-                                echo Html::a(IconHelper::getDelete(), ['asset/delete-file', 'id' => $model->id],
-                                    ['class' => 'card-link float-right', 'data-confirm' => "Delete Asset?",
-                                        'data-method' => 'POST', 'title' => 'Delete Asset?']);
-                            }
-                        ?>
-                    </h6>
-
-                    <p class="card-text">
-
-                        <?php
-                            $tmp        = explode('.', $model->asset);
-                            $ext        = end($tmp);
-
-                            if($fileType == Asset::ASSET_TYPE_IMAGE){
-                                echo Html::img($assetUrl, ['class' => 'img-fluid']);
-                            } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
-                                echo $helper->displayGrid($fileData);
-                            } elseif ($fileType == Asset::ASSET_TYPE_WORD ||
-                                        $fileType == Asset::ASSET_TYPE_PDF) {
-                                echo ViewerJsDocumentViewer::widget([
-                                    'url'=> $assetUrl,//url на ваш документ
-                                    'width'=>'100%',
-                                    'height'=>'300px',
-                                    //https://geektimes.ru/post/111647/
-                                ]);
-                            } elseif ($fileType == Asset::ASSET_TYPE_COMPRESSION){
-                                echo '<p class="text-center">'.IconHelper::getArchive(). '</p>';
-                                echo Html::a( 'Extract',
-                                    ['asset/extract','id'=>$model->id,'title'=>$model->title],
-                                    ['class'=>'text-center','title'=>'Extract']);
-                            }
-                            echo '<p>File name'.'<br>';
-                            echo $model->asset_name.'</p>';
-                        ?>
-                    </p>
-
-                </div>
-            </div>
+            <?= $this->render('_view_side', [
+                'model' => $model,
+                'scheduleDetailList'=>$scheduleDetailList,
+                'assetUrl' => $assetUrl,
+                'fileType' => $fileType,
+                'helper' => $helper,
+                'fileData' => $fileData,
+                'renderIndexFileStatus' => $renderIndexFileStatus
+            ]) ?>
 
         </div>
-        <div class="col-md-8">
+
+        <div class="col-md-7">
             <?= DetailView::widget([
                 'model' => $model,
                 'condensed' => false,
@@ -106,110 +61,110 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                 ],
                 'attributes' => [
                     [
-                        'attribute'=>'date_issued',
-                        'format'=>'date',
-                        'type'=>DetailView::INPUT_WIDGET,
-                        'widgetOptions'=>[
-                            'class'=>DateControl::class,
-                            'type'=>DateControl::FORMAT_DATE,
+                        'attribute' => 'date_issued',
+                        'format' => 'date',
+                        'type' => DetailView::INPUT_WIDGET,
+                        'widgetOptions' => [
+                            'class' => DateControl::class,
+                            'type' => DateControl::FORMAT_DATE,
                         ],
                     ],
                     [
-                        'attribute'=>'title', 
-                        'format'=>'html',
-                        'type'=>DetailView::INPUT_TEXT, 
+                        'attribute' => 'title',
+                        'format' => 'html',
+                        'type' => DetailView::INPUT_TEXT,
                     ],
                     [
-                        'attribute'=>'asset_category_id',
-                        'value'=>($model->asset_category_id!=null) ? $model->assetCategory->title:'',
-                        'type'=>DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'asset_category_id', 'prompt' => '', 'disabled'=>false],
+                        'attribute' => 'asset_category_id',
+                        'value' => ($model->asset_category_id != null) ? $model->assetCategory->title : '',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'asset_category_id', 'prompt' => '', 'disabled' => false],
                         'items' => $assetCategoryList,
-                        'widgetOptions'=>[
-                            'class'=> Select2::class,
-                            'data'=>$assetCategoryList,
+                        'widgetOptions' => [
+                            'class' => Select2::class,
+                            'data' => $assetCategoryList,
                         ],
                     ],
                     [
-                        'attribute'=>'asset_type',
-                        'format'=>'html',
-                        'value'=>($model->asset_type!=null) ? $model->getOneAssetType($model->asset_type):'',
-                        'type'=>DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'asset_type', 'prompt' => '', 'disabled'=>false],
+                        'attribute' => 'asset_type',
+                        'format' => 'html',
+                        'value' => ($model->asset_type != null) ? $model->getOneAssetType($model->asset_type) : '',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'asset_type', 'prompt' => '', 'disabled' => false],
                         'items' => $assetTypeList,
-                        'widgetOptions'=>[
-                            'class'=> Select2::class,
-                            'data'=>$assetTypeList,
+                        'widgetOptions' => [
+                            'class' => Select2::class,
+                            'data' => $assetTypeList,
                         ],
                         //'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
-                        'attribute'=>'is_visible',
-                        'format'=>'html',
-                        'value'=>($model->is_visible!=null) ? $model->getOneIsVisible($model->is_visible):'',
-                        'type'=>DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'is_visible', 'prompt' => '', 'disabled'=>false],
+                        'attribute' => 'is_visible',
+                        'format' => 'html',
+                        'value' => ($model->is_visible != null) ? $model->getOneIsVisible($model->is_visible) : '',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'is_visible', 'prompt' => '', 'disabled' => false],
                         'items' => $isVisibleList,
-                        'widgetOptions'=>[
-                            'class'=> Select2::class,
-                            'data'=>$isVisibleList,
+                        'widgetOptions' => [
+                            'class' => Select2::class,
+                            'data' => $isVisibleList,
                         ],
                         //'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
-                        'attribute'=>'description', 
-                        'format'=>'html',
-                        'value'=>$model->description,
-                        'type'=>DetailView::INPUT_TEXTAREA,
+                        'attribute' => 'description',
+                        'format' => 'html',
+                        'value' => $model->description,
+                        'type' => DetailView::INPUT_TEXTAREA,
                     ],
-                    
+
                     [
                         'attribute' => 'asset',
                         'label' => 'Asset Url',
-                        'value' => 'https://'.Yii::$app->getRequest()->serverName.$assetUrl,
+                        'value' => 'https://' . Yii::$app->getRequest()->serverName . $assetUrl,
                         'format' => 'raw',
 
-                        'type'=>DetailView::INPUT_WIDGET,
-                        'widgetOptions'=>[
-                            'class'=> FileInput::class,
-                            'pluginOptions'=>['previewFileType' => 'any','showUpload' => false,]
+                        'type' => DetailView::INPUT_WIDGET,
+                        'widgetOptions' => [
+                            'class' => FileInput::class,
+                            'pluginOptions' => ['previewFileType' => 'any', 'showUpload' => false,]
                         ],
                         //'valueColOptions'=>['style'=>'width:30%']
                     ],
 
                     [
-                        'group'=>true,
-                        'rowOptions'=>['class'=>'default']
+                        'group' => true,
+                        'rowOptions' => ['class' => 'default']
                     ],
                     [
                         'columns' => [
                             [
-                                'attribute'=>'created_at',
-                                'format'=>'date',
-                                'type'=>DetailView::INPUT_HIDDEN,
-                                'valueColOptions'=>['style'=>'width:30%']
+                                'attribute' => 'created_at',
+                                'format' => 'date',
+                                'type' => DetailView::INPUT_HIDDEN,
+                                'valueColOptions' => ['style' => 'width:30%']
                             ],
                             [
-                                'attribute'=>'updated_at',
-                                'format'=>'date',
-                                'type'=>DetailView::INPUT_HIDDEN,
-                                'valueColOptions'=>['style'=>'width:30%']
+                                'attribute' => 'updated_at',
+                                'format' => 'date',
+                                'type' => DetailView::INPUT_HIDDEN,
+                                'valueColOptions' => ['style' => 'width:30%']
                             ],
                         ],
                     ],
                     [
                         'columns' => [
                             [
-                                'attribute'=>'created_by',
-                                'value'=>($model->created_by!=null) ? \common\models\User::getName($model->created_by):'',
-                                'type'=>DetailView::INPUT_HIDDEN,
-                                'valueColOptions'=>['style'=>'width:30%']
+                                'attribute' => 'created_by',
+                                'value' => ($model->created_by != null) ? \common\models\User::getName($model->created_by) : '',
+                                'type' => DetailView::INPUT_HIDDEN,
+                                'valueColOptions' => ['style' => 'width:30%']
                             ],
                             [
-                                'attribute'=>'updated_by',
-                                'value'=>($model->updated_by!=null) ? \common\models\User::getName($model->updated_by):'',
-                                'type'=>DetailView::INPUT_HIDDEN,
-                                'valueColOptions'=>['style'=>'width:30%']
+                                'attribute' => 'updated_by',
+                                'value' => ($model->updated_by != null) ? \common\models\User::getName($model->updated_by) : '',
+                                'type' => DetailView::INPUT_HIDDEN,
+                                'valueColOptions' => ['style' => 'width:30%']
                             ],
                         ],
                     ],
