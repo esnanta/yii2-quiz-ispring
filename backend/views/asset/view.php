@@ -3,6 +3,7 @@
 use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\Asset;
+use lesha724\documentviewer\MicrosoftDocumentViewer;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
@@ -71,13 +72,16 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                                 echo Html::img($assetUrl, ['class' => 'img-fluid']);
                             } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
                                 echo $helper->displayGrid($fileData);
-                            } else {
+                            } elseif ($fileType == Asset::ASSET_TYPE_WORD ||
+                                        $fileType == Asset::ASSET_TYPE_PDF) {
                                 echo ViewerJsDocumentViewer::widget([
                                     'url'=> $assetUrl,//url на ваш документ
                                     'width'=>'100%',
                                     'height'=>'300px',
                                     //https://geektimes.ru/post/111647/
                                 ]);
+                            } elseif ($fileType == Asset::ASSET_TYPE_COMPRESSION){
+                                echo '<i class="far fa-file-archive"></i>';
                             }
                             echo '<p>File name'.'<br>';
                             echo $model->asset_name.'</p>';

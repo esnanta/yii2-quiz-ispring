@@ -78,6 +78,7 @@ class AssetController extends Controller
             $assetCategoryList    = DataListService::getAssetCategory();
             $isVisibleList        = Asset::getArrayIsVisible();
             $assetTypeList        = Asset::getArrayAssetType();
+            $fileExtensionList    = Asset::getArrayFileExtension();
 
             $currentFile    = $model->getAssetFile();
             $currentName    = $model->asset_name;
@@ -87,12 +88,16 @@ class AssetController extends Controller
 
             if (!empty($currentFile)) {
                 try {
-                    $fileExtension = pathinfo($currentFile, PATHINFO_EXTENSION);
+                    $fileExtension = strtolower(pathinfo($currentFile, PATHINFO_EXTENSION));
 
-                    // Identify file type based on extension
-                    if (in_array(strtolower($fileExtension), ['xlsx', 'xls'])) {
-                        // Spreadsheet handling
-                        $fileType = Asset::ASSET_TYPE_SPREADSHEET;
+                    foreach ($fileExtensionList as $type => $extensions) {
+                        if (in_array($fileExtension, $extensions)) {
+                            $fileType = $type; // Assign the asset type integer
+                            break;
+                        }
+                    }
+
+                    if ($fileType === Asset::ASSET_TYPE_SPREADSHEET) {
                         $spreadsheetHelper = SpreadsheetHelper::getInstance();
                         $helper = $spreadsheetHelper->getHelper();
                         $sheetName = $spreadsheetHelper->getSheetName();
@@ -102,16 +107,12 @@ class AssetController extends Controller
                         $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
                             $activeRange, null, true, true, true
                         );
-
-                    } elseif (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif'])) {
-                        // Image handling
-                        $fileType = Asset::ASSET_TYPE_IMAGE;
-                        $fileData = $currentFile; // Assuming this is the file path to display the image
-                    } elseif (in_array(strtolower($fileExtension), ['pdf', 'doc', 'docx'])) {
-                        // Document handling
-                        $fileType = Asset::ASSET_TYPE_DOCUMENT;
-                        $fileData = $currentFile; // Assuming this is the file path for download or preview
+                    } elseif ($fileType === Asset::ASSET_TYPE_IMAGE) {
+                        $fileData = $currentFile; // Path to display image
+                    } elseif (in_array($fileType, [Asset::ASSET_TYPE_WORD, Asset::ASSET_TYPE_COMPRESSION, Asset::ASSET_TYPE_PDF])) {
+                        $fileData = $currentFile; // Path for download or preview
                     }
+
                 } catch (\Exception $e) {
                     MessageHelper::getFlashAssetNotFound();
                 }

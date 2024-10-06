@@ -20,13 +20,14 @@ class Asset extends BaseAsset
     public $file;
     public $url;
 
-    const IS_VISIBLE_PRIVATE            = 1;
-    const IS_VISIBLE_PUBLIC             = 2;
+    const IS_VISIBLE_PRIVATE          = 1;
+    const IS_VISIBLE_PUBLIC           = 2;
 
-    const ASSET_TYPE_DOCUMENT         = 1;
+    const ASSET_TYPE_WORD             = 1;
     const ASSET_TYPE_SPREADSHEET      = 2;
     const ASSET_TYPE_IMAGE            = 3;
     const ASSET_TYPE_COMPRESSION      = 4;
+    const ASSET_TYPE_PDF              = 5;
 
     /**
      * @inheritdoc
@@ -49,9 +50,7 @@ class Asset extends BaseAsset
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
-    
-    
-    
+
     public function beforeSave($insert): bool
     {
         if ($this->isNewRecord) {
@@ -99,10 +98,11 @@ class Asset extends BaseAsset
     {
         return [
             //MASTER
-            self::ASSET_TYPE_DOCUMENT => Yii::t('app', 'Document'),
+            self::ASSET_TYPE_WORD => Yii::t('app', 'Word'),
             self::ASSET_TYPE_SPREADSHEET  => Yii::t('app', 'Spreadsheet'),
             self::ASSET_TYPE_IMAGE  => Yii::t('app', 'Image'),
             self::ASSET_TYPE_COMPRESSION  => Yii::t('app', 'Compression'),
+            self::ASSET_TYPE_PDF  => Yii::t('app', 'Pdf'),
         ];
     }
     public static function getOneAssetType($_module = null)
@@ -112,7 +112,7 @@ class Asset extends BaseAsset
             $arrayModule = self::getArrayAssetType();
 
             switch ($_module) {
-                case ($_module == self::ASSET_TYPE_DOCUMENT):
+                case ($_module == self::ASSET_TYPE_WORD):
                     $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_SPREADSHEET):
@@ -124,6 +124,9 @@ class Asset extends BaseAsset
                 case ($_module == self::ASSET_TYPE_COMPRESSION):
                     $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
+                case ($_module == self::ASSET_TYPE_PDF):
+                    $returnValue = LabelHelper::getInfo($arrayModule[$_module]);
+                    break;
                 default:
                     $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
@@ -133,6 +136,18 @@ class Asset extends BaseAsset
         }
         else
             return;
+    }
+
+    // Public static method to return the file types array
+    public static function getArrayFileExtension(): array
+    {
+        return [
+            self::ASSET_TYPE_SPREADSHEET => ['xlsx', 'xls'],
+            self::ASSET_TYPE_IMAGE       => ['jpg', 'jpeg', 'png', 'gif'],
+            self::ASSET_TYPE_WORD        => ['doc', 'docx'],
+            self::ASSET_TYPE_COMPRESSION => ['zip', 'rar'],
+            self::ASSET_TYPE_PDF         => ['pdf'],
+        ];
     }
 
     public function downloadFile($path) {

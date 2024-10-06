@@ -8,9 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/asset/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/IconHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/IconHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/AssetSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/AssetSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Asset.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Asset.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -711,7 +709,7 @@
       <workItem from="1728109783025" duration="765000" />
       <workItem from="1728110673008" duration="25000" />
       <workItem from="1728113566870" duration="2736000" />
-      <workItem from="1728178131733" duration="132000" />
+      <workItem from="1728178131733" duration="4617000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
