@@ -1,10 +1,7 @@
 <?php
 
-use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\DateHelper;
-use common\helper\LabelHelper;
 use common\models\User;
-use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
@@ -19,7 +16,7 @@ use yii\helpers\Html;
 <div class="card">
     <div class="card-header">
         <?= Yii::t('app', 'Schedule') ?>
-        <strong> #<?= $model->title; ?></strong>
+        <strong>#<?= $model->title; ?></strong>
     </div>
 
     <div class="card-body">

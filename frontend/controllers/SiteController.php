@@ -106,7 +106,7 @@ class SiteController extends Controller
             return $this->redirect(['site/login']);
         } else {
 
-            $officeId = CacheService::getInstance()->getOfficeId();
+            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
             $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
 
             return $this->render('index',[

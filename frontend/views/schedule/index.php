@@ -3,10 +3,11 @@
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\DateHelper;
 use common\service\CacheService;
+use common\service\ScheduleService;
 
 
 /** @var yii\web\View $this */
-/** @var common\models\Schedule $schedules */
+/** @var common\models\Schedule $listSchedules */
 /** @var common\models\Participant $participant */
 /** @var common\service\ScheduleDetailService $scheduleDetailService */
 /** @var frontend\models\TokenForm $tokenForm */
@@ -60,15 +61,20 @@ $this->title = Yii::$app->name;
         <div class="card w-100">
 
             <?php
-            foreach ($schedules as $i => $scheduleItem) {
-                $timer = $scheduleItem->getTimeReference();
+            $scheduleService = new ScheduleService();
+            foreach ($listSchedules as $i => $schedule) {
+                $timeStart      = $schedule->getTimeStart();
+                $timeOut        = $schedule->getTimeOut();
+                $currentTime    = time();
+                $timer          = $scheduleService->getCountdownTime(
+                                    $timeStart,$timeOut,$currentTime);
                 ?>
                 <div class="card-body p-4">
                     <div class="mb-4">
                         <h5 class="card-title fw-semibold">
-                            <?= '#' . $scheduleItem->title; ?> / <?= DateHelper::formatDate($scheduleItem->date_start) ?>
+                            <?= '#' . $schedule->title; ?> / <?= DateHelper::formatDate($schedule->date_start) ?>
                             <span class="float-end float-right">
-                                <?= $scheduleItem->room->title; ?>
+                                <?= $schedule->room->title; ?>
                             </span>
                         </h5>
 
@@ -76,8 +82,8 @@ $this->title = Yii::$app->name;
 
                     <h5>
                         <small class="text-muted">
-                            Start : <?= DateHelper::formatTime($scheduleItem->date_start) ?>
-                            <div class="<?= $scheduleItem->getLabelAlertTimer(); ?> float-end float-right">
+                            Start : <?= DateHelper::formatTime($schedule->date_start) ?>
+                            <div class="<?= $scheduleService->getLabelAlertTimer($schedule); ?> float-end float-right">
                                 <div id="time-down-counter-<?= $i; ?>"></div>
                             </div>
                             <?=
@@ -102,7 +108,7 @@ $this->title = Yii::$app->name;
                             </thead>
 
                             <tbody>
-                            <?php foreach ($scheduleItem->scheduleDetails as $j => $scheduleDetailItem) {
+                            <?php foreach ($schedule->scheduleDetails as $j => $scheduleDetailItem) {
                                 $assessment = $scheduleDetailService->getAssessment($scheduleDetailItem, $participant->id);
                                 $isSubmitted = $scheduleDetailService->isParticipantSubmitted($assessment, $participant->id)
                                 ?>
@@ -119,7 +125,7 @@ $this->title = Yii::$app->name;
                                     </td>
                                     <td class="left">
                                         <?php
-                                            if($tokenForm->checkTokenToSchedule($scheduleItem)){
+                                            if($tokenForm->checkTokenToSchedule($schedule)){
                                                 echo $scheduleDetailService->getAssetButton($scheduleDetailItem, $isSubmitted, $participant->id);
                                             } else {
                                                 echo $tokenForm->getStatus($isSubmitted);

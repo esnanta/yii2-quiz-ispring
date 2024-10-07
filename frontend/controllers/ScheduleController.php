@@ -65,7 +65,7 @@ class ScheduleController extends Controller
         } else {
 
             $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
-            $schedules = $this->scheduleService->getScheduleOneMonthByParticipant(
+            $listSchedules = $this->scheduleService->getScheduleOneMonthByParticipant(
                 $participant->office_id,$participant->group_id);
 
             if ($this->tokenForm->load(Yii::$app->request->post())) {
@@ -76,7 +76,7 @@ class ScheduleController extends Controller
                 'token' => $this->token,
                 'tokenForm' => $this->tokenForm,
                 'participant' => $participant,
-                'schedules' => $schedules,
+                'listSchedules' => $listSchedules,
                 'scheduleDetailService' => $this->scheduleDetailService
             ]);
         }

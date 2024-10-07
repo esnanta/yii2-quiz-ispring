@@ -24,7 +24,7 @@ class ScheduleDetail extends BaseScheduleDetail
     {
         return [
             //TAMBAHAN
-            [['subject_id'], 'required'],
+            [['subject_id','asset_id'], 'required'],
 
             [['office_id', 'schedule_id', 'subject_id', 'asset_id', 'question_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['remark'], 'string'],

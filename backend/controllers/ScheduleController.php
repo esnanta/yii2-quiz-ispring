@@ -235,11 +235,6 @@ class ScheduleController extends Controller
             try {
                 $scheduleDetailService = new ScheduleDetailService();
                 foreach ($modelDetails as $modelDetailItem) {
-
-                    $scheduleDetailService->deleteAsset($modelDetailItem);
-                    $extractDir = $scheduleDetailService->getExtractDir($modelDetailItem);
-                    $scheduleDetailService->removeExtractFolder($extractDir);
-
                     $modelDetailItem->delete();
                 }
                 $model->delete();

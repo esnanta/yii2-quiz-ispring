@@ -127,7 +127,6 @@ Yii2TimerCountDown::widget([
                                 <th><?= Yii::t('app', 'Remark'); ?></th>
                                 <th><?= Yii::t('app', 'Question Type'); ?></th>
                                 <th class="center"><?= Yii::t('app', 'Asset'); ?></th>
-                                <th class="right"><?= Yii::t('app', ''); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -149,26 +148,6 @@ Yii2TimerCountDown::widget([
                                             echo Yii::t('app', 'Please upload files in zip');
                                         } else {
                                             echo $scheduleDetailService->getAssetButton($modelDetailItem,$submissionIsFalse,0);
-                                        }
-                                        ?></td>
-                                    <td class="right">
-                                        <?php
-                                        if ($modelDetailItem->asset_id == null) {
-                                            echo Html::a(
-                                                IconHelper::getUpload(),
-                                                ['schedule/index-asset',
-                                                    'id'=>$modelDetailItem->id, 'remark'=>$modelDetailItem->remark],
-                                                ['class' => LabelHelper::getButtonCssPlus()]
-                                            );
-                                        } else {
-//                                            echo Html::a(IconHelper::getDelete(),
-//                                                ['schedule-detail/delete-file', 'id' => $modelDetailItem->id], [
-//                                                    'class' => LabelHelper::getButtonCssMinus(),
-//                                                    'data' => [
-//                                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-//                                                        'method' => 'post',
-//                                                    ],
-//                                                ]);
                                         }
                                         ?>
                                     </td>

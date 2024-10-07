@@ -143,39 +143,9 @@ class ScheduleDetailController extends Controller
                 $scheduleList = DataListService::getSchedule();
                 $subjectList = DataListService::getSubject();
 
-                $oldFile = $this->scheduleDetailService->getAssetFile($model);
-                $oldAvatar = $model->asset_name;
-
-                if ($model->load(Yii::$app->request->post())) {
-                    // process uploaded asset file instance
-                    $asset = $this->scheduleDetailService->uploadAsset($model);
-                    if(empty($asset)){
-                        MessageHelper::getFlashUpdateFailed();
-                        return $this->redirect(['schedule/view', 'id' => $model->schedule_id]);
-                    } else {
-                        $model->asset_name  = $asset->name;
-                    }
-
-                    // revert back if no valid file instance uploaded
-                    if ($asset === false) {
-                        $model->asset_name = $oldAvatar;
-                    }
-
-                    if ($model->save()) :
-                        // upload only if valid uploaded file instance found
-                        if ($asset !== false) { // delete old and overwrite
-                            if(file_exists($oldFile)):
-                                unlink($oldFile);
-                            endif;
-                            $path = $this->scheduleDetailService->getAssetFile($model);
-                            $asset->saveAs($path);
-                            $this->scheduleDetailService->extract($model);
-                        }
-                        MessageHelper::getFlashUpdateSuccess();
-                    endif;
-
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    MessageHelper::getFlashUpdateSuccess();
                     $model->schedule->updateIsAsset();
-
                     return $this->redirect(['schedule/view', 'id' => $model->schedule_id]);
                 } else {
                     return $this->render('update', [
@@ -220,15 +190,8 @@ class ScheduleDetailController extends Controller
     {
         if (Yii::$app->user->can('delete-scheduledetail')) {
             $model  = $this->findModel($id);
-
-            $extractDir = $this->scheduleDetailService->getExtractDir($model);
-            $this->scheduleDetailService->removeExtractFolder($extractDir);
-            $this->scheduleDetailService->deleteAsset($model);
-
             $model->save();
-
             $model->schedule->updateIsAsset();
-
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect([
                 'schedule/view',
