@@ -7,6 +7,7 @@ use common\models\Assessment;
 use common\models\Participant;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
+use common\service\CacheService;
 use common\service\ScheduleDetailService;
 use common\service\ScheduleService;
 use frontend\models\TokenForm;
@@ -134,29 +135,89 @@ class ScheduleController extends Controller
      * http://www.mywebsite.com/presentation/index.html?USER_NAME=John&USER_EMAIL=john@ispringsolutions.com&ADDRESS=NYC
      * @throws Exception
      */
-    public function actionOpen($id, $title=null)
+//    public function actionOpen($id, $title=null)
+//    {
+//        $scheduleDetail = ScheduleDetail::findOne($id);
+//        $scheduleDetailService = new ScheduleDetailService();
+//        $participant = Participant::findone([
+//            'office_id' => $scheduleDetail->office_id,
+//            'username'=>Yii::$app->user->identity->username]);
+//
+//        $assessment = new Assessment();
+//        $assessment->schedule_detail_id = $scheduleDetail->id;
+//        $assessment->office_id = $scheduleDetail->office_id;
+//        $assessment->schedule_id = $scheduleDetail->schedule_id;
+//        $assessment->participant_id = $participant->id;
+//        $assessment->period_id = $scheduleDetail->schedule->period_id;
+//        $assessment->group_id = $scheduleDetail->schedule->group_id;
+//        $assessment->subject_id = $scheduleDetail->subject_id;
+//        $assessment->question_type = $scheduleDetail->question_type;
+//        $assessment->exam_type = $scheduleDetail->schedule->exam_type;
+//        $assessment->save();
+//
+//        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail,$this->scheduleService);
+//        $this->redirect($textLink);
+//    }
+
+    public function actionOpen($id, $title = null)
     {
-        $scheduleDetail = ScheduleDetail::findOne($id);
+        // Initialize cache
+        $cache = Yii::$app->cache;
+        $scheduleDetailKey = CacheService::getInstance()->getScheduleDetailKey();
+        $participantKey = CacheService::getInstance()->getParticipantKey();
+        $assessmentKey = CacheService::getInstance()->getAssessmentKey();
+
+        // Use the helper function to generate cache keys
+        $scheduleDetailCacheKey = CacheService::getInstance()->generateCacheKey($scheduleDetailKey, $id);
+        $participantCacheKey = CacheService::getInstance()->generateCacheKey($participantKey, $id);
+        $assessmentCacheKey = CacheService::getInstance()->generateCacheKey($assessmentKey, $id);
+
+        // ScheduleDetail cache handling
+        $scheduleDetail = $cache->get($scheduleDetailCacheKey);
+        if ($scheduleDetail === false) {
+            // Cache miss, fetch data and store in cache
+            $scheduleDetail = ScheduleDetail::findOne($id);
+            $cache->set($scheduleDetailCacheKey, $scheduleDetail);
+        }
+
+        // ScheduleDetailService
         $scheduleDetailService = new ScheduleDetailService();
-        $participant = Participant::findone([
-            'office_id' => $scheduleDetail->office_id,
-            'username'=>Yii::$app->user->identity->username]);
 
-        $assessment = new Assessment();
-        $assessment->schedule_detail_id = $scheduleDetail->id;
-        $assessment->office_id = $scheduleDetail->office_id;
-        $assessment->schedule_id = $scheduleDetail->schedule_id;
-        $assessment->participant_id = $participant->id;
-        $assessment->period_id = $scheduleDetail->schedule->period_id;
-        $assessment->group_id = $scheduleDetail->schedule->group_id;
-        $assessment->subject_id = $scheduleDetail->subject_id;
-        $assessment->question_type = $scheduleDetail->question_type;
-        $assessment->exam_type = $scheduleDetail->schedule->exam_type;
-        $assessment->save();
+        // Participant cache handling
+        $participant = $cache->get($participantCacheKey);
+        if ($participant === false) {
+            // Cache miss, fetch data and store in cache
+            $participant = Participant::findOne([
+                'office_id' => $scheduleDetail->office_id,
+                'username' => Yii::$app->user->identity->username,
+            ]);
+            $cache->set($participantCacheKey, $participant);
+        }
 
-        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail,$this->scheduleService);
-        $this->redirect($textLink);
+        // Assessment cache handling
+        $assessment = $cache->get($assessmentCacheKey);
+        if ($assessment === false) {
+            $assessment = new Assessment();
+            $assessment->schedule_detail_id = $scheduleDetail->id;
+            $assessment->office_id = $scheduleDetail->office_id;
+            $assessment->schedule_id = $scheduleDetail->schedule_id;
+            $assessment->participant_id = $participant->id;
+            $assessment->period_id = $scheduleDetail->schedule->period_id;
+            $assessment->group_id = $scheduleDetail->schedule->group_id;
+            $assessment->subject_id = $scheduleDetail->subject_id;
+            $assessment->question_type = $scheduleDetail->question_type;
+            $assessment->exam_type = $scheduleDetail->schedule->exam_type;
+            $assessment->save();
+
+            // Cache the assessment after saving
+            $cache->set($assessmentCacheKey, $assessment);
+        }
+
+        // Redirect to the generated text link
+        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail, $this->scheduleService);
+        return $this->redirect($textLink);
     }
+
 
     /**
      * Finds the Schedule model based on its primary key value.

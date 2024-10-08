@@ -5,6 +5,7 @@ use common\models\AuthAssignment;
 use common\models\Participant;
 use common\models\Staff;
 use Yii;
+use yii\base\Exception;
 use yii\web\ForbiddenHttpException;
 
 
@@ -108,5 +109,46 @@ class CacheService {
             $model = Participant::find()->where(['id' => $this->userId])->one();
             return $model->office_id;
         });
+    }
+
+    public function generateCacheKey($type, $id): string
+    {
+        switch ($type) {
+            case $this->getScheduleDetailKey():
+                return $this->getScheduleDetailKey().'_' . $id;
+            case $this->getParticipantKey():
+                // Assuming Yii::$app->user->identity is available
+                return $this->getParticipantKey().'_' . $id . '_' . Yii::$app->user->identity->username;
+            case 'assessment':
+                return $this->getAssessmentKey().'_' . $id;
+            default:
+                throw new Exception('Invalid cache type provided.');
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function destroyCache($id): void
+    {
+        $cache = Yii::$app->cache;
+
+        // Generate cache keys and delete them
+        $cache->delete($this->generateCacheKey($this->getScheduleDetailKey(), $id));
+        $cache->delete($this->generateCacheKey($this->getParticipantKey(), $id));
+        $cache->delete($this->generateCacheKey($this->getAssessmentKey(), $id));
+    }
+
+    public function getScheduleDetailKey(): string
+    {
+        return 'scheduleDetail';
+    }
+    public function getParticipantKey(): string
+    {
+        return 'participant';
+    }
+    public function getAssessmentKey(): string
+    {
+        return 'assessment';
     }
 }

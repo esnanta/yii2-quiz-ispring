@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 use common\models\Assessment;
-use common\models\charts\ChartParticipant;
 use common\models\Participant;
 use common\models\Period;
 use common\models\Schedule;
@@ -11,7 +10,6 @@ use common\models\ScheduleDetail;
 use common\models\Subject;
 use common\service\AssessmentService;
 use common\service\CacheService;
-use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
 use frontend\models\AssessmentSearch;
@@ -231,6 +229,7 @@ class AssessmentController extends Controller
             $assessment->submission_status        = Assessment::SUBMISSION_STATUS_SUBMITTED;
             $assessment->save();
 
+            CacheService::getInstance()->destroyCache($scheduleDetailId);
 
 //            $dateTime = date('Y-m-d_H-i-s');
 //            $resultFilename = Yii::getAlias('@common') . "/quizresult/result/quiz_result_{$dateTime}.txt";

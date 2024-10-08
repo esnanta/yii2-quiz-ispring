@@ -74,7 +74,7 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
-                    ['label' => Yii::t('app', 'Assessment'), 'url' => ['/assessment/index']],
+                    ['label' => Yii::t('app', 'Score'), 'url' => ['/assessment/index']],
                 ]],
                 ['label' => Yii::t('app', 'Asset'), 'icon' => 'shopping-basket', 'items' => [
                     ['label' => Yii::t('app', 'Index'), 'url' => ['/asset/index']],
@@ -82,9 +82,9 @@ use kartik\widgets\SideNav;
                     //['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
                 ]],
                 ['label' => Yii::t('app', 'Report'), 'icon' => 'file', 'items' => [
-                    ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['/chart/participant']],
-                    ['label' => Yii::t('app', 'Participant Card'), 'url' => ['/report/participant-card']],
-                    ['label' => Yii::t('app', 'Assessment Score'), 'url' => ['/report/assessment-score']],
+                    ['label' => Yii::t('app', 'Chart'), 'url' => ['/chart/participant']],
+                    ['label' => Yii::t('app', 'Card'), 'url' => ['/report/participant-card']],
+                    ['label' => Yii::t('app', 'Score'), 'url' => ['/report/assessment-score']],
                 ]],
                 ['label' => Yii::t('app', 'Download'), 'icon' => 'download', 'items' => [
                     ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']]

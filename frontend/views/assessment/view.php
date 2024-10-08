@@ -3,9 +3,7 @@
 use common\helper\ApexChartHelper;
 use common\helper\LabelHelper;
 use kartik\select2\Select2;
-use yii\helpers\Html;
 use kartik\detail\DetailView;
-use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
