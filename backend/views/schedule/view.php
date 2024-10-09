@@ -185,6 +185,19 @@ Yii2TimerCountDown::widget([
                     </div>
                     <div class="tab-pane fade show" id="assessment">
                         <?php if ($providerAssessment->totalCount) {
+
+                            $deleteAllAssessment = Html::a(
+                                IconHelper::getDelete().' Delete All',
+                                ['/schedule/delete-assessment', 'id' => $model->id],
+                                ['data-method' => 'post',
+                                    'data-confirm' => 'Delete all assessment?',
+                                    'class' => 'float-right float-end',
+                                    'title' => 'Delete']);
+
+                            echo '<br>';
+                            echo $deleteAllAssessment;
+                            echo '<br>';
+
                             echo $this->render('view_assessment', [
                                 'providerAssessment' => $providerAssessment,
                             ]);

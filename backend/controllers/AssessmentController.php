@@ -6,6 +6,7 @@ namespace backend\controllers;
 use common\helper\MessageHelper;
 use common\models\Assessment;
 use common\models\AssessmentSearch;
+use common\models\ScheduleDetail;
 use common\service\AssessmentService;
 use common\service\DataListService;
 use Yii;
@@ -188,8 +189,11 @@ class AssessmentController extends Controller
     public function actionDelete($id)
     {
         if (Yii::$app->user->can('delete-assessment')) {
-            $this->findModel($id)->delete();
-            return $this->redirect(['index']);
+            $model = $this->findModel($id);
+            $scheduleId = $model->schedule->id;
+            $model->delete();
+            MessageHelper::getFlashDeleteSuccess();
+            return $this->redirect(['/schedule/view', 'id' => $scheduleId]);
         } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;

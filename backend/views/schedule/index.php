@@ -27,6 +27,22 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
+        'title',
+        [
+            'attribute'=>'exam_type',
+            'vAlign'=>'middle',
+            'width'=>'120px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return ($model->exam_type!=null) ? $model->getOneExamType($model->exam_type):'';
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+            'filter'=>$examTypeList,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>''],
+            'format'=>'html'
+        ],
         [
                 'attribute' => 'period_id',
                 'label' => Yii::t('app', 'Period'),
@@ -75,7 +91,7 @@ $this->registerJs($search);
             ],
             'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-room_id']
         ],
-        'title',
+
         'date_start',
         'date_end',
         [

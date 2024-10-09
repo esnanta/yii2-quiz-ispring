@@ -23,15 +23,6 @@ use yii\web\NotFoundHttpException;
 class ScheduleDetailController extends Controller
 {
 
-    private ScheduleDetailService $scheduleDetailService;
-
-    public function __construct($id, $module,
-                                ScheduleDetailService $scheduleDetailService, $config = [])
-    {
-        $this->scheduleDetailService = $scheduleDetailService;
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return [
@@ -40,6 +31,7 @@ class ScheduleDetailController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'delete-file' => ['post'],
+                    'delete-assessment' => ['post'],
                 ],
             ],
         ];

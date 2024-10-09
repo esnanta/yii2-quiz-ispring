@@ -22,7 +22,7 @@ use yii\data\ActiveDataProvider;
     public function rules()
     {
         return [
-            [['id', 'office_id', 'period_id', 'group_id', 'room_id', 'is_asset','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'period_id', 'group_id', 'room_id', 'exam_type','is_asset','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'date_start', 'date_end', 'token','description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -69,6 +69,7 @@ use yii\data\ActiveDataProvider;
             'room_id' => $this->room_id,
             'date_start' => $this->date_start,
             'date_end' => $this->date_end,
+            'exam_type' => $this->exam_type,
             'is_asset' => $this->is_asset,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -1,9 +1,7 @@
 <?php
-
+use common\helper\IconHelper;
 use yii\helpers\Html;
-
 ?>
-
 
 <div class="table-responsive-sm">
     <table class="table table-striped">
@@ -19,6 +17,7 @@ use yii\helpers\Html;
             <th><?= Yii::t('app', 'Time Spent'); ?></th>
             <th><?= Yii::t('app', 'Time Limit'); ?></th>
             <th><?= Yii::t('app', 'Work Status'); ?></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +50,17 @@ use yii\helpers\Html;
                 <td class="left"><?= $modelDetailItem->time_spent; ?></td>
                 <td class="left"><?= $modelDetailItem->time_limit; ?></td>
                 <td class="left"><?= $wokStatus ?></td>
+                <td class="left no-print">
+                    <?php
+                    echo Html::a(
+                        IconHelper::getDelete(),
+                        ['/assessment/delete','id'=>$modelDetailItem->id],
+                        ['data-method' => 'post',
+                            'data-confirm' => 'Delete this?',
+                            'class' => 'dropdown-item',
+                            'title' => 'Delete']);
+                    ?>
+                </td>
             </tr>
 
         <?php } ?>

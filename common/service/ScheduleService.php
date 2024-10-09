@@ -133,7 +133,7 @@ class ScheduleService
                 date('Y-m-d H:i:s', strtotime('-14 days')), // 14 days ago
                 date('Y-m-d H:i:s', strtotime('+14 days'))  // 14 days ahead
             ])
-            ->orderBy(['date_start' => SORT_DESC]) // Optional: Sort by date
+            ->orderBy(['date_start' => SORT_ASC]) // Optional: Sort by date
             ->limit(12) // Limit to 6 records
             ->all();
     }

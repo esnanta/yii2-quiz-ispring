@@ -44,6 +44,7 @@ class ScheduleController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'delete-assessment' => ['post'],
                 ],
             ],
         ];
@@ -251,6 +252,25 @@ class ScheduleController extends Controller
         }
     }
 
+    /**
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionDeleteAssessment($id)
+    {
+        if (Yii::$app->user->can('delete-assessment')) {
+            $model  = $this->findModel($id);
+            $assessmentList = $model->getAssessments()->all();
+            foreach ($assessmentList as $assessment) {
+                $assessment->delete();
+            }
+            MessageHelper::getFlashDeleteSuccess();
+            return $this->redirect(['view','id'=>$model->id]);
+        } else {
+            MessageHelper::getFlashLoginInfo();
+            throw new ForbiddenHttpException;
+        }
+    }
 
     /**
      * Finds the Schedule model based on its primary key value.
