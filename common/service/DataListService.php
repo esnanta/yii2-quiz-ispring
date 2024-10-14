@@ -64,7 +64,9 @@ class DataListService
     {
         return ArrayHelper::map(Schedule::find()
             ->where(['office_id' => DataIdService::getOfficeId()])
-            ->asArray()->all(), 'id', 'title');
+            ->asArray()->all(), 'id', function ($model) {
+            return $model['title'] . '-' . $model['description']; // Concatenating title and description
+        });
     }
 
     public static function getAssessment(): array
