@@ -194,7 +194,7 @@ class ReportController extends Controller
 
                 if ($period_id != null && count($list) > 0) {
                     foreach ($list as $i => $model) {
-                        $out[] = ['id' => $model['id'], 'name' => $model['title']];
+                        $out[] = ['id' => $model['id'], 'name' => $model['title'].' - '.$model['description']];
                     }
                     // Optionally, preselect a value
                     return ['output' => $out, 'selected' => null];
