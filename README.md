@@ -26,7 +26,7 @@
 
 <h3><strong>Screenshots</strong></h3>
 
-<a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshots">Files</a>
+See <a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshots">IMAGES</a>
 
 ![Alt text](https://github.com/esnanta/yii2-quiz-ispring/raw/master/screenshots/05_grafik_progress.png)
 
