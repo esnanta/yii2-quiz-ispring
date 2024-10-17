@@ -24,6 +24,12 @@
 * Nanta Es (programmer) - ombakrinai@gmail.com
 * [Saroel](https://github.com/saroel01) (contributor, qc) - syahrul.hamdi@smanmba.sch.id
 
+<h3><strong>Screenshots</strong></h3>
+
+<a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshots">Files</a>
+
+![Alt text](https://github.com/esnanta/yii2-quiz-ispring/raw/master/screenshots/05_grafik_progress.png)
+
 <h3>
     <strong>Prerequisites</strong>
 </h3>
@@ -100,7 +106,7 @@
 </div>
 <br>
         Set "Finish Action Url" to : http://{YOUR_HOST}/{YOUR_APP_NAME}/assessment/index
-        <br>Ex : http://localhost/yii2-quiz-ispring/assessment-detail/index
+        <br>Ex : http://localhost/yii2-quiz-ispring/assessment/index
 <br>
 <br>
         Set "Send quiz results to server" : http://{YOUR_HOST}/{YOUR_APP_NAME}/assessment/submit
