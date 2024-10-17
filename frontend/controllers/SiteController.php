@@ -107,10 +107,12 @@ class SiteController extends Controller
         } else {
 
             $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
-            $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
+            $listUpcomingSchedule = $this->scheduleService->getScheduleUpcoming($officeId);
+            $listRecentSchedule = $this->scheduleService->getScheduleRecent($officeId);
 
             return $this->render('index',[
-                'schedules' => $schedules,
+                'listUpcomingSchedule' => $listUpcomingSchedule,
+                'listRecentSchedule' => $listRecentSchedule
             ]);
         }
     }

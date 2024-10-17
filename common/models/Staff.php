@@ -22,7 +22,7 @@ class Staff extends BaseStaff
     const ACTIVE_STATUS_YES     = 1;
     const ACTIVE_STATUS_NO      = 2;
 
-    //public $image;
+    public $asset;
 
     /**
      * @inheritdoc
@@ -31,7 +31,7 @@ class Staff extends BaseStaff
     {
         return [
             //TAMBAHAN
-            [['image'], 'file', 'extensions'=>'jpg, gif, png, jpeg','maxSize' => (500 * 1024), 'tooBig' => 'Limit is 500KB'],
+            [['asset'], 'file', 'extensions'=>'jpg, gif, png, jpeg','maxSize' => (500 * 1024), 'tooBig' => 'Limit is 500KB'],
 
             [['user_id', 'office_id', 'employment_id', 'gender_status', 'active_status', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['address', 'description'], 'string'],

@@ -4,6 +4,7 @@
 /* @var $searchModel common\models\ScheduleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+use common\helper\DateHelper;
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
@@ -91,9 +92,20 @@ $this->registerJs($search);
             ],
             'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-room_id']
         ],
-
-        'date_start',
-        'date_end',
+        [
+            'attribute' => 'date_start',
+            'label' => Yii::t('app', 'Start'),
+            'value' => function($model) {
+                return DateHelper::formatDateTime($model->date_start);
+            },
+        ],
+        [
+            'attribute' => 'date_end',
+            'label' => Yii::t('app', 'End'),
+            'value' => function($model) {
+                return DateHelper::formatDateTime($model->date_end);
+            },
+        ],
         [
             'attribute'=>'is_asset',
             'vAlign'=>'middle',

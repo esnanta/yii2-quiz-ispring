@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
             if($series!=null && $categories!=null):
                 echo ApexChartHelper::renderParticipantScoreChart(
-                    $categories, $series, Yii::t('app', 'Participant')
+                    $categories, $series, $participant->title.' Progress'
                 );
                 echo '<br>';
                 echo ApexChartHelper::renderRadarChart(

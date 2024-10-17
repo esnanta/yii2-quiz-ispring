@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\DateHelper;
 use common\service\CacheService;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

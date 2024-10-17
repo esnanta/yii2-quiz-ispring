@@ -115,13 +115,14 @@ class SiteController extends Controller
                 ->andWhere(['between', 'date_start', $dateStart, $dateEnd])
                 ->count();
 
-            $countNotStartSchedule = Schedule::find('id')
+            $countUpcomingSchedule = Schedule::find('id')
                 ->where(['office_id'=>$officeId])
                 ->andWhere(['>', 'date_start', $now])
                 ->count();
 
 
-            $schedules = $this->scheduleService->getScheduleOneMonth($officeId);
+            $listUpcomingSchedule = $this->scheduleService->getScheduleUpcoming($officeId);
+            $listRecentSchedule = $this->scheduleService->getScheduleRecent($officeId);
 
             return $this->render('index', [
                 'office'=>$office,
@@ -130,8 +131,9 @@ class SiteController extends Controller
                 'countOfflineParticipant' => $countOfflineParticipant,
                 'countOnlineParticipant' => $countOnlineParticipant,
                 'countAllSchedule' => $countAllSchedule,
-                'countNotStartSchedule' => $countNotStartSchedule,
-                'schedules' => $schedules
+                'countUpcomingSchedule' => $countUpcomingSchedule,
+                'listUpcomingSchedule' => $listUpcomingSchedule,
+                'listRecentSchedule' => $listRecentSchedule
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();

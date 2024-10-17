@@ -3,8 +3,17 @@
 $this->title = Yii::$app->name;
 
 use common\helper\DateHelper;
+use common\helper\LabelHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+/** @var yii\web\View $this */
+/** @var common\models\Schedule $listUpcomingSchedule */
+/** @var common\models\Schedule $listRecentSchedule */
+/** @var common\models\Schedule $countAllSchedule */
+/** @var common\models\Schedule $countUpcomingSchedule */
+/** @var common\models\Participant $countOfflineParticipant */
+/** @var common\models\Participant $countOnlineParticipant */
 ?>
 
 
@@ -86,7 +95,7 @@ use yii\helpers\Url;
                             <?= Yii::t('app', 'Schedule (Upcoming)'); ?>
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $countNotStartSchedule ?>
+                            <?= $countUpcomingSchedule ?>
                         </div>
                     </div>
                     <div class="col-auto">
@@ -136,7 +145,7 @@ use yii\helpers\Url;
                 <div id="calendar"></div>
             </div>
             <div class="col-md-5 col-xs-12">
-
+                <h6><?= LabelHelper::getYes(Yii::t('app', 'Upcoming')) ; ?></h6>
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -148,20 +157,56 @@ use yii\helpers\Url;
                     </thead>
                     <tbody>
                     <?php
-                    foreach ($schedules as $i => $schedule) {
+                    foreach ($listUpcomingSchedule as $i => $schedule) {
                         ?>
                         <tr>
-                            <td class="center"><?= $schedule->title; ?></td>
-                            <td class="left">
+                            <td class="center">
                                 <?php
-                                $dateStart = DateHelper::formatDate($schedule->date_start);
-                                $title =
-                                    Html::a($dateStart, ['schedule/view',
-                                        'id' => $schedule->id,
-                                        'title' => $schedule->title
-                                    ]);
-                                echo $title;
+                                echo Html::a($schedule->title, ['schedule/view',
+                                    'id' => $schedule->id,
+                                    'title' => $schedule->title
+                                ]);
                                 ?>
+                            </td>
+                            <td class="left">
+                                <?= DateHelper::formatDate($schedule->date_start); ?>
+                            </td>
+                            <td class="left">
+                                <?= DateHelper::formatTime($schedule->date_start); ?>
+                            </td>
+                            <td class="left">
+                                <?= $schedule->room->title; ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+
+                <h6><strong><?= LabelHelper::getNo(Yii::t('app', 'Recent')) ; ?></strong></h6>
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th class="center">#</th>
+                        <th><?= Yii::t('app', 'Date'); ?></th>
+                        <th><?= Yii::t('app', 'Start'); ?></th>
+                        <th><?= Yii::t('app', 'Room'); ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($listRecentSchedule as $i => $schedule) {
+                        ?>
+                        <tr>
+                            <td class="center">
+                                <?php
+                                echo Html::a($schedule->title, ['schedule/view',
+                                    'id' => $schedule->id,
+                                    'title' => $schedule->title
+                                ]);
+                                ?>
+                            </td>
+                            <td class="left">
+                                <?= DateHelper::formatDate($schedule->date_start); ?>
                             </td>
                             <td class="left">
                                 <?= DateHelper::formatTime($schedule->date_start); ?>

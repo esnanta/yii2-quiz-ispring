@@ -350,7 +350,7 @@ class DummyController extends Controller
                     $schedule->period_id = $period->id;
                     $schedule->room_id = $room->id;
                     $schedule->staff_id = $staff->id;
-                    $schedule->exam_type = 1;
+                    $schedule->exam_type = (rand(1,4));
                     $schedule->date_start = $dateStart;
                     $schedule->date_end = $dateEnd;
                     $schedule->save();
@@ -408,18 +408,18 @@ class DummyController extends Controller
                 $periodId           = $scheduleDetailItem->schedule->period_id;
                 $examType           = $scheduleDetailItem->schedule->exam_type;
 
-                $participants = Participant::find()
+                $listParticipant = Participant::find()
                     ->where(['office_id'=>$officeId,'group_id'=>$groupId])
                     ->all();
 
-                foreach ($participants as $participantItem) {
+                foreach ($listParticipant as $participant) {
                     $assessment = new Assessment();
                     $assessment->office_id = $officeId;
                     $assessment->period_id = $periodId;
                     $assessment->group_id = $groupId;
                     $assessment->schedule_id = $scheduleId;
                     $assessment->schedule_detail_id = $scheduleDetailId;
-                    $assessment->participant_id = $participantItem->id;
+                    $assessment->participant_id = $participant->id;
                     $assessment->subject_id = $subjectId;
                     $assessment->question_type = $questionType;
                     $assessment->exam_type = $examType;
@@ -429,7 +429,7 @@ class DummyController extends Controller
                     $assessment->gained_score = (rand(10,50));
                     $assessment->quiz_title = $assessment->subject->title;
                     $assessment->quiz_type = 'graded';
-                    $assessment->username = $participantItem->username;
+                    $assessment->username = $participant->username;
                     $assessment->save();
 
                     $assessment->submission_status = Assessment::SUBMISSION_STATUS_SUBMITTED;
