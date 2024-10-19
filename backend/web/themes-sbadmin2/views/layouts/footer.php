@@ -27,9 +27,9 @@ use yii\bootstrap4\Html;
             <span>
                 Copyright &copy; by Nantha Seutia |
                 <i class="fab fa-github"></i>
-                <?= Html::a(Html::encode(Yii::$app->name) .' '.date('Y'),
+                <?= Html::a(Html::encode(Yii::$app->name),
                     'https://github.com/esnanta/yii2-quiz-ispring') ?> |
-                Power by <?= Html::a('Yii','https://www.yiiframework.com/') ?>
+                Designed by <?= Html::a('sbadmin-2','https://github.com/StartBootstrap/startbootstrap-sb-admin-2') ?>
             </span>
         </div>
     </div>

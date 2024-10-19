@@ -24,11 +24,10 @@ DO NOT REMOVE OR EDIT FOOTER
 
 <div class="mt-auto py-6 px-6 text-center">
     <p class="mb-0 fs-4">
-        <?= IconHelper::getHome();?> <?= Html::a('Daraspace','https://www.daraspace.com/') ?>
-        |
+        Copyright &copy; by Nantha Seutia  <?=date('Y')?> |
         <?= IconHelper::getGithub();?>
-        <?= Html::a(Html::encode(Yii::$app->name),
-            'https://github.com/esnanta/yii2-quiz-ispring') ?>
-        | Copyright &copy; by Nantha Seutia  <?=date('Y')?>
+        Yii2 Quiz iSpring
+        |
+        <?= IconHelper::getGlobe();?> Daraspace
     </p>
 </div>
