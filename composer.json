@@ -1,16 +1,13 @@
 {
-    "name": "esnanta/yii2-cbt-ispring",
+    "name": "esnanta/yii2-quiz-ispring",
     "description": "ISPRING Assessment System",
-    "keywords": ["yii2", "esnanta", "pertashop"],
-    "homepage": "https://www.yiiframework.com/",
+    "keywords": ["yii2", "ispring", "quiz", "esnanta", "daraspace"],
+    "homepage": "https://www.daraspace.com/",
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "Creative Commons Attribution-NonCommercial 4.0 International",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "https://www.yiiframework.com/forum/",
-        "wiki": "https://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/esnanta/yii2-quiz-ispring/issues?state=open",
+        "source": "https://github.com/esnanta/yii2-quiz-ispring"
     },
     "minimum-stability": "stable",
     "require": {
