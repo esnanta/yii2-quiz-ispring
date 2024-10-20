@@ -1,6 +1,6 @@
 {
     "name": "esnanta/yii2-quiz-ispring",
-    "description": "ISPRING Assessment System",
+    "description": "An intuitive platform for students and instructors",
     "keywords": ["yii2", "ispring", "quiz", "esnanta", "daraspace"],
     "homepage": "https://www.daraspace.com/",
     "type": "project",
