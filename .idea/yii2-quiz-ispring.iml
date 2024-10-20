@@ -2,10 +2,13 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/backend/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/backend/tests" isTestSource="true" packagePrefix="backend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/backend/tests/_support" isTestSource="true" packagePrefix="backend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/common/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/common/tests" isTestSource="true" packagePrefix="common\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/common/tests/_support" isTestSource="true" packagePrefix="common\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
@@ -204,6 +207,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/react/stream" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-grapheme" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/clipboard" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/supplyhog/yii2-clipboardjs" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

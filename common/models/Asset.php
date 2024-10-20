@@ -4,6 +4,8 @@ namespace common\models;
 
 use common\helper\LabelHelper;
 use common\models\base\Asset as BaseAsset;
+use common\service\AssetService;
+use common\service\CacheService;
 use Yii;
 use yii\base\Exception;
 
@@ -132,7 +134,7 @@ class Asset extends BaseAsset
 
         }
         else
-            return;
+            return '-';
     }
 
     // Public static method to return the file types array
@@ -147,6 +149,25 @@ class Asset extends BaseAsset
         ];
     }
 
+    /**
+     * fetch stored asset file name with complete path
+     * @return string
+     * @throws Exception
+     */
+    public function getAssetFile(): ?string
+    {
+        return (new AssetService)->getAssetFile($this);
+    }
+
+    /**
+     * Generates a URL pointing to a file on the server (image, PDF, etc.).
+     * fetch stored asset url
+     * @return string
+     */
+    public function getAssetUrl(): string
+    {
+        return (new AssetService)->getAssetUrl($this);
+    }
     /**
      * Generates a URL pointing to a Yii controller action for routing requests
      * @return string
@@ -173,112 +194,4 @@ class Asset extends BaseAsset
             Yii::app()->end();
         }
     }
-
-//    public function getPath() : string {
-//        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
-//        return '/uploads/asset/'.$officeUniqueId;
-//    }
-
-    /**
-     * fetch stored asset file name with complete path
-     * @return string
-     * @throws Exception
-     */
-//    public function getAssetFile(): ?string
-//    {
-//        return AssetUseCase::getFile($this->getPath(),$this->asset_name);
-//    }
-
-    /**
-     * Generates a URL pointing to a file on the server (image, PDF, etc.).
-     * fetch stored asset url
-     * @return string
-     */
-//    public function getAssetUrl(): string
-//    {
-//        return AssetUseCase::getFileUrl($this->getPath(), $this->asset_name);
-//    }
-
-
-
-    /**
-    * Process upload of asset
-    *
-    * @return mixed the uploaded asset instance
-    */
-//    public function uploadAsset() {
-//        // Get the uploaded file instance
-//        $asset = UploadedFile::getInstance($this, 'asset');
-//
-//        // Abort if no asset is uploaded
-//        if (!$asset) {
-//            return false;
-//        }
-//
-//        // Store the source file name as title if it's empty
-//        if (empty($this->title)) {
-//            $this->title = $asset->name;
-//        }
-//
-//        // Generate a unique file name
-//        $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($this->title, PATHINFO_FILENAME));
-//        $ext = pathinfo($asset->name, PATHINFO_EXTENSION);
-//        $this->asset_name = "{$baseTitle}_" . uniqid() . ".{$ext}";
-//
-//        // Return the uploaded asset instance
-//        return $asset;
-//    }
-
-
-    /**
-    * Process deletion of asset
-    *
-    * @return boolean the status of deletion
-    */
-//    public function deleteAsset() {
-//        $file = $this->getAssetFile();
-//
-//        // check if file exists on server
-//        if (empty($file) || !file_exists($file)) {
-//            return false;
-//        }
-//
-//        // check if uploaded file can be deleted on server
-//        if (!unlink($file)) {
-//            return false;
-//        } else {
-//            // if deletion successful, reset your file attributes
-//            $this->asset_name = null;
-//            $this->asset_url = null;
-//        }
-//
-//        return true;
-//    }
-
-//    public function getProceedButton(): string
-//    {
-//        $button = Html::a(
-//            IconHelper::getImport().' '.Yii::t('app', 'Import'),
-//            ['import','id'=>$this->id,'title'=>$this->title],
-//            ['class' => 'btn btn-sm btn-info pull-right']
-//        );
-//        $asset = $this->getAssetFile();
-//        if(!file_exists($asset)){
-//            $button = Html::a(
-//                IconHelper::getAdd().' '.Yii::t('app', 'Upload'),
-//                ['asset/update','id'=>$this->id,'title'=>$this->title],
-//                ['class' => 'btn btn-sm btn-danger pull-right']
-//            );
-//        }
-//        return $button;
-//    }
-//
-//    public function getUpdateButton(): string
-//    {
-//        return Html::a(
-//            IconHelper::getView(),
-//            ['asset/view','id'=>$this->id,'title'=>$this->title],
-//            ['class' => 'btn btn-sm btn-primary pull-right']
-//        );
-//    }
 }

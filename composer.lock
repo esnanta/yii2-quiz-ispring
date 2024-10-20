@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63b04dd90e631c9cbd8d31de8d0f889a",
+    "content-hash": "abaab92cca15f0f806e8d361395a5bda",
     "packages": [
         {
             "name": "aneeshikmat/yii2-time-down-counter",
@@ -126,17 +126,35 @@
             "type": "bower-asset"
         },
         {
-            "name": "bower-asset/inputmask",
-            "version": "5.0.8",
+            "name": "bower-asset/clipboard",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
-                "reference": "e0f39e0c93569c6b494c3a57edef2c59313a6b64"
+                "url": "git@github.com:zenorocha/clipboard.js.git",
+                "reference": "b6e6b80ab07eab03ce0d277515b3ed540773a330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/e0f39e0c93569c6b494c3a57edef2c59313a6b64",
-                "reference": "e0f39e0c93569c6b494c3a57edef2c59313a6b64"
+                "url": "https://api.github.com/repos/zenorocha/clipboard.js/zipball/b6e6b80ab07eab03ce0d277515b3ed540773a330",
+                "reference": "b6e6b80ab07eab03ce0d277515b3ed540773a330"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/inputmask",
+            "version": "5.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "reference": "310a33557e2944daf86d5946a5e8c82b9118f8f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/310a33557e2944daf86d5946a5e8c82b9118f8f7",
+                "reference": "310a33557e2944daf86d5946a5e8c82b9118f8f7"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -1372,12 +1390,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-date-range.git",
-                "reference": "7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e"
+                "reference": "567ab49bb8262da98f45ea5109a854f85a210474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e",
-                "reference": "7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/567ab49bb8262da98f45ea5109a854f85a210474",
+                "reference": "567ab49bb8262da98f45ea5109a854f85a210474",
                 "shasum": ""
             },
             "require": {
@@ -1423,7 +1441,7 @@
                 "issues": "https://github.com/kartik-v/yii2-date-range/issues",
                 "source": "https://github.com/kartik-v/yii2-date-range/tree/master"
             },
-            "time": "2023-03-03T15:26:35+00:00"
+            "time": "2024-09-27T13:25:31+00:00"
         },
         {
             "name": "kartik-v/yii2-datecontrol",
@@ -4312,16 +4330,16 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "1.29.1",
+            "version": "1.29.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "59ee38f7480904cd6487e5cbdea4d80ff2758719"
+                "reference": "3a5a818d7d3e4b5bd2e56fb9de44dbded6eae07f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/59ee38f7480904cd6487e5cbdea4d80ff2758719",
-                "reference": "59ee38f7480904cd6487e5cbdea4d80ff2758719",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/3a5a818d7d3e4b5bd2e56fb9de44dbded6eae07f",
+                "reference": "3a5a818d7d3e4b5bd2e56fb9de44dbded6eae07f",
                 "shasum": ""
             },
             "require": {
@@ -4411,9 +4429,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/1.29.1"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/1.29.2"
             },
-            "time": "2024-09-03T00:55:32+00:00"
+            "time": "2024-09-29T07:04:47+00:00"
         },
         {
             "name": "psr/container",
@@ -4892,6 +4910,48 @@
                 }
             ],
             "time": "2024-09-02T10:17:15+00:00"
+        },
+        {
+            "name": "supplyhog/yii2-clipboardjs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/supplyhog/yii2-clipboardjs.git",
+                "reference": "9bb74f4cfef3ddd05a572e0c0c59ed2cef3745f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/supplyhog/yii2-clipboardjs/zipball/9bb74f4cfef3ddd05a572e0c0c59ed2cef3745f4",
+                "reference": "9bb74f4cfef3ddd05a572e0c0c59ed2cef3745f4",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/clipboard": "^1.5",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "supplyhog\\ClipboardJs\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Wil Wade",
+                    "email": "wil@supplyhog.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/supplyhog/yii2-clipboardjs/issues",
+                "source": "https://github.com/supplyhog/yii2-clipboardjs/tree/master"
+            },
+            "time": "2016-10-31T13:13:08+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -6622,25 +6682,25 @@
     "packages-dev": [
         {
             "name": "behat/gherkin",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Gherkin.git",
-                "reference": "0bc8d1e30e96183e4f36db9dc79caead300beff4"
+                "reference": "cbb83c4c435dd8d05a161f2a5ae322e61b2f4db6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/0bc8d1e30e96183e4f36db9dc79caead300beff4",
-                "reference": "0bc8d1e30e96183e4f36db9dc79caead300beff4",
+                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/cbb83c4c435dd8d05a161f2a5ae322e61b2f4db6",
+                "reference": "cbb83c4c435dd8d05a161f2a5ae322e61b2f4db6",
                 "shasum": ""
             },
             "require": {
                 "php": "~7.2|~8.0"
             },
             "require-dev": {
-                "cucumber/cucumber": "dev-gherkin-22.0.0",
+                "cucumber/cucumber": "dev-gherkin-24.1.0",
                 "phpunit/phpunit": "~8|~9",
-                "symfony/yaml": "~3|~4|~5"
+                "symfony/yaml": "~3|~4|~5|~6|~7"
             },
             "suggest": {
                 "symfony/yaml": "If you want to parse features, represented in YAML files"
@@ -6679,9 +6739,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Behat/Gherkin/issues",
-                "source": "https://github.com/Behat/Gherkin/tree/v4.9.0"
+                "source": "https://github.com/Behat/Gherkin/tree/v4.10.0"
             },
-            "time": "2021-10-12T13:05:09+00:00"
+            "time": "2024-10-19T14:46:06+00:00"
         },
         {
             "name": "clue/ndjson-react",
@@ -7952,16 +8012,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.2.0",
+            "version": "v5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb"
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
-                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8eea230464783aa9671db8eea6f8c6ac5285794b",
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b",
                 "shasum": ""
             },
             "require": {
@@ -8004,9 +8064,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.2.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.1"
             },
-            "time": "2024-09-15T16:40:33+00:00"
+            "time": "2024-10-08T18:51:32+00:00"
         },
         {
             "name": "pdepend/pdepend",
@@ -8315,16 +8375,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.4",
+            "version": "1.12.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ffa517cb918591b93acc9b95c0bebdcd0e4538bd"
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ffa517cb918591b93acc9b95c0bebdcd0e4538bd",
-                "reference": "ffa517cb918591b93acc9b95c0bebdcd0e4538bd",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
                 "shasum": ""
             },
             "require": {
@@ -8369,7 +8429,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-19T07:58:01+00:00"
+            "time": "2024-10-18T11:12:07+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12041,6 +12101,7 @@
         "kartik-v/yii2-date-range": 20,
         "kartik-v/yii2-number": 20,
         "kartik-v/yii2-password": 20,
+        "supplyhog/yii2-clipboardjs": 20,
         "mootensai/yii2-enhanced-gii": 20,
         "warrence/yii2-kartikgii": 20,
         "phpmd/phpmd": 0,

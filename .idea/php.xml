@@ -417,6 +417,8 @@
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-rating" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-spinner" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-sidenav" />
+      <path value="$PROJECT_DIR$/vendor/supplyhog/yii2-clipboardjs" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/clipboard" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

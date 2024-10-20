@@ -3,6 +3,7 @@
 use common\helper\IconHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
+use supplyhog\ClipboardJs\ClipboardJsWidget;
 use yii\helpers\Html;
 
 /**
@@ -25,21 +26,30 @@ use yii\helpers\Html;
         <h6 class="card-subtitle mb-2 text-muted">
             <i class="fa fa-eye"></i> <?= $model->view_counter; ?>
             <?php
+
+            echo ClipboardJsWidget::widget([
+                'text' => 'https://' . Yii::$app->getRequest()->serverName . $model->getAssetUrl(),
+                'label' => IconHelper::getClipboard() . ' Copy Url',
+                'htmlOptions' => ['class' => 'btn btn-small'],
+                'tag' => 'button',
+            ]);
+
+            if (!empty($model->asset_name)) {
+                echo Html::a(IconHelper::getDelete(), ['asset/delete-file', 'id' => $model->id],
+                    ['class' => 'card-link float-right float-end', 'data-confirm' => "Delete Asset?",
+                        'data-method' => 'POST', 'title' => 'Delete Asset?']);
+            }
+
             echo Html::a(IconHelper::getDownload() . ' ' . $model->download_counter,
                 ['asset/download', 'id' => $model->id, 'title' => $model->title],
-                ['class' => 'card-link', 'title' => 'Download']);
+                ['class' => 'card-link float-right float-end','style'=>'padding-right:5px', 'title' => 'Download']);
 
             if ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
                 echo Html::a(IconHelper::getImport() . ' Import',
                     ['participant/import', 'id' => $model->id, 'title' => $model->title],
-                    ['class' => 'card-link', 'title' => 'Import']);
+                    ['class' => 'card-link float-right float-end', 'title' => 'Import']);
             }
 
-            if (!empty($model->asset_name)) {
-                echo Html::a(IconHelper::getDelete(), ['asset/delete-file', 'id' => $model->id],
-                    ['class' => 'card-link float-right', 'data-confirm' => "Delete Asset?",
-                        'data-method' => 'POST', 'title' => 'Delete Asset?']);
-            }
             ?>
         </h6>
 
