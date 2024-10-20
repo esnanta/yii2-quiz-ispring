@@ -68,9 +68,23 @@ See <a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshot
         Run "yii2_quiz_ispring.sql" and "yii2_auth.sql"
     </li>
     <li>
-        A more complete guide see <a href="https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring">Step-by-Step Guide: Installing Yii2 Quiz iSpring</a>;
+        A more complete guide see <a href="https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring">Step-by-Step Guide: Installing Yii2 Quiz iSpring</a>
     </li>
 </ul>
+
+<h3>
+    <strong>How To Use</strong>
+</h3>
+<ul>
+    <li>
+        <a href="https://github.com/esnanta/yii2-quiz-ispring/blob/master/tutorial/ID-Tutorial%20Quiz%20Ispring%20Admin%20.pdf">Quiz iSpring Admin (Indonesia)</a>
+    </li>
+    <li>
+        <a href="https://github.com/esnanta/yii2-quiz-ispring/blob/master/tutorial/ID-Tutorial%20Quiz%20Ispring%20Peserta%20Ujian.pdf">Quiz iSpring Peserta Ujian (Indonesia)</a>
+    </li>
+</ul>
+
+
 <h3>
     <strong>ISPRING Configuration</strong>
 </h3>
