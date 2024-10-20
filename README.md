@@ -1,5 +1,5 @@
 <h1>
-    <strong>Yii2 Quiz ISPRING</strong>
+    <strong>Yii2 Quiz iSPRING</strong>
 </h1>
 <p>
     This program use
@@ -44,7 +44,7 @@ See <a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshot
         QuizMaker (<a href="https://www.ispringsolutions.com/">iSpring Suite</a>).
     </li>
     <li>
-        <a href="https://www.apachefriends.org/">XAMMP</a>
+        <a href="https://www.apachefriends.org/">XAMPP</a>
         8.0.x
     </li>
     <li>
@@ -59,13 +59,16 @@ See <a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshot
 </h3>
 <ul>
     <li>
-        Run "composer install"
+        Run "composer update --no-dev"
     </li>
     <li>
         Run "php init" and choose "production".
     </li>
     <li>
         Run "yii2_quiz_ispring.sql" and "yii2_auth.sql"
+    </li>
+    <li>
+        A more complete guide see <a href="https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring">Step-by-Step Guide: Installing Yii2 Quiz iSpring</a>;
     </li>
 </ul>
 <h3>

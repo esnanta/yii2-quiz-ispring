@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abaab92cca15f0f806e8d361395a5bda",
+    "content-hash": "f2208c812da74b29014cfd58d256bbfe",
     "packages": [
         {
             "name": "aneeshikmat/yii2-time-down-counter",
