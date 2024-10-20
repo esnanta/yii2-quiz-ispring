@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore.bak" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/repository-open-graph-template.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/asset/_view_side.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/_view_side.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/asset/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/asset/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/IconHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/IconHelper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/helper/LabelHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/LabelHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Asset.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Asset.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -738,7 +727,7 @@
       <workItem from="1729341239576" duration="1341000" />
       <workItem from="1729343634853" duration="36000" />
       <workItem from="1729344329057" duration="32000" />
-      <workItem from="1729398022615" duration="1689000" />
+      <workItem from="1729398022615" duration="3115000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
