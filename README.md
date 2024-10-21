@@ -59,7 +59,10 @@ See <a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshot
 </h3>
 <ul>
     <li>
-        Run "composer update --no-dev"
+        Run "composer update --no-dev". It aims to download the required vendor library.
+        <br>If you experience problems, you can
+        <a href="https://drive.google.com/drive/folders/1CnwzIY4ZuYD9JylFdHgcFHPcqFJicnVi?usp=sharing">download the vendor library</a>
+        and then extract it according to the directory structure.
     </li>
     <li>
         Run "php init" and choose "production".
@@ -71,6 +74,28 @@ See <a href="https://github.com/esnanta/yii2-quiz-ispring/tree/master/screenshot
         A more complete guide see <a href="https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring">Step-by-Step Guide: Installing Yii2 Quiz iSpring</a>
     </li>
 </ul>
+
+<h3>
+    <strong>DIRECTORY STRUCTURE</strong>
+</h3>
+
+```
+assets
+    yii2_quiz_ispring.sql
+    yii2_auth.sql
+backend
+common
+    config/
+        main.php
+console
+environments           
+frontend
+screenshots
+tutorial
+vagrant
+vendor
+    autoload.php                 
+```
 
 <h3>
     <strong>How To Use</strong>
