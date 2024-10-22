@@ -9,7 +9,7 @@ use yii\bootstrap4\Html;
 =========================================================
 
 * Product Page: https://github.com/esnanta/yii2-quiz-ispring
-* Licensed under MIT
+* Licensed under Creative Commons Attribution-NonCommercial 4.0 International
 * Power by Yii
 
 =========================================================
