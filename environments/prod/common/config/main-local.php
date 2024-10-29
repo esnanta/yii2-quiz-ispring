@@ -2,6 +2,19 @@
 
 return [
 //    'components' => [
+//
+//        'cache' => [
+//            'class' => 'yii\caching\MemCache',
+//            'servers' => [
+//                [
+//                    'host' => 'localhost',
+//                    'port' => 11211,
+//                    'weight' => 100,
+//                ],
+//            ],
+//            'useMemcached' => true,
+//        ],
+//
 //        'db' => [
 //            'class' => \yii\db\Connection::class,
 //            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',

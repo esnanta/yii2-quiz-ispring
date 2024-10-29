@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
+      <change afterPath="$PROJECT_DIR$/backend/web/images/dairy-1986532_1280.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/images/default-images-01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/images/default-images-02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/images/default-images-03.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/images/default-images-04.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/images/no-picture-available-icon-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/web/images/no_image.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/images/unify263-admin/logo-dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/images/unify263-admin/logo-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/images/unify263-admin/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/images/unify263-marketing/logo-white.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/images/unify263-marketing/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/environments/prod/common/config/main-local.php" beforeDir="false" afterPath="$PROJECT_DIR$/environments/prod/common/config/main-local.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -492,7 +508,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/web/htdocs/app/yii2-news",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/web",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -505,11 +521,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\asset" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\schedule" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\assets" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\themes-sbadmin2\dektrium\user\views" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\views\assessment" />
@@ -731,6 +747,7 @@
       <workItem from="1729517306240" duration="5274000" />
       <workItem from="1729743010909" duration="210000" />
       <workItem from="1730093552115" duration="82000" />
+      <workItem from="1730243020526" duration="851000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
