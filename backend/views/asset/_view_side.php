@@ -58,7 +58,7 @@ use yii\helpers\Html;
         <?php
         if ($fileType == Asset::ASSET_TYPE_IMAGE) {
             echo Html::img($assetUrl, ['class' => 'img-fluid']);
-        } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET && !empty($helper)) {
+        } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
             /*
              * "displayGrid" is defined as a void method, using echo here will result
              * in a warning because echo expects a return value to display.

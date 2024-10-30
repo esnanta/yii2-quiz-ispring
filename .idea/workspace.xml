@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/asset/_view_side.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/_view_side.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/SpreadsheetHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/SpreadsheetHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/asset/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/asset/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -737,7 +737,7 @@
       <workItem from="1729743010909" duration="210000" />
       <workItem from="1730093552115" duration="82000" />
       <workItem from="1730243020526" duration="2820000" />
-      <workItem from="1730290112022" duration="1559000" />
+      <workItem from="1730290112022" duration="3292000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

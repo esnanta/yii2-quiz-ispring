@@ -1,14 +1,11 @@
 <?php
 
-use common\helper\IconHelper;
 use common\helper\LabelHelper;
-use common\models\Asset;
-use lesha724\documentviewer\ViewerJsDocumentViewer;
-use yii\helpers\Html;
-use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
-use kartik\widgets\FileInput;
+use kartik\detail\DetailView;
 use kartik\select2\Select2;
+use kartik\widgets\FileInput;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -23,7 +20,7 @@ use kartik\select2\Select2;
  */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assets'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assets'), 'url' => ['asset/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $create = LabelHelper::getCreateButton();

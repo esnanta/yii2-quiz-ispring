@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{copy} {update} {view}',
+                'template'=>'{copy} {update} {view} {delete}',
                 'buttons' => [
                     'copy' => function ($url, $model) {
                         return ClipboardJsWidget::widget([
@@ -134,7 +134,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'class'=>'btn btn-sm btn-info',
                             ]
                         );
-                    },        
+                    },
+                    'delete' => function ($url, $model) {
+                        return Html::a('<i class="fa fa-trash"></i>', ['asset/delete', 'id' => $model->id],
+                            ['class' => 'btn btn-sm btn-danger', 'data-confirm' => "Delete Asset?",
+                                'data-method' => 'POST', 'title' => 'Delete Asset?']);
+                    },
                 ],
             ],
         ],
