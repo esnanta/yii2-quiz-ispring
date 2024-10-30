@@ -4,8 +4,10 @@ namespace common\helper;
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use PhpOffice\PhpSpreadsheet\Reader\IReader;
 
-class SpreadsheetHelper
+class SpreadsheetHelper extends Sample
 {
     private static ?SpreadsheetHelper $instance = null;
 
@@ -16,7 +18,11 @@ class SpreadsheetHelper
         return self::$instance;
     }
 
-    public function getReader($inputFileName, $sheetName){
+    /**
+     * @throws Exception
+     */
+    public function getReader($inputFileName, $sheetName): IReader
+    {
         $filterSubset = new ReadFilter();
 
         $inputFileType = IOFactory::identify($inputFileName);
