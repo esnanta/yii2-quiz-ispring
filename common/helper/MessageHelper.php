@@ -211,6 +211,18 @@ class MessageHelper
             )]
         );
     }
+
+    public static function getFlashNoActivePeriod(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'danger',
+            ['message' => Yii::t(
+                'app',
+                'View card cancelled. Please set active period first.'
+            )]
+        );
+    }
+
     public static function getTimeElapsedString($_ptime)
     {
         $ptime = strtotime($_ptime);

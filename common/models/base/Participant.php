@@ -17,10 +17,10 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $identity_number
  * @property string $username
  * @property string $password
- * @property string $auth_key
  * @property string $email
  * @property integer $status
  * @property string $last_login_at
+ * @property string $auth_key
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -31,7 +31,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\Assessment[] $assessmentDetails
+ * @property \common\models\Assessment[] $assessments
  * @property \common\models\Group $group
  * @property \common\models\Office $office
  */
@@ -61,7 +61,7 @@ class Participant extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'assessmentDetails',
+            'assessments',
             'group',
             'office'
         ];
@@ -117,10 +117,10 @@ class Participant extends \yii\db\ActiveRecord
             'identity_number' => Yii::t('app', 'Identity Number'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
             'last_login_at' => Yii::t('app', 'Last Login At'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),
@@ -130,7 +130,7 @@ class Participant extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAssessmentDetails()
+    public function getAssessments()
     {
         return $this->hasMany(\common\models\Assessment::class, ['participant_id' => 'id']);
     }

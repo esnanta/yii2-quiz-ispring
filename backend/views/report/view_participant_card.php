@@ -2,9 +2,13 @@
 
 /**
  * @var yii\web\View $this
- * @var common\models\Assessment $model
- * @var common\models\Participant $participants
+ * @var common\models\reports\ExportParticipant $model
+ * @var common\models\Participant $listParticipant
+ * @var common\models\Period $activePeriod
+ *
  */
+
+use common\service\ParticipantService;
 
 $this->title = Yii::t('app', 'Report {modelClass}', [
     'modelClass' => 'Participant',
@@ -48,28 +52,33 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <!-- Participant Card Start -->
         <?php
-        foreach($participants as $i=>$participantItemModel) {
+        foreach($listParticipant as $i=>$participant) {
             ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-default text-black">
-                        <?= $participantItemModel->office->title;?>
+                        <?=Yii::t('app', 'Participant Credential');?>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">
-                            <?= $participantItemModel->title;?>
+                            <?= $participant->title;?>
                             <span class="float-right float-end">
                                 <?=Yii::t('app', 'Group')?> :
-                                <?= $participantItemModel->group->title;?>
+                                <?= $participant->group->title;?>
                             </span>
                         </h5>
                         <p class="card-text">
                             <strong><?=Yii::t('app', 'Username')?>:</strong>
-                            <?= $participantItemModel->username;?>
+                            <?= $participant->username;?><br>
+                            <strong><?=Yii::t('app', 'Password')?>:</strong>
+                            <?= $participant->password;?>
                         </p>
                         <p class="card-text">
-                            <strong><?=Yii::t('app', 'Password')?>:</strong>
-                            <?= $participantItemModel->password;?>
+                            <?php
+                            if($model->is_display_subject):
+                                ParticipantService::displaySchedule($participant->group_id, $activePeriod->id);
+                            endif;
+                            ?>
                         </p>
                     </div>
                 </div>

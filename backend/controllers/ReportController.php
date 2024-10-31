@@ -211,22 +211,38 @@ class ReportController extends Controller
     public function actionParticipantCard()
     {
         $model      = new ExportParticipant();
-
         $groupList  = DataListService::getGroup();
+        $officeId   = CacheService::getInstance()->getOfficeId();
+
+        $activePeriod = Period::find()
+            ->where([
+                'office_id' => $officeId,
+                'is_active' => Period::IS_ACTIVE_YES
+            ])
+            ->one();
+
+        if(empty($activePeriod)):
+            MessageHelper::getFlashNoActivePeriod();
+            return $this->render('report_participant', [
+                'model' => $model,
+                'groupList' => $groupList
+            ]);
+        endif;
 
         if (Yii::$app->user->can('view-participant')) {
             if ($model->load(Yii::$app->request->post())) {
 
                 $officeId = CacheService::getInstance()->getOfficeId();
 
-                $participants = Participant::find()
+                $listParticipant = Participant::find()
                     ->where(['office_id'=>$officeId, 'group_id' => $model->group_id])
                     ->orderBy(['id' => SORT_ASC])
                     ->all();
 
-
                 return $this->render('view_participant_card', [
-                    'participants' => $participants,
+                    'model' => $model,
+                    'listParticipant' => $listParticipant,
+                    'activePeriod' => $activePeriod,
                 ]);
 
             } else {

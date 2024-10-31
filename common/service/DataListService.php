@@ -57,6 +57,7 @@ class DataListService
     {
         return ArrayHelper::map(Group::find()
             ->where(['office_id' => DataIdService::getOfficeId()])
+            ->orderBy('sequence ASC')
             ->asArray()->all(), 'id', 'title');
     }
 

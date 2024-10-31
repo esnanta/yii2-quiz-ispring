@@ -2,8 +2,12 @@
 
 namespace common\service;
 
+use common\helper\DateHelper;
 use common\helper\LabelHelper;
 use common\models\Participant;
+use common\models\Period;
+use common\models\Schedule;
+use common\models\ScheduleDetail;
 use Yii;
 
 class ParticipantService
@@ -74,6 +78,53 @@ class ParticipantService
                     echo '<tr>';
                     echo '<td colspan="2" class="text-danger">Invalid data format</td>';
                     echo '</tr>';
+                }
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+        } else {
+            echo '<div class="alert alert-info">No data found.</div>';
+        }
+    }
+
+    public static function displaySchedule($groupId,$activePeriodId): void
+    {
+        // Loop through the result and display each item in a Bootstrap table
+        if (!empty($groupId)) {
+
+            $officeId = CacheService::getInstance()->getOfficeId();
+            $listSchedules = Schedule::find()
+                ->where([
+                    'office_id' => $officeId,
+                    'group_id' => $groupId,
+                    'period_id' => $activePeriodId
+                ])
+                ->all();
+
+            echo '<table class="table table-sm table-bordered">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>'.Yii::t('app', '#').'</th>';
+            echo '<th>'.Yii::t('app', 'Subject').'</th>';
+            echo '<th>'.Yii::t('app', 'Date').'</th>';
+            echo '<th>'.Yii::t('app', 'Start').'</th>';
+
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            $counter = 1;
+            foreach ($listSchedules as $schedule) {
+                $listScheduleDetails = $schedule->scheduleDetails;
+                foreach ($listScheduleDetails as $scheduleDetail) {
+                    echo '<tr>';
+                    echo '<td>'.$counter.'</td>';
+                    echo '<td>'.$scheduleDetail->subject->title.'</td>';
+                    echo '<td>'.DateHelper::formatDate($schedule->date_start).'</td>';
+                    echo '<td>'.DateHelper::formatTime($schedule->date_start).'</td>';
+                    echo '</tr>';
+                    $counter++;
                 }
             }
 

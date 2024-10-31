@@ -10,6 +10,7 @@ use yii\base\Model;
 class ExportParticipant extends Model
 {
     public $group_id;
+    public $is_display_subject = false;
 
     /**
      * @inheritdoc
@@ -18,6 +19,7 @@ class ExportParticipant extends Model
     {
         return [
             [['group_id'], 'required'],
+            [['is_display_subject'], 'safe'],
         ];
     }
 
@@ -25,6 +27,7 @@ class ExportParticipant extends Model
     {
         return [
             'group_id'       => Yii::t('app', 'Group ID'),
+            'is_display_subject' => Yii::t('app', 'Display Subject'),
         ];
     }
 }

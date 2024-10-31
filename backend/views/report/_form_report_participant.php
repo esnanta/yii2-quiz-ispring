@@ -36,30 +36,18 @@ echo Form::widget([
                 'allowClear' => true
             ],
         ],
+        'is_display_subject' => [
+            'type' => Form::INPUT_DROPDOWN_LIST,
+            'items' => [
+                'false' => 'No',
+                'true' => 'Yes',
+            ],
+            'options' => [
+                'prompt' => '',
+            ],
+        ],
     ]
 ]);
-
-//    echo '<hr>';
-//    echo '<p class="help-block">Optional</p>';
-//
-//    echo Form::widget([
-//        'model' => $model,
-//        'form' => $form,
-//        'columns' => 1,
-//        'attributes' => [
-//            'subject_id' => [
-//                'type' => Form::INPUT_WIDGET,
-//                'widgetClass' => Select2::class,
-//                'options' => [
-//                    'data' => $subjectList,
-//                    'options' => ['placeholder' => '', 'disabled' => false],
-//                ],
-//                'pluginOptions' => [
-//                    'allowClear' => true
-//                ],
-//            ],
-//        ]
-//    ]);
 
 echo Html::submitButton(Yii::t('app', 'View'),
     ['class' => 'btn btn-success']
