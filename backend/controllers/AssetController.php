@@ -133,12 +133,10 @@ class AssetController extends Controller
                 // process uploaded asset file instance
                 $asset = $this->assetService->uploadAsset($model);
 
-                if(empty($asset)){
-                    MessageHelper::getFlashUploadFailed();
-                } else {
+                if(!empty($asset)):
                     $model->asset_name  = $asset->name;
                     $model->asset_url = $this->assetService->getAssetUrl($model);
-                }
+                endif;
 
                 if ($model->save()) {
                     if ($asset !== false) {

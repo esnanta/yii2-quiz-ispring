@@ -5,7 +5,6 @@ namespace common\service;
 use common\helper\IconHelper;
 use common\helper\ImageHelper;
 use common\helper\LabelHelper;
-use PhpParser\Node\Stmt\Label;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
@@ -29,7 +28,7 @@ class AssetService
         $uploadedFile = UploadedFile::getInstance($asset, 'asset');
 
         // Abort if no asset is uploaded
-        if (empty($asset)) {
+        if (empty($uploadedFile)) {
             return false;
         }
 
@@ -78,6 +77,10 @@ class AssetService
 
     public function getAssetUrl(Asset $asset): string
     {
+        if($asset->asset_type != Asset::ASSET_TYPE_IMAGE){
+            return self::getDefaultImage();
+        }
+
         $path = self::getPath($asset);
         $fileName = $asset->asset_name;
 
