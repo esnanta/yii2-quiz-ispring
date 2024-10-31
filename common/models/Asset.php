@@ -5,9 +5,9 @@ namespace common\models;
 use common\helper\LabelHelper;
 use common\models\base\Asset as BaseAsset;
 use common\service\AssetService;
-use common\service\CacheService;
 use Yii;
 use yii\base\Exception;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "tx_asset".
@@ -193,5 +193,35 @@ class Asset extends BaseAsset
 
             Yii::app()->end();
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getProceedButton(): string
+    {
+        $button = Html::a(
+            '<i class="fas fa-file-import"></i> '.Yii::t('app', 'Import'),
+            ['import','id'=>$this->id,'title'=>$this->title],
+            ['class' => 'btn btn-sm btn-info pull-right']
+        );
+        $asset = $this->getAssetFile();
+        if(!file_exists($asset)){
+            $button = Html::a(
+                '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
+                ['asset/update','id'=>$this->id,'title'=>$this->title],
+                ['class' => 'btn btn-sm btn-danger pull-right']
+            );
+        }
+        return $button;
+    }
+
+    public function getUpdateButton(): string
+    {
+        return Html::a(
+            '<i class="fas fa-eye"></i>',
+            ['asset/view','id'=>$this->id,'title'=>$this->title],
+            ['class' => 'btn btn-sm btn-primary pull-right']
+        );
     }
 }
