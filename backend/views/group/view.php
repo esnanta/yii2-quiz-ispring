@@ -17,7 +17,7 @@ use yii\helpers\Html;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = LabelHelper::getCreateButton('');
+$create = LabelHelper::getCreateButton('create');
 ?>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
