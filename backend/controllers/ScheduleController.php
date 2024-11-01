@@ -17,6 +17,7 @@ use Yii;
 use yii\base\Exception;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -184,21 +185,34 @@ class ScheduleController extends Controller
     {
         if (Yii::$app->user->can('update-schedule')) {
             $model = $this->findModel($id);
-            $officeList = DataListService::getOffice();
-            $periodList = DataListService::getPeriodActive();
-            $roomList = DataListService::getRoom();
-            $groupList = DataListService::getGroup();
-            $subjectList = DataListService::getSubject();
-            $staffList = DataListService::getStaff();
-            $assetList = DataListService::getAssetCompression();
-            $examTypeList = Schedule::getArrayExamType();
-            $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
+            $existingDetailIds = ArrayHelper::map($model->scheduleDetails, 'id', 'id'); // Track existing details
 
             if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                // Get the IDs of details from the submitted data
+                $submittedDetailIds = ArrayHelper::getColumn($model->scheduleDetails, 'id');
+
+                // Find details that were not submitted (hence marked for deletion)
+                $detailsToDelete = array_diff($existingDetailIds, $submittedDetailIds);
+
+                // Delete each missing detail
+                if (!empty($detailsToDelete)) {
+                    ScheduleDetail::deleteAll(['id' => $detailsToDelete]);
+                }
+
                 $model->updateIsAsset();
                 MessageHelper::getFlashUpdateSuccess();
-                return $this->redirect(['view', 'id' => $model->id,'title'=>$model->title]);
+                return $this->redirect(['view', 'id' => $model->id, 'title' => $model->title]);
             } else {
+                $officeList = DataListService::getOffice();
+                $periodList = DataListService::getPeriodActive();
+                $roomList = DataListService::getRoom();
+                $groupList = DataListService::getGroup();
+                $subjectList = DataListService::getSubject();
+                $staffList = DataListService::getStaff();
+                $assetList = DataListService::getAssetCompression();
+                $examTypeList = Schedule::getArrayExamType();
+                $questionTypeList = ScheduleDetail::getArrayQuestionTypes();
+
                 return $this->render('update', [
                     'model' => $model,
                     'officeList' => $officeList,
@@ -209,7 +223,7 @@ class ScheduleController extends Controller
                     'staffList' => $staffList,
                     'assetList' => $assetList,
                     'examTypeList' => $examTypeList,
-                    'questionTypeList' => $questionTypeList
+                    'questionTypeList' => $questionTypeList,
                 ]);
             }
         } else {
@@ -234,7 +248,6 @@ class ScheduleController extends Controller
 
             $transaction = \Yii::$app->db->beginTransaction();
             try {
-                $scheduleDetailService = new ScheduleDetailService();
                 foreach ($modelDetails as $modelDetailItem) {
                     $modelDetailItem->delete();
                 }
