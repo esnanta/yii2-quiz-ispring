@@ -19,6 +19,7 @@
 return [
     'Delete' => '',
     'Edit' => '',
+    'Participant Chart' => '',
     'Reset' => '',
     'Update' => '',
     'View' => '',

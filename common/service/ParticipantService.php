@@ -109,7 +109,7 @@ class ParticipantService
             echo '<th>'.Yii::t('app', 'Subject').'</th>';
             echo '<th>'.Yii::t('app', 'Date').'</th>';
             echo '<th>'.Yii::t('app', 'Start').'</th>';
-
+            echo '<th>'.Yii::t('app', 'Sign').'</th>';
             echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
@@ -123,6 +123,7 @@ class ParticipantService
                     echo '<td>'.$scheduleDetail->subject->title.'</td>';
                     echo '<td>'.DateHelper::formatDate($schedule->date_start).'</td>';
                     echo '<td>'.DateHelper::formatTime($schedule->date_start).'</td>';
+                    echo '<td> </td>';
                     echo '</tr>';
                     $counter++;
                 }
