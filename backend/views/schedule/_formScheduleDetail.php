@@ -1,5 +1,7 @@
 <div class="form-group" id="add-schedule-detail">
 <?php
+
+use common\helper\IconHelper;
 use kartik\grid\GridView;
 use kartik\builder\TabularForm;
 use kartik\widgets\Select2;
@@ -74,7 +76,7 @@ echo TabularForm::widget([
             'value' => function($model, $key) {
                 return
                     Html::hiddenInput('Children[' . $key . '][id]', (!empty($model['id'])) ? $model['id'] : "") .
-                    Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowScheduleDetail(' . $key . '); return false;', 'id' => 'schedule-detail-del-btn']);
+                    Html::a(IconHelper::getDelete(), '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowScheduleDetail(' . $key . '); return false;', 'id' => 'schedule-detail-del-btn']);
             },
         ],
     ],
