@@ -359,15 +359,4 @@ class ScheduleController extends Controller
             return Json::encode(['success' => false, 'message' => 'Record not found']);
         }
     }
-
-    /**
-     * @throws Exception
-     */
-    public function actionOpen($id, $title)
-    {
-        $scheduleDetailService = new ScheduleDetailService();
-        $scheduleDetail = ScheduleDetail::findOne($id);
-        $textLink = $scheduleDetailService->generateTextLink($scheduleDetail,$this->scheduleService);
-        $this->redirect(str_replace('admin/','',$textLink));
-    }
 }

@@ -2,12 +2,15 @@
 
 use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\DateHelper;
+use common\helper\LabelHelper;
 use common\service\CacheService;
+use common\service\ScheduleDetailService;
 use common\service\ScheduleService;
+use yii\helpers\Html;
 
 
 /** @var yii\web\View $this */
-/** @var common\models\Schedule $listSchedules */
+/** @var common\models\Schedule $listUpcomingSchedule */
 /** @var common\models\Participant $participant */
 /** @var common\service\ScheduleDetailService $scheduleDetailService */
 /** @var frontend\models\TokenForm $tokenForm */
@@ -62,7 +65,7 @@ $this->title = Yii::$app->name;
 
             <?php
             $scheduleService = new ScheduleService();
-            foreach ($listSchedules as $i => $schedule) {
+            foreach ($listUpcomingSchedule as $i => $schedule) {
                 $timeStart      = $schedule->getTimeStart();
                 $timeOut        = $schedule->getTimeOut();
                 $currentTime    = time();
@@ -126,7 +129,12 @@ $this->title = Yii::$app->name;
                                     <td class="left">
                                         <?php
                                             if($tokenForm->checkTokenToSchedule($schedule)){
-                                                echo $scheduleDetailService->getAssetButton($scheduleDetailItem, $isSubmitted, $participant->id);
+                                                echo $scheduleDetailService->getAssetButton(
+                                                        $scheduleDetailItem,
+                                                        $isSubmitted,
+                                                        $participant->id,
+                                                        ScheduleDetailService::EXECUTE_ASSESSMENT_TRUE
+                                                );
                                             } else {
                                                 echo $tokenForm->getStatus($isSubmitted);
                                             }
@@ -141,6 +149,47 @@ $this->title = Yii::$app->name;
                     </div>
                 </div>
             <?php } ?>
+
+            <hr>
+
+            <div class="card-body p-4">
+                <h6><strong><?= LabelHelper::getNo(Yii::t('app', 'Recent')) ; ?></strong></h6>
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th class="center">#</th>
+                        <th><?= Yii::t('app', 'Date'); ?></th>
+                        <th><?= Yii::t('app', 'End'); ?></th>
+                        <th><?= Yii::t('app', 'Room'); ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($listRecentSchedule as $i => $schedule) {
+                        ?>
+                        <tr>
+                            <td class="center">
+                                <?php
+                                echo Html::a($schedule->title, ['schedule/view',
+                                    'id' => $schedule->id,
+                                    'title' => $schedule->title
+                                ]);
+                                ?>
+                            </td>
+                            <td class="left">
+                                <?= DateHelper::formatDate($schedule->date_start); ?>
+                            </td>
+                            <td class="left">
+                                <?= DateHelper::formatTime($schedule->date_end); ?>
+                            </td>
+                            <td class="left">
+                                <?= $schedule->room->title; ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

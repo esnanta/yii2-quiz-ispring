@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/AssetService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/AssetService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -675,7 +677,9 @@
       <workItem from="1730429065889" duration="22000" />
       <workItem from="1730430049232" duration="2972000" />
       <workItem from="1730433641462" duration="2208000" />
-      <workItem from="1730606576968" duration="3593000" />
+      <workItem from="1730606576968" duration="4137000" />
+      <workItem from="1730611829791" duration="5122000" />
+      <workItem from="1730621063404" duration="1540000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

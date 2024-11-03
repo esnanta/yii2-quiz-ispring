@@ -5,6 +5,7 @@ use common\helper\DateHelper;
 use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\User;
+use common\service\ScheduleDetailService;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -147,7 +148,11 @@ Yii2TimerCountDown::widget([
                                         if (empty($modelDetailItem->asset_id)) {
                                             echo Yii::t('app', 'Please upload files in zip');
                                         } else {
-                                            echo $scheduleDetailService->getAssetButton($modelDetailItem,$submissionIsFalse,0);
+                                            echo $scheduleDetailService->getAssetButton(
+                                                    $modelDetailItem,
+                                                    $submissionIsFalse,0,
+                                                    ScheduleDetailService::EXECUTE_ASSESSMENT_FALSE
+                                            );
                                         }
                                         ?>
                                     </td>
