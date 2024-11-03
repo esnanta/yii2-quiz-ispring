@@ -114,15 +114,17 @@ class AssetService
      * @param Asset $asset
      * @throws Exception
      */
-    public function extract(Asset $asset)
+    public function extract(Asset $asset): void
     {
-        $fileSource = $this->getAssetFile($asset);
-        $extractDir = $this->getExtractDir($asset);
+        if($asset->asset_type==Asset::ASSET_TYPE_COMPRESSION) {
+            $fileSource = $this->getAssetFile($asset);
+            $extractDir = $this->getExtractDir($asset);
 
-        $zip = new ZipArchive;
-        $zip->open($fileSource);
-        $zip->extractTo($extractDir);
-        $zip->close();
+            $zip = new ZipArchive;
+            $zip->open($fileSource);
+            $zip->extractTo($extractDir);
+            $zip->close();
+        }
     }
 
     /**
