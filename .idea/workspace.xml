@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
-    </list>
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -677,7 +673,7 @@
       <workItem from="1730611829791" duration="5122000" />
       <workItem from="1730621063404" duration="1540000" />
       <workItem from="1730692911226" duration="282000" />
-      <workItem from="1730732947664" duration="1435000" />
+      <workItem from="1730732947664" duration="2080000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
