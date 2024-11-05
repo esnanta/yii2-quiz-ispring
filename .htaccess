@@ -22,11 +22,18 @@
 # Block access to "hidden" directories whose names begin with a period. This
 # includes directories used by version control systems such as Subversion or Git.
 <IfModule mod_rewrite.c>
-#  RewriteCond %{SCRIPT_FILENAME} -d
-#  RewriteCond %{SCRIPT_FILENAME} -f
-#  RewriteRule "(^|/)\." - [F]
+    Options +FollowSymlinks
+    RewriteEngine On
 
-    # deal with admin first
+    # Redirect requests to the frontend without exposing the /frontend/web directory
+    RewriteCond %{REQUEST_URI} !^/(backend|frontend)/web/
+    RewriteRule ^uploads/(.*)$ frontend/web/uploads/$1 [L]
+    RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+    RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+    RewriteRule ^themes/(.*)$ frontend/web/themes/$1 [L]
+    RewriteRule ^images/(.*)$ frontend/web/images/$1 [L]
+
+    # Handle admin routes to backend
     RewriteCond %{REQUEST_URI} ^/(admin)
     RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
     RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
@@ -35,25 +42,11 @@
     RewriteRule ^admin/uploads/(.*)$ backend/web/uploads/$1 [L]
     RewriteRule ^admin/(.*)$ backend/web/$1 [L]
 
-    RewriteCond %{REQUEST_URI} !^/backend/web/(assets|css)/
-    RewriteCond %{REQUEST_URI} ^/(admin)
-    RewriteRule ^.*$ backend/web/index.php [L]
-
-    RewriteCond %{REQUEST_URI} ^/(assets|css)
-    RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
-    RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
-    RewriteRule ^themes/(.*)$ frontend/web/themes/$1 [L]
-    RewriteRule ^uploads/(.*)$ frontend/web/uploads/$1 [L]
-    RewriteRule ^images/(.*)$ backend/web/images/$1 [L]
-    RewriteRule ^uploads/(.*)$ backend/web/uploads/$1 [L]
-    RewriteRule ^(.*)$ frontend/web/$1 [L]
-
-    RewriteCond %{REQUEST_URI} !^/(frontend|backend)/web/(assets|css)/
-    RewriteCond %{REQUEST_URI} !index.php
-    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    # Default routing to frontend index.php
+    RewriteCond %{REQUEST_URI} !^/(backend|frontend)/web/
+    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^.*$ frontend/web/index.php
-
+    RewriteRule ^(.*)$ frontend/web/index.php [L]
 </IfModule>
 
 
