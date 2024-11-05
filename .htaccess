@@ -1,31 +1,23 @@
 # ----------------------------------------------------------------------
 # Adds some security for the Apache server configuration for use with
 # https://github.com/kartik-v/yii2-app-practical-b template.
-# @author Kartik Visweswaran <kartikv2@gmail.com>
-# @see http://demos.krajee.com/app-practical-b
 # ----------------------------------------------------------------------
 
-# "-Indexes" will have Apache block users from browsing folders without a default document
-# Usually you should leave this activated, because you shouldn't allow everybody to surf through
-# every folder on your server (which includes rather private places like CMS system folders).
+# Disable directory browsing
 <IfModule mod_autoindex.c>
   Options -Indexes
 </IfModule>
 
-
-<IfModule mod_rewrite.c>
-    Options +FollowSymlinks
-    RewriteEngine On
-</IfModule>
-
-
-# Block access to "hidden" directories whose names begin with a period. This
-# includes directories used by version control systems such as Subversion or Git.
+# Enable mod_rewrite
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks
     RewriteEngine On
 
-    # Redirect requests to the frontend without exposing the /frontend/web directory
+    # Force HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Handle requests to frontend without exposing /frontend/web
     RewriteCond %{REQUEST_URI} !^/(backend|frontend)/web/
     RewriteRule ^uploads/(.*)$ frontend/web/uploads/$1 [L]
     RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
@@ -34,7 +26,7 @@
     RewriteRule ^images/(.*)$ frontend/web/images/$1 [L]
 
     # Handle admin routes to backend
-    RewriteCond %{REQUEST_URI} ^/(admin)
+    RewriteCond %{REQUEST_URI} ^/admin
     RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
     RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
     RewriteRule ^admin/themes/(.*)$ backend/web/themes/$1 [L]
@@ -42,17 +34,18 @@
     RewriteRule ^admin/uploads/(.*)$ backend/web/uploads/$1 [L]
     RewriteRule ^admin/(.*)$ backend/web/$1 [L]
 
-    # Default routing to frontend index.php
+    # Redirect root requests to frontend/web/index.php
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule ^$ frontend/web/index.php [L]
+
+    # Default routing to frontend index.php for other routes
     RewriteCond %{REQUEST_URI} !^/(backend|frontend)/web/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ frontend/web/index.php [L]
 </IfModule>
 
-
 # Block access to backup and source files
-# These files may be left by some text/html editors and
-# pose a great security danger, when someone can access them
 <FilesMatch "(\.(bak|bat|config|sql|fla|md|psd|ini|log|sh|inc|swp|dist)|~|init|composer\.json|composer\.lock)$">
   Order allow,deny
   Deny from all
@@ -64,18 +57,12 @@
   php_value session.cookie_httponly true
 </IfModule>
 
+# PHP version handling
 <IfModule mime_module>
   AddHandler application/x-httpd-ea-php72 .php .php7 .phtml
 </IfModule>
 
-# Settings to hide index.php and ensure pretty urls
-RewriteEngine on
-
-# if a directory or a file exists, use it directly
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# otherwise forward it to index.php
-RewriteRule . index.php
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# cPanel PHP settings
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
