@@ -136,7 +136,7 @@ class AssetService
     public function getExtractDir(Asset $asset): ?string
     {
         $combinedName = $this->getExtractFolderName($asset);
-        $directory = Yii::getAlias('@webroot') . $this->getPath($asset) . '/extract/' . $combinedName;
+        $directory = str_replace('backend', 'frontend', Yii::getAlias('@webroot')) . $this->getPath($asset) . '/' . $combinedName;
         if (!is_dir($directory)) {
             FileHelper::createDirectory($directory, $mode = 0777);
         }

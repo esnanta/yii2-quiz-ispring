@@ -22,19 +22,6 @@ $this->title = Yii::$app->name;
 <div class="row">
     <div class="col-xs-6 col-sm-3 col-xl-3">
         <div class="card overflow-hidden rounded-2">
-            <div class="position-relative">
-
-<!--                <a href="javascript:void(0)">-->
-<!--                    <img src="--><?php //= Url::base() ?><!--/frontend/web/themes-b5-modernize/assets/images/profile/user-1.jpg"-->
-<!--                         class="card-img-top rounded-0"-->
-<!--                         alt="...">-->
-<!--                </a>-->
-<!--                <a href="javascript:void(0)"-->
-<!--                   class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"-->
-<!--                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i-->
-<!--                            class="ti ti-basket fs-4"></i>-->
-<!--                </a>-->
-            </div>
             <div class="card-body pt-3 p-4">
                 <h6 class="fw-semibold fs-4">
                     <?= Yii::$app->user->identity->username ?>
@@ -69,8 +56,6 @@ $this->title = Yii::$app->name;
                 $timeStart      = $schedule->getTimeStart();
                 $timeOut        = $schedule->getTimeOut();
                 $currentTime    = time();
-                $timer          = $scheduleService->getCountdownTime(
-                                    $timeStart,$timeOut,$currentTime);
                 ?>
                 <div class="card-body p-4">
                     <div class="mb-4">
@@ -86,13 +71,15 @@ $this->title = Yii::$app->name;
                     <h5>
                         <small class="text-muted">
                             Start : <?= DateHelper::formatTime($schedule->date_start) ?>
+
                             <div class="<?= $scheduleService->getLabelAlertTimer($schedule); ?> float-end float-right">
                                 <div id="time-down-counter-<?= $i; ?>"></div>
                             </div>
+
                             <?=
                             Yii2TimerCountDown::widget([
                                 'countDownIdSelector' => 'time-down-counter-' . $i,
-                                'countDownDate' => strtotime(date("Y-m-d H:i:s", $timer)) * 1000
+                                'countDownDate' => strtotime(date("Y-m-d H:i:s", $timeOut)) * 1000
                             ]);
                             ?>
                         </small>

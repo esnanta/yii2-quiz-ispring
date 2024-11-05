@@ -8,10 +8,13 @@ use kartik\detail\DetailView;
 /**
  * @var yii\web\View $this
  * @var common\models\Assessment $model
+ * @var common\models\Schedule $scheduleList
+ * @var common\models\Assessment $examTypeList
+ * @var common\models\Participant $participantList
  */
 
 $this->title = $model->quiz_title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessment Details'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assessments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
