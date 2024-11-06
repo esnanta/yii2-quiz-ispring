@@ -18,7 +18,7 @@ $this->title = Yii::$app->name;
 <!-- Content Row -->
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?= Yii::t('app', 'Schedule'); ?>
+        <?= Html::a(Yii::t('app', 'Go to Schedule'), ['schedule/index']); ?>
         <span class="float-right float-end">
         </span>
     </div>

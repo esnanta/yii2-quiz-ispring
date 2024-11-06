@@ -92,8 +92,8 @@ $this->title = Yii::$app->name;
                                 <th class="center">#</th>
                                 <th><?= Yii::t('app', 'Subject'); ?></th>
                                 <th><?= Yii::t('app', 'Question Type'); ?></th>
-                                <th><?= Yii::t('app', 'Submission'); ?></th>
                                 <th><?= Yii::t('app', 'Asset'); ?></th>
+                                <th><?= Yii::t('app', 'Submission'); ?></th>
                             </tr>
                             </thead>
 
@@ -111,21 +111,21 @@ $this->title = Yii::$app->name;
                                         <?= $scheduleDetailItem->getOneQuestionType($scheduleDetailItem->question_type); ?>
                                     </td>
                                     <td class="left">
-                                        <?= $scheduleDetailService->getSubmissionStatus($assessment);?>
+                                        <?php
+                                        if($tokenForm->checkTokenToSchedule($schedule)){
+                                            echo $scheduleDetailService->getAssetButton(
+                                                $scheduleDetailItem,
+                                                $isSubmitted,
+                                                $participant->id,
+                                                ScheduleDetailService::EXECUTE_ASSESSMENT_TRUE
+                                            );
+                                        } else {
+                                            echo $tokenForm->getStatus($isSubmitted);
+                                        }
+                                        ?>
                                     </td>
                                     <td class="left">
-                                        <?php
-                                            if($tokenForm->checkTokenToSchedule($schedule)){
-                                                echo $scheduleDetailService->getAssetButton(
-                                                        $scheduleDetailItem,
-                                                        $isSubmitted,
-                                                        $participant->id,
-                                                        ScheduleDetailService::EXECUTE_ASSESSMENT_TRUE
-                                                );
-                                            } else {
-                                                echo $tokenForm->getStatus($isSubmitted);
-                                            }
-                                        ?>
+                                        <?= $scheduleDetailService->getSubmissionStatus($assessment);?>
                                     </td>
                                 </tr>
 
