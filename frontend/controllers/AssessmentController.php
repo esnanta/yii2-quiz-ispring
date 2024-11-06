@@ -153,7 +153,7 @@ class AssessmentController extends Controller
         ini_set('display_errors', 0);
         ini_set('log_errors', 1);
 
-        require_once Yii::getAlias('@common').'\quizresult\includes\common.inc.php';
+        require_once Yii::getAlias('@common') . DIRECTORY_SEPARATOR . 'quizresult' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'common.inc.php';
 //        require_once Yii::getAlias('@common').'\quizresult\classes\QuizResults.class.php';
 //        require_once Yii::getAlias('@common').'\quizresult\classes\QuizReportGenerator.class.php';
 //        require_once Yii::getAlias('@common').'\quizresult\classes\QuizDetails.class.php';
