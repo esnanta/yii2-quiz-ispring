@@ -54,7 +54,7 @@ echo TabularForm::widget([
                     'placeholder' => Yii::t('app', ''),
                 ],
             ],
-            'columnOptions' => ['width' => '200px']
+            'columnOptions' => ['width' => '150px']
         ],
 
         'asset_id' => [
@@ -67,7 +67,7 @@ echo TabularForm::widget([
                     'placeholder' => Yii::t('app', ''),
                 ],
             ],
-            'columnOptions' => ['width' => '200px']
+            'columnOptions' => ['width' => '300px']
         ],
 
         'del' => [

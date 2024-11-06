@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/DataListService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/DataListService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ChartController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -680,7 +680,7 @@
       <workItem from="1730732947664" duration="3216000" />
       <workItem from="1730808067229" duration="2762000" />
       <workItem from="1730859582972" duration="1942000" />
-      <workItem from="1730897922839" duration="1059000" />
+      <workItem from="1730897922839" duration="5458000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

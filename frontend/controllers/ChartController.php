@@ -12,6 +12,7 @@ use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -72,9 +73,9 @@ class ChartController extends Controller
         $model = new ChartParticipant();
         $officeId = DataIdService::getOfficeId();
 
-        $periodList = DataListService::getPeriod();
-        $groupList = DataListService::getGroup();
-        $subjectList = DataListService::getSubject();
+        $periodList = DataListService::getDistinctPeriodsByParticipant($participant->id);
+        $groupList = DataListService::getDistinctGroupsByParticipant($participant->id);
+        $subjectList = DataListService::getDistinctSubjectsByParticipant($participant->id);
 
         if ($model->load(Yii::$app->request->post())) {
             $assessmentData = AssessmentService::getChartByPeriod(

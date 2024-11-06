@@ -61,6 +61,64 @@ class DataListService
             ->asArray()->all(), 'id', 'title');
     }
 
+    public static function getDistinctPeriodsByParticipant($participantId): array
+    {
+        return ArrayHelper::map(
+            Assessment::find()
+                ->select(['tx_period.id', 'tx_period.title'])
+                ->distinct()
+                ->joinWith('period')
+                ->where([
+                    'tx_assessment.office_id' => DataIdService::getOfficeId(),
+                    'tx_assessment.participant_id' => $participantId
+                ])
+                ->orderBy('tx_period.id DESC')
+                ->asArray()
+                ->all(),
+            'id',
+            'title'
+        );
+    }
+
+    public static function getDistinctGroupsByParticipant($participantId): array
+    {
+        return ArrayHelper::map(
+            Assessment::find()
+                ->select(['tx_group.id', 'tx_group.title'])
+                ->distinct()
+                ->joinWith('group')
+                ->where([
+                    'tx_assessment.office_id' => DataIdService::getOfficeId(),
+                    'tx_assessment.participant_id' => $participantId
+                ])
+                ->orderBy('tx_group.sequence ASC')
+                ->asArray()
+                ->all(),
+            'id',
+            'title'
+        );
+    }
+
+    public static function getDistinctSubjectsByParticipant($participantId): array
+    {
+        return ArrayHelper::map(
+            Assessment::find()
+                ->select(['tx_subject.id', 'tx_subject.title'])
+                ->distinct()
+                ->joinWith('subject')
+                ->where([
+                    'tx_assessment.office_id' => DataIdService::getOfficeId(),
+                    'tx_assessment.participant_id' => $participantId
+                ])
+                ->orderBy('tx_subject.sequence ASC')
+                ->asArray()
+                ->all(),
+            'id',
+            'title'
+        );
+    }
+
+
     public static function getSchedule(): array
     {
         return ArrayHelper::map(Schedule::find()
