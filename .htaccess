@@ -9,13 +9,6 @@
     RewriteEngine On
 </IfModule>
 
-# Conditional HTTPS redirection (only enforce HTTPS if not on localhost)
-<IfModule mod_rewrite.c>
-    RewriteCond %{HTTPS} !=on
-    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1) [NC]
-    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-</IfModule>
-
 # Handle requests to admin (backend) without exposing /backend/web
 <IfModule mod_rewrite.c>
     # Deal with admin requests

@@ -11,13 +11,12 @@ class SbAdmin2 extends AssetBundle
 
     public $css = [
         // Existing CSS files
-        'assets/vendor/fontawesome-free/css/all.min.css',
-        'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
         'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i',
+        'assets/vendor/fontawesome-free/css/all.min.css',
         'assets/css/sb-admin-2.min.css',
 
         // FullCalendar CSS
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css',
+        'assets/vendor/fullcalendar-3.10.2/fullcalendar.min.css',
     ];
 
     public $js = [
@@ -27,8 +26,8 @@ class SbAdmin2 extends AssetBundle
         'assets/js/sb-admin-2.min.js',
 
         // Moment.js and FullCalendar JS
-        'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js',
+        'assets/vendor/moment-2.29.1/moment.min.js',
+        'assets/vendor/fullcalendar-3.10.2/fullcalendar.min.js',
     ];
 
     public $depends = [

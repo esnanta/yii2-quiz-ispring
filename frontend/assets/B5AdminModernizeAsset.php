@@ -13,11 +13,11 @@ class B5AdminModernizeAsset extends AssetBundle
     public $baseUrl = '@web/themes-b5-modernize';
     public $css = [
 
-        'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
+        'assets/vendor/fontawesome-free-5.15.4/css/all.css',
         'assets/vendor/icon-awesome/css/font-awesome.min.css',
 
         // FullCalendar CSS
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css',
+        'assets/vendor/fullcalendar-3.10.2/fullcalendar.min.css',
 
         //CSS Global Compulsory
         'assets/css/styles.min.css',
@@ -35,8 +35,8 @@ class B5AdminModernizeAsset extends AssetBundle
         //'assets/js/dashboard.js',
 
         // Moment.js and FullCalendar JS
-        'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js',
+        'assets/vendor/moment-2.29.1/moment.min.js',
+        'assets/vendor/fullcalendar-3.10.2/fullcalendar.min.js',
     ];
 
     public $depends = [
