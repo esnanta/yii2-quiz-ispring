@@ -188,7 +188,7 @@ class ScheduleService
                 'title' => $schedule->room->title, // The event title
                 'start' => $schedule->date_start, // The event start time
                 'end' => $schedule->date_end, // The event end time
-                'url' => Url::to(['schedule/view', 'id' => $schedule->id]), // URL for schedule view page
+                'url' => Url::to(['schedule/index', 'id' => $schedule->id]), // URL for schedule view page
             ];
         }
         return $events;

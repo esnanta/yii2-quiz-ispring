@@ -22,7 +22,7 @@ $this->title = Yii::$app->name;
 <div class="row">
     <div class="col-xs-6 col-sm-3 col-xl-3">
         <div class="card overflow-hidden rounded-2">
-            <div class="card-body pt-3 p-4">
+            <div class="card-body pt-3 p-2">
                 <h6 class="fw-semibold fs-4">
                     <?= Yii::$app->user->identity->username ?>
                 </h6>
@@ -37,7 +37,7 @@ $this->title = Yii::$app->name;
 
             </div>
 
-            <div class="card-body p-4">
+            <div class="card-body p-2">
                 <?= $this->render('_form_token', [
                     'tokenForm' => $tokenForm,
                 ])
@@ -145,6 +145,7 @@ $this->title = Yii::$app->name;
                     <thead>
                     <tr>
                         <th class="center">#</th>
+                        <th><?= Yii::t('app', 'Subject'); ?></th>
                         <th><?= Yii::t('app', 'Date'); ?></th>
                         <th><?= Yii::t('app', 'End'); ?></th>
                         <th><?= Yii::t('app', 'Room'); ?></th>
@@ -156,8 +157,11 @@ $this->title = Yii::$app->name;
                         ?>
                         <tr>
                             <td class="center">
+                                <?= ($i+1) ?>
+                            </td>
+                            <td class="center">
                                 <?php
-                                echo Html::a($schedule->title, ['schedule/view',
+                                echo Html::a($schedule->getSubjectsTitle(), ['schedule/view',
                                     'id' => $schedule->id,
                                     'title' => $schedule->title
                                 ]);

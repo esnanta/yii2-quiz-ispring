@@ -144,4 +144,13 @@ class Schedule extends BaseSchedule
     {
         return Html::a($this->title, ['schedule/view', 'id' => $this->id,'title'=>$this->title]);
     }
+
+    public function getSubjectsTitle(){
+        $listScheduleDetails = $this->scheduleDetails;
+        $subjects = '';
+        foreach ($listScheduleDetails as $scheduleDetail) {
+            $subjects .= $scheduleDetail->subject->title . ', ';
+        }
+        return rtrim($subjects, ', ');
+    }
 }

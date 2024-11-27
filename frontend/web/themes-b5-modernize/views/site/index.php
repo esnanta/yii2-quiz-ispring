@@ -26,33 +26,6 @@ $this->title = Yii::$app->name;
         <div class="row">
             <div class="col-md-7 col-xs-12">
 
-                <?php
-                $this->registerJs("
-                    $('#calendar').fullCalendar({
-                        events: '" . Url::to(['site/get-schedules']) . "',
-                        editable: false,
-                        eventLimit: true,
-                        header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'month,agendaWeek,agendaDay'
-                        },
-                        timeFormat: 'H:mm', // 24-hour format (HH:mm),
-                        
-                        eventClick: function(event) {
-                            if (event.url) {
-                                window.location.href = event.url; // Redirect to the schedule URL
-                                return false; // Prevent the default action (like opening in a new tab)
-                            }
-                        }
-                    });
-                ");
-                ?>
-
-                <div id="calendar"></div>
-            </div>
-            <div class="col-md-5 col-xs-12">
-
                 <h6><?= LabelHelper::getYes(Yii::t('app', 'Upcoming')) ; ?></h6>
                 <table class="table table-striped table-sm">
                     <thead>
@@ -64,17 +37,10 @@ $this->title = Yii::$app->name;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach ($listUpcomingSchedule as $i => $schedule) {
-                        ?>
+                    <?php foreach ($listUpcomingSchedule as $i => $schedule) { ?>
                         <tr>
                             <td class="center">
-                                <?php
-                                echo Html::a($schedule->title, ['schedule/view',
-                                    'id' => $schedule->id,
-                                    'title' => $schedule->title
-                                ]);
-                                ?>
+                                <?= Html::a($schedule->getSubjectsTitle(), ['schedule/index']);?>
                             </td>
                             <td class="left">
                                 <?= DateHelper::formatDate($schedule->date_start); ?>
@@ -101,17 +67,10 @@ $this->title = Yii::$app->name;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach ($listRecentSchedule as $i => $schedule) {
-                        ?>
+                    <?php foreach ($listRecentSchedule as $i => $schedule) { ?>
                         <tr>
                             <td class="center">
-                                <?php
-                                echo Html::a($schedule->title, ['schedule/view',
-                                    'id' => $schedule->id,
-                                    'title' => $schedule->title
-                                ]);
-                                ?>
+                                <?= Html::a($schedule->getSubjectsTitle(), ['schedule/index']);?>
                             </td>
                             <td class="left">
                                 <?= DateHelper::formatDate($schedule->date_start); ?>
@@ -126,6 +85,33 @@ $this->title = Yii::$app->name;
                     <?php } ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="col-md-5 col-xs-12">
+
+                <?php
+                $this->registerJs("
+                    $('#calendar').fullCalendar({
+                        events: '" . Url::to(['site/get-schedules']) . "',
+                        editable: false,
+                        eventLimit: true,
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        timeFormat: 'H:mm', // 24-hour format (HH:mm),
+                        
+                        eventClick: function(event) {
+                            if (event.url) {
+                                window.location.href = event.url; // Redirect to the schedule URL
+                                return false; // Prevent the default action (like opening in a new tab)
+                            }
+                        }
+                    });
+                ");
+                ?>
+
+                <div id="calendar"></div>
             </div>
         </div>
 

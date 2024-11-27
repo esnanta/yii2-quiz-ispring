@@ -11,11 +11,11 @@ class DateHelper
 
     public static function getPHPDateTimeDisplayFormat(): string
     {
-        return 'php:d-M-Y H:i:s';
+        return 'php:d-M-Y H:i:00';
     }
     public static function getPHPDateTimeSaveFormat(): string
     {
-        return 'php:Y-m-d H:i:s';
+        return 'php:Y-m-d H:i:00';
     }
 
     public static function getDateTimeSaveFormat(): string
