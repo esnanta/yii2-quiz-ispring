@@ -30,37 +30,6 @@ $this->registerJs($search);
         ['attribute' => 'id', 'visible' => false],
         'title',
         [
-            'attribute'=>'exam_type',
-            'vAlign'=>'middle',
-            'width'=>'120px',
-            'value'=>function ($model, $key, $index, $widget) {
-                return ($model->exam_type!=null) ? $model->getOneExamType($model->exam_type):'';
-            },
-            'filterType'=>GridView::FILTER_SELECT2,
-            'filter'=>$examTypeList,
-            'filterWidgetOptions'=>[
-                'pluginOptions'=>['allowClear'=>true],
-            ],
-            'filterInputOptions'=>['placeholder'=>''],
-            'format'=>'html'
-        ],
-        [
-                'attribute' => 'period_id',
-                'label' => Yii::t('app', 'Period'),
-                'value' => function($model){
-                    if ($model->period)
-                    {return $model->period->title;}
-                    else
-                    {return NULL;}
-                },
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter' => $periodList,
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
-                'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-office_id']
-        ],
-        [
             'attribute' => 'group_id',
             'label' => Yii::t('app', 'Group'),
             'value' => function($model){
@@ -92,6 +61,7 @@ $this->registerJs($search);
             ],
             'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-room_id']
         ],
+        'token',
         [
             'attribute' => 'date_start',
             'label' => Yii::t('app', 'Start'),
@@ -99,12 +69,43 @@ $this->registerJs($search);
                 return DateHelper::formatDateTime($model->date_start);
             },
         ],
+//        [
+//            'attribute' => 'date_end',
+//            'label' => Yii::t('app', 'End'),
+//            'value' => function($model) {
+//                return DateHelper::formatDateTime($model->date_end);
+//            },
+//        ],
         [
-            'attribute' => 'date_end',
-            'label' => Yii::t('app', 'End'),
-            'value' => function($model) {
-                return DateHelper::formatDateTime($model->date_end);
+            'attribute' => 'period_id',
+            'label' => Yii::t('app', 'Period'),
+            'value' => function($model){
+                if ($model->period)
+                {return $model->period->title;}
+                else
+                {return NULL;}
             },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter' => $periodList,
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-office_id']
+        ],
+        [
+            'attribute'=>'exam_type',
+            'vAlign'=>'middle',
+            'width'=>'120px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return ($model->exam_type!=null) ? $model->getOneExamType($model->exam_type):'';
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+            'filter'=>$examTypeList,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>''],
+            'format'=>'html'
         ],
         [
             'attribute'=>'is_asset',

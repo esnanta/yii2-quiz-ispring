@@ -17,6 +17,8 @@ SbAdmin2::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+        <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/favicon.ico">
+
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>

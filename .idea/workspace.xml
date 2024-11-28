@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/DateHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/DateHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yii2-quiz-ispring.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/main.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/main.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,126 +84,6 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-symfonymailer" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-imagine" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-jui" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-fileinput" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-star-rating" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/php-date-formatter" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/strength-meter" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-tabs-x" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/dependent-dropdown" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-builder" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-date-range" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap4-dropdown" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dialog" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dynagrid" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-datecontrol" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-detail-view" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-icons" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-export" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-grid" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-number" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-password" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-krajee-base" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-mpdf" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-activeform" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-affix" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-sortable" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-tabs-x" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datepicker" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datetimepicker" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-alert" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-colorinput" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-growl" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rangeinput" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-depdrop" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-fileinput" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-sidenav" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-spinner" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rating" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-select2" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-touchspin" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-typeahead" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-switchinput" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-timepicker" />
-      <path value="$PROJECT_DIR$/vendor/onmotion/yii2-widget-apexcharts" />
-      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
-      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widgets" />
-      <path value="$PROJECT_DIR$/vendor/lesha724/yii2-document-viewer" />
-      <path value="$PROJECT_DIR$/vendor/yii2tech/spreadsheet" />
-      <path value="$PROJECT_DIR$/vendor/warrence/yii2-kartikgii" />
-      <path value="$PROJECT_DIR$/vendor/yii2tech/ar-softdelete" />
-      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-enhanced-gii" />
-      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
-      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-relation-trait" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-uuid-behavior" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-jsblock" />
-      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-optimistic-lock-validator" />
-      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
-      <path value="$PROJECT_DIR$/vendor/npm-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
-      <path value="$PROJECT_DIR$/vendor/components/flag-icon-css" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/inputmask" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/jcrop" />
-      <path value="$PROJECT_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/punycode" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/simple-ajax-uploader" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery-ui" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/viewerjs" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/yii2-pjax" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
-      <path value="$PROJECT_DIR$/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
-      <path value="$PROJECT_DIR$/vendor/mpdf/psr-http-message-shim" />
-      <path value="$PROJECT_DIR$/vendor/cebe/markdown" />
-      <path value="$PROJECT_DIR$/vendor/mpdf/psr-log-aware-trait" />
-      <path value="$PROJECT_DIR$/vendor/budyaga/yii2-cropper" />
-      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
-      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
-      <path value="$PROJECT_DIR$/vendor/bajadev/yii2-ckeditor" />
-      <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
-      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
-      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-rbac" />
-      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-user" />
-      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
-      <path value="$PROJECT_DIR$/vendor/select2/select2" />
-      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
-      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap5" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-composer" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-authclient" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap4" />
-      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-httpclient" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
-      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-timepicker" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-switchinput" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-typeahead" />
@@ -396,8 +277,122 @@
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-rating" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-spinner" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-sidenav" />
-      <path value="$PROJECT_DIR$/vendor/supplyhog/yii2-clipboardjs" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-rbac" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-relation-trait" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-uuid-behavior" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-jsblock" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-optimistic-lock-validator" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/bajadev/yii2-ckeditor" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/lesha724/yii2-document-viewer" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/budyaga/yii2-cropper" />
+      <path value="$PROJECT_DIR$/vendor/select2/select2" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-fileinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/dependent-dropdown" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/php-date-formatter" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-star-rating" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/bootstrap-tabs-x" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-builder" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap4-dropdown" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dialog" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-grid" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-dynagrid" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-export" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-mpdf" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-number" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-krajee-base" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-tabs-x" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-activeform" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-sortable" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-colorinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datepicker" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-affix" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-alert" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-fileinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-growl" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-datetimepicker" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-depdrop" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rangeinput" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-rating" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-timepicker" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-touchspin" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-spinner" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-switchinput" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/psr-http-message-shim" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-typeahead" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widgets" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jcrop" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/yii2-pjax" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/simple-ajax-uploader" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/viewerjs" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-authclient" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-composer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-symfonymailer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-imagine" />
+      <path value="$PROJECT_DIR$/vendor/cebe/markdown" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/aneeshikmat/yii2-time-down-counter" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/psr-log-aware-trait" />
+      <path value="$PROJECT_DIR$/vendor/esnanta/dektrium-user" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-jui" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-httpclient" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap4" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap5" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/bootstrap" />
       <path value="$PROJECT_DIR$/vendor/bower-asset/clipboard" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/punycode" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery-ui" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/mootensai/yii2-enhanced-gii" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/inputmask" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-detail-view" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-select2" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/strength-meter" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-sidenav" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-password" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-date-range" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-icons" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-datecontrol" />
+      <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-bootstrap5-dropdown" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/vendor/yii2tech/spreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/yii2tech/ar-softdelete" />
+      <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
+      <path value="$PROJECT_DIR$/vendor/onmotion/yii2-widget-apexcharts" />
+      <path value="$PROJECT_DIR$/vendor/warrence/yii2-kartikgii" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/components/flag-icon-css" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/supplyhog/yii2-clipboardjs" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -412,39 +407,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Codeception.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.PHP.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Script.ScheduleDetailController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.StaffController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.yii-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Web Page.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Web Page.yii2-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/web/htdocs/app/yii2-quiz-ispring/backend/web/themes-sbadmin2/assets/vendor&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Codeception.Main.executor": "Debug",
+    "PHP Script.PHP.executor": "Run",
+    "PHP Script.ScheduleDetailController.php.executor": "Debug",
+    "PHP Script.StaffController.php.executor": "Debug",
+    "PHP Script.yii-quiz-ispring.executor": "Debug",
+    "PHP Web Page.Unnamed.executor": "Run",
+    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/web",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web" />
+      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\themes-sbadmin2\assets\vendor" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\vendor\fullcalendar-3.10.2" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\css" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\themes-sbadmin2\assets\js" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\themes-sbadmin2\assets\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\vendor" />
@@ -690,6 +685,8 @@
       <workItem from="1731239117872" duration="33000" />
       <workItem from="1732620439839" duration="3375000" />
       <workItem from="1732692386062" duration="3251000" />
+      <workItem from="1732778918295" duration="1498000" />
+      <workItem from="1732798619633" duration="2868000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />

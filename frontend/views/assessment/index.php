@@ -115,10 +115,22 @@ echo GridView::widget([
             'filterInputOptions'=>['placeholder'=>''],
             'format'=>'raw'
         ],
-        'earned_points',
-        'passing_score',
-        'gained_score',
-        'evaluate_score',
+        [
+            'attribute'=>'earned_points',
+            'vAlign'=>'middle',
+        ],
+        [
+            'attribute'=>'passing_score',
+            'vAlign'=>'middle',
+        ],
+        [
+            'attribute'=>'gained_score',
+            'vAlign'=>'middle',
+        ],
+        [
+            'attribute'=>'evaluate_score',
+            'vAlign'=>'middle',
+        ],
         [
             'attribute'=>'time_limit',
             'vAlign'=>'middle',
