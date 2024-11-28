@@ -20,6 +20,7 @@ class ScheduleDetailService
     /**
      * Generate the asset button based on participant status and time.
      * Executes additional scripts if needed.
+     *      (This script will handle if user click  more than one time)
      * @param ScheduleDetail $scheduleDetail
      * @param bool $isSubmitted
      * @param int $participantId
@@ -141,6 +142,7 @@ class ScheduleDetailService
             $assessment->subject_id = $scheduleDetail->subject_id;
             $assessment->question_type = $scheduleDetail->question_type;
             $assessment->exam_type = $scheduleDetail->schedule->exam_type;
+            $assessment->submission_status = Assessment::SUBMISSION_STATUS_ONGOING;
             $assessment->save();
             $cache->set($assessmentCacheKey, $assessment);
         }

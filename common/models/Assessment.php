@@ -40,10 +40,6 @@ class Assessment extends BaseAssessment
             return false;
         }
 
-        if ($this->isNewRecord) {
-            $this->submission_status = self::SUBMISSION_STATUS_ONGOING;
-        }
-
         if($this->gained_score > 0) {
             $this->evaluate_score = ceil(($this->earned_points / $this->gained_score) * 100);
         } else {
