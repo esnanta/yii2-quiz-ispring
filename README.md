@@ -160,9 +160,14 @@ vendor
         <br>Ex : http://localhost/yii2-quiz-ispring/assessment/submit
 <hr>
 
-<h3>Contribute</h3>
-Contributions are always welcome! Please create a PR to add Github Profile.
+## Contribution Guidelines
 
+Contributions are welcome! Please:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Submit a pull request with detailed information about your changes.
+   
 <h3>Support</h3>
 <p>If you find value in this application and believe in its benefit, every little bit helps. <br>
 Give a ⭐️ or You can even spread the word and tell your friends, colleagues, or community.</p>
