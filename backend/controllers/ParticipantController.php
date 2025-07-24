@@ -206,7 +206,8 @@ class ParticipantController extends Controller
                                 $email = $data[2];
 
                                 $participant = Participant::find()
-                                    ->where(['office_id' => $officeId, 'identity_number' => $identityNumber])
+                                    ->where(['office_id' => $officeId,
+                                        'identity_number' => $identityNumber])
                                     ->one();
 
                                 if(empty($participant)):
