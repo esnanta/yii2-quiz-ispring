@@ -645,8 +645,9 @@ CREATE TABLE `tx_profile` (
   `user_id` int NOT NULL AUTO_INCREMENT,
   `office_id` int DEFAULT NULL,
   `group_id` int DEFAULT NULL,
+  `user_type` int DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `identity_number` varchar(100) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `identity_number` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `public_email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `gravatar_email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `gravatar_id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
@@ -654,10 +655,18 @@ CREATE TABLE `tx_profile` (
   `website` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `timezone` varchar(40) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `bio` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
-  `file_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `asset_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
+  `verlock` bigint DEFAULT NULL,
+  `uuid` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_profile_user` FOREIGN KEY (`user_id`) REFERENCES `tx_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -666,7 +675,7 @@ CREATE TABLE `tx_profile` (
 
 LOCK TABLES `tx_profile` WRITE;
 /*!40000 ALTER TABLE `tx_profile` DISABLE KEYS */;
-INSERT INTO `tx_profile` VALUES (1,NULL,NULL,'Nanta Es',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tx_profile` VALUES (1,NULL,NULL,NULL,'Nanta Es',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tx_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -863,7 +872,7 @@ CREATE TABLE `tx_session` (
 
 LOCK TABLES `tx_session` WRITE;
 /*!40000 ALTER TABLE `tx_session` DISABLE KEYS */;
-INSERT INTO `tx_session` VALUES ('3136ijudheacpuukj0mcvt883o',1728315956,_binary '__flash|a:0:{}'),('3ch0ddv71adictji7c2sphpq6r',1752469527,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('3lgs0qqh5v7m2956dlm9nt8ppq',1728221656,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('c9h4hqcj0nqkhghjuptfu4k39j',1728218461,_binary '__flash|a:0:{}'),('co9ocnfojrnmr48fb52qeptd81',1753335584,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('cr07nttqglt5ths44i9o98k2e0',1728297019,_binary '__flash|a:0:{}'),('dilprjg9ldehne8jd1c730jkmc',1728300555,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('g5h6qn0c2mbg23svin4os1k16k',1728317815,_binary '__flash|a:0:{}__id|i:2;__authKey|s:32:\"rTLWE9bn6GPyCsMjhNTKBkPIexpbruG5\";'),('md8rijokc5run1672nsf50hpiv',1728317766,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('sv3edprf7n4nlg54bou3drkhig',1753334782,_binary '__flash|a:0:{}'),('vtoiigselke6gru44tq9de3jem',1752462536,_binary '__flash|a:0:{}');
+INSERT INTO `tx_session` VALUES ('3136ijudheacpuukj0mcvt883o',1728315956,_binary '__flash|a:0:{}'),('3ch0ddv71adictji7c2sphpq6r',1752469527,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('3lgs0qqh5v7m2956dlm9nt8ppq',1728221656,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('8116t3hb5gh25ioru6jahtv64f',1753586442,_binary '__flash|a:0:{}'),('c9h4hqcj0nqkhghjuptfu4k39j',1728218461,_binary '__flash|a:0:{}'),('co9ocnfojrnmr48fb52qeptd81',1753335584,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('cr07nttqglt5ths44i9o98k2e0',1728297019,_binary '__flash|a:0:{}'),('dilprjg9ldehne8jd1c730jkmc',1728300555,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('g5h6qn0c2mbg23svin4os1k16k',1728317815,_binary '__flash|a:0:{}__id|i:2;__authKey|s:32:\"rTLWE9bn6GPyCsMjhNTKBkPIexpbruG5\";'),('kkq45ds4loc0j48lj7ja6rftn9',1753501698,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('md8rijokc5run1672nsf50hpiv',1728317766,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('sanu50tc1bpvfc1q9b0nor7npv',1753501262,_binary '__flash|a:0:{}'),('sk3u79ecv0jdmrubve2s7tbtui',1753589023,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('sv3edprf7n4nlg54bou3drkhig',1753334782,_binary '__flash|a:0:{}'),('vtoiigselke6gru44tq9de3jem',1752462536,_binary '__flash|a:0:{}');
 /*!40000 ALTER TABLE `tx_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1048,7 +1057,7 @@ CREATE TABLE `tx_user` (
 
 LOCK TABLES `tx_user` WRITE;
 /*!40000 ALTER TABLE `tx_user` DISABLE KEYS */;
-INSERT INTO `tx_user` VALUES (1,'admin','ombakrinai@gmail.com','$2y$12$1OrcfbmLlEy1lFwPTNVqZ.8mdXzEZboHOM1DWaT4/8GXe5jcwR5pG','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1727166428,1675777211,1753333367,NULL,0);
+INSERT INTO `tx_user` VALUES (1,'admin','ombakrinai@gmail.com','$2y$12$1OrcfbmLlEy1lFwPTNVqZ.8mdXzEZboHOM1DWaT4/8GXe5jcwR5pG','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1727166428,1675777211,1753585008,NULL,0);
 /*!40000 ALTER TABLE `tx_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1061,4 +1070,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-24 12:22:25
+-- Dump completed on 2025-07-27 10:48:26
