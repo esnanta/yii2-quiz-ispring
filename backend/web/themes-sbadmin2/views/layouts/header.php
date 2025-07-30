@@ -126,10 +126,10 @@ if (!Yii::$app->user->isGuest) {
                     ['/site/flush'],
                     [
                             'data-method' => 'post',
-                            'data-confirm' => 'Flush now?',
+                            'data-confirm' => 'Reset Cache?',
                             'class' => 'nav-link',
                             'role' => 'button',
-                            'title'=>'Flush'
+                            'title'=>'Reset Cache'
                     ]
                 )
                 :'';
