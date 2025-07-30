@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /**
  * @var yii\web\View $this
  * @var common\models\Profile $model
@@ -24,6 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="profile-create">
             <?= $this->render('_form', [
                 'model' => $model,
+                'officeId' => $officeId,
+                'officeList' => $officeList,
+                'groupList' => $groupList,
+                'userTypeList' => $userTypeList,
             ]) 
             ?>
         </div>

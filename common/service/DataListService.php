@@ -11,6 +11,7 @@ use common\models\Office;
 use common\models\Page;
 use common\models\Participant;
 use common\models\Period;
+use common\models\Profile;
 use common\models\Room;
 use common\models\Schedule;
 use common\models\Staff;
@@ -59,6 +60,14 @@ class DataListService
             ->where(['office_id' => DataIdService::getOfficeId()])
             ->orderBy('sequence ASC')
             ->asArray()->all(), 'id', 'title');
+    }
+
+    public static function getProfile(): array
+    {
+        return ArrayHelper::map(Profile::find()
+            ->where(['office_id' => DataIdService::getOfficeId()])
+            ->orderBy('user_id ASC')
+            ->asArray()->all(), 'id', 'name');
     }
 
     public static function getDistinctPeriodsByParticipant($participantId): array

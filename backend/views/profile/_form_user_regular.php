@@ -31,26 +31,7 @@ use kartik\widgets\Select2;
                     'allowClear' => true
                 ],                            
             ],  
-            
-            'employment_id' => [
-                'label' => 'Jabatan',
-                'type' => Form::INPUT_WIDGET, 
-                'widgetClass'=> Select2::class,
-                'options' => [
-                    'data' => $employmentList,
-                    'options' => ['placeholder' => '', 'disabled'=>false],
-                ],                            
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],                            
-            ],    
-            
-            'staff_title' => [
-                'label' => 'Nama',
-                'type' => Form::INPUT_TEXT, 
-                'options' => ['placeholder' => '', 'maxlength' => 100]
-            ],
-            
+
             'email' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
             'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
             'password' => ['type' => Form::INPUT_PASSWORD, 'options' => ['placeholder' => '', 'maxlength' => 100]],

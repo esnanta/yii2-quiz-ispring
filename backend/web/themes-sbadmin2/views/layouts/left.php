@@ -73,7 +73,7 @@ use kartik\widgets\SideNav;
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
-                    ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
+                    ['label' => Yii::t('app', 'User'), 'url' => ['/profile/index']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/assessment/index']],
                 ]],
                 ['label' => Yii::t('app', 'Asset'), 'icon' => 'shopping-basket', 'items' => [

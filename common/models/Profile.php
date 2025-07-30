@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helper\LabelHelper;
 use Yii;
 use \common\models\base\Profile as BaseProfile;
 
@@ -10,13 +11,16 @@ use \common\models\base\Profile as BaseProfile;
  */
 class Profile extends BaseProfile
 {
+
+    const USER_TYPE_ADMIN = 1;
+    const USER_TYPE_REGULAR = 2;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return array_replace_recursive(parent::rules(),
-	    [
+        return [
             [['office_id', 'group_id', 'user_type', 'created_by', 'updated_by', 'deleted_by', 'verlock'], 'integer'],
             [['bio'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
@@ -28,7 +32,40 @@ class Profile extends BaseProfile
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
-        ]);
+        ];
+    }
+
+    public static function getArrayUserType(): array
+    {
+        return [
+            //MASTER
+            self::USER_TYPE_ADMIN  => Yii::t('app', 'Administrator'),
+            self::USER_TYPE_REGULAR  => Yii::t('app', 'Regular'),
+        ];
+    }
+
+    public static function getOneUserType($_module = null): string
+    {
+        if($_module)
+        {
+            $arrayModule = self::getArrayUserType();
+
+            switch ($_module) {
+                case ($_module == self::USER_TYPE_ADMIN):
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
+                    break;
+                case ($_module == self::USER_TYPE_REGULAR):
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+                    break;
+                default:
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
+            }
+
+            return $returnValue;
+
+        }
+        else
+            return '-';
     }
 	
 }

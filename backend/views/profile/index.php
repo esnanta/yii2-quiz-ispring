@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'toolbar' => [
             [
                 'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
+                    Html::a('<i class="fas fa-plus"></i> Add New', ['create-regular'], ['class' => 'btn btn-success'])
                      . ' '.
                     Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
                 'options' => ['class' => 'btn-group-md']
@@ -41,29 +41,54 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'username',
+                'vAlign' => 'middle',
+                'width' => '180px',
+                'value' => function ($model, $key, $index, $widget) {
+                    return ($model->user_id != null) ? $model->user->username : '';
+                },
+                'filter' => true, // enable default text input
+                'filterInputOptions' => [
+                    'class' => 'form-control', // use active CSS
+                    'placeholder' => '',
+                ],
+                'format' => 'html',
+            ],
 
-            'user_id',
-            'office_id',
-            'group_id',
-            'user_type',
             'name',
-//            'identity_number', 
-//            'public_email:email', 
-//            'gravatar_email:email', 
-//            'gravatar_id', 
-//            'location', 
-//            'website', 
-//            'timezone', 
-//            'bio:ntext', 
-//            'asset_name', 
-//            ['attribute' => 'created_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            ['attribute' => 'updated_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            'created_by', 
-//            'updated_by', 
-//            ['attribute' => 'deleted_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            'deleted_by', 
-//            'verlock', 
-//            'uuid', 
+            'identity_number',
+
+            [
+                'attribute'=>'group_id',
+                'vAlign'=>'middle',
+                'width'=>'180px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->group_id!=null) ? $model->group->title:'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$groupList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'html',
+            ],
+            [
+                'attribute'=>'user_type',
+                'vAlign'=>'middle',
+                'width'=>'120px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->user_type!=null) ? $model->getOneUserType($model->user_type):'';
+                },
+                'filterType'=>GridView::FILTER_SELECT2,
+                'filter'=>$userTypeList,
+                'filterWidgetOptions'=>[
+                    'pluginOptions'=>['allowClear'=>true],
+                ],
+                'filterInputOptions'=>['placeholder'=>''],
+                'format'=>'raw'
+            ],
 
             [
                 'class' => 'yii\grid\ActionColumn',

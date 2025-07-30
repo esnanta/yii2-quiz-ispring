@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\service\CacheService;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -13,23 +14,23 @@ use common\models\Profile;
  */
 class ProfileSearch extends Profile
 {
+    public String $username;
+
     public function rules()
     {
         return [
             [['user_id', 'office_id', 'group_id', 'user_type', 'created_by', 'updated_by', 'deleted_by', 'verlock'], 'integer'],
-            [['name', 'identity_number', 'public_email', 'gravatar_email', 'gravatar_id', 'location', 'website', 'timezone', 'bio', 'asset_name', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['name', 'identity_number', 'public_email', 'gravatar_email', 'gravatar_id', 'location', 'website', 'timezone', 'bio', 'asset_name', 'created_at', 'updated_at', 'deleted_at', 'uuid',
+                'username'], 'safe'],
         ];
-    }
-
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     public function search($params)
     {
-        $query = Profile::find();
+        $officeId = CacheService::getInstance()->getOfficeId();
+        $query = Profile::find()->where(['office_id'=>$officeId])
+            ->orderBy('user_id ASC')
+            ->joinWith(['user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -63,7 +64,8 @@ class ProfileSearch extends Profile
             ->andFilterWhere(['like', 'timezone', $this->timezone])
             ->andFilterWhere(['like', 'bio', $this->bio])
             ->andFilterWhere(['like', 'asset_name', $this->asset_name])
-            ->andFilterWhere(['like', 'uuid', $this->uuid]);
+            ->andFilterWhere(['like', 'uuid', $this->uuid])
+            ->andFilterWhere(['like', 'tx_user.username', $this->username]); // filter username
 
         return $dataProvider;
     }
