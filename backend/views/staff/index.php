@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'toolbar' => [
             [
                 'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['site/create-reguler'], ['class' => 'btn btn-success'])
+                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
                      . ' '.
                     Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
                 'options' => ['class' => 'btn-group-md']

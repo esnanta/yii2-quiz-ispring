@@ -30,21 +30,21 @@ use kartik\widgets\Select2;
                 'widgetClass' => Select2::class,
                 'options' => [
                     'data' => $officeList,
-                    'options' => ['placeholder' => 'Choose Office', 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
+                    'options' => ['placeholder' => '', 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
                 ],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
             ], 
-            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
-            'initial' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Initial...', 'maxlength' => 10]],
+            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'initial' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 10]],
             
             'gender_status' => [
                 'type' => Form::INPUT_WIDGET, 
                 'widgetClass'=> Select2::class,
                 'options' => [
                     'data' => $genderList,
-                    'options' => ['placeholder' => 'Choose Gender', 'disabled'=>false],
+                    'options' => ['placeholder' => '', 'disabled'=>false],
                 ],                            
                 'pluginOptions' => [
                     'allowClear' => true
@@ -63,11 +63,11 @@ use kartik\widgets\Select2;
                 ],                            
             ],              
                  
-            'phone_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Phone Number...', 'maxlength' => 50]],
-            'identity_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Identity Number...', 'maxlength' => 100]],
-            'email' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Email Account...', 'maxlength' => 100]],
-            'address' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Address...','rows' => 6]],
-            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Description...','rows' => 6]],
+            'phone_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 50]],
+            'identity_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'email' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
+            'address' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => '','rows' => 6]],
+            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => '','rows' => 6]],
 
         ]
 
