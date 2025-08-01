@@ -8,11 +8,11 @@ use Yii;
 class AssessmentService
 {
     public static function getChartByPeriod(
-        $officeId, $participantId, $periodId, $subjectId = null): array
+        $officeId, $userId, $periodId, $subjectId = null): array
     {
         // Retrieve the evaluations for the participant
         $assessments = Assessment::find()
-            ->where(['office_id' => $officeId, 'participant_id' => $participantId])
+            ->where(['office_id' => $officeId, 'user_id' => $userId])
             ->andWhere(['period_id' => $periodId])
             ->orderBy(['id' => SORT_ASC])
             ->limit(12);

@@ -14,7 +14,7 @@ class AssessmentSearch extends Assessment
     public function rules()
     {
         return [
-            [['id', 'office_id', 'schedule_id','schedule_detail_id','participant_id', 'period_id','subject_id', 'question_type', 'submission_status','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'schedule_id','schedule_detail_id','user_id', 'period_id','subject_id', 'question_type', 'submission_status','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['app_version', 'quiz_title', 'quiz_type', 'username', 'time_limit', 'used_time', 'time_spent', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
             [['earned_points', 'passing_score', 'passing_score_percent', 'gained_score', 'evaluate_score'], 'number'],
         ];
@@ -47,7 +47,7 @@ class AssessmentSearch extends Assessment
             'schedule_detail_id' => $this->schedule_detail_id,
             'subject_id' => $this->subject_id,
             'question_type' => $this->question_type,
-            'participant_id' => $this->participant_id,
+            'user_id' => $this->user_id,
             'submission_status' => $this->submission_status,
             'earned_points' => $this->earned_points,
             'passing_score' => $this->passing_score,

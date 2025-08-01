@@ -34,6 +34,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \common\models\User $user
+ * @property \common\models\Group $group
+ * @property \common\models\Office $office
  */
 class Profile extends \yii\db\ActiveRecord
 {
@@ -61,7 +63,9 @@ class Profile extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'user'
+            'user',
+            'group',
+            'office'
         ];
     }
 
@@ -136,15 +140,23 @@ class Profile extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
     }
-
+        
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getGroup()
     {
-        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
+        return $this->hasOne(\common\models\Group::className(), ['id' => 'group_id']);
     }
-
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffice()
+    {
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+    }
+    
     /**
      * @inheritdoc
      * @return array mixed

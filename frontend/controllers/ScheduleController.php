@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Participant;
+use common\models\Profile;
 use common\models\Schedule;
 use common\service\CacheService;
 use common\service\ScheduleDetailService;
@@ -62,15 +62,15 @@ class ScheduleController extends Controller
         } else {
 
             $officeId = CacheService::getInstance()->getOfficeId();
-            $participant = Participant::findone([
+            $profile = Profile::findone([
                 'office_id' => $officeId,
-                'username'=>Yii::$app->user->identity->username
+                'user_id'=>Yii::$app->user->identity->id
             ]);
 
             $listUpcomingSchedule = $this->scheduleService
-                ->getScheduleUpcomingByGroup($officeId,$participant->group_id);
+                ->getScheduleUpcomingByGroup($officeId,$profile->group_id);
             $listRecentSchedule = $this->scheduleService
-                ->getScheduleRecentByGroup($officeId,$participant->group_id);
+                ->getScheduleRecentByGroup($officeId,$profile->group_id);
 
             if ($this->tokenForm->load(Yii::$app->request->post())) {
                 $this->token = $this->tokenForm->token;
@@ -79,7 +79,7 @@ class ScheduleController extends Controller
             return $this->render('index',[
                 'token' => $this->token,
                 'tokenForm' => $this->tokenForm,
-                'participant' => $participant,
+                'profile' => $profile,
                 'listUpcomingSchedule' => $listUpcomingSchedule,
                 'listRecentSchedule' => $listRecentSchedule,
                 'scheduleDetailService' => $this->scheduleDetailService
