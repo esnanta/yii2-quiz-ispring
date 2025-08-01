@@ -26,19 +26,23 @@ return [
     
     'components' => [
 
+        //https://www.yiiframework.com/doc/api/2.0/yii-web-user
         'user' => [
-            'identityClass' => 'common\models\UserParticipant',
-            'enableAutoLogin' => false,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'class' => 'yii\web\User',
+            'identityCookie' => [
+                'name'     => '_identity-frontend6',
+                'path'     => '/',
+                'httpOnly' => true,
+            ],
         ],
 
         'session' => [
-            //'class' => 'yii\web\Session',
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'quiz-frontend',
-//            'cookieParams' => ['httponly' => true, 'lifetime' => 3600 * 4],
-//            'timeout' => 3600*4, //session expire after 4 hour
-//            'useCookies' => true,
+            'class' => 'yii\web\DbSession',
+            'name' => 'frontend-SESSID',
+            'cookieParams' => [
+                'httpOnly' => true,
+                'path'     => '/',
+            ],
         ],
 
         'request' => [

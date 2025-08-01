@@ -103,10 +103,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']);
+            return $this->redirect(['user/login']);
         } else {
 
-            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
+            $officeId = CacheService::getInstance()->getOfficeIdByProfile();
             $listUpcomingSchedule = $this->scheduleService->getScheduleUpcoming($officeId);
             $listRecentSchedule = $this->scheduleService->getScheduleRecent($officeId);
 

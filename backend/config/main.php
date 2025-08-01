@@ -22,7 +22,26 @@ return [
         ],
     ],
     'components' => [
-        
+
+        //https://www.yiiframework.com/doc/api/2.0/yii-web-user
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityCookie' => [
+                'name'     => '_identity-backend7',
+                'path'     => '/',
+                'httpOnly' => true,
+            ],
+        ],
+
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            'name' => 'backend-SESSID',
+            'cookieParams' => [
+                'httpOnly' => true,
+                'path'     => '/',
+            ],
+        ],
+
         'request' => [
             'csrfParam' => '_csrf-backend',
             'class' => 'common\components\Request',

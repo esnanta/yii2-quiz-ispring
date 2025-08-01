@@ -3,6 +3,7 @@ namespace common\service;
 
 use common\models\AuthAssignment;
 use common\models\Participant;
+use common\models\Profile;
 use common\models\Staff;
 use Yii;
 use yii\base\Exception;
@@ -104,9 +105,9 @@ class CacheService {
         });
     }
 
-    public function getOfficeIdByParticipant(){
+    public function getOfficeIdByProfile(){
         return Yii::$app->cache->getOrSet($this->cacheOfficeId.$this->combineCache, function () {
-            $model = Participant::find()->where(['id' => $this->userId])->one();
+            $model = Profile::find()->where(['user_id' => $this->userId])->one();
             return $model->office_id;
         });
     }
