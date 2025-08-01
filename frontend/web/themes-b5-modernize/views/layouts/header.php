@@ -2,7 +2,7 @@
 
 use common\helper\DateHelper;
 use common\helper\IconHelper;
-use common\models\Participant;
+use common\models\Profile;
 use common\service\CacheService;
 use common\service\ScheduleService;
 use yii\helpers\Html;
@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 $model = null;
 if (!Yii::$app->user->isGuest) {
-    $model = Participant::findOne(['username' => Yii::$app->user->identity->username]);
+    $model = Profile::findOne(['user_id' => Yii::$app->user->identity->id]);
 }
 
 function renderDropdownItem($url, $icon, $text)
@@ -44,10 +44,10 @@ function renderDropdownItem($url, $icon, $text)
                         <?php if (!Yii::$app->user->isGuest): ?>
                             <?php
                             $scheduleService = new ScheduleService();
-                            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
-                            $participant = Participant::findOne([
+                            $officeId = CacheService::getInstance()->getOfficeIdByProfile();
+                            $participant = Profile::findOne([
                                 'office_id' => $officeId,
-                                'username' => Yii::$app->user->identity->username
+                                'user_id' => Yii::$app->user->identity->id
                             ]);
                             $listUpcomingSchedule = $scheduleService->getScheduleUpcomingByGroup($officeId, $participant->group_id);
 
@@ -88,7 +88,7 @@ function renderDropdownItem($url, $icon, $text)
                         <div class="message-body">
                             <?php if (!Yii::$app->user->isGuest): ?>
                                 <?= renderDropdownItem(Url::to(['site/index']), '<i class="ti ti-user fs-6"></i>', 'Dashboard') ?>
-                                <?= Html::a('Logout', ['/site/logout'], ['data-method' => 'POST', 'data-confirm' => 'Logout?', 'class' => 'btn btn-outline-primary mx-3 mt-2 d-block']) ?>
+                                <?= Html::a('Logout', ['/user/logout'], ['data-method' => 'POST', 'data-confirm' => 'Logout?', 'class' => 'btn btn-outline-primary mx-3 mt-2 d-block']) ?>
                             <?php else: ?>
                                 <?= Html::a(Yii::t('app', 'Admin'), ['/admin/user/login'], ['class' => 'btn btn-outline-primary mx-3 mt-2 d-block']) ?>
                             <?php endif; ?>

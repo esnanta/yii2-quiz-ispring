@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="refactor import">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update login">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/CacheService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/CacheService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/config/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/config/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/models/LoginParticipantForm.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/user/security/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/user/security/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -784,7 +778,7 @@
       <workItem from="1753865228008" duration="6881000" />
       <workItem from="1753880403888" duration="7482000" />
       <workItem from="1753926423969" duration="2976000" />
-      <workItem from="1754010050031" duration="2073000" />
+      <workItem from="1754010050031" duration="2765000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -938,7 +932,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754010425974</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="update login">
+      <option name="closed" value="true" />
+      <created>1754012293640</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1754012293640</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -977,6 +979,7 @@
     <MESSAGE value="fix message" />
     <MESSAGE value="update user&#10;refactor import" />
     <MESSAGE value="refactor import" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor import" />
+    <MESSAGE value="update login" />
+    <option name="LAST_COMMIT_MESSAGE" value="update login" />
   </component>
 </project>

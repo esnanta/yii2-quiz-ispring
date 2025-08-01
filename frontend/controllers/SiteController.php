@@ -124,45 +124,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
-    public function actionLogin()
-    {
-        $model = new LoginParticipantForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('index');
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
-    public function actionLogout()
-    {
-        try {
-            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
-            $participant->status = Participant::STATUS_INACTIVE;
-            $participant->save();
-            Yii::$app->user->logout();
-            return $this->goHome();
-        } catch (\Exception $e)
-        {
-            error_log($e);
-            echo "Error: " . $e->getMessage();
-            return $this->goHome();
-        }
-    }
-
-    /**
      * Displays contact page.
      *
      * @return mixed
