@@ -43,7 +43,7 @@ echo TabularForm::widget([
             'label' => Yii::t('app', 'Title'),
             'type' => TabularForm::INPUT_TEXT,
             'options' => [
-                'placeholder' => 'Enter participant title',
+                'placeholder' => 'Enter profile title',
                 'maxlength' => 100,
                 'disabled' => true // Disable the field
             ],
@@ -84,7 +84,7 @@ echo TabularForm::widget([
                     Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', [
                         'title' => Yii::t('app', 'Delete'),
                         'onClick' => "delRowParticipant($key); return false;",
-                        'id' => 'participant-del-btn'
+                        'id' => 'profile-del-btn'
                     ]);
             },
         ],

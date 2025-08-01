@@ -8,7 +8,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('app', 'Report');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['participant/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['profile/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

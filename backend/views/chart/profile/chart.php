@@ -6,28 +6,28 @@ use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  * @var common\models\Assessment $model
- * @var common\models\Participant $participant
+ * @var common\models\Profile $profile
  * @var common\models\Period $periodList
  * @var common\models\Group $groupList
  * @var common\models\Subject $subjectList
  */
 
 $this->title = Yii::t('app', 'Chart');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['chart/participant']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profile Chart'), 'url' => ['chart/profile']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?= '<i class="fas fa-user"></i> '. $participant->title ;?>
+        <?= '<i class="fas fa-user"></i> '. $profile->name ;?>
         <span class="float-right float-end">
-            <?= $participant->identity_number ;?>
+            <?= $profile->user->username ;?>
         </span>
     </div>
     <div class="card-body text-default">
-        <?= $this->render('/chart/participant/_form', [
+        <?= $this->render('/chart/profile/_form', [
             'model' => $model,
-            'participant' => $participant,
+            'profile' => $profile,
             'periodList' => $periodList,
             'groupList' => $groupList,
             'subjectList' => $subjectList,
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
             if($series!=null && $categories!=null):
                 echo ApexChartHelper::renderParticipantScoreChart(
-                    $categories, $series, $participant->title.' Progress'
+                    $categories, $series, $profile->title.' Progress'
                 );
                 echo '<br>';
                 echo ApexChartHelper::renderRadarChart(

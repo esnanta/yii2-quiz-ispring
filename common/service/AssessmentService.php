@@ -10,7 +10,7 @@ class AssessmentService
     public static function getChartByPeriod(
         $officeId, $userId, $periodId, $subjectId = null): array
     {
-        // Retrieve the evaluations for the participant
+        // Retrieve the evaluations for the profile
         $assessments = Assessment::find()
             ->where(['office_id' => $officeId, 'user_id' => $userId])
             ->andWhere(['period_id' => $periodId])

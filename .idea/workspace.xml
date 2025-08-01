@@ -4,12 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="fix assessment">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update staff &amp; room">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/staff/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/staff/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/staff/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/staff/create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/staff/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/staff/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/staff/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/staff/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/02-yii2-auth.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/02-yii2-auth.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fix user/fix user.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/fix user/fix user.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ChartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/GroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/GroupController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/chart/participant/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/chart/profile/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/chart/participant/chart.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/chart/profile/chart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/chart/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/chart/profile/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/dummy/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/dummy/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/_form_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/_form_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/view_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/report/report_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/report_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view_assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view_assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/ApexChartHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/ApexChartHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/reports/ExportParticipant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/reports/ExportProfile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/AssessmentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/AssessmentService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/CacheService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/CacheService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ParticipantService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ParticipantService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ChartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/chart.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/participant/chart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/participant/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -786,7 +816,7 @@
       <workItem from="1754017225293" duration="2489000" />
       <workItem from="1754034283226" duration="241000" />
       <workItem from="1754034536545" duration="51000" />
-      <workItem from="1754034600210" duration="1069000" />
+      <workItem from="1754034600210" duration="4039000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -972,7 +1002,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754034996024</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="update staff &amp; room">
+      <option name="closed" value="true" />
+      <created>1754035908338</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1754035908338</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1015,6 +1053,7 @@
     <MESSAGE value="update frontend login" />
     <MESSAGE value="fix frontend" />
     <MESSAGE value="fix assessment" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix assessment" />
+    <MESSAGE value="update staff &amp; room" />
+    <option name="LAST_COMMIT_MESSAGE" value="update staff &amp; room" />
   </component>
 </project>

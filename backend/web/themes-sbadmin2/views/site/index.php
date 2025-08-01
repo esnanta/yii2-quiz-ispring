@@ -37,7 +37,7 @@ use yii\helpers\Url;
                         <i class="fas fa-user fa-2x text-gray-300"></i>
                     </div>
                 </div>
-                <a href="<?= Url::to(['participant/index']) ?>" class="card-link stretched-link"></a>
+                <a href="<?= Url::to(['profile/index']) ?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@ use yii\helpers\Url;
                         <i class="fas fa-user fa-2x text-primary"></i>
                     </div>
                 </div>
-                <a href="<?= Url::to(['participant/index']) ?>" class="card-link stretched-link"></a>
+                <a href="<?= Url::to(['profile/index']) ?>" class="card-link stretched-link"></a>
             </div>
         </div>
     </div>

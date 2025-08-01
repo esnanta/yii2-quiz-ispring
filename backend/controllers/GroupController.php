@@ -111,20 +111,20 @@ class GroupController extends Controller
                 $postData = Yii::$app->request->post('Participant');
                 $isValid = true;
 
-                // Loop through each posted participant data
+                // Loop through each posted profile data
                 foreach ($postData as $key => $participantData) {
                     $participant = Participant::findOne($participantData['id']);
 
-                    // If the participant exists
+                    // If the profile exists
                     if ($participant) {
                         // Load the posted data into the model
                         $participant->load(['Participant' => $participantData]);
 
-                        // Validate and save the participant
+                        // Validate and save the profile
                         if (!$participant->validate() || !$participant->save()) {
                             $isValid = false;
                             MessageHelper::getFlashUpdateFailed();
-                            Yii::$app->session->setFlash('error', "Failed to save participant: " . $participant->id);
+                            Yii::$app->session->setFlash('error', "Failed to save profile: " . $participant->id);
                         }
                     }
                 }

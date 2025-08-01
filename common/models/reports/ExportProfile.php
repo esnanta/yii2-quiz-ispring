@@ -7,7 +7,7 @@ use yii\base\Model;
 /**
  * Login form
  */
-class ExportParticipant extends Model
+class ExportProfile extends Model
 {
     public $group_id;
     public $is_display_subject = false;

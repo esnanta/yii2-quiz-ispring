@@ -146,7 +146,7 @@ class CacheService {
     }
     public function getParticipantKey(): string
     {
-        return 'participant';
+        return 'profile';
     }
     public function getAssessmentKey(): string
     {

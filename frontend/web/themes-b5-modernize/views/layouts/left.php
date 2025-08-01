@@ -68,7 +68,7 @@ function getMenu($_menuName, $_classIcon): string
                     <li class="sidebar-item">
                         <?= Html::a(
                             getMenu(Yii::t('app', 'Chart'), 'fa fa-angle-right'),
-                            ['/chart/participant-chart'],
+                            ['/chart/profile-chart'],
                             ['class' => 'sidebar-link']
                         ) ?>
                     </li>

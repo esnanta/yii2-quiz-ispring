@@ -29,7 +29,7 @@ use yii\helpers\Html;
                 <td class="left">
                     <?php
                     $participant =
-                        Html::a($modelDetailItem->title, ['participant/view',
+                        Html::a($modelDetailItem->title, ['profile/view',
                             'id' => $modelDetailItem->id,
                             'title' => $modelDetailItem->title
                         ]);
@@ -52,7 +52,7 @@ use yii\helpers\Html;
                     Html::a(
                         IconHelper::getReset(),
                         Yii::$app->urlManager->createUrl([
-                            'participant/reset',
+                            'profile/reset',
                             'id' => $modelDetailItem->id,
                             'schId' => $model->id,
                             'title' => $modelDetailItem->title
