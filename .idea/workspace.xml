@@ -4,37 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="integrate user&#10;remove participant&#10;update profile">
-      <change afterPath="$PROJECT_DIR$/common/mail/confirmation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/new_password.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/reconfirmation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/recovery.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/text/confirmation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/text/new_password.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/text/reconfirmation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/text/recovery.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/text/welcome.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/mail/welcome.php" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="fix message">
+      <change afterPath="$PROJECT_DIR$/backend/views/asset/_import.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/views/asset/import.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/asset/_view_side.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/_view_side.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/profile/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/profile/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/profile/_search.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/_search.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/views/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/profile/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/site/_form_user_reguler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/_form_user_regular.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/site/create_user_reguler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/create_user_regular.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/profile/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mail/emailVerify-html.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/mail/emailVerify-html.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mail/emailVerify-text.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/mail/emailVerify-text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mail/layouts/html.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/mail/layouts/html.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mail/layouts/text.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/mail/layouts/text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mail/passwordResetToken-html.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/mail/passwordResetToken-html.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mail/passwordResetToken-text.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/mail/passwordResetToken-text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Asset.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Asset.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ParticipantImport.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ProfileImport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/models/Profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/ProfileSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ProfileSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Profile.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/models/base/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/DataListService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/DataListService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ParticipantService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ParticipantService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -514,7 +502,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;fix-user&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cassiopeia/Documents/www/html/yii2-quiz-ispring/common/mail&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/cassiopeia/Documents/www/html/yii2-quiz-ispring/backend/views/asset&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -527,11 +515,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/views/asset" />
       <recent name="$PROJECT_DIR$/common/mail" />
       <recent name="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site" />
       <recent name="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend/views/profile" />
@@ -803,7 +791,10 @@
       <workItem from="1753598883382" duration="6950000" />
       <workItem from="1753757731959" duration="1087000" />
       <workItem from="1753860972108" duration="3078000" />
-      <workItem from="1753865228008" duration="3503000" />
+      <workItem from="1753865228008" duration="6881000" />
+      <workItem from="1753880403888" duration="7482000" />
+      <workItem from="1753926423969" duration="2976000" />
+      <workItem from="1754010050031" duration="321000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -917,7 +908,31 @@
       <option name="project" value="LOCAL" />
       <updated>1726583957034</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="remove UserParticipant.php">
+      <option name="closed" value="true" />
+      <created>1753869308869</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1753869308869</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix reset">
+      <option name="closed" value="true" />
+      <created>1753869320465</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1753869320465</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix message">
+      <option name="closed" value="true" />
+      <created>1753871163611</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1753871163611</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -951,6 +966,9 @@
     <MESSAGE value="use only new label for new record" />
     <MESSAGE value="add more filter and dependent dropdown to AssessmentReport" />
     <MESSAGE value="integrate user&#10;remove participant&#10;update profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="integrate user&#10;remove participant&#10;update profile" />
+    <MESSAGE value="remove UserParticipant.php" />
+    <MESSAGE value="fix reset" />
+    <MESSAGE value="fix message" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix message" />
   </component>
 </project>

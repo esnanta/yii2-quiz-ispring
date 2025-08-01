@@ -27,8 +27,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?php // echo $form->field($model, 'identity_number') ?>
-
     <?php // echo $form->field($model, 'public_email') ?>
 
     <?php // echo $form->field($model, 'gravatar_email') ?>

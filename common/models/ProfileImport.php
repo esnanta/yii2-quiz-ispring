@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "tx_participant".
  */
-class ParticipantImport extends Participant
+class ProfileImport extends Profile
 {
     public $asset_id;
     /**
@@ -19,7 +19,6 @@ class ParticipantImport extends Participant
             [['asset_id', 'group_id'], 'required'],
 
             [['office_id', 'group_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            //ADD ARCHIVE
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title', 'identity_number'], 'string', 'max' => 100],
             [['username'], 'string', 'max' => 50],
@@ -34,7 +33,7 @@ class ParticipantImport extends Participant
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'asset_id' => Yii::t('app', 'Archive'),
+            'asset_id' => Yii::t('app', 'Asset'),
             'office_id' => Yii::t('app', 'Office ID'),
             'group_id' => Yii::t('app', 'Group ID'),
             'title' => Yii::t('app', 'Title'),

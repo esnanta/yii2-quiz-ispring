@@ -32,7 +32,7 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
             'group_id',
             'user_type',
             'name',
-            'identity_number',
+            'password',
             'public_email:email',
             'gravatar_email:email',
             'gravatar_id',

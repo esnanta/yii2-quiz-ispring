@@ -27,6 +27,7 @@ class Asset extends BaseAsset
     const ASSET_TYPE_IMAGE            = 3;
     const ASSET_TYPE_COMPRESSION      = 4;
     const ASSET_TYPE_PDF              = 5;
+    const ASSET_TYPE_IMPORT           = 6;
 
     /**
      * @inheritdoc
@@ -102,6 +103,7 @@ class Asset extends BaseAsset
             self::ASSET_TYPE_IMAGE  => Yii::t('app', 'Image'),
             self::ASSET_TYPE_COMPRESSION  => Yii::t('app', 'Compression'),
             self::ASSET_TYPE_PDF  => Yii::t('app', 'Pdf'),
+            self::ASSET_TYPE_IMPORT  => Yii::t('app', 'Import'),
         ];
     }
     public static function getOneAssetType($_module = null)
@@ -146,6 +148,7 @@ class Asset extends BaseAsset
             self::ASSET_TYPE_WORD        => ['doc', 'docx'],
             self::ASSET_TYPE_COMPRESSION => ['zip', 'rar'],
             self::ASSET_TYPE_PDF         => ['pdf'],
+            self::ASSET_TYPE_IMPORT      => ['xlsx', 'xls'],
         ];
     }
 

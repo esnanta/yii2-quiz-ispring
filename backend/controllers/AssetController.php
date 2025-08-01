@@ -7,9 +7,14 @@ use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
+use common\models\Profile;
+use common\models\ProfileImport;
+use common\models\User;
 use common\service\AssetService;
 use common\service\CacheService;
+use common\service\DataIdService;
 use common\service\DataListService;
+use common\service\ParticipantService;
 use Yii;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
@@ -372,6 +377,128 @@ class AssetController extends Controller
             return $this->redirect(['asset/view', 'id' => $model->id, 'title' => $model->title]);
         } else {
             MessageHelper::getFlashLoginInfo();
+            throw new ForbiddenHttpException;
+        }
+    }
+
+    //$id = asset id
+    public function actionImport($id,$title=null)
+    {
+        if(Yii::$app->user->can('create-asset')){
+            $officeId       = DataIdService::getOfficeId();
+            $officeList     = DataListService::getOffice();
+            $assetList      = DataListService::getAsset();
+            $groupList      = DataListService::getGroup();
+
+            $model = new ProfileImport();
+            $model->office_id = $officeId;
+            $model->asset_id = $id;
+
+            $asset = Asset::find()->where(['id'=>$model->asset_id])->one();
+            $inputFileName = $this->assetService->getAssetFile($asset);
+
+            $helper = SpreadsheetHelper::getInstance()->getHelper();
+            $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
+            $reader = SpreadsheetHelper::getInstance()->getReader($inputFileName,$sheetName);
+            $spreadsheet = $reader->load($inputFileName);
+            $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+            $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                $activeRange, null, true, true, true
+            );
+            $data = $spreadsheet->getActiveSheet();
+            $dataList = SpreadsheetHelper::getInstance()->getDataList($data);
+
+            try {
+                if ($model->load(Yii::$app->request->post())) {
+
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        $counter = 0;
+                        foreach (array_filter($dataList) as $i=>$data){
+                            if(sizeof($data) > 2){
+                                $username = $data[0];
+                                $title = $data[1];
+                                $email = $data[2];
+
+                                $user = User::find()->where(['username'=>$username])
+                                    ->orWhere(['email'=>$email])
+                                    ->one();
+
+                                if(empty($user)):
+                                    // Generate password
+                                    $plainPassword = substr(str_shuffle(MD5(microtime())), 0, 5);
+
+                                    // Create new user
+                                    $user = new User();
+                                    $user->username = 'U' . $username;
+                                    $user->email = $email;
+                                    $user->auth_key = Yii::$app->security->generateRandomString();
+                                    $user->password_hash = Yii::$app->security->generatePasswordHash($plainPassword);
+                                    $user->created_at = time();
+                                    $user->updated_at = time();
+
+                                    if ($user->save()) {
+                                        // Create profile for user
+                                        $profile = new Profile();
+                                        $profile->user_id = $user->id;
+                                        $profile->name = $title;
+                                        $profile->office_id = $model->office_id;
+                                        $profile->group_id = $model->group_id;
+                                        $profile->password = $plainPassword; // Store plain password in profile
+                                        $profile->user_type = Profile::USER_TYPE_REGULAR;
+
+                                        Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
+                                            'item_name'         => Yii::$app->params['userRoleRegular'],
+                                            'user_id'           => $user->id,
+                                            'created_at'        => time(),
+                                        ])->execute();
+
+                                        if ($profile->save()) {
+                                            $counter++;
+                                        } else {
+                                            Yii::error('Profile save error: ' . json_encode($profile->errors));
+                                        }
+                                    } else {
+                                        Yii::error('User save error: ' . json_encode($user->errors));
+                                    }
+                                endif;
+                            }
+                        }
+
+                        $transaction->commit();
+                        MessageHelper::getFlashSaveSuccess();
+                        Yii::$app->getSession()->setFlash(
+                            'success',
+                            ['message' => Yii::t(
+                                'app',
+                                'Saved '.$counter.' records.'
+                            )]
+                        );
+                        return $this->redirect(['index']);
+                    } catch (\Exception|\Throwable $e) {
+                        $transaction->rollBack();
+                        throw $e;
+                    }
+                }
+                else {
+                    $duplicateData = ParticipantService::checkDuplicate($dataList);
+                    return $this->render('import', [
+                        'model' => $model,
+                        'officeList' => $officeList,
+                        'groupList' => $groupList,
+                        'assetList' => $assetList,
+                        'helper' => $helper,
+                        'sheetData' => $sheetData,
+                        'duplicateData' => $duplicateData
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
     }

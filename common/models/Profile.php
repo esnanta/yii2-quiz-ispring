@@ -25,7 +25,7 @@ class Profile extends BaseProfile
             [['bio'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['name', 'public_email', 'gravatar_email', 'location', 'website'], 'string', 'max' => 255],
-            [['identity_number'], 'string', 'max' => 100],
+            [['password'], 'string', 'max' => 100],
             [['gravatar_id'], 'string', 'max' => 32],
             [['timezone'], 'string', 'max' => 40],
             [['asset_name'], 'string', 'max' => 200],

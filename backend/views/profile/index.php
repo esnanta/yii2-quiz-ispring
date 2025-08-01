@@ -57,7 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             'name',
-            'identity_number',
 
             [
                 'attribute'=>'group_id',

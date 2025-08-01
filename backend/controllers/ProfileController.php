@@ -2,8 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\Employment;
-use common\models\Staff;
 use common\models\UserDektrium;
 use common\service\CacheService;
 use common\service\DataIdService;
@@ -11,7 +9,6 @@ use common\service\DataListService;
 use Yii;
 use common\models\Profile;
 use common\models\ProfileSearch;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;

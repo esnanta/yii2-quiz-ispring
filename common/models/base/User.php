@@ -20,13 +20,16 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $flags
  * @property integer $confirmed_at
  * @property integer $blocked_at
- * @property integer $updated_at
  * @property integer $created_at
+ * @property integer $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property integer $last_login_at
  * @property string $auth_tf_key
- * @property integer $auth_tf_enabled
  * @property string $deleted_at
+ * @property integer $auth_tf_enabled
  * @property integer $deleted_by
+ * @property integer $verlock
  * @property string $uuid
  *
  * @property \common\models\Profile $profile
@@ -69,8 +72,8 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'email', 'password_hash', 'auth_key', 'updated_at', 'created_at'], 'required'],
-            [['flags', 'confirmed_at', 'blocked_at', 'updated_at', 'created_at', 'last_login_at', 'deleted_by'], 'integer'],
+            [['username', 'email', 'password_hash', 'auth_key', 'created_at', 'updated_at'], 'required'],
+            [['flags', 'confirmed_at', 'blocked_at', 'created_at', 'updated_at', 'created_by', 'updated_by', 'last_login_at', 'deleted_by', 'verlock'], 'integer'],
             [['deleted_at'], 'safe'],
             [['username', 'email', 'unconfirmed_email'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
@@ -124,6 +127,7 @@ class User extends \yii\db\ActiveRecord
             'last_login_at' => Yii::t('app', 'Last Login At'),
             'auth_tf_key' => Yii::t('app', 'Auth Tf Key'),
             'auth_tf_enabled' => Yii::t('app', 'Auth Tf Enabled'),
+            'verlock' => Yii::t('app', 'Verlock'),
             'uuid' => Yii::t('app', 'Uuid'),
         ];
     }

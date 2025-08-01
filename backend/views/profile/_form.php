@@ -57,7 +57,6 @@ use kartik\select2\Select2;
             ],
 
             'name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 255]],
-            'identity_number' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 100]],
             'bio' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => '','rows' => 6]],
         ]
 

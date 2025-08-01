@@ -15,7 +15,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $group_id
  * @property integer $user_type
  * @property string $name
- * @property string $identity_number
+ * @property string $password
  * @property string $public_email
  * @property string $gravatar_email
  * @property string $gravatar_id
@@ -75,7 +75,7 @@ class Profile extends \yii\db\ActiveRecord
             [['bio'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['name', 'public_email', 'gravatar_email', 'location', 'website'], 'string', 'max' => 255],
-            [['identity_number'], 'string', 'max' => 100],
+            [['password'], 'string', 'max' => 100],
             [['gravatar_id'], 'string', 'max' => 32],
             [['timezone'], 'string', 'max' => 40],
             [['asset_name'], 'string', 'max' => 200],
@@ -115,7 +115,7 @@ class Profile extends \yii\db\ActiveRecord
             'group_id' => Yii::t('app', 'Group ID'),
             'user_type' => Yii::t('app', 'User Type'),
             'name' => Yii::t('app', 'Name'),
-            'identity_number' => Yii::t('app', 'Identity Number'),
+            'password' => Yii::t('app', 'Password'),
             'public_email' => Yii::t('app', 'Public Email'),
             'gravatar_email' => Yii::t('app', 'Gravatar Email'),
             'gravatar_id' => Yii::t('app', 'Gravatar ID'),
@@ -136,7 +136,15 @@ class Profile extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
     }
-    
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroup()
+    {
+        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
+    }
+
     /**
      * @inheritdoc
      * @return array mixed
