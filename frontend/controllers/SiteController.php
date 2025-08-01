@@ -105,7 +105,11 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['user/login']);
         } else {
-
+            // Check if current user is admin, redirect to admin site index if true
+            if (Yii::$app->user->identity->isAdmin ?? false) {
+                return $this->redirect(['/admin/site/index']);
+            }
+            
             $officeId = CacheService::getInstance()->getOfficeIdByProfile();
             $listUpcomingSchedule = $this->scheduleService->getScheduleUpcoming($officeId);
             $listRecentSchedule = $this->scheduleService->getScheduleRecent($officeId);

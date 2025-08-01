@@ -144,13 +144,6 @@ class DataListService
             ->asArray()->all(), 'id', 'title');
     }
 
-    public static function getParticipant(): array
-    {
-        return ArrayHelper::map(Participant::find()
-            ->where(['office_id' => DataIdService::getOfficeId()])
-            ->asArray()->all(), 'id', 'title');
-    }
-
     public static function getEmployment(): array
     {
         return ArrayHelper::map(Employment::find()
