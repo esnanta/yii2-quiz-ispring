@@ -113,7 +113,7 @@ class Participant extends BaseParticipant
 
     public function getUrl(): string
     {
-        return Html::a($this->title, ['participant/view', 'id' => $this->id,'title'=>$this->title]);
+        return Html::a($this->title, ['profile/view', 'id' => $this->id,'title'=>$this->title]);
     }
 
     public function getIsButtonDisabled(): string

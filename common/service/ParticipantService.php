@@ -4,7 +4,6 @@ namespace common\service;
 
 use common\helper\DateHelper;
 use common\helper\LabelHelper;
-use common\models\Participant;
 use common\models\Schedule;
 use common\models\User;
 use Yii;
