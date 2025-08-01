@@ -14,7 +14,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('app', 'Chart');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['chart/participant']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['chart/profile']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </span>
     </div>
     <div class="card-body text-default">
-        <?= $this->render('/chart/participant/_form', [
+        <?= $this->render('/chart/profile/_form', [
             'model' => $model,
             'profile' => $profile,
             'periodList' => $periodList,

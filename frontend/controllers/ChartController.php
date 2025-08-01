@@ -33,7 +33,7 @@ class ChartController extends Controller
 
 
     /*
-     * $id is participant id
+     * $id is profile id
      */
     public function actionParticipantChart()
     {
@@ -53,7 +53,7 @@ class ChartController extends Controller
             $categories = $assessmentData['categories'];
             $series = $assessmentData['series'];
 
-            return $this->render('participant/chart', [
+            return $this->render('profile/chart', [
                 'model' => $model,
                 'profile' => $profile,
                 'periodList' => $periodList,
@@ -63,7 +63,7 @@ class ChartController extends Controller
                 'categories' => $categories
             ]);
         } else {
-            return $this->render('participant/chart', [
+            return $this->render('profile/chart', [
                 'model' => $model,
                 'profile' => $profile,
                 'periodList' => $periodList,
