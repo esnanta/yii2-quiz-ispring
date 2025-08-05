@@ -44,7 +44,9 @@
 		"supplyhog/yii2-clipboardjs" : "dev-master",
 		
         "mootensai/yii2-enhanced-gii": "dev-master",
-        "warrence/yii2-kartikgii": "dev-master"
+        "warrence/yii2-kartikgii": "dev-master",
+
+        "ext-pdo": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
