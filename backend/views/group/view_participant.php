@@ -17,7 +17,7 @@ use yii\helpers\Html;
         <?=Yii::t('app', 'Participants');?>
         <span class="float-right float-end">
                     <?= Html::a(IconHelper::getUpdate(),
-                        ['update-participant', 'id'=>$model->id, 'title'=>$model->title],
+                        ['update-profile', 'id'=>$model->id, 'title'=>$model->title],
                         ['class' => 'btn btn-primary float-right float-end']); ?>
                 </span>
     </div>

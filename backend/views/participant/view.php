@@ -91,5 +91,5 @@ $create = LabelHelper::getCreateButton();
     'deleteOptions' => [
         'url' => ['delete', 'id' => $model->id],
     ],
-    'enableEditMode' => Yii::$app->user->can('update-participant'),
+    'enableEditMode' => Yii::$app->user->can('update-profile'),
 ]) ?>

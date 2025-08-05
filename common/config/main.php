@@ -86,24 +86,6 @@ return [
             ],
         ],
 
-        //https://www.yiiframework.com/doc/api/2.0/yii-web-user
-        'user' => [
-            'class' => 'yii\web\User',
-            'identityCookie' => [
-                'name'     => '_allIdentityhere',
-                'path'     => '/',
-                'httpOnly' => true,
-            ],
-        ],
-        'session' => [
-            'class' => 'yii\web\DbSession',
-            'name' => 'my-ALL-SESSID',
-            'cookieParams' => [
-                'httpOnly' => true,
-                'path'     => '/',
-            ],
-        ],
-
         //https://github.com/victor78/yii2-zipper
         'zipper' => [
             'class' => 'Victor78\Zipper\Zipper', //required

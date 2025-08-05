@@ -4,10 +4,10 @@ namespace backend\controllers;
 
 use common\helper\MessageHelper;
 use common\models\Assessment;
-use common\models\Participant;
+use common\models\Profile;
 use common\models\Period;
 use common\models\reports\ExportAssessment;
-use common\models\reports\ExportParticipant;
+use common\models\reports\ExportProfile;
 use common\models\Schedule;
 use common\models\Subject;
 use common\service\CacheService;
@@ -105,7 +105,7 @@ class ReportController extends Controller
                             ],
                         ],
                         [
-                            'attribute' => 'participant.title',
+                            'attribute' => 'profile.title',
                             'header' => Yii::t('app', 'Participant'),
                         ],
                         [
@@ -208,9 +208,9 @@ class ReportController extends Controller
      * Lists all Group models.
      * @return mixed
      */
-    public function actionParticipantCard()
+    public function actionProfileCard()
     {
-        $model      = new ExportParticipant();
+        $model      = new ExportProfile();
         $groupList  = DataListService::getGroup();
         $officeId   = CacheService::getInstance()->getOfficeId();
 
@@ -229,14 +229,14 @@ class ReportController extends Controller
             ]);
         endif;
 
-        if (Yii::$app->user->can('view-participant')) {
+        if (Yii::$app->user->can('view-profile')) {
             if ($model->load(Yii::$app->request->post())) {
 
                 $officeId = CacheService::getInstance()->getOfficeId();
 
-                $listParticipant = Participant::find()
+                $listParticipant = Profile::find()
                     ->where(['office_id'=>$officeId, 'group_id' => $model->group_id])
-                    ->orderBy(['id' => SORT_ASC])
+                    ->orderBy(['user_id' => SORT_ASC])
                     ->all();
 
                 return $this->render('view_participant_card', [

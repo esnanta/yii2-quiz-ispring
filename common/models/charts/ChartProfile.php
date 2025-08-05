@@ -5,7 +5,7 @@ namespace common\models\charts;
 use Yii;
 use yii\base\Model;
 
-class ChartParticipant extends Model
+class ChartProfile extends Model
 {
     public $period_id;
     public $group_id;

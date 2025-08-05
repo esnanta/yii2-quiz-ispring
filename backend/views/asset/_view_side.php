@@ -44,9 +44,9 @@ use yii\helpers\Html;
                 ['asset/download', 'id' => $model->id, 'title' => $model->title],
                 ['class' => 'card-link float-right float-end','style'=>'padding-right:5px', 'title' => 'Download']);
 
-            if ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
+            if ($model->asset_type == Asset::ASSET_TYPE_IMPORT) {
                 echo Html::a(IconHelper::getImport() . ' Import',
-                    ['participant/import', 'id' => $model->id, 'title' => $model->title],
+                    ['asset/import', 'id' => $model->id, 'title' => $model->title],
                     ['class' => 'card-link float-right float-end', 'title' => 'Import']);
             }
 

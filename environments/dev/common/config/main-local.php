@@ -75,14 +75,6 @@ if (!YII_ENV_TEST) {
                     'mootensai-model' => '@common/templates/mootensai/model/default', // template name => path to template
                 ]
             ],
-        
-            'thtmorais-test' => [ // generator name
-                'class' => 'thtmorais\test\unit\Generator', // generator class
-                'templates' => [ //setting for out templates
-                    'yii2-test' => 'vendor/thtmorais/yii2-test/src/unit/default', // template name => path to template
-                ]
-            ] 
-        
     ];
 }
 

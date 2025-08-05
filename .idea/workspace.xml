@@ -4,13 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add more filter and dependent dropdown to AssessmentReport">
-      <change afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/assets/vendor/moment-2.29.1/moment.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/assets/vendor/moment-2.29.1/moment.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update staff &amp; room">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/01-yii2-quiz-ispring.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/02-yii2-auth.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/02-yii2-auth.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fix user/fix user.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/fix user/fix user.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ChartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/GroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/GroupController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ParticipantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/chart/participant/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/chart/profile/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/chart/participant/chart.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/chart/profile/chart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/chart/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/chart/profile/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/dummy/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/dummy/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/_form_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/_form_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/view_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/participant/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/report/report_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/report_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view_assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view_assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view_participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/ApexChartHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/ApexChartHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Participant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/reports/ExportParticipant.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/reports/ExportProfile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/AssessmentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/AssessmentService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/CacheService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/CacheService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ParticipantService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ParticipantService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ChartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/chart.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/participant/chart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/participant/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/left.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,13 +71,18 @@
       <option value="$PROJECT_DIR$/../yii2-news/backend/web/assets/32c415de/composer.json" />
     </option>
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" notifyAboutMissingVendor="false" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable path="composer" />
     </execution>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -64,7 +98,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/esnanta/yii2-quiz-ispring&quot;,
-    &quot;accountId&quot;: &quot;977774cd-64a6-4f90-b83d-accf0372ca84&quot;
+    &quot;accountId&quot;: &quot;2043d190-d690-4a7f-a940-295fcc4428d1&quot;
   }
 }</component>
   <component name="MarkdownSettingsMigration">
@@ -80,7 +114,7 @@
       <server host="localhost" id="39925484-4ff4-4d6c-8548-10c177f96b0f" name="localhost" />
     </servers>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/bin/php">
     <include_path>
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-timepicker" />
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-switchinput" />
@@ -391,6 +425,69 @@
       <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/vendor/npm-asset/bootstrap" />
       <path value="$PROJECT_DIR$/vendor/supplyhog/yii2-clipboardjs" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/react/child-process" />
+      <path value="$PROJECT_DIR$/vendor/react/stream" />
+      <path value="$PROJECT_DIR$/vendor/phpmd/phpmd" />
+      <path value="$PROJECT_DIR$/vendor/react/cache" />
+      <path value="$PROJECT_DIR$/vendor/react/dns" />
+      <path value="$PROJECT_DIR$/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/vendor/react/socket" />
+      <path value="$PROJECT_DIR$/vendor/react/event-loop" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/php-diff" />
+      <path value="$PROJECT_DIR$/vendor/pdepend/pdepend" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-debug" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-faker" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-gii" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/vendor/evenement/evenement" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -398,53 +495,56 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2bJUFRy4PJBtzLZSdEbDSCeqe29" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Codeception.Main.executor": "Debug",
-    "PHP Script.PHP.executor": "Run",
-    "PHP Script.ScheduleDetailController.php.executor": "Debug",
-    "PHP Script.StaffController.php.executor": "Debug",
-    "PHP Script.yii-quiz-ispring.executor": "Debug",
-    "PHP Web Page.Unnamed.executor": "Run",
-    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/web/htdocs/app/yii2-quiz-ispring/backend/web/themes-sbadmin2/assets/vendor/moment-2.29.1",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Codeception.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Script.PHP.executor&quot;: &quot;Run&quot;,
+    &quot;PHP Script.ScheduleDetailController.php.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Script.StaffController.php.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Script.yii-quiz-ispring.executor&quot;: &quot;Debug&quot;,
+    &quot;PHP Web Page.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;PHP Web Page.yii2-quiz-ispring.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fix-user&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/cassiopeia/Documents/www/html/yii2-quiz-ispring/backend/views/asset&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/views/asset" />
+      <recent name="$PROJECT_DIR$/common/mail" />
+      <recent name="$PROJECT_DIR$/backend/web/themes-niceadmin/views/site" />
+      <recent name="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/site" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\web\themes-sbadmin2\assets\vendor" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\vendor\fullcalendar-3.10.2" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/views/profile" />
+      <recent name="$PROJECT_DIR$/assets/fix user" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\vendor" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets" />
       <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\web\themes-b5-modernize\assets\js" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\frontend\views\assessment" />
-      <recent name="D:\web\htdocs\app\yii2-quiz-ispring\backend\views\chart\participant" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Web Page.yii2-quiz-ispring">
@@ -480,8 +580,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23726.107" />
-        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23726.107" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PS-251.27812.52" />
+        <option value="bundled-php-predefined-a98d8de5180a-e5747d4f5a45-com.jetbrains.php.sharedIndexes-PS-251.27812.52" />
       </set>
     </attachedChunks>
   </component>
@@ -686,6 +786,37 @@
       <workItem from="1732778918295" duration="1498000" />
       <workItem from="1732798619633" duration="2868000" />
       <workItem from="1732833373818" duration="1647000" />
+      <workItem from="1752114960956" duration="816000" />
+      <workItem from="1752115929200" duration="322000" />
+      <workItem from="1752290687073" duration="2657000" />
+      <workItem from="1752299020040" duration="52000" />
+      <workItem from="1752460431845" duration="7776000" />
+      <workItem from="1752547905511" duration="379000" />
+      <workItem from="1752637543944" duration="636000" />
+      <workItem from="1752662409542" duration="6000" />
+      <workItem from="1752662885284" duration="5000" />
+      <workItem from="1753073110568" duration="479000" />
+      <workItem from="1753073606966" duration="1253000" />
+      <workItem from="1753152033265" duration="2678000" />
+      <workItem from="1753330185848" duration="195000" />
+      <workItem from="1753330402388" duration="4123000" />
+      <workItem from="1753338718892" duration="757000" />
+      <workItem from="1753498045142" duration="1604000" />
+      <workItem from="1753503567350" duration="352000" />
+      <workItem from="1753512966597" duration="4000" />
+      <workItem from="1753513547732" duration="1090000" />
+      <workItem from="1753583814770" duration="6498000" />
+      <workItem from="1753598883382" duration="6950000" />
+      <workItem from="1753757731959" duration="1087000" />
+      <workItem from="1753860972108" duration="3078000" />
+      <workItem from="1753865228008" duration="6881000" />
+      <workItem from="1753880403888" duration="7482000" />
+      <workItem from="1753926423969" duration="2976000" />
+      <workItem from="1754010050031" duration="7155000" />
+      <workItem from="1754017225293" duration="2489000" />
+      <workItem from="1754034283226" duration="241000" />
+      <workItem from="1754034536545" duration="51000" />
+      <workItem from="1754034600210" duration="4039000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -799,7 +930,87 @@
       <option name="project" value="LOCAL" />
       <updated>1726583957034</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="remove UserParticipant.php">
+      <option name="closed" value="true" />
+      <created>1753869308869</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1753869308869</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix reset">
+      <option name="closed" value="true" />
+      <created>1753869320465</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1753869320465</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix message">
+      <option name="closed" value="true" />
+      <created>1753871163611</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1753871163611</updated>
+    </task>
+    <task id="LOCAL-00018" summary="update user&#10;refactor import">
+      <option name="closed" value="true" />
+      <created>1754010409340</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1754010409340</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor import">
+      <option name="closed" value="true" />
+      <created>1754010425974</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1754010425974</updated>
+    </task>
+    <task id="LOCAL-00020" summary="update login">
+      <option name="closed" value="true" />
+      <created>1754012293640</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1754012293640</updated>
+    </task>
+    <task id="LOCAL-00021" summary="update frontend login">
+      <option name="closed" value="true" />
+      <created>1754012908664</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1754012908664</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix frontend">
+      <option name="closed" value="true" />
+      <created>1754017307517</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1754017307517</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix assessment">
+      <option name="closed" value="true" />
+      <created>1754034996024</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1754034996024</updated>
+    </task>
+    <task id="LOCAL-00024" summary="update staff &amp; room">
+      <option name="closed" value="true" />
+      <created>1754035908338</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1754035908338</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -832,6 +1043,17 @@
     <MESSAGE value="update ParticipantImport" />
     <MESSAGE value="use only new label for new record" />
     <MESSAGE value="add more filter and dependent dropdown to AssessmentReport" />
-    <option name="LAST_COMMIT_MESSAGE" value="add more filter and dependent dropdown to AssessmentReport" />
+    <MESSAGE value="integrate user&#10;remove participant&#10;update profile" />
+    <MESSAGE value="remove UserParticipant.php" />
+    <MESSAGE value="fix reset" />
+    <MESSAGE value="fix message" />
+    <MESSAGE value="update user&#10;refactor import" />
+    <MESSAGE value="refactor import" />
+    <MESSAGE value="update login" />
+    <MESSAGE value="update frontend login" />
+    <MESSAGE value="fix frontend" />
+    <MESSAGE value="fix assessment" />
+    <MESSAGE value="update staff &amp; room" />
+    <option name="LAST_COMMIT_MESSAGE" value="update staff &amp; room" />
   </component>
 </project>

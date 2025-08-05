@@ -4,10 +4,8 @@ namespace common\service;
 
 use common\helper\DateHelper;
 use common\helper\LabelHelper;
-use common\models\Participant;
-use common\models\Period;
 use common\models\Schedule;
-use common\models\ScheduleDetail;
+use common\models\User;
 use Yii;
 
 class ParticipantService
@@ -22,26 +20,29 @@ class ParticipantService
 
         foreach (array_filter($dataList) as $i=>$data){
             if(sizeof($data) > 2){
-                $identityNumber = $data[0];
-                $participantName = $data[1];
+                $username = $data[0];
+                $name = $data[1];
+                $email = $data[2];
 
-                $model = Participant::find()
-                    ->where(['office_id' => $officeId, 'identity_number' => $identityNumber])
+                $model = User::find()->where(['username'=>$username])
+                    ->orWhere(['email'=>$email])
                     ->one();
 
                 if ($model !== null) {
                     (new ParticipantService)->setIsAllDataExisted(true);
                     $resultList[] = [
-                        'name' => $participantName,
-                        'identity_number' => $identityNumber,
+                        'name' => $name,
+                        'username' => $username,
+                        'email' => $email,
                         'status' => LabelHelper::getYes('<i class="fas fa-check"></i>')
                     ];
 
                 } else {
                     (new ParticipantService)->setIsAllDataExisted(false);
                     $resultList[] = [
-                        'name' => $participantName,
-                        'identity_number' => $identityNumber,
+                        'name' => $name,
+                        'username' => $username,
+                        'email' => $email,
                         'status' => LabelHelper::getSuccess(Yii::t('app', 'New'))
                     ];
                 }
@@ -59,7 +60,7 @@ class ParticipantService
             echo '<thead>';
             echo '<tr>';
             echo '<th>'.Yii::t('app', 'Participant').'</th>';
-            echo '<th>'.Yii::t('app', 'Identity Number').'</th>';
+            echo '<th>'.Yii::t('app', 'Username').'</th>';
             echo '<th>'.Yii::t('app', 'Status').'</th>';
             echo '</tr>';
             echo '</thead>';
@@ -70,7 +71,7 @@ class ParticipantService
                 if (is_array($data) && isset($data['name']) && isset($data['status'])) {
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8') . '</td>'; // Participant's name
-                    echo '<td>' . $data['identity_number'] . '</td>'; // Status icon HTML
+                    echo '<td>' . $data['username'] . '</td>'; // Status icon HTML
                     echo '<td>' . $data['status'] . '</td>'; // Status icon HTML
                     echo '</tr>';
                 } else {

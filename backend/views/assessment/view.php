@@ -9,6 +9,7 @@ use kartik\detail\DetailView;
 /**
  * @var yii\web\View $this
  * @var common\models\Assessment $model
+ * @var common\models\Profile $profileList
  */
 
 $this->title = $model->schedule->title.' / '.$model->quiz_title;
@@ -68,15 +69,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
                 [
-                    'attribute' => 'participant_id',
+                    'attribute' => 'user_id',
                     'format'=>'html',
-                    'value'=> ($model->participant_id!=null) ? $model->participant->getUrl():'',
+                    'value'=> ($model->user_id!=null) ? $model->profile->title:'',
                     'type' => DetailView::INPUT_SELECT2,
                     'options' => ['id' => 'participant_id', 'prompt' => '', 'disabled'=>false],
-                    'items' => $participantList,
+                    'items' => $profileList,
                     'widgetOptions'=>[
                         'class'=> Select2::class,
-                        'data' => $participantList,
+                        'data' => $profileList,
                     ],
                 ],
 

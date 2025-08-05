@@ -19,7 +19,7 @@ insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`crea
 values
     ('admin',1,'Admin',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('regular',1,'Regular',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('participant',1,'Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('profile',1,'Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
     ('guest',1,'Guest',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 
@@ -265,12 +265,12 @@ values
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
-    ('index-participant',2,'Index Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('create-participant',2,'Create Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('update-participant',2,'Update Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('view-participant',2,'View Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('delete-participant',2,'Delete Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-    ('report-participant',2,'Report Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
+    ('index-profile',2,'Index Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('create-profile',2,'Create Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('update-profile',2,'Update Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('view-profile',2,'View Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('delete-profile',2,'Delete Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
+    ('report-profile',2,'Report Participant',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`)
 values
@@ -376,12 +376,12 @@ values
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values
-    ('index-ispring-master','index-participant'),
-    ('create-ispring-master','create-participant'),
-    ('update-ispring-master','update-participant'),
-    ('view-ispring-master','view-participant'),
-    ('delete-ispring-master','delete-participant'),
-    ('report-ispring-master','report-participant');
+    ('index-ispring-master','index-profile'),
+    ('create-ispring-master','create-profile'),
+    ('update-ispring-master','update-profile'),
+    ('view-ispring-master','view-profile'),
+    ('delete-ispring-master','delete-profile'),
+    ('report-ispring-master','report-profile');
 
 insert  into `tx_auth_item_child`(`parent`,`child`)
 values

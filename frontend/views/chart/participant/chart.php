@@ -7,28 +7,28 @@ use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  * @var common\models\Assessment $model
- * @var common\models\Participant $participant
+ * @var common\models\Profile $profile
  * @var common\models\Period $periodList
  * @var common\models\Group $groupList
  * @var common\models\Subject $subjectList
  */
 
 $this->title = Yii::t('app', 'Chart');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['chart/participant']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant Chart'), 'url' => ['chart/profile']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?= IconHelper::getUser().' '. $participant->title ;?>
+        <?= IconHelper::getUser().' '. $profile->user->username ;?>
         <span class="float-right float-end">
-            <?= $participant->identity_number ;?>
+            <?= $profile->name ;?>
         </span>
     </div>
     <div class="card-body text-default">
-        <?= $this->render('/chart/participant/_form', [
+        <?= $this->render('/chart/profile/_form', [
             'model' => $model,
-            'participant' => $participant,
+            'profile' => $profile,
             'periodList' => $periodList,
             'groupList' => $groupList,
             'subjectList' => $subjectList,
@@ -40,11 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
             if($series!=null && $categories!=null):
                 echo ApexChartHelper::renderParticipantScoreChart(
-                    $categories, $series, Yii::t('app', 'Participant')
+                    $categories, $series, Yii::t('app', 'Profile')
                 );
                 echo '<br>';
                 echo ApexChartHelper::renderRadarChart(
-                    $categories, $series, Yii::t('app', 'Participant Evaluation vs Average')
+                    $categories, $series, Yii::t('app', 'Profile Evaluation vs Average')
                 );
             endif;
         ?>

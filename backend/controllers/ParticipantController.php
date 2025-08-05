@@ -56,7 +56,7 @@ class ParticipantController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('index-participant')){
+        if(Yii::$app->user->can('index-profile')){
             $searchModel = new ParticipantSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
@@ -86,7 +86,7 @@ class ParticipantController extends Controller
      */
     public function actionView($id,$title=null)
     {
-        if(Yii::$app->user->can('view-participant')){
+        if(Yii::$app->user->can('view-profile')){
             $model      = $this->findModel($id);
             $officeList = DataListService::getOffice();
             $groupList  = DataListService::getGroup();
@@ -114,7 +114,7 @@ class ParticipantController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('create-participant')){
+        if(Yii::$app->user->can('create-profile')){
 
             $officeId   = DataIdService::getOfficeId();
             $officeList = DataListService::getOffice();
@@ -147,7 +147,7 @@ class ParticipantController extends Controller
     }
 
     public function actionSelect(){
-        if(Yii::$app->user->can('create-participant')){
+        if(Yii::$app->user->can('create-profile')){
             $searchModel    = new AssetSearch();
             $dataProvider   = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->query->andWhere(['asset_type' => Asset::ASSET_TYPE_SPREADSHEET]);
@@ -169,7 +169,7 @@ class ParticipantController extends Controller
     //$id = asset id
     public function actionImport($id,$title=null)
     {
-        if(Yii::$app->user->can('create-participant')){
+        if(Yii::$app->user->can('create-profile')){
             $officeId       = DataIdService::getOfficeId();
             $officeList     = DataListService::getOffice();
             $assetList      = DataListService::getAsset();
@@ -206,7 +206,8 @@ class ParticipantController extends Controller
                                 $email = $data[2];
 
                                 $participant = Participant::find()
-                                    ->where(['office_id' => $officeId, 'identity_number' => $identityNumber])
+                                    ->where(['office_id' => $officeId,
+                                        'identity_number' => $identityNumber])
                                     ->one();
 
                                 if(empty($participant)):
@@ -269,7 +270,7 @@ class ParticipantController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('update-participant')){
+        if(Yii::$app->user->can('update-profile')){
             try {
                 $model      = $this->findModel($id);
                 $officeList = DataListService::getOffice();;
@@ -302,7 +303,7 @@ class ParticipantController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('delete-participant')){
+        if(Yii::$app->user->can('delete-profile')){
             $this->findModel($id)->delete();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['index']);
@@ -353,7 +354,7 @@ class ParticipantController extends Controller
 
     public function actionReset($id, $schId=null, $title=null)
     {
-        if(Yii::$app->user->can('update-participant')){
+        if(Yii::$app->user->can('update-profile')){
             $model = Participant::findOne($id);
             $model->status = Participant::STATUS_INACTIVE;
             $model->save();

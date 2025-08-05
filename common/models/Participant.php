@@ -36,6 +36,28 @@ class Participant extends BaseParticipant
         ]);
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'user_id' => Yii::t('app', 'User'),
+            'office_id' => Yii::t('app', 'Office'),
+            'group_id' => Yii::t('app', 'Group'),
+            'user_type' => Yii::t('app', 'Type'),
+            'name' => Yii::t('app', 'Name'),
+            'identity_number' => Yii::t('app', 'Identity'),
+            'public_email' => Yii::t('app', 'Email'),
+            'gravatar_email' => Yii::t('app', 'Gravatar'),
+            'gravatar_id' => Yii::t('app', 'Gravatar ID'),
+            'location' => Yii::t('app', 'Location'),
+            'website' => Yii::t('app', 'Website'),
+            'timezone' => Yii::t('app', 'Timezone'),
+            'bio' => Yii::t('app', 'Bio'),
+            'asset_name' => Yii::t('app', 'Asset Name'),
+            'verlock' => Yii::t('app', 'Verlock'),
+            'uuid' => Yii::t('app', 'Uuid'),
+        ];
+    }
+
     public function beforeSave($insert): bool
     {
         if (!parent::beforeSave($insert)) {
@@ -91,7 +113,7 @@ class Participant extends BaseParticipant
 
     public function getUrl(): string
     {
-        return Html::a($this->title, ['participant/view', 'id' => $this->id,'title'=>$this->title]);
+        return Html::a($this->title, ['profile/view', 'id' => $this->id,'title'=>$this->title]);
     }
 
     public function getIsButtonDisabled(): string

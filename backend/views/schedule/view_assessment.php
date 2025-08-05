@@ -33,7 +33,7 @@ use yii\helpers\Html;
                 <td class="left">
                     <?php
                     $participant =
-                        Html::a($modelDetailItem->participant->title,['participant/view',
+                        Html::a($modelDetailItem->participant->title,['profile/view',
                             'id' => $modelDetailItem->participant->id,
                             'title' => $modelDetailItem->participant->title
                     ]);

@@ -18,7 +18,7 @@ class ApexChartHelper
     }
 
     /**
-     * Generates a line chart for participant scores.
+     * Generates a line chart for profile scores.
      *
      * @param array $categories
      * @param array $series
@@ -101,7 +101,7 @@ class ApexChartHelper
     }
 
     /**
-     * Generates a radar chart for participant evaluation vs average.
+     * Generates a radar chart for profile evaluation vs average.
      *
      * @param array $categories
      * @param array $series

@@ -6,7 +6,6 @@ namespace backend\controllers;
 use common\helper\MessageHelper;
 use common\models\Assessment;
 use common\models\AssessmentSearch;
-use common\models\ScheduleDetail;
 use common\service\AssessmentService;
 use common\service\DataListService;
 use Yii;
@@ -44,7 +43,7 @@ class AssessmentController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
             $scheduleList = DataListService::getSchedule();
-            $participantList  = DataListService::getParticipant();
+            $profileList  = DataListService::getProfile();
             $periodList = DataListService::getPeriod();
             $groupList = DataListService::getGroup();
             $subjectList = DataListService::getSubject();
@@ -55,7 +54,7 @@ class AssessmentController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'scheduleList' => $scheduleList,
-                'participantList' => $participantList,
+                'profileList' => $profileList,
                 'periodList' => $periodList,
                 'groupList' => $groupList,
                 'subjectList' => $subjectList,
@@ -79,7 +78,7 @@ class AssessmentController extends Controller
             $model = $this->findModel($id);
 
             $scheduleList = DataListService::getAssessment();
-            $participantList  = DataListService::getParticipant();
+            $profileList  = DataListService::getProfile();
             $groupList = DataListService::getGroup();
             $questionTypeList = Assessment::getArrayQuestionTypes();
             $examTypeList = Assessment::getArrayExamType();
@@ -97,7 +96,7 @@ class AssessmentController extends Controller
                 return $this->render('view', [
                     'model' => $model,
                     'scheduleList' => $scheduleList,
-                    'participantList' => $participantList,
+                    'profileList' => $profileList,
                     'groupList' => $groupList,
                     'questionTypeList' => $questionTypeList,
                     'examTypeList' => $examTypeList,
@@ -123,7 +122,7 @@ class AssessmentController extends Controller
 //        if (Yii::$app->user->can('create-assessment')) {
 //            $model = new Assessment;
 //            $scheduleList = DataListService::getAssessment();
-//            $participantList  = DataListService::getParticipant();
+//            $profileList  = DataListService::getParticipant();
 //            $questionTypeList = Assessment::getArrayQuestionTypes();
 //
 //            try {
@@ -133,7 +132,7 @@ class AssessmentController extends Controller
 //                    return $this->render('create', [
 //                        'model' => $model,
 //                        'scheduleList' => $scheduleList,
-//                        'participantList' => $participantList,
+//                        'profileList' => $profileList,
 //                        'questionTypeList' => $questionTypeList
 //                    ]);
 //                }
@@ -158,7 +157,7 @@ class AssessmentController extends Controller
             try {
                 $model = $this->findModel($id);
                 $scheduleList = DataListService::getAssessment();
-                $participantList  = DataListService::getParticipant();
+                $profileList  = DataListService::getProfile();
                 $questionTypeList = Assessment::getArrayQuestionTypes();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -167,7 +166,7 @@ class AssessmentController extends Controller
                     return $this->render('update', [
                         'model' => $model,
                         'scheduleList' => $scheduleList,
-                        'participantList' => $participantList,
+                        'profileList' => $profileList,
                         'questionTypeList' => $questionTypeList
                     ]);
                 }

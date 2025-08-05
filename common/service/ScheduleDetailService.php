@@ -18,7 +18,7 @@ class ScheduleDetailService
     const EXECUTE_ASSESSMENT_FALSE = FALSE;
 
     /**
-     * Generate the asset button based on participant status and time.
+     * Generate the asset button based on profile status and time.
      * Executes additional scripts if needed.
      *      (This script will handle if user click  more than one time)
      * @param ScheduleDetail $scheduleDetail
@@ -149,7 +149,7 @@ class ScheduleDetailService
     }
 
     /**
-     * Check if participant has submitted assessment
+     * Check if profile has submitted assessment
      * @param ?Assessment $assessment
      * @param int $participantId
      * @return bool

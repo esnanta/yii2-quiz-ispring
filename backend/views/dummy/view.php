@@ -68,12 +68,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr>
                 <th scope="row">4</th>
-                <td><?=Html::a(Yii::t('app', 'Participant'), ['participant/index']);?></td>
+                <td><?=Html::a(Yii::t('app', 'Participant'), ['profile/index']);?></td>
                 <td><?=$participants;?></td>
                 <td>
-                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-participant']);?>
+                    <?= Html::a('<i class="fas fa-plus-circle"></i>', ['create-profile']);?>
                     &nbsp;
-                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-participant']);?>
+                    <?= Html::a('<i class="fas fa-trash"></i>', ['delete-profile']);?>
                 </td>
             </tr>
             <tr>

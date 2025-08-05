@@ -4,7 +4,6 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Fuel $model
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
@@ -23,10 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body text-default">
         <div class="fuel-create">
 
-            <?= $this->render('_form_user_reguler', [
+            <?= $this->render('_form_user_regular', [
                 'model' => $model,
-                'employmentList' => $employmentList,
                 'userTypeList' => $userTypeList,
+                'profileList' => $profileList,
             ]) 
             ?>
         </div>

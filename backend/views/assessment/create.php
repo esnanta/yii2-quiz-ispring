@@ -5,6 +5,9 @@ use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  * @var common\models\Assessment $model
+ * @var common\models\Schedule $scheduleList
+ * @var common\models\Profile $profileList
+ * @var common\models\Assessment $questionTypeList
  */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
@@ -26,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $this->render('_form', [
                 'model' => $model,
                 'scheduleList' => $scheduleList,
-                'participantList' => $participantList,
+                'profileList' => $profileList,
                 'questionTypeList' => $questionTypeList
             ]) 
             ?>

@@ -20,14 +20,14 @@ use yii\widgets\ActiveForm;
  * @var dektrium\user\Module $module
  */
 
-$this->title = Yii::t('user', 'Sign in as Admin');
+$this->title = Yii::t('user', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
 <div class="card">
-    <div class="card-header text-white bg-danger">
+    <div class="card-header text-white bg-primary">
         <?=Yii::t('app', 'Authentication')?>
     </div>
     <div class="card-body">

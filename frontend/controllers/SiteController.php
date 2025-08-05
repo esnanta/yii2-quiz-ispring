@@ -103,10 +103,14 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']);
+            return $this->redirect(['user/login']);
         } else {
-
-            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
+            // Check if current user is admin, redirect to admin site index if true
+            if (Yii::$app->user->identity->isAdmin ?? false) {
+                return $this->redirect(['/admin/site/index']);
+            }
+            
+            $officeId = CacheService::getInstance()->getOfficeIdByProfile();
             $listUpcomingSchedule = $this->scheduleService->getScheduleUpcoming($officeId);
             $listRecentSchedule = $this->scheduleService->getScheduleRecent($officeId);
 
@@ -121,45 +125,6 @@ class SiteController extends Controller
     {
         $officeId = CacheService::getInstance()->getOfficeId();
         return $this->scheduleService->getScheduleAsJson($officeId);
-    }
-
-    /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
-    public function actionLogin()
-    {
-        $model = new LoginParticipantForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('index');
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
-    public function actionLogout()
-    {
-        try {
-            $participant = Participant::findone(['username'=>Yii::$app->user->identity->username]);
-            $participant->status = Participant::STATUS_INACTIVE;
-            $participant->save();
-            Yii::$app->user->logout();
-            return $this->goHome();
-        } catch (\Exception $e)
-        {
-            error_log($e);
-            echo "Error: " . $e->getMessage();
-            return $this->goHome();
-        }
     }
 
     /**

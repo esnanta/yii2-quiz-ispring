@@ -11,6 +11,7 @@ use common\models\Office;
 use common\models\Page;
 use common\models\Participant;
 use common\models\Period;
+use common\models\Profile;
 use common\models\Room;
 use common\models\Schedule;
 use common\models\Staff;
@@ -61,7 +62,15 @@ class DataListService
             ->asArray()->all(), 'id', 'title');
     }
 
-    public static function getDistinctPeriodsByParticipant($participantId): array
+    public static function getProfile(): array
+    {
+        return ArrayHelper::map(Profile::find()
+            ->where(['office_id' => DataIdService::getOfficeId()])
+            ->orderBy('user_id ASC')
+            ->asArray()->all(), 'id', 'name');
+    }
+
+    public static function getDistinctPeriodsByProfile($userId): array
     {
         return ArrayHelper::map(
             Assessment::find()
@@ -70,7 +79,7 @@ class DataListService
                 ->joinWith('period')
                 ->where([
                     'tx_assessment.office_id' => DataIdService::getOfficeId(),
-                    'tx_assessment.participant_id' => $participantId
+                    'tx_assessment.user_id' => $userId
                 ])
                 ->orderBy('tx_period.id DESC')
                 ->asArray()
@@ -80,16 +89,16 @@ class DataListService
         );
     }
 
-    public static function getDistinctGroupsByParticipant($participantId): array
+    public static function getDistinctGroupsByProfile($userId): array
     {
         return ArrayHelper::map(
             Assessment::find()
-                ->select(['tx_group.id', 'tx_group.title'])
+                ->select(['tx_group.id', 'tx_group.title','tx_group.sequence'])
                 ->distinct()
                 ->joinWith('group')
                 ->where([
                     'tx_assessment.office_id' => DataIdService::getOfficeId(),
-                    'tx_assessment.participant_id' => $participantId
+                    'tx_assessment.user_id' => $userId
                 ])
                 ->orderBy('tx_group.sequence ASC')
                 ->asArray()
@@ -99,16 +108,16 @@ class DataListService
         );
     }
 
-    public static function getDistinctSubjectsByParticipant($participantId): array
+    public static function getDistinctSubjectsByProfile($profileId): array
     {
         return ArrayHelper::map(
             Assessment::find()
-                ->select(['tx_subject.id', 'tx_subject.title'])
+                ->select(['tx_subject.id', 'tx_subject.title','tx_subject.sequence'])
                 ->distinct()
                 ->joinWith('subject')
                 ->where([
                     'tx_assessment.office_id' => DataIdService::getOfficeId(),
-                    'tx_assessment.participant_id' => $participantId
+                    'tx_assessment.user_id' => $profileId
                 ])
                 ->orderBy('tx_subject.sequence ASC')
                 ->asArray()
@@ -131,13 +140,6 @@ class DataListService
     public static function getAssessment(): array
     {
         return ArrayHelper::map(Assessment::find()
-            ->where(['office_id' => DataIdService::getOfficeId()])
-            ->asArray()->all(), 'id', 'title');
-    }
-
-    public static function getParticipant(): array
-    {
-        return ArrayHelper::map(Participant::find()
             ->where(['office_id' => DataIdService::getOfficeId()])
             ->asArray()->all(), 'id', 'title');
     }

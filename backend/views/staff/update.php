@@ -15,18 +15,19 @@ $this->params['breadcrumbs'][] = 'Update';
 
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?=Yii::t('app', 'Please fill out the form below');?>
+        <?= Yii::t('app', 'Please fill out the form below'); ?>
         <span class="float-right">
             <?= Html::encode($this->title) ?>
         </span>
     </div>
     <div class="card-body text-default">
-        <div class="room-create">
-            <?= $this->render('_form_avatar', [
-                'model' => $model,
-                'officeList'=>$officeList
-            ])
-            ?>
-        </div>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'officeList' => $officeList,
+            'employmentList' => $employmentList,
+            'genderList' => $genderList,
+            'activeStatusList' => $activeStatusList
+        ])
+        ?>
     </div>
 </div>

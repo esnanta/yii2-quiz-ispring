@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Assessment;
-use common\models\Participant;
+use common\models\Profile;
 use common\models\Period;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
@@ -47,12 +47,12 @@ class AssessmentController extends Controller
     public function actionIndex($user=null)
     {
         try {
-            $participant = Participant::findone(['username' => Yii::$app->user->identity->username]);
+            $profile = Profile::findone(['user_id' => Yii::$app->user->identity->id]);
             $searchModel = new AssessmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-            $dataProvider->query->andWhere(['participant_id' => $participant->id]);
+            $dataProvider->query->andWhere(['user_id' => $profile->user_id]);
 
-            $officeId = $participant->office_id;
+            $officeId = $profile->office_id;
 
             $scheduleList = ArrayHelper::map(Schedule::find()
                 ->where(['office_id' => $officeId])
@@ -69,16 +69,16 @@ class AssessmentController extends Controller
             $questionTypeList = Assessment::getArrayQuestionTypes();
 
             //ONLY DISPLAY 1 PARTICIPANT
-            $participantList = ArrayHelper::map(Participant::find()
-                ->where(['office_id' => $participant->office_id])
-                ->andWhere(['id' => $participant->id])
-                ->asArray()->all(), 'id', 'title');
+            $profileList = ArrayHelper::map(Profile::find()
+                ->where(['office_id' => $profile->office_id])
+                ->andWhere(['user_id' => $profile->user_id])
+                ->asArray()->all(), 'user_id', 'name');
 
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'scheduleList' => $scheduleList,
-                'participantList' => $participantList,
+                'participantList' => $profileList,
                 'periodList' => $periodList,
                 'subjectList' => $subjectList,
                 'questionTypeList' => $questionTypeList
@@ -97,7 +97,7 @@ class AssessmentController extends Controller
     public function actionView($id)
     {
         try {
-            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
+            $officeId = CacheService::getInstance()->getOfficeIdByProfile();
             $model = Assessment::find()
                 ->where(['id'=>$id,'office_id' => $officeId])
                 ->one();
@@ -109,17 +109,17 @@ class AssessmentController extends Controller
             $examTypeList       = Assessment::getArrayExamType();
 
             $assessmentData = AssessmentService::getChartByPeriod(
-                $model->office_id, $model->participant_id,
+                $model->office_id, $model->user_id,
                 $model->period_id, $model->subject_id);
 
             $categories = $assessmentData['categories'];
             $series = $assessmentData['series'];
 
             //ONLY DISPLAY 1 PARTICIPANT
-            $participantList = ArrayHelper::map(Participant::find()
+            $profileList = ArrayHelper::map(Profile::find()
                 ->where(['office_id' => $model->office_id])
-                ->andWhere(['id' => $model->participant_id])
-                ->asArray()->all(), 'id', 'title');
+                ->andWhere(['user_id' => $model->user_id])
+                ->asArray()->all(), 'user_id', 'name');
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -130,7 +130,7 @@ class AssessmentController extends Controller
                     'periodList' => $periodList,
                     'subjectList' => $subjectList,
                     'questionTypeList' => $questionTypeList,
-                    'participantList' => $participantList,
+                    'participantList' => $profileList,
                     'examTypeList' => $examTypeList,
                     'categories' => $categories,
                     'series' => $series,
@@ -178,17 +178,18 @@ class AssessmentController extends Controller
 
             $scheduleDetailId       = $_POST['SCD']; //SCHEDULE DETAIL ID
 
-            $officeId = CacheService::getInstance()->getOfficeIdByParticipant();
+            $officeId = CacheService::getInstance()->getOfficeIdByProfile();
             $scheduleDetail = ScheduleDetail::find()
                 ->where(['id'=>$scheduleDetailId,'office_id' => $officeId])
                 ->one();
 
-            $participant = Participant::find()
-                ->select('id')
-                ->where(['username' => $username,'office_id' => $officeId])
+            $profile = Profile::find()
+                ->select('user_id')
+                ->where(['tx_user.username' => $username,'office_id' => $officeId])
+                ->joinWith(['user'])
                 ->one();
 
-            $participantId      = $participant->id;
+            $profileId          = $profile->user_id;
             $scheduleId         = $scheduleDetail->schedule->id;
             $periodId           = $scheduleDetail->schedule->period_id;
             $groupId            = $scheduleDetail->schedule->group_id;
@@ -199,7 +200,7 @@ class AssessmentController extends Controller
             $assessment = Assessment::find()
                 ->where(['office_id' => $officeId,
                     'schedule_detail_id'  => $scheduleDetailId,
-                    'participant_id' => $participantId
+                    'user_id' => $profileId
                 ])->one();
 
             if(empty($assessment)):
@@ -211,7 +212,7 @@ class AssessmentController extends Controller
             $assessment->group_id                 = $groupId;
             $assessment->schedule_id              = $scheduleId;
             $assessment->schedule_detail_id       = $scheduleDetailId;
-            $assessment->participant_id           = $participantId;
+            $assessment->user_id                  = $profileId;
             $assessment->subject_id               = $subjectId;
             $assessment->question_type            = $questionType;
             $assessment->exam_type                = $examType;

@@ -98,13 +98,15 @@ class SiteController extends Controller
             $office     = Office::find()->where(['id' => $officeId])->one();
             $staff      = Staff::find()->where(['id' => $staffId])->one();
 
-            $countOfflineParticipant = Participant::find('id')
-                ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_INACTIVE])
-                ->count();
+            $countOfflineParticipant = 0;
+//                Participant::find('id')
+//                ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_INACTIVE])
+//                ->count();
 
-            $countOnlineParticipant = Participant::find('id')
-                ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_ACTIVE])
-                ->count();
+            $countOnlineParticipant = 0;
+//                Participant::find('id')
+//                ->where(['office_id'=>$officeId,'status'=>Participant::STATUS_ACTIVE])
+//                ->count();
 
             $dateStart = date(Yii::$app->params['datetimeSaveFormat'], strtotime('today midnight'));
             $dateEnd = date(Yii::$app->params['datetimeSaveFormat'], strtotime('today 23:59:59'));

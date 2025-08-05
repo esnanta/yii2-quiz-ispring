@@ -1,11 +1,9 @@
 <?php
 
-use kartik\depdrop\DepDrop;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
 use kartik\widgets\Select2;
-use yii\helpers\Url;
 
 /**
  * @var yii\web\View $this

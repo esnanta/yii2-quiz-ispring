@@ -62,14 +62,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'html',
             ],
             [
-                'attribute'=>'participant_id',
+                'attribute'=>'user_id',
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->participant_id!=null) ? $model->participant->getUrl():'';
+                    return ($model->user_id!=null) ? $model->profile->name:'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter' => $participantList,
+                'filter' => $profileList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],

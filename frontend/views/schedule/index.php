@@ -11,7 +11,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Schedule $listUpcomingSchedule */
-/** @var common\models\Participant $participant */
+/** @var common\models\Profile $profile */
 /** @var common\service\ScheduleDetailService $scheduleDetailService */
 /** @var frontend\models\TokenForm $tokenForm */
 
@@ -28,11 +28,11 @@ $this->title = Yii::$app->name;
                 </h6>
 
                 <div class="timeline-desc fs-3 text-dark mt-n1">
-                    <?= $participant->title; ?> <br>
-                    <?= $participant->group->title; ?> <br>
-                    <?= $participant->office->title; ?>
+                    <?= $profile->name; ?> <br>
+                    <?= $profile->group->title; ?> <br>
+                    <?= $profile->office->title; ?>
 
-                    <?= CacheService::getInstance()->getOfficeIdByParticipant(); ?>
+                    <?= CacheService::getInstance()->getOfficeIdByProfile(); ?>
                 </div>
 
             </div>

@@ -50,33 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'username',
-                'label' => Yii::t('app', 'username'),
+                'vAlign' => 'middle',
+                'width' => '180px',
+                'value' => function ($model, $key, $index, $widget) {
+                    return ($model->user_id != null) ? $model->user->username : '';
+                },
+                'filter' => true, // enable default text input
+                'filterInputOptions' => [
+                    'class' => 'form-control', // use active CSS
+                    'placeholder' => '',
+                ],
+                'format' => 'html',
             ],
-            'title',
-            //'username',
-            //'password',
-//            [
-//                'attribute'=>'status',
-//                'vAlign'=>'middle',
-//                //'width'=>'120px',
-//                'value'=>function ($model, $key, $index, $widget) {
-//                    return ($model->status!=null) ? $model->getOneStatus($model->status):'';
-//                },
-//                'filterType'=>GridView::FILTER_SELECT2,
-//                'filter'=>$statusList,
-//                'filterWidgetOptions'=>[
-//                    'pluginOptions'=>['allowClear'=>true],
-//                ],
-//                'filterInputOptions'=>['placeholder'=>''],
-//                'format'=>'html'
-//            ],
-//            [
-//                'attribute' => 'last_login_at',
-//                'label' => Yii::t('app', 'Last Login'),
-//                'value'=>function ($model, $key, $index, $widget) {
-//                    return ($model->last_login_at!=null) ? date('h:i:s a', strtotime($model->last_login_at)):'';
-//                },
-//            ],
+            'name',
             [
                 'class' => 'common\widgets\ActionColumn',
                 'header'=> 'Chart',
@@ -85,7 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'chart' => function ($url, $model) {
                         return Html::a('<i class="fas fa-chart-line"></i>',
-                            Yii::$app->urlManager->createUrl(['chart/participant-chart', 'id' => $model->id, 'title'=>$model->title,]),
+                            Yii::$app->urlManager->createUrl(['chart/profile-chart',
+                                'id' => $model->user_id,
+                                'title' => $model->name]),
                             [
                                 'title' => Yii::t('yii', 'Participant Chart'),
                                 'class'=>'btn btn-sm btn-info',

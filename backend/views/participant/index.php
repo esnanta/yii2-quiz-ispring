@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'reset' => function ($url, $model) {
                         return Html::a(IconHelper::getReset(),
-                            Yii::$app->urlManager->createUrl(['participant/reset', 'id' => $model->id, 'schId','title'=>$model->title]),
+                            Yii::$app->urlManager->createUrl(['profile/reset', 'id' => $model->id, 'schId','title'=>$model->title]),
                             [
                                 'title' => Yii::t('yii', 'Reset'),
                                 'class'=>'btn btn-sm btn-danger '.$model->getIsButtonDisabled(),
@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'update' => function ($url, $model) {
                         return Html::a(IconHelper::getUpdate(),
-                            Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'edit' => 't']),
+                            Yii::$app->urlManager->createUrl(['profile/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'view' => function ($url, $model) {
                         return Html::a(IconHelper::getView(),
-                            Yii::$app->urlManager->createUrl(['participant/view', 'id' => $model->id, 'title'=>$model->title,]),
+                            Yii::$app->urlManager->createUrl(['profile/view', 'id' => $model->id, 'title'=>$model->title,]),
                             [
                                 'title' => Yii::t('yii', 'View'),
                                 'class'=>'btn btn-sm btn-info',

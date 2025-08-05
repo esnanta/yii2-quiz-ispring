@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'chart' => function ($url, $model) {
                         return Html::a(IconHelper::getChartLine(),
-                            Yii::$app->urlManager->createUrl(['chart/participant-chart', 'id' => $model->id, 'title'=>$model->title,]),
+                            Yii::$app->urlManager->createUrl(['chart/profile-chart', 'id' => $model->id, 'title'=>$model->title,]),
                             [
                                 'title' => Yii::t('yii', 'Participant Chart'),
                                 'class'=>'btn btn-sm btn-info',

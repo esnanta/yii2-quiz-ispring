@@ -3,7 +3,6 @@ namespace common\models;
 
 use Yii;
 use dektrium\user\models\User as BaseUser;
-use dektrium\user\models\Profile;
 
 /**
  * User model

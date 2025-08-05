@@ -4,9 +4,9 @@ namespace backend\controllers;
 
 use common\helper\MessageHelper;
 use common\models\Assessment;
-use common\models\charts\ChartParticipant;
-use common\models\Participant;
-use common\models\ParticipantSearch;
+use common\models\charts\ChartProfile;
+use common\models\Profile;
+use common\models\ProfileSearch;
 use common\service\AssessmentService;
 use common\service\DataIdService;
 use common\service\DataListService;
@@ -35,25 +35,23 @@ class ChartController extends Controller
     }
 
     /**
-     * Lists all Participant models.
+     * Lists all Profile models.
      * @return mixed
      */
-    public function actionParticipant()
+    public function actionProfile()
     {
-        if(Yii::$app->user->can('index-participant')){
-            $searchModel = new ParticipantSearch;
+        if(Yii::$app->user->can('index-profile')){
+            $searchModel = new ProfileSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
             $officeList = DataListService::getOffice();
             $groupList  = DataListService::getGroup();
-            $statusList = Participant::getArrayStatus();
 
-            return $this->render('participant/index', [
+            return $this->render('profile/index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
                 'groupList' => $groupList,
-                'statusList' => $statusList
             ]);
         }
         else{
@@ -63,13 +61,13 @@ class ChartController extends Controller
     }
 
     /*
-     * $id is participant id
+     * $id is profile id
      */
-    public function actionParticipantChart($id,$title=null){
-        if(Yii::$app->user->can('view-participant')){
+    public function actionProfileChart($id,$title=null){
+        if(Yii::$app->user->can('view-profile')){
 
-            $model = new ChartParticipant();
-            $participant = Participant::findOne($id);
+            $model = new ChartProfile();
+            $profile = Profile::findOne(['user_id' =>$id]);
             $officeId = DataIdService::getOfficeId();
 
             $periodList = DataListService::getPeriod();
@@ -78,14 +76,14 @@ class ChartController extends Controller
 
             if ($model->load(Yii::$app->request->post())) {
                 $assessmentData = AssessmentService::getChartByPeriod(
-                    $officeId, $participant->id, $model->period_id, $model->subject_id);
+                    $officeId, $profile->user_id, $model->period_id, $model->subject_id);
 
                 $categories = $assessmentData['categories'];
                 $series = $assessmentData['series'];
 
-                return $this->render('participant/chart', [
+                return $this->render('profile/chart', [
                     'model' => $model,
-                    'participant' => $participant,
+                    'profile' => $profile,
                     'periodList' => $periodList,
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
@@ -93,9 +91,9 @@ class ChartController extends Controller
                     'categories'=>$categories
                 ]);
             } else {
-                return $this->render('participant/chart', [
+                return $this->render('profile/chart', [
                     'model' => $model,
-                    'participant' => $participant,
+                    'profile' => $profile,
                     'periodList' => $periodList,
                     'groupList' => $groupList,
                     'subjectList' => $subjectList,
@@ -114,12 +112,12 @@ class ChartController extends Controller
      * Finds the Participant model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Participant the loaded model
+     * @return Profile the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Participant::findOne($id)) !== null) {
+        if (($model = Profile::findOne(['user_id' =>$id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -138,14 +136,14 @@ class ChartController extends Controller
                 $officeId = DataIdService::getOfficeId();
                 $list = Assessment::find()
                     ->where([
-                        'office_id' => $officeId, 'period_id' => $period_id,
-                        'participant'])
+                        'office_id' => $officeId,
+                        'period_id' => $period_id])
                     ->asArray()
                     ->all();
 
                 if ($period_id != null && count($list) > 0) {
                     foreach ($list as $i => $model) {
-                        $out[] = ['id' => $model['id'], 'name' => $model['title']];
+                        $out[] = ['id' => $model['id'], 'name' => $model['name']];
                     }
                     // Optionally, preselect a value
                     return ['output' => $out, 'selected' => null];

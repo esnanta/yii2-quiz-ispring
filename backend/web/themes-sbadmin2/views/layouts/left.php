@@ -73,21 +73,21 @@ use kartik\widgets\SideNav;
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
-                    ['label' => Yii::t('app', 'Participant'), 'url' => ['/participant/index']],
+                    ['label' => Yii::t('app', 'Profile'), 'url' => ['/profile/index']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/assessment/index']],
                 ]],
                 ['label' => Yii::t('app', 'Asset'), 'icon' => 'shopping-basket', 'items' => [
-                    ['label' => Yii::t('app', 'Index'), 'url' => ['/asset/index']],
+                    ['label' => Yii::t('app', 'List'), 'url' => ['/asset/index']],
                     ['label' => Yii::t('app', 'Category'), 'url' => ['/asset-category/index']],
-                    //['label' => Yii::t('app', 'Import'), 'url' => ['/participant/select']],
+                    //['label' => Yii::t('app', 'Import'), 'url' => ['/profile/select']],
                 ]],
                 ['label' => Yii::t('app', 'Report'), 'icon' => 'file', 'items' => [
-                    ['label' => Yii::t('app', 'Chart'), 'url' => ['/chart/participant']],
-                    ['label' => Yii::t('app', 'Card'), 'url' => ['/report/participant-card']],
+                    ['label' => Yii::t('app', 'Chart'), 'url' => ['/chart/profile']],
+                    ['label' => Yii::t('app', 'Card'), 'url' => ['/report/profile-card']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/report/assessment-score']],
                 ]],
                 ['label' => Yii::t('app', 'Download'), 'icon' => 'download', 'items' => [
-                    ['label' => Yii::t('app', 'Template'), 'url' => ['/participant/download']]
+                    ['label' => Yii::t('app', 'Template'), 'url' => ['/profile/download']]
                 ]],
                 ['label' => Yii::t('app', 'Admin'), 'icon' => 'user-secret', 'items' => [
                     ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create-owner']],

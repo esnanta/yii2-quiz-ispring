@@ -2,7 +2,7 @@
 
 /**
  * @var yii\web\View $this
- * @var common\models\reports\ExportParticipant $model
+ * @var common\models\reports\ExportProfile $model
  * @var common\models\Participant $listParticipant
  * @var common\models\Period $activePeriod
  *
@@ -13,7 +13,7 @@ use common\service\ParticipantService;
 $this->title = Yii::t('app', 'Report {modelClass}', [
     'modelClass' => 'Participant',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['participant/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Participant'), 'url' => ['profile/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <!-- Participant Card Start -->
         <?php
-        foreach($listParticipant as $i=>$participant) {
+        foreach($listParticipant as $i=>$profile) {
             ?>
             <div class="col-md-6">
                 <div class="card">
@@ -61,22 +61,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">
-                            <?= $participant->title;?>
+                            <?= $profile->name;?>
                             <span class="float-right float-end">
                                 <?=Yii::t('app', 'Group')?> :
-                                <?= $participant->group->title;?>
+                                <?= $profile->group->title;?>
                             </span>
                         </h5>
                         <p class="card-text">
                             <strong><?=Yii::t('app', 'Username')?>:</strong>
-                            <?= $participant->username;?><br>
+                            <?= $profile->user->username;?><br>
                             <strong><?=Yii::t('app', 'Password')?>:</strong>
-                            <?= $participant->password;?>
+                            <?= $profile->password;?>
                         </p>
                         <p class="card-text">
                             <?php
                             if($model->is_display_subject):
-                                ParticipantService::displaySchedule($participant->group_id, $activePeriod->id);
+                                ParticipantService::displaySchedule($profile->group_id, $activePeriod->id);
                             endif;
                             ?>
                         </p>
