@@ -6,7 +6,7 @@ use yii\db\Migration;
  * Class m240807_050002_insert_rbac_data
  * Handles inserting RBAC initial data for roles and permissions.
  */
-class m240807_050002_insert_rbac_data extends Migration
+class m250807_200102_insert_rbac_data extends Migration
 {
     /**
      * {@inheritdoc}

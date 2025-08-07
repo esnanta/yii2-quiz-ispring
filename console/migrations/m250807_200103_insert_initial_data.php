@@ -7,7 +7,7 @@ use yii\db\Migration;
  * Handles inserting initial "seed" data into the database.
  * This should be run after all table structures are created.
  */
-class m250807_121504_insert_initial_data extends Migration
+class m250807_200103_insert_initial_data extends Migration
 {
     /**
      * {@inheritdoc}
