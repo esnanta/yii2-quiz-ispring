@@ -51,7 +51,8 @@ Follow these steps to set up the project on your local environment:
     ```
    Select either `development` or `production`.
 
-3. **Install Composer Dependencies**
+3. **Install Dependencies**
+    Choose based on your environment.
     - For development:
       ```bash
       composer update
@@ -92,8 +93,11 @@ Follow these steps to set up the project on your local environment:
       ```
       http://localhost/yii2-quiz-ispring
       ```
-
-6. For full installation steps, see this [Step-by-Step Guide](https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring)
+6. **Admin**
+    - User : admin
+    - Pass : admin123
+   
+7. For full installation steps, see this [Step-by-Step Guide](https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring)
 
 ---
 
