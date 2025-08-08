@@ -1,7 +1,7 @@
 # Yii2 Quiz iSPRING
 ![Version](https://img.shields.io/github/v/tag/esnanta/yii2-quiz-ispring?label=version&color=blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![PHP](https://img.shields.io/badge/PHP->=7.4-blue)
+![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 
 ---
 This program uses [QuizResults](https://github.com/ispringsolutions/QuizResults) by ISpringSolution.
@@ -30,7 +30,7 @@ See the [Screenshots Folder](https://github.com/esnanta/yii2-quiz-ispring/tree/m
 ## ✅ Requirements
 
 - A copy of **iSpring QuizMaker** or another iSpring authoring tool (e.g., [iSpring Suite](https://www.ispringsolutions.com/))
-- [XAMPP](https://www.apachefriends.org/) 8.0.x
+- [XAMPP](https://www.apachefriends.org/) 8.x.x
 - [Composer v2.x.x](https://getcomposer.org/)
 - *(Optional)* Server-side application programming skills (PHP, SQL, XML)
 
