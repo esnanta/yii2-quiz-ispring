@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add migration">
-      <change afterPath="$PROJECT_DIR$/console/migrations/m250807_200101_create_all_tables.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="fix migration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/migrations/m240807_050003_create_other_tables.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/migrations/m250807_040101_create_user_and_rbac_tables.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/migrations/m250807_040202_insert_rbac_data.php" beforeDir="false" afterPath="$PROJECT_DIR$/console/migrations/m250807_200102_insert_rbac_data.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/migrations/m250807_121504_insert_initial_data.php" beforeDir="false" afterPath="$PROJECT_DIR$/console/migrations/m250807_200103_insert_initial_data.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -798,7 +793,8 @@
       <workItem from="1754034600210" duration="4039000" />
       <workItem from="1754386326168" duration="2075000" />
       <workItem from="1754487649288" duration="81000" />
-      <workItem from="1754540979719" duration="7913000" />
+      <workItem from="1754540979719" duration="8237000" />
+      <workItem from="1754616489093" duration="1812000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -1000,7 +996,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754546572375</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix migration">
+      <option name="closed" value="true" />
+      <created>1754549693622</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1754549693622</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1027,7 +1031,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update DummyController.php" />
     <MESSAGE value="fix getAssetButton" />
     <MESSAGE value="update index layout" />
     <MESSAGE value="update schedule" />
@@ -1052,6 +1055,7 @@
     <MESSAGE value="fix assessment" />
     <MESSAGE value="update staff &amp; room" />
     <MESSAGE value="add migration" />
-    <option name="LAST_COMMIT_MESSAGE" value="add migration" />
+    <MESSAGE value="fix migration" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix migration" />
   </component>
 </project>
