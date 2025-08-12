@@ -96,7 +96,7 @@ function getMenu($_menuName, $_classIcon): string
                     <?=
                     Html::a(
                         getMenu(Yii::t('app', 'Login'), 'fa fa-sign-in'),
-                        ['/site/login'],
+                        ['/user/login'],
                         ['class' => 'sidebar-link']
                     )
                     ?>
