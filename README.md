@@ -163,6 +163,11 @@ You must add custom variables that will be used to collect data schedule.
   ```
   Example: `http://localhost/yii2-quiz-ispring/assessment/submit`
 
+- **Quiz message**:
+  ```
+  http://{YOUR_HOST}/{YOUR_APP_NAME}/schedule/index
+  ```
+  Example: `http://localhost/yii2-quiz-ispring/schedule/index`
 ---
 
 ## 🤝 Contribution Guidelines
