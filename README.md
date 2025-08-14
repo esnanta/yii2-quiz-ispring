@@ -151,7 +151,7 @@ You must add custom variables that will be used to collect data schedule.
 | Email      | Don't Ask | Text       | Email      |                |
 | Schedule   | Don't Ask | Text       | SCD        | Add manually   |
 
-- **Finish Action URL**:
+- **Finish Action URL (Quiz message)**:
   ```
   http://{YOUR_HOST}/{YOUR_APP_NAME}/assessment/index
   ```
@@ -162,12 +162,6 @@ You must add custom variables that will be used to collect data schedule.
   http://{YOUR_HOST}/{YOUR_APP_NAME}/assessment/submit
   ```
   Example: `http://localhost/yii2-quiz-ispring/assessment/submit`
-
-- **Quiz message**:
-  ```
-  http://{YOUR_HOST}/{YOUR_APP_NAME}/schedule/index
-  ```
-  Example: `http://localhost/yii2-quiz-ispring/schedule/index`
 ---
 
 ## 🤝 Contribution Guidelines
