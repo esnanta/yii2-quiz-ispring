@@ -7,7 +7,6 @@ use common\models\ScheduleDetail;
 use common\models\ScheduleDetailSearch;
 use common\service\DataIdService;
 use common\service\DataListService;
-use common\service\ScheduleDetailService;
 use Yii;
 use yii\base\Exception;
 use yii\db\StaleObjectException;

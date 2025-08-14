@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use common\helper\DateHelper;
 use common\helper\MessageHelper;
-use common\models\Participant;
+use common\models\Profile;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
 use common\models\ScheduleSearch;
@@ -106,7 +106,7 @@ class ScheduleController extends Controller
             'allModels' => $model->assessments,
         ]);
 
-        $participantList = Participant::find()
+        $profileList = Profile::find()
             ->where(['office_id'=>$model->office_id, 'group_id'=>$model->group_id])
             ->all();
 
@@ -119,7 +119,7 @@ class ScheduleController extends Controller
             'model' => $model,
             'providerScheduleDetail' => $providerScheduleDetail,
             'providerAssessment' => $providerAssessment,
-            'participantList' => $participantList,
+            'participantList' => $profileList,
             'countdownTime' => $countdownTime,
             'interval' => $interval,
             'labelAlertTimer'=>$labelAlertTimer,

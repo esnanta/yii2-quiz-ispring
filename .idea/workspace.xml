@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add toggle button">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/PeriodController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PeriodController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/period/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleDetailController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -803,7 +803,7 @@
       <workItem from="1755139320411" duration="234000" />
       <workItem from="1755139584586" duration="1971000" />
       <workItem from="1755159481201" duration="1308000" />
-      <workItem from="1755160814599" duration="1357000" />
+      <workItem from="1755160814599" duration="2736000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -1077,7 +1077,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755160757369</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="add toggle button">
+      <option name="closed" value="true" />
+      <created>1755162465226</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1755162465226</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1104,7 +1112,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="remove unnecessary script" />
     <MESSAGE value="refactoring date&#10;refactoring handleTokenAndCountdown" />
     <MESSAGE value="fix ReportController.php" />
     <MESSAGE value="update ParticipantImport" />
@@ -1129,7 +1136,8 @@
     <MESSAGE value="update README.md" />
     <MESSAGE value="if record is being set to active, deactivate all other records in the same office" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="add toggle button" />
+    <option name="LAST_COMMIT_MESSAGE" value="add toggle button" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
