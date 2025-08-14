@@ -62,9 +62,8 @@ Follow these steps to set up the project on your local environment:
       composer update --no-dev
       ```
 
-4. **Create Database**
-
-    - Configure your database connection in:
+4. **Database Configuration**
+    - Configure your database connection according to your database credentials
       ```
       common/config/main.php
       ```
@@ -72,7 +71,8 @@ Follow these steps to set up the project on your local environment:
       ```
       common/config/main-local.php
       ```
-      according to your database credentials.
+      
+5. **Create Database**
     - Create a MySQL database
       ```bash
          php yii db/create
@@ -82,7 +82,7 @@ Follow these steps to set up the project on your local environment:
            php yii migrate
         ```
 
-5. **Run the Application**
+6. **Run the Application**
     - For the backend:
       Open in browser:
       ```
@@ -93,11 +93,11 @@ Follow these steps to set up the project on your local environment:
       ```
       http://localhost/yii2-quiz-ispring
       ```
-6. **Admin**
+7. **Admin**
     - User : admin
     - Pass : admin123
    
-7. For full installation steps, see this [Step-by-Step Guide](https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring)
+8. For full installation steps, see this [Step-by-Step Guide](https://daraspace.com/article/5?title=Step-by-Step+Guide%3A+Installing+Yii2+Quiz+iSpring)
 
 ---
 
