@@ -1,17 +1,15 @@
 <?php
 
-use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\User;
 use kartik\detail\DetailView;
 use kartik\widgets\Select2;
-use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
  * @var common\models\Group $model
  * @var common\models\Office $officeList
- * @var common\models\Participant $listParticipant
+ * @var common\models\Profile $listProfile
  */
 
 $this->title = $model->title;
@@ -29,7 +27,7 @@ $create = LabelHelper::getCreateButton('create');
         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#participant" role="tab"
            aria-controls="profile" aria-selected="false">
             <?= Yii::t('app', 'Participant'); ?>
-            <span class="badge badge-primary"><?=count($listParticipant);?></span>
+            <span class="badge badge-primary"><?=count($listProfile);?></span>
         </a>
     </li>
 </ul>
@@ -110,9 +108,9 @@ $create = LabelHelper::getCreateButton('create');
         ]) ?>
     </div>
     <div class="tab-pane fade" id="participant" role="tabpanel" aria-labelledby="profile-tab">
-        <?= $this->render('view_participant',[
+        <?= $this->render('view_profile',[
                 'model'=>$model,
-                'listParticipant' => $listParticipant
+                'listProfile' => $listProfile
         ]);?>
     </div>
 </div>

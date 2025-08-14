@@ -73,7 +73,7 @@ class LabelHelper {
     {
         return Html::a('<i class="fas fa-plus"></i>',
             [$route],
-            ['class' => 'button float-right','style'=>'color:white;padding:0 5px']);
+            ['class' => 'button float-right','style'=>'color:black;padding:0 5px']);
     }
 
     public static function getUpdateButton($route='create'): string
@@ -85,6 +85,6 @@ class LabelHelper {
 
     public static function getDetailViewType(): string
     {
-        return DetailView::TYPE_DARK;
+        return DetailView::TYPE_DEFAULT;
     }
 }

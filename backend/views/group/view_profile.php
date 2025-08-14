@@ -7,14 +7,14 @@ use yii\helpers\Html;
  * @var yii\web\View $this
  * @var common\models\Group $model
  * @var common\models\Office $officeList
- * @var common\models\Participant $listParticipant
+ * @var common\models\Profile $listProfile
  */
 
 ?>
 
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?=Yii::t('app', 'Participants');?>
+        <?=Yii::t('app', 'Profiles');?>
         <span class="float-right float-end">
                     <?= Html::a(IconHelper::getUpdate(),
                         ['update-profile', 'id'=>$model->id, 'title'=>$model->title],
@@ -27,17 +27,15 @@ use yii\helpers\Html;
             <tr>
                 <th scope="col">#</th>
                 <th scope="col"><?=Yii::t('app', 'Title');?></th>
-                <th scope="col"><?=Yii::t('app', 'Identity Number');?></th>
                 <th scope="col"><?=Yii::t('app', 'Username');?></th>
                 <th scope="col"><?=Yii::t('app', 'Group');?></th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($listParticipant as $i=>$participant) { ?>
+            <?php foreach ($listProfile as $i=>$participant) { ?>
                 <tr>
                     <th scope="row"><?=($i+1)?></th>
                     <td><?= $participant->title ?></td>
-                    <td><?= $participant->identity_number ;?></td>
                     <td><?= $participant->username ;?></td>
                     <td><?= $participant->group->title ;?></td>
                 </tr>

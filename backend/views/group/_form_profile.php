@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var array $listParticipants - The list of participants
+ * @var array $listProfiles - The list of profiles
  * @var array $officeList - The list of offices for dropdown
  * @var array $groupList - The list of groups for dropdown
  */
@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 <?php
 
 $dataProvider = new ArrayDataProvider([
-    'allModels' => $listParticipants,
+    'allModels' => $listProfiles,
     'pagination' => [
         'pageSize' => -1 // Disable pagination
     ]
@@ -28,7 +28,7 @@ $dataProvider = new ArrayDataProvider([
 
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
-    'formName' => 'Participant',
+    'formName' => 'Profile',
     'checkboxColumn' => false,
     'actionColumn' => false,
     'attributeDefaults' => [
@@ -44,15 +44,6 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_TEXT,
             'options' => [
                 'placeholder' => 'Enter profile title',
-                'maxlength' => 100,
-                'disabled' => true // Disable the field
-            ],
-        ],
-        'identity_number' => [
-            'label' => Yii::t('app', 'Identity Number'),
-            'type' => TabularForm::INPUT_TEXT,
-            'options' => [
-                'placeholder' => 'Enter identity number',
                 'maxlength' => 100,
                 'disabled' => true // Disable the field
             ],
@@ -80,10 +71,10 @@ echo TabularForm::widget([
             'type' => 'raw',
             'label' => '',
             'value' => function ($model, $key) {
-                return Html::hiddenInput("Participant[$key][id]", $model['id']) .
+                return Html::hiddenInput("Profile[$key][id]", $model['id']) .
                     Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', [
                         'title' => Yii::t('app', 'Delete'),
-                        'onClick' => "delRowParticipant($key); return false;",
+                        'onClick' => "delRowProfile($key); return false;",
                         'id' => 'profile-del-btn'
                     ]);
             },

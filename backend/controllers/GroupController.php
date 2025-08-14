@@ -6,6 +6,7 @@ use common\helper\MessageHelper;
 use common\models\Group;
 use common\models\GroupSearch;
 use common\models\Participant;
+use common\models\Profile;
 use common\service\DataIdService;
 use common\service\DataListService;
 use Yii;
@@ -68,7 +69,7 @@ class GroupController extends Controller
         if(Yii::$app->user->can('view-group')){
             $model = $this->findModel($id);
             $officeList = DataListService::getOffice();
-            $listParticipant = Participant::find()
+            $listProfile = Profile::find()
                 ->where(['office_id'=>$model->office_id, 'group_id'=>$id])
                 ->all();
 
@@ -79,7 +80,7 @@ class GroupController extends Controller
                 return $this->render('view', [
                     'model' => $model,
                     'officeList'=>$officeList,
-                    'listParticipant' => $listParticipant
+                    'listProfile' => $listProfile
                 ]);
             }
         }
@@ -93,7 +94,7 @@ class GroupController extends Controller
      * @throws Exception
      * @throws NotFoundHttpException
      */
-    public function actionUpdateParticipant($id): Response|string
+    public function actionUpdateProfile($id): Response|string
     {
         if(Yii::$app->user->can('update-group')){
             // Find the group model
@@ -102,23 +103,23 @@ class GroupController extends Controller
             $groupList = DataListService::getGroup();
 
             // Find all participants in this group
-            $participants = Participant::find()
+            $profiles = Profile::find()
                 ->where(['group_id' => $id, 'office_id' => $group->office_id])
                 ->all();
 
             // If the form is submitted
-            if (Yii::$app->request->post('Participant')) {
-                $postData = Yii::$app->request->post('Participant');
+            if (Yii::$app->request->post('Profile')) {
+                $postData = Yii::$app->request->post('Profile');
                 $isValid = true;
 
                 // Loop through each posted profile data
-                foreach ($postData as $key => $participantData) {
-                    $participant = Participant::findOne($participantData['id']);
+                foreach ($postData as $key => $profileData) {
+                    $participant = Participant::findOne($profileData['id']);
 
                     // If the profile exists
                     if ($participant) {
                         // Load the posted data into the model
-                        $participant->load(['Participant' => $participantData]);
+                        $participant->load(['Participant' => $profileData]);
 
                         // Validate and save the profile
                         if (!$participant->validate() || !$participant->save()) {
@@ -137,16 +138,16 @@ class GroupController extends Controller
             }
 
             // Prepare data provider for TabularForm
-            $listParticipants = [];
-            foreach ($participants as $participant) {
-                $listParticipants[] = $participant->toArray();
+            $listProfiles = [];
+            foreach ($profiles as $profile) {
+                $listProfiles[] = $profile->toArray();
             }
 
-            return $this->render('_form_participant', [
+            return $this->render('_form_profile', [
                 'group' => $group,
                 'officeList' => $officeList,
                 'groupList' => $groupList,
-                'listParticipants' => $listParticipants,
+                'listProfiles' => $listProfiles,
             ]);
         }
         else{

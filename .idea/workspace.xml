@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="fix login menu">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update README.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/GroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/GroupController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/_form_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/_form_profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/view_participant.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view_profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/helper/LabelHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/LabelHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Period.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Period.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -800,7 +805,8 @@
       <workItem from="1754989665535" duration="473000" />
       <workItem from="1754990153124" duration="4662000" />
       <workItem from="1755139320411" duration="234000" />
-      <workItem from="1755139584586" duration="898000" />
+      <workItem from="1755139584586" duration="1971000" />
+      <workItem from="1755159481201" duration="1109000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -1050,7 +1056,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754996442261</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="update README.md">
+      <option name="closed" value="true" />
+      <created>1755140754921</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1755140754921</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1077,7 +1091,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="refactoring ScheduleController.php&#10;add ScheduleService.php" />
     <MESSAGE value="update ScheduleDetailController.php" />
     <MESSAGE value="remove unnecessary script" />
     <MESSAGE value="refactoring date&#10;refactoring handleTokenAndCountdown" />
@@ -1102,7 +1115,8 @@
     <MESSAGE value="update readme" />
     <MESSAGE value="update" />
     <MESSAGE value="fix login menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix login menu" />
+    <MESSAGE value="update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
