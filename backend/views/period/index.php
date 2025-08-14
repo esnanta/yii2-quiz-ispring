@@ -48,7 +48,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->is_active!=null) ? $model->getOneIsActive($model->is_active):'';
+                    $isActive = $model->is_active == \common\models\Period::IS_ACTIVE_YES;
+                    $buttonClass = $isActive ? 'btn-success' : 'btn-secondary';
+                    $buttonText = $isActive ? 'Active' : 'Inactive';
+                    $icon = $isActive ? 'fas fa-toggle-on' : 'fas fa-toggle-off';
+                    
+                    return Html::a(
+                        '<i class="' . $icon . '"></i> ' . $buttonText,
+                        ['toggle', 'id' => $model->id],
+                        [
+                            'class' => 'btn btn-sm ' . $buttonClass,
+                            'data-method' => 'post',
+                            'data-confirm' => 'Are you sure you want to change the status?',
+                            'title' => 'Click to toggle status'
+                        ]
+                    );
                 },
                 'filterType' => GridView::FILTER_SELECT2,
                 'filter' => $isActiveList,

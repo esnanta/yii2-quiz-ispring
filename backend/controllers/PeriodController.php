@@ -27,6 +27,7 @@ class PeriodController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'toggle' => ['post'],
                 ],
             ],
         ];
@@ -163,6 +164,35 @@ class PeriodController extends Controller
             return $this->redirect(['index']);
         } else {
             MessageHelper::getFlashLoginInfo();
+            throw new ForbiddenHttpException;
+        }
+    }
+
+    /**
+     * Toggles the is_active status of an existing Period model.
+     * If toggle is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionToggle($id)
+    {
+        if (Yii::$app->user->can('update-period')) {
+            $model = $this->findModel($id);
+            
+            // Toggle the is_active value
+            $model->is_active = ($model->is_active == Period::IS_ACTIVE_YES) 
+                ? Period::IS_ACTIVE_NO 
+                : Period::IS_ACTIVE_YES;
+            
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Status updated successfully.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to update status.');
+            }
+
+            return $this->redirect(['index']);
+        } else {
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
     }
