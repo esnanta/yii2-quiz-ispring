@@ -64,4 +64,28 @@ class Period extends BasePeriod
         else
             return '-';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->is_active == self::IS_ACTIVE_YES && $this->office_id) {
+            // Update all other records in the same office to inactive
+            self::updateAll(
+                ['is_active' => self::IS_ACTIVE_NO],
+                [
+                    'and',
+                    ['office_id' => $this->office_id],
+                    ['!=', 'id', $this->id ?: 0] // Exclude current record (handle new records with id = 0)
+                ]
+            );
+        }
+
+        return true;
+    }
 }
