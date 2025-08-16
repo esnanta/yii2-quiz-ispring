@@ -71,16 +71,15 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                 ]],
+                    ['label' => Yii::t('app', 'Asset'), 'icon' => 'shopping-basket', 'items' => [
+                            ['label' => Yii::t('app', 'Category'), 'url' => ['/asset-category/index']],
+                            ['label' => Yii::t('app', 'List'), 'url' => ['/asset/index']],
+                    ]],
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Token'), 'url' => ['/schedule-token/index']],
                     ['label' => Yii::t('app', 'Profile'), 'url' => ['/profile/index']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/assessment/index']],
-                ]],
-                ['label' => Yii::t('app', 'Asset'), 'icon' => 'shopping-basket', 'items' => [
-                    ['label' => Yii::t('app', 'List'), 'url' => ['/asset/index']],
-                    ['label' => Yii::t('app', 'Category'), 'url' => ['/asset-category/index']],
-                    //['label' => Yii::t('app', 'Import'), 'url' => ['/profile/select']],
                 ]],
                 ['label' => Yii::t('app', 'Report'), 'icon' => 'file', 'items' => [
                     ['label' => Yii::t('app', 'Chart'), 'url' => ['/chart/profile']],

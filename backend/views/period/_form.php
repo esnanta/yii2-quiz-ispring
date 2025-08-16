@@ -21,17 +21,6 @@ use kartik\select2\Select2;
         'form' => $form,
         'columns' => 1,
         'attributes' => [
-            'office_id' => [
-                'type' => Form::INPUT_WIDGET,
-                'widgetClass' => Select2::class,
-                'options' => [
-                    'data' => $officeList,
-                    'options' => ['placeholder' => 'Choose Office', 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ],
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => '', 'maxlength' => 200]],
             'is_active' => [
                 'type' => Form::INPUT_WIDGET,

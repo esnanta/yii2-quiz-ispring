@@ -4,9 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update breadcrumb">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="change menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule-token/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-token/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/group/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/period/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/room/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/room/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/subject/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/subject/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -812,31 +823,7 @@
       <workItem from="1755312473546" duration="12279000" />
       <workItem from="1755328496743" duration="86000" />
       <workItem from="1755328619246" duration="3995000" />
-      <workItem from="1755350340700" duration="2056000" />
-    </task>
-    <task id="LOCAL-00002" summary="update DummyController.php">
-      <option name="closed" value="true" />
-      <created>1726036679002</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1726036679002</updated>
-    </task>
-    <task id="LOCAL-00003" summary="fix getAssetButton">
-      <option name="closed" value="true" />
-      <created>1726038691299</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1726038691299</updated>
-    </task>
-    <task id="LOCAL-00004" summary="update index layout">
-      <option name="closed" value="true" />
-      <created>1726038729550</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1726038729550</updated>
+      <workItem from="1755350340700" duration="6353000" />
     </task>
     <task id="LOCAL-00005" summary="update schedule">
       <option name="closed" value="true" />
@@ -1206,7 +1193,31 @@
       <option name="project" value="LOCAL" />
       <updated>1755352154549</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="update">
+      <option name="closed" value="true" />
+      <created>1755352494526</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1755352494526</updated>
+    </task>
+    <task id="LOCAL-00052" summary="remove nice admin theme">
+      <option name="closed" value="true" />
+      <created>1755356198017</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1755356198017</updated>
+    </task>
+    <task id="LOCAL-00053" summary="change menu">
+      <option name="closed" value="true" />
+      <created>1755356216773</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1755356216773</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1233,8 +1244,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="refactor import" />
-    <MESSAGE value="update login" />
     <MESSAGE value="update frontend login" />
     <MESSAGE value="fix frontend" />
     <MESSAGE value="fix assessment" />
@@ -1255,10 +1264,12 @@
     <MESSAGE value="add token service" />
     <MESSAGE value="update token" />
     <MESSAGE value="rename token_time to token_interval" />
-    <MESSAGE value="update" />
     <MESSAGE value="fix date" />
     <MESSAGE value="update breadcrumb" />
-    <option name="LAST_COMMIT_MESSAGE" value="update breadcrumb" />
+    <MESSAGE value="update" />
+    <MESSAGE value="remove nice admin theme" />
+    <MESSAGE value="change menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="change menu" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

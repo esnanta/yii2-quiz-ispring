@@ -29,6 +29,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
         'title',
+        'description',
         [
             'attribute' => 'group_id',
             'label' => Yii::t('app', 'Group'),
@@ -68,13 +69,6 @@ $this->registerJs($search);
                 return DateHelper::formatDateTime($model->date_start);
             },
         ],
-//        [
-//            'attribute' => 'date_end',
-//            'label' => Yii::t('app', 'End'),
-//            'value' => function($model) {
-//                return DateHelper::formatDateTime($model->date_end);
-//            },
-//        ],
         [
             'attribute' => 'period_id',
             'label' => Yii::t('app', 'Period'),
@@ -107,11 +101,12 @@ $this->registerJs($search);
             'format'=>'html'
         ],
         [
-            'attribute'=>'is_asset',
+            'attribute'=>'is_asset_available',
+            'label' => Yii::t('app', 'Asset Available'),
             'vAlign'=>'middle',
             'width'=>'120px',
             'value'=>function ($model, $key, $index, $widget) {
-                return ($model->is_asset!=null) ? $model->getOneIsAsset($model->is_asset):'';
+                return ($model->is_asset_available!=null) ? $model->getOneIsAsset($model->is_asset_available):'';
             },
             'filterType'=>GridView::FILTER_SELECT2,
             'filter'=>$isAssetList,

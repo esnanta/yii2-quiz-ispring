@@ -12,9 +12,7 @@ use common\models\Subject;
 use common\service\DataIdService;
 use common\service\DataListService;
 use common\service\ScheduleDetailService;
-use common\service\ScheduleService;
 use Yii;
-use yii\base\Exception;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
@@ -29,14 +27,6 @@ use yii\web\Response;
  */
 class ScheduleController extends Controller
 {
-
-    private $scheduleService;
-
-    public function __construct($id, $module, ScheduleService $scheduleService, $config = [])
-    {
-        $this->scheduleService = $scheduleService;
-        parent::__construct($id, $module, $config);
-    }
 
     public function behaviors()
     {
@@ -110,21 +100,11 @@ class ScheduleController extends Controller
             ->where(['office_id'=>$model->office_id, 'group_id'=>$model->group_id])
             ->all();
 
-        // Use ScheduleService for token and countdown logic
-        list($countdownTime, $interval, $tokenMessage) =
-            $this->scheduleService->handleTokenAndCountdown($model);
-        $labelAlertTimer = $this->scheduleService->getLabelAlertTimer($model);
-
         return $this->render('view', [
             'model' => $model,
             'providerScheduleDetail' => $providerScheduleDetail,
             'providerAssessment' => $providerAssessment,
             'participantList' => $profileList,
-            'countdownTime' => $countdownTime,
-            'interval' => $interval,
-            'labelAlertTimer'=>$labelAlertTimer,
-            'tokenMessage' => $tokenMessage,  // Pass token status message
-            'minutesTolerance' => $this->scheduleService->getMinutesTolerance(),
             'scheduleDetailService' => $scheduleDetailService
         ]);
     }

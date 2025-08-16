@@ -42,11 +42,6 @@ class Schedule extends BaseSchedule
 
         if ($this->isNewRecord) :
             $this->title = Counter::getDataNumber(Counter::CODE_OF_SCHEDULE);
-            $this->token = substr(uniqid('', true), -6);
-        endif;
-
-        if(empty($this->token_time)):
-            $this->token_time = $this->date_start;
         endif;
 
         return true;

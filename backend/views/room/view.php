@@ -28,17 +28,17 @@ $create = LabelHelper::getCreateButton();
             'type' => LabelHelper::getDetailViewType(),
         ],
         'attributes' => [
-            [
-                'attribute'=>'office_id',
-                'value'=>($model->office_id!=null) ? $model->office->title:'',
-                'type'=>DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'office_id', 'prompt' => '', 'disabled'=> (Yii::$app->user->identity->isAdmin) ? false : true],
-                'items' => $officeList,
-                'widgetOptions'=>[
-                    'class'=> Select2::class,
-                    'data'=>$officeList,
-                ],
-            ],
+//            [
+//                'attribute'=>'office_id',
+//                'value'=>($model->office_id!=null) ? $model->office->title:'',
+//                'type'=>DetailView::INPUT_SELECT2,
+//                'options' => ['id' => 'office_id', 'prompt' => '', 'disabled'=> (Yii::$app->user->identity->isAdmin) ? false : true],
+//                'items' => $officeList,
+//                'widgetOptions'=>[
+//                    'class'=> Select2::class,
+//                    'data'=>$officeList,
+//                ],
+//            ],
             'title',
             'sequence',
             'description:ntext',

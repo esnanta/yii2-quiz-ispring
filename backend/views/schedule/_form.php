@@ -70,9 +70,6 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
         <div class="col-md-6 col-xs-12">
             <?= $form->field($model, 'date_start')->widget(DateControl::class, [
                 'type' => DateControl::FORMAT_DATETIME,
-                'displayFormat' => DateHelper::getPHPDateTimeDisplayFormat(),
-                'saveFormat' => DateHelper::getPHPDateTimeSaveFormat(),
-                //'ajaxConversion' => true,
                 'options' => [
                     'pluginOptions' => [
                         'placeholder' => Yii::t('app', ''),
@@ -82,9 +79,6 @@ JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END,
             ]); ?>
             <?= $form->field($model, 'date_end')->widget(DateControl::class, [
                 'type' => DateControl::FORMAT_DATETIME,
-                'displayFormat' => DateHelper::getPHPDateTimeDisplayFormat(),
-                'saveFormat' => DateHelper::getPHPDateTimeSaveFormat(),
-                //'ajaxConversion' => true,
                 'options' => [
                     'pluginOptions' => [
                         'placeholder' => Yii::t('app', ''),
