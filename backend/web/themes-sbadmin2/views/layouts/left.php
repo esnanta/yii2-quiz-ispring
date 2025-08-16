@@ -22,7 +22,7 @@ use kartik\widgets\SideNav;
 
         $authItemName   = CacheService::getInstance()->getAuthItemName();
         $officeId       = CacheService::getInstance()->getOfficeId();
-        
+
         $officeMenuVisibility = false;
         if($authItemName == Yii::$app->params['userRoleAdmin'] ||
             $authItemName == Yii::$app->params['userRoleOwner']){
@@ -32,7 +32,7 @@ use kartik\widgets\SideNav;
         echo SideNav::widget([
             'type' => SideNav::TYPE_INFO,
             'encodeLabels' => false,
-            
+
             //FOR <ul>
             'options' => [
                 'id'=>'accordionSidebar',
@@ -52,7 +52,7 @@ use kartik\widgets\SideNav;
 
             'items' => [
                 ['label' => Yii::t('app', 'Home'), 'icon' => 'home', 'url' => ['/site/index']],
-                
+
                 ['label' => Yii::t('app', 'Office'), 'icon' => 'university', 'items' => [
                     ['label' => Yii::t('app', 'Staff'), 'icon' => 'chevron-circle-right', 'items' => [
                         ['label' => Yii::t('app', 'Employment'), 'url' => ['/employment/index']],
@@ -66,14 +66,14 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Office'), 'url' => ['/office/index']],
                 ],'visible' => $officeMenuVisibility],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
+                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
                     ['label' => Yii::t('app', 'Subject'), 'url' => ['/subject/index']],
                     ['label' => Yii::t('app', 'Room'), 'url' => ['/room/index']],
                 ]],
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
-                    ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
-                        ['label' => Yii::t('app', 'Token'), 'url' => ['/schedule-token/index']],
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
+                    ['label' => Yii::t('app', 'Token'), 'url' => ['/schedule-token/index']],
                     ['label' => Yii::t('app', 'Profile'), 'url' => ['/profile/index']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/assessment/index']],
                 ]],
