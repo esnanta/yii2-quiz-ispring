@@ -155,8 +155,8 @@ return [
             'displaySettings' => [
                 Module::FORMAT_DATE => 'dd-MM-yyyy',
                 Module::FORMAT_TIME => 'hh:mm:ss a',
-                //Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a', ex:24-04-2024 10:04:38 PM
-                Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm',
+                //Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a', //ex:24-04-2024 10:04:38 PM
+                Module::FORMAT_DATETIME => 'dd-MM-yyyy HH:mm:ss',
             ],
             
             // format settings for saving each date attribute (PHP format example)

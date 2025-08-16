@@ -27,8 +27,6 @@ use kartik\datecontrol\DateControl;
                             'widgetClass' => DateControl::class,
                             'options' => [
                                     'type' => DateControl::FORMAT_DATETIME,
-                                    'displayFormat' => DateHelper::getPHPDateTimeDisplayFormat(),
-                                    'saveFormat' => DateHelper::getPHPDateTimeSaveFormat(),
                                     'options' => [
                                             'pluginOptions' => [
                                                     'placeholder' => Yii::t('app', ''),
@@ -42,8 +40,6 @@ use kartik\datecontrol\DateControl;
                             'widgetClass' => DateControl::class,
                             'options' => [
                                     'type' => DateControl::FORMAT_DATETIME,
-                                    'displayFormat' => DateHelper::getPHPDateTimeDisplayFormat(),
-                                    'saveFormat' => DateHelper::getPHPDateTimeSaveFormat(),
                                     'options' => [
                                             'pluginOptions' => [
                                                     'placeholder' => Yii::t('app', ''),
