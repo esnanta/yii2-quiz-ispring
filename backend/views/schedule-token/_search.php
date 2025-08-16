@@ -17,13 +17,11 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'office_id') ?>
 
     <?= $form->field($model, 'token') ?>
 
-    <?= $form->field($model, 'token_time') ?>
+    <?= $form->field($model, 'token_interval') ?>
 
     <?= $form->field($model, 'created_at') ?>
 

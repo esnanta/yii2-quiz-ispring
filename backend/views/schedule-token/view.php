@@ -133,12 +133,13 @@ Yii2TimerCountDown::widget([
                             ]
                     ],
                     [
-                            'attribute' => 'token_time',
+                            'attribute' => 'token_interval',
                             'type' => DetailView::INPUT_WIDGET,
                             'widgetOptions' => [
                                     'class' => DateControl::class,
                                     'type' => DateControl::FORMAT_DATETIME
-                            ]
+                            ],
+                            'visible' => Yii::$app->request->get('edit') != 't'
                     ],
                     'token',
                     'description'

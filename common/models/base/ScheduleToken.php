@@ -15,7 +15,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $user_id
  * @property integer $office_id
  * @property string $token
- * @property string $token_time
+ * @property string $token_interval
  * @property string $date_start
  * @property string $date_end
  * @property string $description
@@ -72,7 +72,7 @@ class ScheduleToken extends \yii\db\ActiveRecord
     {
         return [
             [['schedule_id', 'user_id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['token_time', 'date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['token_interval', 'date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
@@ -111,7 +111,7 @@ class ScheduleToken extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'token' => Yii::t('app', 'Token'),
-            'token_time' => Yii::t('app', 'Token Time'),
+            'token_interval' => Yii::t('app', 'Token Interval'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
             'description' => Yii::t('app', 'Description'),

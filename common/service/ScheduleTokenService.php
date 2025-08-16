@@ -53,7 +53,7 @@ class ScheduleTokenService
     private function generateTokenIfNeeded(ScheduleToken $model, int $currentTime, int $dateStart): void
     {
         $currentInterval = $this->getCurrentInterval($currentTime, $dateStart);
-        $lastTokenTime = $model->token_time ? strtotime($model->token_time) : null;
+        $lastTokenTime = $model->token_interval ? strtotime($model->token_interval) : null;
 
         // Check if we need to generate a new token
         if (!$lastTokenTime || $this->getCurrentInterval($lastTokenTime, $dateStart) < $currentInterval) {
@@ -91,7 +91,7 @@ class ScheduleTokenService
         $intervalStartTime = $dateStart + ($currentInterval * $this->intervalSeconds);
 
         $model->token = $this->generateTokenString();
-        $model->token_time = date('Y-m-d H:i:s', $intervalStartTime);
+        $model->token_interval = date('Y-m-d H:i:s', $intervalStartTime);
 
         if (!$model->save()) {
             throw new Exception('Failed to save token');

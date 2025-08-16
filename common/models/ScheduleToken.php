@@ -18,7 +18,7 @@ class ScheduleToken extends BaseScheduleToken
         return array_replace_recursive(parent::rules(),
 	    [
             [['schedule_id', 'user_id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['token_time', 'date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['token_interval', 'date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
@@ -33,7 +33,7 @@ class ScheduleToken extends BaseScheduleToken
         }
 
         if ($this->isNewRecord) :
-            $this->token_time = $this->date_start;
+            $this->token_interval = $this->date_start;
         endif;
 
         return true;

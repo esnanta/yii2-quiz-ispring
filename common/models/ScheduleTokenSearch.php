@@ -18,7 +18,7 @@ class ScheduleTokenSearch extends ScheduleToken
     {
         return [
             [['id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['token', 'token_time', 'date_start', 'date_end', 'description',
+            [['token', 'token_interval', 'date_start', 'date_end', 'description',
                 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -46,7 +46,7 @@ class ScheduleTokenSearch extends ScheduleToken
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'token_time' => $this->token_time,
+            'token_interval' => $this->token_interval,
             'date_start' => $this->date_start,
             'date_end' => $this->date_end,
             'description' => $this->description,
