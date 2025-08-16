@@ -13,8 +13,8 @@ use yii\bootstrap5\Html;
  */
 class Schedule extends BaseSchedule
 {
-    const IS_ASSET_AVAILABLE        = 1;
-    const IS_ASSET_NOT_AVAILABLE    = 2;
+    const IS_ASSET_AVAILABLE_NO    = 1;
+    const IS_ASSET_AVAILABLE_YES   = 2;
 
     /**
      * @inheritdoc
@@ -25,11 +25,10 @@ class Schedule extends BaseSchedule
             //TAMBAHAN
             [['period_id','group_id', 'room_id','staff_id','date_start','date_end'], 'required'],
 
-            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset_available', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
-            [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -72,8 +71,8 @@ class Schedule extends BaseSchedule
     {
         return [
             //MASTER
-            self::IS_ASSET_AVAILABLE => Yii::t('app', 'OK'),
-            self::IS_ASSET_NOT_AVAILABLE  => Yii::t('app', 'NA'),
+            self::IS_ASSET_AVAILABLE_YES => Yii::t('app', 'Yes'),
+            self::IS_ASSET_AVAILABLE_NO  => Yii::t('app', 'No'),
         ];
     }
 
@@ -84,10 +83,10 @@ class Schedule extends BaseSchedule
             $arrayModule = self::getArrayIsAsset();
 
             switch ($_module) {
-                case ($_module == self::IS_ASSET_AVAILABLE):
+                case ($_module == self::IS_ASSET_AVAILABLE_YES):
                     $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
-                case ($_module == self::IS_ASSET_NOT_AVAILABLE):
+                case ($_module == self::IS_ASSET_AVAILABLE_NO):
                     $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 default:
@@ -103,7 +102,7 @@ class Schedule extends BaseSchedule
 
     public function updateIsAsset(): int
     {
-        $isAsset = self::IS_ASSET_AVAILABLE;
+        $isAssetAvailable = self::IS_ASSET_AVAILABLE_YES;
         $nullAsset = ScheduleDetail::find('asset_id')
             ->where([
                 'schedule_id' => $this->id,
@@ -112,12 +111,12 @@ class Schedule extends BaseSchedule
             ->count();
 
         if($nullAsset > 0):
-            $isAsset = self::IS_ASSET_NOT_AVAILABLE;
+            $isAssetAvailable = self::IS_ASSET_AVAILABLE_NO;
         endif;
 
-        $this->is_asset = $isAsset;
+        $this->is_asset_available = $isAssetAvailable;
         $this->save();
-        return $isAsset;
+        return $isAssetAvailable;
     }
 
     public function getMinutesBuffer(): int

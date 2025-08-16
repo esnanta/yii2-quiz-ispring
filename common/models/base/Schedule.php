@@ -20,9 +20,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $exam_type
  * @property string $date_start
  * @property string $date_end
- * @property string $token
- * @property string $token_time
- * @property integer $is_asset
+ * @property integer $is_asset_available
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -84,11 +82,10 @@ class Schedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['date_start', 'date_end', 'token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['office_id', 'period_id', 'group_id', 'room_id', 'staff_id', 'exam_type', 'is_asset_available', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 100],
-            [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
@@ -130,9 +127,7 @@ class Schedule extends \yii\db\ActiveRecord
             'exam_type' => Yii::t('app', 'Exam Type'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
-            'token' => Yii::t('app', 'Token'),
-            'token_time' => Yii::t('app', 'Token Time'),
-            'is_asset' => Yii::t('app', 'Is Asset'),
+            'is_asset_available' => Yii::t('app', 'Is Asset Available'),
             'description' => Yii::t('app', 'Description'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
             'verlock' => Yii::t('app', 'Verlock'),
@@ -145,7 +140,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getAssessments()
     {
-        return $this->hasMany(\common\models\Assessment::class, ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\Assessment::className(), ['schedule_id' => 'id']);
     }
         
     /**
@@ -153,7 +148,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getGroup()
     {
-        return $this->hasOne(\common\models\Group::class, ['id' => 'group_id']);
+        return $this->hasOne(\common\models\Group::className(), ['id' => 'group_id']);
     }
         
     /**
@@ -161,7 +156,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getOffice()
     {
-        return $this->hasOne(\common\models\Office::class, ['id' => 'office_id']);
+        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
     }
         
     /**
@@ -169,7 +164,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(\common\models\Period::class, ['id' => 'period_id']);
+        return $this->hasOne(\common\models\Period::className(), ['id' => 'period_id']);
     }
         
     /**
@@ -177,7 +172,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getRoom()
     {
-        return $this->hasOne(\common\models\Room::class, ['id' => 'room_id']);
+        return $this->hasOne(\common\models\Room::className(), ['id' => 'room_id']);
     }
         
     /**
@@ -185,7 +180,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasOne(\common\models\Staff::class, ['id' => 'staff_id']);
+        return $this->hasOne(\common\models\Staff::className(), ['id' => 'staff_id']);
     }
         
     /**
@@ -193,7 +188,7 @@ class Schedule extends \yii\db\ActiveRecord
      */
     public function getScheduleDetails()
     {
-        return $this->hasMany(\common\models\ScheduleDetail::class, ['schedule_id' => 'id']);
+        return $this->hasMany(\common\models\ScheduleDetail::className(), ['schedule_id' => 'id']);
     }
     
     /**

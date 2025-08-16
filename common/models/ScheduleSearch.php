@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use common\helper\DateHelper;
 use common\service\CacheService;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -23,8 +22,8 @@ use yii\data\ActiveDataProvider;
     public function rules()
     {
         return [
-            [['id', 'office_id', 'period_id', 'group_id', 'room_id', 'exam_type','is_asset','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'date_start', 'date_end', 'token','description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'period_id', 'group_id', 'room_id', 'exam_type','is_asset_available','created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'date_start', 'date_end', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -71,7 +70,7 @@ use yii\data\ActiveDataProvider;
             'date_start' => $this->date_start,
             'date_end' => $this->date_end,
             'exam_type' => $this->exam_type,
-            'is_asset' => $this->is_asset,
+            'is_asset_available' => $this->is_asset_available,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -84,7 +83,6 @@ use yii\data\ActiveDataProvider;
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;
