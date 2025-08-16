@@ -52,7 +52,7 @@ Yii2TimerCountDown::widget([
                         <?= $status === 'expired' ? '-' : ($model->token ?: 'Not Generated') ?>
                     </span>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <strong><?= Yii::t('app', 'Status') ?>:</strong><br>
                     <span class="<?= $labelAlertTimer ?>">
                         <?php
@@ -70,7 +70,7 @@ Yii2TimerCountDown::widget([
                         ?>
                     </span>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <strong>
                         <?php
                         if ($status === 'waiting') {
@@ -86,22 +86,15 @@ Yii2TimerCountDown::widget([
                         <div id="schedule-token-countdown"></div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <strong><?= Yii::t('app', 'Message') ?>:</strong><br>
-                    <?= $tokenMessage ?>
+                <div class="col-md-5">
+                    <?php if ($status === 'active'): ?>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <?= Yii::t('app', 'Changes every 15 minutes during the active period') ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
-
-            <?php if ($status === 'active'): ?>
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <?= Yii::t('app', 'Token changes every 15 minutes during the active period') ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endif; ?>
         </div>
     </div>
 
