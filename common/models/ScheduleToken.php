@@ -26,5 +26,16 @@ class ScheduleToken extends BaseScheduleToken
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
-	
+    public function beforeSave($insert): bool
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->isNewRecord) :
+            $this->token_time = $this->date_start;
+        endif;
+
+        return true;
+    }
 }

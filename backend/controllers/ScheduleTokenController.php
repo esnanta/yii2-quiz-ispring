@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\service\DataIdService;
+use common\service\ScheduleTokenService;
 use Yii;
 use common\models\ScheduleToken;
 use common\models\ScheduleTokenSearch;
@@ -11,13 +12,21 @@ use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
 use common\helper\MessageHelper;
+
 /**
  * ScheduleTokenController implements the CRUD actions for ScheduleToken model.
  */
 class ScheduleTokenController extends Controller
 {
+    private $scheduleTokenService;
+
+    public function __construct($id, $module, $config = [])
+    {
+        $this->scheduleTokenService = new ScheduleTokenService();
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -37,14 +46,14 @@ class ScheduleTokenController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->can('index-scheduletoken')){
-                            $searchModel = new ScheduleTokenSearch;
-                    $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $searchModel = new ScheduleTokenSearch;
+            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-                    return $this->render('index', [
-                        'dataProvider' => $dataProvider,
-                        'searchModel' => $searchModel,
-                    ]);
-                    }
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]);
+        }
         else{
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
@@ -58,19 +67,30 @@ class ScheduleTokenController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('view-scheduletoken')){
-            $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('view', ['model' => $model]);
-            }
-        }
-        else{
+        if (!Yii::$app->user->can('view-scheduletoken')) {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
+
+        $model = $this->findModel($id);
+
+        // Use ScheduleTokenService for token and countdown logic
+        list($countdownTime, $interval, $tokenMessage, $status) =
+            $this->scheduleTokenService->handleTokenAndCountdown($model);
+        $labelAlertTimer = $this->scheduleTokenService->getLabelAlertTimer($model);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('view', [
+            'model' => $model,
+            'countdownTime' => $countdownTime,
+            'interval' => $interval,
+            'labelAlertTimer' => $labelAlertTimer,
+            'tokenMessage' => $tokenMessage,
+            'status' => $status
+        ]);
     }
 
     /**
@@ -89,7 +109,7 @@ class ScheduleTokenController extends Controller
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
-                } 
+                }
                 else {
                     return $this->render('create', [
                         'model' => $model,
