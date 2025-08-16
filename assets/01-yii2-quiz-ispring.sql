@@ -119,7 +119,7 @@ CREATE TABLE `tx_asset` (
   KEY `FK_tx_archive_category` (`asset_category_id`),
   CONSTRAINT `FK_tx_archive_category` FOREIGN KEY (`asset_category_id`) REFERENCES `tx_asset_category` (`id`),
   CONSTRAINT `FK_tx_archive_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,6 @@ CREATE TABLE `tx_asset` (
 
 LOCK TABLES `tx_asset` WRITE;
 /*!40000 ALTER TABLE `tx_asset` DISABLE KEYS */;
-INSERT INTO `tx_asset` VALUES (2,1,1,4,1,'Bahasa Indonesia','2025-08-14','Bahasa_Indonesia_689da943425d8.zip','/yii2-quiz-ispring/admin/images/no-picture-available-icon-1.jpg',NULL,NULL,0,0,NULL,'2025-08-14 16:15:47','2025-08-14 16:15:47',1,1,NULL,NULL,NULL,0,'4374b19578ef11f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_asset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +156,7 @@ CREATE TABLE `tx_asset_category` (
   PRIMARY KEY (`id`),
   KEY `FK_tx_archive_category_office` (`office_id`),
   CONSTRAINT `FK_tx_archive_category_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +165,6 @@ CREATE TABLE `tx_asset_category` (
 
 LOCK TABLES `tx_asset_category` WRITE;
 /*!40000 ALTER TABLE `tx_asset_category` DISABLE KEYS */;
-INSERT INTO `tx_asset_category` VALUES (1,1,'Soal',NULL,'','2025-08-14 16:14:37','2025-08-14 16:14:37',1,1,NULL,NULL,NULL,0,'1a008db578ef11f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_asset_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +190,7 @@ CREATE TABLE `tx_auth_assignment` (
 
 LOCK TABLES `tx_auth_assignment` WRITE;
 /*!40000 ALTER TABLE `tx_auth_assignment` DISABLE KEYS */;
-INSERT INTO `tx_auth_assignment` VALUES ('admin','1',1754549515);
+INSERT INTO `tx_auth_assignment` VALUES ('admin','1',1755351092);
 /*!40000 ALTER TABLE `tx_auth_assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +221,7 @@ CREATE TABLE `tx_auth_item` (
 
 LOCK TABLES `tx_auth_item` WRITE;
 /*!40000 ALTER TABLE `tx_auth_item` DISABLE KEYS */;
-INSERT INTO `tx_auth_item` VALUES ('admin',1,'Admin',NULL,NULL,1754549515,1754549515),('create-assessment',2,'Create Assessment',NULL,NULL,1754549515,1754549515),('create-asset',2,'Create Asset',NULL,NULL,1754549515,1754549515),('create-assetcategory',2,'Create Asset Category',NULL,NULL,1754549515,1754549515),('create-employment',2,'Create Employment',NULL,NULL,1754549515,1754549515),('create-group',2,'Create Group',NULL,NULL,1754549515,1754549515),('create-ispring-master',2,'Create Ispring Master',NULL,NULL,1754549515,1754549515),('create-ispring-transaction',2,'Create Ispring Transaction',NULL,NULL,1754549515,1754549515),('create-master',2,'Create Master',NULL,NULL,1754549515,1754549515),('create-office',2,'Create Office',NULL,NULL,1754549515,1754549515),('create-officemedia',2,'Create Office Media',NULL,NULL,1754549515,1754549515),('create-page',2,'Create Page',NULL,NULL,1754549515,1754549515),('create-participant',2,'Create Participant',NULL,NULL,1754549515,1754549515),('create-period',2,'Create Period',NULL,NULL,1754549515,1754549515),('create-profile',2,'Create Profile',NULL,NULL,1754549515,1754549515),('create-room',2,'Create Room',NULL,NULL,1754549515,1754549515),('create-schedule',2,'Create Schedule',NULL,NULL,1754549515,1754549515),('create-scheduledetail',2,'Create Schedule Detail',NULL,NULL,1754549515,1754549515),('create-staff',2,'Create Staff',NULL,NULL,1754549515,1754549515),('create-subject',2,'Create Subject',NULL,NULL,1754549515,1754549515),('create-transaction',2,'Create Transaction',NULL,NULL,1754549515,1754549515),('create-user-owner',2,'Create User Owner',NULL,NULL,1754549515,1754549515),('create-user-regular',2,'Create User Regular',NULL,NULL,1754549515,1754549515),('delete-assessment',2,'Delete Assessment',NULL,NULL,1754549515,1754549515),('delete-asset',2,'Delete Asset',NULL,NULL,1754549515,1754549515),('delete-assetcategory',2,'Delete Asset Category',NULL,NULL,1754549515,1754549515),('delete-employment',2,'Delete Employment',NULL,NULL,1754549515,1754549515),('delete-group',2,'Delete Group',NULL,NULL,1754549515,1754549515),('delete-ispring-master',2,'Delete Ispring Master',NULL,NULL,1754549515,1754549515),('delete-ispring-transaction',2,'Delete Ispring Transaction',NULL,NULL,1754549515,1754549515),('delete-master',2,'Delete Master',NULL,NULL,1754549515,1754549515),('delete-office',2,'Delete Office',NULL,NULL,1754549515,1754549515),('delete-officemedia',2,'Delete Office Media',NULL,NULL,1754549515,1754549515),('delete-page',2,'Delete Page',NULL,NULL,1754549515,1754549515),('delete-participant',2,'Delete Participant',NULL,NULL,1754549515,1754549515),('delete-period',2,'Delete Period',NULL,NULL,1754549515,1754549515),('delete-profile',2,'Delete Profile',NULL,NULL,1754549515,1754549515),('delete-room',2,'Delete Room',NULL,NULL,1754549515,1754549515),('delete-schedule',2,'Delete Schedule',NULL,NULL,1754549515,1754549515),('delete-scheduledetail',2,'Delete Schedule Detail',NULL,NULL,1754549515,1754549515),('delete-staff',2,'Delete Staff',NULL,NULL,1754549515,1754549515),('delete-subject',2,'Delete Subject',NULL,NULL,1754549515,1754549515),('delete-transaction',2,'Delete Transaction',NULL,NULL,1754549515,1754549515),('guest',1,'Guest',NULL,NULL,1754549515,1754549515),('index-assessment',2,'Index Assessment',NULL,NULL,1754549515,1754549515),('index-asset',2,'Index Asset',NULL,NULL,1754549515,1754549515),('index-assetcategory',2,'Index Asset Category',NULL,NULL,1754549515,1754549515),('index-employment',2,'Index Employment',NULL,NULL,1754549515,1754549515),('index-group',2,'Index Group',NULL,NULL,1754549515,1754549515),('index-ispring-master',2,'Index Ispring Master',NULL,NULL,1754549515,1754549515),('index-ispring-transaction',2,'Index Ispring Transaction',NULL,NULL,1754549515,1754549515),('index-master',2,'Index Master',NULL,NULL,1754549515,1754549515),('index-office',2,'Index Office',NULL,NULL,1754549515,1754549515),('index-officemedia',2,'Index Office Media',NULL,NULL,1754549515,1754549515),('index-page',2,'Index Page',NULL,NULL,1754549515,1754549515),('index-participant',2,'Index Participant',NULL,NULL,1754549515,1754549515),('index-period',2,'Index Period',NULL,NULL,1754549515,1754549515),('index-profile',2,'Index Profile',NULL,NULL,1754549515,1754549515),('index-room',2,'Index Room',NULL,NULL,1754549515,1754549515),('index-schedule',2,'Index Schedule',NULL,NULL,1754549515,1754549515),('index-scheduledetail',2,'Index Schedule Detail',NULL,NULL,1754549515,1754549515),('index-staff',2,'Index Staff',NULL,NULL,1754549515,1754549515),('index-subject',2,'Index Subject',NULL,NULL,1754549515,1754549515),('index-transaction',2,'Index Transaction',NULL,NULL,1754549515,1754549515),('owner',1,'Company Owner',NULL,NULL,1754549515,1754549515),('participant',1,'Participant',NULL,NULL,1754549515,1754549515),('regular',1,'Regular',NULL,NULL,1754549515,1754549515),('report-assessment',2,'Report Assessment',NULL,NULL,1754549515,1754549515),('report-asset',2,'Report Asset',NULL,NULL,1754549515,1754549515),('report-assetcategory',2,'Report Asset Category',NULL,NULL,1754549515,1754549515),('report-group',2,'Report Group',NULL,NULL,1754549515,1754549515),('report-ispring-master',2,'Report Ispring Master',NULL,NULL,1754549515,1754549515),('report-ispring-transaction',2,'Report Ispring Transaction',NULL,NULL,1754549515,1754549515),('report-master',2,'Report Master',NULL,NULL,1754549515,1754549515),('report-participant',2,'Report Participant',NULL,NULL,1754549515,1754549515),('report-period',2,'Report Period',NULL,NULL,1754549515,1754549515),('report-room',2,'Report Room',NULL,NULL,1754549515,1754549515),('report-schedule',2,'Report Schedule',NULL,NULL,1754549515,1754549515),('report-scheduledetail',2,'Report Schedule Detail',NULL,NULL,1754549515,1754549515),('report-subject',2,'Report Subject',NULL,NULL,1754549515,1754549515),('report-transaction',2,'Report Transaction',NULL,NULL,1754549515,1754549515),('update-assessment',2,'Update Assessment',NULL,NULL,1754549515,1754549515),('update-asset',2,'Update Asset',NULL,NULL,1754549515,1754549515),('update-assetcategory',2,'Update Asset Category',NULL,NULL,1754549515,1754549515),('update-employment',2,'Update Employment',NULL,NULL,1754549515,1754549515),('update-group',2,'Update Group',NULL,NULL,1754549515,1754549515),('update-ispring-master',2,'Update Ispring Master',NULL,NULL,1754549515,1754549515),('update-ispring-transaction',2,'Update Ispring Transaction',NULL,NULL,1754549515,1754549515),('update-master',2,'Update Master',NULL,NULL,1754549515,1754549515),('update-office',2,'Update Office',NULL,NULL,1754549515,1754549515),('update-officemedia',2,'Update Office Media',NULL,NULL,1754549515,1754549515),('update-page',2,'Update Page',NULL,NULL,1754549515,1754549515),('update-participant',2,'Update Participant',NULL,NULL,1754549515,1754549515),('update-period',2,'Update Period',NULL,NULL,1754549515,1754549515),('update-profile',2,'Update Profile',NULL,NULL,1754549515,1754549515),('update-room',2,'Update Room',NULL,NULL,1754549515,1754549515),('update-schedule',2,'Update Schedule',NULL,NULL,1754549515,1754549515),('update-scheduledetail',2,'Update Schedule Detail',NULL,NULL,1754549515,1754549515),('update-staff',2,'Update Staff',NULL,NULL,1754549515,1754549515),('update-subject',2,'Update Subject',NULL,NULL,1754549515,1754549515),('update-transaction',2,'Update Transaction',NULL,NULL,1754549515,1754549515),('view-assessment',2,'View Assessment',NULL,NULL,1754549515,1754549515),('view-asset',2,'View Asset',NULL,NULL,1754549515,1754549515),('view-assetcategory',2,'View Asset Category',NULL,NULL,1754549515,1754549515),('view-employment',2,'View Employment',NULL,NULL,1754549515,1754549515),('view-group',2,'View Group',NULL,NULL,1754549515,1754549515),('view-ispring-master',2,'View Ispring Master',NULL,NULL,1754549515,1754549515),('view-ispring-transaction',2,'View Ispring Transaction',NULL,NULL,1754549515,1754549515),('view-master',2,'View Master',NULL,NULL,1754549515,1754549515),('view-office',2,'View Office',NULL,NULL,1754549515,1754549515),('view-officemedia',2,'View Office Media',NULL,NULL,1754549515,1754549515),('view-page',2,'View Page',NULL,NULL,1754549515,1754549515),('view-participant',2,'View Participant',NULL,NULL,1754549515,1754549515),('view-period',2,'View Period',NULL,NULL,1754549515,1754549515),('view-profile',2,'View Profile',NULL,NULL,1754549515,1754549515),('view-room',2,'View Room',NULL,NULL,1754549515,1754549515),('view-schedule',2,'View Schedule',NULL,NULL,1754549515,1754549515),('view-scheduledetail',2,'View Schedule Detail',NULL,NULL,1754549515,1754549515),('view-staff',2,'View Staff',NULL,NULL,1754549515,1754549515),('view-subject',2,'View Subject',NULL,NULL,1754549515,1754549515),('view-transaction',2,'View Transaction',NULL,NULL,1754549515,1754549515);
+INSERT INTO `tx_auth_item` VALUES ('admin',1,'Admin',NULL,NULL,1755351092,1755351092),('create-assessment',2,'Create Assessment',NULL,NULL,1755351092,1755351092),('create-asset',2,'Create Asset',NULL,NULL,1755351092,1755351092),('create-assetcategory',2,'Create Asset Category',NULL,NULL,1755351092,1755351092),('create-employment',2,'Create Employment',NULL,NULL,1755351092,1755351092),('create-group',2,'Create Group',NULL,NULL,1755351092,1755351092),('create-ispring-master',2,'Create Ispring Master',NULL,NULL,1755351092,1755351092),('create-ispring-transaction',2,'Create Ispring Transaction',NULL,NULL,1755351092,1755351092),('create-master',2,'Create Master',NULL,NULL,1755351092,1755351092),('create-office',2,'Create Office',NULL,NULL,1755351092,1755351092),('create-officemedia',2,'Create Office Media',NULL,NULL,1755351092,1755351092),('create-page',2,'Create Page',NULL,NULL,1755351092,1755351092),('create-participant',2,'Create Participant',NULL,NULL,1755351092,1755351092),('create-period',2,'Create Period',NULL,NULL,1755351092,1755351092),('create-profile',2,'Create Profile',NULL,NULL,1755351092,1755351092),('create-room',2,'Create Room',NULL,NULL,1755351092,1755351092),('create-schedule',2,'Create Schedule',NULL,NULL,1755351092,1755351092),('create-scheduledetail',2,'Create Schedule Detail',NULL,NULL,1755351092,1755351092),('create-scheduletoken',2,'Create Schedule Token',NULL,NULL,1755351092,1755351092),('create-staff',2,'Create Staff',NULL,NULL,1755351092,1755351092),('create-subject',2,'Create Subject',NULL,NULL,1755351092,1755351092),('create-transaction',2,'Create Transaction',NULL,NULL,1755351092,1755351092),('create-user-owner',2,'Create User Owner',NULL,NULL,1755351092,1755351092),('create-user-regular',2,'Create User Regular',NULL,NULL,1755351092,1755351092),('delete-assessment',2,'Delete Assessment',NULL,NULL,1755351092,1755351092),('delete-asset',2,'Delete Asset',NULL,NULL,1755351092,1755351092),('delete-assetcategory',2,'Delete Asset Category',NULL,NULL,1755351092,1755351092),('delete-employment',2,'Delete Employment',NULL,NULL,1755351092,1755351092),('delete-group',2,'Delete Group',NULL,NULL,1755351092,1755351092),('delete-ispring-master',2,'Delete Ispring Master',NULL,NULL,1755351092,1755351092),('delete-ispring-transaction',2,'Delete Ispring Transaction',NULL,NULL,1755351092,1755351092),('delete-master',2,'Delete Master',NULL,NULL,1755351092,1755351092),('delete-office',2,'Delete Office',NULL,NULL,1755351092,1755351092),('delete-officemedia',2,'Delete Office Media',NULL,NULL,1755351092,1755351092),('delete-page',2,'Delete Page',NULL,NULL,1755351092,1755351092),('delete-participant',2,'Delete Participant',NULL,NULL,1755351092,1755351092),('delete-period',2,'Delete Period',NULL,NULL,1755351092,1755351092),('delete-profile',2,'Delete Profile',NULL,NULL,1755351092,1755351092),('delete-room',2,'Delete Room',NULL,NULL,1755351092,1755351092),('delete-schedule',2,'Delete Schedule',NULL,NULL,1755351092,1755351092),('delete-scheduledetail',2,'Delete Schedule Detail',NULL,NULL,1755351092,1755351092),('delete-scheduletoken',2,'Delete Schedule Token',NULL,NULL,1755351092,1755351092),('delete-staff',2,'Delete Staff',NULL,NULL,1755351092,1755351092),('delete-subject',2,'Delete Subject',NULL,NULL,1755351092,1755351092),('delete-transaction',2,'Delete Transaction',NULL,NULL,1755351092,1755351092),('guest',1,'Guest',NULL,NULL,1755351092,1755351092),('index-assessment',2,'Index Assessment',NULL,NULL,1755351092,1755351092),('index-asset',2,'Index Asset',NULL,NULL,1755351092,1755351092),('index-assetcategory',2,'Index Asset Category',NULL,NULL,1755351092,1755351092),('index-employment',2,'Index Employment',NULL,NULL,1755351092,1755351092),('index-group',2,'Index Group',NULL,NULL,1755351092,1755351092),('index-ispring-master',2,'Index Ispring Master',NULL,NULL,1755351092,1755351092),('index-ispring-transaction',2,'Index Ispring Transaction',NULL,NULL,1755351092,1755351092),('index-master',2,'Index Master',NULL,NULL,1755351092,1755351092),('index-office',2,'Index Office',NULL,NULL,1755351092,1755351092),('index-officemedia',2,'Index Office Media',NULL,NULL,1755351092,1755351092),('index-page',2,'Index Page',NULL,NULL,1755351092,1755351092),('index-participant',2,'Index Participant',NULL,NULL,1755351092,1755351092),('index-period',2,'Index Period',NULL,NULL,1755351092,1755351092),('index-profile',2,'Index Profile',NULL,NULL,1755351092,1755351092),('index-room',2,'Index Room',NULL,NULL,1755351092,1755351092),('index-schedule',2,'Index Schedule',NULL,NULL,1755351092,1755351092),('index-scheduledetail',2,'Index Schedule Detail',NULL,NULL,1755351092,1755351092),('index-scheduletoken',2,'Index Schedule Token',NULL,NULL,1755351092,1755351092),('index-staff',2,'Index Staff',NULL,NULL,1755351092,1755351092),('index-subject',2,'Index Subject',NULL,NULL,1755351092,1755351092),('index-transaction',2,'Index Transaction',NULL,NULL,1755351092,1755351092),('owner',1,'Company Owner',NULL,NULL,1755351092,1755351092),('participant',1,'Participant',NULL,NULL,1755351092,1755351092),('regular',1,'Regular',NULL,NULL,1755351092,1755351092),('report-assessment',2,'Report Assessment',NULL,NULL,1755351092,1755351092),('report-asset',2,'Report Asset',NULL,NULL,1755351092,1755351092),('report-assetcategory',2,'Report Asset Category',NULL,NULL,1755351092,1755351092),('report-group',2,'Report Group',NULL,NULL,1755351092,1755351092),('report-ispring-master',2,'Report Ispring Master',NULL,NULL,1755351092,1755351092),('report-ispring-transaction',2,'Report Ispring Transaction',NULL,NULL,1755351092,1755351092),('report-master',2,'Report Master',NULL,NULL,1755351092,1755351092),('report-participant',2,'Report Participant',NULL,NULL,1755351092,1755351092),('report-period',2,'Report Period',NULL,NULL,1755351092,1755351092),('report-room',2,'Report Room',NULL,NULL,1755351092,1755351092),('report-schedule',2,'Report Schedule',NULL,NULL,1755351092,1755351092),('report-scheduledetail',2,'Report Schedule Detail',NULL,NULL,1755351092,1755351092),('report-scheduletoken',2,'Report Schedule Token',NULL,NULL,1755351092,1755351092),('report-subject',2,'Report Subject',NULL,NULL,1755351092,1755351092),('report-transaction',2,'Report Transaction',NULL,NULL,1755351092,1755351092),('update-assessment',2,'Update Assessment',NULL,NULL,1755351092,1755351092),('update-asset',2,'Update Asset',NULL,NULL,1755351092,1755351092),('update-assetcategory',2,'Update Asset Category',NULL,NULL,1755351092,1755351092),('update-employment',2,'Update Employment',NULL,NULL,1755351092,1755351092),('update-group',2,'Update Group',NULL,NULL,1755351092,1755351092),('update-ispring-master',2,'Update Ispring Master',NULL,NULL,1755351092,1755351092),('update-ispring-transaction',2,'Update Ispring Transaction',NULL,NULL,1755351092,1755351092),('update-master',2,'Update Master',NULL,NULL,1755351092,1755351092),('update-office',2,'Update Office',NULL,NULL,1755351092,1755351092),('update-officemedia',2,'Update Office Media',NULL,NULL,1755351092,1755351092),('update-page',2,'Update Page',NULL,NULL,1755351092,1755351092),('update-participant',2,'Update Participant',NULL,NULL,1755351092,1755351092),('update-period',2,'Update Period',NULL,NULL,1755351092,1755351092),('update-profile',2,'Update Profile',NULL,NULL,1755351092,1755351092),('update-room',2,'Update Room',NULL,NULL,1755351092,1755351092),('update-schedule',2,'Update Schedule',NULL,NULL,1755351092,1755351092),('update-scheduledetail',2,'Update Schedule Detail',NULL,NULL,1755351092,1755351092),('update-scheduletoken',2,'Update Schedule Token',NULL,NULL,1755351092,1755351092),('update-staff',2,'Update Staff',NULL,NULL,1755351092,1755351092),('update-subject',2,'Update Subject',NULL,NULL,1755351092,1755351092),('update-transaction',2,'Update Transaction',NULL,NULL,1755351092,1755351092),('view-assessment',2,'View Assessment',NULL,NULL,1755351092,1755351092),('view-asset',2,'View Asset',NULL,NULL,1755351092,1755351092),('view-assetcategory',2,'View Asset Category',NULL,NULL,1755351092,1755351092),('view-employment',2,'View Employment',NULL,NULL,1755351092,1755351092),('view-group',2,'View Group',NULL,NULL,1755351092,1755351092),('view-ispring-master',2,'View Ispring Master',NULL,NULL,1755351092,1755351092),('view-ispring-transaction',2,'View Ispring Transaction',NULL,NULL,1755351092,1755351092),('view-master',2,'View Master',NULL,NULL,1755351092,1755351092),('view-office',2,'View Office',NULL,NULL,1755351092,1755351092),('view-officemedia',2,'View Office Media',NULL,NULL,1755351092,1755351092),('view-page',2,'View Page',NULL,NULL,1755351092,1755351092),('view-participant',2,'View Participant',NULL,NULL,1755351092,1755351092),('view-period',2,'View Period',NULL,NULL,1755351092,1755351092),('view-profile',2,'View Profile',NULL,NULL,1755351092,1755351092),('view-room',2,'View Room',NULL,NULL,1755351092,1755351092),('view-schedule',2,'View Schedule',NULL,NULL,1755351092,1755351092),('view-scheduledetail',2,'View Schedule Detail',NULL,NULL,1755351092,1755351092),('view-scheduletoken',2,'View Schedule Token',NULL,NULL,1755351092,1755351092),('view-staff',2,'View Staff',NULL,NULL,1755351092,1755351092),('view-subject',2,'View Subject',NULL,NULL,1755351092,1755351092),('view-transaction',2,'View Transaction',NULL,NULL,1755351092,1755351092);
 /*!40000 ALTER TABLE `tx_auth_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +248,7 @@ CREATE TABLE `tx_auth_item_child` (
 
 LOCK TABLES `tx_auth_item_child` WRITE;
 /*!40000 ALTER TABLE `tx_auth_item_child` DISABLE KEYS */;
-INSERT INTO `tx_auth_item_child` VALUES ('create-ispring-transaction','create-assessment'),('create-transaction','create-asset'),('create-master','create-assetcategory'),('create-master','create-employment'),('create-ispring-master','create-group'),('admin','create-ispring-master'),('owner','create-ispring-master'),('admin','create-ispring-transaction'),('owner','create-ispring-transaction'),('regular','create-ispring-transaction'),('admin','create-master'),('owner','create-master'),('create-master','create-office'),('create-master','create-officemedia'),('create-master','create-page'),('create-ispring-master','create-participant'),('create-ispring-master','create-period'),('create-master','create-profile'),('create-ispring-master','create-room'),('create-ispring-master','create-schedule'),('create-ispring-master','create-scheduledetail'),('create-master','create-staff'),('create-ispring-master','create-subject'),('admin','create-transaction'),('owner','create-transaction'),('regular','create-transaction'),('index-transaction','create-user-regular'),('delete-ispring-transaction','delete-assessment'),('delete-transaction','delete-asset'),('delete-master','delete-assetcategory'),('delete-master','delete-employment'),('delete-ispring-master','delete-group'),('admin','delete-ispring-master'),('owner','delete-ispring-master'),('admin','delete-ispring-transaction'),('owner','delete-ispring-transaction'),('admin','delete-master'),('owner','delete-master'),('delete-master','delete-office'),('delete-master','delete-officemedia'),('delete-master','delete-page'),('delete-ispring-master','delete-participant'),('delete-ispring-master','delete-period'),('delete-master','delete-profile'),('delete-ispring-master','delete-room'),('delete-ispring-master','delete-schedule'),('delete-ispring-master','delete-scheduledetail'),('delete-master','delete-staff'),('delete-ispring-master','delete-subject'),('admin','delete-transaction'),('owner','delete-transaction'),('regular','delete-transaction'),('index-ispring-transaction','index-assessment'),('guest','index-asset'),('index-transaction','index-asset'),('index-master','index-assetcategory'),('index-master','index-employment'),('index-ispring-master','index-group'),('admin','index-ispring-master'),('owner','index-ispring-master'),('regular','index-ispring-master'),('admin','index-ispring-transaction'),('owner','index-ispring-transaction'),('regular','index-ispring-transaction'),('admin','index-master'),('owner','index-master'),('regular','index-master'),('index-master','index-office'),('index-master','index-officemedia'),('index-master','index-page'),('index-ispring-master','index-participant'),('index-ispring-master','index-period'),('index-master','index-profile'),('index-ispring-master','index-room'),('index-ispring-master','index-schedule'),('index-ispring-master','index-scheduledetail'),('index-master','index-staff'),('index-ispring-master','index-subject'),('admin','index-transaction'),('owner','index-transaction'),('regular','index-transaction'),('report-ispring-transaction','report-assessment'),('report-transaction','report-asset'),('report-master','report-assetcategory'),('report-ispring-master','report-group'),('admin','report-ispring-master'),('owner','report-ispring-master'),('regular','report-ispring-master'),('admin','report-ispring-transaction'),('owner','report-ispring-transaction'),('regular','report-ispring-transaction'),('admin','report-master'),('owner','report-master'),('report-ispring-master','report-participant'),('report-ispring-master','report-period'),('report-ispring-master','report-room'),('report-ispring-master','report-schedule'),('report-ispring-master','report-scheduledetail'),('report-ispring-master','report-subject'),('admin','report-transaction'),('owner','report-transaction'),('regular','report-transaction'),('update-ispring-transaction','update-assessment'),('update-transaction','update-asset'),('update-master','update-assetcategory'),('update-master','update-employment'),('update-ispring-master','update-group'),('admin','update-ispring-master'),('owner','update-ispring-master'),('admin','update-ispring-transaction'),('owner','update-ispring-transaction'),('admin','update-master'),('owner','update-master'),('update-master','update-office'),('update-master','update-officemedia'),('update-master','update-page'),('update-ispring-master','update-participant'),('update-ispring-master','update-period'),('regular','update-profile'),('update-master','update-profile'),('update-ispring-master','update-room'),('update-ispring-master','update-schedule'),('update-ispring-master','update-scheduledetail'),('update-master','update-staff'),('update-ispring-master','update-subject'),('admin','update-transaction'),('owner','update-transaction'),('regular','update-transaction'),('view-ispring-transaction','view-assessment'),('guest','view-asset'),('view-transaction','view-asset'),('view-master','view-assetcategory'),('view-master','view-employment'),('view-ispring-master','view-group'),('admin','view-ispring-master'),('owner','view-ispring-master'),('regular','view-ispring-master'),('admin','view-ispring-transaction'),('owner','view-ispring-transaction'),('regular','view-ispring-transaction'),('admin','view-master'),('owner','view-master'),('regular','view-master'),('view-master','view-office'),('view-master','view-officemedia'),('view-master','view-page'),('view-ispring-master','view-participant'),('view-ispring-master','view-period'),('regular','view-profile'),('view-master','view-profile'),('view-ispring-master','view-room'),('view-ispring-master','view-schedule'),('view-ispring-master','view-scheduledetail'),('view-master','view-staff'),('view-ispring-master','view-subject'),('admin','view-transaction'),('owner','view-transaction'),('regular','view-transaction');
+INSERT INTO `tx_auth_item_child` VALUES ('create-ispring-transaction','create-assessment'),('create-transaction','create-asset'),('create-master','create-assetcategory'),('create-master','create-employment'),('create-ispring-master','create-group'),('admin','create-ispring-master'),('owner','create-ispring-master'),('admin','create-ispring-transaction'),('owner','create-ispring-transaction'),('regular','create-ispring-transaction'),('admin','create-master'),('owner','create-master'),('create-master','create-office'),('create-master','create-officemedia'),('create-master','create-page'),('create-ispring-master','create-participant'),('create-ispring-master','create-period'),('create-master','create-profile'),('create-ispring-master','create-room'),('create-ispring-master','create-schedule'),('create-ispring-master','create-scheduledetail'),('create-ispring-master','create-scheduletoken'),('create-master','create-staff'),('create-ispring-master','create-subject'),('admin','create-transaction'),('owner','create-transaction'),('regular','create-transaction'),('index-transaction','create-user-regular'),('delete-ispring-transaction','delete-assessment'),('delete-transaction','delete-asset'),('delete-master','delete-assetcategory'),('delete-master','delete-employment'),('delete-ispring-master','delete-group'),('admin','delete-ispring-master'),('owner','delete-ispring-master'),('admin','delete-ispring-transaction'),('owner','delete-ispring-transaction'),('admin','delete-master'),('owner','delete-master'),('delete-master','delete-office'),('delete-master','delete-officemedia'),('delete-master','delete-page'),('delete-ispring-master','delete-participant'),('delete-ispring-master','delete-period'),('delete-master','delete-profile'),('delete-ispring-master','delete-room'),('delete-ispring-master','delete-schedule'),('delete-ispring-master','delete-scheduledetail'),('delete-ispring-master','delete-scheduletoken'),('delete-master','delete-staff'),('delete-ispring-master','delete-subject'),('admin','delete-transaction'),('owner','delete-transaction'),('regular','delete-transaction'),('index-ispring-transaction','index-assessment'),('guest','index-asset'),('index-transaction','index-asset'),('index-master','index-assetcategory'),('index-master','index-employment'),('index-ispring-master','index-group'),('admin','index-ispring-master'),('owner','index-ispring-master'),('regular','index-ispring-master'),('admin','index-ispring-transaction'),('owner','index-ispring-transaction'),('regular','index-ispring-transaction'),('admin','index-master'),('owner','index-master'),('regular','index-master'),('index-master','index-office'),('index-master','index-officemedia'),('index-master','index-page'),('index-ispring-master','index-participant'),('index-ispring-master','index-period'),('index-master','index-profile'),('index-ispring-master','index-room'),('index-ispring-master','index-schedule'),('index-ispring-master','index-scheduledetail'),('index-ispring-master','index-scheduletoken'),('index-master','index-staff'),('index-ispring-master','index-subject'),('admin','index-transaction'),('owner','index-transaction'),('regular','index-transaction'),('report-ispring-transaction','report-assessment'),('report-transaction','report-asset'),('report-master','report-assetcategory'),('report-ispring-master','report-group'),('admin','report-ispring-master'),('owner','report-ispring-master'),('regular','report-ispring-master'),('admin','report-ispring-transaction'),('owner','report-ispring-transaction'),('regular','report-ispring-transaction'),('admin','report-master'),('owner','report-master'),('report-ispring-master','report-participant'),('report-ispring-master','report-period'),('report-ispring-master','report-room'),('report-ispring-master','report-schedule'),('report-ispring-master','report-scheduledetail'),('report-ispring-master','report-scheduletoken'),('report-ispring-master','report-subject'),('admin','report-transaction'),('owner','report-transaction'),('regular','report-transaction'),('update-ispring-transaction','update-assessment'),('update-transaction','update-asset'),('update-master','update-assetcategory'),('update-master','update-employment'),('update-ispring-master','update-group'),('admin','update-ispring-master'),('owner','update-ispring-master'),('admin','update-ispring-transaction'),('owner','update-ispring-transaction'),('admin','update-master'),('owner','update-master'),('update-master','update-office'),('update-master','update-officemedia'),('update-master','update-page'),('update-ispring-master','update-participant'),('update-ispring-master','update-period'),('regular','update-profile'),('update-master','update-profile'),('update-ispring-master','update-room'),('update-ispring-master','update-schedule'),('update-ispring-master','update-scheduledetail'),('update-ispring-master','update-scheduletoken'),('update-master','update-staff'),('update-ispring-master','update-subject'),('admin','update-transaction'),('owner','update-transaction'),('regular','update-transaction'),('view-ispring-transaction','view-assessment'),('guest','view-asset'),('view-transaction','view-asset'),('view-master','view-assetcategory'),('view-master','view-employment'),('view-ispring-master','view-group'),('admin','view-ispring-master'),('owner','view-ispring-master'),('regular','view-ispring-master'),('admin','view-ispring-transaction'),('owner','view-ispring-transaction'),('regular','view-ispring-transaction'),('admin','view-master'),('owner','view-master'),('regular','view-master'),('view-master','view-office'),('view-master','view-officemedia'),('view-master','view-page'),('view-ispring-master','view-participant'),('view-ispring-master','view-period'),('regular','view-profile'),('view-master','view-profile'),('view-ispring-master','view-room'),('view-ispring-master','view-schedule'),('view-ispring-master','view-scheduledetail'),('view-ispring-master','view-scheduletoken'),('view-master','view-staff'),('view-ispring-master','view-subject'),('admin','view-transaction'),('owner','view-transaction'),('regular','view-transaction');
 /*!40000 ALTER TABLE `tx_auth_item_child` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -303,7 +301,7 @@ CREATE TABLE `tx_counter` (
   PRIMARY KEY (`id`),
   KEY `Fk_counter_office` (`office_id`),
   CONSTRAINT `Fk_counter_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +310,6 @@ CREATE TABLE `tx_counter` (
 
 LOCK TABLES `tx_counter` WRITE;
 /*!40000 ALTER TABLE `tx_counter` DISABLE KEYS */;
-INSERT INTO `tx_counter` VALUES (1,1,'SCD',1,'2025-08-14 16:17:31','2025-08-14 16:17:31',1,1,NULL,NULL,NULL,0,'815f6e2b78ef11f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_counter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +373,7 @@ CREATE TABLE `tx_employment` (
 
 LOCK TABLES `tx_employment` WRITE;
 /*!40000 ALTER TABLE `tx_employment` DISABLE KEYS */;
-INSERT INTO `tx_employment` VALUES (1,1,'Programmer','-',1,'2025-08-07 13:51:55','2025-08-07 13:51:55',1,1,NULL,NULL,NULL,0,NULL);
+INSERT INTO `tx_employment` VALUES (1,1,'Programmer','-',1,'2025-08-16 20:31:32','2025-08-16 20:31:32',1,1,NULL,NULL,NULL,0,NULL);
 /*!40000 ALTER TABLE `tx_employment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,7 +440,7 @@ CREATE TABLE `tx_group` (
   PRIMARY KEY (`id`),
   KEY `Fk_group_office` (`office_id`),
   CONSTRAINT `Fk_group_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,7 +449,6 @@ CREATE TABLE `tx_group` (
 
 LOCK TABLES `tx_group` WRITE;
 /*!40000 ALTER TABLE `tx_group` DISABLE KEYS */;
-INSERT INTO `tx_group` VALUES (1,1,'111',1,'1','2025-08-07 13:54:18','2025-08-07 13:54:18',1,1,NULL,NULL,NULL,0,'56c97724735b11f082bec858c0b7f92b');
 /*!40000 ALTER TABLE `tx_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,7 +472,7 @@ CREATE TABLE `tx_migration` (
 
 LOCK TABLES `tx_migration` WRITE;
 /*!40000 ALTER TABLE `tx_migration` DISABLE KEYS */;
-INSERT INTO `tx_migration` VALUES ('m000000_000000_base',1754549510),('m250807_200101_create_all_tables',1754549515),('m250807_200102_insert_rbac_data',1754549515),('m250807_200103_insert_initial_data',1754549515);
+INSERT INTO `tx_migration` VALUES ('m000000_000000_base',1755351088),('m250807_200101_create_all_tables',1755351092),('m250807_200102_insert_rbac_data',1755351092),('m250807_200103_insert_initial_data',1755351092);
 /*!40000 ALTER TABLE `tx_migration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +514,7 @@ CREATE TABLE `tx_office` (
 
 LOCK TABLES `tx_office` WRITE;
 /*!40000 ALTER TABLE `tx_office` DISABLE KEYS */;
-INSERT INTO `tx_office` VALUES (1,'65a7fb0e28f7b','Daraspace','-',NULL,'ombakrinai@gmail.com','https://daraspace.com','-',NULL,NULL,'-','2025-08-07 13:51:55','2025-08-07 13:51:55',1,1,NULL,NULL,NULL,0,NULL);
+INSERT INTO `tx_office` VALUES (1,'65a7fb0e28f7b','Daraspace','-',NULL,'ombakrinai@gmail.com','https://daraspace.com','-',NULL,NULL,'-','2025-08-16 20:31:32','2025-08-16 20:31:32',1,1,NULL,NULL,NULL,0,NULL);
 /*!40000 ALTER TABLE `tx_office` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -620,7 +616,7 @@ CREATE TABLE `tx_period` (
   PRIMARY KEY (`id`),
   KEY `Fk_period_office` (`office_id`),
   CONSTRAINT `Fk_period_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -629,7 +625,6 @@ CREATE TABLE `tx_period` (
 
 LOCK TABLES `tx_period` WRITE;
 /*!40000 ALTER TABLE `tx_period` DISABLE KEYS */;
-INSERT INTO `tx_period` VALUES (1,1,'2025/2026',2,'-','2025-08-14 15:26:28','2025-08-14 16:05:42',1,1,NULL,NULL,NULL,2,'5fe3900b78e811f0ae32c858c0b7f92b'),(2,1,'2024/2025',1,'','2025-08-14 15:27:25','2025-08-14 15:47:21',1,1,NULL,NULL,NULL,2,'81e01e0f78e811f0ae32c858c0b7f92b'),(3,1,'2023/2024',1,'','2025-08-14 15:36:38','2025-08-14 16:05:35',1,1,NULL,NULL,NULL,1,'cb62854e78e911f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_period` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,7 +673,7 @@ CREATE TABLE `tx_profile` (
 
 LOCK TABLES `tx_profile` WRITE;
 /*!40000 ALTER TABLE `tx_profile` DISABLE KEYS */;
-INSERT INTO `tx_profile` VALUES (1,NULL,NULL,NULL,'Nanta Es',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-08-07 13:51:55','2025-08-07 13:51:55',NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tx_profile` VALUES (1,NULL,NULL,NULL,'Nanta Es',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-08-16 20:31:32','2025-08-16 20:31:32',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tx_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -743,7 +738,7 @@ CREATE TABLE `tx_room` (
   PRIMARY KEY (`id`),
   KEY `Fk_room_office` (`office_id`),
   CONSTRAINT `Fk_room_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -752,7 +747,6 @@ CREATE TABLE `tx_room` (
 
 LOCK TABLES `tx_room` WRITE;
 /*!40000 ALTER TABLE `tx_room` DISABLE KEYS */;
-INSERT INTO `tx_room` VALUES (1,1,'R01',NULL,'Ruang 1','2025-08-14 15:26:00','2025-08-14 15:26:00',1,1,NULL,NULL,NULL,0,'4ef9d6af78e811f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -796,7 +790,7 @@ CREATE TABLE `tx_schedule` (
   CONSTRAINT `Fk_schedule_period` FOREIGN KEY (`period_id`) REFERENCES `tx_period` (`id`),
   CONSTRAINT `Fk_schedule_room` FOREIGN KEY (`room_id`) REFERENCES `tx_room` (`id`),
   CONSTRAINT `Fk_schedule_staff` FOREIGN KEY (`staff_id`) REFERENCES `tx_staff` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -805,7 +799,6 @@ CREATE TABLE `tx_schedule` (
 
 LOCK TABLES `tx_schedule` WRITE;
 /*!40000 ALTER TABLE `tx_schedule` DISABLE KEYS */;
-INSERT INTO `tx_schedule` VALUES (1,1,'00001',1,1,1,1,1,'2025-08-13 01:05:00','2025-08-15 16:25:00',1,'Bahasa Indonesia','2025-08-14 16:17:31','2025-08-14 16:25:30',1,1,NULL,NULL,NULL,2,'815eb57378ef11f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -842,7 +835,7 @@ CREATE TABLE `tx_schedule_detail` (
   CONSTRAINT `Fk_schedule_detail_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `tx_schedule` (`id`),
   CONSTRAINT `Fk_schedule_detail_subject` FOREIGN KEY (`subject_id`) REFERENCES `tx_subject` (`id`),
   CONSTRAINT `FK_tx_schedule_detail_asset` FOREIGN KEY (`asset_id`) REFERENCES `tx_asset` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -851,7 +844,6 @@ CREATE TABLE `tx_schedule_detail` (
 
 LOCK TABLES `tx_schedule_detail` WRITE;
 /*!40000 ALTER TABLE `tx_schedule_detail` DISABLE KEYS */;
-INSERT INTO `tx_schedule_detail` VALUES (1,1,1,1,2,1,'-','2025-08-14 16:17:31','2025-08-14 16:25:30',1,1,NULL,NULL,NULL,1,'815f9e9e78ef11f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_schedule_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -866,7 +858,10 @@ CREATE TABLE `tx_schedule_token` (
   `id` int NOT NULL AUTO_INCREMENT,
   `office_id` int DEFAULT NULL,
   `token` varchar(6) DEFAULT NULL,
-  `token_time` datetime DEFAULT NULL,
+  `token_interval` datetime DEFAULT NULL,
+  `date_start` datetime DEFAULT NULL,
+  `date_end` datetime DEFAULT NULL,
+  `description` text,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int DEFAULT NULL,
@@ -877,9 +872,9 @@ CREATE TABLE `tx_schedule_token` (
   `verlock` int DEFAULT NULL,
   `uuid` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `tx_schedule_token_tx_office_FK` (`office_id`),
-  CONSTRAINT `tx_schedule_token_tx_office_FK` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `Fk_schedule_token_office` (`office_id`),
+  CONSTRAINT `Fk_schedule_token_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -912,7 +907,7 @@ CREATE TABLE `tx_session` (
 
 LOCK TABLES `tx_session` WRITE;
 /*!40000 ALTER TABLE `tx_session` DISABLE KEYS */;
-INSERT INTO `tx_session` VALUES ('720bgdhtc6vic9ee7r35oraan6',1754997735,_binary '__flash|a:0:{}'),('9hrd5tahua6s0uququg80anao4',1755163790,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('a3l1l81o32hdp9ckuf9q74ong6',1755164131,_binary '__flash|a:0:{}'),('b769h5fvg93i46g28qj9q7ufqg',1755313938,_binary '__flash|a:0:{}'),('c429jd5i3cpamrc227oiu01nbj',1755142210,_binary '__flash|a:0:{}'),('e44nt7196uk66vvklmbmh7n8rd',1754997742,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('e47gjh30mkbk452cf2pn54tchc',1755161201,_binary '__flash|a:0:{}'),('efikm8qh1d6ftdlgcei7felvpc',1754551098,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('g84m04au2fjsd2rc06vdae4moi',1755317088,_binary '__flash|a:0:{}__returnUrl|s:41:\"http://localhost/yii2-quiz-ispring/admin/\";__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('jfhesuutfp4c81447hg1b64atk',1754551077,_binary '__flash|a:0:{}'),('ms3s42ff4da21s1v5aerd0oau7',1755165054,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";'),('tg5ulk424rjouhjiqn2jtumi04',1755143010,_binary '__flash|a:0:{}__id|i:1;__authKey|s:32:\"e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm\";');
+INSERT INTO `tx_session` VALUES ('eenrvtql42aekm9b0a7bg36n96',1755352540,_binary '__flash|a:0:{}__returnUrl|s:51:\"http://localhost/yii2-quiz-ispring/admin/site/index\";');
 /*!40000 ALTER TABLE `tx_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -994,7 +989,7 @@ CREATE TABLE `tx_staff` (
 
 LOCK TABLES `tx_staff` WRITE;
 /*!40000 ALTER TABLE `tx_staff` DISABLE KEYS */;
-INSERT INTO `tx_staff` VALUES (1,1,1,1,'Nanta Es','Es','123','123',1,1,'-','662a80f98ab73.jpg','asdf','-','2025-08-07 13:51:55','2025-08-07 13:51:55',1,1,NULL,NULL,NULL,0,NULL);
+INSERT INTO `tx_staff` VALUES (1,1,1,1,'Nanta Es','Es','123','123',1,1,'-','662a80f98ab73.jpg','asdf','-','2025-08-16 20:31:32','2025-08-16 20:31:32',1,1,NULL,NULL,NULL,0,NULL);
 /*!40000 ALTER TABLE `tx_staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1023,7 +1018,7 @@ CREATE TABLE `tx_subject` (
   PRIMARY KEY (`id`),
   KEY `Fk_subject_office` (`office_id`),
   CONSTRAINT `Fk_subject_office` FOREIGN KEY (`office_id`) REFERENCES `tx_office` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1032,7 +1027,6 @@ CREATE TABLE `tx_subject` (
 
 LOCK TABLES `tx_subject` WRITE;
 /*!40000 ALTER TABLE `tx_subject` DISABLE KEYS */;
-INSERT INTO `tx_subject` VALUES (1,1,'biologi',1,'-','2025-08-14 15:24:49','2025-08-14 15:24:49',1,1,NULL,NULL,NULL,0,'2500647c78e811f0ae32c858c0b7f92b');
 /*!40000 ALTER TABLE `tx_subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1102,7 +1096,7 @@ CREATE TABLE `tx_user` (
 
 LOCK TABLES `tx_user` WRITE;
 /*!40000 ALTER TABLE `tx_user` DISABLE KEYS */;
-INSERT INTO `tx_user` VALUES (1,'admin','ombakrinai@gmail.com','$2y$12$1OrcfbmLlEy1lFwPTNVqZ.8mdXzEZboHOM1DWaT4/8GXe5jcwR5pG','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1754549515,1754549515,NULL,NULL,1755315579,NULL,NULL,0,NULL,NULL,NULL);
+INSERT INTO `tx_user` VALUES (1,'admin','ombakrinai@gmail.com','$2y$12$1OrcfbmLlEy1lFwPTNVqZ.8mdXzEZboHOM1DWaT4/8GXe5jcwR5pG','e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm',NULL,NULL,0,NULL,NULL,1755351092,1755351092,NULL,NULL,1755351092,NULL,NULL,0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tx_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1115,4 +1109,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-16 10:42:47
+-- Dump completed on 2025-08-16 20:32:15
