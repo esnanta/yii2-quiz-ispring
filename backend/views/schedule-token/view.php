@@ -17,7 +17,7 @@ use kartik\datecontrol\DateControl;
  * @var string $status
  */
 
-$this->title = 'Schedule Token #' . $model->id;
+$this->title = 'Current Token ' . $model->token;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Schedule Tokens'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $create = LabelHelper::getCreateButton();
