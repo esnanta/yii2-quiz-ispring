@@ -332,6 +332,24 @@ class m250807_200101_create_all_tables extends Migration
             'uuid' => $this->string(36)->defaultValue(null),
         ]);
 
+        $this->createTable('{{%schedule_token}}', [
+            'id' => $this->primaryKey(),
+            'schedule_id' => $this->integer()->defaultValue(null),
+            'user_id' => $this->integer()->defaultValue(null),
+            'office_id' => $this->integer()->defaultValue(null),
+            'token' => $this->string(6)->defaultValue(null),
+            'token_time' => $this->dateTime()->defaultValue(null),
+            'created_at' => $this->dateTime()->defaultValue(null),
+            'updated_at' => $this->dateTime()->defaultValue(null),
+            'created_by' => $this->integer()->defaultValue(null),
+            'updated_by' => $this->integer()->defaultValue(null),
+            'is_deleted' => $this->integer()->defaultValue(null),
+            'deleted_at' => $this->dateTime()->defaultValue(null),
+            'deleted_by' => $this->integer()->defaultValue(null),
+            'verlock' => $this->integer()->defaultValue(null),
+            'uuid' => $this->string(36)->defaultValue(null),
+        ]);
+
         $this->createTable('{{%assessment}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer()->defaultValue(null),
@@ -407,6 +425,9 @@ class m250807_200101_create_all_tables extends Migration
         $this->addForeignKey('Fk_schedule_detail_schedule', '{{%schedule_detail}}', 'schedule_id', '{{%schedule}}', 'id');
         $this->addForeignKey('Fk_schedule_detail_subject', '{{%schedule_detail}}', 'subject_id', '{{%subject}}', 'id');
         $this->addForeignKey('FK_tx_schedule_detail_asset', '{{%schedule_detail}}', 'asset_id', '{{%asset}}', 'id');
+        $this->addForeignKey('Fk_schedule_token_office', '{{%schedule_token}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey('Fk_schedule_token_schedule', '{{%schedule_token}}', 'schedule_id', '{{%schedule}}', 'id');
+        $this->addForeignKey('Fk_schedule_token_user', '{{%schedule_token}}', 'user_id', '{{%user}}', 'id');
         $this->addForeignKey('Fk_assessment_office', '{{%assessment}}', 'office_id', '{{%office}}', 'id');
         $this->addForeignKey('Fk_assessment_schedule', '{{%assessment}}', 'schedule_id', '{{%schedule}}', 'id');
         $this->addForeignKey('Fk_assessment_schedule_detail', '{{%assessment}}', 'schedule_detail_id', '{{%schedule_detail}}', 'id');
@@ -425,6 +446,7 @@ class m250807_200101_create_all_tables extends Migration
     {
         // Drop semua tabel dalam urutan terbalik untuk menghindari error FK
         $this->dropTable('{{%assessment}}');
+        $this->dropTable('{{%schedule_token}}');
         $this->dropTable('{{%schedule_detail}}');
         $this->dropTable('{{%schedule}}');
         $this->dropTable('{{%profile}}');
