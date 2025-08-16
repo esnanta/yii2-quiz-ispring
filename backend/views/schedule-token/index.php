@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\DateHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -20,71 +21,74 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php /* echo Html::a(Yii::t('app', 'Create {modelClass}', [
     'modelClass' => 'Schedule Token',
-]), ['create'], ['class' => 'btn btn-success'])*/  ?>
+]), ['create'], ['class' => 'btn btn-success'])*/ ?>
     </p>
 
-    <?php Pjax::begin(); echo GridView::widget([
-        'dataProvider' => $dataProvider,
-        
-        'toolbar' => [
-            [
-                'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                     . ' '.
-                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-                'options' => ['class' => 'btn-group-md']
+    <?php Pjax::begin();
+    echo GridView::widget([
+            'dataProvider' => $dataProvider,
+
+            'toolbar' => [
+                    [
+                            'content' =>
+                                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
+                                    . ' ' .
+                                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                            'options' => ['class' => 'btn-group-md']
+                    ],
+                //'{export}',
+                //'{toggleData}'
             ],
-            //'{export}',
-            //'{toggleData}'
-        ],
-        
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'office_id',
-            'token',
-            ['attribute' => 'token_time','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']],
-            ['attribute' => 'created_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']],
-//            ['attribute' => 'updated_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            'created_by', 
-//            'updated_by', 
-//            'is_deleted', 
-//            ['attribute' => 'deleted_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            'deleted_by', 
-//            'verlock', 
-//            'uuid', 
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'buttons' => [
-                    'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
-                            Yii::$app->urlManager->createUrl(['schedule-token/view', 'id' => $model->id, 'edit' => 't']),
-                            ['title' => Yii::t('yii', 'Edit'),]
-                        );
-                    }
-                ],
+            'filterModel' => $searchModel,
+            'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                            'attribute' => 'date_start',
+                            'label' => Yii::t('app', 'Start'),
+                            'value' => function ($model) {
+                                return DateHelper::formatDateTime($model->date_start);
+                            },
+                    ],
+                    [
+                            'attribute' => 'date_end',
+                            'label' => Yii::t('app', 'End'),
+                            'value' => function ($model) {
+                                return DateHelper::formatDateTime($model->date_end);
+                            },
+                    ],
+                    'token',
+                    'description',
+                    [
+                            'class' => 'yii\grid\ActionColumn',
+                            'buttons' => [
+                                    'update' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                                                Yii::$app->urlManager->createUrl(['schedule-token/view', 'id' => $model->id, 'edit' => 't']),
+                                                ['title' => Yii::t('yii', 'Edit'),]
+                                        );
+                                    }
+                            ],
+                    ],
             ],
-        ],
-        'responsive' => true,
-        'hover' => true,
-        'condensed' => true,
-        'floatHeader' => false,
-                        
-        'bordered' => true,
-        'striped' => false,
-        'responsiveWrap' => false,
+            'responsive' => true,
+            'hover' => true,
+            'condensed' => true,
+            'floatHeader' => false,
 
-        'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
-            'type' => 'default',
-            //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
-            //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-            'showFooter' => false
-        ],
-    ]); Pjax::end(); ?>
-    
+            'bordered' => true,
+            'striped' => false,
+            'responsiveWrap' => false,
+
+            'panel' => [
+                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
+                    'type' => 'default',
+                //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
+                //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                    'showFooter' => false
+            ],
+    ]);
+    Pjax::end(); ?>
+
 
 </div>

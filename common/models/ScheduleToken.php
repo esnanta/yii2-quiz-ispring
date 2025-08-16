@@ -17,8 +17,9 @@ class ScheduleToken extends BaseScheduleToken
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['token_time', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['schedule_id', 'user_id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['token_time', 'date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['description'], 'string'],
             [['token'], 'string', 'max' => 6],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],

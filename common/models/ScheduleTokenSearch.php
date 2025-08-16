@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\service\CacheService;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -17,7 +18,8 @@ class ScheduleTokenSearch extends ScheduleToken
     {
         return [
             [['id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['token', 'token_time', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['token', 'token_time', 'date_start', 'date_end', 'description',
+                'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -29,7 +31,9 @@ class ScheduleTokenSearch extends ScheduleToken
 
     public function search($params)
     {
-        $query = ScheduleToken::find();
+        $officeId = CacheService::getInstance()->getOfficeId();
+        $query = ScheduleToken::find()->where(['office_id'=>$officeId])
+            ->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -43,6 +47,9 @@ class ScheduleTokenSearch extends ScheduleToken
             'id' => $this->id,
             'office_id' => $this->office_id,
             'token_time' => $this->token_time,
+            'date_start' => $this->date_start,
+            'date_end' => $this->date_end,
+            'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

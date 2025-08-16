@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="remove fix_user.sql">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update migration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/migrations/m250807_200101_create_all_tables.php" beforeDir="false" afterPath="$PROJECT_DIR$/console/migrations/m250807_200101_create_all_tables.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console/migrations/m250807_200102_insert_rbac_data.php" beforeDir="false" afterPath="$PROJECT_DIR$/console/migrations/m250807_200102_insert_rbac_data.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleTokenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleTokenController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule-token/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-token/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule-token/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-token/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule-token/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule-token/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ScheduleToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/ScheduleTokenSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/ScheduleTokenSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/ScheduleToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/ScheduleToken.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -810,7 +816,7 @@
       <workItem from="1755254029780" duration="778000" />
       <workItem from="1755258067643" duration="1204000" />
       <workItem from="1755310676183" duration="678000" />
-      <workItem from="1755312473546" duration="4440000" />
+      <workItem from="1755312473546" duration="8477000" />
     </task>
     <task id="LOCAL-00001" summary="reorder left menu">
       <option name="closed" value="true" />
@@ -1124,7 +1130,31 @@
       <option name="project" value="LOCAL" />
       <updated>1755315875218</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="add schedule-token to migration">
+      <option name="closed" value="true" />
+      <created>1755317120307</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1755317120307</updated>
+    </task>
+    <task id="LOCAL-00041" summary="update">
+      <option name="closed" value="true" />
+      <created>1755317128191</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1755317128191</updated>
+    </task>
+    <task id="LOCAL-00042" summary="update migration">
+      <option name="closed" value="true" />
+      <created>1755317963382</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1755317963382</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1151,8 +1181,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="use only new label for new record" />
-    <MESSAGE value="add more filter and dependent dropdown to AssessmentReport" />
     <MESSAGE value="integrate user&#10;remove participant&#10;update profile" />
     <MESSAGE value="remove UserParticipant.php" />
     <MESSAGE value="fix reset" />
@@ -1172,11 +1200,13 @@
     <MESSAGE value="update README.md" />
     <MESSAGE value="if record is being set to active, deactivate all other records in the same office" />
     <MESSAGE value="add toggle button" />
-    <MESSAGE value="update" />
     <MESSAGE value="separate token and schedule" />
     <MESSAGE value="add schedule-token" />
     <MESSAGE value="remove fix_user.sql" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove fix_user.sql" />
+    <MESSAGE value="add schedule-token to migration" />
+    <MESSAGE value="update" />
+    <MESSAGE value="update migration" />
+    <option name="LAST_COMMIT_MESSAGE" value="update migration" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

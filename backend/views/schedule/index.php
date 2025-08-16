@@ -61,7 +61,6 @@ $this->registerJs($search);
             ],
             'filterInputOptions' => ['placeholder' => '', 'id' => 'grid-schedule-search-room_id']
         ],
-        'token',
         [
             'attribute' => 'date_start',
             'label' => Yii::t('app', 'Start'),

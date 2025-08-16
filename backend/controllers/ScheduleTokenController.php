@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\service\DataIdService;
 use Yii;
 use common\models\ScheduleToken;
 use common\models\ScheduleTokenSearch;
@@ -80,7 +81,10 @@ class ScheduleTokenController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-scheduletoken')){
-            $model = new ScheduleToken;
+            $officeId   = DataIdService::getOfficeId();
+
+            $model      = new ScheduleToken;
+            $model->office_id = $officeId;
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
