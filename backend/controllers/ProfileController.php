@@ -6,6 +6,7 @@ use common\models\UserDektrium;
 use common\service\CacheService;
 use common\service\DataIdService;
 use common\service\DataListService;
+use common\service\UserService;
 use Yii;
 use common\models\Profile;
 use common\models\ProfileSearch;
@@ -21,6 +22,14 @@ use common\helper\MessageHelper;
  */
 class ProfileController extends Controller
 {
+    private UserService $userService;
+
+    public function __construct($id, $module, UserService $userService, $config = [])
+    {
+        $this->userService = $userService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -220,33 +229,39 @@ class ProfileController extends Controller
 
             if ($canCreateRegular) {
                 $model = new UserDektrium;
-                $transaction    = Yii::$app->db->beginTransaction();
-                try {
-                    if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                        Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
-                            'item_name'         => Yii::$app->params['userRoleRegular'],
-                            'user_id'           => $model->id,
-                            'created_at'        => time(),
-                        ])->execute();
 
-                        $profile = Profile::find()->where(['user_id' => $model->id])->one();
-                        $profile->office_id = $officeId; //OFFICE
-                        $profile->save(false);
+                if ($model->load(Yii::$app->request->post())) {
+                    // Use UserService for consistent user creation
+                    $result = $this->userService->createUser([
+                        'username' => $model->username,
+                        'email' => $model->email,
+                        'name' => $model->staff_title ?? '',
+                        'office_id' => $officeId,
+                        'group_id' => null, // Set as needed
+                    ], $model->password);
 
-                        $transaction->commit();
-
+                    if ($result['success']) {
+                        MessageHelper::getFlashSaveSuccess();
                         return $this->redirect(['/profile/index']);
                     } else {
-                        return $this->render('create_user_regular', [
-                            'model' => $model,
-                            'userTypeList' => $userTypeList,
-                            'profileList' => $profileList,
-                        ]);
+                        // Add validation errors to the model
+                        foreach ($result['errors'] as $field => $errors) {
+                            if (is_array($errors)) {
+                                foreach ($errors as $error) {
+                                    $model->addError($field, $error);
+                                }
+                            } else {
+                                $model->addError('username', $errors);
+                            }
+                        }
                     }
-                } catch (\Exception|\Throwable $e) {
-                    $transaction->rollBack();
-                    throw $e;
                 }
+
+                return $this->render('create_user_regular', [
+                    'model' => $model,
+                    'userTypeList' => $userTypeList,
+                    'profileList' => $profileList,
+                ]);
             } else {
                 MessageHelper::getFlashAccessDenied();
                 throw new ForbiddenHttpException;

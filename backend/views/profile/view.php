@@ -1,6 +1,7 @@
 <?php
 
-use yii\helpers\Html;
+use common\helper\LabelHelper;
+use kartik\select2\Select2;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
 
@@ -12,7 +13,7 @@ use kartik\datecontrol\DateControl;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profiles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button pull-right','style'=>'color:#333333;padding:0 5px']);
+$create = LabelHelper::getCreateButton('create-regular');
 
 ?>
 <div class="profile-view">
@@ -29,8 +30,30 @@ $create = Html::a('<i class="fas fa-plus"></i>', ['create'], ['class' => 'button
         'attributes' => [
             'user_id',
             'office_id',
-            'group_id',
-            'user_type',
+                [
+                        'attribute' => 'group_id',
+                        'value' => ($model->group_id != null) ? $model->group->title : '',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'group_id', 'prompt' => '', 'disabled' => false],
+                        'items' => $groupList,
+                        'widgetOptions' => [
+                                'class' => Select2::class,
+                                'data' => $groupList,
+                        ],
+                ],
+                [
+                        'attribute' => 'user_type',
+                        'format' => 'html',
+                        'value' => ($model->user_type != null) ? $model->getOneUserType($model->user_type) : '',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'user_type', 'prompt' => '', 'disabled' => false],
+                        'items' => $userTypeList,
+                        'widgetOptions' => [
+                                'class' => Select2::class,
+                                'data' => $userTypeList,
+                        ],
+                    //'valueColOptions'=>['style'=>'width:30%']
+                ],
             'name',
             'password',
             'public_email:email',

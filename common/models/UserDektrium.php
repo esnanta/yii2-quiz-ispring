@@ -20,10 +20,7 @@ use dektrium\user\models\User as BaseUser;
  */
 class UserDektrium extends BaseUser
 {
-    
-    public $office_title;
-    public $staff_title;
-    public $employment_id;
+
     public $user_type;
     public $password;
  
@@ -31,10 +28,9 @@ class UserDektrium extends BaseUser
     public function rules()
     {
         return [
-            
-            [['employment_id'], 'integer'],
-            [['office_title', 'staff_title', 'password', 'user_type'], 'string'],
-            [['office_title', 'staff_title', 'user_type','employment_id'], 'safe'],
+
+            [['password', 'user_type'], 'string'],
+            [['user_type'], 'safe'],
             
 
             // username rules

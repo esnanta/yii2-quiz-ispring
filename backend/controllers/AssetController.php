@@ -15,6 +15,7 @@ use common\service\CacheService;
 use common\service\DataIdService;
 use common\service\DataListService;
 use common\service\ParticipantService;
+use common\service\UserService;
 use Yii;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
@@ -29,11 +30,14 @@ use yii\web\NotFoundHttpException;
 class AssetController extends Controller
 {
     private AssetService $assetService;
+    private UserService $userService;
 
     public function __construct($id, $module,
-                                AssetService $assetService, $config = [])
+                                AssetService $assetService,
+                                UserService $userService, $config = [])
     {
         $this->assetService = $assetService;
+        $this->userService = $userService;
         parent::__construct($id, $module, $config);
     }
 
@@ -410,74 +414,39 @@ class AssetController extends Controller
 
             try {
                 if ($model->load(Yii::$app->request->post())) {
+                    // Use UserService for bulk user creation
+                    $result = $this->userService->createUsersFromImport(
+                        array_filter($dataList),
+                        $model->office_id,
+                        $model->group_id
+                    );
 
-                    $transaction = \Yii::$app->db->beginTransaction();
-                    try {
-                        $counter = 0;
-                        foreach (array_filter($dataList) as $i=>$data){
-                            if(sizeof($data) > 2){
-                                $username = $data[0];
-                                $title = $data[1];
-                                $email = $data[2];
-
-                                $user = User::find()->where(['username'=>$username])
-                                    ->orWhere(['email'=>$email])
-                                    ->one();
-
-                                if(empty($user)):
-                                    // Generate password
-                                    $plainPassword = substr(str_shuffle(MD5(microtime())), 0, 5);
-
-                                    // Create new user
-                                    $user = new User();
-                                    $user->username = 'U' . $username;
-                                    $user->email = $email;
-                                    $user->auth_key = Yii::$app->security->generateRandomString();
-                                    $user->password_hash = Yii::$app->security->generatePasswordHash($plainPassword);
-                                    $user->created_at = time();
-                                    $user->updated_at = time();
-
-                                    if ($user->save()) {
-                                        // Create profile for user
-                                        $profile = new Profile();
-                                        $profile->user_id = $user->id;
-                                        $profile->name = $title;
-                                        $profile->office_id = $model->office_id;
-                                        $profile->group_id = $model->group_id;
-                                        $profile->password = $plainPassword; // Store plain password in profile
-                                        $profile->user_type = Profile::USER_TYPE_REGULAR;
-
-                                        Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
-                                            'item_name'         => Yii::$app->params['userRoleRegular'],
-                                            'user_id'           => $user->id,
-                                            'created_at'        => time(),
-                                        ])->execute();
-
-                                        if ($profile->save()) {
-                                            $counter++;
-                                        } else {
-                                            Yii::error('Profile save error: ' . json_encode($profile->errors));
-                                        }
-                                    } else {
-                                        Yii::error('User save error: ' . json_encode($user->errors));
-                                    }
-                                endif;
-                            }
-                        }
-
-                        $transaction->commit();
+                    if ($result['success']) {
                         MessageHelper::getFlashSaveSuccess();
                         Yii::$app->getSession()->setFlash(
                             'success',
                             ['message' => Yii::t(
                                 'app',
-                                'Saved '.$counter.' records.'
+                                'Saved '.$result['created_count'].' records.'
                             )]
                         );
                         return $this->redirect(['index']);
-                    } catch (\Exception|\Throwable $e) {
-                        $transaction->rollBack();
-                        throw $e;
+                    } else {
+                        // Handle errors
+                        foreach ($result['errors'] as $error) {
+                            Yii::$app->getSession()->setFlash('error', $error);
+                        }
+
+                        $duplicateData = ParticipantService::checkDuplicate($dataList);
+                        return $this->render('import', [
+                            'model' => $model,
+                            'officeList' => $officeList,
+                            'groupList' => $groupList,
+                            'assetList' => $assetList,
+                            'helper' => $helper,
+                            'sheetData' => $sheetData,
+                            'duplicateData' => $duplicateData
+                        ]);
                     }
                 }
                 else {

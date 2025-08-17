@@ -89,17 +89,31 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw'
             ],
 
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'buttons' => [
-                    'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
-                            Yii::$app->urlManager->createUrl(['profile/view', 'id' => $model->user_id, 'edit' => 't']),
-                            ['title' => Yii::t('yii', 'Edit'),]
-                        );
-                    }
+                [
+                        'class' => 'common\widgets\ActionColumn',
+                        'contentOptions' => ['style' => 'white-space:nowrap;'],
+                        'template'=>'{update} {view}',
+                        'buttons' => [
+                                'update' => function ($url, $model) {
+                                    return Html::a('<i class="fas fa-pencil-alt"></i>',
+                                            Yii::$app->urlManager->createUrl(['profile/view', 'id' => $model->user_id, 'edit' => 't']),
+                                            [
+                                                    'title' => Yii::t('yii', 'Edit'),
+                                                    'class'=>'btn btn-sm btn-info',
+                                            ]
+                                    );
+                                },
+                                'view' => function ($url, $model) {
+                                    return Html::a('<i class="fas fa-eye"></i>',
+                                            Yii::$app->urlManager->createUrl(['profile/view', 'id' => $model->user_id]),
+                                            [
+                                                    'title' => Yii::t('yii', 'View'),
+                                                    'class'=>'btn btn-sm btn-info',
+                                            ]
+                                    );
+                                },
+                        ],
                 ],
-            ],
         ],
         'responsive' => true,
         'hover' => true,
