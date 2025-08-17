@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="change menu">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update dan fix">
+      <change afterPath="$PROJECT_DIR$/common/service/ScheduleService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/group/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/group/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/group/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/period/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/period/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/room/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/room/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/_form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/schedule/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/subject/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/subject/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -823,23 +812,8 @@
       <workItem from="1755312473546" duration="12279000" />
       <workItem from="1755328496743" duration="86000" />
       <workItem from="1755328619246" duration="3995000" />
-      <workItem from="1755350340700" duration="6353000" />
-    </task>
-    <task id="LOCAL-00005" summary="update schedule">
-      <option name="closed" value="true" />
-      <created>1726126659199</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1726126659199</updated>
-    </task>
-    <task id="LOCAL-00006" summary="fix file name">
-      <option name="closed" value="true" />
-      <created>1726126904215</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1726126904215</updated>
+      <workItem from="1755350340700" duration="7247000" />
+      <workItem from="1755398638262" duration="1834000" />
     </task>
     <task id="LOCAL-00007" summary="refactoring ScheduleController.php&#10;add ScheduleService.php">
       <option name="closed" value="true" />
@@ -1217,7 +1191,23 @@
       <option name="project" value="LOCAL" />
       <updated>1755356216773</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="remove ScheduleService.php">
+      <option name="closed" value="true" />
+      <created>1755357920703</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1755357920703</updated>
+    </task>
+    <task id="LOCAL-00055" summary="update dan fix">
+      <option name="closed" value="true" />
+      <created>1755357983958</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1755357983958</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1244,8 +1234,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update frontend login" />
-    <MESSAGE value="fix frontend" />
     <MESSAGE value="fix assessment" />
     <MESSAGE value="update staff &amp; room" />
     <MESSAGE value="add migration" />
@@ -1269,7 +1257,9 @@
     <MESSAGE value="update" />
     <MESSAGE value="remove nice admin theme" />
     <MESSAGE value="change menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="change menu" />
+    <MESSAGE value="remove ScheduleService.php" />
+    <MESSAGE value="update dan fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dan fix" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
