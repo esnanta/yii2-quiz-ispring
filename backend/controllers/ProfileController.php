@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Employment;
+use common\models\Office;
+use common\models\Staff;
 use common\models\UserDektrium;
 use common\service\CacheService;
 use common\service\DataIdService;
@@ -269,6 +272,83 @@ class ProfileController extends Controller
         } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
+        }
+    }
+
+    public function actionCreateOwner()
+    {
+        if (Yii::$app->user->can('create-user-owner')) {
+            $model          = new UserDektrium();
+            $userTypeList[] = [Yii::$app->params['userRoleOwner'] => 'Owner'];
+
+            $transaction    = Yii::$app->db->beginTransaction();
+            try {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
+                        'item_name'         => $model->user_type,
+                        'user_id'           => $model->id,
+                        'created_at'        => time(),
+                    ])->execute();
+
+                    $office = new Office;
+                    $office->user_id        = $model->id;
+                    $office->title          = $model->office_title;
+                    $office->email          = $model->email;
+                    $office->save();
+
+                    $employment = new Employment;
+                    $employment->office_id  = $office->id; //OFFICE
+                    $employment->title      = 'Manager';
+                    $employment->sequence   = '1';
+                    $employment->save();
+
+                    $staff = new Staff;
+                    $staff->office_id       = $office->id; //OFFICE
+                    $staff->user_id         = $model->id; //USER
+                    $staff->employment_id   = $employment->id; //EMPLOYMENT
+                    $staff->title           = $model->staff_title;
+                    $staff->save();
+
+                    $transaction->commit();
+
+                    return $this->redirect(['/user/admin/index']);
+                } else {
+                    return $this->render('create_user_owner', [
+                        'model' => $model,
+                        'userTypeList'=>$userTypeList
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            } catch (\Throwable $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        } else {
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
+    }
+
+    public function actionDownload()
+    {
+        $fileName = 'template_participant.xlsx';
+        $path = str_replace('frontend', 'backend', Yii::getAlias('@webroot'))
+            . '/template/' . $fileName;
+
+        if (!empty($path)) {
+
+            header('Content-Type:text/plain; charset=ISO-8859-15');
+            //if you want to read text file using text/plain header
+            header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+            header('Content-Length: ' . filesize($path));
+            readfile($path);
+
+            Yii::app()->end();
+
+        } else {
+            throw new NotFoundHttpException();
         }
     }
 }

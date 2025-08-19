@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add ScheduleService.php">
-      <change afterPath="$PROJECT_DIR$/common/service/UserService.php" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="refactor user">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/assets/AppAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/assets/NiceAdminAsset.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/profile/_form_user_regular.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/_form_user_regular.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/profile/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/profile/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/models/UserDektrium.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/UserDektrium.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/themes-sbadmin2/views/layouts/left.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -821,14 +821,9 @@
       <workItem from="1755350340700" duration="7247000" />
       <workItem from="1755398638262" duration="4576000" />
       <workItem from="1755415521496" duration="2291000" />
-    </task>
-    <task id="LOCAL-00008" summary="update ScheduleDetailController.php">
-      <option name="closed" value="true" />
-      <created>1726130165663</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1726130165663</updated>
+      <workItem from="1755433162547" duration="3340000" />
+      <workItem from="1755507276802" duration="720000" />
+      <workItem from="1755600691860" duration="3823000" />
     </task>
     <task id="LOCAL-00009" summary="remove unnecessary script">
       <option name="closed" value="true" />
@@ -1214,7 +1209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755400548622</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="refactor user">
+      <option name="closed" value="true" />
+      <created>1755433208750</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1755433208751</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1241,7 +1244,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update staff &amp; room" />
     <MESSAGE value="add migration" />
     <MESSAGE value="fix migration" />
     <MESSAGE value="update readme &amp; license" />
@@ -1266,7 +1268,8 @@
     <MESSAGE value="remove ScheduleService.php" />
     <MESSAGE value="update dan fix" />
     <MESSAGE value="add ScheduleService.php" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ScheduleService.php" />
+    <MESSAGE value="refactor user" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor user" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

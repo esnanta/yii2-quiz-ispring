@@ -3,20 +3,15 @@
 namespace backend\controllers;
 
 use common\helper\MessageHelper;
-use common\models\Employment;
 use common\models\Office;
-use common\models\Participant;
 use common\models\Schedule;
-use common\models\ScheduleDetail;
 use common\models\Staff;
 use common\models\UserDektrium;
 use common\service\CacheService;
 use common\service\ScheduleService;
-use Exception;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 
@@ -158,130 +153,5 @@ class SiteController extends Controller
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
-    }
-    
-    
-    public function actionCreateOwner()
-    {
-        if (Yii::$app->user->can('create-user-owner')) {
-            $model          = new UserDektrium();
-            $userTypeList[] = [Yii::$app->params['userRoleOwner'] => 'Owner'];
-
-            $transaction    = Yii::$app->db->beginTransaction();
-            try {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
-                        'item_name'         => $model->user_type,
-                        'user_id'           => $model->id,
-                        'created_at'        => time(),
-                    ])->execute();
-
-                    $office = new Office;
-                    $office->user_id        = $model->id;
-                    $office->title          = $model->office_title;
-                    $office->email          = $model->email;
-                    $office->save();
-
-                    $employment = new Employment;
-                    $employment->office_id  = $office->id; //OFFICE
-                    $employment->title      = 'Manager';
-                    $employment->sequence   = '1';
-                    $employment->save();
-
-                    $staff = new Staff;
-                    $staff->office_id       = $office->id; //OFFICE
-                    $staff->user_id         = $model->id; //USER
-                    $staff->employment_id   = $employment->id; //EMPLOYMENT
-                    $staff->title           = $model->staff_title;
-                    $staff->save();
-
-                    $transaction->commit();
-
-                    return $this->redirect(['/user/admin/index']);
-                } else {
-                    return $this->render('create_user_owner', [
-                        'model' => $model,
-                        'userTypeList'=>$userTypeList
-                    ]);
-                }
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-                throw $e;
-            } catch (\Throwable $e) {
-                $transaction->rollBack();
-                throw $e;
-            }
-        } else {
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }
-    }
-
-
-    /**
-     * @throws Exception
-     * @throws Throwable
-     * @throws ForbiddenHttpException
-     */
-    public function actionCreateRegular()
-    {
-        if (Yii::$app->user->can('create-user-regular')) {
-            $officeId   = CacheService::getInstance()->getOfficeId();
-            $authItemName   = CacheService::getInstance()->getAuthItemName();
-
-            $canCreateRegular = false;
-            if ($authItemName == Yii::$app->params['userRoleAdmin'] ||
-                $authItemName == Yii::$app->params['userRoleOwner']) {
-                $canCreateRegular = true;
-            }
-
-            if ($canCreateRegular) {
-                $model          = new UserDektrium;
-                $userTypeList[] = [Yii::$app->params['userRoleRegular'] => 'Staff'];
-
-                $employmentList = ArrayHelper::map(Employment::find()
-                    ->where(['office_id' => $officeId])
-                    ->asArray()->all(), 'id', 'title');
-
-                $transaction    = Yii::$app->db->beginTransaction();
-                try {
-                    if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                        Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
-                            'item_name'         => $model->user_type,
-                            'user_id'           => $model->id,
-                            'created_at'        => time(),
-                        ])->execute();
-
-                        $staff = new Staff;
-                        $staff->office_id       = $officeId; //OFFICE
-                        $staff->user_id         = $model->id; //USER
-                        $staff->employment_id   = $model->employment_id; //EMPLOYMENT
-                        $staff->title           = $model->staff_title;
-                        $staff->save();
-
-                        $transaction->commit();
-
-                        return $this->redirect(['/staff/index']);
-                    } else {
-                        return $this->render('create_user_regular', [
-                            'model' => $model,
-                            'employmentList' => $employmentList,
-                            'userTypeList' => $userTypeList,
-                        ]);
-                    }
-                } catch (\Exception|\Throwable $e) {
-                    $transaction->rollBack();
-                    throw $e;
-                }
-            } else {
-                MessageHelper::getFlashAccessDenied();
-                throw new ForbiddenHttpException;
-            }
-        } else {
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }
-
-
     }
 }
