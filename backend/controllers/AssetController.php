@@ -184,7 +184,7 @@ class AssetController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($isImport=false)
     {
         if (Yii::$app->user->can('create-asset')) {
 
@@ -196,6 +196,9 @@ class AssetController extends Controller
             $model->office_id   = $officeId;
             $model->date_issued = date(DateHelper::getDateSaveFormat());
             $model->is_visible  = Asset::IS_VISIBLE_PRIVATE;
+            if($isImport):
+                $model->asset_type = Asset::ASSET_TYPE_IMPORT;
+            endif;
 
             $assetTypeList = Asset::getArrayAssetType();
             $isVisibleList = Asset::getArrayIsVisible();
