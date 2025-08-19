@@ -53,18 +53,10 @@ use kartik\widgets\SideNav;
             'items' => [
                 ['label' => Yii::t('app', 'Home'), 'icon' => 'home', 'url' => ['/site/index']],
 
-                ['label' => Yii::t('app', 'Office'), 'icon' => 'university', 'items' => [
-                    ['label' => Yii::t('app', 'Staff'), 'icon' => 'chevron-circle-right', 'items' => [
-                        ['label' => Yii::t('app', 'Employment'), 'url' => ['/employment/index']],
-                        ['label' => Yii::t('app', 'Staff'), 'url' => ['/staff/index'] ],
-                        //['label' => Yii::t('app', 'Add Staff'), 'url' => ['/site/create-reguler']]
-                    ]],
-                    ['label' => Yii::t('app', 'Page'), 'icon' => 'chevron-circle-right', 'items' => [
-                        ['label' => Yii::t('app', 'Text'), 'url' => ['/page/index','type'=> Page::PAGE_TYPE_TEXT]],
-                        ['label' => Yii::t('app', 'Image'), 'url' => ['/page/index','type'=> Page::PAGE_TYPE_IMAGE] ],
-                    ]],
-                    ['label' => Yii::t('app', 'Office'), 'url' => ['/office/index']],
-                ],'visible' => $officeMenuVisibility],
+                ['label' => Yii::t('app', 'Users'), 'icon' => 'user', 'items' => [
+                        ['label' => Yii::t('app', 'Profiles'), 'url' => ['/profile/index']],
+
+                ]],
                 ['label' => Yii::t('app', 'Master'), 'icon' => 'cloud', 'items' => [
                     ['label' => Yii::t('app', 'Period'), 'url' => ['/period/index']],
                     ['label' => Yii::t('app', 'Group'), 'url' => ['/group/index']],
@@ -78,7 +70,6 @@ use kartik\widgets\SideNav;
                 ['label' => Yii::t('app', 'Quiz'), 'icon' => 'clipboard-list', 'items' => [
                     ['label' => Yii::t('app', 'Schedule'), 'url' => ['/schedule/index']],
                     ['label' => Yii::t('app', 'Token'), 'url' => ['/schedule-token/index']],
-                    ['label' => Yii::t('app', 'Profile'), 'url' => ['/profile/index']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/assessment/index']],
                 ]],
                 ['label' => Yii::t('app', 'Report'), 'icon' => 'file', 'items' => [
@@ -86,15 +77,14 @@ use kartik\widgets\SideNav;
                     ['label' => Yii::t('app', 'Card'), 'url' => ['/report/profile-card']],
                     ['label' => Yii::t('app', 'Score'), 'url' => ['/report/assessment-score']],
                 ]],
-                ['label' => Yii::t('app', 'Download'), 'icon' => 'download', 'items' => [
-                    ['label' => Yii::t('app', 'Template'), 'url' => ['/profile/download']]
-                ]],
                 ['label' => Yii::t('app', 'Admin'), 'icon' => 'user-secret', 'items' => [
-                    ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create-owner']],
-                    ['label' => Yii::t('app', 'User'), 'url' => ['/user/admin/index']],
-                    ['label' => Yii::t('app', 'Gii'), 'url' => ['/gii']],
-                    ['label' => Yii::t('app', 'Dummy'), 'url' => ['/dummy/view'],
-                        'visible'=> (YII_ENV == true) ],
+                        ['label' => Yii::t('app', 'Office'), 'url' => ['/office/index'],
+                                'visible' => $officeMenuVisibility],
+                        ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create-owner']],
+                        ['label' => Yii::t('app', 'User'), 'url' => ['/user/admin/index']],
+                        ['label' => Yii::t('app', 'Gii'), 'url' => ['/gii']],
+                        ['label' => Yii::t('app', 'Dummy'), 'url' => ['/dummy/view'],
+                            'visible'=> (YII_ENV == true) ],
                 ], 'visible' => Yii::$app->user->identity->isAdmin],
 
                 ['label' => 'Logout', 'icon' => 'sign-out-alt',
