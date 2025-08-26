@@ -103,36 +103,50 @@ class AssetController extends Controller
             $currentFile    = $this->assetService->getAssetFile($model);
             $assetUrl       = $this->assetService->getAssetUrl($model);
             $fileData       = null;
-            $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
+            $fileType       = null;
             $helper         = null;
+            $detectedFileType = null; // Add this new variable
 
             if (!empty($currentFile)) {
                 try {
+                    // Use getIdentify method to detect the actual file type
+                    $spreadsheetHelper = SpreadsheetHelper::getInstance();
+                    $detectedFileType = $spreadsheetHelper->getIdentify($currentFile);
+
+                    // Log the detected file type for debugging
+                    if ($detectedFileType) {
+                        Yii::info("Detected file type: {$detectedFileType} for file: {$currentFile}", __METHOD__);
+                    }
+
                     $fileExtension = strtolower(pathinfo($currentFile, PATHINFO_EXTENSION));
 
                     foreach ($fileExtensionList as $type => $extensions) {
                         if (in_array($fileExtension, $extensions)) {
-                            $fileType = $type; // Assign the asset type integer
+                            $fileType = $type;
                             break;
                         }
                     }
 
                     if ($fileType === Asset::ASSET_TYPE_SPREADSHEET) {
-                        $spreadsheetHelper = SpreadsheetHelper::getInstance();
+                        if ($detectedFileType && !$spreadsheetHelper->isSupportedFormat($currentFile)) {
+                            throw new \Exception("Unsupported spreadsheet format: {$detectedFileType}");
+                        }
+
                         $helper = $spreadsheetHelper;
                         $sheetName = $spreadsheetHelper->getSheetName();
                         $spreadsheet = $spreadsheetHelper->loadSpreadsheet($currentFile, $sheetName);
-
-                        // Use the corrected getDataList method to ensure data is read properly
                         $worksheet = $spreadsheet->getActiveSheet();
                         $fileData = $spreadsheetHelper->getDataList($worksheet);
-
-                    } else  {
+                    } else {
                         $fileData = $currentFile;
                     }
 
                 } catch (\Exception $e) {
                     MessageHelper::getFlashAssetNotFound();
+                    if ($detectedFileType) {
+                        Yii::$app->getSession()->setFlash('error',
+                            "Error processing {$detectedFileType} file: " . $e->getMessage());
+                    }
                 }
             }
 
@@ -151,7 +165,6 @@ class AssetController extends Controller
                             unlink($currentFile);
                         }
                         $path = $this->assetService->getAssetFile($model);
-                        // Use the new method that sets proper permissions
                         $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                     }
                     MessageHelper::getFlashUpdateSuccess();
@@ -170,7 +183,8 @@ class AssetController extends Controller
                 'fileType' => $fileType,
                 'helper' => $helper,
                 'fileData' => $fileData,
-                'renderIndexFileStatus' => $renderIndexFileStatus
+                'renderIndexFileStatus' => $renderIndexFileStatus,
+                'detectedFileType' => $detectedFileType // Pass to view
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -215,10 +229,8 @@ class AssetController extends Controller
                     }
 
                     if ($model->save()) :
-                        // upload only if valid uploaded file instance found
                         if ($asset !== false) {
                             $path = $this->assetService->getAssetFile($model);
-                            // Use the new method that sets proper permissions
                             $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                         }
                         MessageHelper::getFlashUpdateSuccess();
@@ -271,10 +283,8 @@ class AssetController extends Controller
                 }
 
                 if ($model->save()) :
-                    // upload only if valid uploaded file instance found
                     if ($asset !== false) {
                         $path = $this->assetService->getAssetFile($model);
-                        // Use the new method that sets proper permissions
                         $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                     }
                     MessageHelper::getFlashUpdateSuccess();

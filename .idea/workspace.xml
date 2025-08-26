@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="fix displayGrid">
       <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/asset/_view_side.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/_view_side.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/ReadFilter.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/ReadFilter.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/helper/SpreadsheetHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/SpreadsheetHelper.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -833,15 +830,7 @@
       <workItem from="1755953783313" duration="1800000" />
       <workItem from="1756002949051" duration="3402000" />
       <workItem from="1756118606170" duration="1211000" />
-      <workItem from="1756206224919" duration="12772000" />
-    </task>
-    <task id="LOCAL-00016" summary="fix reset">
-      <option name="closed" value="true" />
-      <created>1753869320465</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1753869320465</updated>
+      <workItem from="1756206224919" duration="13242000" />
     </task>
     <task id="LOCAL-00017" summary="fix message">
       <option name="closed" value="true" />
@@ -1227,7 +1216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756213692348</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="fix displayGrid">
+      <option name="closed" value="true" />
+      <created>1756224606673</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1756224606673</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1254,7 +1251,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update README.md" />
     <MESSAGE value="if record is being set to active, deactivate all other records in the same office" />
     <MESSAGE value="add toggle button" />
     <MESSAGE value="separate token and schedule" />
@@ -1279,7 +1275,8 @@
     <MESSAGE value="refactor" />
     <MESSAGE value="rename ParticipantService.php to ProfileService.php" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="fix displayGrid" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix displayGrid" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

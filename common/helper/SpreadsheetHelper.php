@@ -117,9 +117,21 @@ class SpreadsheetHelper extends Sample
         return 'Participant';
     }
 
-    public function getIdentify($inputFileName): string
+    /**
+     * Identify the file type of a spreadsheet file
+     * @param string $inputFileName
+     * @return string|null Returns the file type or null if unable to identify
+     */
+    public function getIdentify($inputFileName): ?string
     {
-        return IOFactory::identify($inputFileName);
+        try {
+            if (!file_exists($inputFileName)) {
+                return null;
+            }
+            return IOFactory::identify($inputFileName);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     /**
