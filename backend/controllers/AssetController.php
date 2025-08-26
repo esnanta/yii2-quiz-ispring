@@ -7,14 +7,12 @@ use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
-use common\models\Profile;
 use common\models\ProfileImport;
-use common\models\User;
 use common\service\AssetService;
 use common\service\CacheService;
 use common\service\DataIdService;
 use common\service\DataListService;
-use common\service\ParticipantService;
+use common\service\ProfileService;
 use common\service\UserService;
 use Yii;
 use yii\base\Exception;
@@ -440,7 +438,7 @@ class AssetController extends Controller
                             Yii::$app->getSession()->setFlash('error', $error);
                         }
 
-                        $duplicateData = ParticipantService::checkDuplicate($dataList);
+                        $duplicateData = ProfileService::checkDuplicate($dataList);
                         return $this->render('import', [
                             'model' => $model,
                             'officeList' => $officeList,
@@ -453,7 +451,7 @@ class AssetController extends Controller
                     }
                 }
                 else {
-                    $duplicateData = ParticipantService::checkDuplicate($dataList);
+                    $duplicateData = ProfileService::checkDuplicate($dataList);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,

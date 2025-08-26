@@ -40,7 +40,7 @@ class SpreadsheetHelper extends Sample
     }
 
     public function getSheetName(): String {
-        return 'Participant';
+        return 'Profile-User';
     }
 
     public function getIdentify($inputFileName): string

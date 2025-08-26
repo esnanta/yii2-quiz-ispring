@@ -4,18 +4,14 @@ namespace backend\controllers;
 
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
-use common\models\Assessment;
 use common\models\Asset;
 use common\models\AssetSearch;
 use common\models\Participant;
-use common\models\ParticipantImport;
 use common\models\ParticipantSearch;
-use common\models\Subject;
-use common\service\AssessmentService;
 use common\service\AssetService;
 use common\service\DataIdService;
 use common\service\DataListService;
-use common\service\ParticipantService;
+use common\service\ProfileService;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
@@ -239,7 +235,7 @@ class ParticipantController extends Controller
                     }
                 }
                 else {
-                    $duplicateData = ParticipantService::checkDuplicate($dataList);
+                    $duplicateData = ProfileService::checkDuplicate($dataList);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,

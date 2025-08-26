@@ -8,7 +8,7 @@
  *
  */
 
-use common\service\ParticipantService;
+use common\service\ProfileService;
 
 $this->title = Yii::t('app', 'Report {modelClass}', [
     'modelClass' => 'Participant',
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="card-text">
                             <?php
                             if($model->is_display_subject):
-                                ParticipantService::displaySchedule($profile->group_id, $activePeriod->id);
+                                ProfileService::displaySchedule($profile->group_id, $activePeriod->id);
                             endif;
                             ?>
                         </p>

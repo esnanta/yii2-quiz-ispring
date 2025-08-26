@@ -1,7 +1,7 @@
 <?php
 
 use common\helper\LabelHelper;
-use common\service\ParticipantService;
+use common\service\ProfileService;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
@@ -62,7 +62,7 @@ use kartik\builder\Form;
 
     ]);
 
-    if(!ParticipantService::getIsAllDataExisted()) {
+    if(!ProfileService::getIsAllDataExisted()) {
         echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Import') : Yii::t('app', 'Import'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
         );
