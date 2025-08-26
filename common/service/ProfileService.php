@@ -8,7 +8,7 @@ use common\models\Schedule;
 use common\models\User;
 use Yii;
 
-class ParticipantService
+class ProfileService
 {
     // Declare the is_duplicate property
     protected static bool $is_all_data_existed = true;
@@ -29,7 +29,7 @@ class ParticipantService
                     ->one();
 
                 if ($model !== null) {
-                    (new ParticipantService)->setIsAllDataExisted(true);
+                    (new ProfileService)->setIsAllDataExisted(true);
                     $resultList[] = [
                         'name' => $name,
                         'username' => $username,
@@ -38,7 +38,7 @@ class ParticipantService
                     ];
 
                 } else {
-                    (new ParticipantService)->setIsAllDataExisted(false);
+                    (new ProfileService)->setIsAllDataExisted(false);
                     $resultList[] = [
                         'name' => $name,
                         'username' => $username,
