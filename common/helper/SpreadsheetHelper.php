@@ -114,7 +114,7 @@ class SpreadsheetHelper extends Sample
     }
 
     public function getSheetName(): String {
-        return 'Profile-User';
+        return 'Participant';
     }
 
     public function getIdentify($inputFileName): string
@@ -140,26 +140,16 @@ class SpreadsheetHelper extends Sample
     public function getDataList($data): array
     {
         $dataList = [];
-        //$data->getRowIterator(1) = START FROM ROW 1
         foreach ($data->getRowIterator(1) as $row) {
             $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
 
-            /*
-             * setIterateOnlyExistingCells
-             * Default value is 'false'
-             * FALSE = This loops through all cells, even if a cell value is not set.
-             * TRUE = Loop through cells only when their value is set.
-             */
-            $cellIterator->setIterateOnlyExistingCells(FALSE);
-
-            //$counter = 0;
             $rowList = [];
-            foreach ($cellIterator as $i=>$cell) {
-                if($i !=  'A' && $cell->getValue() != null){
-                    $rowList[] = $cell->getFormattedValue();
-                }
-                $dataList[] = $rowList;
+            foreach ($cellIterator as $cell) {
+                // Add all cell values, even null ones, to preserve column structure
+                $rowList[] = $cell->getFormattedValue();
             }
+            $dataList[] = $rowList;
         }
         return $dataList;
     }
@@ -180,30 +170,33 @@ class SpreadsheetHelper extends Sample
      */
     public function displayGrid($fileData): void
     {
-        if (empty($fileData)) {
-            echo '<div class="alert alert-warning">No data found in spreadsheet</div>';
+        if (empty($fileData) || empty($fileData[0])) {
+            echo '<div class="alert alert-warning">No data or header found in spreadsheet.</div>';
             return;
         }
 
-        echo '<div class="table-responsive">';
-        echo '<table class="table table-bordered table-striped table-sm">';
+        // Always use the first row as header
+        $headerRow = $fileData[0];
 
-        $isFirstRow = true;
+        echo '<div class="table-responsive">';
+        echo '<table class="table table-striped table-bordered">';
+        echo '<thead class="table-dark"><tr>';
+        // Display only the first 4 header columns
+        foreach (array_slice($headerRow, 0, 4) as $cellValue) {
+            echo '<th class="text-center">' . htmlspecialchars($cellValue ?? 'Column') . '</th>';
+        }
+        echo '</tr></thead><tbody>';
+
+        // Display data rows, skipping the header
         foreach ($fileData as $rowIndex => $row) {
-            if ($isFirstRow) {
-                echo '<thead class="thead-dark"><tr>';
-                foreach ($row as $cellValue) {
-                    echo '<th>' . htmlspecialchars($cellValue ?? '') . '</th>';
-                }
-                echo '</tr></thead><tbody>';
-                $isFirstRow = false;
-            } else {
-                echo '<tr>';
-                foreach ($row as $cellValue) {
-                    echo '<td>' . htmlspecialchars($cellValue ?? '') . '</td>';
-                }
-                echo '</tr>';
+            if ($rowIndex === 0) continue; // skip header row
+
+            echo '<tr>';
+            // Display only the first 4 data columns
+            foreach (array_slice($row, 0, 4) as $cellValue) {
+                echo '<td>' . htmlspecialchars($cellValue ?? '') . '</td>';
             }
+            echo '</tr>';
         }
 
         echo '</tbody></table>';
