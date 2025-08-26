@@ -133,7 +133,8 @@ class AssetController extends Controller
                         }
 
                         $helper = $spreadsheetHelper;
-                        $sheetName = $spreadsheetHelper->getSheetName();
+                        $sheetNames = $spreadsheetHelper->getSheetNames($currentFile, 'Participant');
+                        $sheetName = $sheetNames[0];
                         $spreadsheet = $spreadsheetHelper->loadSpreadsheet($currentFile, $sheetName);
                         $worksheet = $spreadsheet->getActiveSheet();
                         $fileData = $spreadsheetHelper->getDataList($worksheet);
@@ -425,7 +426,8 @@ class AssetController extends Controller
 
             try {
                 $helper = $spreadsheetHelper->getHelper();
-                $sheetName = $spreadsheetHelper->getSheetName();
+                $sheetNames = $spreadsheetHelper->getSheetNames($inputFileName, 'Participant');
+                $sheetName = $sheetNames[0];
 
                 // Use the enhanced loadSpreadsheet method with fallback
                 $spreadsheet = $spreadsheetHelper->loadSpreadsheet($inputFileName, $sheetName);

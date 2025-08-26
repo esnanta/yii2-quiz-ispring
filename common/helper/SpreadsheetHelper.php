@@ -69,15 +69,24 @@ class SpreadsheetHelper extends Sample
     /**
      * Get available sheet names from the file
      * @param string $inputFileName
+     * @param string|null $preferredSheet Optional preferred sheet name to prioritize
      * @return array
      * @throws Exception
      */
-    public function getSheetNames($inputFileName): array
+    public function getSheetNames($inputFileName, $preferredSheet = null): array
     {
         try {
             $inputFileType = IOFactory::identify($inputFileName);
             $reader = IOFactory::createReader($inputFileType);
-            return $reader->listWorksheetNames($inputFileName);
+            $sheetNames = $reader->listWorksheetNames($inputFileName);
+            
+            if ($preferredSheet && in_array($preferredSheet, $sheetNames)) {
+                // If preferred sheet exists, move it to the front of the array
+                $sheetNames = array_diff($sheetNames, [$preferredSheet]);
+                array_unshift($sheetNames, $preferredSheet);
+            }
+            
+            return $sheetNames;
         } catch (Exception $e) {
             // For files like CSV that don't have named sheets
             return ['Sheet1'];
@@ -93,7 +102,7 @@ class SpreadsheetHelper extends Sample
      */
     public function loadSpreadsheet($inputFileName, $preferredSheetName = null): Spreadsheet
     {
-        $reader = $this->getReader($inputFileName, $preferredSheetName ?: $this->getSheetName());
+        $reader = $this->getReader($inputFileName, $preferredSheetName ?: 'Sheet1');
 
         try {
             return $reader->load($inputFileName);
@@ -113,9 +122,6 @@ class SpreadsheetHelper extends Sample
         return new Sample();
     }
 
-    public function getSheetName(): String {
-        return 'Participant';
-    }
 
     /**
      * Identify the file type of a spreadsheet file
