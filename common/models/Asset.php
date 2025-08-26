@@ -38,6 +38,8 @@ class Asset extends BaseAsset
             //TAMBAHAN
             [['is_visible','asset_category_id'], 'required'],
             [['asset'], 'file', 'maxSize' => (1024 * 1024 * 20), 'tooBig' => 'Limit is 20MB'],
+            [['asset'], 'file', 'extensions' => 'xlsx,xls,ods,csv,xlsm,xlsb,doc,docx,jpg,jpeg,png,gif,zip,rar,pdf',
+             'wrongExtension' => 'Only files with these extensions are allowed: {extensions}'],
 
             [['office_id', 'is_visible', 'asset_type', 'asset_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
@@ -143,12 +145,12 @@ class Asset extends BaseAsset
     public static function getArrayFileExtension(): array
     {
         return [
-            self::ASSET_TYPE_SPREADSHEET => ['xlsx', 'xls'],
+            self::ASSET_TYPE_SPREADSHEET => ['xlsx', 'xls', 'ods', 'csv', 'xlsm', 'xlsb'],
             self::ASSET_TYPE_IMAGE       => ['jpg', 'jpeg', 'png', 'gif'],
             self::ASSET_TYPE_WORD        => ['doc', 'docx'],
             self::ASSET_TYPE_COMPRESSION => ['zip', 'rar'],
             self::ASSET_TYPE_PDF         => ['pdf'],
-            self::ASSET_TYPE_IMPORT      => ['xlsx', 'xls'],
+            self::ASSET_TYPE_IMPORT      => ['xlsx', 'xls', 'ods', 'csv', 'xlsm', 'xlsb'],
         ];
     }
 
@@ -194,7 +196,7 @@ class Asset extends BaseAsset
             $this->download_counter = $this->download_counter+1;
             $this->save();
 
-            Yii::app()->end();
+            Yii::$app->end();
         }
     }
 

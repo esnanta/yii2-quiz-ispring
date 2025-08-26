@@ -40,6 +40,55 @@ class AssetService
     }
 
     /**
+     * Set file permissions for uploaded files
+     * @param string $filePath
+     * @param int $permissions Default is 0644 (read/write for owner, read for group/others)
+     * @return bool
+     */
+    public function setFilePermissions(string $filePath, int $permissions = 0644): bool
+    {
+        if (!file_exists($filePath)) {
+            return false;
+        }
+
+        try {
+            // Set file permissions
+            if (chmod($filePath, $permissions)) {
+                // Also ensure the parent directory has proper permissions
+                $directory = dirname($filePath);
+                chmod($directory, 0755); // rwxr-xr-x for directories
+                return true;
+            }
+        } catch (\Exception $e) {
+            Yii::error("Failed to set file permissions for {$filePath}: " . $e->getMessage());
+        }
+
+        return false;
+    }
+
+    /**
+     * Save uploaded file with proper permissions
+     * @param UploadedFile $uploadedFile
+     * @param string $filePath
+     * @param int $permissions
+     * @return bool
+     */
+    public function saveUploadedFileWithPermissions(UploadedFile $uploadedFile, string $filePath, int $permissions = 0644): bool
+    {
+        try {
+            // Save the file
+            if ($uploadedFile->saveAs($filePath)) {
+                // Set proper permissions after saving
+                return $this->setFilePermissions($filePath, $permissions);
+            }
+        } catch (\Exception $e) {
+            Yii::error("Failed to save file with permissions: " . $e->getMessage());
+        }
+
+        return false;
+    }
+
+    /**
      * Delete asset file from server
      * @param Asset $asset
      * @return bool
@@ -77,24 +126,36 @@ class AssetService
 
     public function getAssetUrl(Asset $asset): string
     {
-        if($asset->asset_type != Asset::ASSET_TYPE_IMAGE){
-            return self::getDefaultImage();
-        }
-
         $path = self::getPath($asset);
         $fileName = $asset->asset_name;
 
-        // Set default image if fileName is empty
-        $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
-        $filePath = (new AssetService())->getWebRoot() . $path . '/' . $assetName;
+        // For image assets, return the actual image URL or default if not found
+        if($asset->asset_type == Asset::ASSET_TYPE_IMAGE){
+            // Set default image if fileName is empty
+            $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
+            $filePath = (new AssetService())->getWebRoot() . $path . '/' . $assetName;
 
-        // Check if the file exists
-        if (file_exists($filePath)) {
-            return Yii::$app->urlManager->baseUrl . $path . '/' . $assetName;
+            // Check if the file exists
+            if (file_exists($filePath)) {
+                return Yii::$app->urlManager->baseUrl . $path . '/' . $assetName;
+            }
+
+            // Return default image if file doesn't exist
+            return self::getDefaultImage();
         }
 
-        // Return default image if file doesn't exist
-        return self::getDefaultImage();
+        // For non-image assets (spreadsheets, documents, etc.), return file URL or empty string
+        if (!empty($fileName)) {
+            $filePath = (new AssetService())->getWebRoot() . $path . '/' . $fileName;
+
+            // Check if the file exists
+            if (file_exists($filePath)) {
+                return Yii::$app->urlManager->baseUrl . $path . '/' . $fileName;
+            }
+        }
+
+        // Return empty string for non-image assets when file doesn't exist
+        return '';
     }
 
     /**
@@ -124,6 +185,38 @@ class AssetService
             $zip->open($fileSource);
             $zip->extractTo($extractDir);
             $zip->close();
+
+            // Set proper permissions for extracted files
+            $this->setExtractedFilesPermissions($extractDir);
+        }
+    }
+
+    /**
+     * Set permissions for all extracted files recursively
+     * @param string $directory
+     * @return void
+     */
+    private function setExtractedFilesPermissions(string $directory): void
+    {
+        if (!is_dir($directory)) {
+            return;
+        }
+
+        try {
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+
+            foreach ($iterator as $item) {
+                if ($item->isDir()) {
+                    chmod($item->getPathname(), 0755); // rwxr-xr-x for directories
+                } else {
+                    chmod($item->getPathname(), 0644); // rw-r--r-- for files
+                }
+            }
+        } catch (\Exception $e) {
+            Yii::error("Failed to set permissions for extracted files in {$directory}: " . $e->getMessage());
         }
     }
 

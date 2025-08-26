@@ -119,10 +119,11 @@ class AssetController extends Controller
 
                     if ($fileType === Asset::ASSET_TYPE_SPREADSHEET) {
                         $spreadsheetHelper = SpreadsheetHelper::getInstance();
-                        $helper = $spreadsheetHelper->getHelper();
+                        $helper = $spreadsheetHelper; // Use the SpreadsheetHelper directly instead of Sample
                         $sheetName = $spreadsheetHelper->getSheetName();
-                        $reader = $spreadsheetHelper->getReader($currentFile, $sheetName);
-                        $spreadsheet = $reader->load($currentFile);
+
+                        // Use the enhanced loadSpreadsheet method
+                        $spreadsheet = $spreadsheetHelper->loadSpreadsheet($currentFile, $sheetName);
                         $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
                         $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
                             $activeRange, null, true, true, true
@@ -151,7 +152,8 @@ class AssetController extends Controller
                             unlink($currentFile);
                         }
                         $path = $this->assetService->getAssetFile($model);
-                        $asset->saveAs($path);
+                        // Use the new method that sets proper permissions
+                        $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                     }
                     MessageHelper::getFlashUpdateSuccess();
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -217,7 +219,8 @@ class AssetController extends Controller
                         // upload only if valid uploaded file instance found
                         if ($asset !== false) {
                             $path = $this->assetService->getAssetFile($model);
-                            $asset->saveAs($path);
+                            // Use the new method that sets proper permissions
+                            $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                         }
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
@@ -272,7 +275,8 @@ class AssetController extends Controller
                     // upload only if valid uploaded file instance found
                     if ($asset !== false) {
                         $path = $this->assetService->getAssetFile($model);
-                        $asset->saveAs($path);
+                        // Use the new method that sets proper permissions
+                        $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                     }
                     MessageHelper::getFlashUpdateSuccess();
                 endif;
@@ -402,18 +406,27 @@ class AssetController extends Controller
             $asset = Asset::find()->where(['id'=>$model->asset_id])->one();
             $inputFileName = $this->assetService->getAssetFile($asset);
 
-            $helper = SpreadsheetHelper::getInstance()->getHelper();
-            $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
-            $reader = SpreadsheetHelper::getInstance()->getReader($inputFileName,$sheetName);
-            $spreadsheet = $reader->load($inputFileName);
-            $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-            $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
-                $activeRange, null, true, true, true
-            );
-            $data = $spreadsheet->getActiveSheet();
-            $dataList = SpreadsheetHelper::getInstance()->getDataList($data);
+            // Validate file format before processing
+            $spreadsheetHelper = SpreadsheetHelper::getInstance();
+            if (!$spreadsheetHelper->isSupportedFormat($inputFileName)) {
+                MessageHelper::getFlashAccessDenied();
+                Yii::$app->getSession()->setFlash('error', 'Unsupported file format. Please upload a valid spreadsheet file (xlsx, xls, ods, csv, etc.).');
+                return $this->redirect(['asset/view', 'id' => $asset->id]);
+            }
 
             try {
+                $helper = $spreadsheetHelper->getHelper();
+                $sheetName = $spreadsheetHelper->getSheetName();
+
+                // Use the enhanced loadSpreadsheet method with fallback
+                $spreadsheet = $spreadsheetHelper->loadSpreadsheet($inputFileName, $sheetName);
+                $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
+                $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
+                    $activeRange, null, true, true, true
+                );
+                $data = $spreadsheet->getActiveSheet();
+                $dataList = $spreadsheetHelper->getDataList($data);
+
                 if ($model->load(Yii::$app->request->post())) {
                     // Use UserService for bulk user creation
                     $result = $this->userService->createUsersFromImport(
@@ -462,9 +475,10 @@ class AssetController extends Controller
                         'duplicateData' => $duplicateData
                     ]);
                 }
-            }
-            catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+            } catch (\Exception $e) {
+                MessageHelper::getFlashAccessDenied();
+                Yii::$app->getSession()->setFlash('error', 'Error processing spreadsheet: ' . $e->getMessage());
+                return $this->redirect(['asset/view', 'id' => $asset->id]);
             }
         }
         else{

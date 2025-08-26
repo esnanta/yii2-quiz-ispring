@@ -89,7 +89,12 @@ class BrowseAction extends \bajadev\ckeditor\actions\BrowseAction
 
                 if ($model->validate()) {
                     $fileName = $this->getFileName($image);
-                    $image->saveAs($this->getPath() . $fileName);
+                    $filePath = $this->getPath() . $fileName;
+                    $image->saveAs($filePath);
+
+                    // Set proper file permissions after upload
+                    chmod($filePath, 0644);
+                    chmod($this->getPath(), 0755);
 
                     $imagine = Image::getImagine();
                     $photo = $imagine->open($this->getPath() . $fileName);
