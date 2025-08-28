@@ -1,7 +1,6 @@
 <?php
 
-use common\service\ProfileService;
-use yii\helpers\Html;
+use common\service\UserService;
 
 /**
  * @var yii\web\View $this
@@ -40,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                        ProfileService::displayDuplicate($duplicateData);
+                        UserService::displayDuplicate($duplicateData);
                     ?>
                 </div>
             </div>

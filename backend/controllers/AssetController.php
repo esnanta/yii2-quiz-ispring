@@ -437,11 +437,13 @@ class AssetController extends Controller
                 );
                 $data = $spreadsheet->getActiveSheet();
                 $dataList = $spreadsheetHelper->getDataList($data);
+                // Remove header row
+                $dataListNoHeader = array_slice($dataList, 1);
 
                 if ($model->load(Yii::$app->request->post())) {
                     // Use UserService for bulk user creation
                     $result = $this->userService->createUsersFromImport(
-                        array_filter($dataList),
+                        array_filter($dataListNoHeader),
                         $model->office_id,
                         $model->group_id
                     );
@@ -462,7 +464,7 @@ class AssetController extends Controller
                             Yii::$app->getSession()->setFlash('error', $error);
                         }
 
-                        $duplicateData = ProfileService::checkDuplicate($dataList);
+                        $duplicateData = UserService::checkDuplicate($dataListNoHeader);
                         return $this->render('import', [
                             'model' => $model,
                             'officeList' => $officeList,
@@ -475,7 +477,7 @@ class AssetController extends Controller
                     }
                 }
                 else {
-                    $duplicateData = ProfileService::checkDuplicate($dataList);
+                    $duplicateData = UserService::checkDuplicate($dataList);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,
