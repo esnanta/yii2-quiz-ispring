@@ -23,17 +23,6 @@ use kartik\builder\Form;
         'form' => $form,
         'columns' => 1,
         'attributes' => [
-//            'office_id' => [
-//                'type' => Form::INPUT_WIDGET,
-//                'widgetClass' => Select2::class,
-//                'options' => [
-//                    'data' => $officeList,
-//                    'options' => ['placeholder' => 'Choose Office', 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
-//                ],
-//                'pluginOptions' => [
-//                    'allowClear' => true
-//                ],
-//            ],
 
             'asset_id' => [
                 'type' => Form::INPUT_WIDGET,
