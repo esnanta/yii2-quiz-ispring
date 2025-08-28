@@ -28,16 +28,11 @@ class UserService
         try {
             // Generate password if not provided
             if (empty($plainPassword)) {
-                $plainPassword = substr(str_shuffle(MD5(microtime())), 0, 8);
+                $plainPassword = $this->generatePassword();
             }
 
             // Check if user already exists
-            $existingUser = User::find()
-                ->where(['username' => $userData['username']])
-                ->orWhere(['email' => $userData['email']])
-                ->one();
-
-            if ($existingUser) {
+            if ($this->userExists($userData['username'], $userData['email'])) {
                 return [
                     'success' => false,
                     'user' => null,
@@ -139,14 +134,16 @@ class UserService
                     continue; // Skip incomplete data
                 }
 
-                $username = $userData[1];
-                $name = $userData[2];
-                $email = $userData[3];
+                $parsedData = $this->parseImportUserData($userData);
+                if (!$parsedData) {
+                    $errors[] = "Row " . ($i + 1) . ": Invalid data format";
+                    continue;
+                }
 
                 $result = $this->createUser([
-                    'username' => 'U' . $username,
-                    'email' => $email,
-                    'name' => $name,
+                    'username' => 'U' . $parsedData['username'],
+                    'email' => $parsedData['email'],
+                    'name' => $parsedData['name'],
                     'office_id' => $officeId,
                     'group_id' => $groupId,
                 ]);
@@ -212,48 +209,78 @@ class UserService
         return substr(str_shuffle(MD5(microtime())), 0, $length);
     }
 
+    /**
+     * Parse user data from import format
+     *
+     * @param array $userData Raw data array
+     * @return array|null Parsed data with keys: username, name, email or null if invalid
+     */
+    private function parseImportUserData(array $userData): ?array
+    {
+        if (count($userData) < 4) {
+            return null;
+        }
+
+        return [
+            'username' => $userData[1],
+            'name' => $userData[2],
+            'email' => $userData[3]
+        ];
+    }
+
+    /**
+     * Check for duplicate users in import data
+     *
+     * @param array $dataList Array of import data
+     * @return array Array of user data with duplicate status
+     */
     public static function checkDuplicate($dataList): array
     {
         $resultList = [];
+        $service = new self();
+
         // Skip the first row (header)
         $rows = array_values(array_filter($dataList));
         foreach ($rows as $i => $data) {
             // Skip header row (first row)
             if ($i === 0) continue;
-            if (sizeof($data) > 2) {
-                $name = $data[2]; //title
-                $username = $data[1]; //email
-                $email = $data[3]; //email
 
-                $model = User::find()->where(['username' => $username])
-                    ->orWhere(['email' => $email])
-                    ->one();
+            $parsedData = $service->parseImportUserData($data);
+            if (!$parsedData) {
+                continue;
+            }
 
-                if ($model !== null) {
-                    (new UserService)->setIsAllDataExisted(true);
-                    $resultList[] = [
-                        'name' => $name,
-                        'username' => $username,
-                        'email' => $email,
-                        'status' => LabelHelper::getYes('<i class="fas fa-check"></i>')
-                    ];
+            $model = User::find()->where(['username' => $parsedData['username']])
+                ->orWhere(['email' => $parsedData['email']])
+                ->one();
 
-                } else {
-                    (new UserService)->setIsAllDataExisted(false);
-                    $resultList[] = [
-                        'name' => $name,
-                        'username' => $username,
-                        'email' => $email,
-                        'status' => LabelHelper::getSuccess(Yii::t('app', 'New'))
-                    ];
-                }
+            if ($model !== null) {
+                $service->setIsAllDataExisted(true);
+                $resultList[] = [
+                    'name' => $parsedData['name'],
+                    'username' => $parsedData['username'],
+                    'email' => $parsedData['email'],
+                    'status' => LabelHelper::getYes('<i class="fas fa-check"></i>')
+                ];
+            } else {
+                $service->setIsAllDataExisted(false);
+                $resultList[] = [
+                    'name' => $parsedData['name'],
+                    'username' => $parsedData['username'],
+                    'email' => $parsedData['email'],
+                    'status' => LabelHelper::getSuccess(Yii::t('app', 'New'))
+                ];
             }
         }
         return $resultList;
     }
 
-
-    public static function displayDuplicate($duplicateData)
+    /**
+     * Display duplicate check results in a table format
+     *
+     * @param array $duplicateData Array of duplicate check results
+     */
+    public static function displayDuplicate($duplicateData): void
     {
         // Loop through the result and display each item in a Bootstrap table
         if (!empty($duplicateData)) {
@@ -269,18 +296,17 @@ class UserService
             echo '<tbody>';
 
             foreach ($duplicateData as $data) {
-                // Ensure $data is an array with 'name' and 'status' keys
+                // Ensure $data is an array with required keys
                 if (is_array($data) && isset($data['name']) && isset($data['status'])) {
                     echo '<tr>';
-                    echo '<td>' . htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8') . '</td>'; // Participant's name
-                    echo '<td>' . $data['username'] . '</td>'; // Status icon HTML
-                    echo '<td>' . $data['email'] . '</td>'; // Status icon HTML
-                    echo '<td>' . $data['status'] . '</td>'; // Status icon HTML
+                    echo '<td>' . htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8') . '</td>';
+                    echo '<td>' . htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8') . '</td>';
+                    echo '<td>' . htmlspecialchars($data['email'], ENT_QUOTES, 'UTF-8') . '</td>';
+                    echo '<td>' . $data['status'] . '</td>';
                     echo '</tr>';
                 } else {
-                    // Handle cases where $data is not in the expected format
                     echo '<tr>';
-                    echo '<td colspan="2" class="text-danger">Invalid data format</td>';
+                    echo '<td colspan="4" class="text-danger">Invalid data format</td>';
                     echo '</tr>';
                 }
             }
@@ -292,11 +318,16 @@ class UserService
         }
     }
 
-    public static function displaySchedule($groupId,$activePeriodId): void
+    /**
+     * Display schedule for a group
+     *
+     * @param int $groupId Group ID
+     * @param int $activePeriodId Active period ID
+     */
+    public static function displaySchedule($groupId, $activePeriodId): void
     {
         // Loop through the result and display each item in a Bootstrap table
         if (!empty($groupId)) {
-
             $officeId = CacheService::getInstance()->getOfficeId();
             $listSchedules = Schedule::find()
                 ->where([
@@ -340,16 +371,25 @@ class UserService
         }
     }
 
-    private function setIsAllDataExisted($isDuplicate): void
+    /**
+     * Set the all data existed flag
+     *
+     * @param bool $isDuplicate Whether data is duplicate
+     */
+    private function setIsAllDataExisted(bool $isDuplicate): void
     {
         //DEFAULT IS FALSE
         //RETURN ONLY TRUE VALUE
-        if (!$isDuplicate) :
+        if (!$isDuplicate) {
             self::$is_all_data_existed = $isDuplicate;
-        endif;
+        }
     }
 
-    // Method to get the value of is_duplicate
+    /**
+     * Get the all data existed flag
+     *
+     * @return bool
+     */
     public static function getIsAllDataExisted(): bool
     {
         return self::$is_all_data_existed;

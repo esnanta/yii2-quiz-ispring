@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="remove comment">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/AssetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AssetController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/asset/_import.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/_import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/asset/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/asset/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/_import.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/_import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/participant/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/participant/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/report/view_participant_card.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ProfileService.php" beforeDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="merge ProfileService.php into UserService.php&#10;remove ProfileService.php">
       <change beforePath="$PROJECT_DIR$/common/service/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/UserService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -842,15 +834,7 @@
       <workItem from="1756313894880" duration="983000" />
       <workItem from="1756359671390" duration="1357000" />
       <workItem from="1756361042667" duration="2325000" />
-      <workItem from="1756364286484" duration="618000" />
-    </task>
-    <task id="LOCAL-00023" summary="fix assessment">
-      <option name="closed" value="true" />
-      <created>1754034996024</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1754034996024</updated>
+      <workItem from="1756364286484" duration="1554000" />
     </task>
     <task id="LOCAL-00024" summary="update staff &amp; room">
       <option name="closed" value="true" />
@@ -1236,7 +1220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756360822118</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="merge ProfileService.php into UserService.php&#10;remove ProfileService.php">
+      <option name="closed" value="true" />
+      <created>1756365022076</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1756365022077</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1263,7 +1255,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add schedule-token to migration" />
     <MESSAGE value="update migration" />
     <MESSAGE value="add token service" />
     <MESSAGE value="update token" />
@@ -1288,7 +1279,8 @@
     <MESSAGE value="rename tools menu" />
     <MESSAGE value="update" />
     <MESSAGE value="remove comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove comment" />
+    <MESSAGE value="merge ProfileService.php into UserService.php&#10;remove ProfileService.php" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge ProfileService.php into UserService.php&#10;remove ProfileService.php" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
