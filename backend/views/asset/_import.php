@@ -1,7 +1,7 @@
 <?php
 
 use common\helper\LabelHelper;
-use common\service\ProfileService;
+use common\service\UserService;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
@@ -23,17 +23,6 @@ use kartik\builder\Form;
         'form' => $form,
         'columns' => 1,
         'attributes' => [
-//            'office_id' => [
-//                'type' => Form::INPUT_WIDGET,
-//                'widgetClass' => Select2::class,
-//                'options' => [
-//                    'data' => $officeList,
-//                    'options' => ['placeholder' => 'Choose Office', 'disabled' => (Yii::$app->user->identity->isAdmin) ? false : true],
-//                ],
-//                'pluginOptions' => [
-//                    'allowClear' => true
-//                ],
-//            ],
 
             'asset_id' => [
                 'type' => Form::INPUT_WIDGET,
@@ -62,7 +51,7 @@ use kartik\builder\Form;
 
     ]);
 
-    if(!ProfileService::getIsAllDataExisted()) {
+    if(!UserService::getIsAllDataExisted()) {
         echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Import') : Yii::t('app', 'Import'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
         );

@@ -12,7 +12,6 @@ use common\service\AssetService;
 use common\service\CacheService;
 use common\service\DataIdService;
 use common\service\DataListService;
-use common\service\ProfileService;
 use common\service\UserService;
 use Yii;
 use yii\base\Exception;
@@ -103,36 +102,51 @@ class AssetController extends Controller
             $currentFile    = $this->assetService->getAssetFile($model);
             $assetUrl       = $this->assetService->getAssetUrl($model);
             $fileData       = null;
-            $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
+            $fileType       = null;
             $helper         = null;
+            $detectedFileType = null; // Add this new variable
 
             if (!empty($currentFile)) {
                 try {
+                    // Use getIdentify method to detect the actual file type
+                    $spreadsheetHelper = SpreadsheetHelper::getInstance();
+                    $detectedFileType = $spreadsheetHelper->getIdentify($currentFile);
+
+                    // Log the detected file type for debugging
+                    if ($detectedFileType) {
+                        Yii::info("Detected file type: {$detectedFileType} for file: {$currentFile}", __METHOD__);
+                    }
+
                     $fileExtension = strtolower(pathinfo($currentFile, PATHINFO_EXTENSION));
 
                     foreach ($fileExtensionList as $type => $extensions) {
                         if (in_array($fileExtension, $extensions)) {
-                            $fileType = $type; // Assign the asset type integer
+                            $fileType = $type;
                             break;
                         }
                     }
 
                     if ($fileType === Asset::ASSET_TYPE_SPREADSHEET) {
-                        $spreadsheetHelper = SpreadsheetHelper::getInstance();
-                        $helper = $spreadsheetHelper->getHelper();
-                        $sheetName = $spreadsheetHelper->getSheetName();
-                        $reader = $spreadsheetHelper->getReader($currentFile, $sheetName);
-                        $spreadsheet = $reader->load($currentFile);
-                        $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-                        $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
-                            $activeRange, null, true, true, true
-                        );
-                    } else  {
+                        if ($detectedFileType && !$spreadsheetHelper->isSupportedFormat($currentFile)) {
+                            throw new \Exception("Unsupported spreadsheet format: {$detectedFileType}");
+                        }
+
+                        $helper = $spreadsheetHelper;
+                        $sheetNames = $spreadsheetHelper->getSheetNames($currentFile, 'Participant');
+                        $sheetName = $sheetNames[0];
+                        // Use filtered method for spreadsheet display
+                        // (columns A-D, max 20 rows, no empty rows)
+                        $fileData = $spreadsheetHelper->getFilteredUserImportData($currentFile, $sheetName);
+                    } else {
                         $fileData = $currentFile;
                     }
 
                 } catch (\Exception $e) {
                     MessageHelper::getFlashAssetNotFound();
+                    if ($detectedFileType) {
+                        Yii::$app->getSession()->setFlash('error',
+                            "Error processing {$detectedFileType} file: " . $e->getMessage());
+                    }
                 }
             }
 
@@ -151,7 +165,7 @@ class AssetController extends Controller
                             unlink($currentFile);
                         }
                         $path = $this->assetService->getAssetFile($model);
-                        $asset->saveAs($path);
+                        $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                     }
                     MessageHelper::getFlashUpdateSuccess();
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -169,7 +183,8 @@ class AssetController extends Controller
                 'fileType' => $fileType,
                 'helper' => $helper,
                 'fileData' => $fileData,
-                'renderIndexFileStatus' => $renderIndexFileStatus
+                'renderIndexFileStatus' => $renderIndexFileStatus,
+                'detectedFileType' => $detectedFileType // Pass to view
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -214,10 +229,9 @@ class AssetController extends Controller
                     }
 
                     if ($model->save()) :
-                        // upload only if valid uploaded file instance found
                         if ($asset !== false) {
                             $path = $this->assetService->getAssetFile($model);
-                            $asset->saveAs($path);
+                            $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                         }
                         MessageHelper::getFlashUpdateSuccess();
                     endif;
@@ -269,10 +283,9 @@ class AssetController extends Controller
                 }
 
                 if ($model->save()) :
-                    // upload only if valid uploaded file instance found
                     if ($asset !== false) {
                         $path = $this->assetService->getAssetFile($model);
-                        $asset->saveAs($path);
+                        $this->assetService->saveUploadedFileWithPermissions($asset, $path, 0664);
                     }
                     MessageHelper::getFlashUpdateSuccess();
                 endif;
@@ -402,69 +415,77 @@ class AssetController extends Controller
             $asset = Asset::find()->where(['id'=>$model->asset_id])->one();
             $inputFileName = $this->assetService->getAssetFile($asset);
 
-            $helper = SpreadsheetHelper::getInstance()->getHelper();
-            $sheetName = SpreadsheetHelper::getInstance()->getSheetName();
-            $reader = SpreadsheetHelper::getInstance()->getReader($inputFileName,$sheetName);
-            $spreadsheet = $reader->load($inputFileName);
-            $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-            $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
-                $activeRange, null, true, true, true
-            );
-            $data = $spreadsheet->getActiveSheet();
-            $dataList = SpreadsheetHelper::getInstance()->getDataList($data);
+            // Validate file format before processing
+            $spreadsheetHelper = SpreadsheetHelper::getInstance();
+            if (!$spreadsheetHelper->isSupportedFormat($inputFileName)) {
+                MessageHelper::getFlashAccessDenied();
+                Yii::$app->getSession()->setFlash('error', 'Unsupported file format. Please upload a valid spreadsheet file (xlsx, xls, ods, csv, etc.).');
+                return $this->redirect(['asset/view', 'id' => $asset->id]);
+            }
 
             try {
+                $helper = $spreadsheetHelper->getHelper();
+                $sheetNames = $spreadsheetHelper->getSheetNames($inputFileName, 'Participant');
+                $sheetName = $sheetNames[0];
+
+                // Data for display (limited to 20 rows)
+                $displayData = $spreadsheetHelper->getFilteredUserImportData($inputFileName, $sheetName);
+
                 if ($model->load(Yii::$app->request->post())) {
+                    // Data for import (all non-empty rows)
+                    $importData = $spreadsheetHelper->getAllDataForImport($inputFileName, $sheetName);
+
                     // Use UserService for bulk user creation
-                    $result = $this->userService->createUsersFromImport(
-                        array_filter($dataList),
+                    $result = $this->userService->createUsersFromImportBulk(
+                        $importData,
                         $model->office_id,
                         $model->group_id
                     );
 
                     if ($result['success']) {
                         MessageHelper::getFlashSaveSuccess();
-                        Yii::$app->getSession()->setFlash(
-                            'success',
-                            ['message' => Yii::t(
-                                'app',
-                                'Saved '.$result['created_count'].' records.'
-                            )]
-                        );
+                        if ($result['created_count'] > 0) {
+                            Yii::$app->getSession()->setFlash(
+                                'success',
+                                Yii::t('app', 'Successfully imported {count} users.', ['count' => $result['created_count']])
+                            );
+                        }
+                        if (!empty($result['errors'])) {
+                            Yii::$app->getSession()->setFlash('warning', 'Some users were not imported: <br>' . implode('<br>', $result['errors']));
+                        }
                         return $this->redirect(['index']);
                     } else {
                         // Handle errors
-                        foreach ($result['errors'] as $error) {
-                            Yii::$app->getSession()->setFlash('error', $error);
-                        }
+                        Yii::$app->getSession()->setFlash('error', 'An error occurred during import: <br>' . implode('<br>', $result['errors']));
 
-                        $duplicateData = ProfileService::checkDuplicate($dataList);
+                        $duplicateData = UserService::checkDuplicate($displayData);
                         return $this->render('import', [
                             'model' => $model,
                             'officeList' => $officeList,
                             'groupList' => $groupList,
                             'assetList' => $assetList,
                             'helper' => $helper,
-                            'sheetData' => $sheetData,
+                            'sheetData' => $displayData, // Use display data for the grid
                             'duplicateData' => $duplicateData
                         ]);
                     }
                 }
                 else {
-                    $duplicateData = ProfileService::checkDuplicate($dataList);
+                    $duplicateData = UserService::checkDuplicate($displayData);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,
                         'groupList' => $groupList,
                         'assetList' => $assetList,
                         'helper' => $helper,
-                        'sheetData' => $sheetData,
+                        'sheetData' => $displayData, // Use display data for the grid
                         'duplicateData' => $duplicateData
                     ]);
                 }
-            }
-            catch (StaleObjectException $e) {
-                throw new StaleObjectException('The object being updated is outdated.');
+            } catch (\Exception $e) {
+                MessageHelper::getFlashAccessDenied();
+                Yii::$app->getSession()->setFlash('error', 'Error processing spreadsheet: ' . $e->getMessage());
+                return $this->redirect(['asset/view', 'id' => $asset->id]);
             }
         }
         else{

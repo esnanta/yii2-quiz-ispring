@@ -2,13 +2,17 @@
 
 namespace common\service;
 
+use common\helper\DateHelper;
+use common\helper\LabelHelper;
 use common\models\Profile;
+use common\models\Schedule;
 use common\models\User;
 use Yii;
-use yii\db\Exception;
 
 class UserService
 {
+    protected static bool $is_all_data_existed = true;
+
     /**
      * Create a new user with profile
      *
@@ -24,16 +28,11 @@ class UserService
         try {
             // Generate password if not provided
             if (empty($plainPassword)) {
-                $plainPassword = substr(str_shuffle(MD5(microtime())), 0, 8);
+                $plainPassword = $this->generatePassword();
             }
 
             // Check if user already exists
-            $existingUser = User::find()
-                ->where(['username' => $userData['username']])
-                ->orWhere(['email' => $userData['email']])
-                ->one();
-
-            if ($existingUser) {
+            if ($this->userExists($userData['username'], $userData['email'])) {
                 return [
                     'success' => false,
                     'user' => null,
@@ -116,70 +115,152 @@ class UserService
     }
 
     /**
-     * Create multiple users from array data (for import functionality)
+     * Create multiple users from array data using bulk insert (for import functionality)
      *
      * @param array $usersData Array of user data arrays
      * @param int $officeId Office ID for all users
      * @param int $groupId Group ID for all users
      * @return array ['success' => bool, 'created_count' => int, 'errors' => array]
      */
-    public function createUsersFromImport(array $usersData, int $officeId, int $groupId): array
+    public function createUsersFromImportBulk(array $usersData, int $officeId, int $groupId): array
+    {
+        $createdCount = 0;
+        $errors = [];
+        $userBatch = [];
+        $batchSize = 100;
+
+        foreach ($usersData as $i => $userData) {
+            // Skip incomplete data
+            if (count($userData) < 4 || empty($userData[1]) || empty($userData[2]) || empty($userData[3])) {
+                continue;
+            }
+
+            $parsedData = $this->parseImportUserData($userData);
+            if (!$parsedData) {
+                $errors[] = "Row " . ($i + 2) . ": Invalid data format"; // +2 because of 0-based index and header
+                continue;
+            }
+
+            // Check for duplicates before adding to batch
+            if ($this->userExists('U' . $parsedData['username'], $parsedData['email'])) {
+                $errors[] = "Row " . ($i + 2) . ": User with username '{$parsedData['username']}' or email '{$parsedData['email']}' already exists.";
+                continue;
+            }
+
+            $userBatch[] = $parsedData;
+
+            if (count($userBatch) >= $batchSize) {
+                $result = $this->processUserBatch($userBatch, $officeId, $groupId);
+                $createdCount += $result['created_count'];
+                $errors = array_merge($errors, $result['errors']);
+                $userBatch = []; // Reset batch
+            }
+        }
+
+        // Process any remaining users in the last batch
+        if (!empty($userBatch)) {
+            $result = $this->processUserBatch($userBatch, $officeId, $groupId);
+            $createdCount += $result['created_count'];
+            $errors = array_merge($errors, $result['errors']);
+        }
+
+        return [
+            'success' => empty($errors),
+            'created_count' => $createdCount,
+            'errors' => $errors
+        ];
+    }
+
+    /**
+     * Process a batch of users for bulk insertion.
+     *
+     * @param array $userBatch
+     * @param int $officeId
+     * @param int $groupId
+     * @return array
+     */
+    private function processUserBatch(array $userBatch, int $officeId, int $groupId): array
     {
         $transaction = Yii::$app->db->beginTransaction();
         $createdCount = 0;
         $errors = [];
 
         try {
-            foreach ($usersData as $i => $userData) {
-                if (count($userData) < 3) {
-                    continue; // Skip incomplete data
-                }
+            $userRows = [];
+            $profileRows = [];
+            $authAssignmentRows = [];
+            $plainPasswords = [];
 
-                $username = $userData[0];
-                $name = $userData[1];
-                $email = $userData[2];
+            foreach ($userBatch as $parsedData) {
+                $plainPassword = $this->generatePassword();
+                $user = new User();
+                $user->username = 'U' . $parsedData['username'];
+                $user->email = $parsedData['email'];
+                $user->auth_key = Yii::$app->security->generateRandomString();
+                $user->password_hash = Yii::$app->security->generatePasswordHash($plainPassword);
+                $user->created_at = time();
+                $user->updated_at = time();
+                $user->flags = 0; // Set default value for flags
 
-                $result = $this->createUser([
-                    'username' => 'U' . $username,
-                    'email' => $email,
-                    'name' => $name,
-                    'office_id' => $officeId,
-                    'group_id' => $groupId,
-                ]);
-
-                if ($result['success']) {
-                    $createdCount++;
+                if ($user->validate()) {
+                    $userRows[] = $user->getAttributes();
+                    $plainPasswords[$user->username] = $plainPassword;
                 } else {
-                    $errors[] = "Row " . ($i + 1) . ": " . implode(', ', $result['errors']);
+                    $errorMessages = [];
+                    foreach($user->errors as $field => $fieldErrors) {
+                        $errorMessages[] = "$field: " . implode(', ', $fieldErrors);
+                    }
+                    $errors[] = "Validation failed for username '{$parsedData['username']}': " . implode('; ', $errorMessages);
                 }
             }
 
-            if (empty($errors)) {
-                $transaction->commit();
-                return [
-                    'success' => true,
-                    'created_count' => $createdCount,
-                    'errors' => []
-                ];
-            } else {
+            if (empty($userRows)) {
                 $transaction->rollBack();
-                return [
-                    'success' => false,
-                    'created_count' => 0,
-                    'errors' => $errors
-                ];
+                return ['created_count' => 0, 'errors' => $errors];
             }
 
+            // Bulk insert users
+            $userCommand = Yii::$app->db->createCommand()->batchInsert(User::tableName(), array_keys($userRows[0]), $userRows);
+            $insertedUserRows = $userCommand->execute();
+
+            if ($insertedUserRows > 0) {
+                // Fetch inserted users to get their IDs
+                $usernames = array_column($userRows, 'username');
+                $insertedUsers = User::find()->where(['username' => $usernames])->all();
+
+                foreach ($insertedUsers as $user) {
+                    $profileRows[] = [
+                        'user_id' => $user->id,
+                        'name' => $userBatch[array_search($user->username, array_column($userBatch, 'username'))]['name'],
+                        'office_id' => $officeId,
+                        'group_id' => $groupId,
+                        'public_email' => $user->email,
+                        'password' => $plainPasswords[$user->username],
+                        'user_type' => Profile::USER_TYPE_REGULAR,
+                    ];
+                    $authAssignmentRows[] = [
+                        'item_name' => Yii::$app->params['userRoleRegular'],
+                        'user_id' => $user->id,
+                        'created_at' => time(),
+                    ];
+                }
+
+                // Bulk insert profiles
+                Yii::$app->db->createCommand()->batchInsert(Profile::tableName(), array_keys($profileRows[0]), $profileRows)->execute();
+                // Bulk insert auth assignments
+                Yii::$app->db->createCommand()->batchInsert('tx_auth_assignment', array_keys($authAssignmentRows[0]), $authAssignmentRows)->execute();
+
+                $createdCount += count($insertedUsers);
+            }
+
+            $transaction->commit();
         } catch (\Exception|\Throwable $e) {
             $transaction->rollBack();
+            $errors[] = 'Bulk insert failed: ' . $e->getMessage();
             Yii::error('Bulk user creation failed: ' . $e->getMessage());
-
-            return [
-                'success' => false,
-                'created_count' => 0,
-                'errors' => ['Bulk user creation failed: ' . $e->getMessage()]
-            ];
         }
+
+        return ['created_count' => $createdCount, 'errors' => $errors];
     }
 
     /**
@@ -206,5 +287,197 @@ class UserService
     public function generatePassword(int $length = 8): string
     {
         return substr(str_shuffle(MD5(microtime())), 0, $length);
+    }
+
+    /**
+     * Parse user data from import format
+     *
+     * @param array $userData Raw data array
+     * @return array|null Parsed data with keys: username, name, email or null if invalid
+     */
+    private function parseImportUserData(array $userData): ?array
+    {
+        if (count($userData) < 4) {
+            return null;
+        }
+
+        return [
+            'username' => $userData[1],
+            'name' => $userData[2],
+            'email' => $userData[3]
+        ];
+    }
+
+    /**
+     * Check for duplicate users in import data
+     *
+     * @param array $dataList Array of import data
+     * @return array Array of user data with duplicate status
+     */
+    public static function checkDuplicate($dataList): array
+    {
+        $resultList = [];
+        $service = new self();
+
+        // Assume $dataList is already filtered by ReadFilter (columns A-D, max 20 rows)
+        $rows = array_values(array_filter($dataList));
+        foreach ($rows as $i => $data) {
+            // Skip header row (first row)
+            if ($i === 0) continue;
+            // Only process if $data is array and has at least 4 columns
+            if (!is_array($data) || count($data) < 4) continue;
+            // If any cell in columns A-D is empty, stop looping immediately
+            if (empty($data[0]) || empty($data[1]) || empty($data[2]) || empty($data[3])) {
+                break;
+            }
+
+            $parsedData = $service->parseImportUserData($data);
+            if (!$parsedData) {
+                continue;
+            }
+
+            $model = User::find()->where(['username' => $parsedData['username']])
+                ->orWhere(['email' => $parsedData['email']])
+                ->one();
+
+            if ($model !== null) {
+                $service->setIsAllDataExisted(true);
+                $resultList[] = [
+                    'name' => $parsedData['name'],
+                    'username' => $parsedData['username'],
+                    'email' => $parsedData['email'],
+                    'status' => LabelHelper::getYes('<i class="fas fa-check"></i>')
+                ];
+            } else {
+                $service->setIsAllDataExisted(false);
+                $resultList[] = [
+                    'name' => $parsedData['name'],
+                    'username' => $parsedData['username'],
+                    'email' => $parsedData['email'],
+                    'status' => LabelHelper::getSuccess(Yii::t('app', 'New'))
+                ];
+            }
+        }
+        return $resultList;
+    }
+
+    /**
+     * Display duplicate check results in a table format
+     *
+     * @param array $duplicateData Array of duplicate check results
+     */
+    public static function displayDuplicate($duplicateData): void
+    {
+        // Loop through the result and display each item in a Bootstrap table
+        if (!empty($duplicateData)) {
+            echo '<table class="table table-striped">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>'.Yii::t('app', 'Title').'</th>';
+            echo '<th>'.Yii::t('app', 'Username').'</th>';
+            echo '<th>'.Yii::t('app', 'Email').'</th>';
+            echo '<th>'.Yii::t('app', 'Status').'</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            foreach ($duplicateData as $data) {
+                // Ensure $data is an array with required keys
+                if (is_array($data) && isset($data['name']) && isset($data['status'])) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8') . '</td>';
+                    echo '<td>' . htmlspecialchars($data['username'], ENT_QUOTES, 'UTF-8') . '</td>';
+                    echo '<td>' . htmlspecialchars($data['email'], ENT_QUOTES, 'UTF-8') . '</td>';
+                    echo '<td>' . $data['status'] . '</td>';
+                    echo '</tr>';
+                } else {
+                    echo '<tr>';
+                    echo '<td colspan="4" class="text-danger">Invalid data format</td>';
+                    echo '</tr>';
+                }
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+        } else {
+            echo '<div class="alert alert-info">No data found.</div>';
+        }
+    }
+
+    /**
+     * Display schedule for a group
+     *
+     * @param int $groupId Group ID
+     * @param int $activePeriodId Active period ID
+     */
+    public static function displaySchedule($groupId, $activePeriodId): void
+    {
+        // Loop through the result and display each item in a Bootstrap table
+        if (!empty($groupId)) {
+            $officeId = CacheService::getInstance()->getOfficeId();
+            $listSchedules = Schedule::find()
+                ->where([
+                    'office_id' => $officeId,
+                    'group_id' => $groupId,
+                    'period_id' => $activePeriodId
+                ])
+                ->all();
+
+            echo '<table class="table table-sm table-bordered">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>'.Yii::t('app', '#').'</th>';
+            echo '<th>'.Yii::t('app', 'Subject').'</th>';
+            echo '<th>'.Yii::t('app', 'Date').'</th>';
+            echo '<th>'.Yii::t('app', 'Start').'</th>';
+            echo '<th>'.Yii::t('app', 'Sign').'</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            $counter = 1;
+            foreach ($listSchedules as $schedule) {
+                $listScheduleDetails = $schedule->scheduleDetails;
+                foreach ($listScheduleDetails as $scheduleDetail) {
+                    echo '<tr>';
+                    echo '<td>'.$counter.'</td>';
+                    echo '<td>'.$scheduleDetail->subject->title.'</td>';
+                    echo '<td>'.DateHelper::formatDate($schedule->date_start).'</td>';
+                    echo '<td>'.DateHelper::formatTime($schedule->date_start).'</td>';
+                    echo '<td> </td>';
+                    echo '</tr>';
+                    $counter++;
+                }
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+        } else {
+            echo '<div class="alert alert-info">No data found.</div>';
+        }
+    }
+
+    /**
+     * Set the all data existed flag
+     *
+     * @param bool $isDuplicate Whether data is duplicate
+     */
+    private function setIsAllDataExisted(bool $isDuplicate): void
+    {
+        //DEFAULT IS FALSE
+        //RETURN ONLY TRUE VALUE
+        if (!$isDuplicate) {
+            self::$is_all_data_existed = $isDuplicate;
+        }
+    }
+
+    /**
+     * Get the all data existed flag
+     *
+     * @return bool
+     */
+    public static function getIsAllDataExisted(): bool
+    {
+        return self::$is_all_data_existed;
     }
 }

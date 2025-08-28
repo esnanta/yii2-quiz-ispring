@@ -79,7 +79,7 @@ if (!Yii::$app->user->isGuest) {
                  aria-labelledby="toolsDropdown">
                 <h6 class="dropdown-header">Menu:</h6>
                 <?= Html::a(
-                    '<i class="fas fa-file-import fa-sm fa-fw mr-2 text-primary"></i> Import Users',
+                    '<i class="fas fa-file-import fa-sm fa-fw mr-2 text-primary"></i> Add Import',
                     ['/asset/create', 'isImport' => true],
                     ['class' => 'dropdown-item']
                 ) ?>

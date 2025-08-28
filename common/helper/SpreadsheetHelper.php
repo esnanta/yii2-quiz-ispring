@@ -6,10 +6,17 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\IReader;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use common\helper\ReadFilter;
 
 class SpreadsheetHelper extends Sample
 {
     private static ?SpreadsheetHelper $instance = null;
+
+    // Supported spreadsheet formats
+    private const SUPPORTED_FORMATS = [
+        'Xlsx', 'Xls', 'Ods', 'Csv', 'Slk', 'Gnumeric', 'Html'
+    ];
 
     public static function getInstance(): SpreadsheetHelper{
         if (self::$instance === null) {
@@ -23,15 +30,91 @@ class SpreadsheetHelper extends Sample
      */
     public function getReader($inputFileName, $sheetName): IReader
     {
+        // Validate file exists
+        if (!file_exists($inputFileName)) {
+            throw new Exception("File not found: {$inputFileName}");
+        }
+
         $filterSubset = new ReadFilter();
 
-        $inputFileType = IOFactory::identify($inputFileName);
-        $reader = IOFactory::createReader($inputFileType);
-        $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
-        $reader->setLoadSheetsOnly($sheetName);
-        $reader->setReadFilter($filterSubset);
+        try {
+            $inputFileType = IOFactory::identify($inputFileName);
 
-        return $reader;
+            // Validate if the file type is supported
+            if (!in_array($inputFileType, self::SUPPORTED_FORMATS)) {
+                throw new Exception("Unsupported file format: {$inputFileType}");
+            }
+
+            $reader = IOFactory::createReader($inputFileType);
+            $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
+
+            // For some formats like CSV, sheet names don't apply
+            if ($inputFileType !== 'Csv' && $inputFileType !== 'Slk') {
+                try {
+                    $reader->setLoadSheetsOnly($sheetName);
+                } catch (Exception $e) {
+                    // If specific sheet doesn't exist, load the first sheet
+                    // This will be handled when loading the spreadsheet
+                }
+            }
+
+            $reader->setReadFilter($filterSubset);
+
+            return $reader;
+        } catch (Exception $e) {
+            throw new Exception("Error creating reader for file {$inputFileName}: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get available sheet names from the file
+     * @param string $inputFileName
+     * @param string|null $preferredSheet Optional preferred sheet name to prioritize
+     * @return array
+     * @throws Exception
+     */
+    public function getSheetNames($inputFileName, $preferredSheet = null): array
+    {
+        try {
+            $inputFileType = IOFactory::identify($inputFileName);
+            $reader = IOFactory::createReader($inputFileType);
+            $sheetNames = $reader->listWorksheetNames($inputFileName);
+            
+            if ($preferredSheet && in_array($preferredSheet, $sheetNames)) {
+                // If preferred sheet exists, move it to the front of the array
+                $sheetNames = array_diff($sheetNames, [$preferredSheet]);
+                array_unshift($sheetNames, $preferredSheet);
+            }
+            
+            return $sheetNames;
+        } catch (Exception $e) {
+            // For files like CSV that don't have named sheets
+            return ['Sheet1'];
+        }
+    }
+
+    /**
+     * Load spreadsheet with fallback for sheet selection
+     * @param string $inputFileName
+     * @param string $preferredSheetName
+     * @return Spreadsheet
+     * @throws Exception
+     */
+    public function loadSpreadsheet($inputFileName, $preferredSheetName = null): Spreadsheet
+    {
+        $reader = $this->getReader($inputFileName, $preferredSheetName ?: 'Sheet1');
+
+        try {
+            return $reader->load($inputFileName);
+        } catch (Exception $e) {
+            // If preferred sheet fails, try loading without sheet restriction
+            $inputFileType = IOFactory::identify($inputFileName);
+            $fallbackReader = IOFactory::createReader($inputFileType);
+            $fallbackReader->setReadDataOnly(true);
+            $fallbackReader->setReadFilter(new ReadFilter());
+
+            return $fallbackReader->load($inputFileName);
+        }
     }
 
     public function getHelper(): Sample
@@ -39,39 +122,182 @@ class SpreadsheetHelper extends Sample
         return new Sample();
     }
 
-    public function getSheetName(): String {
-        return 'Profile-User';
+
+    /**
+     * Identify the file type of a spreadsheet file
+     * @param string $inputFileName
+     * @return string|null Returns the file type or null if unable to identify
+     */
+    public function getIdentify($inputFileName): ?string
+    {
+        try {
+            if (!file_exists($inputFileName)) {
+                return null;
+            }
+            return IOFactory::identify($inputFileName);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
-    public function getIdentify($inputFileName): string
+    /**
+     * Check if file format is supported
+     * @param string $inputFileName
+     * @return bool
+     */
+    public function isSupportedFormat($inputFileName): bool
     {
-        return IOFactory::identify($inputFileName);
+        try {
+            $inputFileType = IOFactory::identify($inputFileName);
+            return in_array($inputFileType, self::SUPPORTED_FORMATS);
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     public function getDataList($data): array
     {
         $dataList = [];
-        //$data->getRowIterator(1) = START FROM ROW 1
         foreach ($data->getRowIterator(1) as $row) {
             $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
 
-            /*
-             * setIterateOnlyExistingCells
-             * Default value is 'false'
-             * FALSE = This loops through all cells, even if a cell value is not set.
-             * TRUE = Loop through cells only when their value is set.
-             */
-            $cellIterator->setIterateOnlyExistingCells(FALSE);
-
-            //$counter = 0;
             $rowList = [];
-            foreach ($cellIterator as $i=>$cell) {
-                if($i !=  'A' && $cell->getValue() != null){
-                    $rowList[] = $cell->getFormattedValue();
-                }
-                $dataList[] = $rowList;
+            foreach ($cellIterator as $cell) {
+                // Add all cell values, even null ones, to preserve column structure
+                $rowList[] = $cell->getFormattedValue();
             }
+            $dataList[] = $rowList;
         }
         return $dataList;
+    }
+
+    /**
+     * Get supported file extensions
+     * @return array
+     */
+    public static function getSupportedExtensions(): array
+    {
+        return ['xlsx', 'xls', 'ods', 'csv', 'xlsm', 'xlsb', 'slk', 'gnumeric', 'html', 'htm'];
+    }
+
+    /**
+     * Display spreadsheet data in a grid format
+     * @param array $fileData
+     * @return void
+     */
+    public function displayGrid($fileData): void
+    {
+        if (empty($fileData) || empty($fileData[0])) {
+            echo '<div class="alert alert-warning">No data or header found in spreadsheet.</div>';
+            return;
+        }
+
+        // Always use the first row as header
+        $headerRow = $fileData[0];
+
+        echo '<div class="table-responsive">';
+        echo '<table class="table table-striped table-bordered">';
+        echo '<thead class="table-dark"><tr>';
+        // Display only the first 4 header columns
+        foreach (array_slice($headerRow, 0, 4) as $cellValue) {
+            echo '<th class="text-center">' . htmlspecialchars($cellValue ?? 'Column') . '</th>';
+        }
+        echo '</tr></thead><tbody>';
+
+        // Display data rows, skipping the header
+        foreach ($fileData as $rowIndex => $row) {
+            if ($rowIndex === 0) continue; // skip header row
+            $rowSlice = array_slice($row, 0, 4);
+            // If any cell in columns A-D is empty, stop displaying further rows
+            if (empty($rowSlice[0]) || empty($rowSlice[1]) || empty($rowSlice[2]) || empty($rowSlice[3])) {
+                break;
+            }
+            echo '<tr>';
+            foreach ($rowSlice as $cellValue) {
+                echo '<td>' . htmlspecialchars($cellValue ?? '') . '</td>';
+            }
+            echo '</tr>';
+        }
+
+        echo '</tbody></table>';
+        echo '</div>';
+    }
+
+    /**
+     * Get filtered data for user import (columns A-D, max 20 rows, stop at first empty row)
+     * @param string $inputFileName
+     * @param string|null $preferredSheetName
+     * @return array
+     * @throws Exception
+     */
+    public function getFilteredUserImportData($inputFileName, $preferredSheetName = null): array
+    {
+        $sheetNames = $this->getSheetNames($inputFileName, $preferredSheetName);
+        $sheetName = $sheetNames[0];
+        $spreadsheet = $this->loadSpreadsheet($inputFileName, $sheetName);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $dataList = $this->getDataList($worksheet);
+        $filtered = [];
+        foreach ($dataList as $i => $row) {
+            if ($i > 19) break; // 0-based, so 0-19 = 20 rows
+            $rowSlice = array_slice($row, 0, 4);
+            // If any cell in columns A-D is empty, stop including further rows
+            if (empty($rowSlice[0]) || empty($rowSlice[1]) ||
+                empty($rowSlice[2]) || empty($rowSlice[3])) {
+                break;
+            }
+            $filtered[] = $rowSlice;
+        }
+        return $filtered;
+    }
+
+    /**
+     * Get all data for user import, stopping at the first empty row.
+     * @param string $inputFileName
+     * @param string|null $preferredSheetName
+     * @return array
+     * @throws Exception
+     */
+    public function getAllDataForImport($inputFileName, $preferredSheetName = null): array
+    {
+        $sheetNames = $this->getSheetNames($inputFileName, $preferredSheetName);
+        $sheetName = $sheetNames[0];
+
+        // Create a new reader instance without the row-limiting ReadFilter for bulk import
+        $inputFileType = IOFactory::identify($inputFileName);
+        $reader = IOFactory::createReader($inputFileType);
+        $reader->setReadDataOnly(true);
+        if ($inputFileType !== 'Csv' && $inputFileType !== 'Slk') {
+            try {
+                $reader->setLoadSheetsOnly($sheetName);
+            } catch (Exception $e) {
+                // If sheet not found, it will load the first one by default
+            }
+        }
+        $spreadsheet = $reader->load($inputFileName);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $dataList = $this->getDataList($worksheet);
+
+        $allData = [];
+        // Skip header row by starting loop from index 1
+        for ($i = 1; $i < count($dataList); $i++) {
+            $row = $dataList[$i];
+            // Consider only the first 4 columns (A-D)
+            $rowSlice = array_slice($row, 0, 4);
+
+            // If all of the first 4 cells are empty, we assume it's the end of the data.
+            if (empty($rowSlice[0]) && empty($rowSlice[1]) && empty($rowSlice[2]) && empty($rowSlice[3])) {
+                break;
+            }
+
+            // Skip rows where any of the required cells (A-D) are empty
+            if (empty($rowSlice[0]) || empty($rowSlice[1]) || empty($rowSlice[2]) || empty($rowSlice[3])) {
+                continue;
+            }
+
+            $allData[] = $row;
+        }
+        return $allData;
     }
 }
