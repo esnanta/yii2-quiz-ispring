@@ -135,9 +135,9 @@ class AssetController extends Controller
                         $helper = $spreadsheetHelper;
                         $sheetNames = $spreadsheetHelper->getSheetNames($currentFile, 'Participant');
                         $sheetName = $sheetNames[0];
-                        $spreadsheet = $spreadsheetHelper->loadSpreadsheet($currentFile, $sheetName);
-                        $worksheet = $spreadsheet->getActiveSheet();
-                        $fileData = $spreadsheetHelper->getDataList($worksheet);
+                        // Use filtered method for spreadsheet display
+                        // (columns A-D, max 20 rows, no empty rows)
+                        $fileData = $spreadsheetHelper->getFilteredUserImportData($currentFile, $sheetName);
                     } else {
                         $fileData = $currentFile;
                     }
@@ -429,21 +429,21 @@ class AssetController extends Controller
                 $sheetNames = $spreadsheetHelper->getSheetNames($inputFileName, 'Participant');
                 $sheetName = $sheetNames[0];
 
-                // Use the enhanced loadSpreadsheet method with fallback
+                // Use the new filtered method for user import
+                $filteredDataList = $spreadsheetHelper->getFilteredUserImportData($inputFileName, $sheetName);
+                // Remove header row for import
+                $filteredDataListNoHeader = array_slice($filteredDataList, 1);
+
                 $spreadsheet = $spreadsheetHelper->loadSpreadsheet($inputFileName, $sheetName);
                 $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
                 $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
                     $activeRange, null, true, true, true
                 );
-                $data = $spreadsheet->getActiveSheet();
-                $dataList = $spreadsheetHelper->getDataList($data);
-                // Remove header row
-                $dataListNoHeader = array_slice($dataList, 1);
 
                 if ($model->load(Yii::$app->request->post())) {
                     // Use UserService for bulk user creation
                     $result = $this->userService->createUsersFromImport(
-                        array_filter($dataListNoHeader),
+                        array_filter($filteredDataListNoHeader),
                         $model->office_id,
                         $model->group_id
                     );
@@ -464,7 +464,7 @@ class AssetController extends Controller
                             Yii::$app->getSession()->setFlash('error', $error);
                         }
 
-                        $duplicateData = UserService::checkDuplicate($dataListNoHeader);
+                        $duplicateData = UserService::checkDuplicate($filteredDataListNoHeader);
                         return $this->render('import', [
                             'model' => $model,
                             'officeList' => $officeList,
@@ -477,7 +477,7 @@ class AssetController extends Controller
                     }
                 }
                 else {
-                    $duplicateData = UserService::checkDuplicate($dataList);
+                    $duplicateData = UserService::checkDuplicate($filteredDataList);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,

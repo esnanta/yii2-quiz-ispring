@@ -239,11 +239,17 @@ class UserService
         $resultList = [];
         $service = new self();
 
-        // Skip the first row (header)
+        // Assume $dataList is already filtered by ReadFilter (columns A-D, max 20 rows)
         $rows = array_values(array_filter($dataList));
         foreach ($rows as $i => $data) {
             // Skip header row (first row)
             if ($i === 0) continue;
+            // Only process if $data is array and has at least 4 columns
+            if (!is_array($data) || count($data) < 4) continue;
+            // If any cell in columns A-D is empty, stop looping immediately
+            if (empty($data[0]) || empty($data[1]) || empty($data[2]) || empty($data[3])) {
+                break;
+            }
 
             $parsedData = $service->parseImportUserData($data);
             if (!$parsedData) {

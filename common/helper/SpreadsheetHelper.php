@@ -208,10 +208,13 @@ class SpreadsheetHelper extends Sample
         // Display data rows, skipping the header
         foreach ($fileData as $rowIndex => $row) {
             if ($rowIndex === 0) continue; // skip header row
-
+            $rowSlice = array_slice($row, 0, 4);
+            // If any cell in columns A-D is empty, stop displaying further rows
+            if (empty($rowSlice[0]) || empty($rowSlice[1]) || empty($rowSlice[2]) || empty($rowSlice[3])) {
+                break;
+            }
             echo '<tr>';
-            // Display only the first 4 data columns
-            foreach (array_slice($row, 0, 4) as $cellValue) {
+            foreach ($rowSlice as $cellValue) {
                 echo '<td>' . htmlspecialchars($cellValue ?? '') . '</td>';
             }
             echo '</tr>';
@@ -220,4 +223,33 @@ class SpreadsheetHelper extends Sample
         echo '</tbody></table>';
         echo '</div>';
     }
+
+    /**
+     * Get filtered data for user import (columns A-D, max 20 rows, stop at first empty row)
+     * @param string $inputFileName
+     * @param string|null $preferredSheetName
+     * @return array
+     * @throws Exception
+     */
+    public function getFilteredUserImportData($inputFileName, $preferredSheetName = null): array
+    {
+        $sheetNames = $this->getSheetNames($inputFileName, $preferredSheetName);
+        $sheetName = $sheetNames[0];
+        $spreadsheet = $this->loadSpreadsheet($inputFileName, $sheetName);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $dataList = $this->getDataList($worksheet);
+        $filtered = [];
+        foreach ($dataList as $i => $row) {
+            if ($i > 19) break; // 0-based, so 0-19 = 20 rows
+            $rowSlice = array_slice($row, 0, 4);
+            // If any cell in columns A-D is empty, stop including further rows
+            if (empty($rowSlice[0]) || empty($rowSlice[1]) ||
+                empty($rowSlice[2]) || empty($rowSlice[3])) {
+                break;
+            }
+            $filtered[] = $rowSlice;
+        }
+        return $filtered;
+    }
 }
+
