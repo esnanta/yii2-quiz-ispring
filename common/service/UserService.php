@@ -115,72 +115,152 @@ class UserService
     }
 
     /**
-     * Create multiple users from array data (for import functionality)
+     * Create multiple users from array data using bulk insert (for import functionality)
      *
      * @param array $usersData Array of user data arrays
      * @param int $officeId Office ID for all users
      * @param int $groupId Group ID for all users
      * @return array ['success' => bool, 'created_count' => int, 'errors' => array]
      */
-    public function createUsersFromImport(array $usersData, int $officeId, int $groupId): array
+    public function createUsersFromImportBulk(array $usersData, int $officeId, int $groupId): array
+    {
+        $createdCount = 0;
+        $errors = [];
+        $userBatch = [];
+        $batchSize = 100;
+
+        foreach ($usersData as $i => $userData) {
+            // Skip incomplete data
+            if (count($userData) < 4 || empty($userData[1]) || empty($userData[2]) || empty($userData[3])) {
+                continue;
+            }
+
+            $parsedData = $this->parseImportUserData($userData);
+            if (!$parsedData) {
+                $errors[] = "Row " . ($i + 2) . ": Invalid data format"; // +2 because of 0-based index and header
+                continue;
+            }
+
+            // Check for duplicates before adding to batch
+            if ($this->userExists('U' . $parsedData['username'], $parsedData['email'])) {
+                $errors[] = "Row " . ($i + 2) . ": User with username '{$parsedData['username']}' or email '{$parsedData['email']}' already exists.";
+                continue;
+            }
+
+            $userBatch[] = $parsedData;
+
+            if (count($userBatch) >= $batchSize) {
+                $result = $this->processUserBatch($userBatch, $officeId, $groupId);
+                $createdCount += $result['created_count'];
+                $errors = array_merge($errors, $result['errors']);
+                $userBatch = []; // Reset batch
+            }
+        }
+
+        // Process any remaining users in the last batch
+        if (!empty($userBatch)) {
+            $result = $this->processUserBatch($userBatch, $officeId, $groupId);
+            $createdCount += $result['created_count'];
+            $errors = array_merge($errors, $result['errors']);
+        }
+
+        return [
+            'success' => empty($errors),
+            'created_count' => $createdCount,
+            'errors' => $errors
+        ];
+    }
+
+    /**
+     * Process a batch of users for bulk insertion.
+     *
+     * @param array $userBatch
+     * @param int $officeId
+     * @param int $groupId
+     * @return array
+     */
+    private function processUserBatch(array $userBatch, int $officeId, int $groupId): array
     {
         $transaction = Yii::$app->db->beginTransaction();
         $createdCount = 0;
         $errors = [];
 
         try {
-            foreach ($usersData as $i => $userData) {
-                if (count($userData) < 3) {
-                    continue; // Skip incomplete data
-                }
+            $userRows = [];
+            $profileRows = [];
+            $authAssignmentRows = [];
+            $plainPasswords = [];
 
-                $parsedData = $this->parseImportUserData($userData);
-                if (!$parsedData) {
-                    $errors[] = "Row " . ($i + 1) . ": Invalid data format";
-                    continue;
-                }
+            foreach ($userBatch as $parsedData) {
+                $plainPassword = $this->generatePassword();
+                $user = new User();
+                $user->username = 'U' . $parsedData['username'];
+                $user->email = $parsedData['email'];
+                $user->auth_key = Yii::$app->security->generateRandomString();
+                $user->password_hash = Yii::$app->security->generatePasswordHash($plainPassword);
+                $user->created_at = time();
+                $user->updated_at = time();
+                $user->flags = 0; // Set default value for flags
 
-                $result = $this->createUser([
-                    'username' => 'U' . $parsedData['username'],
-                    'email' => $parsedData['email'],
-                    'name' => $parsedData['name'],
-                    'office_id' => $officeId,
-                    'group_id' => $groupId,
-                ]);
-
-                if ($result['success']) {
-                    $createdCount++;
+                if ($user->validate()) {
+                    $userRows[] = $user->getAttributes();
+                    $plainPasswords[$user->username] = $plainPassword;
                 } else {
-                    $errors[] = "Row " . ($i + 1) . ": " . implode(', ', $result['errors']);
+                    $errorMessages = [];
+                    foreach($user->errors as $field => $fieldErrors) {
+                        $errorMessages[] = "$field: " . implode(', ', $fieldErrors);
+                    }
+                    $errors[] = "Validation failed for username '{$parsedData['username']}': " . implode('; ', $errorMessages);
                 }
             }
 
-            if (empty($errors)) {
-                $transaction->commit();
-                return [
-                    'success' => true,
-                    'created_count' => $createdCount,
-                    'errors' => []
-                ];
-            } else {
+            if (empty($userRows)) {
                 $transaction->rollBack();
-                return [
-                    'success' => false,
-                    'created_count' => 0,
-                    'errors' => $errors
-                ];
+                return ['created_count' => 0, 'errors' => $errors];
             }
 
+            // Bulk insert users
+            $userCommand = Yii::$app->db->createCommand()->batchInsert(User::tableName(), array_keys($userRows[0]), $userRows);
+            $insertedUserRows = $userCommand->execute();
+
+            if ($insertedUserRows > 0) {
+                // Fetch inserted users to get their IDs
+                $usernames = array_column($userRows, 'username');
+                $insertedUsers = User::find()->where(['username' => $usernames])->all();
+
+                foreach ($insertedUsers as $user) {
+                    $profileRows[] = [
+                        'user_id' => $user->id,
+                        'name' => $userBatch[array_search($user->username, array_column($userBatch, 'username'))]['name'],
+                        'office_id' => $officeId,
+                        'group_id' => $groupId,
+                        'public_email' => $user->email,
+                        'password' => $plainPasswords[$user->username],
+                        'user_type' => Profile::USER_TYPE_REGULAR,
+                    ];
+                    $authAssignmentRows[] = [
+                        'item_name' => Yii::$app->params['userRoleRegular'],
+                        'user_id' => $user->id,
+                        'created_at' => time(),
+                    ];
+                }
+
+                // Bulk insert profiles
+                Yii::$app->db->createCommand()->batchInsert(Profile::tableName(), array_keys($profileRows[0]), $profileRows)->execute();
+                // Bulk insert auth assignments
+                Yii::$app->db->createCommand()->batchInsert('tx_auth_assignment', array_keys($authAssignmentRows[0]), $authAssignmentRows)->execute();
+
+                $createdCount += count($insertedUsers);
+            }
+
+            $transaction->commit();
         } catch (\Exception|\Throwable $e) {
             $transaction->rollBack();
+            $errors[] = 'Bulk insert failed: ' . $e->getMessage();
             Yii::error('Bulk user creation failed: ' . $e->getMessage());
-
-            return [
-                'success' => false,
-                'created_count' => 0,
-                'errors' => ['Bulk user creation failed: ' . $e->getMessage()]
-            ];
         }
+
+        return ['created_count' => $createdCount, 'errors' => $errors];
     }
 
     /**

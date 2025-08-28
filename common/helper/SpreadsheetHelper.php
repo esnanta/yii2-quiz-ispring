@@ -251,5 +251,53 @@ class SpreadsheetHelper extends Sample
         }
         return $filtered;
     }
-}
 
+    /**
+     * Get all data for user import, stopping at the first empty row.
+     * @param string $inputFileName
+     * @param string|null $preferredSheetName
+     * @return array
+     * @throws Exception
+     */
+    public function getAllDataForImport($inputFileName, $preferredSheetName = null): array
+    {
+        $sheetNames = $this->getSheetNames($inputFileName, $preferredSheetName);
+        $sheetName = $sheetNames[0];
+
+        // Create a new reader instance without the row-limiting ReadFilter for bulk import
+        $inputFileType = IOFactory::identify($inputFileName);
+        $reader = IOFactory::createReader($inputFileType);
+        $reader->setReadDataOnly(true);
+        if ($inputFileType !== 'Csv' && $inputFileType !== 'Slk') {
+            try {
+                $reader->setLoadSheetsOnly($sheetName);
+            } catch (Exception $e) {
+                // If sheet not found, it will load the first one by default
+            }
+        }
+        $spreadsheet = $reader->load($inputFileName);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $dataList = $this->getDataList($worksheet);
+
+        $allData = [];
+        // Skip header row by starting loop from index 1
+        for ($i = 1; $i < count($dataList); $i++) {
+            $row = $dataList[$i];
+            // Consider only the first 4 columns (A-D)
+            $rowSlice = array_slice($row, 0, 4);
+
+            // If all of the first 4 cells are empty, we assume it's the end of the data.
+            if (empty($rowSlice[0]) && empty($rowSlice[1]) && empty($rowSlice[2]) && empty($rowSlice[3])) {
+                break;
+            }
+
+            // Skip rows where any of the required cells (A-D) are empty
+            if (empty($rowSlice[0]) || empty($rowSlice[1]) || empty($rowSlice[2]) || empty($rowSlice[3])) {
+                continue;
+            }
+
+            $allData[] = $row;
+        }
+        return $allData;
+    }
+}

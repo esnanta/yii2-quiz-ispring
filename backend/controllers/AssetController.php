@@ -12,7 +12,6 @@ use common\service\AssetService;
 use common\service\CacheService;
 use common\service\DataIdService;
 use common\service\DataListService;
-use common\service\ProfileService;
 use common\service\UserService;
 use Yii;
 use yii\base\Exception;
@@ -429,62 +428,57 @@ class AssetController extends Controller
                 $sheetNames = $spreadsheetHelper->getSheetNames($inputFileName, 'Participant');
                 $sheetName = $sheetNames[0];
 
-                // Use the new filtered method for user import
-                $filteredDataList = $spreadsheetHelper->getFilteredUserImportData($inputFileName, $sheetName);
-                // Remove header row for import
-                $filteredDataListNoHeader = array_slice($filteredDataList, 1);
-
-                $spreadsheet = $spreadsheetHelper->loadSpreadsheet($inputFileName, $sheetName);
-                $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
-                $sheetData = $spreadsheet->getActiveSheet()->rangeToArray(
-                    $activeRange, null, true, true, true
-                );
+                // Data for display (limited to 20 rows)
+                $displayData = $spreadsheetHelper->getFilteredUserImportData($inputFileName, $sheetName);
 
                 if ($model->load(Yii::$app->request->post())) {
+                    // Data for import (all non-empty rows)
+                    $importData = $spreadsheetHelper->getAllDataForImport($inputFileName, $sheetName);
+
                     // Use UserService for bulk user creation
-                    $result = $this->userService->createUsersFromImport(
-                        array_filter($filteredDataListNoHeader),
+                    $result = $this->userService->createUsersFromImportBulk(
+                        $importData,
                         $model->office_id,
                         $model->group_id
                     );
 
                     if ($result['success']) {
                         MessageHelper::getFlashSaveSuccess();
-                        Yii::$app->getSession()->setFlash(
-                            'success',
-                            ['message' => Yii::t(
-                                'app',
-                                'Saved '.$result['created_count'].' records.'
-                            )]
-                        );
+                        if ($result['created_count'] > 0) {
+                            Yii::$app->getSession()->setFlash(
+                                'success',
+                                Yii::t('app', 'Successfully imported {count} users.', ['count' => $result['created_count']])
+                            );
+                        }
+                        if (!empty($result['errors'])) {
+                            Yii::$app->getSession()->setFlash('warning', 'Some users were not imported: <br>' . implode('<br>', $result['errors']));
+                        }
                         return $this->redirect(['index']);
                     } else {
                         // Handle errors
-                        foreach ($result['errors'] as $error) {
-                            Yii::$app->getSession()->setFlash('error', $error);
-                        }
+                        Yii::$app->getSession()->setFlash('error', 'An error occurred during import: <br>' . implode('<br>', $result['errors']));
 
-                        $duplicateData = UserService::checkDuplicate($filteredDataListNoHeader);
+                        $duplicateData = UserService::checkDuplicate($displayData);
                         return $this->render('import', [
                             'model' => $model,
                             'officeList' => $officeList,
                             'groupList' => $groupList,
                             'assetList' => $assetList,
                             'helper' => $helper,
-                            'sheetData' => $sheetData,
+                            'sheetData' => $displayData, // Use display data for the grid
                             'duplicateData' => $duplicateData
                         ]);
                     }
                 }
                 else {
-                    $duplicateData = UserService::checkDuplicate($filteredDataList);
+                    $duplicateData = UserService::checkDuplicate($displayData);
                     return $this->render('import', [
                         'model' => $model,
                         'officeList' => $officeList,
                         'groupList' => $groupList,
                         'assetList' => $assetList,
                         'helper' => $helper,
-                        'sheetData' => $sheetData,
+                        'sheetData' => $displayData, // Use display data for the grid
                         'duplicateData' => $duplicateData
                     ]);
                 }
