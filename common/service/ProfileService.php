@@ -15,14 +15,13 @@ class ProfileService
 
     public static function checkDuplicate($dataList): array
     {
-        $officeId = CacheService::getInstance()->getOfficeId();
         $resultList = [];
 
         foreach (array_filter($dataList) as $i=>$data){
             if(sizeof($data) > 2){
-                $username = $data[0];
-                $name = $data[1];
-                $email = $data[2];
+                $name = $data[1]; //title
+                $username = $data[3]; //email
+                $email = $data[3]; //email
 
                 $model = User::find()->where(['username'=>$username])
                     ->orWhere(['email'=>$email])
