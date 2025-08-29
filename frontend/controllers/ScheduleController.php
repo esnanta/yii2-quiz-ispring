@@ -7,6 +7,7 @@ use common\models\Schedule;
 use common\service\CacheService;
 use common\service\ScheduleDetailService;
 use common\service\ScheduleService;
+use common\service\ScheduleTokenService;
 use frontend\models\TokenForm;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -25,10 +26,12 @@ class ScheduleController extends Controller
     private string $token = '';
     private ScheduleService $scheduleService;
     private ScheduleDetailService $scheduleDetailService;
+    private ScheduleTokenService $scheduleTokenService;
     private TokenForm $tokenForm;
     public function __construct($id, $module,
                                 ScheduleService $scheduleService,
                                 ScheduleDetailService $scheduleDetailService,
+                                ScheduleTokenService $scheduleTokenService,
                                 TokenForm $tokenForm,
         $config = [])
     {
@@ -110,19 +113,19 @@ class ScheduleController extends Controller
                 'allModels' => $model->assessments,
             ]);
 
-            $participantList = Participant::find()
+            $profileList = Profile::find()
                 ->where(['office_id' => $model->office_id, 'group_id' => $model->group_id])
                 ->all();
 
             // Use ScheduleService for token and countdown logic
             list($countdownTime, $interval, $tokenMessage) =
-                $this->scheduleService->handleTokenAndCountdown($model);
+                $this->scheduleTokenService->handleTokenAndCountdown($model);
 
             return $this->render('view', [
                 'model' => $model,
                 'providerScheduleDetail' => $providerScheduleDetail,
                 'providerAssessment' => $providerAssessment,
-                'participantList' => $participantList,
+                'participantList' => $profileList,
                 'countdownTime' => $countdownTime,
                 'interval' => $interval,
                 'tokenMessage' => $tokenMessage,  // Pass token status message
