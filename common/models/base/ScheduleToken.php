@@ -11,8 +11,6 @@ use mootensai\behaviors\UUIDBehavior;
  * This is the base model class for table "tx_schedule_token".
  *
  * @property integer $id
- * @property integer $schedule_id
- * @property integer $user_id
  * @property integer $office_id
  * @property string $token
  * @property string $token_interval
@@ -30,8 +28,6 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $uuid
  *
  * @property \common\models\Office $office
- * @property \common\models\Schedule $schedule
- * @property \common\models\User $user
  */
 class ScheduleToken extends \yii\db\ActiveRecord
 {
@@ -59,9 +55,7 @@ class ScheduleToken extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'office',
-            'schedule',
-            'user'
+            'office'
         ];
     }
 
@@ -71,7 +65,7 @@ class ScheduleToken extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['schedule_id', 'user_id', 'office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['token_interval', 'date_start', 'date_end', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['token'], 'string', 'max' => 6],
@@ -107,8 +101,6 @@ class ScheduleToken extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'schedule_id' => Yii::t('app', 'Schedule ID'),
-            'user_id' => Yii::t('app', 'User ID'),
             'office_id' => Yii::t('app', 'Office ID'),
             'token' => Yii::t('app', 'Token'),
             'token_interval' => Yii::t('app', 'Token Interval'),
@@ -127,22 +119,6 @@ class ScheduleToken extends \yii\db\ActiveRecord
     public function getOffice()
     {
         return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSchedule()
-    {
-        return $this->hasOne(\common\models\Schedule::className(), ['id' => 'schedule_id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
     }
     
     /**
