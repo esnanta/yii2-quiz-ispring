@@ -129,7 +129,7 @@ class ScheduleController extends Controller
                 'countdownTime' => $countdownTime,
                 'interval' => $interval,
                 'tokenMessage' => $tokenMessage,  // Pass token status message
-                'minutesTolerance' => $this->scheduleService->getMinutesTolerance(),
+                'minutesTolerance' => $this->scheduleTokenService->getMinutesTolerance(),
                 'scheduleDetailService' => $scheduleDetailService
             ]);
         }

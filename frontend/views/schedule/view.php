@@ -84,10 +84,10 @@ use common\models\User;
 
         <?php } ?>
 
-        <?php if (!empty($participantList)) {
-            echo $this->render('view_participant', [
+        <?php if (!empty($profileList)) {
+            echo $this->render('view_profile', [
                 'model'=>$model,
-                'participantList' => $participantList,
+                'profileList' => $profileList,
             ]);
         }
         ?>

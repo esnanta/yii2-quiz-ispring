@@ -11,7 +11,7 @@ use yii\helpers\Html;
         <thead>
         <tr>
             <th class="center">#</th>
-            <th><?= Yii::t('app', 'Participant'); ?></th>
+            <th><?= Yii::t('app', 'Profile'); ?></th>
             <th><?= Yii::t('app', 'Group'); ?></th>
             <th><?= Yii::t('app', 'Username'); ?></th>
         </tr>
@@ -19,7 +19,7 @@ use yii\helpers\Html;
         <tbody>
 
         <?php
-        foreach ($participantList as $i => $modelDetailItem) {
+        foreach ($profileList as $i => $modelDetailItem) {
             ?>
             <tr>
                 <td class="center"><?= ($i + 1); ?></td>
