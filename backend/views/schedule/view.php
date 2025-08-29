@@ -1,6 +1,5 @@
 <?php
 
-use aneeshikmat\yii2\Yii2TimerCountDown\Yii2TimerCountDown;
 use common\helper\DateHelper;
 use common\helper\IconHelper;
 use common\helper\LabelHelper;
@@ -10,10 +9,10 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
+/* @var $profileList common\models\Profile */
 /* @var $scheduleDetailService common\service\ScheduleDetailService */
 /* @var $providerAssessment yii\data\ActiveDataProvider */
 /* @var $providerScheduleDetail yii\data\ActiveDataProvider */
-
 
 
 $this->title = $model->title;
@@ -140,8 +139,8 @@ $create = LabelHelper::getCreateButton();
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#participant">
-                    <?= Yii::t('app', 'Participant'); ?></a>
+                <a class="nav-link active" data-toggle="tab" href="#profile">
+                    <?= Yii::t('app', 'Profiles'); ?></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#assessment">
@@ -151,11 +150,11 @@ $create = LabelHelper::getCreateButton();
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="participant">
+            <div class="tab-pane fade show active" id="profile">
                 <?php if (!empty($participantList)) {
-                    echo $this->render('view_participant', [
+                    echo $this->render('view_profile', [
                             'model'=>$model,
-                            'participantList' => $participantList,
+                            'profileList' => $profileList,
                     ]);
                 }
                 ?>

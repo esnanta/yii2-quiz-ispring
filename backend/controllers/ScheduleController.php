@@ -104,7 +104,7 @@ class ScheduleController extends Controller
             'model' => $model,
             'providerScheduleDetail' => $providerScheduleDetail,
             'providerAssessment' => $providerAssessment,
-            'participantList' => $profileList,
+            'profileList' => $profileList,
             'scheduleDetailService' => $scheduleDetailService
         ]);
     }
