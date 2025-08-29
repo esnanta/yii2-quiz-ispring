@@ -22,16 +22,16 @@ use yii\helpers\Html;
         <tbody>
 
         <?php
-        foreach ($participantList as $i => $modelDetailItem) {
+        foreach ($profileList as $i => $modelDetailItem) {
             ?>
             <tr>
                 <td class="center"><?= ($i + 1); ?></td>
                 <td class="left">
                     <?php
                     $participant =
-                        Html::a($modelDetailItem->title, ['profile/view',
+                        Html::a($modelDetailItem->name, ['profile/view',
                             'id' => $modelDetailItem->id,
-                            'title' => $modelDetailItem->title
+                            'title' => $modelDetailItem->name
                         ]);
                     echo $participant;
                     ?>
