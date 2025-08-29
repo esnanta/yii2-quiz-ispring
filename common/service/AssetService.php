@@ -124,6 +124,20 @@ class AssetService
         return (!empty($asset->asset_name)) ? $directory.'/'. $asset->asset_name : '';
     }
 
+    /**
+     * @param $path
+     * @param int $mode
+     * @return string
+     * @throws Exception
+     */
+    public function createDirectory($path, $mode = 0775): string
+    {
+        if (!is_dir($path)) {
+            FileHelper::createDirectory($path, $mode, true);
+        }
+        return $path;
+    }
+
     public function getAssetUrl(Asset $asset): string
     {
         $path = self::getPath($asset);
@@ -164,10 +178,7 @@ class AssetService
     public function createBackendDirectory($path): string
     {
         $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $path;
-        if (!is_dir($directory)) {
-            FileHelper::createDirectory($directory, $mode = 0777);
-        }
-        return $directory;
+        return $this->createDirectory($directory);
     }
 
     /**
@@ -230,10 +241,7 @@ class AssetService
     {
         $combinedName = $this->getExtractFolderName($asset);
         $directory = str_replace('backend', 'frontend', Yii::getAlias('@webroot')) . $this->getPath($asset) . '/' . $combinedName;
-        if (!is_dir($directory)) {
-            FileHelper::createDirectory($directory, $mode = 0777);
-        }
-        return $directory;
+        return $this->createDirectory($directory);
     }
 
     /**
