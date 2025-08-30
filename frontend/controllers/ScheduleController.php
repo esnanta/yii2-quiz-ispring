@@ -75,12 +75,7 @@ class ScheduleController extends Controller
             $listRecentSchedule = $this->scheduleService
                 ->getScheduleRecentByGroup($officeId,$profile->group_id);
 
-            if ($this->tokenForm->load(Yii::$app->request->post())) {
-                $this->token = $this->tokenForm->token;
-            }
-
             return $this->render('index',[
-                'tokenForm' => $this->tokenForm,
                 'profile' => $profile,
                 'listUpcomingSchedule' => $listUpcomingSchedule,
                 'listRecentSchedule' => $listRecentSchedule,
@@ -105,6 +100,10 @@ class ScheduleController extends Controller
             $model = $this->findModel($id);
             $scheduleDetailService = new ScheduleDetailService();
 
+            if ($this->tokenForm->load(Yii::$app->request->post())) {
+                $this->tokenForm->checkTokenToSchedule($model);
+            }
+
             $providerScheduleDetail = new ArrayDataProvider([
                 'allModels' => $model->scheduleDetails,
             ]);
@@ -118,6 +117,7 @@ class ScheduleController extends Controller
 
             return $this->render('view', [
                 'model' => $model,
+                'tokenForm' => $this->tokenForm,
                 'providerScheduleDetail' => $providerScheduleDetail,
                 'providerAssessment' => $providerAssessment,
                 'participantList' => $profileList,

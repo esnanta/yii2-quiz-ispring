@@ -82,16 +82,21 @@ use yii\helpers\Html;
 
         <?php } ?>
 
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'token')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Enter Token')])->label(false) ?>
-                <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
+        <?php
+        $currentTime = time();
+        if ($currentTime >= $model->getTimeStart() && $currentTime <= $model->getTimeOut()) {
+            ?>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <?php $form = ActiveForm::begin(); ?>
+                    <?= $form->field($tokenForm, 'token')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Enter Token')])->label(false) ?>
+                    <div class="form-group">
+                        <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
-                <?php ActiveForm::end(); ?>
             </div>
-        </div>
+        <?php } ?>
 
         <?php if (!empty($profileList)) {
             echo $this->render('view_participant', [
