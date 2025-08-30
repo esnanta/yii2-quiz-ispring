@@ -18,6 +18,32 @@ use yii\helpers\Html;
     </div>
 
     <div class="card-body">
+        <?php
+        $currentTime = time();
+        if ($currentTime >= $model->getTimeStart() && $currentTime <= $model->getTimeOut()) {
+            ?>
+            <div class="d-flex justify-content-center align-items-center mb-3" style="gap: 8px;">
+                <?php $form = ActiveForm::begin(['options' => ['class' => 'form-inline p-0 m-0', 'style' => 'display:flex;align-items:center;gap:8px;']]); ?>
+                <label class="font-weight-bold mb-0" for="token-input">
+                    <?= Yii::t('app', 'Token') ?>:
+                </label>
+                <?= $form->field($tokenForm, 'token')->textInput([
+                    'maxlength' => true,
+                    'placeholder' => Yii::t('app', 'Enter token'),
+                    'class' => 'form-control',
+                    'autocomplete' => 'off',
+                    'id' => 'token-input',
+                    'style' => 'width:120px;display:inline-block;'
+                ])->label(false) ?>
+                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
+                <?php ActiveForm::end(); ?>
+                <?php if (isset($tokenForm->is_token_equals) && !$tokenForm->is_token_equals && !empty($tokenForm->token)) { ?>
+                    <span class="ml-2 text-danger small">
+                        <?= Yii::t('app', 'Invalid token.') ?>
+                    </span>
+                <?php } ?>
+            </div>
+        <?php } ?>
         <div class="row mb-4">
 
             <div class="col-sm-4">
@@ -57,6 +83,7 @@ use yii\helpers\Html;
                         <th><?= Yii::t('app', 'Subject'); ?></th>
                         <th><?= Yii::t('app', 'Remark'); ?></th>
                         <th><?= Yii::t('app', 'Question Type'); ?></th>
+                        <th><?= Yii::t('app', 'Action'); ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -72,6 +99,15 @@ use yii\helpers\Html;
                             <td class="left"><?= $modelDetailItem->subject->title; ?></td>
                             <td class="left"><?= $modelDetailItem->remark; ?></td>
                             <td class="left"><?= $modelDetailItem->getOneQuestionType($modelDetailItem->question_type); ?></td>
+                            <td>
+                                <?php
+                                if ($tokenForm->is_token_equals) {
+                                    echo $scheduleDetailService->getAssetButton($modelDetailItem, $submissionIsFalse, Yii::$app->user->id);
+                                } else {
+                                    echo Html::a(Yii::t('app', 'Closed'), '#', ['class' => 'btn btn-secondary btn-sm disabled']);
+                                }
+                                ?>
+                            </td>
                         </tr>
 
                     <?php } ?>
@@ -80,22 +116,6 @@ use yii\helpers\Html;
                 </table>
             </div>
 
-        <?php } ?>
-
-        <?php
-        $currentTime = time();
-        if ($currentTime >= $model->getTimeStart() && $currentTime <= $model->getTimeOut()) {
-            ?>
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <?php $form = ActiveForm::begin(); ?>
-                    <?= $form->field($tokenForm, 'token')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Enter Token')])->label(false) ?>
-                    <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                    </div>
-                    <?php ActiveForm::end(); ?>
-                </div>
-            </div>
         <?php } ?>
 
         <?php if (!empty($profileList)) {
