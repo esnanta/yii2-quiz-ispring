@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="refactoring">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -838,23 +841,9 @@
       <workItem from="1756364286484" duration="2914000" />
       <workItem from="1756369549096" duration="6886000" />
       <workItem from="1756379806711" duration="4725000" />
-      <workItem from="1756446895294" duration="4997000" />
-    </task>
-    <task id="LOCAL-00030" summary="update">
-      <option name="closed" value="true" />
-      <created>1754996423651</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1754996423651</updated>
-    </task>
-    <task id="LOCAL-00031" summary="fix login menu">
-      <option name="closed" value="true" />
-      <created>1754996442261</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1754996442261</updated>
+      <workItem from="1756446895294" duration="9936000" />
+      <workItem from="1756526317946" duration="1522000" />
+      <workItem from="1756532355995" duration="728000" />
     </task>
     <task id="LOCAL-00032" summary="update README.md">
       <option name="closed" value="true" />
@@ -1232,7 +1221,23 @@
       <option name="project" value="LOCAL" />
       <updated>1756455380030</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="add schedule token service to view">
+      <option name="closed" value="true" />
+      <created>1756456369128</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1756456369129</updated>
+    </task>
+    <task id="LOCAL-00080" summary="update">
+      <option name="closed" value="true" />
+      <created>1756456528997</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1756456528997</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1259,7 +1264,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update token" />
     <MESSAGE value="rename token_time to token_interval" />
     <MESSAGE value="fix date" />
     <MESSAGE value="update breadcrumb" />
@@ -1281,10 +1285,11 @@
     <MESSAGE value="merge ProfileService.php into UserService.php&#10;remove ProfileService.php" />
     <MESSAGE value="refactor" />
     <MESSAGE value="rename" />
-    <MESSAGE value="update" />
     <MESSAGE value="fix ScheduleToken.php model" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="add schedule token service to view" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

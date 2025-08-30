@@ -80,7 +80,6 @@ class ScheduleController extends Controller
             }
 
             return $this->render('index',[
-                'token' => $this->token,
                 'tokenForm' => $this->tokenForm,
                 'profile' => $profile,
                 'listUpcomingSchedule' => $listUpcomingSchedule,
@@ -117,19 +116,11 @@ class ScheduleController extends Controller
                 ->where(['office_id' => $model->office_id, 'group_id' => $model->group_id])
                 ->all();
 
-            // Use ScheduleService for token and countdown logic
-            list($countdownTime, $interval, $tokenMessage) =
-                $this->scheduleTokenService->handleTokenAndCountdown($model);
-
             return $this->render('view', [
                 'model' => $model,
                 'providerScheduleDetail' => $providerScheduleDetail,
                 'providerAssessment' => $providerAssessment,
                 'participantList' => $profileList,
-                'countdownTime' => $countdownTime,
-                'interval' => $interval,
-                'tokenMessage' => $tokenMessage,  // Pass token status message
-                'minutesTolerance' => $this->scheduleTokenService->getMinutesTolerance(),
                 'scheduleDetailService' => $scheduleDetailService
             ]);
         }

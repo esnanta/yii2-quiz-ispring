@@ -2,16 +2,14 @@
 
 use common\helper\DateHelper;
 use common\models\User;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Schedule */
 /* @var $scheduleDetailService common\service\ScheduleDetailService */
-/* @var $minutesTolerance int The value returned from ScheduleService::getMinutesTolerance() */
-/* @var $interval int The value returned from ScheduleService::handleTokenAndCountdown(Schedule $model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array() */
-/* @var $countdownTime int The value returned from ScheduleService::handleTokenAndCountdown(Schedule $model, $tokenStartTime, $timeStart, $timeOut, $currentTime): array() */
 /* @var $providerAssessment yii\data\ActiveDataProvider */
 /* @var $providerScheduleDetail yii\data\ActiveDataProvider */
-/* @var $tokenMessage String */
 ?>
 <div class="card">
     <div class="card-header">
@@ -84,8 +82,19 @@ use common\models\User;
 
         <?php } ?>
 
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <?php $form = ActiveForm::begin(); ?>
+                <?= $form->field($model, 'token')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Enter Token')])->label(false) ?>
+                <div class="form-group">
+                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
+                </div>
+                <?php ActiveForm::end(); ?>
+            </div>
+        </div>
+
         <?php if (!empty($profileList)) {
-            echo $this->render('view_profile', [
+            echo $this->render('view_participant', [
                 'model'=>$model,
                 'profileList' => $profileList,
             ]);

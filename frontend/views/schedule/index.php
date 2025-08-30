@@ -72,7 +72,7 @@ $this->title = Yii::$app->name;
                         <small class="text-muted">
                             Start : <?= DateHelper::formatTime($schedule->date_start) ?>
 
-                            <div class="<?= $scheduleService->getLabelAlertTimer($schedule); ?> float-end float-right">
+                            <div class="<?php // $scheduleTokenService->getLabelAlertTimer($schedule); ?> float-end float-right">
                                 <div id="time-down-counter-<?= $i; ?>"></div>
                             </div>
 
@@ -99,8 +99,8 @@ $this->title = Yii::$app->name;
 
                             <tbody>
                             <?php foreach ($schedule->scheduleDetails as $j => $scheduleDetailItem) {
-                                $assessment = $scheduleDetailService->getAssessment($scheduleDetailItem, $participant->id);
-                                $isSubmitted = $scheduleDetailService->isParticipantSubmitted($assessment, $participant->id)
+                                $assessment = $scheduleDetailService->getAssessment($scheduleDetailItem, $profile->user_id);
+                                $isSubmitted = $scheduleDetailService->isUserSubmitted($assessment, $profile->user_id)
                                 ?>
                                 <tr>
                                     <td class="center"><?= ($j + 1); ?></td>
@@ -116,7 +116,7 @@ $this->title = Yii::$app->name;
                                             echo $scheduleDetailService->getAssetButton(
                                                 $scheduleDetailItem,
                                                 $isSubmitted,
-                                                $participant->id,
+                                                $profile->user_id,
                                                 ScheduleDetailService::EXECUTE_ASSESSMENT_TRUE
                                             );
                                         } else {

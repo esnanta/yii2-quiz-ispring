@@ -151,12 +151,12 @@ class ScheduleDetailService
     /**
      * Check if profile has submitted assessment
      * @param ?Assessment $assessment
-     * @param int $participantId
+     * @param int $userId
      * @return bool
      */
-    public function isParticipantSubmitted(?Assessment $assessment, int $participantId): bool
+    public function isUserSubmitted(?Assessment $assessment, int $userId): bool
     {
-        if ($participantId == 0) {
+        if ($userId == 0) {
             return false;
         }
 
@@ -177,12 +177,12 @@ class ScheduleDetailService
         }
     }
 
-    public function getAssessment(ScheduleDetail $scheduleDetail, int $participantId): array|ActiveRecord|null
+    public function getAssessment(ScheduleDetail $scheduleDetail, int $userId): array|ActiveRecord|null
     {
         return Assessment::find()
             ->where(['schedule_detail_id' => $scheduleDetail->id])
             ->andWhere(['office_id' => $scheduleDetail->office_id])
-            ->andWhere(['participant_id' => $participantId])
+            ->andWhere(['user_id' => $userId])
             ->one();
     }
 }
