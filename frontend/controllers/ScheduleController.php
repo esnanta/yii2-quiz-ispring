@@ -70,15 +70,18 @@ class ScheduleController extends Controller
                 'user_id'=>Yii::$app->user->identity->id
             ]);
 
+            $listOngoingSchedule = $this->scheduleService
+                ->getScheduleOngoingByGroup($officeId, $profile->group_id);
             $listUpcomingSchedule = $this->scheduleService
                 ->getScheduleUpcomingByGroup($officeId,$profile->group_id);
-            $listRecentSchedule = $this->scheduleService
-                ->getScheduleRecentByGroup($officeId,$profile->group_id);
+            $listCompletedSchedule = $this->scheduleService
+                ->getScheduleCompletedByGroup($officeId,$profile->group_id);
 
             return $this->render('index',[
                 'profile' => $profile,
+                'listOngoingSchedule' => $listOngoingSchedule,
                 'listUpcomingSchedule' => $listUpcomingSchedule,
-                'listRecentSchedule' => $listRecentSchedule,
+                'listCompletedSchedule' => $listCompletedSchedule,
                 'scheduleDetailService' => $this->scheduleDetailService
             ]);
         }

@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleDetailService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/service/ScheduleService.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/service/ScheduleService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/models/TokenForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/models/TokenForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/_form_token.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/layouts/header.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -846,15 +842,7 @@
       <workItem from="1756379806711" duration="4725000" />
       <workItem from="1756446895294" duration="9936000" />
       <workItem from="1756526317946" duration="1522000" />
-      <workItem from="1756532355995" duration="2741000" />
-    </task>
-    <task id="LOCAL-00033" summary="if record is being set to active, deactivate all other records in the same office">
-      <option name="closed" value="true" />
-      <created>1755160721246</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1755160721246</updated>
+      <workItem from="1756532355995" duration="3908000" />
     </task>
     <task id="LOCAL-00034" summary="update">
       <option name="closed" value="true" />
@@ -1240,7 +1228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756533204475</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="update">
+      <option name="closed" value="true" />
+      <created>1756535127917</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1756535127917</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
