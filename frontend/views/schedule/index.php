@@ -135,12 +135,24 @@ $this->title = Yii::$app->name;
                                      aria-labelledby="heading-upcoming-<?= $schedule->id ?>"
                                      data-bs-parent="#upcomingSchedulesAccordion">
                                     <div class="accordion-body">
-                                        <p>
-                                            <i class="fas fa-clock text-muted me-1"></i>
-                                            <small class="text-muted">
-                                                <?= Yii::t('app', 'Starts at {time}', ['time' => DateHelper::formatTime($schedule->date_start)]) ?>
-                                            </small>
-                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div>
+                                                <i class="fas fa-clock text-muted me-1"></i>
+                                                <small class="text-muted">
+                                                    <?= Yii::t('app', 'Starts at {time}', ['time' => DateHelper::formatTime($schedule->date_start)]) ?>
+                                                </small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <small class="text-primary me-2"><?= Yii::t('app', 'Countdown:') ?></small>
+                                                <div class="badge bg-primary">
+                                                    <div id="time-down-counter-upcoming-<?= $i ?>"></div>
+                                                </div>
+                                                <?= Yii2TimerCountDown::widget([
+                                                    'countDownIdSelector' => 'time-down-counter-upcoming-' . $i,
+                                                    'countDownDate' => strtotime($schedule->date_start) * 1000,
+                                                ]); ?>
+                                            </div>
+                                        </div>
                                         <div class="table-responsive">
                                             <table class="table table-hover">
                                                 <thead class="table-light">
