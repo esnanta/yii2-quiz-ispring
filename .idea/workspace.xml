@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update view">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/views/schedule/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/view.php" afterDir="false" />
     </list>
@@ -841,14 +841,8 @@
       <workItem from="1756446895294" duration="9936000" />
       <workItem from="1756526317946" duration="1522000" />
       <workItem from="1756532355995" duration="3908000" />
-    </task>
-    <task id="LOCAL-00034" summary="update">
-      <option name="closed" value="true" />
-      <created>1755160757369</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1755160757369</updated>
+      <workItem from="1756558031276" duration="1755000" />
+      <workItem from="1756607934402" duration="879000" />
     </task>
     <task id="LOCAL-00035" summary="add toggle button">
       <option name="closed" value="true" />
@@ -1234,7 +1228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756535127917</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="update view">
+      <option name="closed" value="true" />
+      <created>1756555240564</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1756555240564</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1261,7 +1263,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="rename token_time to token_interval" />
     <MESSAGE value="fix date" />
     <MESSAGE value="update breadcrumb" />
     <MESSAGE value="remove nice admin theme" />
@@ -1286,7 +1287,8 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="add schedule token service to view" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="update view" />
+    <option name="LAST_COMMIT_MESSAGE" value="update view" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
