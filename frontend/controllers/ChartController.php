@@ -35,7 +35,7 @@ class ChartController extends Controller
     /*
      * $id is profile id
      */
-    public function actionParticipantChart()
+    public function actionProfileChart()
     {
         $profile = Profile::findone(['user_id' => Yii::$app->user->identity->id]);
 
@@ -48,7 +48,7 @@ class ChartController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $assessmentData = AssessmentService::getChartByPeriod(
-                $officeId, $profile->id, $model->period_id, $model->subject_id);
+                $officeId, $profile->user_id, $model->period_id, $model->subject_id);
 
             $categories = $assessmentData['categories'];
             $series = $assessmentData['series'];

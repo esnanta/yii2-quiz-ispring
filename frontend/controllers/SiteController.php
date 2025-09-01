@@ -2,12 +2,10 @@
 
 namespace frontend\controllers;
 
-use common\models\Participant;
 use common\service\CacheService;
 use common\service\ScheduleDetailService;
 use common\service\ScheduleService;
 use frontend\models\ContactForm;
-use frontend\models\LoginParticipantForm;
 use frontend\models\TokenForm;
 use Yii;
 use yii\captcha\CaptchaAction;

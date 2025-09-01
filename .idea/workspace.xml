@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update view">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/schedule/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/schedule/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/models/base/Profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/models/base/Profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/AssessmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/ChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/ChartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/assessment/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/assessment/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/_form.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/profile/_form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/chart.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/profile/chart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/views/chart/participant/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/chart/profile/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,16 +90,15 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpDebugGeneral" listening_started="true" notify_if_session_was_finished_without_being_paused="false">
+  <component name="PhpDebugGeneral" notify_if_session_was_finished_without_being_paused="false">
     <xdebug_debug_ports port="9003" />
-    <xdebug_debug_ports port="9000" />
-    <xdebug_debug_ports port="9004" />
   </component>
   <component name="PhpServers">
     <servers>
       <server host="localhost" id="39925484-4ff4-4d6c-8548-10c177f96b0f" name="localhost" />
     </servers>
   </component>
+  <component name="PhpWebServerValidation" path_to_validation_script="$PROJECT_DIR$" selected_validation_type="LOCAL" web_path_to_validation_script="http://localhost/yii2-quiz-ispring/site/index:80" />
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/bin/php">
     <include_path>
       <path value="$PROJECT_DIR$/../yii2-news/vendor/kartik-v/yii2-widget-timepicker" />
@@ -477,36 +488,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Codeception.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.PHP.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Script.ScheduleDetailController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.StaffController.php.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Script.yii-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;PHP Web Page.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;PHP Web Page.yii2-quiz-ispring.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix-token-frontend&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cassiopeia/Documents/www/html/yii2-mcp-server/dist/index.js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Codeception.Main.executor": "Debug",
+    "PHP Remote Debug.XDebug.executor": "Debug",
+    "PHP Script.PHP.executor": "Run",
+    "PHP Script.ScheduleDetailController.php.executor": "Debug",
+    "PHP Script.StaffController.php.executor": "Debug",
+    "PHP Script.yii-quiz-ispring.executor": "Debug",
+    "PHP Web Page.Unnamed.executor": "Run",
+    "PHP Web Page.yii2-quiz-ispring.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "fix-token-frontend",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/cassiopeia/Documents/www/html/yii2-mcp-server/dist/index.js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "settings.php.debug.step.filters",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend/views/asset" />
@@ -525,7 +537,7 @@
   </component>
   <component name="RunManager" selected="PHP Web Page.yii2-quiz-ispring">
     <configuration name="D:\web\htdocs\app\yii2-news\vendor\codeception\codeception\codecept" type="CodeceptionConfigurationType" factoryName="Codeception">
-      <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/../yii2-news/common/codeception.yml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
+      <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/../yii2-news/common/codeception.yml" method="" scope="ConfigurationFile" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
     <configuration name="Main" type="CodeceptionConfigurationType" factoryName="Codeception">
@@ -543,7 +555,7 @@
     <configuration default="true" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="localhost">
       <method v="2" />
     </configuration>
-    <configuration name="yii2-quiz-ispring" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" server_name="localhost" start_url="/app/yii2-quiz-ispring">
+    <configuration name="yii2-quiz-ispring" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" server_name="localhost" start_url="/yii2-quiz-ispring">
       <method v="2" />
     </configuration>
     <list>
@@ -842,23 +854,9 @@
       <workItem from="1756526317946" duration="1522000" />
       <workItem from="1756532355995" duration="3908000" />
       <workItem from="1756558031276" duration="1755000" />
-      <workItem from="1756607934402" duration="2364000" />
-    </task>
-    <task id="LOCAL-00036" summary="update">
-      <option name="closed" value="true" />
-      <created>1755163735535</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1755163735535</updated>
-    </task>
-    <task id="LOCAL-00037" summary="separate token and schedule">
-      <option name="closed" value="true" />
-      <created>1755315822602</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1755315822602</updated>
+      <workItem from="1756607934402" duration="3205000" />
+      <workItem from="1756637630936" duration="9752000" />
+      <workItem from="1756712474399" duration="9374000" />
     </task>
     <task id="LOCAL-00038" summary="add schedule-token">
       <option name="closed" value="true" />
@@ -1236,7 +1234,23 @@
       <option name="project" value="LOCAL" />
       <updated>1756608932763</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="add count down">
+      <option name="closed" value="true" />
+      <created>1756610446109</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1756610446109</updated>
+    </task>
+    <task id="LOCAL-00086" summary="update">
+      <option name="closed" value="true" />
+      <created>1756649482296</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1756649482296</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1263,7 +1277,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix date" />
     <MESSAGE value="update breadcrumb" />
     <MESSAGE value="remove nice admin theme" />
     <MESSAGE value="change menu" />
@@ -1286,9 +1299,21 @@
     <MESSAGE value="fix ScheduleToken.php model" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="add schedule token service to view" />
-    <MESSAGE value="update" />
     <MESSAGE value="update view" />
-    <option name="LAST_COMMIT_MESSAGE" value="update view" />
+    <MESSAGE value="add count down" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/frontend/controllers/AssessmentController.php</url>
+          <line>181</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
