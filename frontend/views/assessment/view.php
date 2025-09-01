@@ -10,7 +10,7 @@ use kartik\detail\DetailView;
  * @var common\models\Assessment $model
  * @var common\models\Schedule $scheduleList
  * @var common\models\Assessment $examTypeList
- * @var common\models\Participant $participantList
+ * @var common\models\Profile $profileList
  */
 
 $this->title = $model->quiz_title;
@@ -68,15 +68,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
                 [
-                    'attribute' => 'participant_id',
+                    'attribute' => 'user_id',
                     'format'=>'html',
-                    'value'=> ($model->participant_id!=null) ? $model->participant->getUrl():'',
+                    'value'=> ($model->user_id!=null) ? $model->profile->name:'',
                     'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'participant_id', 'prompt' => '', 'disabled'=>false],
-                    'items' => $participantList,
+                    'options' => ['id' => 'user_id', 'prompt' => '', 'disabled'=>false],
+                    'items' => $profileList,
                     'widgetOptions'=>[
                         'class'=> Select2::class,
-                        'data' => $participantList,
+                        'data' => $profileList,
                     ],
                 ],
 

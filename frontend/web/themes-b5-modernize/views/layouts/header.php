@@ -76,8 +76,11 @@ function renderDropdownItem($url, $icon, $text)
         <!-- DROPDOWN USER -->
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                <?php if (!Yii::$app->user->isGuest): ?>
-                    <?= Html::a(IconHelper::getHome(), Url::to(['site/index']), ['class' => 'btn btn-sm btn-primary', 'style' => 'margin-right:2px']) ?>
+                <?php if (!Yii::$app->user->isGuest && $model): ?>
+                    <div class="d-none d-md-block">
+                        <span class="fw-semibold mb-0"><?= Html::encode($model->name) ?></span><br>
+                        <small><?= Html::encode($model->group->title) ?> - <?= Html::encode($model->office->title) ?></small>
+                    </div>
                 <?php endif; ?>
 
                 <li class="nav-item dropdown">

@@ -82,7 +82,7 @@ class ScheduleDetailService
         $timeStart = $scheduleDetail->schedule->getTimeStart();
         $timeEnd = $scheduleDetail->schedule->getTimeOut();
 
-        return $isAdmin || ($currentTime > $timeStart && $currentTime < $timeEnd);
+        return $currentTime > $timeStart && $currentTime < $timeEnd;
     }
 
     /**

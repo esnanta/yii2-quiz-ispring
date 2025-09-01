@@ -70,20 +70,18 @@ class ScheduleController extends Controller
                 'user_id'=>Yii::$app->user->identity->id
             ]);
 
+            $listOngoingSchedule = $this->scheduleService
+                ->getScheduleOngoingByGroup($officeId, $profile->group_id);
             $listUpcomingSchedule = $this->scheduleService
                 ->getScheduleUpcomingByGroup($officeId,$profile->group_id);
-            $listRecentSchedule = $this->scheduleService
-                ->getScheduleRecentByGroup($officeId,$profile->group_id);
-
-            if ($this->tokenForm->load(Yii::$app->request->post())) {
-                $this->token = $this->tokenForm->token;
-            }
+            $listCompletedSchedule = $this->scheduleService
+                ->getScheduleCompletedByGroup($officeId,$profile->group_id);
 
             return $this->render('index',[
-                'tokenForm' => $this->tokenForm,
                 'profile' => $profile,
+                'listOngoingSchedule' => $listOngoingSchedule,
                 'listUpcomingSchedule' => $listUpcomingSchedule,
-                'listRecentSchedule' => $listRecentSchedule,
+                'listCompletedSchedule' => $listCompletedSchedule,
                 'scheduleDetailService' => $this->scheduleDetailService
             ]);
         }
@@ -105,6 +103,10 @@ class ScheduleController extends Controller
             $model = $this->findModel($id);
             $scheduleDetailService = new ScheduleDetailService();
 
+            if ($this->tokenForm->load(Yii::$app->request->post())) {
+                $this->tokenForm->checkTokenToSchedule($model);
+            }
+
             $providerScheduleDetail = new ArrayDataProvider([
                 'allModels' => $model->scheduleDetails,
             ]);
@@ -118,6 +120,7 @@ class ScheduleController extends Controller
 
             return $this->render('view', [
                 'model' => $model,
+                'tokenForm' => $this->tokenForm,
                 'providerScheduleDetail' => $providerScheduleDetail,
                 'providerAssessment' => $providerAssessment,
                 'participantList' => $profileList,

@@ -428,7 +428,7 @@ class m250807_200101_create_all_tables extends Migration
         $this->addForeignKey('Fk_assessment_office', '{{%assessment}}', 'office_id', '{{%office}}', 'id');
         $this->addForeignKey('Fk_assessment_schedule', '{{%assessment}}', 'schedule_id', '{{%schedule}}', 'id');
         $this->addForeignKey('Fk_assessment_schedule_detail', '{{%assessment}}', 'schedule_detail_id', '{{%schedule_detail}}', 'id');
-        $this->addForeignKey('tx_assessment_tx_profile_FK', '{{%assessment}}', 'user_id', '{{%profile}}', 'user_id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('Fk_assessment_profile', '{{%assessment}}', 'user_id', '{{%user}}', 'id');
         $this->addForeignKey('Fk_assessment_period', '{{%assessment}}', 'period_id', '{{%period}}', 'id');
         $this->addForeignKey('FK_tx_assessment_group', '{{%assessment}}', 'group_id', '{{%group}}', 'id');
         $this->addForeignKey('Fk_assessment_subject', '{{%assessment}}', 'subject_id', '{{%subject}}', 'id');

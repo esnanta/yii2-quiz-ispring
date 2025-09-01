@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body text-default">
         <?= $this->render('/chart/profile/_form', [
             'model' => $model,
-            'profile' => $profile,
             'periodList' => $periodList,
             'groupList' => $groupList,
             'subjectList' => $subjectList,

@@ -33,6 +33,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
+ * @property \common\models\Assessment[] $assessments
  * @property \common\models\User $user
  * @property \common\models\Group $group
  * @property \common\models\Office $office
@@ -63,6 +64,7 @@ class Profile extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'assessments',
             'user',
             'group',
             'office'
@@ -133,6 +135,14 @@ class Profile extends \yii\db\ActiveRecord
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssessments()
+    {
+        return $this->hasMany(\common\models\Assessment::className(), ['user_id' => 'user_id']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */

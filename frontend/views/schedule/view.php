@@ -11,6 +11,55 @@ use yii\helpers\Html;
 /* @var $providerAssessment yii\data\ActiveDataProvider */
 /* @var $providerScheduleDetail yii\data\ActiveDataProvider */
 ?>
+<?php
+$currentTime = time();
+if ($currentTime >= $model->getTimeStart() && $currentTime <= $model->getTimeOut()) {
+    ?>
+    <div class="card mb-3">
+        <div class="card-header">
+            <strong><i class="fas fa-key"></i> <?= Yii::t('app', 'Token Access') ?></strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <?php $form = ActiveForm::begin(['options' => ['class' => 'row g-2 align-items-center']]); ?>
+                    <div class="col-auto">
+                        <label class="font-weight-bold mb-0" for="token-input">
+                            <?= Yii::t('app', 'Token') ?>:
+                        </label>
+                    </div>
+                    <div class="col">
+                        <?= $form->field($tokenForm, 'token')->textInput([
+                            'maxlength' => true,
+                            'placeholder' => Yii::t('app', 'Enter token'),
+                            'class' => 'form-control',
+                            'autocomplete' => 'off',
+                            'id' => 'token-input',
+                        ])->label(false) ?>
+                    </div>
+                    <div class="col-auto">
+                        <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+                    <?php if (isset($tokenForm->is_token_equals)) {
+                        if ($tokenForm->is_token_equals && !empty($tokenForm->token)) { ?>
+                            <div class="alert alert-success mt-2 mb-0 p-2 d-flex align-items-center">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span><?= Yii::t('app', 'Token accepted.') ?></span>
+                            </div>
+                        <?php } elseif (!$tokenForm->is_token_equals && !empty($tokenForm->token)) { ?>
+                            <div class="alert alert-danger mt-2 mb-0 p-2 d-flex align-items-center">
+                                <i class="fas fa-times-circle mr-2"></i>
+                                <span><?= Yii::t('app', 'Invalid token.') ?></span>
+                            </div>
+                        <?php }
+                    } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php }
+?>
 <div class="card">
     <div class="card-header">
         <?= Yii::t('app', 'Schedule') ?>
@@ -57,6 +106,7 @@ use yii\helpers\Html;
                         <th><?= Yii::t('app', 'Subject'); ?></th>
                         <th><?= Yii::t('app', 'Remark'); ?></th>
                         <th><?= Yii::t('app', 'Question Type'); ?></th>
+                        <th><?= Yii::t('app', 'Action'); ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -72,6 +122,15 @@ use yii\helpers\Html;
                             <td class="left"><?= $modelDetailItem->subject->title; ?></td>
                             <td class="left"><?= $modelDetailItem->remark; ?></td>
                             <td class="left"><?= $modelDetailItem->getOneQuestionType($modelDetailItem->question_type); ?></td>
+                            <td>
+                                <?php
+                                if ($tokenForm->is_token_equals) {
+                                    echo $scheduleDetailService->getAssetButton($modelDetailItem, $submissionIsFalse, Yii::$app->user->id);
+                                } else {
+                                    echo Html::a(Yii::t('app', 'Closed'), '#', ['class' => 'btn btn-secondary btn-sm disabled']);
+                                }
+                                ?>
+                            </td>
                         </tr>
 
                     <?php } ?>
@@ -81,17 +140,6 @@ use yii\helpers\Html;
             </div>
 
         <?php } ?>
-
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'token')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Enter Token')])->label(false) ?>
-                <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                </div>
-                <?php ActiveForm::end(); ?>
-            </div>
-        </div>
 
         <?php if (!empty($profileList)) {
             echo $this->render('view_participant', [

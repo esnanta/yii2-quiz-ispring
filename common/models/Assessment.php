@@ -17,6 +17,32 @@ class Assessment extends BaseAssessment
     const SUBMISSION_STATUS_CANCELLED    = 3;
 
     /**
+     * This function helps \mootensai\relation\RelationTrait runs faster
+     * @return array relation names of this model
+     */
+    public function relationNames()
+    {
+        return [
+            'office',
+            'period',
+            'schedule',
+            'scheduleDetail',
+            'subject',
+            'group',
+            'user',
+            'profile'
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['user_id' => 'user_id']);
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()

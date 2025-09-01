@@ -8,6 +8,7 @@ use common\models\Period;
 use common\models\Schedule;
 use common\models\ScheduleDetail;
 use common\models\Subject;
+use common\models\User;
 use common\service\AssessmentService;
 use common\service\CacheService;
 use common\service\DataListService;
@@ -78,7 +79,7 @@ class AssessmentController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'scheduleList' => $scheduleList,
-                'participantList' => $profileList,
+                'profileList' => $profileList,
                 'periodList' => $periodList,
                 'subjectList' => $subjectList,
                 'questionTypeList' => $questionTypeList
@@ -130,7 +131,7 @@ class AssessmentController extends Controller
                     'periodList' => $periodList,
                     'subjectList' => $subjectList,
                     'questionTypeList' => $questionTypeList,
-                    'participantList' => $profileList,
+                    'profileList' => $profileList,
                     'examTypeList' => $examTypeList,
                     'categories' => $categories,
                     'series' => $series,
@@ -183,13 +184,11 @@ class AssessmentController extends Controller
                 ->where(['id'=>$scheduleDetailId,'office_id' => $officeId])
                 ->one();
 
-            $profile = Profile::find()
-                ->select('user_id')
-                ->where(['tx_user.username' => $username,'office_id' => $officeId])
-                ->joinWith(['user'])
+            $user = User::find()
+                ->where(['username' => $username])
                 ->one();
 
-            $profileId          = $profile->user_id;
+            $userId             = $user->id;
             $scheduleId         = $scheduleDetail->schedule->id;
             $periodId           = $scheduleDetail->schedule->period_id;
             $groupId            = $scheduleDetail->schedule->group_id;
@@ -200,7 +199,7 @@ class AssessmentController extends Controller
             $assessment = Assessment::find()
                 ->where(['office_id' => $officeId,
                     'schedule_detail_id'  => $scheduleDetailId,
-                    'user_id' => $profileId
+                    'user_id' => $userId
                 ])->one();
 
             if(empty($assessment)):
@@ -212,7 +211,7 @@ class AssessmentController extends Controller
             $assessment->group_id                 = $groupId;
             $assessment->schedule_id              = $scheduleId;
             $assessment->schedule_detail_id       = $scheduleDetailId;
-            $assessment->user_id                  = $profileId;
+            $assessment->user_id                  = $userId;
             $assessment->subject_id               = $subjectId;
             $assessment->question_type            = $questionType;
             $assessment->exam_type                = $examType;

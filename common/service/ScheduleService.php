@@ -2,6 +2,7 @@
 
 namespace common\service;
 
+use common\helper\DateHelper;
 use common\models\Schedule;
 use Yii;
 use yii\helpers\Url;
@@ -46,19 +47,31 @@ class ScheduleService
     {
         return Schedule::find()
             ->where(['office_id' => $officeId, 'group_id' => $groupId])
-            ->andWhere(['>=', 'date_end', date('Y-m-d H:i:s')]) // Starting from now
+            ->andWhere(['>', 'date_start', date(DateHelper::getDateTimeSaveFormat())]) // Starting from now
             ->orderBy(['date_start' => SORT_ASC]) // Sort by date in ascending order
             ->limit(6) // Limit to 6 records
             ->all();
     }
 
-    public function getScheduleRecentByGroup(int $officeId, int $groupId): array
+    public function getScheduleCompletedByGroup(int $officeId, int $groupId): array
     {
         return Schedule::find()
             ->where(['office_id' => $officeId, 'group_id' => $groupId])
-            ->andWhere(['between', 'date_start', date('Y-m-d H:i:s', strtotime('-14 days')), date('Y-m-d H:i:s')]) // Between 14 days ago and now
+            ->andWhere(['<', 'date_end', date(DateHelper::getDateTimeSaveFormat())])
             ->orderBy(['date_start' => SORT_DESC]) // Sort by date in descending order
             ->limit(6) // Limit to 6 records
+            ->all();
+    }
+
+    public function getScheduleOngoingByGroup(int $officeId, int $groupId): array
+    {
+        $now = date(DateHelper::getDateTimeSaveFormat());
+        return Schedule::find()
+            ->where(['office_id' => $officeId, 'group_id' => $groupId])
+            ->andWhere(['<=', 'date_start', $now])
+            ->andWhere(['>=', 'date_end', $now])
+            ->orderBy(['date_start' => SORT_ASC])
+            ->limit(6)
             ->all();
     }
 

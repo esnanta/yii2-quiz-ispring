@@ -63,7 +63,7 @@ echo GridView::widget([
                 return ($model->user_id!=null) ? $model->profile->name:'';
             },
             'filterType' => GridView::FILTER_SELECT2,
-            'filter' => $participantList,
+            'filter' => $profileList,
             'filterWidgetOptions'=>[
                 'pluginOptions'=>['allowClear'=>true],
             ],

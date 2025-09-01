@@ -50,7 +50,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \common\models\ScheduleDetail $scheduleDetail
  * @property \common\models\Subject $subject
  * @property \common\models\Group $group
- * @property \common\models\Profile $user
+ * @property \common\models\User $user
  */
 class Assessment extends \yii\db\ActiveRecord
 {
@@ -213,7 +213,7 @@ class Assessment extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\common\models\Profile::className(), ['user_id' => 'user_id']);
+        return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
     }
     
     /**
