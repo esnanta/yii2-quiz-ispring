@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\ErrorAction;
+use common\models\Assessment;
+use common\models\Profile;
 
 /**
  * Site controller
@@ -112,9 +114,47 @@ class SiteController extends Controller
             $listUpcomingSchedule = $this->scheduleService->getScheduleUpcoming($officeId);
             $listRecentSchedule = $this->scheduleService->getScheduleRecent($officeId);
 
+            // Student dashboard: assessment stats & chart data
+            $userId = Yii::$app->user->id;
+            $profile = Profile::findOne(['user_id' => $userId]);
+            $assessments = Assessment::find()
+                ->where(['user_id' => $userId, 'office_id' => $officeId])
+                ->all();
+
+            $total = count($assessments);
+            $passed = 0;
+            $failed = 0;
+            $scoreSum = 0;
+            $categories = [];
+            $series = [];
+
+            foreach ($assessments as $assessment) {
+                $categories[] = $assessment->quiz_title ?: 'Assessment ' . $assessment->id;
+                $score = $assessment->evaluate_score ?? 0;
+                $scoreSum += $score;
+                $series[] = $score;
+                if ($assessment->evaluate_score >= $assessment->passing_score_percent) {
+                    $passed++;
+                } else {
+                    $failed++;
+                }
+            }
+            $average_score = $total > 0 ? round($scoreSum / $total, 2) : 0;
+
+            $assessmentStats = [
+                'total' => $total,
+                'average_score' => $average_score,
+                'passed' => $passed,
+                'failed' => $failed,
+            ];
+
             return $this->render('index',[
                 'listUpcomingSchedule' => $listUpcomingSchedule,
-                'listRecentSchedule' => $listRecentSchedule
+                'listRecentSchedule' => $listRecentSchedule,
+                'assessmentStats' => $assessmentStats,
+                'categories' => $total ? $categories : null,
+                'series' => $total ? $series : null,
+                'profile' => $profile,
             ]);
         }
     }
