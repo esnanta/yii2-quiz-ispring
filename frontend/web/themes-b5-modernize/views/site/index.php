@@ -77,13 +77,13 @@ $this->title = Yii::$app->name;
                     <div class="col-md-12 text-center">
                         <?php
                         // Pie chart for average time used vs available
-                        $pieLabels = [
-                            Yii::t('app', 'Average Time Used'),
-                            Yii::t('app', 'Average Time Remaining')
-                        ];
                         $used = $assessmentStats['average_used_time'] ?? 0;
                         $limit = $assessmentStats['average_time_limit'] ?? 0;
                         $remaining = $limit > $used ? $limit - $used : 0;
+                        $pieLabels = [
+                            Yii::t('app', 'Average Time Used') . " ({$used})",
+                            Yii::t('app', 'Average Time Remaining') . " ({$remaining})"
+                        ];
                         $pieSeries = [$used, $remaining];
                         echo ApexChartHelper::renderPieChart($pieLabels, $pieSeries, Yii::t('app', 'Average Time Used vs Available'));
                         ?>

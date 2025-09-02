@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add dashboard to frontend">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/helper/ApexChartHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/helper/ApexChartHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterDir="false" />
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="modify dashboard">
       <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -848,15 +845,7 @@
       <workItem from="1756637630936" duration="9752000" />
       <workItem from="1756712474399" duration="9374000" />
       <workItem from="1756798527100" duration="1622000" />
-      <workItem from="1756800287521" duration="3109000" />
-    </task>
-    <task id="LOCAL-00040" summary="add schedule-token to migration">
-      <option name="closed" value="true" />
-      <created>1755317120307</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1755317120307</updated>
+      <workItem from="1756800287521" duration="3453000" />
     </task>
     <task id="LOCAL-00041" summary="update">
       <option name="closed" value="true" />
@@ -1242,7 +1231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756800908715</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="modify dashboard">
+      <option name="closed" value="true" />
+      <created>1756804374655</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1756804374655</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1269,7 +1266,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="change menu" />
     <MESSAGE value="remove ScheduleService.php" />
     <MESSAGE value="update dan fix" />
     <MESSAGE value="add ScheduleService.php" />
@@ -1294,7 +1290,8 @@
     <MESSAGE value="update" />
     <MESSAGE value="remove participant model" />
     <MESSAGE value="add dashboard to frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="add dashboard to frontend" />
+    <MESSAGE value="modify dashboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify dashboard" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
