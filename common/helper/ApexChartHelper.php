@@ -151,4 +151,87 @@ class ApexChartHelper
             'series' => $series, // Pass the series data
         ]);
     }
+
+    /**
+     * Generates a pie chart.
+     *
+     * @param array $labels
+     * @param array $series
+     * @param string $title
+     * @return string
+     */
+    public static function renderPieChart(
+        array $labels,
+        array $series,
+        string $title = 'Pie Chart'
+    ): string
+    {
+        return ApexchartsWidget::widget([
+            'type' => 'pie',
+            'height' => '350',
+            'width' => '100%',
+            'chartOptions' => [
+                'chart' => [
+                    'toolbar' => [
+                        'show' => true,
+                    ],
+                ],
+                'labels' => $labels,
+                'title' => [
+                    'text' => \Yii::t('app', $title),
+                    'align' => 'center',
+                ],
+                'legend' => [
+                    'position' => 'bottom',
+                    'horizontalAlign' => 'center',
+                ],
+            ],
+            'series' => $series,
+        ]);
+    }
+
+    /**
+     * Generates a bar chart.
+     *
+     * @param array $categories
+     * @param array $series
+     * @param string $title
+     * @return string
+     */
+    public static function renderBarChart(
+        array $categories,
+        array $series,
+        string $title = 'Bar Chart'
+    ): string
+    {
+        return ApexchartsWidget::widget([
+            'type' => 'bar',
+            'height' => '350',
+            'width' => '100%',
+            'chartOptions' => [
+                'chart' => [
+                    'toolbar' => [
+                        'show' => true,
+                    ],
+                ],
+                'xaxis' => [
+                    'categories' => $categories,
+                ],
+                'title' => [
+                    'text' => \Yii::t('app', $title),
+                    'align' => 'center',
+                ],
+                'legend' => [
+                    'position' => 'bottom',
+                    'horizontalAlign' => 'center',
+                ],
+            ],
+            'series' => [
+                [
+                    'name' => \Yii::t('app', 'Exam Type'),
+                    'data' => $series,
+                ]
+            ],
+        ]);
+    }
 }

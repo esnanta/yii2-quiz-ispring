@@ -54,7 +54,55 @@ $this->title = Yii::$app->name;
                         </div>
                     </div>
                 </div>
-
+                <!-- Add average time used vs available -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6><?= Yii::t('app', 'Average Time Used (minutes)'); ?></h6>
+                                <h3><?= $assessmentStats['average_used_time'] ?? '-' ?></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6><?= Yii::t('app', 'Average Time Available (minutes)'); ?></h6>
+                                <h3><?= $assessmentStats['average_time_limit'] ?? '-' ?></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12 text-center">
+                        <?php
+                        // Pie chart for average time used vs available
+                        $pieLabels = [
+                            Yii::t('app', 'Average Time Used'),
+                            Yii::t('app', 'Average Time Remaining')
+                        ];
+                        $used = $assessmentStats['average_used_time'] ?? 0;
+                        $limit = $assessmentStats['average_time_limit'] ?? 0;
+                        $remaining = $limit > $used ? $limit - $used : 0;
+                        $pieSeries = [$used, $remaining];
+                        echo ApexChartHelper::renderPieChart($pieLabels, $pieSeries, Yii::t('app', 'Average Time Used vs Available'));
+                        ?>
+                    </div>
+                </div>
+                <!-- Exam Type Bar Chart -->
+                <div class="row mb-3">
+                    <div class="col-md-12 text-center">
+                        <?php
+                        if (!empty($assessmentStats['exam_type_labels']) && !empty($assessmentStats['exam_type_counts'])) {
+                            echo ApexChartHelper::renderBarChart(
+                                $assessmentStats['exam_type_labels'],
+                                $assessmentStats['exam_type_counts'],
+                                Yii::t('app', 'Exam Type Distribution')
+                            );
+                        }
+                        ?>
+                    </div>
+                </div>
                 <!-- Chart Section -->
                 <div class="mb-3">
                     <?php

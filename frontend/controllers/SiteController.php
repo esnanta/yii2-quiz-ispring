@@ -128,6 +128,18 @@ class SiteController extends Controller
             $categories = [];
             $series = [];
 
+            // Add time calculation
+            $totalUsedTime = 0;
+            $totalTimeLimit = 0;
+            $validTimeCount = 0;
+
+            // Exam type stats
+            $examTypeCounts = [];
+            $examTypeMap = Assessment::getArrayExamType();
+            foreach ($examTypeMap as $typeKey => $typeLabel) {
+                $examTypeCounts[$typeLabel] = 0;
+            }
+
             foreach ($assessments as $assessment) {
                 $categories[] = $assessment->quiz_title ?: 'Assessment ' . $assessment->id;
                 $score = $assessment->evaluate_score ?? 0;
@@ -138,14 +150,31 @@ class SiteController extends Controller
                 } else {
                     $failed++;
                 }
+                // Only count if both used_time and time_limit are numeric
+                if (is_numeric($assessment->used_time) && is_numeric($assessment->time_limit)) {
+                    $totalUsedTime += (float)$assessment->used_time;
+                    $totalTimeLimit += (float)$assessment->time_limit;
+                    $validTimeCount++;
+                }
+                // Count exam type
+                if ($assessment->exam_type && isset($examTypeMap[$assessment->exam_type])) {
+                    $label = $examTypeMap[$assessment->exam_type];
+                    $examTypeCounts[$label]++;
+                }
             }
             $average_score = $total > 0 ? round($scoreSum / $total, 2) : 0;
+            $average_used_time = $validTimeCount > 0 ? round($totalUsedTime / $validTimeCount, 2) : 0;
+            $average_time_limit = $validTimeCount > 0 ? round($totalTimeLimit / $validTimeCount, 2) : 0;
 
             $assessmentStats = [
                 'total' => $total,
                 'average_score' => $average_score,
                 'passed' => $passed,
                 'failed' => $failed,
+                'average_used_time' => $average_used_time,
+                'average_time_limit' => $average_time_limit,
+                'exam_type_labels' => array_keys($examTypeCounts),
+                'exam_type_counts' => array_values($examTypeCounts),
             ];
 
             return $this->render('index',[
