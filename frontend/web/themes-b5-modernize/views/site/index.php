@@ -27,6 +27,7 @@ $this->title = Yii::$app->name;
                 </span>
             </div>
             <div class="card-body text-default">
+                <!-- Summary Cards -->
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <div class="card text-center">
@@ -54,56 +55,50 @@ $this->title = Yii::$app->name;
                         </div>
                     </div>
                 </div>
-                <!-- Add average time used vs available -->
+
+                <!-- Charts Section -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h6><?= Yii::t('app', 'Average Time Used (minutes)'); ?></h6>
-                                <h3><?= $assessmentStats['average_used_time'] ?? '-' ?></h3>
+                        <div class="card h-100">
+                            <div class="card-header text-center">
+                                <?= Yii::t('app', 'Average Time Used vs Available'); ?>
+                            </div>
+                            <div class="card-body p-2">
+                                <?php
+                                $used = $assessmentStats['average_used_time'] ?? 0;
+                                $limit = $assessmentStats['average_time_limit'] ?? 0;
+                                $remaining = $limit > $used ? $limit - $used : 0;
+                                $pieLabels = [
+                                    Yii::t('app', 'Average Time Used') . " ({$used})",
+                                    Yii::t('app', 'Average Time Remaining') . " ({$remaining})"
+                                ];
+                                $pieSeries = [$used, $remaining];
+                                echo ApexChartHelper::renderPieChart($pieLabels, $pieSeries, Yii::t('app', 'Average Time Used vs Available'));
+                                ?>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h6><?= Yii::t('app', 'Average Time Available (minutes)'); ?></h6>
-                                <h3><?= $assessmentStats['average_time_limit'] ?? '-' ?></h3>
+                        <div class="card h-100">
+                            <div class="card-header text-center">
+                                <?= Yii::t('app', 'Exam Type Distribution'); ?>
+                            </div>
+                            <div class="card-body p-2">
+                                <?php
+                                if (!empty($assessmentStats['exam_type_labels']) && !empty($assessmentStats['exam_type_counts'])) {
+                                    echo ApexChartHelper::renderBarChart(
+                                        $assessmentStats['exam_type_labels'],
+                                        $assessmentStats['exam_type_counts'],
+                                        Yii::t('app', 'Exam Type Distribution')
+                                    );
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-12 text-center">
-                        <?php
-                        // Pie chart for average time used vs available
-                        $used = $assessmentStats['average_used_time'] ?? 0;
-                        $limit = $assessmentStats['average_time_limit'] ?? 0;
-                        $remaining = $limit > $used ? $limit - $used : 0;
-                        $pieLabels = [
-                            Yii::t('app', 'Average Time Used') . " ({$used})",
-                            Yii::t('app', 'Average Time Remaining') . " ({$remaining})"
-                        ];
-                        $pieSeries = [$used, $remaining];
-                        echo ApexChartHelper::renderPieChart($pieLabels, $pieSeries, Yii::t('app', 'Average Time Used vs Available'));
-                        ?>
-                    </div>
-                </div>
-                <!-- Exam Type Bar Chart -->
-                <div class="row mb-3">
-                    <div class="col-md-12 text-center">
-                        <?php
-                        if (!empty($assessmentStats['exam_type_labels']) && !empty($assessmentStats['exam_type_counts'])) {
-                            echo ApexChartHelper::renderBarChart(
-                                $assessmentStats['exam_type_labels'],
-                                $assessmentStats['exam_type_counts'],
-                                Yii::t('app', 'Exam Type Distribution')
-                            );
-                        }
-                        ?>
-                    </div>
-                </div>
-                <!-- Chart Section -->
+
+                <!-- Score Charts Section -->
                 <div class="mb-3">
                     <?php
                     if ($series && $categories) {

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="modify dashboard">
+    <list default="true" id="3e980607-95a4-4243-b1df-b20c9af1e802" name="Changes" comment="add label to pie chart">
       <change beforePath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/themes-b5-modernize/views/site/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -845,15 +845,7 @@
       <workItem from="1756637630936" duration="9752000" />
       <workItem from="1756712474399" duration="9374000" />
       <workItem from="1756798527100" duration="1622000" />
-      <workItem from="1756800287521" duration="3453000" />
-    </task>
-    <task id="LOCAL-00041" summary="update">
-      <option name="closed" value="true" />
-      <created>1755317128191</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1755317128191</updated>
+      <workItem from="1756800287521" duration="3761000" />
     </task>
     <task id="LOCAL-00042" summary="update migration">
       <option name="closed" value="true" />
@@ -1239,7 +1231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756804374655</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="add label to pie chart">
+      <option name="closed" value="true" />
+      <created>1756804498203</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1756804498203</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1266,7 +1266,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="remove ScheduleService.php" />
     <MESSAGE value="update dan fix" />
     <MESSAGE value="add ScheduleService.php" />
     <MESSAGE value="refactor user" />
@@ -1291,7 +1290,8 @@
     <MESSAGE value="remove participant model" />
     <MESSAGE value="add dashboard to frontend" />
     <MESSAGE value="modify dashboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify dashboard" />
+    <MESSAGE value="add label to pie chart" />
+    <option name="LAST_COMMIT_MESSAGE" value="add label to pie chart" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
