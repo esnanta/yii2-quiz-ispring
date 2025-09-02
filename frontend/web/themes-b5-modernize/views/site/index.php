@@ -56,6 +56,28 @@ $this->title = Yii::$app->name;
                     </div>
                 </div>
 
+                <!-- Assessment Metrics Progression Chart -->
+                <div class="mb-3">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <?= Yii::t('app', 'Assessment Metrics Progression'); ?>
+                        </div>
+                        <div class="card-body p-2">
+                            <?php
+                            if (!empty($assessmentMetricsChart['labels']) && !empty($assessmentMetricsChart['series'])) {
+                                echo ApexChartHelper::renderAssessmentMetricsLineChart(
+                                    $assessmentMetricsChart['labels'],
+                                    $assessmentMetricsChart['series'],
+                                    Yii::t('app', 'Assessment Metrics Progression')
+                                );
+                            } else {
+                                echo '<div class="alert alert-info">'.Yii::t('app', 'No assessment metrics data available.').'</div>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Charts Section -->
                 <div class="row mb-3">
                     <div class="col-md-6">

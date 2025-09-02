@@ -234,4 +234,64 @@ class ApexChartHelper
             ],
         ]);
     }
+
+    /**
+     * Renders a multi-metric line chart for assessment progression.
+     *
+     * @param array $labels
+     * @param array $series
+     * @param string $title
+     * @return string
+     */
+    public static function renderAssessmentMetricsLineChart(
+        array $labels,
+        array $series,
+        string $title = 'Assessment Metrics Progression'
+    ): string
+    {
+        return ApexchartsWidget::widget([
+            'type' => 'line',
+            'height' => '400',
+            'width' => '100%',
+            'chartOptions' => [
+                'chart' => [
+                    'toolbar' => [
+                        'show' => true,
+                        'autoSelected' => 'zoom'
+                    ],
+                ],
+                'dataLabels' => [
+                    'enabled' => true,
+                ],
+                'stroke' => [
+                    'curve' => 'smooth'
+                ],
+                'title' => [
+                    'text' => Yii::t('app', $title),
+                    'align' => 'center'
+                ],
+                'xaxis' => [
+                    'categories' => $labels,
+                    'title' => [
+                        'text' => Yii::t('app', 'Assessment')
+                    ],
+                    'labels' => [
+                        'rotate' => -45,
+                        'rotateAlways' => true,
+                    ],
+                ],
+                'yaxis' => [
+                    'title' => [
+                        'text' => Yii::t('app', 'Metric Value')
+                    ],
+                    'min' => 0,
+                ],
+                'legend' => [
+                    'position' => 'top',
+                    'horizontalAlign' => 'center',
+                ],
+            ],
+            'series' => $series,
+        ]);
+    }
 }

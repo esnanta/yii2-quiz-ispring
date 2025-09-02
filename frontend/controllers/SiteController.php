@@ -177,6 +177,51 @@ class SiteController extends Controller
                 'exam_type_counts' => array_values($examTypeCounts),
             ];
 
+            $assessmentMetricsLabels = [];
+            $earnedPointsSeries = [];
+            $passingScoreSeries = [];
+            $passingScorePercentSeries = [];
+            $gainedScoreSeries = [];
+            $evaluateScoreSeries = [];
+
+            foreach ($assessments as $assessment) {
+                $label = $assessment->quiz_title ?: (
+                    $assessment->created_at ? date('Y-m-d', strtotime($assessment->created_at)) : 'Assessment ' . $assessment->id
+                );
+                $assessmentMetricsLabels[] = $label;
+                $earnedPointsSeries[] = (float)$assessment->earned_points;
+                $passingScoreSeries[] = (float)$assessment->passing_score;
+                $passingScorePercentSeries[] = (float)$assessment->passing_score_percent;
+                $gainedScoreSeries[] = (float)$assessment->gained_score;
+                $evaluateScoreSeries[] = (float)$assessment->evaluate_score;
+            }
+
+            $assessmentMetricsChart = [
+                'labels' => $assessmentMetricsLabels,
+                'series' => [
+                    [
+                        'name' => Yii::t('app', 'Earned Points'),
+                        'data' => $earnedPointsSeries,
+                    ],
+                    [
+                        'name' => Yii::t('app', 'Passing Score'),
+                        'data' => $passingScoreSeries,
+                    ],
+                    [
+                        'name' => Yii::t('app', 'Passing Score Percent'),
+                        'data' => $passingScorePercentSeries,
+                    ],
+                    [
+                        'name' => Yii::t('app', 'Gained Score'),
+                        'data' => $gainedScoreSeries,
+                    ],
+                    [
+                        'name' => Yii::t('app', 'Evaluate Score'),
+                        'data' => $evaluateScoreSeries,
+                    ],
+                ],
+            ];
+
             return $this->render('index',[
                 'listUpcomingSchedule' => $listUpcomingSchedule,
                 'listRecentSchedule' => $listRecentSchedule,
@@ -184,6 +229,7 @@ class SiteController extends Controller
                 'categories' => $total ? $categories : null,
                 'series' => $total ? $series : null,
                 'profile' => $profile,
+                'assessmentMetricsChart' => $assessmentMetricsChart,
             ]);
         }
     }
