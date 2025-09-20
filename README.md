@@ -32,7 +32,7 @@ See the [Screenshots Folder](https://github.com/esnanta/yii2-quiz-ispring/tree/m
 - A copy of **iSpring QuizMaker** or another iSpring authoring tool (e.g., [iSpring Suite](https://www.ispringsolutions.com/))
 - [XAMPP](https://www.apachefriends.org/) 8.x.x
 - [Composer v2.x.x](https://getcomposer.org/)
-- *(Optional)* Server-side application programming skills (PHP, SQL, XML)
+- *(Optional)* Server-side application programming skills (PHP, SQL, Javascript)
 
 ---
 
