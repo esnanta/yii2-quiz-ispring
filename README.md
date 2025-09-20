@@ -178,8 +178,6 @@ Contributions are welcome!
 
 If you find value in this application, feel free to:
 
-- ⭐ Star this repository
 - Share it with friends, colleagues, or your community
 - [Buy me a coffee](https://www.paypal.me/esnanta)
-
 ---
